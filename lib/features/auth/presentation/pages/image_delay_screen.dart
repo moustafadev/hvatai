@@ -13,7 +13,7 @@ class _ImageDelayScreenState extends State<ImageDelayScreen> {
     super.initState();
     // Wait 5 seconds then navigate
     Timer(const Duration(seconds: 4), () {
-      // Get.offAll(() => BottomNavigationBarWidget());
+      context.go(AppRoutes.bottomNavBar);
     });
   }
 

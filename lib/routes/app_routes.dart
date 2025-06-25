@@ -15,6 +15,7 @@ class AppRoutes {
   static const String interests = '/interests';
   static const String notification = '/notification';
   static const String imageDelay = '/image_delay';
+  static const String bottomNavBar = '/bottom_nav_bar';
 
   static const String interestsDetail = '/interests-detail';
 }
