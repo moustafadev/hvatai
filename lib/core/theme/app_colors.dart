@@ -1,0 +1,45 @@
+import 'package:flutter/material.dart';
+
+class AppColors {
+  // ✅ Existing Colors
+  static const Color white = Color(0xFFFFFFFF);
+  static const Color hotPink = Color(0xFFEC3078);
+  static const Color raspberryRed = Color(0xFFF24259);
+  static const Color graniteGray = Color(0xFF707070);
+  static const Color eerieBlack = Color(0xFF1B1B1B);
+  static const Color gray = Color(0xFFECECEC);
+  static const Color primary = Color(0xFF3ECE3E);
+  static const Color transparent = Colors.transparent;
+  static const Color lightGray = Color(0xFFD9D9D9);
+  static Color get grey100 =>
+      Colors.grey[100]!; // Lightest grey from Material swatch
+
+  // ✅ New Added Colors
+  static const Color purple = Color(0xFF8385E6);
+  static const Color purple1 = Color(0xFF815BFF);
+  static const Color greyLite = Color(0xFFD0D0D0);
+  static const Color grey = Color(0xFFB3B3B3);
+  static const Color blackLite = Color(0xFF2A2A2A);
+  static const Color pink = Color(0xFFE569DB);
+  static const Color blueLite = Color(0xFF3392FF);
+  static const Color purpleLite = Color(0xFF7F5BFF);
+  static const Color deepPurple = Color(0xFFE356D7);
+  static const Color conLine = Color(0xFFE9E9E9);
+  static const Color greyButton = Color(0xFFF2F2F2);
+
+  // ✅ Colors with Opacity
+  static Color greyLiteLine = const Color(0xFF808080).withOpacity(0.5);
+  static Color view = const Color(0xFF000000).withOpacity(0.5);
+  static Color button = const Color(0xFF007AFF).withOpacity(0.2);
+  static Color text = const Color(0xFF2A2A2A);
+  static const Color violetPink = Color(0xFFE26ADC); // New color added
+
+  // ✅ Gradients
+  static LinearGradient primaryGradient = LinearGradient(
+    colors: [blueLite, purpleLite, deepPurple],
+  );
+
+  static LinearGradient secondaryGradient = LinearGradient(
+    colors: [white, white, white],
+  );
+}
