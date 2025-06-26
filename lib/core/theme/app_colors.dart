@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   // ✅ Existing Colors
+
   static const Color white = Color(0xFFFFFFFF);
   static const Color hotPink = Color(0xFFEC3078);
   static const Color raspberryRed = Color(0xFFF24259);
@@ -18,8 +19,10 @@ class AppColors {
   static const Color purple = Color(0xFF8385E6);
   static const Color purple1 = Color(0xFF815BFF);
   static const Color greyLite = Color(0xFFD0D0D0);
+  static const Color blackColorIcon = Color(0xFF2A2A2A);
   static const Color grey = Color(0xFFB3B3B3);
-  static const Color blackLite = Color(0xFF2A2A2A);
+  static const Color blackLite = Color(0xFF3D3D3D);
+  static const Color blackDark = Color(0xFF181818);
   static const Color pink = Color(0xFFE569DB);
   static const Color blueLite = Color(0xFF3392FF);
   static const Color purpleLite = Color(0xFF7F5BFF);

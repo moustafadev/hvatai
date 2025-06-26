@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:hvatai/features/auth/data/datasources/api_service_auth.dart';
 import 'package:hvatai/features/auth/data/repositories/auth_impl_repository.dart';
 import 'package:hvatai/features/auth/domain/repositories/auth_repository.dart';
-import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/interests/interests_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/interests_detail/interests_detail_cubit.dart';
