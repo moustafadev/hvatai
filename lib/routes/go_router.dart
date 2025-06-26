@@ -2,9 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/bottom_nav_bar/presentation/bottom_nav.dart';
-import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/routes/app_routes.dart';
-import 'package:hvatai/routes/shell_route.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/routes/shell_route.dart';
@@ -18,7 +16,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.splash,
       builder: (BuildContext context, GoRouterState state) {
-        return const SplashScreen();
+        return const BottomNavScreen();
       },
     ),
     GoRoute(

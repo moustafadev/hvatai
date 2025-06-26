@@ -29,11 +29,23 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10.r),
-      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 10.h),
+      height: 61.h,
+      margin: EdgeInsets.all(25.w),
+      padding: EdgeInsets.symmetric(
+        horizontal: 8.w,
+        vertical: 8.h,
+      ),
       decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(30.r),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            AppColors.blackLite,
+            AppColors.blackDark,
+            AppColors.blackDark,
+          ],
+        ),
+        borderRadius: BorderRadius.circular(100.r),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -44,29 +56,29 @@ class CustomBottomNavBar extends StatelessWidget {
               onTap: () => onTap(index),
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+                padding: EdgeInsets.all(12.r),
+                margin: EdgeInsets.symmetric(horizontal: 8.w),
                 decoration: BoxDecoration(
-                  color: isSelected ? Colors.white : Colors.black,
-                  borderRadius: BorderRadius.circular(25.r),
+                  color: isSelected ? Colors.white : AppColors.blackColorIcon,
+                  borderRadius: BorderRadius.circular(100.r),
                 ),
                 child: FittedBox(
                   child: Row(
                     children: [
                       Image.asset(
                         imagePaths[index],
-                        height: 24.h,
-                        width: 24.w,
-                        color: isSelected ? Colors.black : Colors.white,
+                        height: 21.h,
+                        width: 21.w,
+                        color:
+                            isSelected ? AppColors.blackDark : AppColors.white,
                       ),
+                      8.ph,
                       if (isSelected)
-                        Padding(
-                          padding: EdgeInsets.only(left: 6.w),
-                          child: CustomText(
-                            text: labels[index],
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.black,
-                          ),
+                        CustomText(
+                          text: labels[index],
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.blackDark,
                         ),
                     ],
                   ),
