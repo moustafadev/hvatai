@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/bottom_nav_bar/presentation/bottom_nav.dart';
@@ -6,11 +7,12 @@ import 'package:hvatai/routes/app_routes.dart';
 import 'package:hvatai/routes/shell_route.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hvatai/routes/shell_route.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter router = GoRouter(
   // observers: [MyNavigatorObserver()],
-  initialLocation: AppRoutes.splash,
+  initialLocation: AppRoutes.home,
   navigatorKey: navigatorKey,
   routes: <RouteBase>[
     GoRoute(
@@ -102,7 +104,7 @@ final GoRouter router = GoRouter(
       },
     ),
 
-    // statefulShellRoute,
+    statefulShellRoute,
   ],
 );
 
@@ -119,4 +121,26 @@ class MyNavigatorObserver extends NavigatorObserver {
     print('didPop $previousRoute');
     backStack.removeLast();
   }
+}
+
+
+
+Page<T> buildCupertinoTransitionPage<T>({
+  required BuildContext context,
+  required GoRouterState state,
+  required Widget child,
+}) {
+  return CustomTransitionPage<T>(
+    key: state.pageKey,
+    child: child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return CupertinoPageTransition(
+        primaryRouteAnimation: animation,
+        secondaryRouteAnimation: secondaryAnimation,
+        linearTransition: false,
+        child: child,
+      );
+    },
+    transitionDuration: const Duration(milliseconds: 300),
+  );
 }
