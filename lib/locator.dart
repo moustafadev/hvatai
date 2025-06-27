@@ -13,6 +13,7 @@ import 'package:hvatai/features/auth/presentation/cubit/registration/registratio
 import 'package:hvatai/features/auth/presentation/cubit/social_login.dart/social_login_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/verification/verification_cubit.dart';
 import 'package:hvatai/features/bottom_nav_bar/presentation/cubit/bottom_nav_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:hvatai/locator_use_case.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +27,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => InterestsCubit());
   locator.registerFactory(() => InterestsDetailCubit());
   locator.registerFactory(() => BottomNavCubit());
+  locator.registerFactory(() => ProfileCubit());
 
   locator.registerFactory(() => SocialLoginCubit(locator()));
   locator.registerFactory(() => RegistrationCubit());

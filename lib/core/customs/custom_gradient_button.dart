@@ -7,6 +7,8 @@ class CustomGradientButton extends StatelessWidget {
   final double height;
   final double borderRadius;
   final double fontSize;
+  final FontWeight? fontWeight;
+  final String? fontFamily;
 
   const CustomGradientButton(
       {super.key,
@@ -15,7 +17,9 @@ class CustomGradientButton extends StatelessWidget {
       this.width = double.infinity,
       this.height = 52,
       this.borderRadius = 10,
-      this.fontSize = 16});
+      this.fontSize = 16,
+      this.fontWeight,
+      this.fontFamily});
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +56,8 @@ class CustomGradientButton extends StatelessWidget {
               style: TextStyle(
                 color: Colors.white,
                 fontSize: fontSize,
-                fontWeight: FontWeight.bold,
+                fontFamily: fontFamily,
+                fontWeight: fontWeight ?? FontWeight.bold,
               ),
             ),
           ),
