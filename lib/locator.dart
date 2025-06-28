@@ -13,6 +13,10 @@ import 'package:hvatai/features/auth/presentation/cubit/registration/registratio
 import 'package:hvatai/features/auth/presentation/cubit/social_login.dart/social_login_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/verification/verification_cubit.dart';
 import 'package:hvatai/features/bottom_nav_bar/presentation/cubit/bottom_nav_cubit.dart';
+import 'package:hvatai/features/home/data/datasources/api_service_home.dart';
+import 'package:hvatai/features/home/data/repositories/home_impl_repository.dart';
+import 'package:hvatai/features/home/domain/repositories/home_repository.dart';
+import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_tabs_cubit.dart';
 import 'package:hvatai/locator_use_case.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +30,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => InterestsCubit());
   locator.registerFactory(() => InterestsDetailCubit());
   locator.registerFactory(() => BottomNavCubit());
+  locator.registerFactory(() => CategoryTabsCubit());
 
   locator.registerFactory(() => SocialLoginCubit(locator()));
   locator.registerFactory(() => RegistrationCubit());
@@ -38,9 +43,11 @@ Future<void> setupLocator() async {
   // //REPOSITORISE
   locator.registerLazySingleton<AuthRepository>(
       () => AuthImplRepository(locator()));
-
+  locator.registerLazySingleton<HomeRepository>(
+      () => HomeImplRepository(locator()));
   // //DATASOURSE
   locator.registerLazySingleton(() => ApiServiceAuth());
+  locator.registerLazySingleton(() => ApiServiceHome());
 
   // //EXTRNAL
   locator.registerLazySingleton(() => SharedPreferences.getInstance());

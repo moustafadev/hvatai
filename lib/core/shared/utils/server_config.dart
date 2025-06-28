@@ -4,4 +4,5 @@ abstract class ServerConfig {
   static const baseUrl = "${domen}api/";
   static String token = "";
   static String login = "${baseUrl}login";
+  static String interestsCategories = "${baseUrl}interestsCategories";
 }

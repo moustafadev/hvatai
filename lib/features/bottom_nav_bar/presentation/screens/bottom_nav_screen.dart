@@ -11,7 +11,7 @@ class BottomNavScreen extends StatelessWidget {
         builder: (context, state) {
           final cubit = context.read<BottomNavCubit>();
           final screens = [
-            // HomeMainScreen(),
+            HomeMainScreen(),
             // SearchScreen(),
             SizedBox(), // Sell tab
             SizedBox(), // Sell tab

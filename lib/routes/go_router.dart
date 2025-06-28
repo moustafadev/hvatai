@@ -1,6 +1,7 @@
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/bottom_nav_bar/presentation/bottom_nav.dart';
+import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';

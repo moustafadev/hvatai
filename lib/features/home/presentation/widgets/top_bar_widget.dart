@@ -1,0 +1,60 @@
+part of '../home.dart';
+
+class TopBarWidget extends StatelessWidget {
+  const TopBarWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(12.0),
+      child: Row(
+        children: [
+          Expanded(
+            child: CustomTextField(
+              fillColor: AppColors.gray,
+              borderRadius: 10.r,
+              hintStyle: TextStyle(
+                color: AppColors.graniteGray,
+                fontSize: 14.sp,
+              ),
+              colorOutlineInputBorder: Colors.transparent,
+              // controller: _searchController,
+              onChanged: (value) {
+                // setState(() {
+                //   _searchQuery = value.toLowerCase().trim();
+                // });
+              },
+              hintText: 'Search by application'.tr(),
+              prefixIcon: Image.asset(
+                Assets.assetsIconsSearch,
+                color: AppColors.blackDark,
+                height: 22.h,
+                width: 22.w,
+              ),
+            ),
+          ),
+          8.pw,
+          GestureDetector(
+            onTap: () {
+              // Get.to(() => NotificationScreen1());
+            },
+            child: NotificationIconWidget(count: 0),
+          ),
+          10.pw,
+          GestureDetector(
+            onTap: () {
+              // Get.to(() => GiftScreen());
+            },
+            child: CircleAvatar(
+              backgroundColor: AppColors.gray,
+              radius: 20.r,
+              child: Image.asset(
+                Assets.assetsIconsGift,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
