@@ -107,7 +107,7 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
             ),
           ),
         ]),
-         StatefulShellBranch(routes: <RouteBase>[
+        StatefulShellBranch(routes: <RouteBase>[
           GoRoute(
             path: AppRoutes.menu,
             pageBuilder: (context, state) => buildCupertinoTransitionPage(

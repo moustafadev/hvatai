@@ -26,7 +26,7 @@ class CustomNavBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: navBarConfig.navBarHeight,
-      margin: EdgeInsets.only(bottom: 28.w, left: 12.h, right: 12.h),
+      // margin: EdgeInsets.only(bottom: 28.w, left: 12.h, right: 12.h),
       padding: EdgeInsets.all(8.r),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -49,7 +49,6 @@ class CustomNavBar extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               if (index == 2) {
-
                 _showSellBottomSheet(context);
               } else {
                 navBarConfig.onItemSelected(index);
@@ -88,67 +87,64 @@ class CustomNavBar extends StatelessWidget {
   }
 }
 
-
-
-
-  void _showSellBottomSheet(
-    BuildContext context,
-  ) {
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+void _showSellBottomSheet(
+  BuildContext context,
+) {
+  showModalBottomSheet(
+    context: context,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
+    ),
+    builder: (ctx) => Padding(
+      padding: EdgeInsets.all(16.r),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(children: [
+            const Spacer(),
+            CustomText(
+              text: "sell".tr(),
+              fontWeight: FontWeight.bold,
+              fontSize: 20.sp,
+            ),
+            const Spacer(),
+            GestureDetector(
+              onTap: () => Navigator.pop(ctx),
+              child: Icon(Icons.close, size: 24.sp),
+            ),
+          ]),
+          SizedBox(height: 10.h),
+          ListTile(
+            leading: Icon(Icons.local_offer, size: 24.sp),
+            title: CustomText(text: "create_product".tr(), fontSize: 16.sp),
+            onTap: () {
+              Navigator.pop(ctx);
+              // Get.to(() => const CreateProductScreen());
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.play_circle_fill, size: 24.sp),
+            title: CustomText(text: "schedule_show".tr(), fontSize: 16.sp),
+            onTap: () {
+              Navigator.pop(ctx);
+              // Get.to(() => LiveStreamingScreen(...));
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.store, size: 24.sp),
+            title: CustomText(text: "seller_hub".tr(), fontSize: 16.sp),
+            subtitle: CustomText(
+              text: "seller_hub_subtitle".tr(),
+              fontSize: 12.sp,
+              color: Colors.black,
+            ),
+            onTap: () {
+              Navigator.pop(ctx);
+              // Get.to(() => const MyProductsScreen());
+            },
+          ),
+        ],
       ),
-      builder: (ctx) => Padding(
-        padding: EdgeInsets.all(16.r),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(children: [
-              const Spacer(),
-              CustomText(
-                text: "sell".tr(),
-                fontWeight: FontWeight.bold,
-                fontSize: 20.sp,
-              ),
-              const Spacer(),
-              GestureDetector(
-                onTap: () => Navigator.pop(ctx),
-                child: Icon(Icons.close, size: 24.sp),
-              ),
-            ]),
-            SizedBox(height: 10.h),
-            ListTile(
-              leading: Icon(Icons.local_offer, size: 24.sp),
-              title: CustomText(text: "create_product".tr(), fontSize: 16.sp),
-              onTap: () {
-                Navigator.pop(ctx);
-                // Get.to(() => const CreateProductScreen());
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.play_circle_fill, size: 24.sp),
-              title: CustomText(text: "schedule_show".tr(), fontSize: 16.sp),
-              onTap: () {
-                Navigator.pop(ctx);
-                // Get.to(() => LiveStreamingScreen(...));
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.store, size: 24.sp),
-              title: CustomText(text: "seller_hub".tr(), fontSize: 16.sp),
-              subtitle: CustomText(
-                text: "seller_hub_subtitle".tr(),
-                fontSize: 12.sp,
-                color: Colors.black,
-              ),
-              onTap: () {
-                Navigator.pop(ctx);
-                // Get.to(() => const MyProductsScreen());
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+    ),
+  );
+}

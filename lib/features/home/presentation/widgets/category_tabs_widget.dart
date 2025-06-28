@@ -24,7 +24,7 @@ class CategoryTabsWidget extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 5),
                 child: CustomGradiantTabButton(
-                  text: 'For you',
+                  text: 'Electronics',
                   isSelected: state.selectedIndex == index,
                   onPressed: () {
                     cubit.selectCategory(index);

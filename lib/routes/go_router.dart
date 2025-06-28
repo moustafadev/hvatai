@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
-import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +12,6 @@ final GoRouter router = GoRouter(
   initialLocation: AppRoutes.home,
   navigatorKey: navigatorKey,
   routes: <RouteBase>[
- 
     GoRoute(
       path: AppRoutes.onboarding, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
@@ -70,7 +68,6 @@ final GoRouter router = GoRouter(
         return InterestsScreen(userData: userData);
       },
     ),
-
     GoRoute(
       path: AppRoutes.interestsDetail,
       builder: (context, state) {
@@ -90,8 +87,6 @@ final GoRouter router = GoRouter(
         return const ImageDelayScreen();
       },
     ),
-   
-
     statefulShellRoute,
   ],
 );
@@ -110,8 +105,6 @@ class MyNavigatorObserver extends NavigatorObserver {
     backStack.removeLast();
   }
 }
-
-
 
 Page<T> buildCupertinoTransitionPage<T>({
   required BuildContext context,

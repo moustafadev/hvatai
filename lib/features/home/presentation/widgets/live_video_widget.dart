@@ -50,7 +50,7 @@ class LiveVideosWidget extends StatelessWidget {
               crossAxisCount: 2,
               crossAxisSpacing: 11,
               mainAxisSpacing: 20,
-              mainAxisExtent: 400,
+              mainAxisExtent: 342,
             ),
             itemCount: filtered.length,
             itemBuilder: (context, index) {

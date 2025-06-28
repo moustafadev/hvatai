@@ -11,14 +11,8 @@ class TopBarWidget extends StatelessWidget {
         children: [
           Expanded(
             child: CustomTextField(
-              // fillColor: AppColors.gray,
-              // borderRadius: 10.r,
-              // hintStyle: TextStyle(
-              //   color: AppColors.graniteGray,
-              //   fontSize: 14.sp,
-              // ),
-              // colorOutlineInputBorder: Colors.transparent,
-              // controller: _searchController,
+              fillColor: AppColors.gray,
+              borderRadius: BorderRadius.circular(10.r),
               onChanged: (value) {
                 // setState(() {
                 //   _searchQuery = value.toLowerCase().trim();

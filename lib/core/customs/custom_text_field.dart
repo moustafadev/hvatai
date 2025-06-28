@@ -13,6 +13,9 @@ class CustomTextField extends StatelessWidget {
   final Widget? prefixIcon;
   final TextInputType? keyboardType;
   final Function(String)? onChanged;
+  final Color? fillColor;
+  final BorderRadius? borderRadius;
+  final BorderSide? borderSide;
 
   const CustomTextField({
     super.key,
@@ -28,6 +31,9 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType,
     this.onChanged,
     this.readOnly = false,
+    this.fillColor,
+    this.borderRadius,
+    this.borderSide,
   });
 
   @override
@@ -43,14 +49,13 @@ class CustomTextField extends StatelessWidget {
       style: const TextStyle(color: Colors.black),
       decoration: InputDecoration(
         filled: true,
-        fillColor: Colors.white,
+        fillColor: fillColor ?? Colors.white,
         contentPadding:
             const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(10),
-          borderSide: BorderSide.none,
+          borderRadius: borderRadius ?? BorderRadius.circular(10),
+          borderSide: borderSide ?? BorderSide.none,
         ),
-
         label: RichText(
           text: TextSpan(
             text: hintText,
@@ -69,7 +74,7 @@ class CustomTextField extends StatelessWidget {
                 : [],
           ),
         ),
-        floatingLabelBehavior: FloatingLabelBehavior.never, // prevent float
+        floatingLabelBehavior: FloatingLabelBehavior.never,
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
         errorStyle: const TextStyle(
