@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
-import 'package:hvatai/features/bottom_nav_bar/presentation/bottom_nav.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -14,12 +13,7 @@ final GoRouter router = GoRouter(
   initialLocation: AppRoutes.home,
   navigatorKey: navigatorKey,
   routes: <RouteBase>[
-    GoRoute(
-      path: AppRoutes.splash,
-      builder: (BuildContext context, GoRouterState state) {
-        return const BottomNavScreen();
-      },
-    ),
+ 
     GoRoute(
       path: AppRoutes.onboarding, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
@@ -96,12 +90,7 @@ final GoRouter router = GoRouter(
         return const ImageDelayScreen();
       },
     ),
-    GoRoute(
-      path: AppRoutes.bottomNavBar,
-      builder: (BuildContext context, GoRouterState state) {
-        return const BottomNavScreen();
-      },
-    ),
+   
 
     statefulShellRoute,
   ],

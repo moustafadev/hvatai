@@ -11,13 +11,13 @@ class TopBarWidget extends StatelessWidget {
         children: [
           Expanded(
             child: CustomTextField(
-              fillColor: AppColors.gray,
-              borderRadius: 10.r,
-              hintStyle: TextStyle(
-                color: AppColors.graniteGray,
-                fontSize: 14.sp,
-              ),
-              colorOutlineInputBorder: Colors.transparent,
+              // fillColor: AppColors.gray,
+              // borderRadius: 10.r,
+              // hintStyle: TextStyle(
+              //   color: AppColors.graniteGray,
+              //   fontSize: 14.sp,
+              // ),
+              // colorOutlineInputBorder: Colors.transparent,
               // controller: _searchController,
               onChanged: (value) {
                 // setState(() {

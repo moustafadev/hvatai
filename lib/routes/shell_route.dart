@@ -5,7 +5,7 @@ import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/features/activity/presentation/screens/activity_screen.dart';
-import 'package:hvatai/features/home/presentation/screens/home_screen.dart';
+import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/search/presentation/screens/search_screen.dart';
 import 'package:hvatai/routes/app_routes.dart';

@@ -12,7 +12,6 @@ import 'package:hvatai/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/registration/registration_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/social_login.dart/social_login_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/verification/verification_cubit.dart';
-import 'package:hvatai/features/bottom_nav_bar/presentation/cubit/bottom_nav_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:hvatai/features/home/data/datasources/api_service_home.dart';
 import 'package:hvatai/features/home/data/repositories/home_impl_repository.dart';
@@ -30,7 +29,6 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => VerificationCubit());
   locator.registerFactory(() => InterestsCubit());
   locator.registerFactory(() => InterestsDetailCubit());
-  locator.registerFactory(() => BottomNavCubit());
   locator.registerFactory(() => ProfileCubit());
 
   locator.registerFactory(() => CategoryTabsCubit());

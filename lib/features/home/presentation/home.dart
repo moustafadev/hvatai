@@ -13,7 +13,7 @@ import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_t
 import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_tabs_state.dart';
 import 'package:hvatai/locator.dart';
 
-part 'pages/home_main_screen.dart';
+part 'screens/home_screen.dart';
 part 'widgets/top_bar_widget.dart';
 part 'widgets/notification_icon_widget.dart';
 part 'widgets/category_tabs_widget.dart';
