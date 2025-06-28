@@ -62,7 +62,6 @@ class LiveVideoCard extends StatelessWidget {
           children: [
             CustomContainer(
               height: 267.h,
-              width: 170.w,
               border: Border.all(
                 color: AppColors.transparent,
               ),
