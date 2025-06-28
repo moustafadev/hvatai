@@ -8,6 +8,7 @@ import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 
 import 'package:hvatai/features/bottom_nav_bar/presentation/cubit/bottom_nav_cubit.dart';
+import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/locator.dart';
 
 part 'screens/bottom_nav_screen.dart';

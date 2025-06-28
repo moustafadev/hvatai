@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -22,7 +21,8 @@ class BottomNavCubit extends Cubit<BottomNavState> {
 
   String _generateChannelId() {
     const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    return List.generate(5, (i) => chars[Random().nextInt(chars.length)]).join();
+    return List.generate(5, (i) => chars[Random().nextInt(chars.length)])
+        .join();
   }
 
   void selectTab(int index) => emit(state.copyWith(selectedIndex: index));

@@ -29,6 +29,7 @@ class AppColors {
   static const Color deepPurple = Color(0xFFE356D7);
   static const Color conLine = Color(0xFFE9E9E9);
   static const Color greyButton = Color(0xFFF2F2F2);
+  static const Color red = Color(0xFFFA0330);
 
   // ✅ Colors with Opacity
   static Color greyLiteLine = const Color(0xFF808080).withOpacity(0.5);
