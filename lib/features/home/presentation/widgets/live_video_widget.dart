@@ -57,105 +57,104 @@ class LiveVideosWidget extends StatelessWidget {
               final stream = filtered[index];
 
               if (stream.isBlocked && currentUserId == stream.adminId) {
-                return DummyLiveVideoCard();
                 // Blocked & owner
-                // return Container(
-                //   padding: const EdgeInsets.all(12),
-                //   decoration: BoxDecoration(
-                //     color: Colors.red.shade50,
-                //     border: Border.all(color: Colors.red),
-                //     borderRadius: BorderRadius.circular(12),
-                //   ),
-                //   child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       const Icon(Icons.block, color: Colors.red, size: 40),
-                //       const SizedBox(height: 8),
-                //       const Text(
-                //         'Your stream is blocked',
-                //         style: TextStyle(
-                //             color: Colors.red, fontWeight: FontWeight.bold),
-                //       ),
-                //       const SizedBox(height: 8),
-                //       ElevatedButton(
-                //         style: ElevatedButton.styleFrom(
-                //           backgroundColor: Colors.orange,
-                //           shape: RoundedRectangleBorder(
-                //             borderRadius: BorderRadius.circular(8),
-                //           ),
-                //         ),
-                //         onPressed: () {
-                //           final TextEditingController reasonController =
-                //               TextEditingController();
-                //           showDialog(
-                //             context: context,
-                //             builder: (_) {
-                //               return AlertDialog(
-                //                 title: const Text("Request Unblock"),
-                //                 content: Column(
-                //                   mainAxisSize: MainAxisSize.min,
-                //                   children: [
-                //                     const Text("Please enter your reason:"),
-                //                     const SizedBox(height: 10),
-                //                     TextField(
-                //                       controller: reasonController,
-                //                       maxLines: 3,
-                //                       decoration: const InputDecoration(
-                //                         hintText: "Enter reason here...",
-                //                         border: OutlineInputBorder(),
-                //                       ),
-                //                     ),
-                //                   ],
-                //                 ),
-                //                 actions: [
-                //                   TextButton(
-                //                     onPressed: () => Navigator.pop(context),
-                //                     child: const Text("Cancel"),
-                //                   ),
-                //                   ElevatedButton(
-                //                     onPressed: () async {
-                //                       final reason =
-                //                           reasonController.text.trim();
-                //                       if (reason.isNotEmpty) {
-                //                         try {
-                //                           await apiService.sendUnblockRequest(
-                //                               stream.channelId, reason);
-                //                           Navigator.pop(context);
-                //                           ScaffoldMessenger.of(context)
-                //                               .showSnackBar(
-                //                             const SnackBar(
-                //                                 content: Text(
-                //                                     "Unblock request sent.")),
-                //                           );
-                //                         } catch (e) {
-                //                           ScaffoldMessenger.of(context)
-                //                               .showSnackBar(
-                //                             SnackBar(
-                //                                 content: Text(
-                //                                     "Failed to send request: $e")),
-                //                           );
-                //                         }
-                //                       } else {
-                //                         ScaffoldMessenger.of(context)
-                //                             .showSnackBar(
-                //                           const SnackBar(
-                //                               content: Text(
-                //                                   "Please enter a reason.")),
-                //                         );
-                //                       }
-                //                     },
-                //                     child: const Text("Submit"),
-                //                   ),
-                //                 ],
-                //               );
-                //             },
-                //           );
-                //         },
-                //         child: const Text("Contact Support"),
-                //       ),
-                //     ],
-                //   ),
-                // );
+                return Container(
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: Colors.red.shade50,
+                    border: Border.all(color: AppColors.red),
+                    borderRadius: BorderRadius.circular(12.r),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(Icons.block, color: AppColors.red, size: 40),
+                      8.ph,
+                      const CustomText(
+                        text: 'Your stream is blocked',
+                        color: AppColors.red,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      8.ph,
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.orange,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                        ),
+                        onPressed: () {
+                          final TextEditingController reasonController =
+                              TextEditingController();
+                          showDialog(
+                            context: context,
+                            builder: (_) {
+                              return AlertDialog(
+                                title: const Text("Request Unblock"),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    const Text("Please enter your reason:"),
+                                    const SizedBox(height: 10),
+                                    TextField(
+                                      controller: reasonController,
+                                      maxLines: 3,
+                                      decoration: const InputDecoration(
+                                        hintText: "Enter reason here...",
+                                        border: OutlineInputBorder(),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                actions: [
+                                  TextButton(
+                                    onPressed: () => Navigator.pop(context),
+                                    child: const Text("Cancel"),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      final reason =
+                                          reasonController.text.trim();
+                                      if (reason.isNotEmpty) {
+                                        try {
+                                          // await apiService.sendUnblockRequest(
+                                          //     stream.channelId, reason);
+                                          Navigator.pop(context);
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content: Text(
+                                                    "Unblock request sent.")),
+                                          );
+                                        } catch (e) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                                content: Text(
+                                                    "Failed to send request: $e")),
+                                          );
+                                        }
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                              content: Text(
+                                                  "Please enter a reason.")),
+                                        );
+                                      }
+                                    },
+                                    child: const Text("Submit"),
+                                  ),
+                                ],
+                              );
+                            },
+                          );
+                        },
+                        child: const Text("Contact Support"),
+                      ),
+                    ],
+                  ),
+                );
               }
 
               // Normal stream card
@@ -176,42 +175,6 @@ class LiveVideosWidget extends StatelessWidget {
             },
           );
         },
-      ),
-    );
-  }
-
-  Widget DummyLiveVideoCard() {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: Colors.grey.shade200,
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Icons.block, color: Colors.grey, size: 40),
-          const SizedBox(height: 8),
-          const Text(
-            'Your stream is blocked',
-            style: TextStyle(
-              color: Colors.grey,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          ElevatedButton(
-            onPressed: null, // disabled
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.grey,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-            ),
-            child: const Text("Contact Support"),
-          ),
-        ],
       ),
     );
   }

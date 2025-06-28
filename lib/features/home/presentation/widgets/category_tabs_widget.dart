@@ -8,9 +8,6 @@ class CategoryTabsWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<CategoryTabsCubit>();
-    if (cubit.state.categories.isEmpty) {
-      cubit.fetchCategories();
-    }
 
     return BlocBuilder<CategoryTabsCubit, CategoryTabsState>(
       builder: (context, state) {

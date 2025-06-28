@@ -56,6 +56,26 @@ class HomeScreen extends StatelessWidget {
                       title:
                           'Lorem ipsum dolor sit amet consectetur adipiscing',
                       adminName: 'company_name',
+                      liveImage:
+                          '2wCEAAkGBxITEhEQEBAVEhUQFRAVEA8PDw8PEBAPFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQGi0fHx0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf',
+                      category: 'Category 1',
+                      isBlocked: false,
+                      channelId: '1',
+                      adminPhoto:
+                          ' 2wCEAAkGBxITEhEQEBAVEhUQFRAVEA8PDw8PEBAPFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQGi0fHx0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf',
+                      viewsCount: 86,
+                      description:
+                          'Lorem ipsum dolor sit amet consectetur adipiscing ',
+                      adminId: '1',
+                      selectedProductImage:
+                          '2wCEAAkGBxITEhEQEBAVEhUQFRAVEA8PDw8PEBAPFRUWFhUVFRUYHSggGBolHRUVITEhJSkrLi4uFx8zODMtNygtLisBCgoKDg0OGhAQGi0fHx0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLf',
+                      unblockRequested: false,
+                      unblockRequestReason: '',
+                    ),
+                    LiveStreamModel(
+                      title:
+                          'Lorem ipsum dolor sit amet consectetur adipiscing',
+                      adminName: 'company_name',
                       liveImage: '',
                       category: 'Category 1',
                       isBlocked: false,
