@@ -25,6 +25,7 @@ class ProfileScreen extends StatelessWidget {
                       );
                     }
                     return SafeArea(
+                      bottom: false,
                       child: Padding(
                         padding: EdgeInsets.symmetric(horizontal: 12.w),
                         child: SingleChildScrollView(

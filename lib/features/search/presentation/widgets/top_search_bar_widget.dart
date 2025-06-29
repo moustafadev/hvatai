@@ -9,7 +9,7 @@ class TopBarSearchWidget extends StatelessWidget {
       children: [
         Expanded(
           child: CustomTextField(
-            fillColor: AppColors.white,
+            fillColor: AppColors.gray,
             borderRadius: BorderRadius.circular(10.r),
             onChanged: (value) {
               // setState(() {
