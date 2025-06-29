@@ -1,0 +1,24 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/core/extensions/size_extension.dart';
+import 'package:hvatai/core/theme/app_colors.dart';
+import 'package:hvatai/core/theme/assets.dart';
+import 'package:hvatai/features/activity/data/models/auction_product.dart';
+import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
+import 'package:hvatai/features/activity/presentation/cubit/featured_activity/featured_activity_cubit.dart';
+import 'package:hvatai/features/activity/presentation/cubit/rates_activity/rates_activity_cubit.dart';
+import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
+import 'package:hvatai/features/home/data/model/live_stream_model.dart';
+import 'package:hvatai/features/home/presentation/home.dart';
+import 'package:hvatai/locator.dart';
+
+part 'screens/activity_screen.dart';
+part 'widgets/rates_activity_widget.dart';
+part 'widgets/auction_card.dart';
+part 'widgets/category_tabs.dart';
+part 'widgets/message_list_widget.dart';
+part 'widgets/featured_activity_widget.dart';

@@ -19,6 +19,8 @@ class AppColors {
   static const Color purple = Color(0xFF8385E6);
   static const Color purple1 = Color(0xFF815BFF);
   static const Color greyLite = Color(0xFFD0D0D0);
+  static const Color raspberryPink = Color(0xFFFF3369);
+
   static const Color blackColorIcon = Color(0xFF2A2A2A);
   static const Color grey = Color(0xFFB3B3B3);
   static const Color blackLite = Color(0xFF3D3D3D);
@@ -30,6 +32,9 @@ class AppColors {
   static const Color conLine = Color(0xFFE9E9E9);
   static const Color greyButton = Color(0xFFF2F2F2);
   static const Color red = Color(0xFFFA0330);
+  static const Color greyBorder = Color(0xFFE6E6E6);
+  static const Color lightGreyBackground = Color(0xFFF6F6F6);
+  static const Color blackTransparent40 = Color(0x662A2A2A);
 
   // ✅ Colors with Opacity
   static Color greyLiteLine = const Color(0xFF808080).withOpacity(0.5);

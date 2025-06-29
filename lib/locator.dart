@@ -2,6 +2,9 @@ import 'package:hvatai/core/shared/datasources/local/app_local.dart';
 import 'package:hvatai/core/shared/datasources/local/cache_helper.dart';
 import 'package:hvatai/core/shared/utils/network_info.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
+import 'package:hvatai/features/activity/presentation/cubit/featured_activity/featured_activity_cubit.dart';
+import 'package:hvatai/features/activity/presentation/cubit/rates_activity/rates_activity_cubit.dart';
 import 'package:hvatai/features/auth/data/datasources/api_service_auth.dart';
 import 'package:hvatai/features/auth/data/repositories/auth_impl_repository.dart';
 import 'package:hvatai/features/auth/domain/repositories/auth_repository.dart';
@@ -31,6 +34,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => InterestsCubit());
   locator.registerFactory(() => InterestsDetailCubit());
   locator.registerFactory(() => ProfileCubit());
+  locator.registerFactory(() => ActivityCubit());
 
   locator.registerFactory(() => CategoryTabsCubit());
   locator.registerFactory(() => SearchTabsCubit());
@@ -38,6 +42,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => SocialLoginCubit(locator()));
   locator.registerFactory(() => RegistrationCubit());
   locator.registerFactory(() => DeliveryAddressCubit());
+  locator.registerFactory(() => RatesActivityCubit());
+  locator.registerFactory(() => FeaturedActivityCubit());
 
   // //CORE
   // //UseCase

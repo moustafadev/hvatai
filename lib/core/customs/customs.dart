@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/shared/utils/app_const.dart';

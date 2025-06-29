@@ -36,44 +36,51 @@ class SearchScreen extends StatelessWidget {
                 backgroundColor: AppColors.gray,
                 body: SafeArea(
                   bottom: false,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const TopBarSearchWidget(),
-                        const SizedBox(height: 18),
-                        const SubscribeElectronics(),
-                        const SizedBox(height: 18),
-                        Expanded(
-                          child: Column(
-                            children: [
-                              ButtonTabBarSearch(),
-                              16.ph,
-                              Expanded(
-                                child: IndexedStack(
-                                  index: state.selectedIndex,
-                                  children: [
-                                    LiveVideosWidget(
-                                      liveStreams: generateDummyLiveStreams(5),
-                                      currentUserId: '34',
-                                    ),
-                                    LiveVideosWidget(
-                                      liveStreams: generateDummyLiveStreams(1),
-                                      currentUserId: '64',
-                                    ),
-                                    LiveVideosWidget(
-                                      liveStreams: generateDummyLiveStreams(3),
-                                      currentUserId: '64',
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          children: [
+                            const TopBarSearchWidget(),
+                            SizedBox(height: 10.h),
+                            const SubscribeElectronics(),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      Expanded(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 12.0),
+                              child: ButtonTabBarSearch(),
+                            ),
+                            16.ph,
+                            Expanded(
+                              child: IndexedStack(
+                                index: state.selectedIndex,
+                                children: [
+                                  LiveVideosWidget(
+                                    liveStreams: generateDummyLiveStreams(5),
+                                    currentUserId: '34',
+                                  ),
+                                  LiveVideosWidget(
+                                    liveStreams: generateDummyLiveStreams(1),
+                                    currentUserId: '64',
+                                  ),
+                                  LiveVideosWidget(
+                                    liveStreams: generateDummyLiveStreams(3),
+                                    currentUserId: '64',
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               );
