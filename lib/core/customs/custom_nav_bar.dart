@@ -24,64 +24,70 @@ class CustomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: navBarConfig.navBarHeight,
-      // margin: EdgeInsets.only(bottom: 28.w, left: 12.h, right: 12.h),
-      padding: EdgeInsets.all(8.r),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            AppColors.blackLite,
-            AppColors.blackDark,
-            AppColors.blackDark,
-          ],
-        ),
-        borderRadius: BorderRadius.circular(100.r),
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 12.w,
+        right: 12.w,
+        bottom: 28.h,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: List.generate(navBarConfig.items.length, (index) {
-          final item = navBarConfig.items[index];
-          final isSelected = navBarConfig.selectedIndex == index;
+      child: Container(
+        height: navBarConfig.navBarHeight,
+        padding: EdgeInsets.all(8.r),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              AppColors.blackLite,
+              AppColors.blackDark,
+              AppColors.blackDark,
+            ],
+          ),
+          borderRadius: BorderRadius.circular(100.r),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: List.generate(navBarConfig.items.length, (index) {
+            final item = navBarConfig.items[index];
+            final isSelected = navBarConfig.selectedIndex == index;
 
-          return GestureDetector(
-            onTap: () {
-              if (index == 2) {
-                _showSellBottomSheet(context);
-              } else {
-                navBarConfig.onItemSelected(index);
-              }
-            },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              padding: EdgeInsets.all(12),
-              height: 45,
-              decoration: BoxDecoration(
-                color: isSelected ? Colors.white : AppColors.blackColorIcon,
-                borderRadius: BorderRadius.circular(100.r),
-              ),
-              child: Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    isSelected ? item.icon : item.inactiveIcon,
-                    if (isSelected) ...[
-                      SizedBox(width: 8.w),
-                      CustomText(
-                        text: item.title ?? "",
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.blackDark,
-                      ),
+            return GestureDetector(
+              onTap: () {
+                if (index == 2) {
+                  _showSellBottomSheet(context);
+                } else {
+                  navBarConfig.onItemSelected(index);
+                }
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                padding: EdgeInsets.all(12),
+                height: 45.h,
+                decoration: BoxDecoration(
+                  color: isSelected ? Colors.white : AppColors.blackColorIcon,
+                  borderRadius: BorderRadius.circular(100.r),
+                ),
+                child: Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      isSelected ? item.icon : item.inactiveIcon,
+                      if (isSelected) ...[
+                        SizedBox(width: 8.w),
+                        CustomText(
+                          text: item.title ?? "",
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.blackDark,
+                        ),
+                      ],
                     ],
-                  ],
+                  ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }

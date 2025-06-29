@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
@@ -82,6 +83,9 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
         navBarBuilder: (navBarConfig) => CustomNavBar(
           navBarConfig: navBarConfig.copyWith(navBarHeight: 61),
         ),
+        backgroundColor:
+            Colors.transparent, // prevents white background showing
+        avoidBottomPadding: true, // ensures nav bar not pushed by insets
         navigationShell: navigationShell,
       ),
       branches: [

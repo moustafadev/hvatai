@@ -8,6 +8,7 @@ class HomeScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => locator<CategoryTabsCubit>()..fetchCategories(),
       child: SafeArea(
+        bottom: false,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

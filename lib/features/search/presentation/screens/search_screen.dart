@@ -35,6 +35,7 @@ class SearchScreen extends StatelessWidget {
               return Scaffold(
                 backgroundColor: AppColors.gray,
                 body: SafeArea(
+                  bottom: false,
                   child: Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Column(
