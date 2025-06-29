@@ -25,3 +25,4 @@ part 'custom_page_indicator.dart';
 // Include all parts here
 part 'under_construction_screen.dart';
 part 'custom_gradiant_tab_button.dart';
+part 'custom_live_video_card.dart';

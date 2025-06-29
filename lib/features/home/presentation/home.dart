@@ -18,4 +18,3 @@ part 'widgets/top_bar_widget.dart';
 part 'widgets/notification_icon_widget.dart';
 part 'widgets/category_tabs_widget.dart';
 part 'widgets/live_video_widget.dart';
-part 'widgets/live_video_card_widget.dart';

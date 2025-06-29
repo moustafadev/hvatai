@@ -1,13 +1,13 @@
-part of '../home.dart';
+part of '../search.dart';
 
-class LiveVideosWidget extends StatelessWidget {
-  final List<LiveStreamModel> liveStreams;
+class SearchLiveVideoWidget extends StatelessWidget {
+  final List<SearchLiveStreamModel> liveStreams;
   final String currentUserId;
   final String searchQuery;
   final String? selectedCategory;
   //final ApiServiceHome apiService;
 
-  const LiveVideosWidget({
+  const SearchLiveVideoWidget({
     super.key,
     required this.liveStreams,
     required this.currentUserId,

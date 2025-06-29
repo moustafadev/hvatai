@@ -1,6 +1,6 @@
-part of '../home.dart';
+part of 'customs.dart';
 
-class LiveVideoCard extends StatelessWidget {
+class CustomLiveVideoCard extends StatelessWidget {
   final String adminName;
   final String adminImage;
   final int viewsCount;
@@ -12,7 +12,7 @@ class LiveVideoCard extends StatelessWidget {
   final bool? isFavorite;
   final VoidCallback? onFavoriteToggle;
 
-  const LiveVideoCard({
+  const CustomLiveVideoCard({
     super.key,
     required this.adminName,
     required this.adminImage,

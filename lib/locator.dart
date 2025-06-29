@@ -17,6 +17,7 @@ import 'package:hvatai/features/home/data/datasources/api_service_home.dart';
 import 'package:hvatai/features/home/data/repositories/home_impl_repository.dart';
 import 'package:hvatai/features/home/domain/repositories/home_repository.dart';
 import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_tabs_cubit.dart';
+import 'package:hvatai/features/search/presentation/cubit/search_tabs_cubit.dart';
 import 'package:hvatai/locator_use_case.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -32,6 +33,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => ProfileCubit());
 
   locator.registerFactory(() => CategoryTabsCubit());
+  locator.registerFactory(() => SearchTabsCubit());
 
   locator.registerFactory(() => SocialLoginCubit(locator()));
   locator.registerFactory(() => RegistrationCubit());

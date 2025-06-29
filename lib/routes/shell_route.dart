@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hvatai/features/activity/presentation/screens/activity_screen.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
-import 'package:hvatai/features/search/presentation/screens/search_screen.dart';
+import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:hvatai/routes/go_router.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
