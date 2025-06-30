@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
+import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -79,6 +80,12 @@ final GoRouter router = GoRouter(
       path: AppRoutes.notification,
       builder: (BuildContext context, GoRouterState state) {
         return const NotificationScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.myAwards,
+      builder: (BuildContext context, GoRouterState state) {
+        return MyAwardsScreen();
       },
     ),
     GoRoute(

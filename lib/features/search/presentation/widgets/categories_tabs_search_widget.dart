@@ -120,11 +120,11 @@ class CategoriesTabsSearchWidget extends StatelessWidget {
                               bottomLeft: Radius.circular(10),
                             ),
                             child: imageUrl != null
-                                ? Image.network(
-                                    imageUrl,
+                                ? CachedNetworkImage(
                                     width: 100,
                                     height: 95,
                                     fit: BoxFit.cover,
+                                    imageUrl: imageUrl,
                                   )
                                 : Image.asset(
                                     Assets.assetsImagesWatch,
@@ -149,7 +149,7 @@ class CategoriesTabsSearchWidget extends StatelessWidget {
                                 Row(
                                   children: [
                                     Image.asset(
-                                      'assets/images/wave.png',
+                                      Assets.assetsImagesWave,
                                       height: 20,
                                     ),
                                     const SizedBox(width: 40),

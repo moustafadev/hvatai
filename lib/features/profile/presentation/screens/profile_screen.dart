@@ -339,7 +339,10 @@ class ProfileScreen extends StatelessWidget {
                                   Expanded(
                                     child: GestureDetector(
                                       onTap: () {
-                                        // Get.to(() => MyRewardsScreen());
+                                        context.push(
+                                          AppRoutes.myAwards,
+                                          // must be a UserRegistrationData instance
+                                        );
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
