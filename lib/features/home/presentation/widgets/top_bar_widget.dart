@@ -8,9 +8,11 @@ class TopBarWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           Expanded(
             child: CustomTextField(
+              height: 40,
               fillColor: AppColors.gray,
               borderRadius: BorderRadius.circular(10.r),
               onChanged: (value) {
@@ -32,7 +34,10 @@ class TopBarWidget extends StatelessWidget {
             onTap: () {
               // Get.to(() => NotificationScreen1());
             },
-            child: NotificationIconWidget(count: 0),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8.0),
+              child: NotificationIconWidget(count: 0),
+            ),
           ),
           10.pw,
           GestureDetector(

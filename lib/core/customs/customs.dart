@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
@@ -25,3 +26,5 @@ part 'custom_page_indicator.dart';
 part 'under_construction_screen.dart';
 part 'custom_gradiant_tab_button.dart';
 part 'custom_live_video_card.dart';
+part 'custom_app_bar.dart';
+part 'custom_switch_widget.dart';

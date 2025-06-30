@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
@@ -19,6 +20,52 @@ class ProfileCubit extends Cubit<ProfileState> {
                   Random().nextInt(36)]).join(),
         )) {
     loadProfile();
+  }
+// Notification Toggles - Live Stream
+  void toggleStreamsFromSubscriptions() {
+    emit(state.copyWith(
+      streamsFromSubscriptions: !state.streamsFromSubscriptions,
+    ));
+  }
+
+  void toggleStreamsISaved() {
+    emit(state.copyWith(
+      streamsISaved: !state.streamsISaved,
+    ));
+  }
+
+  void toggleRecommendedStreams() {
+    emit(state.copyWith(
+      recommendedStreams: !state.recommendedStreams,
+    ));
+  }
+
+// Notification Toggles - Search Notifications
+  void toggleNewSubscriber() {
+    emit(state.copyWith(
+      newSubscriber: !state.newSubscriber,
+    ));
+  }
+
+// Notification Toggles - Seller Bookmark
+  void toggleBookmarksFromStreams() {
+    emit(state.copyWith(
+      bookmarksFromStreams: !state.bookmarksFromStreams,
+    ));
+  }
+
+// Toggle All Notifications
+  void toggleSelectAll() {
+    final newValue = !state.isAllSelected;
+
+    emit(state.copyWith(
+      isAllSelected: newValue,
+      streamsFromSubscriptions: newValue,
+      streamsISaved: newValue,
+      recommendedStreams: newValue,
+      newSubscriber: newValue,
+      bookmarksFromStreams: newValue,
+    ));
   }
 
   Future<void> loadProfile() async {
@@ -54,7 +101,8 @@ class ProfileCubit extends Cubit<ProfileState> {
       {
         "icon": Assets.assetsIconsBell,
         "title": "notifications".tr(),
-        // "onTap": () => Get.to(() => NotificationSettingsScreen()),
+        "onTap": (context) =>
+            GoRouter.of(context).push(AppRoutes.notificationSettings),
       },
       {
         "icon": Assets.assetsIconsLetter,
