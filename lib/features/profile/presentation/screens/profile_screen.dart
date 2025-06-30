@@ -394,6 +394,7 @@ class ProfileScreen extends StatelessWidget {
                             ),
                             ListView.builder(
                               shrinkWrap: true,
+                              padding: EdgeInsets.zero,
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: state.settingsOptions.length,
                               itemBuilder: (context, index) {
@@ -465,6 +466,7 @@ class ProfileScreen extends StatelessWidget {
                             ListView.builder(
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.zero,
                               itemCount: state.helpAndContact.length,
                               itemBuilder: (context, index) {
                                 return ListTile(
@@ -548,13 +550,16 @@ class ProfileScreen extends StatelessWidget {
                             SizedBox(
                               height: 16.h,
                             ),
-                            Center(
-                              child: CustomText(
-                                text: "v25.3.5 (11)\n© 2023 Whatnot, Inc.",
-                                fontWeight: FontWeight.w400,
-                                fontSize: 14,
-                                textAlign: TextAlign.center,
-                                fontFamily: "Gilroy-Bold",
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 100.0),
+                              child: Center(
+                                child: CustomText(
+                                  text: "v25.3.5 (11)\n© 2023 Whatnot, Inc.",
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 14,
+                                  textAlign: TextAlign.center,
+                                  fontFamily: "Gilroy-Bold",
+                                ),
                               ),
                             ),
                           ],

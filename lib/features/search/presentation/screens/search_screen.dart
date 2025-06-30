@@ -31,15 +31,13 @@ class SearchScreen extends StatelessWidget {
         child: BlocConsumer<SearchTabsCubit, SearchTabsState>(
           listener: (context, state) {},
           builder: (context, state) {
-            var cubit = context.read<SearchTabsCubit>();
             return Scaffold(
               backgroundColor: AppColors.gray,
               body: Column(
                 children: [
-                  5.ph,
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10),
-                    height: 111.h,
+                    height: 80.h,
                     width: double.infinity,
                     decoration: BoxDecoration(
                       boxShadow: [

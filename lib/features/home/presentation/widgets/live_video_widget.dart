@@ -45,6 +45,7 @@ class LiveVideosWidget extends StatelessWidget {
       child: LayoutBuilder(
         builder: (context, constraints) {
           return GridView.builder(
+            padding: EdgeInsets.only(bottom: 100),
             physics: const BouncingScrollPhysics(),
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,

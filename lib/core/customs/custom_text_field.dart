@@ -16,6 +16,7 @@ class CustomTextField extends StatelessWidget {
   final Color? fillColor;
   final BorderRadius? borderRadius;
   final BorderSide? borderSide;
+  final double? height;
 
   const CustomTextField({
     super.key,
@@ -34,52 +35,56 @@ class CustomTextField extends StatelessWidget {
     this.fillColor,
     this.borderRadius,
     this.borderSide,
+    this.height,
   });
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller,
-      obscureText: obscureText,
-      readOnly: readOnly,
-      validator: validator,
-      autovalidateMode: autovalidateMode,
-      keyboardType: keyboardType,
-      onChanged: onChanged,
-      style: const TextStyle(color: Colors.black),
-      decoration: InputDecoration(
-        filled: true,
-        fillColor: fillColor ?? Colors.white,
-        contentPadding:
-            const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-        border: OutlineInputBorder(
-          borderRadius: borderRadius ?? BorderRadius.circular(10),
-          borderSide: borderSide ?? BorderSide.none,
-        ),
-        label: RichText(
-          text: TextSpan(
-            text: hintText,
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.grey,
-              fontSize: 16,
-            ),
-            children: isRequired
-                ? const [
-                    TextSpan(
-                      text: '*',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                  ]
-                : [],
+    return SizedBox(
+      height: height,
+      child: TextFormField(
+        controller: controller,
+        obscureText: obscureText,
+        readOnly: readOnly,
+        validator: validator,
+        autovalidateMode: autovalidateMode,
+        keyboardType: keyboardType,
+        onChanged: onChanged,
+        style: const TextStyle(color: Colors.black),
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: fillColor ?? Colors.white,
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          border: OutlineInputBorder(
+            borderRadius: borderRadius ?? BorderRadius.circular(10),
+            borderSide: borderSide ?? BorderSide.none,
           ),
-        ),
-        floatingLabelBehavior: FloatingLabelBehavior.never,
-        suffixIcon: suffixIcon,
-        prefixIcon: prefixIcon,
-        errorStyle: const TextStyle(
-          color: Colors.redAccent,
-          fontSize: 13,
+          label: RichText(
+            text: TextSpan(
+              text: hintText,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.grey,
+                fontSize: 16,
+              ),
+              children: isRequired
+                  ? const [
+                      TextSpan(
+                        text: '*',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ]
+                  : [],
+            ),
+          ),
+          floatingLabelBehavior: FloatingLabelBehavior.never,
+          suffixIcon: suffixIcon,
+          prefixIcon: prefixIcon,
+          errorStyle: const TextStyle(
+            color: Colors.redAccent,
+            fontSize: 13,
+          ),
         ),
       ),
     );
