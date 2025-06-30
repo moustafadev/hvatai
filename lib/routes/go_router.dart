@@ -70,6 +70,12 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
+        path: AppRoutes.notificationSettings,
+        name: AppRoutes.notificationSettings,
+        builder: (context, state) {
+          return NotificationSettingsScreen();
+        }),
+    GoRoute(
       path: AppRoutes.interestsDetail,
       builder: (context, state) {
         final user = state.extra as UserRegistrationData;

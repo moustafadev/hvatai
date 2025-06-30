@@ -30,6 +30,7 @@ class AppColors {
   static const Color conLine = Color(0xFFE9E9E9);
   static const Color greyButton = Color(0xFFF2F2F2);
   static const Color red = Color(0xFFFA0330);
+  static const Color green = Color(0xFF34C759);
 
   // ✅ Colors with Opacity
   static Color greyLiteLine = const Color(0xFF808080).withOpacity(0.5);

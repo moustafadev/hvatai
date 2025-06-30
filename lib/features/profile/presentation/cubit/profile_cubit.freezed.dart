@@ -19,6 +19,12 @@ mixin _$ProfileState {
   String get firstName => throw _privateConstructorUsedError;
   String? get profileImageUrl => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get streamsFromSubscriptions => throw _privateConstructorUsedError;
+  bool get streamsISaved => throw _privateConstructorUsedError;
+  bool get recommendedStreams => throw _privateConstructorUsedError;
+  bool get newSubscriber => throw _privateConstructorUsedError;
+  bool get bookmarksFromStreams => throw _privateConstructorUsedError;
+  bool get isAllSelected => throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get settingsOptions =>
       throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get helpAndContact =>
@@ -43,6 +49,12 @@ abstract class $ProfileStateCopyWith<$Res> {
       {String firstName,
       String? profileImageUrl,
       bool isLoading,
+      bool streamsFromSubscriptions,
+      bool streamsISaved,
+      bool recommendedStreams,
+      bool newSubscriber,
+      bool bookmarksFromStreams,
+      bool isAllSelected,
       List<Map<String, dynamic>> settingsOptions,
       List<Map<String, dynamic>> helpAndContact,
       int uid,
@@ -67,6 +79,12 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? firstName = null,
     Object? profileImageUrl = freezed,
     Object? isLoading = null,
+    Object? streamsFromSubscriptions = null,
+    Object? streamsISaved = null,
+    Object? recommendedStreams = null,
+    Object? newSubscriber = null,
+    Object? bookmarksFromStreams = null,
+    Object? isAllSelected = null,
     Object? settingsOptions = null,
     Object? helpAndContact = null,
     Object? uid = null,
@@ -84,6 +102,30 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      streamsFromSubscriptions: null == streamsFromSubscriptions
+          ? _value.streamsFromSubscriptions
+          : streamsFromSubscriptions // ignore: cast_nullable_to_non_nullable
+              as bool,
+      streamsISaved: null == streamsISaved
+          ? _value.streamsISaved
+          : streamsISaved // ignore: cast_nullable_to_non_nullable
+              as bool,
+      recommendedStreams: null == recommendedStreams
+          ? _value.recommendedStreams
+          : recommendedStreams // ignore: cast_nullable_to_non_nullable
+              as bool,
+      newSubscriber: null == newSubscriber
+          ? _value.newSubscriber
+          : newSubscriber // ignore: cast_nullable_to_non_nullable
+              as bool,
+      bookmarksFromStreams: null == bookmarksFromStreams
+          ? _value.bookmarksFromStreams
+          : bookmarksFromStreams // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAllSelected: null == isAllSelected
+          ? _value.isAllSelected
+          : isAllSelected // ignore: cast_nullable_to_non_nullable
               as bool,
       settingsOptions: null == settingsOptions
           ? _value.settingsOptions
@@ -117,6 +159,12 @@ abstract class _$$ProfileStateImplCopyWith<$Res>
       {String firstName,
       String? profileImageUrl,
       bool isLoading,
+      bool streamsFromSubscriptions,
+      bool streamsISaved,
+      bool recommendedStreams,
+      bool newSubscriber,
+      bool bookmarksFromStreams,
+      bool isAllSelected,
       List<Map<String, dynamic>> settingsOptions,
       List<Map<String, dynamic>> helpAndContact,
       int uid,
@@ -139,6 +187,12 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
     Object? firstName = null,
     Object? profileImageUrl = freezed,
     Object? isLoading = null,
+    Object? streamsFromSubscriptions = null,
+    Object? streamsISaved = null,
+    Object? recommendedStreams = null,
+    Object? newSubscriber = null,
+    Object? bookmarksFromStreams = null,
+    Object? isAllSelected = null,
     Object? settingsOptions = null,
     Object? helpAndContact = null,
     Object? uid = null,
@@ -156,6 +210,30 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      streamsFromSubscriptions: null == streamsFromSubscriptions
+          ? _value.streamsFromSubscriptions
+          : streamsFromSubscriptions // ignore: cast_nullable_to_non_nullable
+              as bool,
+      streamsISaved: null == streamsISaved
+          ? _value.streamsISaved
+          : streamsISaved // ignore: cast_nullable_to_non_nullable
+              as bool,
+      recommendedStreams: null == recommendedStreams
+          ? _value.recommendedStreams
+          : recommendedStreams // ignore: cast_nullable_to_non_nullable
+              as bool,
+      newSubscriber: null == newSubscriber
+          ? _value.newSubscriber
+          : newSubscriber // ignore: cast_nullable_to_non_nullable
+              as bool,
+      bookmarksFromStreams: null == bookmarksFromStreams
+          ? _value.bookmarksFromStreams
+          : bookmarksFromStreams // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAllSelected: null == isAllSelected
+          ? _value.isAllSelected
+          : isAllSelected // ignore: cast_nullable_to_non_nullable
               as bool,
       settingsOptions: null == settingsOptions
           ? _value._settingsOptions
@@ -184,6 +262,12 @@ class _$ProfileStateImpl implements _ProfileState {
       {this.firstName = 'User',
       this.profileImageUrl,
       this.isLoading = false,
+      this.streamsFromSubscriptions = true,
+      this.streamsISaved = false,
+      this.recommendedStreams = true,
+      this.newSubscriber = true,
+      this.bookmarksFromStreams = true,
+      this.isAllSelected = false,
       final List<Map<String, dynamic>> settingsOptions = const [],
       final List<Map<String, dynamic>> helpAndContact = const [],
       required this.uid,
@@ -199,6 +283,24 @@ class _$ProfileStateImpl implements _ProfileState {
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final bool streamsFromSubscriptions;
+  @override
+  @JsonKey()
+  final bool streamsISaved;
+  @override
+  @JsonKey()
+  final bool recommendedStreams;
+  @override
+  @JsonKey()
+  final bool newSubscriber;
+  @override
+  @JsonKey()
+  final bool bookmarksFromStreams;
+  @override
+  @JsonKey()
+  final bool isAllSelected;
   final List<Map<String, dynamic>> _settingsOptions;
   @override
   @JsonKey()
@@ -224,7 +326,7 @@ class _$ProfileStateImpl implements _ProfileState {
 
   @override
   String toString() {
-    return 'ProfileState(firstName: $firstName, profileImageUrl: $profileImageUrl, isLoading: $isLoading, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, uid: $uid, channelId: $channelId)';
+    return 'ProfileState(firstName: $firstName, profileImageUrl: $profileImageUrl, isLoading: $isLoading, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, uid: $uid, channelId: $channelId)';
   }
 
   @override
@@ -238,6 +340,19 @@ class _$ProfileStateImpl implements _ProfileState {
                 other.profileImageUrl == profileImageUrl) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(
+                    other.streamsFromSubscriptions, streamsFromSubscriptions) ||
+                other.streamsFromSubscriptions == streamsFromSubscriptions) &&
+            (identical(other.streamsISaved, streamsISaved) ||
+                other.streamsISaved == streamsISaved) &&
+            (identical(other.recommendedStreams, recommendedStreams) ||
+                other.recommendedStreams == recommendedStreams) &&
+            (identical(other.newSubscriber, newSubscriber) ||
+                other.newSubscriber == newSubscriber) &&
+            (identical(other.bookmarksFromStreams, bookmarksFromStreams) ||
+                other.bookmarksFromStreams == bookmarksFromStreams) &&
+            (identical(other.isAllSelected, isAllSelected) ||
+                other.isAllSelected == isAllSelected) &&
             const DeepCollectionEquality()
                 .equals(other._settingsOptions, _settingsOptions) &&
             const DeepCollectionEquality()
@@ -253,6 +368,12 @@ class _$ProfileStateImpl implements _ProfileState {
       firstName,
       profileImageUrl,
       isLoading,
+      streamsFromSubscriptions,
+      streamsISaved,
+      recommendedStreams,
+      newSubscriber,
+      bookmarksFromStreams,
+      isAllSelected,
       const DeepCollectionEquality().hash(_settingsOptions),
       const DeepCollectionEquality().hash(_helpAndContact),
       uid,
@@ -272,6 +393,12 @@ abstract class _ProfileState implements ProfileState {
       {final String firstName,
       final String? profileImageUrl,
       final bool isLoading,
+      final bool streamsFromSubscriptions,
+      final bool streamsISaved,
+      final bool recommendedStreams,
+      final bool newSubscriber,
+      final bool bookmarksFromStreams,
+      final bool isAllSelected,
       final List<Map<String, dynamic>> settingsOptions,
       final List<Map<String, dynamic>> helpAndContact,
       required final int uid,
@@ -283,6 +410,18 @@ abstract class _ProfileState implements ProfileState {
   String? get profileImageUrl;
   @override
   bool get isLoading;
+  @override
+  bool get streamsFromSubscriptions;
+  @override
+  bool get streamsISaved;
+  @override
+  bool get recommendedStreams;
+  @override
+  bool get newSubscriber;
+  @override
+  bool get bookmarksFromStreams;
+  @override
+  bool get isAllSelected;
   @override
   List<Map<String, dynamic>> get settingsOptions;
   @override

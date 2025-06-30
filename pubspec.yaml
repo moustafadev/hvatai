@@ -37,6 +37,7 @@ dependencies:
   freezed_annotation: ^2.4.4
   easy_localization: ^3.0.7+1
   cached_network_image: ^3.4.1
+  provider: ^6.1.4
   flutter_localizations:
     sdk: flutter
   dropdown_button2: ^2.3.9
