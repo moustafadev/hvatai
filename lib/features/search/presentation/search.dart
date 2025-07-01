@@ -21,3 +21,4 @@ part 'widgets/subscribe_electronics.dart';
 part 'widgets/search_live_video_widget.dart';
 part 'widgets/button_tab_bar_search.dart';
 part 'widgets/top_electronics_container.dart';
+part 'widgets/reusable_custom_container.dart';
