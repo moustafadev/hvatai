@@ -4,8 +4,11 @@ class GradientCheckbox extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
-  const GradientCheckbox(
-      {super.key, required this.selected, required this.onTap});
+  const GradientCheckbox({
+    super.key,
+    required this.selected,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +18,14 @@ class GradientCheckbox extends StatelessWidget {
         width: 22.w,
         height: 22.h,
         margin: EdgeInsets.only(right: 12.h),
-        decoration:
-            const BoxDecoration(shape: BoxShape.circle, color: Colors.white),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+          border: Border.all(
+            color: AppColors.blackLite,
+            width: 1,
+          ),
+        ),
         child: selected
             ? Center(
                 child: Container(
@@ -24,11 +33,7 @@ class GradientCheckbox extends StatelessWidget {
                   height: 14.h,
                   decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      colors: [AppColors.blueLite, AppColors.purpleLite, AppColors.deepPurple],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
+                    color: AppColors.primaryColor,
                   ),
                 ),
               )

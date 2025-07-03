@@ -11,14 +11,14 @@ class NameFields extends StatelessWidget {
       children: [
         CustomTextField(
           hintText: 'firstName'.tr(),
-          isRequired: true,
+          isRequired: false,
           onChanged: (v) => cubit.updateField('firstName', v),
           validator: (v) => v == null || v.isEmpty ? 'Enter first name' : null,
         ),
         SizedBox(height: 15.h),
         CustomTextField(
           hintText: 'lastName'.tr(),
-          isRequired: true,
+          isRequired: false,
           onChanged: (v) => cubit.updateField('lastName', v),
           validator: (v) => v == null || v.isEmpty ? 'Enter last name' : null,
         ),

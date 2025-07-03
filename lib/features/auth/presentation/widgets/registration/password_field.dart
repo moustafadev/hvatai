@@ -13,12 +13,17 @@ class PasswordField extends StatelessWidget {
           children: [
             CustomTextField(
               hintText: 'password'.tr(),
-              isRequired: true,
+              isRequired: false,
               obscureText: state.obscurePassword,
-              suffixIcon: IconButton(
-                icon: SvgPicture.asset(Assets.assetsIconsEyeClosed),
-                onPressed: cubit.toggleObscurePassword,
-              ),
+              suffixIcon: state.obscurePassword
+                  ? IconButton(
+                      icon: SvgPicture.asset(Assets.assetsIconsEyeClosed),
+                      onPressed: cubit.toggleObscurePassword,
+                    )
+                  : IconButton(
+                      icon: Icon(Icons.remove_red_eye_outlined),
+                      onPressed: cubit.toggleObscurePassword,
+                    ),
               onChanged: (value) => cubit.updateField('password', value),
               validator: cubit.validatePassword,
             ),

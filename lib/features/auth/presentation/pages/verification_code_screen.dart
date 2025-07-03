@@ -33,6 +33,14 @@ class VerificationCodeScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => GoRouter.of(context).pop(),
+                        tooltip: 'close'.tr(),
+                      ),
+                    ),
                     const SizedBox(height: 40),
                     CustomText(
                       text: 'enterCode'.tr(),

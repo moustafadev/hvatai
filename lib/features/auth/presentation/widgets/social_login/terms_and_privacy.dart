@@ -5,49 +5,47 @@ class TermsAndPrivacy extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Wrap(
+      alignment: WrapAlignment.start,
+      spacing: 1,
       children: [
         CustomText(
           text: 'termsConditions11'.tr(),
           textAlign: TextAlign.center,
           fontSize: 12.sp,
-          color: Colors.grey,
+          color: AppColors.blackDark,
+          fontWeight: FontWeight.w600,
         ),
-        SizedBox(height: 5.h),
-        RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            style: TextStyle(fontSize: 14.0.sp),
-            children: [
-              TextSpan(
-                text: '${'termsService'.tr()} ',
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () => context.push(AppRoutes.termAndConditions),
-                style: TextStyle(
-                  foreground: Paint()
-                    ..shader = const LinearGradient(
-                      colors: [AppColors.purple, AppColors.pink],
-                    ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
-                ),
-              ),
-              TextSpan(
-                text: '${'and2'.tr()} ',
-                style: const TextStyle(color: Colors.black),
-              ),
-              TextSpan(
-                text: 'privacy2'.tr(),
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () => context.push(AppRoutes.privacyPolicy),
-                style: TextStyle(
-                  foreground: Paint()
-                    ..shader = const LinearGradient(
-                      colors: [AppColors.purple, AppColors.pink],
-                    ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0)),
-                ),
-              ),
-            ],
+        GestureDetector(
+          onTap: () => context.push(AppRoutes.termAndConditions),
+          child: CustomText(
+            text: 'termsService'.tr(),
+            textAlign: TextAlign.center,
+            fontSize: 12.sp,
+            color: AppColors.primaryPink,
+            fontWeight: FontWeight.w600,
           ),
         ),
+        CustomText(
+          text: 'and2'.tr(),
+          // textAlign: TextAlign.center,
+          fontSize: 12.sp,
+          color: AppColors.blackDark,
+          fontWeight: FontWeight.w600,
+        ),
+        GestureDetector(
+          onTap: () => context.push(AppRoutes.privacyPolicy),
+          child: Center(
+            child: CustomText(
+              text: 'privacy2'.tr(),
+              textAlign: TextAlign.center,
+              fontSize: 12.sp,
+              color: AppColors.primaryPink,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        15.ph,
       ],
     );
   }

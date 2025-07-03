@@ -28,3 +28,4 @@ part 'custom_gradiant_tab_button.dart';
 part 'custom_live_video_card.dart';
 part 'custom_app_bar.dart';
 part 'custom_switch_widget.dart';
+part 'social_circle_button.dart';

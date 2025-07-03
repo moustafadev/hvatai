@@ -12,6 +12,13 @@ class GenderDropdown extends StatelessWidget {
         return CustomDropdown(
           hintText: 'Select Gender',
           value: cubit.state.gender,
+          prefix: cubit.state.gender == 'Male'
+              ? Icon(Icons.male)
+              : cubit.state.gender == 'Female'
+                  ? Icon(Icons.female)
+                  : cubit.state.gender == 'Other'
+                      ? Icon(Icons.other_houses)
+                      : null,
           onChanged: cubit.setGender,
           items: const ['Male', 'Female', 'Other']
               .map((val) => DropdownMenuItem(

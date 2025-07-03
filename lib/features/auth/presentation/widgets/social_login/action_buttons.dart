@@ -7,18 +7,20 @@ class ActionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.read<SocialLoginCubit>();
 
-    return Column(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        CustomIconButton(
-          onPressed: cubit.signUpWithGoogle,
-          text: 'continueWithGoogle'.tr(),
-          iconPath: Assets.assetsIconsGoogle,
+        SocialCircleButton(
+          assetPath: Assets.assetsIconsApple,
+          onTap: cubit.signUpWithApple,
         ),
-        SizedBox(height: 10.h),
-        CustomIconButton(
-          onPressed: () => context.push(AppRoutes.registration),
-          text: 'continueWithEmail'.tr(),
-          iconPath: Assets.assetsIconsEmail,
+        SocialCircleButton(
+          assetPath: Assets.assetsIconsGoogle,
+          onTap: cubit.signUpWithGoogle,
+        ),
+        SocialCircleButton(
+          assetPath: Assets.assetsIconsEmail,
+          onTap: () => context.push(AppRoutes.registration),
         ),
       ],
     );

@@ -14,17 +14,15 @@ class TopBar extends StatelessWidget {
             onTap: () => context.push(AppRoutes.login),
             child: Row(
               children: [
-                GradientText(
-                  'enter'.tr(),
-                  colors: [AppColors.purple, AppColors.pink],
-                  style: TextStyle(
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'MontserratAlternates',
-                  ),
+                CustomText(
+                  text: 'enter'.tr(),
+                  color: AppColors.primaryPink,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  //fontFamily: 'MontserratAlternates',
                 ),
                 const Icon(Icons.arrow_forward_ios_rounded,
-                    color: AppColors.violetPink, size: 15),
+                    color: AppColors.primaryPink, size: 15),
               ],
             ),
           ),

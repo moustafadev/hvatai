@@ -20,7 +20,8 @@ class AppColors {
   static const Color purple1 = Color(0xFF815BFF);
   static const Color greyLite = Color(0xFFD0D0D0);
   static const Color raspberryPink = Color(0xFFFF3369);
-
+  static const Color primaryColor = Color(0xFF7BE4EE);
+  static const Color disabledColor = Color(0xFFD2FBFF);
   static const Color blackColorIcon = Color(0xFF2A2A2A);
   static const Color grey = Color(0xFFB3B3B3);
   static const Color blackLite = Color(0xFF3D3D3D);
@@ -36,6 +37,7 @@ class AppColors {
   static const Color lightGreyBackground = Color(0xFFF6F6F6);
   static const Color blackTransparent40 = Color(0x662A2A2A);
   static const Color green = Color(0xFF34C759);
+  static const Color primaryPink = Color(0xFFF4A8A1);
 
   // ✅ Colors with Opacity
   static Color greyLiteLine = const Color(0xFF808080).withOpacity(0.5);

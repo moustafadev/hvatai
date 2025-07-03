@@ -18,32 +18,9 @@ class CheckboxRowTerms extends StatelessWidget {
           },
         ),
         Expanded(
-          child: RichText(
-            text: TextSpan(
-              style: TextStyle(fontSize: 14.sp, color: Colors.black87),
-              children: [
-                TextSpan(text: 'agreePrefix'.tr()),
-                TextSpan(
-                  text: 'terms'.tr(),
-                  style: const TextStyle(
-                    color: Colors.deepPurple,
-                    decoration: TextDecoration.underline,
-                  ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => context.push('/terms'),
-                ),
-                TextSpan(text: 'and'.tr()),
-                TextSpan(
-                  text: 'privacy'.tr(),
-                  style: const TextStyle(
-                    color: Colors.deepPurple,
-                    decoration: TextDecoration.underline,
-                  ),
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => context.push('/privacy'),
-                ),
-              ],
-            ),
+          child: CustomText(
+            text:
+                'agreePrefix'.tr() + 'terms'.tr() + 'and'.tr() + 'privacy'.tr(),
           ),
         ),
       ],

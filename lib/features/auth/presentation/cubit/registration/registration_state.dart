@@ -19,7 +19,6 @@ class RegistrationState with _$RegistrationState {
   }) = _RegistrationState;
 }
 
-
 extension RegistrationStateMapper on RegistrationState {
   UserRegistrationData toUserRegistrationData() {
     return UserRegistrationData(

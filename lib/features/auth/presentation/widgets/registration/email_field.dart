@@ -13,7 +13,7 @@ class EmailField extends StatelessWidget {
           children: [
             CustomTextField(
               hintText: 'email'.tr(),
-              isRequired: true,
+              isRequired: false,
               autovalidateMode: AutovalidateMode.onUserInteraction,
               onChanged: (value) => cubit.updateField('email', value),
               validator: cubit.validateEmail,

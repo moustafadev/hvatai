@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
+import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -10,13 +11,13 @@ import 'package:hvatai/routes/shell_route.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter router = GoRouter(
   // observers: [MyNavigatorObserver()],
-  initialLocation: AppRoutes.home,
+  initialLocation: AppRoutes.onboarding,
   navigatorKey: navigatorKey,
   routes: <RouteBase>[
     GoRoute(
       path: AppRoutes.onboarding, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return const LoginScreen();
+        return const VerificationCodeScreen();
       },
     ),
     GoRoute(

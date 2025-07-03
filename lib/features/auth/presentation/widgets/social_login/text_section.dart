@@ -13,13 +13,13 @@ class TextSection extends StatelessWidget {
           fontWeight: FontWeight.bold,
           fontFamily: 'SFProRounded',
         ),
-        CustomText(
-          text: 'YourPurchaseisProtected'.tr(),
-          textAlign: TextAlign.center,
-          fontSize: 25.sp,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'SFProRounded',
-        ),
+        // CustomText(
+        //   text: 'YourPurchaseisProtected'.tr(),
+        //   textAlign: TextAlign.center,
+        //   fontSize: 25.sp,
+        //   fontWeight: FontWeight.bold,
+        //   fontFamily: 'SFProRounded',
+        // ),
         CustomText(
           text: 'joinCommunity'.tr(),
           textAlign: TextAlign.center,

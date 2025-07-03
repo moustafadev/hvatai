@@ -11,7 +11,7 @@ class SocialsLoginScreen extends StatelessWidget {
         body: SafeArea(
           child: CustomBackgroundScaffold(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 28),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
                 children: [
                   TopBar(),

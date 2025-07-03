@@ -13,6 +13,26 @@ class RegistrationForm extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            10.ph,
+            Row(
+              children: [
+                const Spacer(),
+                Center(
+                  child: CustomText(
+                    text: 'register'.tr(),
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'SFProRounded',
+                  ),
+                ),
+                const Spacer(),
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () => GoRouter.of(context).pop(),
+                  tooltip: 'close'.tr(),
+                ),
+              ],
+            ),
             SizedBox(height: 20.h),
             NameFields(),
             SizedBox(height: 15.h),
@@ -29,7 +49,7 @@ class RegistrationForm extends StatelessWidget {
             CheckboxRowAge(),
             SizedBox(height: 20.h),
             ContinueButton(),
-            SizedBox(height: 40.h),
+            // SizedBox(height: 40.h),
           ],
         ),
       ),

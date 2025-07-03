@@ -6,7 +6,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'social_login_cubit.freezed.dart';
 part 'social_login_state.dart';
 
-
 class SocialLoginCubit extends Cubit<SocialLoginState> {
   SocialLoginCubit(this.loginUseCase) : super(const SocialLoginState());
 
@@ -23,6 +22,10 @@ class SocialLoginCubit extends Cubit<SocialLoginState> {
   }
 
   void signUpWithEmail() {
+    // Leave empty for now
+  }
+
+  void signUpWithApple() {
     // Leave empty for now
   }
 }

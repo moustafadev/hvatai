@@ -5,6 +5,7 @@ class CustomDropdown extends StatelessWidget {
   final List<DropdownMenuItem<String>> items;
   final ValueChanged<String?> onChanged;
   final String hintText;
+  final Widget? prefix; // ⬅️ المتغير الجديد
 
   const CustomDropdown({
     super.key,
@@ -12,6 +13,7 @@ class CustomDropdown extends StatelessWidget {
     required this.items,
     required this.onChanged,
     required this.hintText,
+    this.prefix,
   });
 
   @override
@@ -22,33 +24,35 @@ class CustomDropdown extends StatelessWidget {
         value: value,
         onChanged: onChanged,
         items: items,
-        hint: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4),
-          child: Text(
-            hintText,
-            style: const TextStyle(
-              color: Colors.grey,
-              fontSize: 16,
-            ),
-          ),
-        ),
-        buttonStyleData: ButtonStyleData(
+        customButton: Container(
           height: 50,
           padding: const EdgeInsets.symmetric(horizontal: 10),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
-            border: Border.all(
-              color: Colors.transparent,
-              width: 0,
-            ),
+            border: Border.all(color: Colors.transparent),
           ),
-        ),
-        iconStyleData: IconStyleData(
-          icon: Icon(
-            Icons.keyboard_arrow_down_rounded,
-            size: 20,
-            color: Colors.grey.shade600,
+          child: Row(
+            children: [
+              if (prefix != null) ...[
+                prefix!,
+                const SizedBox(width: 8),
+              ],
+              Expanded(
+                child: Text(
+                  value ?? hintText,
+                  style: TextStyle(
+                    color: value == null ? Colors.black : Colors.black,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              Icon(
+                Icons.keyboard_arrow_down_rounded,
+                size: 20,
+                color: Colors.grey.shade600,
+              ),
+            ],
           ),
         ),
         dropdownStyleData: DropdownStyleData(
