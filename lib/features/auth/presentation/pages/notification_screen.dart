@@ -51,6 +51,7 @@ class NotificationScreen extends StatelessWidget {
                 SizedBox(height: 20.h),
                 CustomGradientButton(
                   text: 'continue'.tr(),
+                  isDisabled: true,
                   onPressed: () {
                     showDialog(
                       barrierColor: Colors.black.withOpacity(0.5),
@@ -152,11 +153,11 @@ class NotificationScreen extends StatelessWidget {
                                                   height: 44.h,
                                                   border: Border(
                                                     top: BorderSide(
-                                                        color:
-                                                            AppColors.greyLiteLine),
+                                                        color: AppColors
+                                                            .greyLiteLine),
                                                     right: BorderSide(
-                                                        color:
-                                                             AppColors.greyLiteLine),
+                                                        color: AppColors
+                                                            .greyLiteLine),
                                                   ),
                                                   child: Center(
                                                     child: CustomText(
@@ -179,11 +180,11 @@ class NotificationScreen extends StatelessWidget {
                                                   conColor: AppColors.button,
                                                   border: Border(
                                                     top: BorderSide(
-                                                        color:
-                                                             AppColors.greyLiteLine),
+                                                        color: AppColors
+                                                            .greyLiteLine),
                                                     left: BorderSide(
-                                                        color:
-                                                             AppColors.greyLiteLine),
+                                                        color: AppColors
+                                                            .greyLiteLine),
                                                   ),
                                                   child: Center(
                                                     child: CustomText(

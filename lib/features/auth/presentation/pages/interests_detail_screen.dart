@@ -34,10 +34,10 @@ class InterestsDetailScreen extends StatelessWidget {
           locator<InterestsDetailCubit>()..init(userData.interests ?? []),
       child: Scaffold(
         appBar: AppBar(
-          title: CustomText(
-            text: 'back'.tr(),
-            fontSize: 20.sp,
-            fontWeight: FontWeight.bold,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios,
+                color: AppColors.blackColorIcon),
+            onPressed: () => GoRouter.of(context).pop(),
           ),
         ),
         body: SafeArea(
@@ -84,14 +84,30 @@ class InterestsDetailScreen extends StatelessWidget {
                                 children: options.map((item) {
                                   final isSelected =
                                       state.selectedDetails.contains(item);
-                                  return ChoiceChip(
-                                    label: Text(item),
-                                    selected: isSelected,
-                                    onSelected: (_) => cubit.toggleDetail(item),
-                                    selectedColor:
-                                        Colors.blueAccent.withOpacity(0.2),
-                                    backgroundColor:
-                                        Colors.black12.withOpacity(0.05),
+                                  return GestureDetector(
+                                    onTap: () => cubit.toggleDetail(item),
+                                    child: Container(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.w, vertical: 10.h),
+                                      decoration: BoxDecoration(
+                                        color: AppColors.gray,
+                                        borderRadius:
+                                            BorderRadius.circular(10.r),
+                                        border: isSelected
+                                            ? Border.all(
+                                                color: AppColors.primaryColor,
+                                                width: 2)
+                                            : Border.all(
+                                                color: Colors.transparent),
+                                      ),
+                                      child: Text(
+                                        item,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
                                   );
                                 }).toList(),
                               ),
@@ -103,6 +119,7 @@ class InterestsDetailScreen extends StatelessWidget {
                     ),
                     CustomGradientButton(
                       text: state.isLoading ? "Updating..." : "Continue",
+                      isDisabled: state.selectedDetails.isNotEmpty,
                       onPressed: (state.isLoading ||
                               state.selectedDetails.isEmpty)
                           ? null

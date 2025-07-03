@@ -44,11 +44,10 @@ class InterestsScreen extends StatelessWidget {
       create: (_) => locator<InterestsCubit>()..initVariable(userData),
       child: Scaffold(
         appBar: AppBar(
-          title: CustomText(
-            text: 'back'.tr(),
-            fontSize: 20.sp,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'SFProRounded',
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back_ios,
+                color: AppColors.blackColorIcon),
+            onPressed: () => GoRouter.of(context).pop(),
           ),
         ),
         body: SafeArea(
@@ -100,7 +99,8 @@ class InterestsScreen extends StatelessWidget {
                             child: Container(
                               height: 120.h,
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color:
+                                    isSelected ? AppColors.primaryColor : null,
                                 borderRadius: BorderRadius.circular(8),
                                 boxShadow: [
                                   BoxShadow(
@@ -113,17 +113,6 @@ class InterestsScreen extends StatelessWidget {
                                     ? Border.all(
                                         width: 0.1, color: Colors.transparent)
                                     : Border.all(color: Colors.white, width: 2),
-                                gradient: isSelected
-                                    ? LinearGradient(
-                                        colors: [
-                                          AppColors.blueLite,
-                                          AppColors.purpleLite,
-                                          AppColors.deepPurple
-                                        ],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                      )
-                                    : null,
                               ),
                               child: Padding(
                                 padding: isSelected
@@ -170,6 +159,7 @@ class InterestsScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 20.h),
                     CustomGradientButton(
+                      isDisabled: state.selectedInterests.isNotEmpty,
                       text: state.isLoading
                           ? "registering".tr()
                           : "continue".tr(),

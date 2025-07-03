@@ -17,7 +17,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.onboarding, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return const VerificationCodeScreen();
+        return const ImageDelayScreen();
       },
     ),
     GoRoute(
