@@ -8,6 +8,8 @@ class CategoryTabsState with _$CategoryTabsState {
   const factory CategoryTabsState({
     required List<String> categories,
     required int selectedIndex,
+    @Default([]) List<String> selectedInterests,
+    @Default({}) Set<int> selectedIndices,
   }) = _CategoryTabsState;
 
   factory CategoryTabsState.initial() => const CategoryTabsState(

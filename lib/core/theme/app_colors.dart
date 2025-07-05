@@ -9,7 +9,7 @@ class AppColors {
   static const Color graniteGray = Color(0xFF707070);
   static const Color eerieBlack = Color(0xFF1B1B1B);
   static const Color gray = Color(0xFFECECEC);
-  static const Color primary = Color(0xFF3ECE3E);
+  static const Color primary = Color(0xFFA1F4A8);
   static const Color transparent = Colors.transparent;
   static const Color lightGray = Color(0xFFD9D9D9);
   static Color get grey100 =>
@@ -36,7 +36,7 @@ class AppColors {
   static const Color greyBorder = Color(0xFFE6E6E6);
   static const Color lightGreyBackground = Color(0xFFF6F6F6);
   static const Color blackTransparent40 = Color(0x662A2A2A);
-  static const Color green = Color(0xFF34C759);
+  static const Color green = Color(0xFF48994F);
   static const Color primaryPink = Color(0xFFF4A8A1);
 
   // ✅ Colors with Opacity

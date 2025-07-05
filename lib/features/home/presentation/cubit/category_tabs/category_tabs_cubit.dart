@@ -10,6 +10,26 @@ class CategoryTabsCubit extends Cubit<CategoryTabsState> {
     emit(state.copyWith(categories: newCategories));
   }
 
+  void toggleInterest(int index, String interestKey) {
+    final isSelected = state.selectedIndices.contains(index);
+    final updatedIndices = Set<int>.from(state.selectedIndices);
+    final updatedInterests = List<String>.from(state.selectedInterests);
+
+    if (isSelected) {
+      updatedIndices.remove(index);
+      updatedInterests.remove(interestKey);
+    } else {
+      updatedIndices.add(index);
+
+      updatedInterests.add(interestKey);
+    }
+
+    emit(state.copyWith(
+      selectedIndices: updatedIndices,
+      selectedInterests: updatedInterests,
+    ));
+  }
+
   void fetchCategories() => emit(state);
 
   void selectCategory(dynamic index) {

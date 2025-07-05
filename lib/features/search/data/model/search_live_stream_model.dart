@@ -12,11 +12,13 @@ class SearchLiveStreamModel {
   final String adminId;
   final bool unblockRequested;
   final String unblockRequestReason;
+  final String price;
 
   SearchLiveStreamModel({
     required this.channelId,
     required this.adminName,
     required this.adminPhoto,
+    required this.price,
     required this.viewsCount,
     required this.title,
     required this.description,
@@ -35,6 +37,7 @@ class SearchLiveStreamModel {
       adminName: json['adminName'] ?? '',
       adminPhoto: json['adminPhoto'] ?? '',
       viewsCount: json['viewsCount'] ?? 0,
+      price: json['price'] ?? '',
       title: json['title'] ?? '',
       description: json['description'] ?? '',
       liveImage: json['liveImage'] ?? '',

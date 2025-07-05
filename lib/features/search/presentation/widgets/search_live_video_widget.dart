@@ -163,6 +163,8 @@ class SearchLiveVideoWidget extends StatelessWidget {
                   // joinLiveStreamingWithPrefs(stream.channelId);
                 },
                 child: CustomLiveVideoCard(
+                  title: stream.title,
+                  price: stream.price,
                   adminName: stream.adminName,
                   adminImage: stream.adminPhoto,
                   viewsCount: stream.viewsCount,

@@ -5,36 +5,57 @@ class CategoryTabsWidget extends StatelessWidget {
 
   const CategoryTabsWidget({required this.onCategorySelected, super.key});
 
+  static const List<String> detailedInterestOptions = [
+    'For you',
+    'Art',
+    'Business',
+    'Health',
+    'Music',
+    'Politics',
+    'Science',
+    'Sports',
+    'Technology',
+    'Travel',
+  ];
+
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<CategoryTabsCubit>();
 
     return BlocBuilder<CategoryTabsCubit, CategoryTabsState>(
       builder: (context, state) {
-        if (state.categories.isEmpty) {
-          return const Center(child: CustomText(text: 'No interests found'));
-        }
-
         return SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: List.generate(min(5, 7), (index) {
-              //  final category = state.categories[index];
+            children: detailedInterestOptions.map((item) {
+              final index = detailedInterestOptions.indexOf(item);
+              final isSelected = state.selectedIndex == index;
+
               return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 5),
-                child: CustomGradiantTabButton(
-                  text: 'Electronics',
-                  isSelected: state.selectedIndex == index,
-                  onPressed: () {
-                    cubit.selectCategory(index);
-                    // context.read<CategoryTabsCubit>().selectCategory(index);
-                    // widget.onCategorySelected(
-                    //     category == 'All' ? null : category);
-                  },
+                padding: EdgeInsets.only(right: 10.w),
+                child: GestureDetector(
+                  onTap: () => cubit.selectCategory(index),
+                  child: Container(
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                    decoration: BoxDecoration(
+                      color: AppColors.gray,
+                      borderRadius: BorderRadius.circular(10.r),
+                      border: isSelected
+                          ? Border.all(color: AppColors.primaryColor, width: 1)
+                          : Border.all(color: Colors.transparent),
+                    ),
+                    child: Text(
+                      item,
+                      style: TextStyle(
+                        color: AppColors.blackDark,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                 ),
               );
-            }),
+            }).toList(),
           ),
         );
       },

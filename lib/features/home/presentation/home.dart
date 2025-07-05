@@ -1,9 +1,8 @@
-import 'dart:math';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
@@ -18,3 +17,5 @@ part 'widgets/top_bar_widget.dart';
 part 'widgets/notification_icon_widget.dart';
 part 'widgets/category_tabs_widget.dart';
 part 'widgets/live_video_widget.dart';
+part 'widgets/title_categories_for_you.dart';
+part 'widgets/my_category.dart';

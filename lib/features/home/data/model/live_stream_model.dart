@@ -12,9 +12,11 @@ class LiveStreamModel {
   final String adminId;
   final bool unblockRequested;
   final String unblockRequestReason;
+  final String price;
 
   LiveStreamModel({
     required this.channelId,
+    required this.price,
     required this.adminName,
     required this.adminPhoto,
     required this.viewsCount,
@@ -32,6 +34,7 @@ class LiveStreamModel {
   factory LiveStreamModel.fromJson(Map<String, dynamic> json) {
     return LiveStreamModel(
       channelId: json['channelId'] ?? '',
+      price: json['price'] ?? '',
       adminName: json['adminName'] ?? '',
       adminPhoto: json['adminPhoto'] ?? '',
       viewsCount: json['viewsCount'] ?? 0,

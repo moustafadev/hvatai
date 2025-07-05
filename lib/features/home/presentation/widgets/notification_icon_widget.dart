@@ -19,7 +19,7 @@ class NotificationIconWidget extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(4),
               decoration: const BoxDecoration(
-                color: AppColors.purple1,
+                color: AppColors.purple,
                 shape: BoxShape.circle,
               ),
               child: CustomText(

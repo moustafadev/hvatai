@@ -1,4 +1,3 @@
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/features/activity/data/models/auction_product.dart';
@@ -6,9 +5,11 @@ import 'package:hvatai/features/home/data/model/live_stream_model.dart';
 
 part 'featured_activity_cubit.freezed.dart';
 part 'featured_activity_state.dart';
+
 class FeaturedActivityCubit extends Cubit<FeaturedActivityState> {
   FeaturedActivityCubit()
-      : super(const FeaturedActivityState(selectedCategoryIndex: 0, products: [], liveStreams: [])) {
+      : super(const FeaturedActivityState(
+            selectedCategoryIndex: 0, products: [], liveStreams: [])) {
     loadProducts();
     loadLiveStreams();
   }
@@ -39,6 +40,7 @@ class FeaturedActivityCubit extends Cubit<FeaturedActivityState> {
     final streams = List.generate(
       6,
       (index) => LiveStreamModel(
+        price: '${100 * (index + 1)}',
         title: 'Stream $index',
         adminName: 'Admin $index',
         liveImage: '',

@@ -4,9 +4,10 @@ class CustomLiveVideoCard extends StatelessWidget {
   final String adminName;
   final String adminImage;
   final int viewsCount;
-
+  final String title;
   final String description;
   final String liveImage;
+  final String price;
 
   /// ✅ Optional favorite icon parameters
   final bool? isFavorite;
@@ -15,8 +16,10 @@ class CustomLiveVideoCard extends StatelessWidget {
   const CustomLiveVideoCard({
     super.key,
     required this.adminName,
+    required this.price,
     required this.adminImage,
     required this.viewsCount,
+    required this.title,
     required this.description,
     required this.liveImage,
     this.isFavorite,
@@ -79,7 +82,7 @@ class CustomLiveVideoCard extends StatelessWidget {
                     padding:
                         const EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                     decoration: BoxDecoration(
-                      color: AppColors.red,
+                      color: AppColors.primaryPink,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: CustomText(
@@ -121,16 +124,56 @@ class CustomLiveVideoCard extends StatelessWidget {
                 ],
               ),
             ),
+            Positioned(
+              bottom: 8,
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 8,
+                  vertical: 2,
+                ),
+                height: 20.h,
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                child: CustomText(
+                  text: 'Free shipping',
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.green,
+                  textAlign: TextAlign.center,
+                  fontFamily: 'Manrope',
+                ),
+              ),
+            ),
           ],
         ),
-
-        // Title + Category
+        8.ph,
         CustomText(
-          text: description,
+          text: price,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
+          color: AppColors.primaryPink,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+
+        CustomText(
+          text: title,
           fontSize: 14,
           fontWeight: FontWeight.bold,
           color: AppColors.blackDark,
           maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
+        4.ph,
+        CustomText(
+          text: description,
+          fontSize: 12,
+          fontWeight: FontWeight.w600,
+          color: AppColors.grey,
+          maxLines: 1,
           overflow: TextOverflow.ellipsis,
         ),
       ],

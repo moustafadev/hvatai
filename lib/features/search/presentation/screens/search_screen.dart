@@ -5,6 +5,7 @@ class SearchScreen extends StatelessWidget {
   List<LiveStreamModel> generateDummyLiveStreams(int count) {
     return List.generate(count, (_) {
       return LiveStreamModel(
+        price: 'Starting price 12 ₽',
         title: 'Lorem ipsum dolor sit amet consectetur adipiscing',
         adminName: 'company_name',
         liveImage: 'base64_image_string_here',
