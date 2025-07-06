@@ -21,14 +21,14 @@ class MyAwardsScreen extends StatelessWidget {
             Navigator.pop(context);
           },
         ),
-        centerTitle: true,
-        title: CustomText(
-          text: "My awards".tr(),
-          fontWeight: FontWeight.w600,
-          fontSize: 16,
-          fontFamily: "SF Pro Rounded",
-          color: AppColors.blackDark,
-        ),
+        // centerTitle: true,
+        // title: CustomText(
+        //   text: "My awards".tr(),
+        //   fontWeight: FontWeight.w600,
+        //   fontSize: 16,
+        //   fontFamily: "SF Pro Rounded",
+        //   color: AppColors.blackDark,
+        // ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
@@ -37,16 +37,29 @@ class MyAwardsScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.only(bottom: 10),
-              child: Container(
-                height: 180,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  image: DecorationImage(
-                    image: AssetImage(rewardImages[index]),
-                    fit: BoxFit.fill,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  CustomText(
+                    text: "My awards".tr(),
+                    fontWeight: FontWeight.w800,
+                    fontSize: 20.sp,
+                    fontFamily: "Manrope",
+                    color: AppColors.blackDark,
                   ),
-                ),
+                  16.ph,
+                  Container(
+                    height: 180,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      image: DecorationImage(
+                        image: AssetImage(rewardImages[index]),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             );
           },

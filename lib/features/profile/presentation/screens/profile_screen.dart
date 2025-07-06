@@ -35,96 +35,7 @@ class ProfileScreen extends StatelessWidget {
                               isSearch: false,
                             ),
                             12.ph,
-                            Row(
-                              children: [
-                                Container(
-                                  height: 41.h,
-                                  width: 41.w,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    image: DecorationImage(
-                                      image:
-
-                                          // (snapshot.data
-                                          //                 .data()?['image'] !=
-                                          //             null &&
-                                          //         snapshot.data!
-                                          //             .data()!['image']
-                                          //             .toString()
-                                          //             .isNotEmpty)
-                                          //     ?
-
-                                          //     NetworkImage(
-                                          //         snapshot.data!.data()?['image'])
-                                          //     :
-
-                                          AssetImage(Assets
-                                                  .assetsImagesProfileImage)
-                                              as ImageProvider,
-                                      fit: BoxFit.fill,
-                                    ),
-                                  ),
-                                ),
-                                15.pw,
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    CustomText(
-                                      fontFamily: "Manrope",
-                                      text: "Ahmed Ramadan".tr(),
-                                      // snapshot.data!.data()!.firstName.toString(),
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 14.sp,
-                                    ),
-                                    2.ph,
-                                    Row(
-                                      children: [
-                                        Image.asset(Assets.assetsIconsStar,
-                                            color: AppColors.goldenColor,
-                                            height: 16.h,
-                                            width: 16.w),
-                                        3.pw,
-                                        CustomText(
-                                          text: "4.7",
-                                        ),
-                                        12.pw,
-                                        CustomGradientButton(
-                                          fontSize: 13.sp,
-                                          height: 30.h,
-                                          borderRadius: 30.r,
-                                          fontWeight: FontWeight.w400,
-                                          isDisabled: true,
-                                          width: 130.w,
-                                          fontFamily: "Gilroy-Bold",
-                                          buttonColor: AppColors.primary,
-                                          text: "tradeProfile".tr(),
-                                          textColor: AppColors.blackDark,
-                                          onPressed: () {
-                                            // Get.to(() => TradeProfileScreen(
-                                            //       userId: FirebaseAuth
-                                            //           .instance.currentUser!.uid,
-                                            //     ));
-                                          },
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                const Spacer(),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: CircleAvatar(
-                                    backgroundColor: AppColors.gray,
-                                    radius: 20.r,
-                                    child: Image.asset(
-                                      Assets.assetsIconsSettings,
-                                      height: 18.h,
-                                      width: 18.w,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
+                            TopProfileInfo(),
                             24.ph,
                             // GestureDetector(
                             //   onTap: () {
@@ -292,131 +203,11 @@ class ProfileScreen extends StatelessWidget {
                             //   onPressed: () {
                             //     Get.to(()=>SoldProductsScreen());
                             //   },
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      // Get.to(() => InviteFriendScreen());
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(15.r),
-                                          border: Border.all(
-                                              color: Colors.grey
-                                                  .withOpacity(0.2))),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 14.w, vertical: 12.h),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Image.asset(
-                                              Assets.assetsImagesUserGroupIcon,
-                                              height: 24.h,
-                                              width: 24.w,
-                                            ),
-                                            SizedBox(
-                                              height: 10.h,
-                                            ),
-                                            FittedBox(
-                                              child: CustomText(
-                                                text: "referralsPoints".tr(),
-                                                fontFamily: "Manrope",
-                                                fontSize: 16.sp,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                            Row(
-                                              children: [
-                                                CustomText(
-                                                  text: "balance".tr(),
-                                                  fontFamily: "Gilroy-Bold",
-                                                  color: AppColors.blackDark,
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                                CustomText(
-                                                  text: '1000 ₽',
-                                                  fontFamily: "Gilroy-Bold",
-                                                  color: AppColors.primary,
-                                                  fontSize: 14.sp,
-                                                  fontWeight: FontWeight.w400,
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                12.pw,
-                                Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      context.push(
-                                        AppRoutes.myAwards,
-                                        // must be a UserRegistrationData instance
-                                      );
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(15.r),
-                                          border: Border.all(
-                                              color: Colors.grey
-                                                  .withOpacity(0.2))),
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 14.w, vertical: 12.h),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Image.asset(
-                                              Assets.assetsIconsCrownIcon,
-                                              height: 25.h,
-                                              width: 25.w,
-                                            ),
-                                            SizedBox(
-                                              height: 10.h,
-                                            ),
-                                            FittedBox(
-                                              child: CustomText(
-                                                text: "myAward".tr(),
-                                                fontFamily: "Manrope",
-                                                fontSize: 14.sp,
-                                                fontWeight: FontWeight.w700,
-                                              ),
-                                            ),
-                                            CustomText(
-                                              text: "viewCoupons".tr(),
-                                              fontFamily: "Manrope",
-                                              color: AppColors.blackDark,
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w400,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                            ReferralsPointsAndAward(),
                             20.ph,
                             PaymentAndDelivery(),
-
                             HelpContacts(),
-
-                            SizedBox(
-                              height: 30.h,
-                            ),
+                            30.ph,
                             GestureDetector(
                               onTap: () {
                                 // _showLogoutDialog();
@@ -448,9 +239,7 @@ class ProfileScreen extends StatelessWidget {
                                 )),
                               ),
                             ),
-                            SizedBox(
-                              height: 16.h,
-                            ),
+                            16.ph,
                             Center(
                               child: CustomText(
                                 text: "v25.3.5 (11)\n© 2023 Whatnot, Inc.",
@@ -472,6 +261,7 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 }
+
 
 
 
