@@ -9,11 +9,15 @@ class CustomGradientButton extends StatelessWidget {
   final double fontSize;
   final FontWeight? fontWeight;
   final String? fontFamily;
+  final Color? buttonColor;
+  final Color? textColor;
   final bool isDisabled;
   const CustomGradientButton(
       {super.key,
       required this.text,
       this.onPressed,
+      this.buttonColor,
+      this.textColor,
       this.width = double.infinity,
       this.height = 52,
       this.borderRadius = 10,
@@ -28,7 +32,9 @@ class CustomGradientButton extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        color: isDisabled ? AppColors.primaryColor : AppColors.disabledColor,
+        color: isDisabled
+            ? buttonColor ?? AppColors.primaryColor
+            : AppColors.disabledColor,
         // gradient: isDisabled
         //     ? LinearGradient(
         //         colors: [
@@ -55,7 +61,7 @@ class CustomGradientButton extends StatelessWidget {
               textAlign: TextAlign.center,
               text,
               style: TextStyle(
-                color: Colors.white,
+                color: textColor ?? AppColors.white,
                 fontSize: fontSize,
                 fontFamily: fontFamily,
                 fontWeight: fontWeight ?? FontWeight.bold,

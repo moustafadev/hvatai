@@ -86,8 +86,16 @@ class ProfileCubit extends Cubit<ProfileState> {
   List<Map<String, dynamic>> _buildSettingsOptions() {
     return [
       {
+        "icon": Assets.assetsIconsMessage,
+        "title": "chat".tr(),
+        // "onTap": () => Get.to(
+        //       () => PaymentDeliveryScreen(),
+        //       //PaymentScreen()
+        //     ),
+      },
+      {
         "icon": Assets.assetsIconsCard,
-        "title": "paymentDelivery".tr(),
+        "title": "paymentMethod".tr(),
         // "onTap": () => Get.to(
         //       () => PaymentDeliveryScreen(),
         //       //PaymentScreen()
@@ -98,110 +106,110 @@ class ProfileCubit extends Cubit<ProfileState> {
         "title": "addresses".tr(),
         // "onTap": () => Get.to(() => DeliveryAddressUpdateScreen()),
       },
-      {
-        "icon": Assets.assetsIconsBell,
-        "title": "notifications".tr(),
-        "onTap": (context) =>
-            GoRouter.of(context).push(AppRoutes.notificationSettings),
-      },
-      {
-        "icon": Assets.assetsIconsLetter,
-        "title": "changeEmail".tr(),
-        // "onTap": (BuildContext context) {
-        //   showDialog(
-        //     context: context,
-        //     builder: (context) {
-        //       return Dialog(
-        //         shape: RoundedRectangleBorder(
-        //           borderRadius: BorderRadius.circular(12),
-        //         ),
-        //         child: Container(
-        //           padding: EdgeInsets.all(16),
-        //           child: Column(
-        //             mainAxisSize: MainAxisSize.min,
-        //             children: [
-        //               Text("Change Email",
-        //                   style: TextStyle(fontWeight: FontWeight.bold)),
-        //               SizedBox(height: 16),
-        //               CustomText(text: "You can't change email"),
-        //               SizedBox(height: 12),
-        //               ElevatedButton(
-        //                 onPressed: () {
-        //                   // Logic for saving new email
-        //                   Navigator.pop(context);
-        //                 },
-        //                 child: Text("Done"),
-        //               )
-        //             ],
-        //           ),
-        //         ),
-        //       );
-        //     },
-        //   );
-        // }
-      },
-      {
-        "icon": Assets.assetsIconsPasswordMinimalisticInput,
-        "title": "changePassword".tr(),
-        // "onTap": (BuildContext context) {
-        //   showDialog(
-        //     context: context,
-        //     builder: (context) {
-        //       return Dialog(
-        //         shape: RoundedRectangleBorder(
-        //           borderRadius: BorderRadius.circular(12),
-        //         ),
-        //         child: Container(
-        //           padding: EdgeInsets.all(16),
-        //           child: Column(
-        //             mainAxisSize: MainAxisSize.min,
-        //             children: [
-        //               Text("Change Password",
-        //                   style: TextStyle(fontWeight: FontWeight.bold)),
-        //               SizedBox(height: 16),
-        //               CustomText(
-        //                 text:
-        //                     "To change your password, you need to log out first and use the 'Forgot Password' option.",
-        //                 textAlign: TextAlign.center,
-        //                 fontSize: 14,
-        //               ),
-        //               SizedBox(height: 12),
-        //               Row(
-        //                 mainAxisAlignment: MainAxisAlignment.center,
-        //                 spacing: 10,
-        //                 children: [
-        //                   ElevatedButton(
-        //                     onPressed: () {
-        //                       // Logic for saving new email
-        //                       Navigator.pop(context);
-        //                     },
-        //                     child: Text("Cancel"),
-        //                   ),
-        //                   ElevatedButton(
-        //                     onPressed: () async {
-        //                       await StorageService.logout();
-        //                       await FirebaseAuth.instance.signOut();
-        //                       Get.back(); // Close dialog
-        //                       Get.offAll(() =>
-        //                           SocialsLoginScreen()); // Navigate to login screen
-        //                     },
-        //                     child: Text("Logout"),
-        //                   )
-        //                 ],
-        //               ),
-        //             ],
-        //           ),
-        //         ),
-        //       );
-        //     },
-        //   );
-        // },
-      },
-      {
-        "icon": Assets.assetsIconsSettings,
-        "title": "settings".tr(),
-        // "onTap": () => Get.to(() => SettingsScreen()),
-      },
+      // {
+      //   "icon": Assets.assetsIconsBell,
+      //   "title": "notifications".tr(),
+      //   "onTap": (context) =>
+      //       GoRouter.of(context).push(AppRoutes.notificationSettings),
+      // },
+      // {
+      //   "icon": Assets.assetsIconsLetter,
+      //   "title": "changeEmail".tr(),
+      // "onTap": (BuildContext context) {
+      //   showDialog(
+      //     context: context,
+      //     builder: (context) {
+      //       return Dialog(
+      //         shape: RoundedRectangleBorder(
+      //           borderRadius: BorderRadius.circular(12),
+      //         ),
+      //         child: Container(
+      //           padding: EdgeInsets.all(16),
+      //           child: Column(
+      //             mainAxisSize: MainAxisSize.min,
+      //             children: [
+      //               Text("Change Email",
+      //                   style: TextStyle(fontWeight: FontWeight.bold)),
+      //               SizedBox(height: 16),
+      //               CustomText(text: "You can't change email"),
+      //               SizedBox(height: 12),
+      //               ElevatedButton(
+      //                 onPressed: () {
+      //                   // Logic for saving new email
+      //                   Navigator.pop(context);
+      //                 },
+      //                 child: Text("Done"),
+      //               )
+      //             ],
+      //           ),
+      //         ),
+      //       );
+      //     },
+      //   );
+      // }
+      // },
+      // {
+      //   "icon": Assets.assetsIconsPasswordMinimalisticInput,
+      //   "title": "changePassword".tr(),
+      // "onTap": (BuildContext context) {
+      //   showDialog(
+      //     context: context,
+      //     builder: (context) {
+      //       return Dialog(
+      //         shape: RoundedRectangleBorder(
+      //           borderRadius: BorderRadius.circular(12),
+      //         ),
+      //         child: Container(
+      //           padding: EdgeInsets.all(16),
+      //           child: Column(
+      //             mainAxisSize: MainAxisSize.min,
+      //             children: [
+      //               Text("Change Password",
+      //                   style: TextStyle(fontWeight: FontWeight.bold)),
+      //               SizedBox(height: 16),
+      //               CustomText(
+      //                 text:
+      //                     "To change your password, you need to log out first and use the 'Forgot Password' option.",
+      //                 textAlign: TextAlign.center,
+      //                 fontSize: 14,
+      //               ),
+      //               SizedBox(height: 12),
+      //               Row(
+      //                 mainAxisAlignment: MainAxisAlignment.center,
+      //                 spacing: 10,
+      //                 children: [
+      //                   ElevatedButton(
+      //                     onPressed: () {
+      //                       // Logic for saving new email
+      //                       Navigator.pop(context);
+      //                     },
+      //                     child: Text("Cancel"),
+      //                   ),
+      //                   ElevatedButton(
+      //                     onPressed: () async {
+      //                       await StorageService.logout();
+      //                       await FirebaseAuth.instance.signOut();
+      //                       Get.back(); // Close dialog
+      //                       Get.offAll(() =>
+      //                           SocialsLoginScreen()); // Navigate to login screen
+      //                     },
+      //                     child: Text("Logout"),
+      //                   )
+      //                 ],
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       );
+      //     },
+      //   );
+      // },
+      // },
+      // {
+      //   "icon": Assets.assetsIconsSettings,
+      //   "title": "settings".tr(),
+      //   // "onTap": () => Get.to(() => SettingsScreen()),
+      // },
     ];
   }
 
@@ -240,11 +248,11 @@ class ProfileCubit extends Cubit<ProfileState> {
         //     );
         // }
       },
-      {
-        "icon": Assets.assetsIconsArchiveCheck,
-        "title": "salesTax".tr(),
-        // "screen": () => Get.to(() => NotificationScreen())
-      },
+      // {
+      //   "icon": Assets.assetsIconsArchiveCheck,
+      //   "title": "salesTax".tr(),
+      //   // "screen": () => Get.to(() => NotificationScreen())
+      // },
       {
         "icon": Assets.assetsIconsInfoCircle,
         "title": "privacyPolicy".tr(),
