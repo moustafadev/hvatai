@@ -24,7 +24,7 @@ class TopBarWidget extends StatelessWidget {
                     //   _searchQuery = value.toLowerCase().trim();
                     // });
                   },
-                  hintText: 'Search by application'.tr(),
+                  hintText: 'find'.tr(),
                   prefixIcon: Image.asset(
                     Assets.assetsIconsSearch,
                     color: AppColors.blackDark,

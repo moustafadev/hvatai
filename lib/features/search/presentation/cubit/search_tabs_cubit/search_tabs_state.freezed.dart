@@ -18,6 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SearchTabsState {
   List<String> get categories => throw _privateConstructorUsedError;
   int get selectedIndex => throw _privateConstructorUsedError;
+  List<String> get selectedInterests => throw _privateConstructorUsedError;
+  Set<int> get selectedIndices => throw _privateConstructorUsedError;
+  List<String> get searchedItems => throw _privateConstructorUsedError;
 
   /// Create a copy of SearchTabsState
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +35,12 @@ abstract class $SearchTabsStateCopyWith<$Res> {
           SearchTabsState value, $Res Function(SearchTabsState) then) =
       _$SearchTabsStateCopyWithImpl<$Res, SearchTabsState>;
   @useResult
-  $Res call({List<String> categories, int selectedIndex});
+  $Res call(
+      {List<String> categories,
+      int selectedIndex,
+      List<String> selectedInterests,
+      Set<int> selectedIndices,
+      List<String> searchedItems});
 }
 
 /// @nodoc
@@ -52,6 +60,9 @@ class _$SearchTabsStateCopyWithImpl<$Res, $Val extends SearchTabsState>
   $Res call({
     Object? categories = null,
     Object? selectedIndex = null,
+    Object? selectedInterests = null,
+    Object? selectedIndices = null,
+    Object? searchedItems = null,
   }) {
     return _then(_value.copyWith(
       categories: null == categories
@@ -62,6 +73,18 @@ class _$SearchTabsStateCopyWithImpl<$Res, $Val extends SearchTabsState>
           ? _value.selectedIndex
           : selectedIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      selectedInterests: null == selectedInterests
+          ? _value.selectedInterests
+          : selectedInterests // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      selectedIndices: null == selectedIndices
+          ? _value.selectedIndices
+          : selectedIndices // ignore: cast_nullable_to_non_nullable
+              as Set<int>,
+      searchedItems: null == searchedItems
+          ? _value.searchedItems
+          : searchedItems // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -74,7 +97,12 @@ abstract class _$$SearchTabsStateImplCopyWith<$Res>
       __$$SearchTabsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> categories, int selectedIndex});
+  $Res call(
+      {List<String> categories,
+      int selectedIndex,
+      List<String> selectedInterests,
+      Set<int> selectedIndices,
+      List<String> searchedItems});
 }
 
 /// @nodoc
@@ -92,6 +120,9 @@ class __$$SearchTabsStateImplCopyWithImpl<$Res>
   $Res call({
     Object? categories = null,
     Object? selectedIndex = null,
+    Object? selectedInterests = null,
+    Object? selectedIndices = null,
+    Object? searchedItems = null,
   }) {
     return _then(_$SearchTabsStateImpl(
       categories: null == categories
@@ -102,6 +133,18 @@ class __$$SearchTabsStateImplCopyWithImpl<$Res>
           ? _value.selectedIndex
           : selectedIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      selectedInterests: null == selectedInterests
+          ? _value._selectedInterests
+          : selectedInterests // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      selectedIndices: null == selectedIndices
+          ? _value._selectedIndices
+          : selectedIndices // ignore: cast_nullable_to_non_nullable
+              as Set<int>,
+      searchedItems: null == searchedItems
+          ? _value._searchedItems
+          : searchedItems // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -110,8 +153,15 @@ class __$$SearchTabsStateImplCopyWithImpl<$Res>
 
 class _$SearchTabsStateImpl implements _SearchTabsState {
   const _$SearchTabsStateImpl(
-      {required final List<String> categories, required this.selectedIndex})
-      : _categories = categories;
+      {required final List<String> categories,
+      required this.selectedIndex,
+      final List<String> selectedInterests = const [],
+      final Set<int> selectedIndices = const {},
+      final List<String> searchedItems = const []})
+      : _categories = categories,
+        _selectedInterests = selectedInterests,
+        _selectedIndices = selectedIndices,
+        _searchedItems = searchedItems;
 
   final List<String> _categories;
   @override
@@ -123,10 +173,37 @@ class _$SearchTabsStateImpl implements _SearchTabsState {
 
   @override
   final int selectedIndex;
+  final List<String> _selectedInterests;
+  @override
+  @JsonKey()
+  List<String> get selectedInterests {
+    if (_selectedInterests is EqualUnmodifiableListView)
+      return _selectedInterests;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedInterests);
+  }
+
+  final Set<int> _selectedIndices;
+  @override
+  @JsonKey()
+  Set<int> get selectedIndices {
+    if (_selectedIndices is EqualUnmodifiableSetView) return _selectedIndices;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableSetView(_selectedIndices);
+  }
+
+  final List<String> _searchedItems;
+  @override
+  @JsonKey()
+  List<String> get searchedItems {
+    if (_searchedItems is EqualUnmodifiableListView) return _searchedItems;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_searchedItems);
+  }
 
   @override
   String toString() {
-    return 'SearchTabsState(categories: $categories, selectedIndex: $selectedIndex)';
+    return 'SearchTabsState(categories: $categories, selectedIndex: $selectedIndex, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, searchedItems: $searchedItems)';
   }
 
   @override
@@ -137,12 +214,23 @@ class _$SearchTabsStateImpl implements _SearchTabsState {
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
             (identical(other.selectedIndex, selectedIndex) ||
-                other.selectedIndex == selectedIndex));
+                other.selectedIndex == selectedIndex) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedInterests, _selectedInterests) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedIndices, _selectedIndices) &&
+            const DeepCollectionEquality()
+                .equals(other._searchedItems, _searchedItems));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_categories), selectedIndex);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_categories),
+      selectedIndex,
+      const DeepCollectionEquality().hash(_selectedInterests),
+      const DeepCollectionEquality().hash(_selectedIndices),
+      const DeepCollectionEquality().hash(_searchedItems));
 
   /// Create a copy of SearchTabsState
   /// with the given fields replaced by the non-null parameter values.
@@ -157,12 +245,21 @@ class _$SearchTabsStateImpl implements _SearchTabsState {
 abstract class _SearchTabsState implements SearchTabsState {
   const factory _SearchTabsState(
       {required final List<String> categories,
-      required final int selectedIndex}) = _$SearchTabsStateImpl;
+      required final int selectedIndex,
+      final List<String> selectedInterests,
+      final Set<int> selectedIndices,
+      final List<String> searchedItems}) = _$SearchTabsStateImpl;
 
   @override
   List<String> get categories;
   @override
   int get selectedIndex;
+  @override
+  List<String> get selectedInterests;
+  @override
+  Set<int> get selectedIndices;
+  @override
+  List<String> get searchedItems;
 
   /// Create a copy of SearchTabsState
   /// with the given fields replaced by the non-null parameter values.

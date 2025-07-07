@@ -6,6 +6,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.background,
       //  appBar: TopBarWidget(),
       body: BlocProvider(
         create: (_) => locator<CategoryTabsCubit>()..fetchCategories(),

@@ -8,11 +8,18 @@ class TopBarSearchWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(12.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        //crossAxisAlignment: CrossAxisAlignment.end,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
+          GestureDetector(
+              onTap: () {
+                context.pop();
+              },
+              child: Icon(Icons.arrow_back_ios)),
+          2.ph,
           Expanded(
             child: CustomTextField(
-              fillColor: AppColors.gray,
+              fillColor: AppColors.white,
               height: 40,
               borderRadius: BorderRadius.circular(10.r),
               onChanged: (value) {
@@ -20,7 +27,7 @@ class TopBarSearchWidget extends StatelessWidget {
                 //   _searchQuery = value.toLowerCase().trim();
                 // });
               },
-              hintText: 'Search for “Apple Technology”'.tr(),
+              hintText: 'find'.tr(),
               prefixIcon: Image.asset(
                 Assets.assetsIconsSearch,
                 color: AppColors.blackDark,

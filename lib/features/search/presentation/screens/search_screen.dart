@@ -2,9 +2,9 @@ part of '../search.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
-  List<LiveStreamModel> generateDummyLiveStreams(int count) {
+  List<SearchLiveStreamModel> generateDummyLiveStreams(int count) {
     return List.generate(count, (_) {
-      return LiveStreamModel(
+      return SearchLiveStreamModel(
         price: 'Starting price 12 ₽',
         title: 'Lorem ipsum dolor sit amet consectetur adipiscing',
         adminName: 'company_name',
@@ -33,61 +33,69 @@ class SearchScreen extends StatelessWidget {
           listener: (context, state) {},
           builder: (context, state) {
             return Scaffold(
-              backgroundColor: AppColors.gray,
+              backgroundColor: AppColors.background,
               body: Column(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    height: 80.h,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black12,
-                          blurRadius: 5.r,
-                        ),
-                      ],
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(16.r),
-                        bottomRight: Radius.circular(16.r),
-                      ),
-                    ),
-                    child: const TopBarSearchWidget(),
-                  ),
-
-                  // ✅ الحل هنا: Expanded يلتف على الباقي
+                  16.ph,
+                  TopBarSearchWidget(),
                   Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 10.0, right: 10.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          18.ph,
-                          const SubscribeElectronics(),
-                          18.ph,
-                          ButtonTabBarSearch(),
-                          16.ph,
-                          Expanded(
-                            child: IndexedStack(
-                              index: state.selectedIndex,
-                              children: [
-                                LiveVideosWidget(
-                                  liveStreams: generateDummyLiveStreams(5),
-                                  currentUserId: '34',
-                                ),
-                                LiveVideosWidget(
-                                  liveStreams: generateDummyLiveStreams(1),
-                                  currentUserId: '64',
-                                ),
-                                LiveVideosWidget(
-                                  liveStreams: generateDummyLiveStreams(3),
-                                  currentUserId: '64',
-                                ),
-                              ],
+                    child: SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            16.ph,
+                            ButtonTabBarSearch(onCategorySelected: (category) {
+                              if (category != null) {
+                                context
+                                    .read<SearchTabsCubit>()
+                                    .selectCategory(category);
+                              }
+                            }),
+                            16.ph,
+                            CustomText(
+                              text: 'recentlySearched'.tr(),
+                              fontFamily: "Manrope",
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20.sp,
                             ),
-                          ),
-                        ],
+                            12.ph,
+                            SearchRecently(),
+                            24.ph,
+                            CustomText(
+                              text: 'category'.tr(),
+                              fontFamily: "Manrope",
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20.sp,
+                            ),
+                            12.ph,
+                            MyCategorySearch(),
+                            24.ph,
+                            CustomText(
+                              text: 'goods'.tr(),
+                              fontFamily: "Manrope",
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20.sp,
+                            ),
+                            12.ph,
+                            AuctionSearchWidget(),
+                            24.ph,
+                            SearchLiveVideoWidget(
+                              liveStreams: generateDummyLiveStreams(4),
+                              currentUserId: '',
+                            ),
+                            24.ph,
+                            CustomText(
+                              text: 'users'.tr(),
+                              fontFamily: "Manrope",
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20.sp,
+                            ),
+                            12.ph,
+                            UsersSearchWidget(),
+                          ],
+                        ),
                       ),
                     ),
                   ),

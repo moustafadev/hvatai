@@ -21,7 +21,8 @@ import 'package:hvatai/features/home/data/repositories/home_impl_repository.dart
 import 'package:hvatai/features/home/domain/repositories/home_repository.dart';
 import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_tabs_cubit.dart';
 import 'package:hvatai/features/profile/presentation/notification_cubit/notification_cubit.dart';
-import 'package:hvatai/features/search/presentation/cubit/search_tabs_cubit.dart';
+import 'package:hvatai/features/search/presentation/cubit/auction_search_cubit/auction_search_cubit.dart';
+import 'package:hvatai/features/search/presentation/cubit/search_tabs_cubit/search_tabs_cubit.dart';
 import 'package:hvatai/locator_use_case.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -37,6 +38,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => ProfileCubit());
   locator.registerFactory(() => ActivityCubit());
   locator.registerLazySingleton(() => NotificationCubit());
+  locator.registerLazySingleton(() => AuctionSearchCubit());
 
   locator.registerFactory(() => CategoryTabsCubit());
   locator.registerFactory(() => SearchTabsCubit());

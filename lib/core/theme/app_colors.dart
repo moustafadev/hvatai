@@ -39,6 +39,7 @@ class AppColors {
   static const Color green = Color(0xFF48994F);
   static const Color primaryPink = Color(0xFFF4A8A1);
   static const Color goldenColor = Color(0xFFF6DD00);
+  static const Color background = Color(0xFFFBFBFB);
 
   // ✅ Colors with Opacity
   static Color greyLiteLine = const Color(0xFF808080).withOpacity(0.5);
