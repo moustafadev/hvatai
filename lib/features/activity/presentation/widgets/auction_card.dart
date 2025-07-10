@@ -40,7 +40,7 @@ class AuctionCard extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 6.h),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.lightGreyBackground,
           borderRadius: BorderRadius.circular(12.r),
         ),
         child: Row(
@@ -49,78 +49,35 @@ class AuctionCard extends StatelessWidget {
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(12.r),
-                  child: imageUrl.isNotEmpty
-                      ? CachedNetworkImage(
-                          imageUrl: imageUrl,
-                          width: 140.w,
-                          height: 140.h,
-                          fit: BoxFit.cover,
-                        )
-                      : Container(
-                          width: 140.w,
-                          height: 140.h,
-                          color: Colors.grey[300],
-                        ),
-                ),
-                if (statusText.isNotEmpty)
-                  Positioned(
-                    bottom: 8,
-                    left: 8,
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(30),
-                        gradient: (selectedCategoryIndex == 1 &&
-                                currentUserBid == highestBid)
-                            ? const LinearGradient(
-                                colors: [
-                                  Color(0xFF60C0FF),
-                                  Color(0xFFE356D7),
-                                ],
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
-                              )
-                            : null,
-                        color: (selectedCategoryIndex == 2 &&
-                                currentUserBid < highestBid)
-                            ? AppColors.raspberryPink
-                            : null,
-                      ),
-                      child: CustomText(
-                        text: statusText,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+                    borderRadius: BorderRadius.circular(12.r),
+                    child: imageUrl.isNotEmpty
+                        ? CachedNetworkImage(
+                            imageUrl: imageUrl,
+                            width: 140.w,
+                            height: 140.h,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            height: 140,
+                            width: 140,
+                            Assets.assetsImagesIphone,
+                          )),
                 Positioned(
                   top: 8.h,
-                  right: 8.w,
+                  left: 8.w,
                   child: Container(
                     padding:
                         EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.8),
-                      borderRadius: BorderRadius.circular(20.r),
+                      color: AppColors.primaryColor,
+                      borderRadius: BorderRadius.circular(10.r),
                     ),
-                    child: Row(
-                      children: [
-                        Image.asset(
-                          Assets.assetsImagesBookmark,
-                          height: 12.h,
-                          width: 12.w,
-                        ),
-                        4.pw,
-                        CustomText(
-                          // '${product.saveCount}',
-                          text: '3',
-                          fontWeight: FontWeight.w400,
-                          fontSize: 14.sp,
-                        ),
-                      ],
+                    child: CustomText(
+                      // '${product.saveCount}',
+                      text: 'Auction',
+                      fontWeight: FontWeight.w600,
+                      fontSize: 10.sp,
+                      fontFamily: "Manrope",
                     ),
                   ),
                 ),
@@ -133,45 +90,72 @@ class AuctionCard extends StatelessWidget {
                 children: [
                   Row(
                     children: [
-                      Icon(Icons.store, size: 14.sp),
-                      4.pw,
-                      CustomText(
-                        // product.companyName,
-                        text: 'company_name',
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
+                      CircleAvatar(
+                        radius: 10.r,
+                        backgroundColor: AppColors.blackDark,
+                        child: Image.asset(
+                          Assets.assetsIconsApple,
+                          height: 10.h,
+                          width: 10.w,
+                          fit: BoxFit.cover,
+                          color: AppColors.goldenColor,
+                        ),
                       ),
-                      4.w.horizontalSpace,
-                      CustomText(
-                        text: '•',
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      4.pw,
-                      Icon(Icons.star, size: 14.sp, color: Colors.amber),
                       2.pw,
+
+                      /// اسم الشركة مع overflow
+                      Expanded(
+                        child: FittedBox(
+                          child: CustomText(
+                            text: 'company_name ',
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'Manrope',
+                            fontSize: 12.sp,
+                            maxLines: 1,
+                            // overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 8.w),
+
+                      /// التقييم
+                      Image.asset(
+                        Assets.assetsIconsStar,
+                        color: AppColors.goldenColor,
+                        height: 16.h,
+                        width: 16.w,
+                      ),
+                      SizedBox(width: 4.w),
                       CustomText(
-                        // '${product.companyRating}',
-                        text: '4.7',
+                        text: "4.5",
                         fontSize: 12.sp,
-                        fontWeight: FontWeight.w400,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'GManrope',
+                        color: AppColors.blackDark,
                       ),
                     ],
                   ),
-                  6.ph,
                   CustomText(
                     text: product.title,
                     fontSize: 16,
-                    fontWeight: FontWeight.w400,
+                    fontFamily: "Manrope",
+                    fontWeight: FontWeight.w700,
                   ),
                   4.ph,
                   CustomText(
                     text: product.description,
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
+                    fontFamily: "Manrope",
                     color: AppColors.blackTransparent40,
                   ),
-                  8.ph,
+                  20.ph,
+                  CustomText(
+                    text: "Current rate:",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: "Manrope",
+                  ),
                   CustomText(
                     text: "${product.price} ₽",
                     fontSize: 20,

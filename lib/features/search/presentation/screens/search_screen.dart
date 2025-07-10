@@ -81,6 +81,13 @@ class SearchScreen extends StatelessWidget {
                             12.ph,
                             AuctionSearchWidget(),
                             24.ph,
+                            CustomText(
+                              text: 'streams'.tr(),
+                              fontFamily: "Manrope",
+                              fontWeight: FontWeight.w800,
+                              fontSize: 20.sp,
+                            ),
+                            10.ph,
                             SearchLiveVideoWidget(
                               liveStreams: generateDummyLiveStreams(4),
                               currentUserId: '',

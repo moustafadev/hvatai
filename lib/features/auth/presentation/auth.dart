@@ -22,7 +22,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:pinput/pinput.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
-import 'package:simple_gradient_text/simple_gradient_text.dart';
 
 // Include all parts here
 part 'pages/social_login_screen.dart';

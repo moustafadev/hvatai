@@ -19,29 +19,18 @@ class CustomGradiantTabButton extends StatelessWidget {
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8.r),
-          gradient: isSelected
-              ? LinearGradient(
-                  colors: [
-                    AppColors.blueLite,
-                    AppColors.purpleLite,
-                    AppColors.deepPurple
-                  ],
-                )
-              : null,
-          color: isSelected ? null : Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 5.r,
-            ),
-          ],
+          color: AppColors.gray,
+          borderRadius: BorderRadius.circular(10.r),
+          border: isSelected
+              ? Border.all(color: AppColors.primaryColor, width: 1)
+              : Border.all(color: Colors.transparent),
         ),
         child: CustomText(
           text: text,
           fontSize: 14.sp,
-          color: isSelected ? AppColors.white : AppColors.blackDark,
-          fontWeight: FontWeight.bold,
+          color: AppColors.blackDark,
+          fontFamily: "Manrope",
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

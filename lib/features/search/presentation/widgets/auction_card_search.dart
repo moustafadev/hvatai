@@ -49,20 +49,19 @@ class AuctionCardSearch extends StatelessWidget {
             Stack(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(12.r),
-                  child: imageUrl.isNotEmpty
-                      ? CachedNetworkImage(
-                          imageUrl: imageUrl,
-                          width: 140.w,
-                          height: 140.h,
-                          fit: BoxFit.cover,
-                        )
-                      : Container(
-                          width: 140.w,
-                          height: 140.h,
-                          color: Colors.grey[300],
-                        ),
-                ),
+                    borderRadius: BorderRadius.circular(12.r),
+                    child: imageUrl.isNotEmpty
+                        ? CachedNetworkImage(
+                            imageUrl: imageUrl,
+                            width: 140.w,
+                            height: 140.h,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.asset(
+                            height: 140,
+                            width: 140,
+                            Assets.assetsImagesIphone,
+                          )),
                 Positioned(
                   top: 8.h,
                   left: 8.w,

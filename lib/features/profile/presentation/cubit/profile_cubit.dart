@@ -3,10 +3,7 @@ import 'dart:math';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/theme/assets.dart';
-import 'package:hvatai/routes/app_routes.dart';
-
 part 'profile_state.dart';
 part 'profile_cubit.freezed.dart';
 

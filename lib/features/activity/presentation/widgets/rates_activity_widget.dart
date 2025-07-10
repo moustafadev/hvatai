@@ -11,7 +11,7 @@ class RatesActivityWidget extends StatelessWidget {
         builder: (context, state) {
           final cubit = context.read<RatesActivityCubit>();
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: AppColors.lightGreyBackground,
             body: Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.w),
               child: Column(

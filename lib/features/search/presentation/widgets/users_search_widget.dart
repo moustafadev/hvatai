@@ -54,7 +54,6 @@ class UserTile extends StatelessWidget {
         color: Colors.grey,
       ),
       trailing: SizedBox(
-        // تحدد عرض مناسب للـ Row
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
