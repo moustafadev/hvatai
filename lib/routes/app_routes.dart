@@ -23,6 +23,6 @@ class AppRoutes {
   static const String bottomNavBar = '/bottom_nav_bar';
   static const String myAwards = '/my_awards';
   static const String notificationSettings = '/notification_settings';
-
+  static const String tradeProfile = '/trade_profile';
   static const String interestsDetail = '/interests-detail';
 }

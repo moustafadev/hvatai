@@ -89,6 +89,12 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
+      path: AppRoutes.tradeProfile,
+      builder: (BuildContext context, GoRouterState state) {
+        return TradeProfileScreen();
+      },
+    ),
+    GoRoute(
       path: AppRoutes.imageDelay,
       builder: (BuildContext context, GoRouterState state) {
         return const ImageDelayScreen();

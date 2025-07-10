@@ -84,13 +84,14 @@ class MyCategorySearch extends StatelessWidget {
                         child: Column(
                           children: [
                             Center(
-                              child: CustomText(
-                                text: interestKeys[index].tr(),
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.blackDark,
-                                textAlign: TextAlign.center,
-                                fontFamily: 'SFProRounded',
+                              child: FittedBox(
+                                child: CustomText(
+                                  text: interestKeys[index].tr(),
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.blackDark,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
                             Container(
@@ -111,13 +112,14 @@ class MyCategorySearch extends StatelessWidget {
                                       radius: 4.r,
                                       backgroundColor: AppColors.primaryPink),
                                   5.pw,
-                                  CustomText(
-                                    text: '2.5k',
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                    textAlign: TextAlign.center,
-                                    fontFamily: 'SFProRounded',
+                                  FittedBox(
+                                    child: CustomText(
+                                      text: '2.5k',
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.black,
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
                                   2.pw,
                                   Icon(

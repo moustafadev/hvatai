@@ -27,7 +27,7 @@ class CustomText extends StatelessWidget {
     this.overflow,
     this.height,
     this.wordSpacing,
-    this.fontFamily = "Gilroy-Bold",
+    this.fontFamily = "Manrope",
   });
 
   @override
@@ -36,7 +36,7 @@ class CustomText extends StatelessWidget {
 
     // Use the specified font family
     switch (fontFamily) {
-      case 'SFProRounded':
+      case 'Manrope':
         textStyle = sfProRoundedTextStyle(
           fontSize: fontSize,
           fontWeight: fontWeight,
@@ -97,7 +97,7 @@ class CustomText extends StatelessWidget {
     double? wordSpacing,
   }) {
     return TextStyle(
-      fontFamily: 'SFProRounded',
+      fontFamily: 'Manrope',
       fontSize: fontSize,
       fontWeight: fontWeight,
       color: color,

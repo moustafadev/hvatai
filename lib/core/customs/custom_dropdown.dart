@@ -6,7 +6,7 @@ class CustomDropdown extends StatelessWidget {
   final ValueChanged<String?> onChanged;
   final String hintText;
   final Widget? prefix; // ⬅️ المتغير الجديد
-
+  final bool isRequired;
   const CustomDropdown({
     super.key,
     required this.value,
@@ -14,6 +14,7 @@ class CustomDropdown extends StatelessWidget {
     required this.onChanged,
     required this.hintText,
     this.prefix,
+    this.isRequired = true,
   });
 
   @override
@@ -47,11 +48,12 @@ class CustomDropdown extends StatelessWidget {
                   ),
                 ),
               ),
-              Icon(
-                Icons.keyboard_arrow_down_rounded,
-                size: 20,
-                color: Colors.grey.shade600,
-              ),
+              if (isRequired)
+                Icon(
+                  Icons.keyboard_arrow_down_rounded,
+                  size: 20,
+                  color: Colors.grey.shade600,
+                ),
             ],
           ),
         ),

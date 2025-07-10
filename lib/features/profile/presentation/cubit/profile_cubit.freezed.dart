@@ -31,6 +31,7 @@ mixin _$ProfileState {
       throw _privateConstructorUsedError;
   int get uid => throw _privateConstructorUsedError;
   String get channelId => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
 
   /// Create a copy of ProfileState
   /// with the given fields replaced by the non-null parameter values.
@@ -58,7 +59,8 @@ abstract class $ProfileStateCopyWith<$Res> {
       List<Map<String, dynamic>> settingsOptions,
       List<Map<String, dynamic>> helpAndContact,
       int uid,
-      String channelId});
+      String channelId,
+      String? type});
 }
 
 /// @nodoc
@@ -89,6 +91,7 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? helpAndContact = null,
     Object? uid = null,
     Object? channelId = null,
+    Object? type = freezed,
   }) {
     return _then(_value.copyWith(
       firstName: null == firstName
@@ -143,6 +146,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.channelId
           : channelId // ignore: cast_nullable_to_non_nullable
               as String,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -168,7 +175,8 @@ abstract class _$$ProfileStateImplCopyWith<$Res>
       List<Map<String, dynamic>> settingsOptions,
       List<Map<String, dynamic>> helpAndContact,
       int uid,
-      String channelId});
+      String channelId,
+      String? type});
 }
 
 /// @nodoc
@@ -197,6 +205,7 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
     Object? helpAndContact = null,
     Object? uid = null,
     Object? channelId = null,
+    Object? type = freezed,
   }) {
     return _then(_$ProfileStateImpl(
       firstName: null == firstName
@@ -251,6 +260,10 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
           ? _value.channelId
           : channelId // ignore: cast_nullable_to_non_nullable
               as String,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -271,7 +284,8 @@ class _$ProfileStateImpl implements _ProfileState {
       final List<Map<String, dynamic>> settingsOptions = const [],
       final List<Map<String, dynamic>> helpAndContact = const [],
       required this.uid,
-      required this.channelId})
+      required this.channelId,
+      this.type})
       : _settingsOptions = settingsOptions,
         _helpAndContact = helpAndContact;
 
@@ -323,10 +337,12 @@ class _$ProfileStateImpl implements _ProfileState {
   final int uid;
   @override
   final String channelId;
+  @override
+  final String? type;
 
   @override
   String toString() {
-    return 'ProfileState(firstName: $firstName, profileImageUrl: $profileImageUrl, isLoading: $isLoading, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, uid: $uid, channelId: $channelId)';
+    return 'ProfileState(firstName: $firstName, profileImageUrl: $profileImageUrl, isLoading: $isLoading, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, uid: $uid, channelId: $channelId, type: $type)';
   }
 
   @override
@@ -359,7 +375,8 @@ class _$ProfileStateImpl implements _ProfileState {
                 .equals(other._helpAndContact, _helpAndContact) &&
             (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.channelId, channelId) ||
-                other.channelId == channelId));
+                other.channelId == channelId) &&
+            (identical(other.type, type) || other.type == type));
   }
 
   @override
@@ -377,7 +394,8 @@ class _$ProfileStateImpl implements _ProfileState {
       const DeepCollectionEquality().hash(_settingsOptions),
       const DeepCollectionEquality().hash(_helpAndContact),
       uid,
-      channelId);
+      channelId,
+      type);
 
   /// Create a copy of ProfileState
   /// with the given fields replaced by the non-null parameter values.
@@ -402,7 +420,8 @@ abstract class _ProfileState implements ProfileState {
       final List<Map<String, dynamic>> settingsOptions,
       final List<Map<String, dynamic>> helpAndContact,
       required final int uid,
-      required final String channelId}) = _$ProfileStateImpl;
+      required final String channelId,
+      final String? type}) = _$ProfileStateImpl;
 
   @override
   String get firstName;
@@ -430,6 +449,8 @@ abstract class _ProfileState implements ProfileState {
   int get uid;
   @override
   String get channelId;
+  @override
+  String? get type;
 
   /// Create a copy of ProfileState
   /// with the given fields replaced by the non-null parameter values.

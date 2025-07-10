@@ -21,3 +21,4 @@ part 'widgets/payment_and_delivery.dart';
 part 'widgets/help_contacts.dart';
 part 'widgets/top_profile_info.dart';
 part 'widgets/referrals_points_and_award.dart';
+part 'widgets/trade_profile_screen.dart';

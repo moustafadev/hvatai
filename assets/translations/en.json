@@ -24,6 +24,8 @@
   "russia": "Russia",
   "usa": "USA",
   "india": "India",
+  "profileType": "Profile type",
+  "currentProfileType": "Current profile type",
   "agreeTerms": "I agree to the Terms of Service and Privacy Policy",
   "confirmAge": "I confirm that I am over 18 years old",
   "continue": "Continue",

@@ -210,6 +210,8 @@ class ProfileCubit extends Cubit<ProfileState> {
     ];
   }
 
+  void setType(String? type) => emit(state.copyWith(type: type));
+
   List<Map<String, dynamic>> _buildHelpOptions() {
     return [
       {

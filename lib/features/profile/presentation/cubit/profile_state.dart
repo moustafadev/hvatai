@@ -16,5 +16,6 @@ class ProfileState with _$ProfileState {
     @Default([]) List<Map<String, dynamic>> helpAndContact,
     required int uid,
     required String channelId,
+    String? type,
   }) = _ProfileState;
 }
