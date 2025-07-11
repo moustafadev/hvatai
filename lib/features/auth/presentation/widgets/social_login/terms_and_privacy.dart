@@ -26,6 +26,7 @@ class TermsAndPrivacy extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
+        2.pw,
         CustomText(
           text: 'and2'.tr(),
           // textAlign: TextAlign.center,
@@ -33,6 +34,7 @@ class TermsAndPrivacy extends StatelessWidget {
           color: AppColors.blackDark,
           fontWeight: FontWeight.w600,
         ),
+        2.pw,
         GestureDetector(
           onTap: () => context.push(AppRoutes.privacyPolicy),
           child: Center(

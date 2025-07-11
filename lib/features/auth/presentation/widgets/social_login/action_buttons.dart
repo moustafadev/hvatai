@@ -8,19 +8,30 @@ class ActionButtons extends StatelessWidget {
     final cubit = context.read<SocialLoginCubit>();
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SocialCircleButton(
           assetPath: Assets.assetsIconsApple,
           onTap: cubit.signUpWithApple,
         ),
+        16.pw,
         SocialCircleButton(
           assetPath: Assets.assetsIconsGoogle,
           onTap: cubit.signUpWithGoogle,
         ),
-        SocialCircleButton(
-          assetPath: Assets.assetsIconsEmail,
+        16.pw,
+        GestureDetector(
           onTap: () => context.push(AppRoutes.registration),
+          child: CircleAvatar(
+            radius: 24.r,
+            backgroundColor: AppColors.primaryColor,
+            child: Center(
+                child: Icon(
+              Icons.email,
+              size: 24,
+              color: AppColors.white,
+            )),
+          ),
         ),
       ],
     );
