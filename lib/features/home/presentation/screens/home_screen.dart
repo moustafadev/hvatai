@@ -78,49 +78,55 @@ class HomeScreen extends StatelessWidget {
         create: (_) => locator<CategoryTabsCubit>()..fetchCategories(),
         child: SafeArea(
           bottom: false,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                10.ph,
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.0),
-                  child: TopBarWidget(),
-                ),
-                16.ph,
-                Padding(
-                  padding: const EdgeInsets.only(left: 15.0),
-                  child: CategoryTabsWidget(
-                    onCategorySelected: (category) {
-                      if (category != null) {
-                        context
-                            .read<CategoryTabsCubit>()
-                            .selectCategory(category);
-                      }
-                    },
+          child: Column(
+            children: [
+              10.ph,
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: TopBarWidget(),
+              ),
+              16.ph,
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15.0),
+                        child: CategoryTabsWidget(
+                          onCategorySelected: (category) {
+                            if (category != null) {
+                              context
+                                  .read<CategoryTabsCubit>()
+                                  .selectCategory(category);
+                            }
+                          },
+                        ),
+                      ),
+                      10.ph,
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 15.0),
+                        child: TitleCategoriesForYou(),
+                      ),
+                      12.ph,
+                      const Padding(
+                        padding: EdgeInsets.only(left: 16.0),
+                        child: MyCategory(),
+                      ),
+                      12.ph,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: LiveVideosWidget(
+                          liveStreams: dummyLiveStreams,
+                          currentUserId: '',
+                        ),
+                      ),
+                      100.ph
+                    ],
                   ),
                 ),
-                10.ph,
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 15.0),
-                  child: TitleCategoriesForYou(),
-                ),
-                12.ph,
-                const Padding(
-                  padding: EdgeInsets.only(left: 16.0),
-                  child: MyCategory(),
-                ),
-                12.ph,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: LiveVideosWidget(
-                    liveStreams: dummyLiveStreams,
-                    currentUserId: '',
-                  ),
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
