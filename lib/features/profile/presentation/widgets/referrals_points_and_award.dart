@@ -16,6 +16,14 @@ class ReferralsPointsAndAward extends StatelessWidget {
             },
             child: Container(
               decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.blackDark.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15.r),
                   border: Border.all(color: Colors.grey.withOpacity(0.2))),
@@ -75,6 +83,14 @@ class ReferralsPointsAndAward extends StatelessWidget {
             },
             child: Container(
               decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.blackDark.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15.r),
                   border: Border.all(color: Colors.grey.withOpacity(0.2))),

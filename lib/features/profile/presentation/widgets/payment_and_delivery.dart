@@ -22,6 +22,7 @@ class PaymentAndDelivery extends StatelessWidget {
           if (index == chatIndex + 1) {
             // العنصر الجديد (الفاصل) بعد "chat"
             return ListTile(
+              contentPadding: EdgeInsets.all(0),
               leading: CustomText(
                 text: "paymentDelivery".tr(),
                 fontSize: 20.sp,
@@ -36,6 +37,7 @@ class PaymentAndDelivery extends StatelessWidget {
           final option = state.settingsOptions[dataIndex];
 
           return ListTile(
+            contentPadding: EdgeInsets.all(0),
             leading: Container(
               decoration: BoxDecoration(
                 color: Color(0xff000000).withOpacity(0.05),

@@ -34,79 +34,84 @@ class SearchScreen extends StatelessWidget {
           builder: (context, state) {
             return Scaffold(
               backgroundColor: AppColors.background,
-              body: Column(
-                children: [
-                  16.ph,
-                  TopBarSearchWidget(),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            16.ph,
-                            ButtonTabBarSearch(onCategorySelected: (category) {
-                              if (category != null) {
-                                context
-                                    .read<SearchTabsCubit>()
-                                    .selectCategory(category);
-                              }
-                            }),
-                            16.ph,
-                            CustomText(
-                              text: 'recentlySearched'.tr(),
-                              fontFamily: "Manrope",
-                              fontWeight: FontWeight.w800,
-                              fontSize: 20.sp,
-                            ),
-                            12.ph,
-                            SearchRecently(),
-                            24.ph,
-                            CustomText(
-                              text: 'category'.tr(),
-                              fontFamily: "Manrope",
-                              fontWeight: FontWeight.w800,
-                              fontSize: 20.sp,
-                            ),
-                            12.ph,
-                            MyCategorySearch(),
-                            24.ph,
-                            CustomText(
-                              text: 'goods'.tr(),
-                              fontFamily: "Manrope",
-                              fontWeight: FontWeight.w800,
-                              fontSize: 20.sp,
-                            ),
-                            12.ph,
-                            AuctionSearchWidget(),
-                            24.ph,
-                            CustomText(
-                              text: 'streams'.tr(),
-                              fontFamily: "Manrope",
-                              fontWeight: FontWeight.w800,
-                              fontSize: 20.sp,
-                            ),
-                            10.ph,
-                            SearchLiveVideoWidget(
-                              liveStreams: generateDummyLiveStreams(4),
-                              currentUserId: '',
-                            ),
-                            24.ph,
-                            CustomText(
-                              text: 'users'.tr(),
-                              fontFamily: "Manrope",
-                              fontWeight: FontWeight.w800,
-                              fontSize: 20.sp,
-                            ),
-                            12.ph,
-                            UsersSearchWidget(),
-                          ],
+              body: SafeArea(
+                bottom: false,
+                child: Column(
+                  children: [
+                    16.ph,
+                    TopBarSearchWidget(),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              16.ph,
+                              ButtonTabBarSearch(
+                                  onCategorySelected: (category) {
+                                if (category != null) {
+                                  context
+                                      .read<SearchTabsCubit>()
+                                      .selectCategory(category);
+                                }
+                              }),
+                              16.ph,
+                              CustomText(
+                                text: 'recentlySearched'.tr(),
+                                fontFamily: "Manrope",
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20.sp,
+                              ),
+                              12.ph,
+                              SearchRecently(),
+                              24.ph,
+                              CustomText(
+                                text: 'category'.tr(),
+                                fontFamily: "Manrope",
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20.sp,
+                              ),
+                              12.ph,
+                              MyCategorySearch(),
+                              24.ph,
+                              CustomText(
+                                text: 'goods'.tr(),
+                                fontFamily: "Manrope",
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20.sp,
+                              ),
+                              12.ph,
+                              AuctionSearchWidget(),
+                              24.ph,
+                              CustomText(
+                                text: 'streams'.tr(),
+                                fontFamily: "Manrope",
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20.sp,
+                              ),
+                              10.ph,
+                              SearchLiveVideoWidget(
+                                liveStreams: generateDummyLiveStreams(4),
+                                currentUserId: '',
+                              ),
+                              24.ph,
+                              CustomText(
+                                text: 'users'.tr(),
+                                fontFamily: "Manrope",
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20.sp,
+                              ),
+                              12.ph,
+                              UsersSearchWidget(),
+                              100.ph
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },

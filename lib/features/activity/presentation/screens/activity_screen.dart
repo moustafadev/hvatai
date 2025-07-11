@@ -24,100 +24,109 @@ class ActivityScreen extends StatelessWidget {
                 backgroundColor: AppColors.lightGreyBackground,
                 elevation: 0,
               ),
-              body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              body: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(
-                      text: "activity".tr(),
-                      color: Colors.black,
-                      fontFamily: 'Manrope',
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w800,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: CustomText(
+                        text: "activity".tr(),
+                        color: Colors.black,
+                        fontFamily: 'Manrope',
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w800,
+                      ),
                     ),
                     12.ph,
-                    GestureDetector(
-                        onTap: () {},
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              radius: 21.r,
-                              backgroundColor: AppColors.gray,
-                              child: Image.asset(
-                                Assets.assetsIconsSave,
-                                height: 20.h,
-                                width: 18.w,
-                                fit: BoxFit.cover,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 13.0),
+                      child: GestureDetector(
+                          onTap: () {},
+                          child: Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 21.r,
+                                backgroundColor: AppColors.gray,
+                                child: Image.asset(
+                                  Assets.assetsIconsSave,
+                                  height: 20.h,
+                                  width: 18.w,
+                                  fit: BoxFit.cover,
+                                  color: AppColors.blackColorIcon,
+                                ),
+                              ),
+                              11.5.pw,
+                              CustomText(
+                                text: "favorites".tr(),
+                                color: Colors.black,
+                                fontFamily: 'Manrope',
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w700,
+                              ),
+                              const Spacer(),
+                              Icon(
+                                Icons.arrow_forward_ios,
                                 color: AppColors.blackColorIcon,
+                                size: 16.sp,
+                              ),
+                            ],
+                          )),
+                    ),
+                    12.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 13.0),
+                      child: AnimatedContainer(
+                        height: 45.h,
+                        margin: EdgeInsets.symmetric(horizontal: 0),
+                        padding: EdgeInsets.all(4.r),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        duration: const Duration(milliseconds: 1000),
+                        child: TabBar(
+                          onTap: cubit.changeTab,
+                          labelPadding: EdgeInsets.zero,
+                          indicator: BoxDecoration(
+                            color: AppColors.primaryColor,
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                          labelColor: AppColors.white,
+                          unselectedLabelColor: AppColors.blackDark,
+                          indicatorColor: Colors.transparent,
+                          dividerColor: Colors.transparent,
+                          tabs: [
+                            Tab(
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: double.infinity,
+                                child: CustomText(
+                                  text: "purchases".tr(),
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'Manrope',
+                                ),
                               ),
                             ),
-                            11.5.pw,
-                            CustomText(
-                              text: "favorites".tr(),
-                              color: Colors.black,
-                              fontFamily: 'Manrope',
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            const Spacer(),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: AppColors.blackColorIcon,
-                              size: 16.sp,
+                            Tab(
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: double.infinity,
+                                child: CustomText(
+                                  text: "rates".tr(),
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'Manrope',
+                                ),
+                              ),
                             ),
                           ],
-                        )),
-                    12.ph,
-                    AnimatedContainer(
-                      height: 45.h,
-                      margin: EdgeInsets.symmetric(horizontal: 0),
-                      padding: EdgeInsets.all(4.r),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      duration: const Duration(milliseconds: 1000),
-                      child: TabBar(
-                        onTap: cubit.changeTab,
-                        labelPadding: EdgeInsets.zero,
-                        indicator: BoxDecoration(
-                          color: AppColors.primaryColor,
-                          borderRadius: BorderRadius.circular(10.r),
                         ),
-                        labelColor: AppColors.white,
-                        unselectedLabelColor: AppColors.blackDark,
-                        indicatorColor: Colors.transparent,
-                        dividerColor: Colors.transparent,
-                        tabs: [
-                          Tab(
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: double.infinity,
-                              child: CustomText(
-                                text: "purchases".tr(),
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: 'Manrope',
-                              ),
-                            ),
-                          ),
-                          Tab(
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: double.infinity,
-                              child: CustomText(
-                                text: "rates".tr(),
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: 'Manrope',
-                              ),
-                            ),
-                          ),
-                        ],
                       ),
                     ),
-                    Expanded(
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.7,
                       child: TabBarView(
                         children: [
                           RatesActivityWidget(),

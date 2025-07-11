@@ -29,3 +29,5 @@ part 'custom_live_video_card.dart';
 part 'custom_app_bar.dart';
 part 'custom_switch_widget.dart';
 part 'social_circle_button.dart';
+part 'reusable_category_widget.dart';
+part 'reusable_live_videos_grid.dart';

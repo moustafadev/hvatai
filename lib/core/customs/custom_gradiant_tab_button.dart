@@ -17,7 +17,9 @@ class CustomGradiantTabButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 10.h),
+        padding: EdgeInsets.symmetric(
+          horizontal: 16.w,
+        ),
         decoration: BoxDecoration(
           color: AppColors.gray,
           borderRadius: BorderRadius.circular(10.r),
@@ -25,12 +27,14 @@ class CustomGradiantTabButton extends StatelessWidget {
               ? Border.all(color: AppColors.primaryColor, width: 1)
               : Border.all(color: Colors.transparent),
         ),
-        child: CustomText(
-          text: text,
-          fontSize: 14.sp,
-          color: AppColors.blackDark,
-          fontFamily: "Manrope",
-          fontWeight: FontWeight.w600,
+        child: Center(
+          child: CustomText(
+            text: text,
+            fontSize: 14.sp,
+            color: AppColors.blackDark,
+            fontFamily: "Manrope",
+            fontWeight: FontWeight.w600,
+          ),
         ),
       ),
     );

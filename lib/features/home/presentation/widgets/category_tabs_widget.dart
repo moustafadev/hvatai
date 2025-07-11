@@ -36,8 +36,6 @@ class CategoryTabsWidget extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () => cubit.selectCategory(index),
                   child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
                     decoration: BoxDecoration(
                       color: AppColors.gray,
                       borderRadius: BorderRadius.circular(10.r),
@@ -45,11 +43,15 @@ class CategoryTabsWidget extends StatelessWidget {
                           ? Border.all(color: AppColors.primaryColor, width: 1)
                           : Border.all(color: Colors.transparent),
                     ),
-                    child: Text(
-                      item,
-                      style: TextStyle(
-                        color: AppColors.blackDark,
-                        fontWeight: FontWeight.bold,
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12.0, vertical: 6),
+                        child: CustomText(
+                          text: item,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),

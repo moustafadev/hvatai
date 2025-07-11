@@ -17,6 +17,7 @@ class HelpContacts extends StatelessWidget {
           if (index == 0) {
             // عنصر العنوان في البداية
             return ListTile(
+              contentPadding: EdgeInsets.all(0),
               leading: CustomText(
                 text: "helpContacts".tr(),
                 fontWeight: FontWeight.w800,
@@ -30,6 +31,7 @@ class HelpContacts extends StatelessWidget {
           final item = state.helpAndContact[index - 1];
 
           return ListTile(
+            contentPadding: EdgeInsets.all(0),
             leading: Container(
               decoration: BoxDecoration(
                 color: Color(0xff000000).withOpacity(0.05),

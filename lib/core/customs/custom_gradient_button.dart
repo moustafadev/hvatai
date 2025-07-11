@@ -57,15 +57,13 @@ class CustomGradientButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
           onTap: isDisabled ? onPressed : null,
           child: Center(
-            child: Text(
+            child: CustomText(
               textAlign: TextAlign.center,
-              text,
-              style: TextStyle(
-                color: textColor ?? AppColors.white,
-                fontSize: fontSize,
-                fontFamily: fontFamily,
-                fontWeight: fontWeight ?? FontWeight.bold,
-              ),
+              text: text,
+              color: textColor ?? AppColors.white,
+              fontSize: fontSize,
+              fontFamily: fontFamily,
+              fontWeight: fontWeight ?? FontWeight.bold,
             ),
           ),
         ),

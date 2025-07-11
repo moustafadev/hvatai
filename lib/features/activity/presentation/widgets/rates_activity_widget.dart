@@ -12,22 +12,25 @@ class RatesActivityWidget extends StatelessWidget {
           final cubit = context.read<RatesActivityCubit>();
           return Scaffold(
             backgroundColor: AppColors.lightGreyBackground,
-            body: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 12.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  12.ph,
-                  SizedBox(
-                    height: 50.h,
+            body: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                12.ph,
+                SizedBox(
+                  height: 35.h,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 13.0),
                     child: CategoryTabsRates(
                       selectedIndex: state.selectedCategoryIndex,
                       onSelect: cubit.changeCategory,
                     ),
                   ),
-                  12.ph,
-                  Expanded(
-                    child: SingleChildScrollView(
+                ),
+                12.ph,
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 13.w),
                       child: Column(
                         children: [
                           ...state.products.map(
@@ -58,8 +61,8 @@ class RatesActivityWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },
