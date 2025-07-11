@@ -39,7 +39,7 @@ class SearchLiveVideoWidget extends StatelessWidget {
       isOwner: (stream) => currentUserId == stream.adminId,
       blockedCardBuilder: (context, stream) {
         return Container(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.symmetric(horizontal: 12),
           decoration: BoxDecoration(
             color: Colors.red.shade50,
             border: Border.all(color: AppColors.red),

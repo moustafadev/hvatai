@@ -33,14 +33,15 @@ class ReusableLiveVideosGrid<T> extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return GridView.builder(
+          padding: const EdgeInsets.all(0),
           physics: const BouncingScrollPhysics(),
           shrinkWrap: true,
           itemCount: filtered.length,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 11,
-            mainAxisSpacing: 20,
-            mainAxisExtent: 390,
+            mainAxisSpacing: 8,
+            mainAxisExtent: 400,
           ),
           itemBuilder: (context, index) {
             final item = filtered[index];

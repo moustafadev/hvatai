@@ -95,7 +95,6 @@ class SearchScreen extends StatelessWidget {
                                 liveStreams: generateDummyLiveStreams(4),
                                 currentUserId: '',
                               ),
-                              24.ph,
                               CustomText(
                                 text: 'users'.tr(),
                                 fontFamily: "Manrope",
