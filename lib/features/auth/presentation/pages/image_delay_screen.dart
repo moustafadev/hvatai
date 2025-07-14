@@ -23,7 +23,7 @@ class ImageDelayScreen extends StatelessWidget {
                 text: "Continue",
                 isDisabled: true,
                 onPressed: () {
-                  context.go(AppRoutes.bottomNavBar);
+                  context.go(AppRoutes.home);
                 },
               ),
             ),
