@@ -21,41 +21,47 @@ class TradeProfileScreen extends StatelessWidget {
         body:
             BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
           final cubit = context.read<ProfileCubit>();
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomText(
-                  text: 'profileType'.tr(),
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w800,
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomText(
+                      text: 'profileType'.tr(),
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w800,
+                    ),
+                    12.ph,
+                    CustomText(
+                      text: 'currentProfileType'.tr(),
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.grey,
+                    ),
+                    8.ph,
+                    CustomDropdown(
+                      hintText: 'Trade',
+                      isRequired: false,
+                      value: state.type,
+                      onChanged: cubit.setType,
+                      items: const ['Trade', 'Buyer', 'Seller']
+                          .map((val) => DropdownMenuItem(
+                                value: val,
+                                child: Text(val),
+                              ))
+                          .toList(),
+                    ),
+                    16.ph,
+                  ],
                 ),
-                12.ph,
-                CustomText(
-                  text: 'currentProfileType'.tr(),
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.grey,
-                ),
-                8.ph,
-                CustomDropdown(
-                  hintText: 'Trade',
-                  isRequired: false,
-                  value: state.type,
-                  onChanged: cubit.setType,
-                  items: const ['Trade', 'Buyer', 'Seller']
-                      .map((val) => DropdownMenuItem(
-                            value: val,
-                            child: Text(val),
-                          ))
-                      .toList(),
-                ),
-                16.ph,
-                Image.asset(Assets.assetsImagesProfileAdvertisementImage,
-                    width: MediaQuery.of(context).size.width, fit: BoxFit.fill),
-              ],
-            ),
+              ),
+              Image.asset(
+                Assets.assetsImagesProfileAdvertisementImage,
+                width: double.infinity,
+              ),
+            ],
           );
         }),
       ),

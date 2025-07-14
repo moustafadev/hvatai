@@ -7,6 +7,7 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        bottom: false,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 28.w),
           child: SingleChildScrollView(

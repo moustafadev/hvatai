@@ -95,7 +95,7 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
               pageBuilder: (context, state) => buildCupertinoTransitionPage(
                 context: context,
                 state: state,
-                child: HomeScreen(),
+                child: const HomeScreen(),
               ),
             ),
           ],

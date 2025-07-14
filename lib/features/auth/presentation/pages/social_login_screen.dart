@@ -9,6 +9,7 @@ class SocialsLoginScreen extends StatelessWidget {
       create: (context) => locator<SocialLoginCubit>(),
       child: Scaffold(
         body: SafeArea(
+          bottom: false,
           child: CustomBackgroundScaffold(
             child: SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 16),

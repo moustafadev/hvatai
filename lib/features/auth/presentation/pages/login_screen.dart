@@ -10,6 +10,7 @@ class LoginScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.grey[100],
         body: SafeArea(
+          bottom: false,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 28),
             child: BlocBuilder<LoginCubit, LoginState>(

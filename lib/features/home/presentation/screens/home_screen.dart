@@ -1,73 +1,27 @@
 part of '../home.dart';
 
 class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
-  final List<LiveStreamModel> dummyLiveStreams = [
-    LiveStreamModel(
-      price: 'Starting price 87 ₽',
-      title: 'Vintage Levis 501 Jeans',
-      adminName: 'company_name',
-      liveImage: 'your_image_url_or_base64_here',
-      category: 'Category 1',
-      isBlocked: false,
-      channelId: '1',
-      adminPhoto: 'your_photo_url',
-      viewsCount: 86,
-      description: 'Women\'s vintage clothing',
-      adminId: '1',
-      selectedProductImage: 'your_product_image_url',
-      unblockRequested: false,
-      unblockRequestReason: '',
-    ),
-    LiveStreamModel(
-      price: 'Starting price 87 ₽',
-      title: 'Vintage Levis 501 Jeans',
-      adminName: 'company_name',
-      liveImage: 'your_image_url_or_base64_here',
-      category: 'Category 1',
-      isBlocked: false,
-      channelId: '1',
-      adminPhoto: 'your_photo_url',
-      viewsCount: 86,
-      description: 'Women\'s vintage clothing',
-      adminId: '1',
-      selectedProductImage: 'your_product_image_url',
-      unblockRequested: false,
-      unblockRequestReason: '',
-    ),
-    LiveStreamModel(
-      price: 'Starting price 87 ₽',
-      title: 'Vintage Levis 501 Jeans',
-      adminName: 'company_name',
-      liveImage: 'your_image_url_or_base64_here',
-      category: 'Category 1',
-      isBlocked: false,
-      channelId: '1',
-      adminPhoto: 'your_photo_url',
-      viewsCount: 86,
-      description: 'Women\'s vintage clothing',
-      adminId: '1',
-      selectedProductImage: 'your_product_image_url',
-      unblockRequested: false,
-      unblockRequestReason: '',
-    ),
-    LiveStreamModel(
-      price: 'Starting price 87 ₽',
-      title: 'Vintage Levis 501 Jeans',
-      adminName: 'company_name',
-      liveImage: 'your_image_url_or_base64_here',
-      category: 'Category 1',
-      isBlocked: false,
-      channelId: '1',
-      adminPhoto: 'your_photo_url',
-      viewsCount: 86,
-      description: 'Women\'s vintage clothing',
-      adminId: '1',
-      selectedProductImage: 'your_product_image_url',
-      unblockRequested: false,
-      unblockRequestReason: '',
-    ),
-  ];
+  const HomeScreen({super.key});
+  List<LiveStreamModel> generateDummyLiveStreams(int count) {
+    return List.generate(count, (_) {
+      return LiveStreamModel(
+        price: 'Starting price 12 ₽',
+        title: 'Lorem ipsum dolor sit amet consectetur adipiscing',
+        adminName: 'company_name',
+        liveImage: 'base64_image_string_here',
+        category: 'Category 1',
+        isBlocked: false,
+        channelId: '1',
+        adminPhoto: 'base64_image_string_here',
+        viewsCount: 86,
+        description: 'Lorem ipsum dolor sit amet consectetur adipiscing',
+        adminId: '1',
+        selectedProductImage: 'base64_image_string_here',
+        unblockRequested: false,
+        unblockRequestReason: '',
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +71,7 @@ class HomeScreen extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: LiveVideosWidget(
-                          liveStreams: dummyLiveStreams,
+                          liveStreams: generateDummyLiveStreams(10),
                           currentUserId: '',
                         ),
                       ),

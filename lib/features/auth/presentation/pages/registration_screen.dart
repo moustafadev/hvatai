@@ -8,6 +8,7 @@ class RegistrationScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => locator<RegistrationCubit>(),
       child: SafeArea(
+        bottom: false,
         child: Scaffold(
           backgroundColor: AppColors.grey100,
           // appBar: AppBar(

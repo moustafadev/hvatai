@@ -49,75 +49,67 @@ class LiveVideosWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Icon(Icons.block, color: AppColors.red, size: 40),
-              const SizedBox(height: 8),
+              8.ph,
               const CustomText(
                 text: 'Your stream is blocked',
                 color: AppColors.red,
                 fontWeight: FontWeight.bold,
               ),
-              const SizedBox(height: 8),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.orange,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-                onPressed: () {
-                  final TextEditingController reasonController =
-                      TextEditingController();
-                  showDialog(
-                    context: context,
-                    builder: (_) {
-                      return AlertDialog(
-                        title: const Text("Request Unblock"),
-                        content: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Text("Please enter your reason:"),
-                            const SizedBox(height: 10),
-                            TextField(
-                              controller: reasonController,
-                              maxLines: 3,
-                              decoration: const InputDecoration(
+              8.ph,
+              CustomButton(
+                  onPressed: () {
+                    final TextEditingController reasonController =
+                        TextEditingController();
+                    showDialog(
+                      context: context,
+                      builder: (_) {
+                        return AlertDialog(
+                          title: const CustomText(text: "Request Unblock"),
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const CustomText(
+                                  text: "Please enter your reason:"),
+                              const SizedBox(height: 10),
+                              CustomTextField(
+                                controller: reasonController,
                                 hintText: "Enter reason here...",
-                                border: OutlineInputBorder(),
+                                // maxLines: 3,
                               ),
+                            ],
+                          ),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.pop(context),
+                              child: const CustomText(text: "Cancel"),
+                            ),
+                            CustomButton(
+                              onPressed: () async {
+                                final reason = reasonController.text.trim();
+                                if (reason.isNotEmpty) {
+                                  context.pop(context);
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text("Unblock request sent."),
+                                    ),
+                                  );
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: CustomText(
+                                          text: "Please enter a reason."),
+                                    ),
+                                  );
+                                }
+                              },
+                              title: "Submit",
                             ),
                           ],
-                        ),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.pop(context),
-                            child: const Text("Cancel"),
-                          ),
-                          ElevatedButton(
-                            onPressed: () async {
-                              final reason = reasonController.text.trim();
-                              if (reason.isNotEmpty) {
-                                Navigator.pop(context);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Unblock request sent."),
-                                  ),
-                                );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text("Please enter a reason."),
-                                  ),
-                                );
-                              }
-                            },
-                            child: const CustomText(text: "Submit"),
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                child: const CustomText(text: "Contact Support"),
-              ),
+                        );
+                      },
+                    );
+                  },
+                  title: "Contact Support"),
             ],
           ),
         );
