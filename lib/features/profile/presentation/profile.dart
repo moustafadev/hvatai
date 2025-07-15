@@ -7,7 +7,6 @@ import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
-import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/notification_cubit/notification_cubit.dart';

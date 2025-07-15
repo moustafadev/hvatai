@@ -9,137 +9,130 @@ class NotificationSettingsScreen extends StatelessWidget {
     return BlocProvider.value(
       value: notificationCubit,
       child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
+            onPressed: () {
+              context.pop(context);
+            },
+          ),
+        ),
         backgroundColor: Colors.white,
-        body: BlocConsumer<NotificationCubit, NotificationState>(
-          listener: (context, state) {},
+        body: BlocBuilder<NotificationCubit, NotificationState>(
           builder: (context, state) {
             final cubit = context.read<NotificationCubit>();
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomAppBar(
-                  title: 'notifications'.tr(),
-                  showBackButton: true,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        text: 'Live Stream Notifications'.tr(),
-                        fontSize: 14,
-                        fontFamily: "Gilroy-Bold",
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.graniteGray,
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomText(
+                      text: 'notificationSettings'.tr(),
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.blackDark,
+                    ),
+                    12.ph,
+                    CustomText(
+                      text: 'notificationDescription'.tr(),
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.grey,
+                    ),
+                    14.ph,
+                    CustomSwitchWidget(
+                      title: 'streamsFromSubscriptions'.tr(),
+                      value: state.streamsFromSubscriptions,
+                      onChanged: (val) {
+                        cubit.toggleStreamsFromSubscriptions();
+                      },
+                    ),
+                    Divider(thickness: 1, color: AppColors.gray),
+                    CustomSwitchWidget(
+                      title: 'streamsISaved'.tr(),
+                      value: state.streamsISaved,
+                      onChanged: (val) {
+                        cubit.toggleStreamsISaved();
+                      },
+                    ),
+                    Divider(thickness: 1, color: AppColors.gray),
+                    CustomSwitchWidget(
+                      title: 'recommendedStreams'.tr(),
+                      value: state.recommendedStreams,
+                      onChanged: (val) {
+                        cubit.toggleRecommendedStreams();
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16.0, bottom: 40),
+                      child: CustomText(
+                        text: 'controlDescription'.tr(),
+                        color: AppColors.grey,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
                       ),
-                      5.ph,
-                      CustomSwitchWidget(
-                        title: 'Streams from subscriptions'.tr(),
-                        value: state.streamsFromSubscriptions,
-                        onChanged: (val) {
-                          cubit.toggleStreamsFromSubscriptions();
-                        },
-                      ),
-                      Divider(thickness: 1, color: AppColors.gray),
-                      CustomSwitchWidget(
-                        title: 'Streams I saved'.tr(),
-                        value: state.streamsISaved,
-                        onChanged: (val) {
-                          cubit.toggleStreamsISaved();
-                        },
-                      ),
-                      Divider(thickness: 1, color: AppColors.gray),
-                      CustomSwitchWidget(
-                        title: 'Recommended Streams'.tr(),
-                        value: state.recommendedStreams,
-                        onChanged: (val) {
-                          cubit.toggleRecommendedStreams();
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0, bottom: 40),
-                        child: CustomText(
-                          text:
-                              'Choose which streams you\'ll be notified about. Grab It! sends you recommended shows based on your history.'
-                                  .tr(),
-                          color: Colors.grey,
-                          fontSize: 12,
-                          fontFamily: "Gilroy-Bold",
+                    ),
+                    Row(
+                      children: [
+                        CustomText(
+                          text: 'addingTagsToChat'.tr(),
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w700,
                         ),
-                      ),
-                      CustomText(
-                        text: 'SEARCH NOTIFICATIONS'.tr(),
-                        fontSize: 12,
-                        fontFamily: "Gilroy-Bold",
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.graniteGray,
-                      ),
-                      12.ph,
-                      Row(
-                        children: [
-                          CustomText(
-                            text: 'Adding tags to chat'.tr(),
-                            fontFamily: "Gilroy-Bold",
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
+                        const Spacer(),
+                        GestureDetector(
+                          onTap: () {
+                            cubit.toggleSelectAll();
+                          },
+                          child: CustomText(
+                            text: state.isAllSelected
+                                ? 'Unselect ^'.tr()
+                                : 'All ^'.tr(),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16.sp,
                           ),
-                          const Spacer(),
-                          GestureDetector(
-                            onTap: () {
-                              cubit.toggleSelectAll();
-                            },
-                            child: CustomText(
-                              text: state.isAllSelected
-                                  ? 'Unselect ^'.tr()
-                                  : 'All ^'.tr(),
-                              fontWeight: FontWeight.bold,
-                              fontFamily: "Gilroy-Bold",
-                              fontSize: 14,
-                            ),
-                          ),
-                        ],
-                      ),
-                      8.ph,
-                      CustomSwitchWidget(
-                        title: 'New subscriber'.tr(),
-                        value: state.newSubscriber,
-                        onChanged: (val) {
-                          cubit.toggleNewSubscriber();
-                        },
-                      ),
-                      30.ph,
-                      CustomText(
-                        text: 'SELLER BOOKMARK NOTIFICATIONS'.tr(),
-                        fontSize: 12,
-                        fontFamily: "Gilroy-Bold",
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.graniteGray,
-                      ),
-                      5.ph,
-                      CustomSwitchWidget(
-                        title: 'Bookmarks from my streams'.tr(),
-                        value: state.bookmarksFromStreams,
-                        onChanged: (val) {
-                          cubit.toggleBookmarksFromStreams();
-                        },
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: CustomText(
-                          fontFamily: "Gilroy-Bold",
-                          text:
-                              'Get notified when people bookmark your upcoming streams.'
-                                  .tr(),
-                          color: Colors.grey,
-                          fontSize: 12,
                         ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
+                    16.ph,
+                    // CustomSwitchWidget(
+                    //   title: 'New subscriber'.tr(),
+                    //   value: state.newSubscriber,
+                    //   onChanged: (val) {
+                    //     cubit.toggleNewSubscriber();
+                    //   },
+                    // ),
+                    // 30.ph,
+                    CustomText(
+                      text: 'bookmarkNotificationDescription'.tr(),
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.grey,
+                    ),
+                    5.ph,
+                    CustomSwitchWidget(
+                      title: 'bookmarksFromMyStreams'.tr(),
+                      value: state.bookmarksFromStreams,
+                      onChanged: (val) {
+                        cubit.toggleBookmarksFromStreams();
+                      },
+                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.only(top: 8.0),
+                    //   child: CustomText(
+                    //     fontFamily: "Gilroy-Bold",
+                    //     text:
+                    //         'Get notified when people bookmark your upcoming streams.'
+                    //             .tr(),
+                    //     color: Colors.grey,
+                    //     fontSize: 12,
+                    //   ),
+                    // ),
+                  ],
                 ),
-              ],
+              ),
             );
           },
         ),

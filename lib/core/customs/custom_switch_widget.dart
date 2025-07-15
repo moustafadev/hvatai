@@ -13,14 +13,14 @@ class CustomSwitchWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(children: [
       CustomText(
-          text: title,
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-          fontFamily: "Gilroy-Bold"),
+        text: title,
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+      ),
       Spacer(),
       CupertinoSwitch(
         value: value,
-        activeTrackColor: AppColors.green,
+        activeTrackColor: AppColors.primary,
         onChanged: onChanged,
       ),
     ]);
