@@ -51,7 +51,6 @@ class HelpContacts extends StatelessWidget {
               style: TextStyle(
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
-                fontFamily: "Gilroy-Bold",
                 color: Color(0xff2A2A2A),
               ),
             ),

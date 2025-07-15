@@ -340,6 +340,7 @@ class Assets {
   /// assets/icons/notification.png
   static const String assetsIconsNotification = "assets/icons/notification.png";
   static const String assetsIconsTrash = "assets/icons/trash.png";
+  static const String assetsIconsStar2 = "assets/icons/star2.png";
 
   /// Assets for assetsIconsPasswordMinimalisticInput
   /// assets/icons/Password_Minimalistic_Input.png

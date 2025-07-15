@@ -11,30 +11,35 @@ class TopProfileInfo extends StatelessWidget {
       // final cubit = context.read<ProfileCubit>();
       return Row(
         children: [
-          Container(
-            height: 41.h,
-            width: 41.w,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image:
+          GestureDetector(
+            onTap: () {
+              context.push(AppRoutes.tradeProfileDetail);
+            },
+            child: Container(
+              height: 41.h,
+              width: 41.w,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image:
 
-                    // (snapshot.data
-                    //                 .data()?['image'] !=
-                    //             null &&
-                    //         snapshot.data!
-                    //             .data()!['image']
-                    //             .toString()
-                    //             .isNotEmpty)
-                    //     ?
+                      // (snapshot.data
+                      //                 .data()?['image'] !=
+                      //             null &&
+                      //         snapshot.data!
+                      //             .data()!['image']
+                      //             .toString()
+                      //             .isNotEmpty)
+                      //     ?
 
-                    //     NetworkImage(
-                    //         snapshot.data!.data()?['image'])
-                    //     :
+                      //     NetworkImage(
+                      //         snapshot.data!.data()?['image'])
+                      //     :
 
-                    AssetImage(Assets.assetsImagesProfileImage)
-                        as ImageProvider,
-                fit: BoxFit.fill,
+                      AssetImage(Assets.assetsImagesProfileImage)
+                          as ImageProvider,
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
           ),
@@ -69,12 +74,6 @@ class TopProfileInfo extends StatelessWidget {
                     buttonColor: AppColors.primary,
                     text: "tradeProfile".tr(),
                     textColor: AppColors.blackDark,
-                    onPressed: () {
-                      context.push(
-                        AppRoutes.tradeProfile,
-                        // must be a UserRegistrationData instance
-                      );
-                    },
                   ),
                 ],
               )

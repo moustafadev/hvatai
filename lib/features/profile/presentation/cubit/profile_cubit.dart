@@ -84,6 +84,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       settingsOptions: _buildSettingsOptions(),
       helpAndContact: _buildHelpOptions(),
       changeInfoProfile: _buildChangeInfoProfile(),
+      streamerOptions: _buildTradeStreamerOptions(),
       isLoading: false,
     ));
   }
@@ -287,6 +288,9 @@ class ProfileCubit extends Cubit<ProfileState> {
       {
         "icon": Assets.assetsIconsProfileType,
         "title": "profileType".tr(),
+        "screen": (BuildContext context) {
+          context.push(AppRoutes.tradeProfile);
+        },
       },
       {
         "icon": Assets.assetsIconsBell,
@@ -294,6 +298,32 @@ class ProfileCubit extends Cubit<ProfileState> {
         "screen": (BuildContext context) {
           context.push(AppRoutes.notificationSettings);
         },
+      },
+    ];
+  }
+
+  // ignore: unused_element
+  List<Map<String, dynamic>> _buildTradeStreamerOptions() {
+    return [
+      {
+        "icon": Assets.assetsIconsUsersGroupRoundedIcon,
+        "title": "Invite a friend and get up to 10,000 ₽\nBalance: 300 ₽".tr(),
+      },
+      {
+        "icon": Assets.assetsIconsStar2,
+        "title": "My reviews".tr(),
+      },
+      {
+        "icon": Assets.assetsIconsMessage,
+        "title": "Chat".tr(),
+      },
+      {
+        "icon": Assets.assetsImagesAnalyticsIcon,
+        "title": "Analytics".tr(),
+      },
+      {
+        "icon": Assets.assetsImagesDeliveryIcon,
+        "title": "Delivery settings".tr(),
       },
     ];
   }

@@ -18,13 +18,13 @@ class ProfileScreen extends StatelessWidget {
                     // stream: getCurrentUserData,
                     stream: Stream.empty(),
                     builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircularProgressIndicator(),
-                          ],
-                        );
+                      if (snapshot.connectionState == ConnectionState.waiting ||
+                          state.helpAndContact.isEmpty ||
+                          state.settingsOptions.isEmpty) {
+                        return Center(
+                            child: CircularProgressIndicator(
+                          color: AppColors.grey,
+                        ));
                       }
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal: 12.w),

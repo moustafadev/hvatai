@@ -32,18 +32,15 @@ class ChangeInfoProfile extends StatelessWidget {
               ),
             ),
           ),
-          title: Text(
-            item['title'],
-            style: TextStyle(
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
-              fontFamily: "Gilroy-Bold",
-              color: Color(0xff2A2A2A),
-            ),
+          title: CustomText(
+            text: item['title'],
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w600,
+            color: AppColors.blackDark,
           ),
           trailing: Icon(
             Icons.chevron_right,
-            color: Colors.black,
+            color: AppColors.blackDark,
             size: 28,
           ),
           onTap: () {

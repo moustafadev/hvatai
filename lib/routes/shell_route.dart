@@ -142,5 +142,15 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
             ),
           ],
         ),
+        StatefulShellBranch(routes: <RouteBase>[
+          GoRoute(
+            path: AppRoutes.tradeProfileDetail,
+            pageBuilder: (context, state) => buildCupertinoTransitionPage(
+              context: context,
+              state: state,
+              child: const TradeProfileDetail(),
+            ),
+          ),
+        ]),
       ],
     );

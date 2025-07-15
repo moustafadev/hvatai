@@ -31,7 +31,7 @@ class SettingsScreen extends StatelessWidget {
             builder: (context, state) {
               final cubit = context.read<ProfileCubit>();
               if (state.changeInfoProfile.isEmpty) {
-                return const Center(
+                return Center(
                     child: CircularProgressIndicator(
                   color: AppColors.grey,
                 ));

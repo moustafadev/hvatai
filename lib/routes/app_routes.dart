@@ -26,4 +26,5 @@ class AppRoutes {
   static const String notificationSettings = '/notification_settings';
   static const String tradeProfile = '/trade_profile';
   static const String interestsDetail = '/interests-detail';
+  static const String tradeProfileDetail = '/trade_profile_detail';
 }
