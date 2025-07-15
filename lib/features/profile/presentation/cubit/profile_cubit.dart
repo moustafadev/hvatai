@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/core/theme/assets.dart';
@@ -25,11 +26,15 @@ class ProfileCubit extends Cubit<ProfileState> {
     ));
   }
 
+  void setGender(String? gender) => emit(state.copyWith(gender: gender!));
+
   void toggleStreamsISaved() {
     emit(state.copyWith(
       streamsISaved: !state.streamsISaved,
     ));
   }
+
+  void setCountry(String? country) => emit(state.copyWith(country: country!));
 
   void toggleRecommendedStreams() {
     emit(state.copyWith(
@@ -76,6 +81,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       profileImageUrl: null,
       settingsOptions: _buildSettingsOptions(),
       helpAndContact: _buildHelpOptions(),
+      changeInfoProfile: _buildChangeInfoProfile(),
       isLoading: false,
     ));
   }
@@ -261,6 +267,28 @@ class ProfileCubit extends Cubit<ProfileState> {
         "icon": Assets.assetsIconsFile,
         "title": "termsConditions".tr(),
         // "screen": () => Get.to(() => TermsAndCondition())
+      },
+    ];
+  }
+
+  // ignore: unused_element
+  List<Map<String, dynamic>> _buildChangeInfoProfile() {
+    return [
+      {
+        "icon": Assets.assetsIconsEmail,
+        "title": "changeEmail".tr(),
+      },
+      {
+        "icon": Assets.assetsIconsPasswordMinimalisticInput,
+        "title": "ChangePassword".tr(),
+      },
+      {
+        "icon": Assets.assetsIconsProfileType,
+        "title": "profileType".tr(),
+      },
+      {
+        "icon": Assets.assetsIconsBell,
+        "title": "settingUpNotifications".tr(),
       },
     ];
   }

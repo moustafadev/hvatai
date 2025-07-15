@@ -40,7 +40,6 @@ part 'widgets/registration/name_fields.dart';
 part 'widgets/registration/email_field.dart';
 part 'widgets/registration/password_field.dart';
 part 'widgets/registration/password_strength_indicator.dart';
-part 'widgets/registration/gender_dropdown.dart';
 part 'widgets/registration/country_dropdown.dart';
 part 'widgets/registration/check_box_row_terms.dart';
 part 'widgets/registration/check_box_row_age.dart';

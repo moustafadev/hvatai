@@ -339,6 +339,7 @@ class Assets {
   /// Assets for assetsIconsNotification
   /// assets/icons/notification.png
   static const String assetsIconsNotification = "assets/icons/notification.png";
+  static const String assetsIconsTrash = "assets/icons/trash.png";
 
   /// Assets for assetsIconsPasswordMinimalisticInput
   /// assets/icons/Password_Minimalistic_Input.png
@@ -380,6 +381,8 @@ class Assets {
   /// Assets for assetsIconsProfile1
   /// assets/icons/profile1.png
   static const String assetsIconsProfile1 = "assets/icons/profile1.png";
+
+  static const String assetsIconsProfileType = "assets/icons/profileType.png";
 
   /// Assets for assetsIconsProfilewin
   /// assets/icons/profilewin.png

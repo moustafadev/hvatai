@@ -19,6 +19,8 @@ mixin _$ProfileState {
   String get firstName => throw _privateConstructorUsedError;
   String? get profileImageUrl => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  String get gender => throw _privateConstructorUsedError;
+  String get country => throw _privateConstructorUsedError;
   bool get streamsFromSubscriptions => throw _privateConstructorUsedError;
   bool get streamsISaved => throw _privateConstructorUsedError;
   bool get recommendedStreams => throw _privateConstructorUsedError;
@@ -28,6 +30,8 @@ mixin _$ProfileState {
   List<Map<String, dynamic>> get settingsOptions =>
       throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get helpAndContact =>
+      throw _privateConstructorUsedError;
+  List<Map<String, dynamic>> get changeInfoProfile =>
       throw _privateConstructorUsedError;
   int get uid => throw _privateConstructorUsedError;
   String get channelId => throw _privateConstructorUsedError;
@@ -50,6 +54,8 @@ abstract class $ProfileStateCopyWith<$Res> {
       {String firstName,
       String? profileImageUrl,
       bool isLoading,
+      String gender,
+      String country,
       bool streamsFromSubscriptions,
       bool streamsISaved,
       bool recommendedStreams,
@@ -58,6 +64,7 @@ abstract class $ProfileStateCopyWith<$Res> {
       bool isAllSelected,
       List<Map<String, dynamic>> settingsOptions,
       List<Map<String, dynamic>> helpAndContact,
+      List<Map<String, dynamic>> changeInfoProfile,
       int uid,
       String channelId,
       String? type});
@@ -81,6 +88,8 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? firstName = null,
     Object? profileImageUrl = freezed,
     Object? isLoading = null,
+    Object? gender = null,
+    Object? country = null,
     Object? streamsFromSubscriptions = null,
     Object? streamsISaved = null,
     Object? recommendedStreams = null,
@@ -89,6 +98,7 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? isAllSelected = null,
     Object? settingsOptions = null,
     Object? helpAndContact = null,
+    Object? changeInfoProfile = null,
     Object? uid = null,
     Object? channelId = null,
     Object? type = freezed,
@@ -106,6 +116,14 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      gender: null == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String,
+      country: null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
       streamsFromSubscriptions: null == streamsFromSubscriptions
           ? _value.streamsFromSubscriptions
           : streamsFromSubscriptions // ignore: cast_nullable_to_non_nullable
@@ -138,6 +156,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.helpAndContact
           : helpAndContact // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
+      changeInfoProfile: null == changeInfoProfile
+          ? _value.changeInfoProfile
+          : changeInfoProfile // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -166,6 +188,8 @@ abstract class _$$ProfileStateImplCopyWith<$Res>
       {String firstName,
       String? profileImageUrl,
       bool isLoading,
+      String gender,
+      String country,
       bool streamsFromSubscriptions,
       bool streamsISaved,
       bool recommendedStreams,
@@ -174,6 +198,7 @@ abstract class _$$ProfileStateImplCopyWith<$Res>
       bool isAllSelected,
       List<Map<String, dynamic>> settingsOptions,
       List<Map<String, dynamic>> helpAndContact,
+      List<Map<String, dynamic>> changeInfoProfile,
       int uid,
       String channelId,
       String? type});
@@ -195,6 +220,8 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
     Object? firstName = null,
     Object? profileImageUrl = freezed,
     Object? isLoading = null,
+    Object? gender = null,
+    Object? country = null,
     Object? streamsFromSubscriptions = null,
     Object? streamsISaved = null,
     Object? recommendedStreams = null,
@@ -203,6 +230,7 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
     Object? isAllSelected = null,
     Object? settingsOptions = null,
     Object? helpAndContact = null,
+    Object? changeInfoProfile = null,
     Object? uid = null,
     Object? channelId = null,
     Object? type = freezed,
@@ -220,6 +248,14 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      gender: null == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String,
+      country: null == country
+          ? _value.country
+          : country // ignore: cast_nullable_to_non_nullable
+              as String,
       streamsFromSubscriptions: null == streamsFromSubscriptions
           ? _value.streamsFromSubscriptions
           : streamsFromSubscriptions // ignore: cast_nullable_to_non_nullable
@@ -252,6 +288,10 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
           ? _value._helpAndContact
           : helpAndContact // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
+      changeInfoProfile: null == changeInfoProfile
+          ? _value._changeInfoProfile
+          : changeInfoProfile // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -275,6 +315,8 @@ class _$ProfileStateImpl implements _ProfileState {
       {this.firstName = 'User',
       this.profileImageUrl,
       this.isLoading = false,
+      this.gender = '',
+      this.country = '',
       this.streamsFromSubscriptions = true,
       this.streamsISaved = false,
       this.recommendedStreams = true,
@@ -283,11 +325,13 @@ class _$ProfileStateImpl implements _ProfileState {
       this.isAllSelected = false,
       final List<Map<String, dynamic>> settingsOptions = const [],
       final List<Map<String, dynamic>> helpAndContact = const [],
+      final List<Map<String, dynamic>> changeInfoProfile = const [],
       required this.uid,
       required this.channelId,
       this.type})
       : _settingsOptions = settingsOptions,
-        _helpAndContact = helpAndContact;
+        _helpAndContact = helpAndContact,
+        _changeInfoProfile = changeInfoProfile;
 
   @override
   @JsonKey()
@@ -297,6 +341,12 @@ class _$ProfileStateImpl implements _ProfileState {
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final String gender;
+  @override
+  @JsonKey()
+  final String country;
   @override
   @JsonKey()
   final bool streamsFromSubscriptions;
@@ -333,6 +383,16 @@ class _$ProfileStateImpl implements _ProfileState {
     return EqualUnmodifiableListView(_helpAndContact);
   }
 
+  final List<Map<String, dynamic>> _changeInfoProfile;
+  @override
+  @JsonKey()
+  List<Map<String, dynamic>> get changeInfoProfile {
+    if (_changeInfoProfile is EqualUnmodifiableListView)
+      return _changeInfoProfile;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_changeInfoProfile);
+  }
+
   @override
   final int uid;
   @override
@@ -342,7 +402,7 @@ class _$ProfileStateImpl implements _ProfileState {
 
   @override
   String toString() {
-    return 'ProfileState(firstName: $firstName, profileImageUrl: $profileImageUrl, isLoading: $isLoading, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, uid: $uid, channelId: $channelId, type: $type)';
+    return 'ProfileState(firstName: $firstName, profileImageUrl: $profileImageUrl, isLoading: $isLoading, gender: $gender, country: $country, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, changeInfoProfile: $changeInfoProfile, uid: $uid, channelId: $channelId, type: $type)';
   }
 
   @override
@@ -356,6 +416,8 @@ class _$ProfileStateImpl implements _ProfileState {
                 other.profileImageUrl == profileImageUrl) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.country, country) || other.country == country) &&
             (identical(
                     other.streamsFromSubscriptions, streamsFromSubscriptions) ||
                 other.streamsFromSubscriptions == streamsFromSubscriptions) &&
@@ -373,6 +435,8 @@ class _$ProfileStateImpl implements _ProfileState {
                 .equals(other._settingsOptions, _settingsOptions) &&
             const DeepCollectionEquality()
                 .equals(other._helpAndContact, _helpAndContact) &&
+            const DeepCollectionEquality()
+                .equals(other._changeInfoProfile, _changeInfoProfile) &&
             (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.channelId, channelId) ||
                 other.channelId == channelId) &&
@@ -385,6 +449,8 @@ class _$ProfileStateImpl implements _ProfileState {
       firstName,
       profileImageUrl,
       isLoading,
+      gender,
+      country,
       streamsFromSubscriptions,
       streamsISaved,
       recommendedStreams,
@@ -393,6 +459,7 @@ class _$ProfileStateImpl implements _ProfileState {
       isAllSelected,
       const DeepCollectionEquality().hash(_settingsOptions),
       const DeepCollectionEquality().hash(_helpAndContact),
+      const DeepCollectionEquality().hash(_changeInfoProfile),
       uid,
       channelId,
       type);
@@ -411,6 +478,8 @@ abstract class _ProfileState implements ProfileState {
       {final String firstName,
       final String? profileImageUrl,
       final bool isLoading,
+      final String gender,
+      final String country,
       final bool streamsFromSubscriptions,
       final bool streamsISaved,
       final bool recommendedStreams,
@@ -419,6 +488,7 @@ abstract class _ProfileState implements ProfileState {
       final bool isAllSelected,
       final List<Map<String, dynamic>> settingsOptions,
       final List<Map<String, dynamic>> helpAndContact,
+      final List<Map<String, dynamic>> changeInfoProfile,
       required final int uid,
       required final String channelId,
       final String? type}) = _$ProfileStateImpl;
@@ -429,6 +499,10 @@ abstract class _ProfileState implements ProfileState {
   String? get profileImageUrl;
   @override
   bool get isLoading;
+  @override
+  String get gender;
+  @override
+  String get country;
   @override
   bool get streamsFromSubscriptions;
   @override
@@ -445,6 +519,8 @@ abstract class _ProfileState implements ProfileState {
   List<Map<String, dynamic>> get settingsOptions;
   @override
   List<Map<String, dynamic>> get helpAndContact;
+  @override
+  List<Map<String, dynamic>> get changeInfoProfile;
   @override
   int get uid;
   @override

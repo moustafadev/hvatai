@@ -23,6 +23,7 @@ class CustomButton extends StatelessWidget {
   final bool spacerInSuffixIcon;
   final bool isSizedBetweenIcon;
   final bool? disabled;
+  final double? height; // ✅ هنا أضفنا height
 
   CustomButton({
     super.key,
@@ -47,6 +48,7 @@ class CustomButton extends StatelessWidget {
     this.spacerInSuffixIcon = true,
     this.isSizedBetweenIcon = true,
     this.disabled = false,
+    this.height, // ✅ وهنا أيضًا
   });
 
   @override
@@ -54,18 +56,18 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: isLoading || disabled! ? null : onPressed,
       style: ElevatedButton.styleFrom(
-              // elevation: elevation,
-              minimumSize: const Size.fromHeight(40),
-              backgroundColor: color ?? AppColors.hotPink,
-              disabledBackgroundColor: color ?? AppColors.hotPink,
-              shape: RoundedRectangleBorder(
-                  side: colorBorderSide != null
-                      ? BorderSide(width: 1, color: colorBorderSide!)
-                      : BorderSide.none,
-                  borderRadius: BorderRadius.all(Radius.circular(radius))),
-              padding: padding,
-              textStyle: const TextStyle(fontSize: 24))
-          .merge(
+        minimumSize: Size.fromHeight(height ?? 40), // ✅ استخدم height هنا
+        backgroundColor: color ?? AppColors.hotPink,
+        disabledBackgroundColor: color ?? AppColors.hotPink,
+        shape: RoundedRectangleBorder(
+          side: colorBorderSide != null
+              ? BorderSide(width: 1, color: colorBorderSide!)
+              : BorderSide.none,
+          borderRadius: BorderRadius.all(Radius.circular(radius)),
+        ),
+        padding: padding,
+        textStyle: const TextStyle(fontSize: 24),
+      ).merge(
         ButtonStyle(
           elevation: WidgetStateProperty.resolveWith<double>(
             (Set<WidgetState> states) {
@@ -91,11 +93,11 @@ class CustomButton extends StatelessWidget {
                 ],
                 CustomText(
                   text: title,
-                  // size: fontSize,
                   color: disabled! ? AppColors.eerieBlack : textColor,
                   fontWeight: fontWeight,
                   textAlign: textAlign,
                   maxLines: maxLines,
+                  fontFamily: 'Manrope',
                   overflow: textOverflow,
                 ),
                 if (suffixIcon != null) ...[

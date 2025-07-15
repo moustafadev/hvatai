@@ -1,7 +1,10 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
+import 'package:hvatai/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
+import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -69,6 +72,13 @@ final GoRouter router = GoRouter(
         builder: (context, state) {
           return NotificationSettingsScreen();
         }),
+    GoRoute(
+      path: AppRoutes.settings,
+      builder: (context, state) => BlocProvider(
+        create: (context) => locator<ProfileCubit>(),
+        child: const SettingsScreen(),
+      ),
+    ),
     GoRoute(
       path: AppRoutes.interestsDetail,
       builder: (context, state) {

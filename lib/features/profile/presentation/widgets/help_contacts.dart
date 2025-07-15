@@ -12,10 +12,9 @@ class HelpContacts extends StatelessWidget {
         shrinkWrap: true,
         padding: EdgeInsets.all(0),
         physics: NeverScrollableScrollPhysics(),
-        itemCount: state.helpAndContact.length + 1, // زودنا 1 للعناصر الإضافية
+        itemCount: state.helpAndContact.length + 1,
         itemBuilder: (context, index) {
           if (index == 0) {
-            // عنصر العنوان في البداية
             return ListTile(
               contentPadding: EdgeInsets.all(0),
               leading: CustomText(
@@ -27,7 +26,6 @@ class HelpContacts extends StatelessWidget {
             );
           }
 
-          // العناصر العادية تبدأ من index = 1
           final item = state.helpAndContact[index - 1];
 
           return ListTile(

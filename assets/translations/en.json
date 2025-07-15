@@ -429,10 +429,13 @@
   "liveOnly": "Live Only",
   "selectStreamer": "Select Streamer",
   "deliveryOption": "Delivery Option",
+  "settingUpNotifications": "Setting up notifications",
   "update": "Update",
   "favorites": "Favorites",
   "maximum10WordsAllowed": "Maximum 10 words allowed",
   "maximum30WordsAllowed": "Maximum 30 words allowed",
+  "accountSettings": "Account Settings",
   "eg100": "e.g. 100",
   "eg999": "e.g. 999"
+
 }

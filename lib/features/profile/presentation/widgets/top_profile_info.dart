@@ -82,7 +82,11 @@ class TopProfileInfo extends StatelessWidget {
           ),
           const Spacer(),
           GestureDetector(
-            onTap: () {},
+            onTap: () {
+              context.push(
+                AppRoutes.settings,
+              );
+            },
             child: CircleAvatar(
               backgroundColor: AppColors.gray,
               radius: 20.r,

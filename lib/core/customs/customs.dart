@@ -31,3 +31,4 @@ part 'custom_switch_widget.dart';
 part 'social_circle_button.dart';
 part 'reusable_category_widget.dart';
 part 'reusable_live_videos_grid.dart';
+part 'custom_select_gender.dart';
