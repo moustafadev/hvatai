@@ -27,6 +27,10 @@ mixin _$ProfileState {
   bool get newSubscriber => throw _privateConstructorUsedError;
   bool get bookmarksFromStreams => throw _privateConstructorUsedError;
   bool get isAllSelected => throw _privateConstructorUsedError;
+  String get password => throw _privateConstructorUsedError;
+  String get passwordError => throw _privateConstructorUsedError;
+  String get confirmPassword => throw _privateConstructorUsedError;
+  String? get emailError => throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get settingsOptions =>
       throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get helpAndContact =>
@@ -35,6 +39,9 @@ mixin _$ProfileState {
       throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get streamerOptions =>
       throw _privateConstructorUsedError;
+  bool get obscurePassword => throw _privateConstructorUsedError;
+  double get passwordStrength => throw _privateConstructorUsedError;
+  String get passwordStrengthText => throw _privateConstructorUsedError;
   int get uid => throw _privateConstructorUsedError;
   String get channelId => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
@@ -64,10 +71,17 @@ abstract class $ProfileStateCopyWith<$Res> {
       bool newSubscriber,
       bool bookmarksFromStreams,
       bool isAllSelected,
+      String password,
+      String passwordError,
+      String confirmPassword,
+      String? emailError,
       List<Map<String, dynamic>> settingsOptions,
       List<Map<String, dynamic>> helpAndContact,
       List<Map<String, dynamic>> changeInfoProfile,
       List<Map<String, dynamic>> streamerOptions,
+      bool obscurePassword,
+      double passwordStrength,
+      String passwordStrengthText,
       int uid,
       String channelId,
       String? type});
@@ -99,10 +113,17 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? newSubscriber = null,
     Object? bookmarksFromStreams = null,
     Object? isAllSelected = null,
+    Object? password = null,
+    Object? passwordError = null,
+    Object? confirmPassword = null,
+    Object? emailError = freezed,
     Object? settingsOptions = null,
     Object? helpAndContact = null,
     Object? changeInfoProfile = null,
     Object? streamerOptions = null,
+    Object? obscurePassword = null,
+    Object? passwordStrength = null,
+    Object? passwordStrengthText = null,
     Object? uid = null,
     Object? channelId = null,
     Object? type = freezed,
@@ -152,6 +173,22 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.isAllSelected
           : isAllSelected // ignore: cast_nullable_to_non_nullable
               as bool,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      passwordError: null == passwordError
+          ? _value.passwordError
+          : passwordError // ignore: cast_nullable_to_non_nullable
+              as String,
+      confirmPassword: null == confirmPassword
+          ? _value.confirmPassword
+          : confirmPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      emailError: freezed == emailError
+          ? _value.emailError
+          : emailError // ignore: cast_nullable_to_non_nullable
+              as String?,
       settingsOptions: null == settingsOptions
           ? _value.settingsOptions
           : settingsOptions // ignore: cast_nullable_to_non_nullable
@@ -168,6 +205,18 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.streamerOptions
           : streamerOptions // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
+      obscurePassword: null == obscurePassword
+          ? _value.obscurePassword
+          : obscurePassword // ignore: cast_nullable_to_non_nullable
+              as bool,
+      passwordStrength: null == passwordStrength
+          ? _value.passwordStrength
+          : passwordStrength // ignore: cast_nullable_to_non_nullable
+              as double,
+      passwordStrengthText: null == passwordStrengthText
+          ? _value.passwordStrengthText
+          : passwordStrengthText // ignore: cast_nullable_to_non_nullable
+              as String,
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -204,10 +253,17 @@ abstract class _$$ProfileStateImplCopyWith<$Res>
       bool newSubscriber,
       bool bookmarksFromStreams,
       bool isAllSelected,
+      String password,
+      String passwordError,
+      String confirmPassword,
+      String? emailError,
       List<Map<String, dynamic>> settingsOptions,
       List<Map<String, dynamic>> helpAndContact,
       List<Map<String, dynamic>> changeInfoProfile,
       List<Map<String, dynamic>> streamerOptions,
+      bool obscurePassword,
+      double passwordStrength,
+      String passwordStrengthText,
       int uid,
       String channelId,
       String? type});
@@ -237,10 +293,17 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
     Object? newSubscriber = null,
     Object? bookmarksFromStreams = null,
     Object? isAllSelected = null,
+    Object? password = null,
+    Object? passwordError = null,
+    Object? confirmPassword = null,
+    Object? emailError = freezed,
     Object? settingsOptions = null,
     Object? helpAndContact = null,
     Object? changeInfoProfile = null,
     Object? streamerOptions = null,
+    Object? obscurePassword = null,
+    Object? passwordStrength = null,
+    Object? passwordStrengthText = null,
     Object? uid = null,
     Object? channelId = null,
     Object? type = freezed,
@@ -290,6 +353,22 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
           ? _value.isAllSelected
           : isAllSelected // ignore: cast_nullable_to_non_nullable
               as bool,
+      password: null == password
+          ? _value.password
+          : password // ignore: cast_nullable_to_non_nullable
+              as String,
+      passwordError: null == passwordError
+          ? _value.passwordError
+          : passwordError // ignore: cast_nullable_to_non_nullable
+              as String,
+      confirmPassword: null == confirmPassword
+          ? _value.confirmPassword
+          : confirmPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      emailError: freezed == emailError
+          ? _value.emailError
+          : emailError // ignore: cast_nullable_to_non_nullable
+              as String?,
       settingsOptions: null == settingsOptions
           ? _value._settingsOptions
           : settingsOptions // ignore: cast_nullable_to_non_nullable
@@ -306,6 +385,18 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
           ? _value._streamerOptions
           : streamerOptions // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
+      obscurePassword: null == obscurePassword
+          ? _value.obscurePassword
+          : obscurePassword // ignore: cast_nullable_to_non_nullable
+              as bool,
+      passwordStrength: null == passwordStrength
+          ? _value.passwordStrength
+          : passwordStrength // ignore: cast_nullable_to_non_nullable
+              as double,
+      passwordStrengthText: null == passwordStrengthText
+          ? _value.passwordStrengthText
+          : passwordStrengthText // ignore: cast_nullable_to_non_nullable
+              as String,
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -337,10 +428,17 @@ class _$ProfileStateImpl implements _ProfileState {
       this.newSubscriber = true,
       this.bookmarksFromStreams = true,
       this.isAllSelected = false,
+      this.password = '',
+      this.passwordError = '',
+      this.confirmPassword = '',
+      this.emailError,
       final List<Map<String, dynamic>> settingsOptions = const [],
       final List<Map<String, dynamic>> helpAndContact = const [],
       final List<Map<String, dynamic>> changeInfoProfile = const [],
       final List<Map<String, dynamic>> streamerOptions = const [],
+      this.obscurePassword = false,
+      this.passwordStrength = 0.0,
+      this.passwordStrengthText = '',
       required this.uid,
       required this.channelId,
       this.type})
@@ -381,6 +479,17 @@ class _$ProfileStateImpl implements _ProfileState {
   @override
   @JsonKey()
   final bool isAllSelected;
+  @override
+  @JsonKey()
+  final String password;
+  @override
+  @JsonKey()
+  final String passwordError;
+  @override
+  @JsonKey()
+  final String confirmPassword;
+  @override
+  final String? emailError;
   final List<Map<String, dynamic>> _settingsOptions;
   @override
   @JsonKey()
@@ -419,6 +528,15 @@ class _$ProfileStateImpl implements _ProfileState {
   }
 
   @override
+  @JsonKey()
+  final bool obscurePassword;
+  @override
+  @JsonKey()
+  final double passwordStrength;
+  @override
+  @JsonKey()
+  final String passwordStrengthText;
+  @override
   final int uid;
   @override
   final String channelId;
@@ -427,7 +545,7 @@ class _$ProfileStateImpl implements _ProfileState {
 
   @override
   String toString() {
-    return 'ProfileState(firstName: $firstName, profileImageUrl: $profileImageUrl, isLoading: $isLoading, gender: $gender, country: $country, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, changeInfoProfile: $changeInfoProfile, streamerOptions: $streamerOptions, uid: $uid, channelId: $channelId, type: $type)';
+    return 'ProfileState(firstName: $firstName, profileImageUrl: $profileImageUrl, isLoading: $isLoading, gender: $gender, country: $country, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, password: $password, passwordError: $passwordError, confirmPassword: $confirmPassword, emailError: $emailError, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, changeInfoProfile: $changeInfoProfile, streamerOptions: $streamerOptions, obscurePassword: $obscurePassword, passwordStrength: $passwordStrength, passwordStrengthText: $passwordStrengthText, uid: $uid, channelId: $channelId, type: $type)';
   }
 
   @override
@@ -456,6 +574,14 @@ class _$ProfileStateImpl implements _ProfileState {
                 other.bookmarksFromStreams == bookmarksFromStreams) &&
             (identical(other.isAllSelected, isAllSelected) ||
                 other.isAllSelected == isAllSelected) &&
+            (identical(other.password, password) ||
+                other.password == password) &&
+            (identical(other.passwordError, passwordError) ||
+                other.passwordError == passwordError) &&
+            (identical(other.confirmPassword, confirmPassword) ||
+                other.confirmPassword == confirmPassword) &&
+            (identical(other.emailError, emailError) ||
+                other.emailError == emailError) &&
             const DeepCollectionEquality()
                 .equals(other._settingsOptions, _settingsOptions) &&
             const DeepCollectionEquality()
@@ -464,6 +590,12 @@ class _$ProfileStateImpl implements _ProfileState {
                 .equals(other._changeInfoProfile, _changeInfoProfile) &&
             const DeepCollectionEquality()
                 .equals(other._streamerOptions, _streamerOptions) &&
+            (identical(other.obscurePassword, obscurePassword) ||
+                other.obscurePassword == obscurePassword) &&
+            (identical(other.passwordStrength, passwordStrength) ||
+                other.passwordStrength == passwordStrength) &&
+            (identical(other.passwordStrengthText, passwordStrengthText) ||
+                other.passwordStrengthText == passwordStrengthText) &&
             (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.channelId, channelId) ||
                 other.channelId == channelId) &&
@@ -471,26 +603,34 @@ class _$ProfileStateImpl implements _ProfileState {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      firstName,
-      profileImageUrl,
-      isLoading,
-      gender,
-      country,
-      streamsFromSubscriptions,
-      streamsISaved,
-      recommendedStreams,
-      newSubscriber,
-      bookmarksFromStreams,
-      isAllSelected,
-      const DeepCollectionEquality().hash(_settingsOptions),
-      const DeepCollectionEquality().hash(_helpAndContact),
-      const DeepCollectionEquality().hash(_changeInfoProfile),
-      const DeepCollectionEquality().hash(_streamerOptions),
-      uid,
-      channelId,
-      type);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        firstName,
+        profileImageUrl,
+        isLoading,
+        gender,
+        country,
+        streamsFromSubscriptions,
+        streamsISaved,
+        recommendedStreams,
+        newSubscriber,
+        bookmarksFromStreams,
+        isAllSelected,
+        password,
+        passwordError,
+        confirmPassword,
+        emailError,
+        const DeepCollectionEquality().hash(_settingsOptions),
+        const DeepCollectionEquality().hash(_helpAndContact),
+        const DeepCollectionEquality().hash(_changeInfoProfile),
+        const DeepCollectionEquality().hash(_streamerOptions),
+        obscurePassword,
+        passwordStrength,
+        passwordStrengthText,
+        uid,
+        channelId,
+        type
+      ]);
 
   /// Create a copy of ProfileState
   /// with the given fields replaced by the non-null parameter values.
@@ -514,10 +654,17 @@ abstract class _ProfileState implements ProfileState {
       final bool newSubscriber,
       final bool bookmarksFromStreams,
       final bool isAllSelected,
+      final String password,
+      final String passwordError,
+      final String confirmPassword,
+      final String? emailError,
       final List<Map<String, dynamic>> settingsOptions,
       final List<Map<String, dynamic>> helpAndContact,
       final List<Map<String, dynamic>> changeInfoProfile,
       final List<Map<String, dynamic>> streamerOptions,
+      final bool obscurePassword,
+      final double passwordStrength,
+      final String passwordStrengthText,
       required final int uid,
       required final String channelId,
       final String? type}) = _$ProfileStateImpl;
@@ -545,6 +692,14 @@ abstract class _ProfileState implements ProfileState {
   @override
   bool get isAllSelected;
   @override
+  String get password;
+  @override
+  String get passwordError;
+  @override
+  String get confirmPassword;
+  @override
+  String? get emailError;
+  @override
   List<Map<String, dynamic>> get settingsOptions;
   @override
   List<Map<String, dynamic>> get helpAndContact;
@@ -552,6 +707,12 @@ abstract class _ProfileState implements ProfileState {
   List<Map<String, dynamic>> get changeInfoProfile;
   @override
   List<Map<String, dynamic>> get streamerOptions;
+  @override
+  bool get obscurePassword;
+  @override
+  double get passwordStrength;
+  @override
+  String get passwordStrengthText;
   @override
   int get uid;
   @override

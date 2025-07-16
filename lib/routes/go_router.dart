@@ -48,6 +48,18 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
+      path: AppRoutes.changeEmail, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        return const ChangeEmailUser();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.changePassword, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        return const ChangePasswordUser();
+      },
+    ),
+    GoRoute(
       path: AppRoutes.termAndConditions, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const TermsAndCondition();

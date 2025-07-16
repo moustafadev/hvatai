@@ -21,6 +21,7 @@ class ProfileCubit extends Cubit<ProfileState> {
         )) {
     loadProfile();
   }
+
 // Notification Toggles - Live Stream
   void toggleStreamsFromSubscriptions() {
     emit(state.copyWith(
@@ -41,7 +42,55 @@ class ProfileCubit extends Cubit<ProfileState> {
       case 'country':
         emit(state.copyWith(country: value));
         break;
+      case 'password':
+        final strength = _evaluatePassword(value);
+        emit(state.copyWith(
+          password: value,
+          passwordStrength: strength.$1,
+          passwordStrengthText: strength.$2,
+        ));
+        break;
+      case 'confirmPassword':
+        emit(state.copyWith(confirmPassword: value));
+        break;
     }
+  }
+
+  String? validateConfirmPassword(String? value, String originalPassword) {
+    if (value == null || value.isEmpty) return 'Please confirm your password';
+    if (value != originalPassword) return 'Passwords do not match';
+    return null;
+  }
+
+  (double, String) _evaluatePassword(String password) {
+    double strength = 0.0;
+    String label = 'Weak';
+
+    if (password.isEmpty) return (0.0, '');
+    if (password.length < 6) return (0.2, 'Weak');
+    if (password.length < 8) return (0.4, 'Fair');
+
+    final hasLetters = RegExp(r'[A-Za-z]').hasMatch(password);
+    final hasDigits = RegExp(r'\d').hasMatch(password);
+    final hasSpecial = RegExp(r'[@$!%*?&]').hasMatch(password);
+    final hasUpper = RegExp(r'[A-Z]').hasMatch(password);
+    final hasLower = RegExp(r'[a-z]').hasMatch(password);
+
+    if (hasLetters && hasDigits) strength = 0.6;
+    if (hasLetters && hasDigits && hasSpecial) strength = 0.8;
+    if (password.length >= 10 &&
+        hasUpper &&
+        hasLower &&
+        hasDigits &&
+        hasSpecial) strength = 1.0;
+
+    if (strength == 0.6)
+      label = 'Good';
+    else if (strength == 0.8)
+      label = 'Very Good';
+    else if (strength == 1.0) label = 'Strong';
+
+    return (strength, label);
   }
 
   void toggleRecommendedStreams() {
@@ -286,16 +335,48 @@ class ProfileCubit extends Cubit<ProfileState> {
     ];
   }
 
+  void toggleObscurePassword() {
+    emit(state.copyWith(obscurePassword: !state.obscurePassword));
+  }
+
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) return 'Please enter your email.';
+    if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(value))
+      return 'Please enter a valid email.';
+    return null;
+  }
+
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) return 'Please enter a password.';
+    if (value.length < 8) return 'At least 8 characters.';
+    if (!RegExp(r'(?=.*[A-Z])').hasMatch(value)) return 'Must have uppercase.';
+    if (!RegExp(r'(?=.*[a-z])').hasMatch(value)) return 'Must have lowercase.';
+    if (!RegExp(r'(?=.*\d)').hasMatch(value)) return 'Must have a digit.';
+    if (!RegExp(r'(?=.*[@$!%*?&])').hasMatch(value))
+      return 'Must have special character.';
+    return null;
+  }
+
   // ignore: unused_element
   List<Map<String, dynamic>> _buildChangeInfoProfile() {
     return [
       {
         "icon": Assets.assetsIconsEmail,
         "title": "changeEmail".tr(),
+        "screen": (BuildContext context) {
+          context.push(
+            AppRoutes.changeEmail,
+          );
+        },
       },
       {
         "icon": Assets.assetsIconsPasswordMinimalisticInput,
         "title": "changePassword".tr(),
+        "screen": (BuildContext context) {
+          context.push(
+            AppRoutes.changePassword,
+          );
+        },
       },
       {
         "icon": Assets.assetsIconsProfileType,

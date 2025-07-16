@@ -26,6 +26,8 @@ class AppRoutes {
   static const String newAddress = '/newAddress';
   static const String addNewPaymentMethod = '/add_new_payment_method';
   static const String payments = '/payments';
+  static const String changePassword = '/change_password';
+  static const String changeEmail = '/change_email';
   static const String notificationSettings = '/notification_settings';
   static const String tradeProfile = '/trade_profile';
   static const String interestsDetail = '/interests-detail';

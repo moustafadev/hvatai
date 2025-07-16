@@ -172,6 +172,7 @@
   "registrationCompleted": "Регистрация успешно завершена!",
   "tradeProfile": "Торговый профиль",
   "account": "Аккаунт",
+  "newPasswordMustBeDifferent": "Новый пароль должен отличаться от текущего",
   "startLive": "Начать трансляцию",
   "currentLives": "Текущие трансляции",
   "referralsPoints": "Рефералы и баллы",

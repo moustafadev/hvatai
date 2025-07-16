@@ -40,3 +40,7 @@ part 'widgets/init_new_address.dart';
 part 'widgets/delivery_address_update_screen.dart';
 part 'widgets/payment_methods_screen.dart';
 part 'widgets/add_new_payment_method.dart';
+part 'widgets/change_password_user.dart';
+part 'widgets/change_email_user.dart';
+part 'widgets/change_email_field.dart';
+part 'widgets/change_password_field.dart';

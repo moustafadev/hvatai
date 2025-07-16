@@ -120,6 +120,7 @@
   "wantContactsDescription": "Gain access to your contacts. Sync your contacts to easily find people you know on other sites. Your contacts will only be used to help you communicate with your friends.",
   "dontAllow": "Don't allow",
   "ok": "OK",
+  "newPasswordMustBeDifferent": "The new password must be different from the current one",
   "cardNumber": "Card number",
   "cardName": "Card name",
   "cvv": "CVV",
