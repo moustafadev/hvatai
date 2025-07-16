@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -33,6 +33,18 @@ final GoRouter router = GoRouter(
       path: AppRoutes.deliveryAddressUpdate, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const DeliveryAddressUpdateScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.payments, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        return const PaymentMethodsScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.addNewPaymentMethod, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        return const AddNewPaymentMethod();
       },
     ),
     GoRoute(

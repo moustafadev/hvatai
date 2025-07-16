@@ -24,6 +24,8 @@ class AppRoutes {
   static const String myAwards = '/my_awards';
   static const String settings = '/settings';
   static const String newAddress = '/newAddress';
+  static const String addNewPaymentMethod = '/add_new_payment_method';
+  static const String payments = '/payments';
   static const String notificationSettings = '/notification_settings';
   static const String tradeProfile = '/trade_profile';
   static const String interestsDetail = '/interests-detail';

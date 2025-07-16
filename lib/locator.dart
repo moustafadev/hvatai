@@ -16,12 +16,13 @@ import 'package:hvatai/features/auth/presentation/cubit/registration/registratio
 import 'package:hvatai/features/auth/presentation/cubit/social_login.dart/social_login_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/verification/verification_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/delivery_address/delivery_address_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/home/data/datasources/api_service_home.dart';
 import 'package:hvatai/features/home/data/repositories/home_impl_repository.dart';
 import 'package:hvatai/features/home/domain/repositories/home_repository.dart';
 import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_tabs_cubit.dart';
-import 'package:hvatai/features/profile/presentation/notification_cubit/notification_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
 import 'package:hvatai/features/search/presentation/cubit/auction_search_cubit/auction_search_cubit.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_tabs_cubit/search_tabs_cubit.dart';
 import 'package:hvatai/locator_use_case.dart';
@@ -44,6 +45,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => CategoryTabsCubit());
   locator.registerFactory(() => SearchTabsCubit());
   locator.registerFactory(() => UpdateDeliveryAddressCubit());
+  locator.registerFactory(() => PaymentMethodCubit());
 
   locator.registerFactory(() => SocialLoginCubit(locator()));
   locator.registerFactory(() => RegistrationCubit());

@@ -17,6 +17,7 @@ class CustomTextField extends StatelessWidget {
   final BorderRadius? borderRadius;
   final BorderSide? borderSide;
   final double? height;
+  final List<TextInputFormatter>? inputFormatters; // ✅ مضافة
 
   const CustomTextField({
     super.key,
@@ -36,6 +37,7 @@ class CustomTextField extends StatelessWidget {
     this.borderRadius,
     this.borderSide,
     this.height,
+    this.inputFormatters, // ✅ مضافة
   });
 
   @override
@@ -50,6 +52,7 @@ class CustomTextField extends StatelessWidget {
         autovalidateMode: autovalidateMode,
         keyboardType: keyboardType,
         onChanged: onChanged,
+        inputFormatters: inputFormatters, // ✅ مضافة
         style: const TextStyle(color: Colors.black),
         decoration: InputDecoration(
           filled: true,

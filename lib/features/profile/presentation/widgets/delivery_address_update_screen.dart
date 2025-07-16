@@ -10,6 +10,7 @@ class DeliveryAddressUpdateScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        backgroundColor: AppColors.background,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
           onPressed: () {
@@ -33,7 +34,7 @@ class DeliveryAddressUpdateScreen extends StatelessWidget {
                     children: [
                       21.ph,
                       CustomText(
-                        text: 'New address',
+                        text: 'newAddress'.tr(),
                         fontWeight: FontWeight.w800,
                         fontSize: 20.sp,
                       ),

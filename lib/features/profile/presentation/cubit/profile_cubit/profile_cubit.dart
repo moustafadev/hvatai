@@ -108,10 +108,11 @@ class ProfileCubit extends Cubit<ProfileState> {
       {
         "icon": Assets.assetsIconsCard,
         "title": "paymentMethod".tr(),
-        // "onTap": () => Get.to(
-        //       () => PaymentDeliveryScreen(),
-        //       //PaymentScreen()
-        //     ),
+        "screen": (BuildContext context) {
+          context.push(
+            AppRoutes.payments,
+          );
+        },
       },
       {
         "icon": Assets.assetsIconsMapPoint,

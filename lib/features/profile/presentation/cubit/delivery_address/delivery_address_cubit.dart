@@ -64,9 +64,9 @@ class UpdateDeliveryAddressCubit extends Cubit<UpdateDeliveryAddressState> {
       index: state.index,
     );
 
-    context.push(
-      AppRoutes.interests,
-      extra: updatedData, // must be a UserRegistrationData instance
-    );
+    // context.push(
+    //   AppRoutes.interests,
+    //   extra: updatedData, // must be a UserRegistrationData instance
+    // );
   }
 }

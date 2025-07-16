@@ -8,6 +8,7 @@ class InitNewAddress extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
+        backgroundColor: AppColors.background,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
           onPressed: () {
@@ -21,7 +22,7 @@ class InitNewAddress extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomText(
-              text: 'Delivery address'.tr(),
+              text: 'deliveryAddress'.tr(),
               fontWeight: FontWeight.w800,
               fontSize: 20.sp,
             ),
@@ -62,7 +63,7 @@ class InitNewAddress extends StatelessWidget {
                 Assets.assetsIconsMapPoint,
               ),
               title: CustomText(
-                text: 'Add new address'.tr(),
+                text: 'addNewAddress'.tr(),
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w500,
               ),
