@@ -32,7 +32,7 @@ class HelpContacts extends StatelessWidget {
             contentPadding: EdgeInsets.all(0),
             leading: Container(
               decoration: BoxDecoration(
-                color: Color(0xff000000).withOpacity(0.05),
+                color: AppColors.gray,
                 shape: BoxShape.circle,
               ),
               child: Padding(
@@ -46,17 +46,15 @@ class HelpContacts extends StatelessWidget {
                 ),
               ),
             ),
-            title: Text(
-              item['title'],
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
-                color: Color(0xff2A2A2A),
-              ),
+            title: CustomText(
+              text: item['title'],
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.blackDark,
             ),
             trailing: Icon(
               Icons.chevron_right,
-              color: Colors.black,
+              color: AppColors.blackDark,
               size: 28,
             ),
             onTap: () {

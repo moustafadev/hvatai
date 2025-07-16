@@ -12,22 +12,19 @@ class PaymentAndDelivery extends StatelessWidget {
         padding: EdgeInsets.all(0),
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: state.settingsOptions.length + 1, // زيادة عنصر واحد للفاصل
+        itemCount: state.settingsOptions.length + 1,
         itemBuilder: (context, index) {
-          // موقع العنصر "chat" في القائمة
           final chatIndex = state.settingsOptions.indexWhere(
             (option) => option['title'] == "chat".tr(),
           );
 
           if (index == chatIndex + 1) {
-            // العنصر الجديد (الفاصل) بعد "chat"
             return ListTile(
               contentPadding: EdgeInsets.all(0),
               leading: CustomText(
                 text: "paymentDelivery".tr(),
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w800,
-                fontFamily: "Manrope",
               ),
             );
           }
@@ -40,7 +37,7 @@ class PaymentAndDelivery extends StatelessWidget {
             contentPadding: EdgeInsets.all(0),
             leading: Container(
               decoration: BoxDecoration(
-                color: Color(0xff000000).withOpacity(0.05),
+                color: AppColors.gray,
                 shape: BoxShape.circle,
               ),
               child: Padding(
@@ -54,20 +51,25 @@ class PaymentAndDelivery extends StatelessWidget {
                 ),
               ),
             ),
-            title: Text(
-              option['title'],
-              style: TextStyle(
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
-                fontFamily: "Gilroy-Bold",
-                color: Colors.black.withOpacity(0.8),
-              ),
+            title: CustomText(
+              text: option['title'],
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.blackDark,
             ),
             trailing: Icon(
               Icons.chevron_right,
-              color: Colors.black,
+              color: AppColors.blackDark,
               size: 28,
             ),
+            onTap: () {
+              final screen = option['screen'];
+              if (screen is Function(BuildContext)) {
+                screen(context);
+              } else if (screen is Function()) {
+                screen();
+              }
+            },
           );
         },
       );

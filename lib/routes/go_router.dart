@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
+import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/locator.dart';
@@ -26,6 +27,12 @@ final GoRouter router = GoRouter(
       path: AppRoutes.socialLogin, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const SocialsLoginScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.deliveryAddressUpdate, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        return const DeliveryAddressUpdateScreen();
       },
     ),
     GoRoute(
@@ -97,6 +104,13 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         return MyAwardsScreen();
       },
+    ),
+    GoRoute(
+      path: AppRoutes.newAddress,
+      builder: (context, state) => BlocProvider(
+        create: (context) => locator<DeliveryAddressCubit>(),
+        child: const InitNewAddress(),
+      ),
     ),
     GoRoute(
       path: AppRoutes.tradeProfile,

@@ -19,7 +19,6 @@ class NotificationScreen extends StatelessWidget {
                   text: "dontMissShow".tr(),
                   fontSize: 24.sp,
                   fontWeight: FontWeight.bold,
-                  fontFamily: 'SFProRounded',
                 ),
                 SizedBox(height: 20.h),
                 CustomContainer(
@@ -36,7 +35,6 @@ class NotificationScreen extends StatelessWidget {
                         text: 'beFirstStream'.tr(),
                         fontSize: 18.sp,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'SFProRounded',
                       ),
                       SizedBox(height: 8.h),
                       CustomText(
@@ -44,7 +42,6 @@ class NotificationScreen extends StatelessWidget {
                         fontSize: 14.sp,
                         color: Colors.grey,
                         textAlign: TextAlign.center,
-                        fontFamily: 'MontserratAlternates',
                       ),
                     ],
                   ),

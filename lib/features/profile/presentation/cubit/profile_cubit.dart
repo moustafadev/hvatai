@@ -36,7 +36,13 @@ class ProfileCubit extends Cubit<ProfileState> {
     ));
   }
 
-  void setCountry(String? country) => emit(state.copyWith(country: country!));
+  void updateField(String field, String value) {
+    switch (field) {
+      case 'country':
+        emit(state.copyWith(country: value));
+        break;
+    }
+  }
 
   void toggleRecommendedStreams() {
     emit(state.copyWith(
@@ -110,6 +116,11 @@ class ProfileCubit extends Cubit<ProfileState> {
       {
         "icon": Assets.assetsIconsMapPoint,
         "title": "addresses".tr(),
+        "screen": (BuildContext context) {
+          context.push(
+            AppRoutes.newAddress,
+          );
+        },
         // "onTap": () => Get.to(() => DeliveryAddressUpdateScreen()),
       },
       // {
@@ -307,7 +318,7 @@ class ProfileCubit extends Cubit<ProfileState> {
     return [
       {
         "icon": Assets.assetsIconsUsersGroupRoundedIcon,
-        "title": "Invite a friend and get up to 10,000 ₽\nBalance: 300 ₽".tr(),
+        //"title": "Invite a friend and get up to 10,000 ₽\nBalance: 300 ₽".tr(),
       },
       {
         "icon": Assets.assetsIconsStar2,

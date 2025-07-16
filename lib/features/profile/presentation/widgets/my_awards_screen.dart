@@ -18,7 +18,7 @@ class MyAwardsScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
           onPressed: () {
-            Navigator.pop(context);
+            context.pop(context);
           },
         ),
         // centerTitle: true,

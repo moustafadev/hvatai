@@ -60,7 +60,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
-                        SizedBox(height: 20.h),
+                        20.ph,
                         CustomDropdown(
                           hintText: 'country'.tr(),
                           value: cubit.state.country.isEmpty
@@ -95,7 +95,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                         //   controller:
                         //       TextEditingController(text: state.country),
                         // ),
-                        SizedBox(height: 20.h),
+                        20.ph,
                         CustomTextField(
                           hintText: 'city'.tr(),
                           isRequired: false,
@@ -104,7 +104,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                           onChanged: (v) => cubit.updateField('city', v),
                           controller: TextEditingController(text: state.city),
                         ),
-                        SizedBox(height: 20.h),
+                        20.ph,
                         CustomTextField(
                           isRequired: false,
                           hintText: 'street'.tr(),
@@ -113,7 +113,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                           onChanged: (v) => cubit.updateField('street', v),
                           controller: TextEditingController(text: state.street),
                         ),
-                        SizedBox(height: 20.h),
+                        20.ph,
                         Row(
                           children: [
                             Expanded(
@@ -127,7 +127,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                                     TextEditingController(text: state.house),
                               ),
                             ),
-                            SizedBox(width: 10.w),
+                            10.pw,
                             Expanded(
                               child: CustomTextField(
                                 isRequired: false,
@@ -140,7 +140,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(height: 20.h),
+                        20.ph,
                         Row(
                           children: [
                             Expanded(
@@ -153,7 +153,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                                     TextEditingController(text: state.entrance),
                               ),
                             ),
-                            SizedBox(width: 10.w),
+                            10.pw,
                             Expanded(
                               child: CustomTextField(
                                 isRequired: false,
@@ -167,23 +167,19 @@ class DeliveryAddressScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 18.h,
-                        ),
+                        18.ph,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             SvgPicture.asset(Assets.assetsIconsMapPin),
-                            SizedBox(
-                              width: 10.w,
-                            ),
+                            10.pw,
                             CustomText(
                               text: 'fillAutomatically'.tr(),
                               color: AppColors.purple1,
                             )
                           ],
                         ),
-                        SizedBox(height: 30.h),
+                        30.ph,
                         CustomGradientButton(
                           text: 'save'.tr(),
                           isDisabled: cubit.state.apartment.isNotEmpty &&
@@ -197,7 +193,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                               .read<DeliveryAddressCubit>()
                               .submit(context, data),
                         ),
-                        SizedBox(height: 20.h),
+                        20.ph,
                       ],
                     ),
                   ),
