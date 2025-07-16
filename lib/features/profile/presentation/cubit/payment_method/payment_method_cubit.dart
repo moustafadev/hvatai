@@ -10,12 +10,15 @@ class PaymentMethodCubit extends Cubit<PaymentMethodState> {
 
   final formKey = GlobalKey<FormState>();
   final cardDateController = TextEditingController();
+  final cardNumberController = TextEditingController();
 
   void updateField(String field, String value) {
     switch (field) {
       case 'cardNumber':
+        cardNumberController.text = value;
         emit(state.copyWith(cardNumber: value));
         break;
+
       case 'cardName':
         emit(state.copyWith(cardName: value));
         break;

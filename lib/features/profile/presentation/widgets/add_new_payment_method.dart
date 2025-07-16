@@ -22,6 +22,12 @@ class AddNewPaymentMethod extends StatelessWidget {
           create: (context) => locator<PaymentMethodCubit>(),
           child: BlocBuilder<PaymentMethodCubit, PaymentMethodState>(
             builder: (context, state) {
+              final cardNumberFormatter = MaskTextInputFormatter(
+                mask: '#### #### #### ####',
+                filter: {"#": RegExp(r'[0-9]')},
+                initialText: state.cardNumber,
+              );
+
               final maskFormatter = MaskTextInputFormatter(
                 mask: '## / ##',
                 filter: {"#": RegExp(r'[0-9]')},
@@ -48,8 +54,9 @@ class AddNewPaymentMethod extends StatelessWidget {
                         validator: (v) =>
                             v!.isEmpty ? 'enter Card number'.tr() : null,
                         onChanged: (v) => cubit.updateField('cardNumber', v),
-                        controller:
-                            TextEditingController(text: state.cardNumber),
+                        controller: cubit.cardNumberController,
+                        inputFormatters: [cardNumberFormatter],
+                        keyboardType: TextInputType.number,
                       ),
                       20.ph,
                       CustomTextField(
