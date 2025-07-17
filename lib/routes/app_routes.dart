@@ -23,6 +23,7 @@ class AppRoutes {
   //static const String bottomNavBar = '/bottom_nav_bar';
   static const String myAwards = '/my_awards';
   static const String settings = '/settings';
+  static const String myGoods = '/my_goods';
   static const String newAddress = '/newAddress';
   static const String addNewPaymentMethod = '/add_new_payment_method';
   static const String payments = '/payments';

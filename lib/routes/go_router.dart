@@ -66,6 +66,12 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
+      path: AppRoutes.myGoods, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        return const MyGoodsScreen();
+      },
+    ),
+    GoRoute(
       path: AppRoutes.privacyPolicy, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const PrivacyPolicy();

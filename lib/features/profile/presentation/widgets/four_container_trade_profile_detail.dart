@@ -11,34 +11,37 @@ class FourContainerTradeProfileDetail extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
-          child: Container(
-            height: 85.h,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8.r),
-                color: AppColors.white,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    blurRadius: 4,
-                    offset: Offset(2, 2),
+          child: GestureDetector(
+            onTap: () => context.push(AppRoutes.myGoods),
+            child: Container(
+              height: 85.h,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8.r),
+                  color: AppColors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 4,
+                      offset: Offset(2, 2),
+                    ),
+                  ]),
+              child: Column(
+                children: [
+                  14.ph,
+                  Image.asset(
+                    Assets.assetsIconsUsersGroupRoundedIcon,
+                    height: 28.h,
+                    width: 28.w,
                   ),
-                ]),
-            child: Column(
-              children: [
-                14.ph,
-                Image.asset(
-                  Assets.assetsIconsUsersGroupRoundedIcon,
-                  height: 28.h,
-                  width: 28.w,
-                ),
-                12.ph,
-                CustomText(
-                  text: 'Goods'.tr(),
-                  fontSize: 14.sp,
-                  color: AppColors.blackDark,
-                  fontWeight: FontWeight.w800,
-                ),
-              ],
+                  12.ph,
+                  CustomText(
+                    text: 'Goods'.tr(),
+                    fontSize: 14.sp,
+                    color: AppColors.blackDark,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
