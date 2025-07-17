@@ -3,6 +3,7 @@ part of 'customs.dart';
 class CustomTextField extends StatelessWidget {
   final String hintText;
   final bool isRequired;
+  final int? maxLines;
   final AutovalidateMode? autovalidateMode;
   final TextEditingController? controller;
   final bool isPassword;
@@ -15,14 +16,16 @@ class CustomTextField extends StatelessWidget {
   final Function(String)? onChanged;
   final Color? fillColor;
   final BorderRadius? borderRadius;
+
   final BorderSide? borderSide;
   final double? height;
-  final List<TextInputFormatter>? inputFormatters; // ✅ مضافة
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextField({
     super.key,
     required this.hintText,
     this.isRequired = false,
+    this.maxLines,
     this.autovalidateMode,
     this.controller,
     this.isPassword = false,
@@ -37,7 +40,7 @@ class CustomTextField extends StatelessWidget {
     this.borderRadius,
     this.borderSide,
     this.height,
-    this.inputFormatters, // ✅ مضافة
+    this.inputFormatters,
   });
 
   @override
@@ -45,6 +48,8 @@ class CustomTextField extends StatelessWidget {
     return SizedBox(
       height: height,
       child: TextFormField(
+        maxLines: maxLines ?? 1,
+        minLines: maxLines ?? 1,
         controller: controller,
         obscureText: obscureText,
         readOnly: readOnly,
@@ -52,9 +57,15 @@ class CustomTextField extends StatelessWidget {
         autovalidateMode: autovalidateMode,
         keyboardType: keyboardType,
         onChanged: onChanged,
-        inputFormatters: inputFormatters, // ✅ مضافة
+        inputFormatters: inputFormatters,
         style: const TextStyle(color: Colors.black),
         decoration: InputDecoration(
+          hintText: isRequired ? '$hintText *' : hintText,
+          hintStyle: const TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.grey,
+            fontSize: 16,
+          ),
           filled: true,
           fillColor: fillColor ?? Colors.white,
           contentPadding:
@@ -62,24 +73,6 @@ class CustomTextField extends StatelessWidget {
           border: OutlineInputBorder(
             borderRadius: borderRadius ?? BorderRadius.circular(10),
             borderSide: borderSide ?? BorderSide.none,
-          ),
-          label: RichText(
-            text: TextSpan(
-              text: hintText,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.grey,
-                fontSize: 16,
-              ),
-              children: isRequired
-                  ? const [
-                      TextSpan(
-                        text: '*',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    ]
-                  : [],
-            ),
           ),
           floatingLabelBehavior: FloatingLabelBehavior.never,
           suffixIcon: suffixIcon,

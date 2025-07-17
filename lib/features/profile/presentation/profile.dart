@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -50,3 +53,7 @@ part 'widgets/change_password_field.dart';
 part 'widgets/my_goods_screen.dart';
 part 'widgets/my_goods_tabs.dart';
 part 'widgets/my_goods_card.dart';
+part 'widgets/add_new_products.dart';
+part 'widgets/upload_photo.dart';
+part 'widgets/add_product_action_button.dart';
+part 'widgets/sale_type_button.dart';

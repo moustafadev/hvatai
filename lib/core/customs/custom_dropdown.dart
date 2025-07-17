@@ -40,19 +40,17 @@ class CustomDropdown extends StatelessWidget {
                 const SizedBox(width: 8),
               ],
               Expanded(
-                child: Text(
-                  value ?? hintText,
-                  style: TextStyle(
-                    color: value == null ? Colors.black : Colors.black,
-                    fontSize: 16,
-                  ),
+                child: CustomText(
+                  text: value ?? hintText,
+                  color: value == null ? Colors.black : Colors.black,
+                  fontSize: 16,
                 ),
               ),
               if (isRequired)
                 Icon(
                   Icons.keyboard_arrow_down_rounded,
                   size: 20,
-                  color: Colors.grey.shade600,
+                  color: AppColors.blackDark,
                 ),
             ],
           ),

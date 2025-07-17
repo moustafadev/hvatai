@@ -350,6 +350,7 @@ class Assets {
   /// Assets for assetsIconsPayIcon
   /// assets/icons/payIcon.png
   static const String assetsIconsPayIcon = "assets/icons/payIcon.png";
+  static const String assetsIconsAlbum = "assets/icons/album.png";
   static const String assetsIconsCardAdd = "assets/icons/card_add.svg";
 
   /// Assets for assetsIconsPayIcon2

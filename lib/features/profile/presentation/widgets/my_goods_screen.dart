@@ -10,18 +10,21 @@ class MyGoodsScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: AppColors.lightGreyBackground,
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        floatingActionButton: Container(
-          margin: const EdgeInsets.only(bottom: 50),
-          height: 50.h,
-          width: 50.w,
-          decoration: const BoxDecoration(
-            color: AppColors.primaryColor,
-            shape: BoxShape.circle,
-          ),
-          child: const Icon(
-            Icons.add_circle_outline,
-            size: 30,
-            color: AppColors.white,
+        floatingActionButton: GestureDetector(
+          onTap: () => context.push(AppRoutes.addProduct),
+          child: Container(
+            margin: const EdgeInsets.only(bottom: 50),
+            height: 50.h,
+            width: 50.w,
+            decoration: const BoxDecoration(
+              color: AppColors.primaryColor,
+              shape: BoxShape.circle,
+            ),
+            child: const Icon(
+              Icons.add_circle_outline,
+              size: 30,
+              color: AppColors.white,
+            ),
           ),
         ),
         appBar: CustomAppBar(
@@ -42,14 +45,12 @@ class MyGoodsScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     12.ph,
-                    // 🟢 هذا هو العنوان الثابت الذي لا يتحرك
                     CustomText(
                       text: 'my Goods'.tr(),
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w800,
                     ),
                     16.ph,
-                    // 🔁 هذا الجزء قابل للتمرير
                     Expanded(
                       child: ListView(
                         children: [

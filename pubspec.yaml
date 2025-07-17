@@ -19,8 +19,11 @@ dependencies:
   mask_text_input_formatter: ^2.5.0 
   flutter_svg: ^2.0.17
   flutter_screenutil: ^5.9.1
+  image_picker: ^1.0.7
   intl: ^0.19.0
   shared_preferences: ^2.2.3
+  multi_image_picker2: ^5.0.02
+  dotted_border: ^2.0.0
   dio: ^5.4.3+1
   flutter_bloc: ^8.1.5
   bloc: ^8.1.4

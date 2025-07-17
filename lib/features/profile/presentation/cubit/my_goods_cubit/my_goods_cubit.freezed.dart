@@ -18,6 +18,12 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MyGoodsState {
   int get selectedCategoryIndex => throw _privateConstructorUsedError;
   List<AuctionProduct> get products => throw _privateConstructorUsedError;
+  List<File> get selectedImages => throw _privateConstructorUsedError;
+  int get selectedButtonIndex => throw _privateConstructorUsedError;
+  bool get selfDestruction => throw _privateConstructorUsedError;
+  bool get bookParticipation => throw _privateConstructorUsedError;
+  bool get pickupFree => throw _privateConstructorUsedError;
+  int get quantity => throw _privateConstructorUsedError;
 
   /// Create a copy of MyGoodsState
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +38,15 @@ abstract class $MyGoodsStateCopyWith<$Res> {
           MyGoodsState value, $Res Function(MyGoodsState) then) =
       _$MyGoodsStateCopyWithImpl<$Res, MyGoodsState>;
   @useResult
-  $Res call({int selectedCategoryIndex, List<AuctionProduct> products});
+  $Res call(
+      {int selectedCategoryIndex,
+      List<AuctionProduct> products,
+      List<File> selectedImages,
+      int selectedButtonIndex,
+      bool selfDestruction,
+      bool bookParticipation,
+      bool pickupFree,
+      int quantity});
 }
 
 /// @nodoc
@@ -52,6 +66,12 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
   $Res call({
     Object? selectedCategoryIndex = null,
     Object? products = null,
+    Object? selectedImages = null,
+    Object? selectedButtonIndex = null,
+    Object? selfDestruction = null,
+    Object? bookParticipation = null,
+    Object? pickupFree = null,
+    Object? quantity = null,
   }) {
     return _then(_value.copyWith(
       selectedCategoryIndex: null == selectedCategoryIndex
@@ -62,6 +82,30 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<AuctionProduct>,
+      selectedImages: null == selectedImages
+          ? _value.selectedImages
+          : selectedImages // ignore: cast_nullable_to_non_nullable
+              as List<File>,
+      selectedButtonIndex: null == selectedButtonIndex
+          ? _value.selectedButtonIndex
+          : selectedButtonIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      selfDestruction: null == selfDestruction
+          ? _value.selfDestruction
+          : selfDestruction // ignore: cast_nullable_to_non_nullable
+              as bool,
+      bookParticipation: null == bookParticipation
+          ? _value.bookParticipation
+          : bookParticipation // ignore: cast_nullable_to_non_nullable
+              as bool,
+      pickupFree: null == pickupFree
+          ? _value.pickupFree
+          : pickupFree // ignore: cast_nullable_to_non_nullable
+              as bool,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -74,7 +118,15 @@ abstract class _$$MyGoodsStateImplCopyWith<$Res>
       __$$MyGoodsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int selectedCategoryIndex, List<AuctionProduct> products});
+  $Res call(
+      {int selectedCategoryIndex,
+      List<AuctionProduct> products,
+      List<File> selectedImages,
+      int selectedButtonIndex,
+      bool selfDestruction,
+      bool bookParticipation,
+      bool pickupFree,
+      int quantity});
 }
 
 /// @nodoc
@@ -92,6 +144,12 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
   $Res call({
     Object? selectedCategoryIndex = null,
     Object? products = null,
+    Object? selectedImages = null,
+    Object? selectedButtonIndex = null,
+    Object? selfDestruction = null,
+    Object? bookParticipation = null,
+    Object? pickupFree = null,
+    Object? quantity = null,
   }) {
     return _then(_$MyGoodsStateImpl(
       selectedCategoryIndex: null == selectedCategoryIndex
@@ -102,6 +160,30 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
           ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
               as List<AuctionProduct>,
+      selectedImages: null == selectedImages
+          ? _value._selectedImages
+          : selectedImages // ignore: cast_nullable_to_non_nullable
+              as List<File>,
+      selectedButtonIndex: null == selectedButtonIndex
+          ? _value.selectedButtonIndex
+          : selectedButtonIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      selfDestruction: null == selfDestruction
+          ? _value.selfDestruction
+          : selfDestruction // ignore: cast_nullable_to_non_nullable
+              as bool,
+      bookParticipation: null == bookParticipation
+          ? _value.bookParticipation
+          : bookParticipation // ignore: cast_nullable_to_non_nullable
+              as bool,
+      pickupFree: null == pickupFree
+          ? _value.pickupFree
+          : pickupFree // ignore: cast_nullable_to_non_nullable
+              as bool,
+      quantity: null == quantity
+          ? _value.quantity
+          : quantity // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -111,8 +193,15 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
 class _$MyGoodsStateImpl implements _MyGoodsState {
   const _$MyGoodsStateImpl(
       {this.selectedCategoryIndex = 0,
-      final List<AuctionProduct> products = const []})
-      : _products = products;
+      final List<AuctionProduct> products = const [],
+      final List<File> selectedImages = const [],
+      this.selectedButtonIndex = 0,
+      this.selfDestruction = false,
+      this.bookParticipation = false,
+      this.pickupFree = false,
+      this.quantity = 1})
+      : _products = products,
+        _selectedImages = selectedImages;
 
   @override
   @JsonKey()
@@ -126,9 +215,34 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
     return EqualUnmodifiableListView(_products);
   }
 
+  final List<File> _selectedImages;
+  @override
+  @JsonKey()
+  List<File> get selectedImages {
+    if (_selectedImages is EqualUnmodifiableListView) return _selectedImages;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedImages);
+  }
+
+  @override
+  @JsonKey()
+  final int selectedButtonIndex;
+  @override
+  @JsonKey()
+  final bool selfDestruction;
+  @override
+  @JsonKey()
+  final bool bookParticipation;
+  @override
+  @JsonKey()
+  final bool pickupFree;
+  @override
+  @JsonKey()
+  final int quantity;
+
   @override
   String toString() {
-    return 'MyGoodsState(selectedCategoryIndex: $selectedCategoryIndex, products: $products)';
+    return 'MyGoodsState(selectedCategoryIndex: $selectedCategoryIndex, products: $products, selectedImages: $selectedImages, selectedButtonIndex: $selectedButtonIndex, selfDestruction: $selfDestruction, bookParticipation: $bookParticipation, pickupFree: $pickupFree, quantity: $quantity)';
   }
 
   @override
@@ -138,12 +252,32 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
             other is _$MyGoodsStateImpl &&
             (identical(other.selectedCategoryIndex, selectedCategoryIndex) ||
                 other.selectedCategoryIndex == selectedCategoryIndex) &&
-            const DeepCollectionEquality().equals(other._products, _products));
+            const DeepCollectionEquality().equals(other._products, _products) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedImages, _selectedImages) &&
+            (identical(other.selectedButtonIndex, selectedButtonIndex) ||
+                other.selectedButtonIndex == selectedButtonIndex) &&
+            (identical(other.selfDestruction, selfDestruction) ||
+                other.selfDestruction == selfDestruction) &&
+            (identical(other.bookParticipation, bookParticipation) ||
+                other.bookParticipation == bookParticipation) &&
+            (identical(other.pickupFree, pickupFree) ||
+                other.pickupFree == pickupFree) &&
+            (identical(other.quantity, quantity) ||
+                other.quantity == quantity));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, selectedCategoryIndex,
-      const DeepCollectionEquality().hash(_products));
+  int get hashCode => Object.hash(
+      runtimeType,
+      selectedCategoryIndex,
+      const DeepCollectionEquality().hash(_products),
+      const DeepCollectionEquality().hash(_selectedImages),
+      selectedButtonIndex,
+      selfDestruction,
+      bookParticipation,
+      pickupFree,
+      quantity);
 
   /// Create a copy of MyGoodsState
   /// with the given fields replaced by the non-null parameter values.
@@ -157,12 +291,30 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
 abstract class _MyGoodsState implements MyGoodsState {
   const factory _MyGoodsState(
       {final int selectedCategoryIndex,
-      final List<AuctionProduct> products}) = _$MyGoodsStateImpl;
+      final List<AuctionProduct> products,
+      final List<File> selectedImages,
+      final int selectedButtonIndex,
+      final bool selfDestruction,
+      final bool bookParticipation,
+      final bool pickupFree,
+      final int quantity}) = _$MyGoodsStateImpl;
 
   @override
   int get selectedCategoryIndex;
   @override
   List<AuctionProduct> get products;
+  @override
+  List<File> get selectedImages;
+  @override
+  int get selectedButtonIndex;
+  @override
+  bool get selfDestruction;
+  @override
+  bool get bookParticipation;
+  @override
+  bool get pickupFree;
+  @override
+  int get quantity;
 
   /// Create a copy of MyGoodsState
   /// with the given fields replaced by the non-null parameter values.
