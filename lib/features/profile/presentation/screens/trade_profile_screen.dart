@@ -57,9 +57,57 @@ class TradeProfileScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              Image.asset(
-                Assets.assetsImagesProfileAdvertisementImage,
-                width: double.infinity,
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 16,
+                ),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  image: DecorationImage(
+                    image: AssetImage(
+                        Assets.assetsImagesProfileAdvertisementImage),
+                    fit: BoxFit.fill, // أو BoxFit.cover حسب الحاجة
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    CustomText(
+                      text: 'Become a seller'.tr(),
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.grey,
+                    ),
+                    2.ph,
+                    CustomText(
+                      text: 'Low commission'.tr(),
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w800,
+                    ),
+                    2.ph,
+                    CustomText(
+                      text:
+                          'Grab!\'s 8% commission is one of\n the lowest in the industry.'
+                              .tr(),
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w700,
+                      textAlign: TextAlign.center,
+                      color: AppColors.grey,
+                    ),
+                    16.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 90,
+                      ),
+                      child: CustomButton(
+                        color: AppColors.primaryColor,
+                        title: 'Get started'.tr(),
+                        onPressed: () {},
+                      ),
+                    ),
+                    60.ph
+                  ],
+                ),
               ),
             ],
           );

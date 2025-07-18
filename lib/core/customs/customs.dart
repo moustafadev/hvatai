@@ -38,3 +38,4 @@ part 'custom_select_gender.dart';
 part 'custom_item_four_container.dart';
 part 'custom_stat_column.dart';
 part 'custom_vertical_divider.dart';
+part 'custom_awards_card.dart';

@@ -49,16 +49,21 @@ class MyAwardsScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 10),
-                    child: Container(
-                      height: 180,
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        image: DecorationImage(
-                          image: AssetImage(rewardImages[index]),
-                          fit: BoxFit.fill,
-                        ),
-                      ),
+                    child: CustomAwardsCard(
+                      imagePath: rewardImages[index],
+                      level: 'Level ${index + 1}'.tr(),
+                      title: [
+                        'bronze'.tr(),
+                        'silver'.tr(),
+                        'gold'.tr(),
+                        'diamond'.tr(),
+                        'platinum'.tr(),
+                      ][index]
+                          .tr(),
+                      features: [
+                        "-${(index + 1) * 3}% on prices in the store".tr(),
+                        "Cashback up to ${(index + 1) * 5}%".tr(),
+                      ],
                     ),
                   );
                 },

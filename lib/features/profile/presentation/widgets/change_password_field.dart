@@ -12,6 +12,20 @@ class PasswordField extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomTextField(
+              hintText: 'old password'.tr(),
+              isRequired: false,
+              obscureText: state.obscurePassword,
+              suffixIcon: IconButton(
+                icon: state.obscurePassword
+                    ? SvgPicture.asset(Assets.assetsIconsEyeClosed)
+                    : Icon(Icons.remove_red_eye_outlined),
+                onPressed: cubit.toggleObscurePassword,
+              ),
+              onChanged: (value) => cubit.updateField('password', value),
+              validator: cubit.validatePassword,
+            ),
+            8.ph,
+            CustomTextField(
               hintText: 'New password'.tr(),
               isRequired: false,
               obscureText: state.obscurePassword,
