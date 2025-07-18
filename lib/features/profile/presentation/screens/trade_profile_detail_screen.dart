@@ -35,7 +35,7 @@ class TradeProfileDetail extends StatelessWidget {
                       22.ph,
                       UserInfoTradeProfileDetail(),
                       32.ph,
-                      InfoTradeProfileDetailBottom(screenHeight: screenHeight),
+                      InfoTradeProfileDetailBottom(),
                       24.ph,
                       FourContainerTradeProfileDetail(),
                       24.ph,

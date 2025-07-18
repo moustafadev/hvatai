@@ -35,3 +35,6 @@ part 'social_circle_button.dart';
 part 'reusable_category_widget.dart';
 part 'reusable_live_videos_grid.dart';
 part 'custom_select_gender.dart';
+part 'custom_item_four_container.dart';
+part 'custom_stat_column.dart';
+part 'custom_vertical_divider.dart';

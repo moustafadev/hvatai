@@ -75,36 +75,35 @@ class NotificationSettingsScreen extends StatelessWidget {
                       ),
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomText(
-                          text: 'addingTagsToChat'.tr(),
-                          fontSize: 16.sp,
-                          fontWeight: FontWeight.w700,
+                        Expanded(
+                          child: CustomText(
+                            text: 'addingTagsToChat'.tr(),
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w700,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
-                        const Spacer(),
                         GestureDetector(
                           onTap: () {
                             cubit.toggleSelectAll();
                           },
-                          child: CustomText(
-                            text: state.isAllSelected
-                                ? 'Unselect ^'.tr()
-                                : 'All ^'.tr(),
-                            fontWeight: FontWeight.w700,
-                            fontSize: 16.sp,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CustomText(
+                                text: state.isAllSelected ? 'Unselect' : 'All',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16.sp,
+                              ),
+                              Icon(Icons.unfold_more, size: 18)
+                            ],
                           ),
                         ),
                       ],
                     ),
                     16.ph,
-                    // CustomSwitchWidget(
-                    //   title: 'New subscriber'.tr(),
-                    //   value: state.newSubscriber,
-                    //   onChanged: (val) {
-                    //     cubit.toggleNewSubscriber();
-                    //   },
-                    // ),
-                    // 30.ph,
                     CustomText(
                       text: 'bookmarkNotificationDescription'.tr(),
                       fontSize: 12.sp,
@@ -119,17 +118,6 @@ class NotificationSettingsScreen extends StatelessWidget {
                         cubit.toggleBookmarksFromStreams();
                       },
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.only(top: 8.0),
-                    //   child: CustomText(
-                    //     fontFamily: "Gilroy-Bold",
-                    //     text:
-                    //         'Get notified when people bookmark your upcoming streams.'
-                    //             .tr(),
-                    //     color: Colors.grey,
-                    //     fontSize: 12,
-                    //   ),
-                    // ),
                   ],
                 ),
               ),

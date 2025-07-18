@@ -149,13 +149,7 @@ class AuctionCard extends StatelessWidget {
                     fontFamily: "Manrope",
                     color: AppColors.blackTransparent40,
                   ),
-                  20.ph,
-                  CustomText(
-                    text: "Current rate:",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "Manrope",
-                  ),
+                  35.ph,
                   CustomText(
                     text: "${product.price} ₽",
                     fontSize: 20,
