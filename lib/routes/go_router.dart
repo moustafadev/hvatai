@@ -6,6 +6,7 @@ import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
+import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ import 'package:hvatai/routes/shell_route.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter router = GoRouter(
   // observers: [MyNavigatorObserver()],
-  initialLocation: AppRoutes.socialLogin,
+  initialLocation: AppRoutes.registration,
   navigatorKey: navigatorKey,
   routes: <RouteBase>[
     GoRoute(
@@ -24,6 +25,12 @@ final GoRouter router = GoRouter(
       path: AppRoutes.login, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const LoginScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.splash, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        return const SplashScreen();
       },
     ),
     GoRoute(
