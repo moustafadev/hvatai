@@ -53,7 +53,7 @@ class RegistrationForm extends StatelessWidget {
               CheckboxRowAge(),
               20.ph,
               ContinueButton(),
-              40.ph,
+              20.ph,
             ],
           ),
         ),

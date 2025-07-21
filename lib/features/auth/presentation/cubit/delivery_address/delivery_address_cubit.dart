@@ -11,12 +11,16 @@ part 'delivery_address_cubit.freezed.dart';
 part 'delivery_address_state.dart';
 
 class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
-  DeliveryAddressCubit(this.deliveryAddressUseCase,
-      {required UserRegistrationData user})
-      : super(DeliveryAddressState(user: user));
+  DeliveryAddressCubit(
+    this.deliveryAddressUseCase,
+  ) : super(DeliveryAddressState(user: UserRegistrationData()));
   DeliveryAddressUseCase deliveryAddressUseCase;
 
   final formKey = GlobalKey<FormState>();
+
+  void initRegistrationModel(UserRegistrationData user) {
+    emit(state.copyWith(user: user));
+  }
 
   Future<Position?> determinePosition() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();

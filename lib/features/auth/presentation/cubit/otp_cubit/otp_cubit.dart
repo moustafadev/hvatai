@@ -10,12 +10,15 @@ part 'otp_state.dart';
 part 'otp_cubit.freezed.dart';
 
 class OtpCubit extends Cubit<OtpState> {
-  OtpCubit(this.checkOtpUseCase, {required UserRegistrationData user})
-      : super(OtpState(user: user)) {
-    debugPrint('User data in OtpCubit: ${user.toJson()}');
-  }
+  OtpCubit(
+    this.checkOtpUseCase,
+  ) : super(OtpState(user: UserRegistrationData()));
 
   final CheckOtpUseCase checkOtpUseCase;
+
+  void initRegistrationModel(UserRegistrationData user) {
+    emit(state.copyWith(user: user));
+  }
 
   void updateCode(String code) {
     emit(state.copyWith(code: code));

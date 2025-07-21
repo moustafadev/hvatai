@@ -9,10 +9,14 @@ part 'interests_detail_state.dart';
 part 'interests_detail_cubit.freezed.dart';
 
 class InterestsDetailCubit extends Cubit<InterestsDetailState> {
-  InterestsDetailCubit({required UserRegistrationData user})
-      : super(InterestsDetailState(user: user));
+  InterestsDetailCubit()
+      : super(InterestsDetailState(user: UserRegistrationData()));
   void init(List<String> generalInterests) {
     emit(state.copyWith(generalInterests: generalInterests));
+  }
+
+  void initRegistrationModel(UserRegistrationData user) {
+    emit(state.copyWith(user: user));
   }
 
   void toggleDetail(String value) {

@@ -30,8 +30,9 @@ class InterestsDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          InterestsDetailCubit(user: data)..init(data.interests ?? []),
+      create: (_) => locator<InterestsDetailCubit>()
+        ..init(data.interests ?? [])
+        ..initRegistrationModel(data),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(

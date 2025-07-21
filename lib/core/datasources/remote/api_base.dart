@@ -20,6 +20,11 @@ abstract class ApiBase {
   AppLocal appLocal = AppLocal();
 
   ApiBase() {
+    _dio.options = BaseOptions(
+      connectTimeout: const Duration(seconds: 30),
+      receiveTimeout: const Duration(seconds: 30),
+      sendTimeout: const Duration(seconds: 30),
+    );
     _dio
       ..interceptors.add(LogInterceptor(responseBody: true, requestBody: true))
       ..interceptors.add(AuthInterceptor());

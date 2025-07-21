@@ -41,7 +41,7 @@ class InterestsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => InterestsCubit(user: data),
+      create: (_) => locator<InterestsCubit>()..initVariable(data),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -167,11 +167,9 @@ class InterestsScreen extends StatelessWidget {
                       isLoading: state.isLoading,
                       isDisabled: !(state.selectedInterests.isNotEmpty),
                       text: "continue".tr(),
-                      onPressed: state.isLoading
-                          ? null
-                          : () {
-                              cubit.submitInterests(context);
-                            },
+                      onPressed: () {
+                        cubit.submitInterests(context);
+                      },
                     ),
                   ),
                 ],

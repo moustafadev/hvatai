@@ -98,9 +98,10 @@ class LoginScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             CustomGradientButton(
-                              text: 'getCode'.tr(),
-                              isDisabled: cubit.state.email.isNotEmpty &&
-                                  cubit.state.password.isNotEmpty,
+                              text: 'login'.tr(),
+                              isLoading: cubit.state.isLoading,
+                              isDisabled: !(cubit.state.email.isNotEmpty &&
+                                  cubit.state.password.isNotEmpty),
                               onPressed: () => cubit.login(context),
                             ),
                             20.ph,

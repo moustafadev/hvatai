@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
@@ -10,8 +9,7 @@ part 'interests_state.dart';
 part 'interests_cubit.freezed.dart';
 
 class InterestsCubit extends Cubit<InterestsState> {
-  InterestsCubit({required UserRegistrationData user})
-      : super(InterestsState(user: user));
+  InterestsCubit() : super(InterestsState(user: UserRegistrationData()));
   void initVariable(UserRegistrationData userData) {
     emit(state.copyWith(user: userData));
   }

@@ -8,9 +8,9 @@ class DeliveryAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          DeliveryAddressCubit(locator<DeliveryAddressUseCase>(), user: data)
-            ..prefill(data.country),
+      create: (_) => locator<DeliveryAddressCubit>()
+        ..initRegistrationModel(data)
+        ..prefill(data.country),
       child: Scaffold(
         backgroundColor: AppColors.grey100,
         appBar: AppBar(

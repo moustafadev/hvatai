@@ -2,6 +2,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
+import 'package:hvatai/features/auth/data/models/login_model.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
@@ -9,11 +10,11 @@ import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
 
 class ApiServiceAuth extends ApiBase {
-  Future<UserRegistrationData> login(LoginParams params) async {
-    return executeAndHandleErrorServer<UserRegistrationData>(() async {
+  Future<LoginModel> login(LoginParams params) async {
+    return executeAndHandleErrorServer<LoginModel>(() async {
       final response = await post(ServerConfig.login, body: params.toJson());
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return UserRegistrationData.fromJson(response.json);
+        return LoginModel.fromJson(response.json['data']);
       } else {
         throw Exception;
       }
@@ -41,11 +42,11 @@ class ApiServiceAuth extends ApiBase {
     });
   }
 
-  Future<UserRegistrationData> checkOtp(CheckOtpParams params) async {
-    return executeAndHandleErrorServer<UserRegistrationData>(() async {
+  Future<LoginModel> checkOtp(CheckOtpParams params) async {
+    return executeAndHandleErrorServer<LoginModel>(() async {
       final response = await post(ServerConfig.checkOtp, body: params.toJson());
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return UserRegistrationData.fromJson(response.json);
+        return LoginModel.fromJson(response.json);
       } else {
         throw Exception;
       }

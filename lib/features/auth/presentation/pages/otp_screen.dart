@@ -9,7 +9,7 @@ class OtpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(data.email != null, 'User email is required');
     return BlocProvider(
-      create: (_) => OtpCubit(locator<CheckOtpUseCase>(), user: data),
+      create: (_) => locator<OtpCubit>()..initRegistrationModel(data),
       child: BlocBuilder<OtpCubit, OtpState>(
         builder: (context, state) {
           final cubit = context.read<OtpCubit>();

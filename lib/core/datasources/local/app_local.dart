@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:hvatai/core/datasources/local/cache_helper.dart';
 
 class AppLocal extends CacheHelper {

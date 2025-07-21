@@ -37,8 +37,8 @@ Future<void> setupLocator() async {
   //BLOC
   locator.registerFactory(() => LoginCubit(locator()));
   locator.registerFactory(() => VerificationCubit());
-  locator.registerFactory(() => InterestsCubit(user: locator()));
-  locator.registerFactory(() => InterestsDetailCubit(user: locator()));
+  locator.registerFactory(() => InterestsCubit());
+  locator.registerFactory(() => InterestsDetailCubit());
   locator.registerFactory(() => ProfileCubit());
   locator.registerFactory(() => ActivityCubit());
   locator.registerLazySingleton(() => NotificationCubit());
@@ -54,9 +54,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => RegistrationCubit(
         locator(),
       ));
-  locator
-      .registerFactory(() => DeliveryAddressCubit(locator(), user: locator()));
-  locator.registerFactory(() => OtpCubit(locator(), user: locator()));
+  locator.registerFactory(() => DeliveryAddressCubit(locator()));
+  locator.registerFactory(() => OtpCubit(locator()));
   locator.registerFactory(() => RatesActivityCubit());
   locator.registerFactory(() => FeaturedActivityCubit());
 

@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
-import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
@@ -16,12 +15,10 @@ import 'package:hvatai/routes/shell_route.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter router = GoRouter(
   // observers: [MyNavigatorObserver()],
-  initialLocation: AppRoutes.registration,
+  initialLocation: AppRoutes.splash,
   navigatorKey: navigatorKey,
   routes: <RouteBase>[
     GoRoute(
-      name: AppRoutes.login,
-
       path: AppRoutes.login, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const LoginScreen();
@@ -34,89 +31,72 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      name: AppRoutes.socialLogin,
-
       path: AppRoutes.socialLogin, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const SocialsLoginScreen();
       },
     ),
     GoRoute(
-      name: AppRoutes.deliveryAddressUpdate,
-
       path: AppRoutes.deliveryAddressUpdate, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const DeliveryAddressUpdateScreen();
       },
     ),
     GoRoute(
-      name: AppRoutes.payments,
-
       path: AppRoutes.payments, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const PaymentMethodsScreen();
       },
     ),
     GoRoute(
-      name: AppRoutes.addNewPaymentMethod,
-
       path: AppRoutes.addNewPaymentMethod, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const AddNewPaymentMethod();
       },
     ),
     GoRoute(
-      name: AppRoutes.changeEmail,
-
       path: AppRoutes.changeEmail, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const ChangeEmailUser();
       },
     ),
     GoRoute(
-      name: AppRoutes.changePassword,
       path: AppRoutes.changePassword, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const ChangePasswordUser();
       },
     ),
     GoRoute(
-      name: AppRoutes.addProduct,
       path: AppRoutes.addProduct, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const AddNewGoods();
       },
     ),
     GoRoute(
-      name: AppRoutes.termAndConditions,
       path: AppRoutes.termAndConditions, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const TermsAndCondition();
       },
     ),
     GoRoute(
-      name: AppRoutes.myGoods,
       path: AppRoutes.myGoods, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const MyGoodsScreen();
       },
     ),
     GoRoute(
-      name: AppRoutes.privacyPolicy,
       path: AppRoutes.privacyPolicy, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const PrivacyPolicy();
       },
     ),
     GoRoute(
-      name: AppRoutes.registration,
       path: AppRoutes.registration, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const RegistrationScreen();
       },
     ),
     GoRoute(
-      name: AppRoutes.verificationCode,
       path: AppRoutes.verificationCode, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const VerificationCodeScreen();
@@ -124,7 +104,6 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.deliveryAddress,
-      name: AppRoutes.deliveryAddress,
       builder: (context, state) {
         final userData = state.extra as UserRegistrationData;
 
@@ -132,7 +111,6 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      name: AppRoutes.interests,
       path: AppRoutes.interests,
       builder: (BuildContext context, GoRouterState state) {
         final userData = state.extra as UserRegistrationData;
@@ -141,7 +119,6 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
         path: AppRoutes.notificationSettings,
-        name: AppRoutes.notificationSettings,
         builder: (context, state) {
           return NotificationSettingsScreen();
         }),
@@ -192,7 +169,6 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.otp,
-      name: AppRoutes.otp,
       builder: (context, state) {
         final data = state.extra as UserRegistrationData?;
 
