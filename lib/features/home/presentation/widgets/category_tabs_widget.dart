@@ -3,20 +3,12 @@ part of '../home.dart';
 class CategoryTabsWidget extends StatelessWidget {
   final Function(dynamic) onCategorySelected;
 
-  const CategoryTabsWidget({required this.onCategorySelected, super.key});
+  const CategoryTabsWidget(
+      {required this.onCategorySelected,
+      super.key,
+      required this.detailedInterestOptions});
 
-  static const List<String> detailedInterestOptions = [
-    'For you',
-    'Art',
-    'Business',
-    'Health',
-    'Music',
-    'Politics',
-    'Science',
-    'Sports',
-    'Technology',
-    'Travel',
-  ];
+  final List<String> detailedInterestOptions;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +26,10 @@ class CategoryTabsWidget extends StatelessWidget {
               return Padding(
                 padding: EdgeInsets.only(right: 10.w),
                 child: GestureDetector(
-                  onTap: () => cubit.selectCategory(index),
+                  onTap: () {
+                    cubit.selectCategory(index);
+                    onCategorySelected(item);
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       color: AppColors.gray,

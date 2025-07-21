@@ -9,10 +9,14 @@ import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
+import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
+import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
+import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/interests/interests_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/interests_detail/interests_detail_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/login/login_cubit.dart';
+import 'package:hvatai/features/auth/presentation/cubit/otp_cubit/otp_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/registration/registration_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/social_login.dart/social_login_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/verification/verification_cubit.dart';
@@ -25,6 +29,7 @@ import 'package:responsive_grid_list/responsive_grid_list.dart';
 
 // Include all parts here
 part 'pages/social_login_screen.dart';
+part 'pages/otp_screen.dart';
 part 'pages/delivery_address_screen.dart';
 part 'pages/privacy_policy.dart';
 part 'pages/verification_code_screen.dart';
@@ -50,3 +55,5 @@ part 'widgets/social_login/top_bar.dart';
 part 'widgets/social_login/text_section.dart';
 part 'widgets/social_login/action_buttons.dart';
 part 'widgets/social_login/terms_and_privacy.dart';
+part 'widgets/interests_detail_widget.dart';
+part 'widgets/category_options_section.dart';

@@ -10,7 +10,7 @@ class TopElectronicsContainer extends StatelessWidget {
         ReusableCustomContainer(
           height: 78.h,
           borderRadius: BorderRadius.circular(8.r),
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
             colors: [
               AppColors.blueLite,
               AppColors.purpleLite,
@@ -28,7 +28,7 @@ class TopElectronicsContainer extends StatelessWidget {
         ReusableCustomContainer(
           height: 78.h,
           borderRadius: BorderRadius.circular(8.r),
-          gradient: const LinearGradient(
+          gradient: LinearGradient(
             colors: [
               AppColors.blueLite,
               AppColors.purpleLite,

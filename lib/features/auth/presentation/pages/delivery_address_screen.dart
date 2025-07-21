@@ -8,7 +8,9 @@ class DeliveryAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => locator<DeliveryAddressCubit>()..prefill(data.country),
+      create: (_) =>
+          DeliveryAddressCubit(locator<DeliveryAddressUseCase>(), user: data)
+            ..prefill(data.country),
       child: Scaffold(
         backgroundColor: AppColors.grey100,
         appBar: AppBar(
@@ -16,7 +18,7 @@ class DeliveryAddressScreen extends StatelessWidget {
           leading: IconButton(
               icon: const Icon(Icons.arrow_back_ios,
                   color: AppColors.blackColorIcon),
-              onPressed: () => GoRouter.of(context).pop()),
+              onPressed: () => context.pop()),
           centerTitle: true,
           title: CustomText(
             text: 'deliveryAddress'.tr(),
@@ -25,24 +27,9 @@ class DeliveryAddressScreen extends StatelessWidget {
             color: AppColors.blackDark,
           ),
           actions: [
-            // TextButton(
-            //   onPressed: () {
-            //     context.read<DeliveryAddressCubit>().submit(context, data);
-            //   },
-            //   child: Row(
-            //     children: [
-            //       CustomText(
-            //         text: 'skip'.tr(),
-            //         fontSize: 16.sp,
-            //         color: AppColors.eerieBlack,
-            //       ),
-            //       const Icon(Icons.arrow_forward_ios),
-            //     ],
-            //   ),
-            // ),
             IconButton(
               icon: const Icon(Icons.close),
-              onPressed: () => GoRouter.of(context).pop(),
+              onPressed: () => context.replaceNamed(AppRoutes.login),
               tooltip: 'close'.tr(),
               color: AppColors.blackDark,
             ),
@@ -82,19 +69,6 @@ class DeliveryAddressScreen extends StatelessWidget {
                                   ))
                               .toList(),
                         ),
-                        // CustomTextField(
-                        //   hintText: 'country'.tr(),
-                        //   readOnly: true,
-                        //   suffixIcon: IconButton(
-                        //     icon: SvgPicture.asset(Assets.assetsIconsLock),
-                        //     onPressed: null,
-                        //   ),
-                        //   validator: (v) =>
-                        //       v!.isEmpty ? 'enterCountry'.tr() : null,
-                        //   onChanged: (v) => cubit.updateField('country', v),
-                        //   controller:
-                        //       TextEditingController(text: state.country),
-                        // ),
                         20.ph,
                         CustomTextField(
                           hintText: 'city'.tr(),
@@ -168,31 +142,58 @@ class DeliveryAddressScreen extends StatelessWidget {
                           ],
                         ),
                         18.ph,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SvgPicture.asset(Assets.assetsIconsMapPin),
-                            10.pw,
-                            CustomText(
-                              text: 'fillAutomatically'.tr(),
-                              color: AppColors.purple1,
-                            )
-                          ],
+                        GestureDetector(
+                          onTap: () async {
+                            final cubit = context.read<DeliveryAddressCubit>();
+
+                            try {
+                              final position = await cubit.determinePosition();
+                              if (position == null) return;
+
+                              final addressData =
+                                  await cubit.getAddressFromPosition(position);
+
+                              // ✅ استبدال القيم المرسلة من الشاشة السابقة بالقيم الجديدة من الموقع
+                              cubit.updateField(
+                                  'country', addressData['country']!);
+                              cubit.updateField('city', addressData['city']!);
+                              cubit.updateField(
+                                  'street', addressData['street']!);
+                              cubit.updateField('index', addressData['index']!);
+                            } catch (e) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                    content:
+                                        Text('Error getting location: $e')),
+                              );
+                            }
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(Assets.assetsIconsMapPin),
+                              10.pw,
+                              CustomText(
+                                text: 'fillAutomatically'.tr(),
+                                color: AppColors.purple1,
+                              )
+                            ],
+                          ),
                         ),
                         30.ph,
                         CustomGradientButton(
-                          text: 'save'.tr(),
-                          isDisabled: cubit.state.apartment.isNotEmpty &&
-                              cubit.state.city.isNotEmpty &&
-                              cubit.state.entrance.isNotEmpty &&
-                              cubit.state.house.isNotEmpty &&
-                              cubit.state.index.isNotEmpty &&
-                              cubit.state.street.isNotEmpty &&
-                              cubit.state.country.isNotEmpty,
-                          onPressed: () => context
-                              .read<DeliveryAddressCubit>()
-                              .submit(context, data),
-                        ),
+                            text: 'save'.tr(),
+                            isLoading: cubit.state.isLoading,
+                            isDisabled: !(cubit.state.apartment.isNotEmpty &&
+                                cubit.state.city.isNotEmpty &&
+                                cubit.state.entrance.isNotEmpty &&
+                                cubit.state.house.isNotEmpty &&
+                                cubit.state.index.isNotEmpty &&
+                                cubit.state.street.isNotEmpty &&
+                                cubit.state.country.isNotEmpty),
+                            onPressed: () {
+                              cubit.submit(context);
+                            }),
                         20.ph,
                       ],
                     ),

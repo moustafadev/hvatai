@@ -35,4 +35,5 @@ class AppRoutes {
   static const String deliveryAddressUpdate = '/delivery_address_update';
   static const String tradeProfileDetail = '/trade_profile_detail';
   static const String addProduct = '/add_product';
+  static const String otp = '/otp';
 }

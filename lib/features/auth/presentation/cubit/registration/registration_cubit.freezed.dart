@@ -28,6 +28,10 @@ mixin _$RegistrationState {
   double get passwordStrength => throw _privateConstructorUsedError;
   String get passwordStrengthText => throw _privateConstructorUsedError;
   String? get emailError => throw _privateConstructorUsedError;
+  bool get isRegisterLoading => throw _privateConstructorUsedError;
+  bool get successRegister => throw _privateConstructorUsedError;
+  String get errorMessage => throw _privateConstructorUsedError;
+  UserRegistrationData get user => throw _privateConstructorUsedError;
 
   /// Create a copy of RegistrationState
   /// with the given fields replaced by the non-null parameter values.
@@ -54,7 +58,13 @@ abstract class $RegistrationStateCopyWith<$Res> {
       bool obscurePassword,
       double passwordStrength,
       String passwordStrengthText,
-      String? emailError});
+      String? emailError,
+      bool isRegisterLoading,
+      bool successRegister,
+      String errorMessage,
+      UserRegistrationData user});
+
+  $UserRegistrationDataCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -84,6 +94,10 @@ class _$RegistrationStateCopyWithImpl<$Res, $Val extends RegistrationState>
     Object? passwordStrength = null,
     Object? passwordStrengthText = null,
     Object? emailError = freezed,
+    Object? isRegisterLoading = null,
+    Object? successRegister = null,
+    Object? errorMessage = null,
+    Object? user = null,
   }) {
     return _then(_value.copyWith(
       firstName: null == firstName
@@ -134,7 +148,33 @@ class _$RegistrationStateCopyWithImpl<$Res, $Val extends RegistrationState>
           ? _value.emailError
           : emailError // ignore: cast_nullable_to_non_nullable
               as String?,
+      isRegisterLoading: null == isRegisterLoading
+          ? _value.isRegisterLoading
+          : isRegisterLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      successRegister: null == successRegister
+          ? _value.successRegister
+          : successRegister // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserRegistrationData,
     ) as $Val);
+  }
+
+  /// Create a copy of RegistrationState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserRegistrationDataCopyWith<$Res> get user {
+    return $UserRegistrationDataCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
   }
 }
 
@@ -158,7 +198,14 @@ abstract class _$$RegistrationStateImplCopyWith<$Res>
       bool obscurePassword,
       double passwordStrength,
       String passwordStrengthText,
-      String? emailError});
+      String? emailError,
+      bool isRegisterLoading,
+      bool successRegister,
+      String errorMessage,
+      UserRegistrationData user});
+
+  @override
+  $UserRegistrationDataCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -186,6 +233,10 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
     Object? passwordStrength = null,
     Object? passwordStrengthText = null,
     Object? emailError = freezed,
+    Object? isRegisterLoading = null,
+    Object? successRegister = null,
+    Object? errorMessage = null,
+    Object? user = null,
   }) {
     return _then(_$RegistrationStateImpl(
       firstName: null == firstName
@@ -236,6 +287,22 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
           ? _value.emailError
           : emailError // ignore: cast_nullable_to_non_nullable
               as String?,
+      isRegisterLoading: null == isRegisterLoading
+          ? _value.isRegisterLoading
+          : isRegisterLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      successRegister: null == successRegister
+          ? _value.successRegister
+          : successRegister // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserRegistrationData,
     ));
   }
 }
@@ -255,7 +322,11 @@ class _$RegistrationStateImpl implements _RegistrationState {
       this.obscurePassword = false,
       this.passwordStrength = 0.0,
       this.passwordStrengthText = '',
-      this.emailError});
+      this.emailError,
+      this.isRegisterLoading = false,
+      this.successRegister = false,
+      this.errorMessage = '',
+      required this.user});
 
   @override
   @JsonKey()
@@ -290,10 +361,21 @@ class _$RegistrationStateImpl implements _RegistrationState {
   final String passwordStrengthText;
   @override
   final String? emailError;
+  @override
+  @JsonKey()
+  final bool isRegisterLoading;
+  @override
+  @JsonKey()
+  final bool successRegister;
+  @override
+  @JsonKey()
+  final String errorMessage;
+  @override
+  final UserRegistrationData user;
 
   @override
   String toString() {
-    return 'RegistrationState(firstName: $firstName, lastName: $lastName, email: $email, password: $password, isAbove18: $isAbove18, agreedToTerms: $agreedToTerms, gender: $gender, country: $country, obscurePassword: $obscurePassword, passwordStrength: $passwordStrength, passwordStrengthText: $passwordStrengthText, emailError: $emailError)';
+    return 'RegistrationState(firstName: $firstName, lastName: $lastName, email: $email, password: $password, isAbove18: $isAbove18, agreedToTerms: $agreedToTerms, gender: $gender, country: $country, obscurePassword: $obscurePassword, passwordStrength: $passwordStrength, passwordStrengthText: $passwordStrengthText, emailError: $emailError, isRegisterLoading: $isRegisterLoading, successRegister: $successRegister, errorMessage: $errorMessage, user: $user)';
   }
 
   @override
@@ -321,7 +403,14 @@ class _$RegistrationStateImpl implements _RegistrationState {
             (identical(other.passwordStrengthText, passwordStrengthText) ||
                 other.passwordStrengthText == passwordStrengthText) &&
             (identical(other.emailError, emailError) ||
-                other.emailError == emailError));
+                other.emailError == emailError) &&
+            (identical(other.isRegisterLoading, isRegisterLoading) ||
+                other.isRegisterLoading == isRegisterLoading) &&
+            (identical(other.successRegister, successRegister) ||
+                other.successRegister == successRegister) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
@@ -338,7 +427,11 @@ class _$RegistrationStateImpl implements _RegistrationState {
       obscurePassword,
       passwordStrength,
       passwordStrengthText,
-      emailError);
+      emailError,
+      isRegisterLoading,
+      successRegister,
+      errorMessage,
+      user);
 
   /// Create a copy of RegistrationState
   /// with the given fields replaced by the non-null parameter values.
@@ -363,7 +456,11 @@ abstract class _RegistrationState implements RegistrationState {
       final bool obscurePassword,
       final double passwordStrength,
       final String passwordStrengthText,
-      final String? emailError}) = _$RegistrationStateImpl;
+      final String? emailError,
+      final bool isRegisterLoading,
+      final bool successRegister,
+      final String errorMessage,
+      required final UserRegistrationData user}) = _$RegistrationStateImpl;
 
   @override
   String get firstName;
@@ -389,6 +486,14 @@ abstract class _RegistrationState implements RegistrationState {
   String get passwordStrengthText;
   @override
   String? get emailError;
+  @override
+  bool get isRegisterLoading;
+  @override
+  bool get successRegister;
+  @override
+  String get errorMessage;
+  @override
+  UserRegistrationData get user;
 
   /// Create a copy of RegistrationState
   /// with the given fields replaced by the non-null parameter values.

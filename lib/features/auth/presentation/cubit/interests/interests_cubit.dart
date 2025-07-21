@@ -1,16 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
+import 'package:hvatai/routes/app_routes.dart';
 
 part 'interests_state.dart';
 part 'interests_cubit.freezed.dart';
 
 class InterestsCubit extends Cubit<InterestsState> {
-  InterestsCubit()
-      : super(InterestsState());
-
+  InterestsCubit({required UserRegistrationData user})
+      : super(InterestsState(user: user));
   void initVariable(UserRegistrationData userData) {
-    emit(state.copyWith(userData: userData));
+    emit(state.copyWith(user: userData));
   }
 
   void toggleInterest(int index, String interestKey) {
@@ -30,6 +33,23 @@ class InterestsCubit extends Cubit<InterestsState> {
       selectedIndices: updatedIndices,
       selectedInterests: updatedInterests,
     ));
+  }
+
+  void submitInterests(BuildContext context) {
+    if (state.selectedInterests.isEmpty) {
+      emit(state.copyWith(errorMessage: 'select_interest'));
+      return;
+    }
+
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
+
+    final updatedUser = state.user.copyWith(
+      interests: state.selectedInterests,
+    );
+
+    emit(state.copyWith(user: updatedUser, isLoading: false));
+
+    context.push(AppRoutes.interestsDetail, extra: updatedUser);
   }
 
   Future<void> registerUser(

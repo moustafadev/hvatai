@@ -7,5 +7,16 @@ class LoginState with _$LoginState {
     @Default('') String password,
     @Default(false) bool obscurePassword,
     @Default(false) bool isLoading,
+    @Default(false) bool successLogin,
+    @Default('') String errorMessage,
   }) = _LoginState;
+}
+
+extension LoginStateMapper on LoginState {
+  LoginParams toUserLoginData() {
+    return LoginParams(
+      email: email,
+      password: password,
+    );
+  }
 }

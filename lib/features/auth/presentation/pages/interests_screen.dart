@@ -1,8 +1,8 @@
 part of '../auth.dart';
 
 class InterestsScreen extends StatelessWidget {
-  final UserRegistrationData userData;
-  const InterestsScreen({super.key, required this.userData});
+  final UserRegistrationData data;
+  const InterestsScreen({super.key, required this.data});
 
   static const interestKeys = [
     'Clothes',
@@ -41,7 +41,7 @@ class InterestsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => locator<InterestsCubit>()..initVariable(userData),
+      create: (_) => InterestsCubit(user: data),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -52,138 +52,131 @@ class InterestsScreen extends StatelessWidget {
         ),
         body: SafeArea(
           bottom: false,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28),
-            child: BlocBuilder<InterestsCubit, InterestsState>(
-              builder: (context, state) {
-                final cubit = context.read<InterestsCubit>();
+          child: BlocBuilder<InterestsCubit, InterestsState>(
+            builder: (context, state) {
+              final cubit = context.read<InterestsCubit>();
 
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                      text: 'interestsTitle'.tr(),
-                      fontSize: 25.sp,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'SFProRounded',
-                    ),
-                    SizedBox(height: 8.h),
-                    CustomText(
-                      text: 'interestsSubtitle'.tr(),
-                      fontSize: 16.sp,
-                      color: Colors.grey,
-                      fontFamily: 'MontserratAlternates',
-                    ),
-                    SizedBox(height: 20.h),
-                    Expanded(
-                      child: ResponsiveGridListBuilder(
-                        minItemWidth: 1,
-                        minItemsPerRow: 3,
-                        maxItemsPerRow: 3,
-                        horizontalGridSpacing: 12.h,
-                        verticalGridSpacing: 12.h,
-                        builder: (context, items) => ListView(
-                          shrinkWrap: true,
-                          physics: BouncingScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          children: items,
+              return Stack(
+                children: [
+                  SingleChildScrollView(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    physics: BouncingScrollPhysics(),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        20.ph,
+                        CustomText(
+                          text: 'interestsTitle'.tr(),
+                          fontSize: 28.sp,
+                          fontWeight: FontWeight.w800,
                         ),
-                        gridItems:
-                            List.generate(interestImages.length, (index) {
-                          final isSelected =
-                              state.selectedIndices.contains(index);
-
-                          return GestureDetector(
-                            onTap: () => cubit.toggleInterest(
-                                index, interestKeys[index].tr()),
-                            child: Container(
-                              height: 120.h,
-                              decoration: BoxDecoration(
-                                color:
-                                    isSelected ? AppColors.primaryColor : null,
-                                borderRadius: BorderRadius.circular(8),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black12,
-                                    blurRadius: 4,
-                                    offset: Offset(2, 2),
-                                  ),
-                                ],
-                                border: isSelected
-                                    ? Border.all(
-                                        width: 0.1, color: Colors.transparent)
-                                    : Border.all(color: Colors.white, width: 2),
-                              ),
-                              child: Padding(
-                                padding: isSelected
-                                    ? EdgeInsets.all(1.5.r)
-                                    : EdgeInsets.zero,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8.r),
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Center(
-                                        child: CustomText(
-                                          text: interestKeys[index].tr(),
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          textAlign: TextAlign.center,
-                                          fontFamily: 'SFProRounded',
+                        4.ph,
+                        CustomText(
+                          text: 'interestsSubtitle'.tr(),
+                          fontSize: 16.sp,
+                          color: Colors.grey,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        20.ph,
+                        ResponsiveGridListBuilder(
+                          minItemWidth: 1,
+                          minItemsPerRow: 3,
+                          maxItemsPerRow: 3,
+                          horizontalGridSpacing: 12.h,
+                          verticalGridSpacing: 12.h,
+                          builder: (context, items) => Column(
+                            children: items,
+                          ),
+                          gridItems:
+                              List.generate(interestImages.length, (index) {
+                            final isSelected =
+                                state.selectedIndices.contains(index);
+                            return GestureDetector(
+                              onTap: () => cubit.toggleInterest(
+                                  index, interestKeys[index].tr()),
+                              child: Container(
+                                height: 120.h,
+                                decoration: BoxDecoration(
+                                  color: isSelected
+                                      ? AppColors.primaryColor
+                                      : null,
+                                  borderRadius: BorderRadius.circular(8),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black12,
+                                      blurRadius: 4,
+                                      offset: Offset(2, 2),
+                                    ),
+                                  ],
+                                  border: isSelected
+                                      ? Border.all(
+                                          width: 0.1, color: Colors.transparent)
+                                      : Border.all(
+                                          color: Colors.white, width: 2),
+                                ),
+                                child: Padding(
+                                  padding: isSelected
+                                      ? EdgeInsets.all(1.5.r)
+                                      : EdgeInsets.zero,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8.r),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Center(
+                                          child: CustomText(
+                                            text: interestKeys[index].tr(),
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.bold,
+                                            color: Colors.black,
+                                            textAlign: TextAlign.center,
+                                          ),
                                         ),
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8.r),
-                                            image: DecorationImage(
-                                              image: AssetImage(
-                                                  interestImages[index]),
-                                              fit: BoxFit.cover,
+                                        Expanded(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.r),
+                                              image: DecorationImage(
+                                                image: AssetImage(
+                                                    interestImages[index]),
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          );
-                        }),
-                      ),
+                            );
+                          }),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 20.h),
-                    CustomGradientButton(
-                      isDisabled: state.selectedInterests.isNotEmpty,
-                      text: state.isLoading
-                          ? "registering".tr()
-                          : "continue".tr(),
+                  ),
+                  // الزر الثابت في الأسفل
+                  Positioned(
+                    left: 16,
+                    right: 16,
+                    bottom: 20,
+                    child: CustomGradientButton(
+                      isLoading: state.isLoading,
+                      isDisabled: !(state.selectedInterests.isNotEmpty),
+                      text: "continue".tr(),
                       onPressed: state.isLoading
                           ? null
                           : () {
-                              final updatedUserData = userData.copyWith(
-                                interests: context
-                                    .read<InterestsCubit>()
-                                    .state
-                                    .selectedInterests,
-                              );
-
-                              context.push(
-                                AppRoutes.interestsDetail,
-                                extra: updatedUserData,
-                              );
+                              cubit.submitInterests(context);
                             },
                     ),
-                    SizedBox(height: 20.h),
-                  ],
-                );
-              },
-            ),
+                  ),
+                ],
+              );
+            },
           ),
         ),
       ),

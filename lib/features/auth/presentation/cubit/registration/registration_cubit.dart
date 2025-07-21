@@ -1,36 +1,47 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
+import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
 part 'registration_cubit.freezed.dart';
 part 'registration_state.dart';
 
 class RegistrationCubit extends Cubit<RegistrationState> {
-  RegistrationCubit() : super(const RegistrationState());
+  RegistrationCubit(this.registerUseCase)
+      : super(RegistrationState(user: UserRegistrationData()));
 
   final formKey = GlobalKey<FormState>();
+  final RegisterUseCase registerUseCase;
 
   void updateField(String field, String value) {
+    final updatedUser = state.user.copyWith(
+      firstName: field == 'firstName' ? value : state.firstName,
+      lastName: field == 'lastName' ? value : state.lastName,
+      email: field == 'email' ? value : state.email,
+      password: field == 'password' ? value : state.password,
+    );
+
     switch (field) {
       case 'firstName':
-        emit(state.copyWith(firstName: value));
+        emit(state.copyWith(firstName: value, user: updatedUser));
         break;
       case 'lastName':
-        emit(state.copyWith(lastName: value));
+        emit(state.copyWith(lastName: value, user: updatedUser));
         break;
       case 'email':
-        emit(state.copyWith(email: value, emailError: null));
+        emit(state.copyWith(email: value, emailError: null, user: updatedUser));
         break;
       case 'password':
         final strength = _evaluatePassword(value);
         emit(state.copyWith(
-            password: value,
-            passwordStrength: strength.$1,
-            passwordStrengthText: strength.$2));
+          password: value,
+          passwordStrength: strength.$1,
+          passwordStrengthText: strength.$2,
+          user: updatedUser,
+        ));
         break;
     }
   }
@@ -39,31 +50,71 @@ class RegistrationCubit extends Cubit<RegistrationState> {
     emit(state.copyWith(obscurePassword: !state.obscurePassword));
   }
 
-  void setGender(String? gender) => emit(state.copyWith(gender: gender));
-  void setCountry(String? country) => emit(state.copyWith(country: country));
-  void toggleAgreed() =>
-      emit(state.copyWith(agreedToTerms: !state.agreedToTerms));
-  void toggleAbove18() => emit(state.copyWith(isAbove18: !state.isAbove18));
+  void setGender(String? gender) {
+    emit(state.copyWith(
+      gender: gender,
+      user: state.user.copyWith(gender: gender ?? ''),
+    ));
+  }
 
-  void submit(BuildContext context) {
-    if (!formKey.currentState!.validate()) return;
+  void setCountry(String? country) {
+    emit(state.copyWith(
+      country: country,
+      user: state.user.copyWith(country: country ?? ''),
+    ));
+  }
+
+  void toggleAgreed() {
+    final updated = !state.agreedToTerms;
+    emit(state.copyWith(
+      agreedToTerms: updated,
+      user: state.user.copyWith(agreedToTerms: updated),
+    ));
+  }
+
+  void toggleAbove18() {
+    final updated = !state.isAbove18;
+    emit(state.copyWith(
+      isAbove18: updated,
+      user: state.user.copyWith(isAbove18: updated),
+    ));
+  }
+
+  void register(BuildContext context) async {
+    if (!formKey.currentState!.validate()) {
+      emit(state.copyWith(errorMessage: 'Please fill all fields correctly.'));
+      return;
+    }
 
     if (!state.agreedToTerms || !state.isAbove18) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("You must agree to terms and be over 18")),
+        const SnackBar(content: Text("You must agree to terms and be over 18")),
       );
       return;
     }
 
-    final user = state.toUserRegistrationData();
+    emit(state.copyWith(isRegisterLoading: true, errorMessage: ''));
 
-    context.push(AppRoutes.deliveryAddress,
-        extra: user); // ✅ GoRouter with extra
-  }
+    final result = await registerUseCase.call(
+      state.toUserRegistrationData(),
+    );
 
-  Future<void> checkEmail(String email) async {
-    // Stub
-    emit(state.copyWith(emailError: null));
+    result.fold(
+      (failure) {
+        emit(state.copyWith(
+          isRegisterLoading: false,
+          errorMessage: failure,
+        ));
+      },
+      (_) {
+        emit(state.copyWith(
+          isRegisterLoading: false,
+          successRegister: true,
+          errorMessage: '',
+        ));
+        context.push(AppRoutes.otp, extra: state.user);
+      },
+    );
   }
 
   (double, String) _evaluatePassword(String password) {

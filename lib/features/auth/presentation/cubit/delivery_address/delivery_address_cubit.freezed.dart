@@ -23,6 +23,9 @@ mixin _$DeliveryAddressState {
   String get apartment => throw _privateConstructorUsedError;
   String get entrance => throw _privateConstructorUsedError;
   String get index => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
+  String get errorMessage => throw _privateConstructorUsedError;
+  UserRegistrationData get user => throw _privateConstructorUsedError;
 
   /// Create a copy of DeliveryAddressState
   /// with the given fields replaced by the non-null parameter values.
@@ -44,7 +47,12 @@ abstract class $DeliveryAddressStateCopyWith<$Res> {
       String house,
       String apartment,
       String entrance,
-      String index});
+      String index,
+      bool isLoading,
+      String errorMessage,
+      UserRegistrationData user});
+
+  $UserRegistrationDataCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -70,6 +78,9 @@ class _$DeliveryAddressStateCopyWithImpl<$Res,
     Object? apartment = null,
     Object? entrance = null,
     Object? index = null,
+    Object? isLoading = null,
+    Object? errorMessage = null,
+    Object? user = null,
   }) {
     return _then(_value.copyWith(
       country: null == country
@@ -100,7 +111,29 @@ class _$DeliveryAddressStateCopyWithImpl<$Res,
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as String,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserRegistrationData,
     ) as $Val);
+  }
+
+  /// Create a copy of DeliveryAddressState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserRegistrationDataCopyWith<$Res> get user {
+    return $UserRegistrationDataCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
   }
 }
 
@@ -119,7 +152,13 @@ abstract class _$$DeliveryAddressStateImplCopyWith<$Res>
       String house,
       String apartment,
       String entrance,
-      String index});
+      String index,
+      bool isLoading,
+      String errorMessage,
+      UserRegistrationData user});
+
+  @override
+  $UserRegistrationDataCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -142,6 +181,9 @@ class __$$DeliveryAddressStateImplCopyWithImpl<$Res>
     Object? apartment = null,
     Object? entrance = null,
     Object? index = null,
+    Object? isLoading = null,
+    Object? errorMessage = null,
+    Object? user = null,
   }) {
     return _then(_$DeliveryAddressStateImpl(
       country: null == country
@@ -172,6 +214,18 @@ class __$$DeliveryAddressStateImplCopyWithImpl<$Res>
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as String,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserRegistrationData,
     ));
   }
 }
@@ -186,7 +240,10 @@ class _$DeliveryAddressStateImpl implements _DeliveryAddressState {
       this.house = '',
       this.apartment = '',
       this.entrance = '',
-      this.index = ''});
+      this.index = '',
+      this.isLoading = false,
+      this.errorMessage = '',
+      required this.user});
 
   @override
   @JsonKey()
@@ -209,10 +266,18 @@ class _$DeliveryAddressStateImpl implements _DeliveryAddressState {
   @override
   @JsonKey()
   final String index;
+  @override
+  @JsonKey()
+  final bool isLoading;
+  @override
+  @JsonKey()
+  final String errorMessage;
+  @override
+  final UserRegistrationData user;
 
   @override
   String toString() {
-    return 'DeliveryAddressState(country: $country, city: $city, street: $street, house: $house, apartment: $apartment, entrance: $entrance, index: $index)';
+    return 'DeliveryAddressState(country: $country, city: $city, street: $street, house: $house, apartment: $apartment, entrance: $entrance, index: $index, isLoading: $isLoading, errorMessage: $errorMessage, user: $user)';
   }
 
   @override
@@ -228,12 +293,17 @@ class _$DeliveryAddressStateImpl implements _DeliveryAddressState {
                 other.apartment == apartment) &&
             (identical(other.entrance, entrance) ||
                 other.entrance == entrance) &&
-            (identical(other.index, index) || other.index == index));
+            (identical(other.index, index) || other.index == index) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, country, city, street, house, apartment, entrance, index);
+  int get hashCode => Object.hash(runtimeType, country, city, street, house,
+      apartment, entrance, index, isLoading, errorMessage, user);
 
   /// Create a copy of DeliveryAddressState
   /// with the given fields replaced by the non-null parameter values.
@@ -254,7 +324,10 @@ abstract class _DeliveryAddressState implements DeliveryAddressState {
       final String house,
       final String apartment,
       final String entrance,
-      final String index}) = _$DeliveryAddressStateImpl;
+      final String index,
+      final bool isLoading,
+      final String errorMessage,
+      required final UserRegistrationData user}) = _$DeliveryAddressStateImpl;
 
   @override
   String get country;
@@ -270,6 +343,12 @@ abstract class _DeliveryAddressState implements DeliveryAddressState {
   String get entrance;
   @override
   String get index;
+  @override
+  bool get isLoading;
+  @override
+  String get errorMessage;
+  @override
+  UserRegistrationData get user;
 
   /// Create a copy of DeliveryAddressState
   /// with the given fields replaced by the non-null parameter values.

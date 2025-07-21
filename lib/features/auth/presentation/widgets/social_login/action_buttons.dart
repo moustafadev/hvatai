@@ -17,11 +17,11 @@ class ActionButtons extends StatelessWidget {
         16.pw,
         SocialCircleButton(
           assetPath: Assets.assetsIconsGoogle,
-          onTap: cubit.signUpWithGoogle,
+          onTap: () => cubit.signUpWithGoogle(context),
         ),
         16.pw,
         GestureDetector(
-          onTap: () => context.push(AppRoutes.registration),
+          onTap: () => context.push(AppRoutes.login),
           child: CircleAvatar(
             radius: 24.r,
             backgroundColor: AppColors.primaryColor,

@@ -5,22 +5,23 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userData = GoRouterState.of(context).extra as UserRegistrationData;
     return Scaffold(
       body: SafeArea(
         bottom: false,
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 28.w),
+          padding: EdgeInsets.symmetric(horizontal: 16.w),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 20.h),
+                20.ph,
                 CustomText(
                   text: "dontMissShow".tr(),
                   fontSize: 24.sp,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w800,
                 ),
-                SizedBox(height: 20.h),
+                20.ph,
                 CustomContainer(
                   height: 551.h,
                   width: double.infinity,
@@ -33,23 +34,24 @@ class NotificationScreen extends StatelessWidget {
                     children: [
                       CustomText(
                         text: 'beFirstStream'.tr(),
-                        fontSize: 18.sp,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w800,
                       ),
-                      SizedBox(height: 8.h),
+                      8.ph,
                       CustomText(
                         text: 'receiveNotifications'.tr(),
                         fontSize: 14.sp,
-                        color: Colors.grey,
                         textAlign: TextAlign.center,
+                        fontWeight: FontWeight.w600,
                       ),
                     ],
                   ),
                 ),
-                SizedBox(height: 20.h),
+                32.ph,
                 CustomGradientButton(
                   text: 'continue'.tr(),
-                  isDisabled: true,
+                  isDisabled: false,
+                  isLoading: false,
                   onPressed: () {
                     showDialog(
                       barrierColor: Colors.black.withOpacity(0.5),
@@ -80,7 +82,7 @@ class NotificationScreen extends StatelessWidget {
                                             text: 'wantBest'.tr(),
                                             style: TextStyle(
                                               fontSize: 28.sp,
-                                              color: Colors.white,
+                                              color: AppColors.white,
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
@@ -89,18 +91,20 @@ class NotificationScreen extends StatelessWidget {
                                             style: TextStyle(
                                               fontSize: 28.sp,
                                               fontWeight: FontWeight.bold,
-                                              foreground: Paint()
-                                                ..shader = const LinearGradient(
-                                                  colors: [
-                                                    AppColors.blueLite,
-                                                    AppColors.purpleLite,
-                                                    AppColors.deepPurple,
-                                                  ],
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                ).createShader(
-                                                    const Rect.fromLTWH(
-                                                        0, 0, 100, 30)),
+                                              color: AppColors.primaryColor,
+
+                                              // foreground: Paint()
+                                              //   ..shader = const LinearGradient(
+                                              //     colors: [
+                                              //       AppColors.blueLite,
+                                              //       AppColors.purpleLite,
+                                              //       AppColors.deepPurple,
+                                              //     ],
+                                              //     begin: Alignment.topLeft,
+                                              //     end: Alignment.bottomRight,
+                                              //   ).createShader(
+                                              //       const Rect.fromLTWH(
+                                              //           0, 0, 100, 30)),
                                             ),
                                           ),
                                         ],
@@ -169,10 +173,9 @@ class NotificationScreen extends StatelessWidget {
                                             ),
                                             Expanded(
                                               child: GestureDetector(
-                                                onTap: () {
-                                                  context
-                                                      .go(AppRoutes.imageDelay);
-                                                },
+                                                onTap: () => context.push(
+                                                    AppRoutes.imageDelay,
+                                                    extra: userData),
                                                 child: CustomContainer(
                                                   height: 44.h,
                                                   conColor: AppColors.button,

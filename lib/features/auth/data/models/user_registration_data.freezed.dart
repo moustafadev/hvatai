@@ -14,24 +14,34 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+UserRegistrationData _$UserRegistrationDataFromJson(Map<String, dynamic> json) {
+  return _UserRegistrationData.fromJson(json);
+}
+
 /// @nodoc
 mixin _$UserRegistrationData {
+// بيانات التسجيل
   String? get firstName => throw _privateConstructorUsedError;
   String? get lastName => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get password => throw _privateConstructorUsedError;
-  String? get gender => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError; // بيانات OTP
+  String? get token => throw _privateConstructorUsedError; // بيانات العنوان
   String? get country => throw _privateConstructorUsedError;
   String? get city => throw _privateConstructorUsedError;
   String? get street => throw _privateConstructorUsedError;
   String? get house => throw _privateConstructorUsedError;
   String? get apartment => throw _privateConstructorUsedError;
   String? get entrance => throw _privateConstructorUsedError;
-  String? get index => throw _privateConstructorUsedError;
-  bool get isSignUpWithGoogle => throw _privateConstructorUsedError;
-  List<String>? get interests =>
-      throw _privateConstructorUsedError; // <== Add this
-  List<String>? get detailedInterests => throw _privateConstructorUsedError;
+  String? get index => throw _privateConstructorUsedError; // بيانات الاهتمامات
+  List<String>? get interests => throw _privateConstructorUsedError;
+  List<String>? get detailedInterests =>
+      throw _privateConstructorUsedError; // شروط الاستخدام
+  bool? get isAbove18 => throw _privateConstructorUsedError;
+  bool? get agreedToTerms => throw _privateConstructorUsedError;
+
+  /// Serializes this UserRegistrationData to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of UserRegistrationData
   /// with the given fields replaced by the non-null parameter values.
@@ -52,6 +62,7 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       String? email,
       String? password,
       String? gender,
+      String? token,
       String? country,
       String? city,
       String? street,
@@ -59,9 +70,10 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       String? apartment,
       String? entrance,
       String? index,
-      bool isSignUpWithGoogle,
       List<String>? interests,
-      List<String>? detailedInterests});
+      List<String>? detailedInterests,
+      bool? isAbove18,
+      bool? agreedToTerms});
 }
 
 /// @nodoc
@@ -85,6 +97,7 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
     Object? email = freezed,
     Object? password = freezed,
     Object? gender = freezed,
+    Object? token = freezed,
     Object? country = freezed,
     Object? city = freezed,
     Object? street = freezed,
@@ -92,9 +105,10 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
     Object? apartment = freezed,
     Object? entrance = freezed,
     Object? index = freezed,
-    Object? isSignUpWithGoogle = null,
     Object? interests = freezed,
     Object? detailedInterests = freezed,
+    Object? isAbove18 = freezed,
+    Object? agreedToTerms = freezed,
   }) {
     return _then(_value.copyWith(
       firstName: freezed == firstName
@@ -117,6 +131,10 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
+      token: freezed == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
       country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
@@ -145,10 +163,6 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as String?,
-      isSignUpWithGoogle: null == isSignUpWithGoogle
-          ? _value.isSignUpWithGoogle
-          : isSignUpWithGoogle // ignore: cast_nullable_to_non_nullable
-              as bool,
       interests: freezed == interests
           ? _value.interests
           : interests // ignore: cast_nullable_to_non_nullable
@@ -157,6 +171,14 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
           ? _value.detailedInterests
           : detailedInterests // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      isAbove18: freezed == isAbove18
+          ? _value.isAbove18
+          : isAbove18 // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      agreedToTerms: freezed == agreedToTerms
+          ? _value.agreedToTerms
+          : agreedToTerms // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ) as $Val);
   }
 }
@@ -175,6 +197,7 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       String? email,
       String? password,
       String? gender,
+      String? token,
       String? country,
       String? city,
       String? street,
@@ -182,9 +205,10 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       String? apartment,
       String? entrance,
       String? index,
-      bool isSignUpWithGoogle,
       List<String>? interests,
-      List<String>? detailedInterests});
+      List<String>? detailedInterests,
+      bool? isAbove18,
+      bool? agreedToTerms});
 }
 
 /// @nodoc
@@ -205,6 +229,7 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
     Object? email = freezed,
     Object? password = freezed,
     Object? gender = freezed,
+    Object? token = freezed,
     Object? country = freezed,
     Object? city = freezed,
     Object? street = freezed,
@@ -212,9 +237,10 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
     Object? apartment = freezed,
     Object? entrance = freezed,
     Object? index = freezed,
-    Object? isSignUpWithGoogle = null,
     Object? interests = freezed,
     Object? detailedInterests = freezed,
+    Object? isAbove18 = freezed,
+    Object? agreedToTerms = freezed,
   }) {
     return _then(_$UserRegistrationDataImpl(
       firstName: freezed == firstName
@@ -237,6 +263,10 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
           ? _value.gender
           : gender // ignore: cast_nullable_to_non_nullable
               as String?,
+      token: freezed == token
+          ? _value.token
+          : token // ignore: cast_nullable_to_non_nullable
+              as String?,
       country: freezed == country
           ? _value.country
           : country // ignore: cast_nullable_to_non_nullable
@@ -265,10 +295,6 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
               as String?,
-      isSignUpWithGoogle: null == isSignUpWithGoogle
-          ? _value.isSignUpWithGoogle
-          : isSignUpWithGoogle // ignore: cast_nullable_to_non_nullable
-              as bool,
       interests: freezed == interests
           ? _value._interests
           : interests // ignore: cast_nullable_to_non_nullable
@@ -277,12 +303,20 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
           ? _value._detailedInterests
           : detailedInterests // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      isAbove18: freezed == isAbove18
+          ? _value.isAbove18
+          : isAbove18 // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      agreedToTerms: freezed == agreedToTerms
+          ? _value.agreedToTerms
+          : agreedToTerms // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$UserRegistrationDataImpl implements _UserRegistrationData {
   const _$UserRegistrationDataImpl(
       {this.firstName,
@@ -290,6 +324,7 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       this.email,
       this.password,
       this.gender,
+      this.token,
       this.country,
       this.city,
       this.street,
@@ -297,12 +332,17 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       this.apartment,
       this.entrance,
       this.index,
-      this.isSignUpWithGoogle = false,
       final List<String>? interests,
-      final List<String>? detailedInterests})
+      final List<String>? detailedInterests,
+      this.isAbove18,
+      this.agreedToTerms})
       : _interests = interests,
         _detailedInterests = detailedInterests;
 
+  factory _$UserRegistrationDataImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserRegistrationDataImplFromJson(json);
+
+// بيانات التسجيل
   @override
   final String? firstName;
   @override
@@ -313,6 +353,10 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   final String? password;
   @override
   final String? gender;
+// بيانات OTP
+  @override
+  final String? token;
+// بيانات العنوان
   @override
   final String? country;
   @override
@@ -327,10 +371,9 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   final String? entrance;
   @override
   final String? index;
-  @override
-  @JsonKey()
-  final bool isSignUpWithGoogle;
+// بيانات الاهتمامات
   final List<String>? _interests;
+// بيانات الاهتمامات
   @override
   List<String>? get interests {
     final value = _interests;
@@ -340,9 +383,7 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
     return EqualUnmodifiableListView(value);
   }
 
-// <== Add this
   final List<String>? _detailedInterests;
-// <== Add this
   @override
   List<String>? get detailedInterests {
     final value = _detailedInterests;
@@ -353,9 +394,15 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
     return EqualUnmodifiableListView(value);
   }
 
+// شروط الاستخدام
+  @override
+  final bool? isAbove18;
+  @override
+  final bool? agreedToTerms;
+
   @override
   String toString() {
-    return 'UserRegistrationData(firstName: $firstName, lastName: $lastName, email: $email, password: $password, gender: $gender, country: $country, city: $city, street: $street, house: $house, apartment: $apartment, entrance: $entrance, index: $index, isSignUpWithGoogle: $isSignUpWithGoogle, interests: $interests, detailedInterests: $detailedInterests)';
+    return 'UserRegistrationData(firstName: $firstName, lastName: $lastName, email: $email, password: $password, gender: $gender, token: $token, country: $country, city: $city, street: $street, house: $house, apartment: $apartment, entrance: $entrance, index: $index, interests: $interests, detailedInterests: $detailedInterests, isAbove18: $isAbove18, agreedToTerms: $agreedToTerms)';
   }
 
   @override
@@ -371,6 +418,7 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
             (identical(other.password, password) ||
                 other.password == password) &&
             (identical(other.gender, gender) || other.gender == gender) &&
+            (identical(other.token, token) || other.token == token) &&
             (identical(other.country, country) || other.country == country) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.street, street) || other.street == street) &&
@@ -380,14 +428,17 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
             (identical(other.entrance, entrance) ||
                 other.entrance == entrance) &&
             (identical(other.index, index) || other.index == index) &&
-            (identical(other.isSignUpWithGoogle, isSignUpWithGoogle) ||
-                other.isSignUpWithGoogle == isSignUpWithGoogle) &&
             const DeepCollectionEquality()
                 .equals(other._interests, _interests) &&
             const DeepCollectionEquality()
-                .equals(other._detailedInterests, _detailedInterests));
+                .equals(other._detailedInterests, _detailedInterests) &&
+            (identical(other.isAbove18, isAbove18) ||
+                other.isAbove18 == isAbove18) &&
+            (identical(other.agreedToTerms, agreedToTerms) ||
+                other.agreedToTerms == agreedToTerms));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -396,6 +447,7 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       email,
       password,
       gender,
+      token,
       country,
       city,
       street,
@@ -403,9 +455,10 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       apartment,
       entrance,
       index,
-      isSignUpWithGoogle,
       const DeepCollectionEquality().hash(_interests),
-      const DeepCollectionEquality().hash(_detailedInterests));
+      const DeepCollectionEquality().hash(_detailedInterests),
+      isAbove18,
+      agreedToTerms);
 
   /// Create a copy of UserRegistrationData
   /// with the given fields replaced by the non-null parameter values.
@@ -416,6 +469,13 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       get copyWith =>
           __$$UserRegistrationDataImplCopyWithImpl<_$UserRegistrationDataImpl>(
               this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$UserRegistrationDataImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _UserRegistrationData implements UserRegistrationData {
@@ -425,6 +485,7 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       final String? email,
       final String? password,
       final String? gender,
+      final String? token,
       final String? country,
       final String? city,
       final String? street,
@@ -432,10 +493,15 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       final String? apartment,
       final String? entrance,
       final String? index,
-      final bool isSignUpWithGoogle,
       final List<String>? interests,
-      final List<String>? detailedInterests}) = _$UserRegistrationDataImpl;
+      final List<String>? detailedInterests,
+      final bool? isAbove18,
+      final bool? agreedToTerms}) = _$UserRegistrationDataImpl;
 
+  factory _UserRegistrationData.fromJson(Map<String, dynamic> json) =
+      _$UserRegistrationDataImpl.fromJson;
+
+// بيانات التسجيل
   @override
   String? get firstName;
   @override
@@ -445,7 +511,9 @@ abstract class _UserRegistrationData implements UserRegistrationData {
   @override
   String? get password;
   @override
-  String? get gender;
+  String? get gender; // بيانات OTP
+  @override
+  String? get token; // بيانات العنوان
   @override
   String? get country;
   @override
@@ -459,13 +527,15 @@ abstract class _UserRegistrationData implements UserRegistrationData {
   @override
   String? get entrance;
   @override
-  String? get index;
+  String? get index; // بيانات الاهتمامات
   @override
-  bool get isSignUpWithGoogle;
+  List<String>? get interests;
   @override
-  List<String>? get interests; // <== Add this
+  List<String>? get detailedInterests; // شروط الاستخدام
   @override
-  List<String>? get detailedInterests;
+  bool? get isAbove18;
+  @override
+  bool? get agreedToTerms;
 
   /// Create a copy of UserRegistrationData
   /// with the given fields replaced by the non-null parameter values.

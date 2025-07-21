@@ -5,6 +5,7 @@ import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/features/activity/presentation/activity.dart';
+import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
@@ -92,11 +93,15 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
           routes: <RouteBase>[
             GoRoute(
               path: AppRoutes.home,
-              pageBuilder: (context, state) => buildCupertinoTransitionPage(
-                context: context,
-                state: state,
-                child: const HomeScreen(),
-              ),
+              pageBuilder: (context, state) {
+                final userData = state.extra as UserRegistrationData;
+
+                return buildCupertinoTransitionPage(
+                  context: context,
+                  state: state,
+                  child: HomeScreen(data: userData),
+                );
+              },
             ),
           ],
         ),

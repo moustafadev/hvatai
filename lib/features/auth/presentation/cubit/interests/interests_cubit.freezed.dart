@@ -16,10 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$InterestsState {
-  UserRegistrationData? get userData => throw _privateConstructorUsedError;
+  UserRegistrationData get user => throw _privateConstructorUsedError;
   List<String> get selectedInterests => throw _privateConstructorUsedError;
   Set<int> get selectedIndices => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  String get errorMessage => throw _privateConstructorUsedError;
 
   /// Create a copy of InterestsState
   /// with the given fields replaced by the non-null parameter values.
@@ -35,12 +36,13 @@ abstract class $InterestsStateCopyWith<$Res> {
       _$InterestsStateCopyWithImpl<$Res, InterestsState>;
   @useResult
   $Res call(
-      {UserRegistrationData? userData,
+      {UserRegistrationData user,
       List<String> selectedInterests,
       Set<int> selectedIndices,
-      bool isLoading});
+      bool isLoading,
+      String errorMessage});
 
-  $UserRegistrationDataCopyWith<$Res>? get userData;
+  $UserRegistrationDataCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -58,16 +60,17 @@ class _$InterestsStateCopyWithImpl<$Res, $Val extends InterestsState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userData = freezed,
+    Object? user = null,
     Object? selectedInterests = null,
     Object? selectedIndices = null,
     Object? isLoading = null,
+    Object? errorMessage = null,
   }) {
     return _then(_value.copyWith(
-      userData: freezed == userData
-          ? _value.userData
-          : userData // ignore: cast_nullable_to_non_nullable
-              as UserRegistrationData?,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserRegistrationData,
       selectedInterests: null == selectedInterests
           ? _value.selectedInterests
           : selectedInterests // ignore: cast_nullable_to_non_nullable
@@ -80,6 +83,10 @@ class _$InterestsStateCopyWithImpl<$Res, $Val extends InterestsState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 
@@ -87,13 +94,9 @@ class _$InterestsStateCopyWithImpl<$Res, $Val extends InterestsState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserRegistrationDataCopyWith<$Res>? get userData {
-    if (_value.userData == null) {
-      return null;
-    }
-
-    return $UserRegistrationDataCopyWith<$Res>(_value.userData!, (value) {
-      return _then(_value.copyWith(userData: value) as $Val);
+  $UserRegistrationDataCopyWith<$Res> get user {
+    return $UserRegistrationDataCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
     });
   }
 }
@@ -107,13 +110,14 @@ abstract class _$$InterestsStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {UserRegistrationData? userData,
+      {UserRegistrationData user,
       List<String> selectedInterests,
       Set<int> selectedIndices,
-      bool isLoading});
+      bool isLoading,
+      String errorMessage});
 
   @override
-  $UserRegistrationDataCopyWith<$Res>? get userData;
+  $UserRegistrationDataCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -129,16 +133,17 @@ class __$$InterestsStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? userData = freezed,
+    Object? user = null,
     Object? selectedInterests = null,
     Object? selectedIndices = null,
     Object? isLoading = null,
+    Object? errorMessage = null,
   }) {
     return _then(_$InterestsStateImpl(
-      userData: freezed == userData
-          ? _value.userData
-          : userData // ignore: cast_nullable_to_non_nullable
-              as UserRegistrationData?,
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserRegistrationData,
       selectedInterests: null == selectedInterests
           ? _value._selectedInterests
           : selectedInterests // ignore: cast_nullable_to_non_nullable
@@ -151,6 +156,10 @@ class __$$InterestsStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -159,15 +168,16 @@ class __$$InterestsStateImplCopyWithImpl<$Res>
 
 class _$InterestsStateImpl implements _InterestsState {
   const _$InterestsStateImpl(
-      {this.userData,
+      {required this.user,
       final List<String> selectedInterests = const [],
       final Set<int> selectedIndices = const {},
-      this.isLoading = false})
+      this.isLoading = false,
+      this.errorMessage = ''})
       : _selectedInterests = selectedInterests,
         _selectedIndices = selectedIndices;
 
   @override
-  final UserRegistrationData? userData;
+  final UserRegistrationData user;
   final List<String> _selectedInterests;
   @override
   @JsonKey()
@@ -190,10 +200,13 @@ class _$InterestsStateImpl implements _InterestsState {
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final String errorMessage;
 
   @override
   String toString() {
-    return 'InterestsState(userData: $userData, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, isLoading: $isLoading)';
+    return 'InterestsState(user: $user, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -201,23 +214,25 @@ class _$InterestsStateImpl implements _InterestsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$InterestsStateImpl &&
-            (identical(other.userData, userData) ||
-                other.userData == userData) &&
+            (identical(other.user, user) || other.user == user) &&
             const DeepCollectionEquality()
                 .equals(other._selectedInterests, _selectedInterests) &&
             const DeepCollectionEquality()
                 .equals(other._selectedIndices, _selectedIndices) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      userData,
+      user,
       const DeepCollectionEquality().hash(_selectedInterests),
       const DeepCollectionEquality().hash(_selectedIndices),
-      isLoading);
+      isLoading,
+      errorMessage);
 
   /// Create a copy of InterestsState
   /// with the given fields replaced by the non-null parameter values.
@@ -231,19 +246,22 @@ class _$InterestsStateImpl implements _InterestsState {
 
 abstract class _InterestsState implements InterestsState {
   const factory _InterestsState(
-      {final UserRegistrationData? userData,
+      {required final UserRegistrationData user,
       final List<String> selectedInterests,
       final Set<int> selectedIndices,
-      final bool isLoading}) = _$InterestsStateImpl;
+      final bool isLoading,
+      final String errorMessage}) = _$InterestsStateImpl;
 
   @override
-  UserRegistrationData? get userData;
+  UserRegistrationData get user;
   @override
   List<String> get selectedInterests;
   @override
   Set<int> get selectedIndices;
   @override
   bool get isLoading;
+  @override
+  String get errorMessage;
 
   /// Create a copy of InterestsState
   /// with the given fields replaced by the non-null parameter values.

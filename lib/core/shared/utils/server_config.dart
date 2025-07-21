@@ -1,8 +1,13 @@
 abstract class ServerConfig {
-  static const String domen = "https://api.super-app.shop:8066/api"; //prod
-  // static const String domen = ""; //test
-  static const baseUrl = "${domen}api/";
+  static const String domen = "https://khvatai.ru/"; //prod
+  static const baseUrl = "${domen}api/v1/";
   static String token = "";
-  static String login = "${baseUrl}login";
-  static String interestsCategories = "${baseUrl}interestsCategories";
+
+  static const String login = "sign-in";
+  static const String register = "sign-up";
+  static const String checkOtp = "submit-otp";
+  static const String logout = "sign-out";
+  static const String interestsCategories = "interestsCategories";
+  static const String loginWithGoogle = "auth/google";
+  static const String deliveryAddress = "addresses";
 }

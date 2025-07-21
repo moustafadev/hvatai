@@ -1,5 +1,5 @@
-import 'package:hvatai/core/shared/datasources/local/app_local.dart';
-import 'package:hvatai/core/shared/datasources/local/cache_helper.dart';
+import 'package:hvatai/core/datasources/local/app_local.dart';
+import 'package:hvatai/core/datasources/local/cache_helper.dart';
 import 'package:hvatai/core/shared/utils/network_info.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
@@ -12,6 +12,7 @@ import 'package:hvatai/features/auth/presentation/cubit/delivery_address/deliver
 import 'package:hvatai/features/auth/presentation/cubit/interests/interests_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/interests_detail/interests_detail_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/login/login_cubit.dart';
+import 'package:hvatai/features/auth/presentation/cubit/otp_cubit/otp_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/registration/registration_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/social_login.dart/social_login_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/verification/verification_cubit.dart';
@@ -34,10 +35,10 @@ GetIt locator = GetIt.instance;
 
 Future<void> setupLocator() async {
   //BLOC
-  locator.registerFactory(() => LoginCubit());
+  locator.registerFactory(() => LoginCubit(locator()));
   locator.registerFactory(() => VerificationCubit());
-  locator.registerFactory(() => InterestsCubit());
-  locator.registerFactory(() => InterestsDetailCubit());
+  locator.registerFactory(() => InterestsCubit(user: locator()));
+  locator.registerFactory(() => InterestsDetailCubit(user: locator()));
   locator.registerFactory(() => ProfileCubit());
   locator.registerFactory(() => ActivityCubit());
   locator.registerLazySingleton(() => NotificationCubit());
@@ -50,8 +51,12 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => MyGoodsCubit());
 
   locator.registerFactory(() => SocialLoginCubit(locator()));
-  locator.registerFactory(() => RegistrationCubit());
-  locator.registerFactory(() => DeliveryAddressCubit());
+  locator.registerFactory(() => RegistrationCubit(
+        locator(),
+      ));
+  locator
+      .registerFactory(() => DeliveryAddressCubit(locator(), user: locator()));
+  locator.registerFactory(() => OtpCubit(locator(), user: locator()));
   locator.registerFactory(() => RatesActivityCubit());
   locator.registerFactory(() => FeaturedActivityCubit());
 

@@ -1,7 +1,12 @@
+// ignore_for_file: avoid_print
+
 import 'dart:developer';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
+import 'package:hvatai/core/datasources/local/app_local.dart';
+import 'package:hvatai/core/shared/utils/server_config.dart';
+import 'interceptor.dart';
 
 class RequestResult {
   dynamic json;
@@ -11,11 +16,14 @@ class RequestResult {
 }
 
 abstract class ApiBase {
-  late String endpoint;
-
   final Dio _dio = Dio();
+  AppLocal appLocal = AppLocal();
+
   ApiBase() {
-    _dio.interceptors.add(LogInterceptor(responseBody: true));
+    _dio
+      ..interceptors.add(LogInterceptor(responseBody: true, requestBody: true))
+      ..interceptors.add(AuthInterceptor());
+    initAdapter();
   }
 
   Future<RequestResult> request({
@@ -27,70 +35,86 @@ abstract class ApiBase {
     bool customPath = false,
     String contentType = 'application/json',
   }) async {
-    path = customPath ? endpoint : path;
+    final fullPath = customPath ? path : ServerConfig.baseUrl + path;
+
     Response? resp;
     dynamic decodedJson;
 
+    final token = appLocal.getToken();
+    print('Token from local storage: $token');
+
+    final requestHeaders = Map<String, String>.from(headers);
+    if (token != null && token.isNotEmpty) {
+      requestHeaders['Authorization'] = 'Bearer $token';
+    }
+
     _dio.options.headers['Accept'] = 'application/json';
 
-    print(path);
+    print("🔗 Requesting: $fullPath");
+
     try {
       switch (method) {
         case 'post':
-          resp = await _dio.post(path,
-              data: body,
-              options: Options(
-                contentType: contentType,
-                headers: headers,
-              ),
-              queryParameters: queryParameters);
+          resp = await _dio.post(
+            fullPath,
+            data: body,
+            options: Options(
+              contentType: contentType,
+              headers: headers,
+            ),
+            queryParameters: queryParameters,
+          );
           break;
         case 'get':
-          resp = await _dio.get(path,
-              queryParameters: queryParameters,
-              options: Options(
-                headers: headers,
-              ));
+          resp = await _dio.get(
+            fullPath,
+            queryParameters: queryParameters,
+            options: Options(headers: headers),
+          );
           break;
         case 'delete':
-          resp = await _dio.delete(path,
-              queryParameters: queryParameters,
-              options: Options(
-                headers: headers,
-              ));
+          resp = await _dio.delete(
+            fullPath,
+            queryParameters: queryParameters,
+            options: Options(headers: headers),
+          );
           break;
-        case "put":
-          resp = await _dio.put(path,
-              data: body,
-              queryParameters: queryParameters,
-              options: Options(
-                contentType: contentType,
-                headers: headers,
-              ));
+        case 'put':
+          resp = await _dio.put(
+            fullPath,
+            data: body,
+            queryParameters: queryParameters,
+            options: Options(
+              contentType: contentType,
+              headers: headers,
+            ),
+          );
           break;
-        case "patch":
-          resp = await _dio.patch(path,
-              data: body,
-              queryParameters: queryParameters,
-              options: Options(
-                contentType: contentType,
-                headers: headers,
-              ));
+        case 'patch':
+          resp = await _dio.patch(
+            fullPath,
+            data: body,
+            queryParameters: queryParameters,
+            options: Options(
+              contentType: contentType,
+              headers: headers,
+            ),
+          );
           break;
       }
-      decodedJson = resp!.data;
+      decodedJson = resp?.data;
     } catch (e, st) {
-      log("""HTTP Request error: 
-            statusCode: ${resp?.statusCode}
-            body: ${resp?.data}
-            exception: $e
-            stackTrace: $st
-            """);
-
-      decodedJson = Map.from(<String, dynamic>{});
+      log("""❌ HTTP Request Error:
+        statusCode: ${resp?.statusCode}
+        body: ${resp?.data}
+        exception: $e
+        stackTrace: $st
+      """);
+      decodedJson = <String, dynamic>{};
       rethrow;
     }
-    return RequestResult(decodedJson, resp.statusCode);
+
+    return RequestResult(decodedJson, resp?.statusCode);
   }
 
   void initAdapter() {
@@ -98,9 +122,7 @@ abstract class ApiBase {
       createHttpClient: () {
         final client = HttpClient();
         client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) {
-          return true;
-        };
+            (X509Certificate cert, String host, int port) => true;
         return client;
       },
     );
@@ -114,12 +136,10 @@ abstract class ApiBase {
     String contentType = "application/json",
     Map<String, String>? queryParameters,
   }) async {
-    headers = Map<String, String>.from(headers);
-
     return request(
       method: 'post',
       path: path,
-      headers: headers,
+      headers: Map.from(headers),
       body: body,
       contentType: contentType,
       customPath: customPath,
@@ -133,12 +153,10 @@ abstract class ApiBase {
     bool customPath = false,
     Map<String, String>? queryParameters,
   }) async {
-    headers = Map<String, String>.from(headers);
-
     return request(
       method: 'delete',
       path: path,
-      headers: headers,
+      headers: Map.from(headers),
       customPath: customPath,
       queryParameters: queryParameters,
     );
@@ -149,17 +167,16 @@ abstract class ApiBase {
     Map<String, String> headers = const {},
     dynamic body = '',
     bool customPath = false,
+    String contentType = "application/json",
     Map<String, String>? queryParameters,
-    String contentType = "",
   }) async {
-    headers = Map<String, String>.from(headers);
     return request(
       method: 'put',
       path: path,
-      headers: headers,
+      headers: Map.from(headers),
       body: body,
-      customPath: customPath,
       contentType: contentType,
+      customPath: customPath,
       queryParameters: queryParameters,
     );
   }
@@ -169,17 +186,16 @@ abstract class ApiBase {
     Map<String, String> headers = const {},
     dynamic body = '',
     bool customPath = false,
+    String contentType = "application/json",
     Map<String, String>? queryParameters,
-    String contentType = "",
   }) async {
-    headers = Map<String, String>.from(headers);
     return request(
       method: 'patch',
       path: path,
-      headers: headers,
+      headers: Map.from(headers),
       body: body,
-      customPath: customPath,
       contentType: contentType,
+      customPath: customPath,
       queryParameters: queryParameters,
     );
   }
@@ -193,7 +209,7 @@ abstract class ApiBase {
     return request(
       method: 'get',
       path: path,
-      headers: headers,
+      headers: Map.from(headers),
       customPath: customPath,
       queryParameters: queryParameters,
     );
@@ -203,21 +219,21 @@ abstract class ApiBase {
 class CustomInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    print('REQUEST[${options.method}] => PATH: ${options.path}');
+    print('➡️ REQUEST[${options.method}] => PATH: ${options.uri}');
     super.onRequest(options, handler);
   }
 
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     print(
-        'RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}');
+        '✅ RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.uri}');
     super.onResponse(response, handler);
   }
 
   @override
   Future onError(DioException err, ErrorInterceptorHandler handler) async {
     print(
-        'ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.path}');
+        '❗️ ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.uri}');
     super.onError(err, handler);
   }
 }

@@ -1,7 +1,9 @@
 part of '../home.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({super.key, required this.data});
+  final UserRegistrationData data;
+
   List<LiveStreamModel> generateDummyLiveStreams(int count) {
     return List.generate(count, (_) {
       return LiveStreamModel(
@@ -55,6 +57,7 @@ class HomeScreen extends StatelessWidget {
                                   .selectCategory(category);
                             }
                           },
+                          detailedInterestOptions: data.detailedInterests ?? [],
                         ),
                       ),
                       10.ph,

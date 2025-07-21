@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SocialLoginState {
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
+  bool get successLogin => throw _privateConstructorUsedError;
 
   /// Create a copy of SocialLoginState
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +33,7 @@ abstract class $SocialLoginStateCopyWith<$Res> {
           SocialLoginState value, $Res Function(SocialLoginState) then) =
       _$SocialLoginStateCopyWithImpl<$Res, SocialLoginState>;
   @useResult
-  $Res call({bool isLoading, String errorMessage});
+  $Res call({bool isLoading, String errorMessage, bool successLogin});
 }
 
 /// @nodoc
@@ -52,6 +53,7 @@ class _$SocialLoginStateCopyWithImpl<$Res, $Val extends SocialLoginState>
   $Res call({
     Object? isLoading = null,
     Object? errorMessage = null,
+    Object? successLogin = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -62,6 +64,10 @@ class _$SocialLoginStateCopyWithImpl<$Res, $Val extends SocialLoginState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      successLogin: null == successLogin
+          ? _value.successLogin
+          : successLogin // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -74,7 +80,7 @@ abstract class _$$SocialLoginStateImplCopyWith<$Res>
       __$$SocialLoginStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, String errorMessage});
+  $Res call({bool isLoading, String errorMessage, bool successLogin});
 }
 
 /// @nodoc
@@ -92,6 +98,7 @@ class __$$SocialLoginStateImplCopyWithImpl<$Res>
   $Res call({
     Object? isLoading = null,
     Object? errorMessage = null,
+    Object? successLogin = null,
   }) {
     return _then(_$SocialLoginStateImpl(
       isLoading: null == isLoading
@@ -102,6 +109,10 @@ class __$$SocialLoginStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      successLogin: null == successLogin
+          ? _value.successLogin
+          : successLogin // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -110,7 +121,9 @@ class __$$SocialLoginStateImplCopyWithImpl<$Res>
 
 class _$SocialLoginStateImpl implements _SocialLoginState {
   const _$SocialLoginStateImpl(
-      {this.isLoading = false, this.errorMessage = ''});
+      {this.isLoading = false,
+      this.errorMessage = '',
+      this.successLogin = false});
 
   @override
   @JsonKey()
@@ -118,10 +131,13 @@ class _$SocialLoginStateImpl implements _SocialLoginState {
   @override
   @JsonKey()
   final String errorMessage;
+  @override
+  @JsonKey()
+  final bool successLogin;
 
   @override
   String toString() {
-    return 'SocialLoginState(isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'SocialLoginState(isLoading: $isLoading, errorMessage: $errorMessage, successLogin: $successLogin)';
   }
 
   @override
@@ -132,11 +148,14 @@ class _$SocialLoginStateImpl implements _SocialLoginState {
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+                other.errorMessage == errorMessage) &&
+            (identical(other.successLogin, successLogin) ||
+                other.successLogin == successLogin));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, errorMessage);
+  int get hashCode =>
+      Object.hash(runtimeType, isLoading, errorMessage, successLogin);
 
   /// Create a copy of SocialLoginState
   /// with the given fields replaced by the non-null parameter values.
@@ -151,12 +170,15 @@ class _$SocialLoginStateImpl implements _SocialLoginState {
 abstract class _SocialLoginState implements SocialLoginState {
   const factory _SocialLoginState(
       {final bool isLoading,
-      final String errorMessage}) = _$SocialLoginStateImpl;
+      final String errorMessage,
+      final bool successLogin}) = _$SocialLoginStateImpl;
 
   @override
   bool get isLoading;
   @override
   String get errorMessage;
+  @override
+  bool get successLogin;
 
   /// Create a copy of SocialLoginState
   /// with the given fields replaced by the non-null parameter values.

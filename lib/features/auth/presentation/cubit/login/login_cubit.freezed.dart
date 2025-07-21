@@ -20,6 +20,8 @@ mixin _$LoginState {
   String get password => throw _privateConstructorUsedError;
   bool get obscurePassword => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get successLogin => throw _privateConstructorUsedError;
+  String get errorMessage => throw _privateConstructorUsedError;
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
@@ -35,7 +37,12 @@ abstract class $LoginStateCopyWith<$Res> {
       _$LoginStateCopyWithImpl<$Res, LoginState>;
   @useResult
   $Res call(
-      {String email, String password, bool obscurePassword, bool isLoading});
+      {String email,
+      String password,
+      bool obscurePassword,
+      bool isLoading,
+      bool successLogin,
+      String errorMessage});
 }
 
 /// @nodoc
@@ -57,6 +64,8 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
     Object? password = null,
     Object? obscurePassword = null,
     Object? isLoading = null,
+    Object? successLogin = null,
+    Object? errorMessage = null,
   }) {
     return _then(_value.copyWith(
       email: null == email
@@ -75,6 +84,14 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      successLogin: null == successLogin
+          ? _value.successLogin
+          : successLogin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
@@ -88,7 +105,12 @@ abstract class _$$LoginStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String email, String password, bool obscurePassword, bool isLoading});
+      {String email,
+      String password,
+      bool obscurePassword,
+      bool isLoading,
+      bool successLogin,
+      String errorMessage});
 }
 
 /// @nodoc
@@ -108,6 +130,8 @@ class __$$LoginStateImplCopyWithImpl<$Res>
     Object? password = null,
     Object? obscurePassword = null,
     Object? isLoading = null,
+    Object? successLogin = null,
+    Object? errorMessage = null,
   }) {
     return _then(_$LoginStateImpl(
       email: null == email
@@ -126,6 +150,14 @@ class __$$LoginStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      successLogin: null == successLogin
+          ? _value.successLogin
+          : successLogin // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -137,7 +169,9 @@ class _$LoginStateImpl implements _LoginState {
       {this.email = '',
       this.password = '',
       this.obscurePassword = false,
-      this.isLoading = false});
+      this.isLoading = false,
+      this.successLogin = false,
+      this.errorMessage = ''});
 
   @override
   @JsonKey()
@@ -151,10 +185,16 @@ class _$LoginStateImpl implements _LoginState {
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final bool successLogin;
+  @override
+  @JsonKey()
+  final String errorMessage;
 
   @override
   String toString() {
-    return 'LoginState(email: $email, password: $password, obscurePassword: $obscurePassword, isLoading: $isLoading)';
+    return 'LoginState(email: $email, password: $password, obscurePassword: $obscurePassword, isLoading: $isLoading, successLogin: $successLogin, errorMessage: $errorMessage)';
   }
 
   @override
@@ -168,12 +208,16 @@ class _$LoginStateImpl implements _LoginState {
             (identical(other.obscurePassword, obscurePassword) ||
                 other.obscurePassword == obscurePassword) &&
             (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading));
+                other.isLoading == isLoading) &&
+            (identical(other.successLogin, successLogin) ||
+                other.successLogin == successLogin) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, email, password, obscurePassword, isLoading);
+  int get hashCode => Object.hash(runtimeType, email, password, obscurePassword,
+      isLoading, successLogin, errorMessage);
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
@@ -189,7 +233,9 @@ abstract class _LoginState implements LoginState {
       {final String email,
       final String password,
       final bool obscurePassword,
-      final bool isLoading}) = _$LoginStateImpl;
+      final bool isLoading,
+      final bool successLogin,
+      final String errorMessage}) = _$LoginStateImpl;
 
   @override
   String get email;
@@ -199,6 +245,10 @@ abstract class _LoginState implements LoginState {
   bool get obscurePassword;
   @override
   bool get isLoading;
+  @override
+  bool get successLogin;
+  @override
+  String get errorMessage;
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.

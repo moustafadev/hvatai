@@ -10,13 +10,16 @@ class ContinueButton extends StatelessWidget {
       final cubit = context.read<RegistrationCubit>();
       return CustomGradientButton(
         text: 'continue'.tr(),
-        onPressed: () => cubit.submit(context),
-        isDisabled: cubit.state.agreedToTerms &&
+        onPressed: () {
+          cubit.register(context);
+        },
+        isLoading: cubit.state.isRegisterLoading,
+        isDisabled: !(cubit.state.agreedToTerms &&
             cubit.state.isAbove18 &&
             cubit.state.lastName.isNotEmpty &&
             cubit.state.firstName.isNotEmpty &&
             cubit.state.email.isNotEmpty &&
-            cubit.state.password.isNotEmpty,
+            cubit.state.password.isNotEmpty),
       );
     });
   }

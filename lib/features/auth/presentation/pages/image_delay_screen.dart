@@ -4,8 +4,9 @@ class ImageDelayScreen extends StatelessWidget {
   const ImageDelayScreen({super.key});
 
   @override
-  @override
   Widget build(BuildContext context) {
+    final userData = GoRouterState.of(context).extra as UserRegistrationData;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -21,10 +22,9 @@ class ImageDelayScreen extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: CustomGradientButton(
                 text: "Continue",
-                isDisabled: true,
-                onPressed: () {
-                  context.go(AppRoutes.home);
-                },
+                isDisabled: false,
+                isLoading: false,
+                onPressed: () => context.push(AppRoutes.home, extra: userData),
               ),
             ),
           ),

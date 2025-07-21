@@ -15,7 +15,7 @@ class NameFields extends StatelessWidget {
           onChanged: (v) => cubit.updateField('firstName', v),
           validator: (v) => v == null || v.isEmpty ? 'Enter first name' : null,
         ),
-        SizedBox(height: 15.h),
+        15.ph,
         CustomTextField(
           hintText: 'lastName'.tr(),
           isRequired: false,

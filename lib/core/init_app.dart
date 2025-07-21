@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hvatai/blocs_observer.dart';
-import 'package:hvatai/core/shared/datasources/local/cache_helper.dart';
+import 'package:hvatai/core/datasources/local/app_local.dart';
+import 'package:hvatai/core/datasources/local/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

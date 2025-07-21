@@ -9,9 +9,8 @@ class TextSection extends StatelessWidget {
       children: [
         CustomText(
           text: 'grabIt'.tr(),
-          fontSize: 32.sp,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'SFProRounded',
+          fontSize: 40.sp,
+          fontWeight: FontWeight.w800,
         ),
         // CustomText(
         //   text: 'YourPurchaseisProtected'.tr(),
@@ -23,8 +22,8 @@ class TextSection extends StatelessWidget {
         CustomText(
           text: 'joinCommunity'.tr(),
           textAlign: TextAlign.center,
-          fontSize: 16.sp,
-          fontFamily: 'MontserratAlternates',
+          fontSize: 14.sp,
+          fontWeight: FontWeight.w400,
         ),
       ],
     );

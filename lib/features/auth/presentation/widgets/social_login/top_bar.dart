@@ -11,11 +11,11 @@ class TopBar extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           GestureDetector(
-            onTap: () => context.push(AppRoutes.login),
+            onTap: () => context.push(AppRoutes.registration),
             child: Row(
               children: [
                 CustomText(
-                  text: 'enter'.tr(),
+                  text: 'register'.tr(),
                   color: AppColors.primaryPink,
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,

@@ -1,4 +1,4 @@
-import 'package:hvatai/core/shared/datasources/local/app_local.dart';
+import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:flutter/material.dart';
