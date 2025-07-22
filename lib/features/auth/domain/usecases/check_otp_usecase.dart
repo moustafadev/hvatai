@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
-import 'package:hvatai/features/auth/data/models/login_model.dart';
+import 'package:hvatai/features/auth/data/models/login_model/login_model.dart';
 import 'package:hvatai/features/auth/domain/repositories/auth_repository.dart';
 
 class CheckOtpUseCase implements UseCase<LoginModel, CheckOtpParams> {

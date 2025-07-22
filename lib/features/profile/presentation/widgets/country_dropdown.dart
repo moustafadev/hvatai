@@ -1,8 +1,8 @@
 part of '../profile.dart';
 
 class CountryDropdown extends StatelessWidget {
-  const CountryDropdown({super.key});
-
+  const CountryDropdown({super.key, required this.country});
+  final String country;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -12,7 +12,7 @@ class CountryDropdown extends StatelessWidget {
           final cubit = context.read<ProfileCubit>();
           return CustomDropdown(
             hintText: 'country'.tr(),
-            value: cubit.state.country.isEmpty ? null : cubit.state.country,
+            value: country,
             onChanged: (v) => cubit.updateField('country', v ?? ''),
             prefix: cubit.state.country == 'Russia'
                 ? const Text('🇷🇺')

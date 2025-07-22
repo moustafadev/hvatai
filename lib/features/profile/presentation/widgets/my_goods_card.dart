@@ -25,13 +25,8 @@ class MyGoodsCard extends StatelessWidget {
             .reduce((a, b) => a > b ? a : b)
         : 0.0;
 
-    String statusText = '';
-
     if (selectedCategoryIndex == 1 && currentUserBid == highestBid) {
-      statusText = 'You are in the lead!';
-    } else if (selectedCategoryIndex == 2 && currentUserBid < highestBid) {
-      statusText = 'The bid has been outbid!';
-    }
+    } else if (selectedCategoryIndex == 2 && currentUserBid < highestBid) {}
 
     return GestureDetector(
       onTap: () {

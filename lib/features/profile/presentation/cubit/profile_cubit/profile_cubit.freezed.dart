@@ -42,8 +42,10 @@ mixin _$ProfileState {
   bool get obscurePassword => throw _privateConstructorUsedError;
   double get passwordStrength => throw _privateConstructorUsedError;
   String get passwordStrengthText => throw _privateConstructorUsedError;
+  String get errorMessage => throw _privateConstructorUsedError;
   int get uid => throw _privateConstructorUsedError;
   String get channelId => throw _privateConstructorUsedError;
+  UserProfileModel get userProfileModel => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
 
   /// Create a copy of ProfileState
@@ -82,9 +84,13 @@ abstract class $ProfileStateCopyWith<$Res> {
       bool obscurePassword,
       double passwordStrength,
       String passwordStrengthText,
+      String errorMessage,
       int uid,
       String channelId,
+      UserProfileModel userProfileModel,
       String? type});
+
+  $UserProfileModelCopyWith<$Res> get userProfileModel;
 }
 
 /// @nodoc
@@ -124,8 +130,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? obscurePassword = null,
     Object? passwordStrength = null,
     Object? passwordStrengthText = null,
+    Object? errorMessage = null,
     Object? uid = null,
     Object? channelId = null,
+    Object? userProfileModel = null,
     Object? type = freezed,
   }) {
     return _then(_value.copyWith(
@@ -217,6 +225,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.passwordStrengthText
           : passwordStrengthText // ignore: cast_nullable_to_non_nullable
               as String,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -225,11 +237,25 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.channelId
           : channelId // ignore: cast_nullable_to_non_nullable
               as String,
+      userProfileModel: null == userProfileModel
+          ? _value.userProfileModel
+          : userProfileModel // ignore: cast_nullable_to_non_nullable
+              as UserProfileModel,
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
+  }
+
+  /// Create a copy of ProfileState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserProfileModelCopyWith<$Res> get userProfileModel {
+    return $UserProfileModelCopyWith<$Res>(_value.userProfileModel, (value) {
+      return _then(_value.copyWith(userProfileModel: value) as $Val);
+    });
   }
 }
 
@@ -264,9 +290,14 @@ abstract class _$$ProfileStateImplCopyWith<$Res>
       bool obscurePassword,
       double passwordStrength,
       String passwordStrengthText,
+      String errorMessage,
       int uid,
       String channelId,
+      UserProfileModel userProfileModel,
       String? type});
+
+  @override
+  $UserProfileModelCopyWith<$Res> get userProfileModel;
 }
 
 /// @nodoc
@@ -304,8 +335,10 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
     Object? obscurePassword = null,
     Object? passwordStrength = null,
     Object? passwordStrengthText = null,
+    Object? errorMessage = null,
     Object? uid = null,
     Object? channelId = null,
+    Object? userProfileModel = null,
     Object? type = freezed,
   }) {
     return _then(_$ProfileStateImpl(
@@ -397,6 +430,10 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
           ? _value.passwordStrengthText
           : passwordStrengthText // ignore: cast_nullable_to_non_nullable
               as String,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -405,6 +442,10 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
           ? _value.channelId
           : channelId // ignore: cast_nullable_to_non_nullable
               as String,
+      userProfileModel: null == userProfileModel
+          ? _value.userProfileModel
+          : userProfileModel // ignore: cast_nullable_to_non_nullable
+              as UserProfileModel,
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -439,8 +480,10 @@ class _$ProfileStateImpl implements _ProfileState {
       this.obscurePassword = false,
       this.passwordStrength = 0.0,
       this.passwordStrengthText = '',
+      this.errorMessage = '',
       required this.uid,
       required this.channelId,
+      required this.userProfileModel,
       this.type})
       : _settingsOptions = settingsOptions,
         _helpAndContact = helpAndContact,
@@ -537,15 +580,20 @@ class _$ProfileStateImpl implements _ProfileState {
   @JsonKey()
   final String passwordStrengthText;
   @override
+  @JsonKey()
+  final String errorMessage;
+  @override
   final int uid;
   @override
   final String channelId;
+  @override
+  final UserProfileModel userProfileModel;
   @override
   final String? type;
 
   @override
   String toString() {
-    return 'ProfileState(firstName: $firstName, profileImageUrl: $profileImageUrl, isLoading: $isLoading, gender: $gender, country: $country, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, password: $password, passwordError: $passwordError, confirmPassword: $confirmPassword, emailError: $emailError, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, changeInfoProfile: $changeInfoProfile, streamerOptions: $streamerOptions, obscurePassword: $obscurePassword, passwordStrength: $passwordStrength, passwordStrengthText: $passwordStrengthText, uid: $uid, channelId: $channelId, type: $type)';
+    return 'ProfileState(firstName: $firstName, profileImageUrl: $profileImageUrl, isLoading: $isLoading, gender: $gender, country: $country, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, password: $password, passwordError: $passwordError, confirmPassword: $confirmPassword, emailError: $emailError, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, changeInfoProfile: $changeInfoProfile, streamerOptions: $streamerOptions, obscurePassword: $obscurePassword, passwordStrength: $passwordStrength, passwordStrengthText: $passwordStrengthText, errorMessage: $errorMessage, uid: $uid, channelId: $channelId, userProfileModel: $userProfileModel, type: $type)';
   }
 
   @override
@@ -596,9 +644,13 @@ class _$ProfileStateImpl implements _ProfileState {
                 other.passwordStrength == passwordStrength) &&
             (identical(other.passwordStrengthText, passwordStrengthText) ||
                 other.passwordStrengthText == passwordStrengthText) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
             (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.channelId, channelId) ||
                 other.channelId == channelId) &&
+            (identical(other.userProfileModel, userProfileModel) ||
+                other.userProfileModel == userProfileModel) &&
             (identical(other.type, type) || other.type == type));
   }
 
@@ -627,8 +679,10 @@ class _$ProfileStateImpl implements _ProfileState {
         obscurePassword,
         passwordStrength,
         passwordStrengthText,
+        errorMessage,
         uid,
         channelId,
+        userProfileModel,
         type
       ]);
 
@@ -665,8 +719,10 @@ abstract class _ProfileState implements ProfileState {
       final bool obscurePassword,
       final double passwordStrength,
       final String passwordStrengthText,
+      final String errorMessage,
       required final int uid,
       required final String channelId,
+      required final UserProfileModel userProfileModel,
       final String? type}) = _$ProfileStateImpl;
 
   @override
@@ -714,9 +770,13 @@ abstract class _ProfileState implements ProfileState {
   @override
   String get passwordStrengthText;
   @override
+  String get errorMessage;
+  @override
   int get uid;
   @override
   String get channelId;
+  @override
+  UserProfileModel get userProfileModel;
   @override
   String? get type;
 

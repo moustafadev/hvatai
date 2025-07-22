@@ -1,6 +1,5 @@
 import 'package:dartz/dartz.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';

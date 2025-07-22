@@ -8,7 +8,7 @@ class TopProfileInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
-      // final cubit = context.read<ProfileCubit>();
+      final user = state.userProfileModel;
       return Row(
         children: [
           GestureDetector(
@@ -21,8 +21,10 @@ class TopProfileInfo extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: AssetImage(Assets.assetsImagesProfileImage)
-                      as ImageProvider,
+                  image: user.data!.image != null
+                      ? CachedNetworkImageProvider(user.data!.image!)
+                      : AssetImage(Assets.assetsImagesProfileImage)
+                          as ImageProvider,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -33,7 +35,7 @@ class TopProfileInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                text: "Ahmed Ramadan".tr(),
+                text: user.data!.name!,
                 fontWeight: FontWeight.w800,
                 fontSize: 14.sp,
               ),
@@ -44,7 +46,7 @@ class TopProfileInfo extends StatelessWidget {
                       color: AppColors.goldenColor, height: 16.h, width: 16.w),
                   3.pw,
                   CustomText(
-                    text: "4.7",
+                    text: user.data!.personalRating.toString(),
                   ),
                   12.pw,
                   CustomGradientButton(
@@ -67,6 +69,7 @@ class TopProfileInfo extends StatelessWidget {
             onTap: () {
               context.push(
                 AppRoutes.settings,
+                extra: user,
               );
             },
             child: CircleAvatar(

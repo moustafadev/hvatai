@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
-
 import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
@@ -50,8 +48,6 @@ class ApiServiceHome extends ApiBase {
 
   Future<void> joinLiveStreamingWithPrefs(String channelId) async {
     return executeAndHandleErrorServer<void>(() async {
-      final uid = 10000 + Random().nextInt(90000);
-
       final response = await http.get(Uri.parse('/livestreams/$channelId'));
 
       if (response.statusCode != 200) {

@@ -1,7 +1,8 @@
 part of '../profile.dart';
 
 class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
+  const SettingsScreen({super.key, required this.user});
+  final UserProfileModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -51,23 +52,27 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       12.ph,
                       CustomTextField(
-                        controller: TextEditingController(text: 'Ahmed'),
+                        controller:
+                            TextEditingController(text: user.data!.name),
                         hintText: 'firstName'.tr(),
                         isRequired: false,
                       ),
                       12.ph,
                       CustomTextField(
-                        controller: TextEditingController(text: 'Ramadan'),
+                        controller:
+                            TextEditingController(text: user.data!.lastName),
                         hintText: 'lastName'.tr(),
                         isRequired: false,
                       ),
                       12.ph,
                       CustomSelectGender(
-                        value: state.gender.isNotEmpty ? state.gender : 'Male',
+                        value: _normalizeGender(user.data!.gender),
                         onChanged: (val) => cubit.setGender(val),
                       ),
                       12.ph,
-                      CountryDropdown(),
+                      CountryDropdown(
+                        country: user.data!.country!,
+                      ),
                       12.ph,
                       ChangeInfoProfile(state: state),
                       50.ph,
@@ -109,5 +114,19 @@ class SettingsScreen extends StatelessWidget {
             },
           ),
         ));
+  }
+
+  String? _normalizeGender(String? gender) {
+    if (gender == null) return null;
+    switch (gender.toLowerCase()) {
+      case 'male':
+        return 'Male';
+      case 'female':
+        return 'Female';
+      case 'other':
+        return 'Other';
+      default:
+        return null;
+    }
   }
 }

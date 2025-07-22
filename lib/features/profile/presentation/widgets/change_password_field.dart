@@ -53,14 +53,13 @@ class PasswordField extends StatelessWidget {
               validator: (value) =>
                   cubit.validateConfirmPassword(value, state.password),
             ),
-            if (state.passwordError != null)
-              Padding(
-                padding: EdgeInsets.only(top: 4.0, left: 8.0),
-                child: Text(
-                  state.passwordError!,
-                  style: TextStyle(color: Colors.red, fontSize: 12),
-                ),
+            Padding(
+              padding: EdgeInsets.only(top: 4.0, left: 8.0),
+              child: Text(
+                state.passwordError,
+                style: TextStyle(color: Colors.red, fontSize: 12),
               ),
+            ),
           ],
         );
       },

@@ -1,18 +1,22 @@
 import 'dart:math';
 
+import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/theme/assets.dart';
+import 'package:hvatai/features/profile/data/model/user_profile_model.dart';
+import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
 part 'profile_state.dart';
 part 'profile_cubit.freezed.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
-  ProfileCubit()
+  ProfileCubit(this.getProfileDataUseCase)
       : super(ProfileState(
+          userProfileModel: UserProfileModel(),
           uid: 10000 + Random().nextInt(90000),
           channelId: List.generate(
               5,
@@ -20,6 +24,29 @@ class ProfileCubit extends Cubit<ProfileState> {
                   Random().nextInt(36)]).join(),
         )) {
     loadProfile();
+  }
+  GetProfileDataUsecase getProfileDataUseCase;
+  Future<void> getProfile() async {
+    emit(state.copyWith(
+      isLoading: true,
+      errorMessage: '',
+    ));
+
+    final result = await getProfileDataUseCase.call(
+      unit,
+    );
+
+    result.fold((failure) {
+      emit(state.copyWith(
+        isLoading: false,
+        errorMessage: failure,
+      ));
+    }, (userProfile) {
+      emit(state.copyWith(
+        isLoading: false,
+        userProfileModel: userProfile,
+      ));
+    });
   }
 
 // Notification Toggles - Live Stream

@@ -8,7 +8,7 @@ import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
-import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
+import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/search/data/model/auction_product_search.dart';
 import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
 import 'package:hvatai/features/search/presentation/cubit/auction_search_cubit/auction_search_cubit.dart';

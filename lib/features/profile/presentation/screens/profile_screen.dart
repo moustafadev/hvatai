@@ -6,13 +6,15 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => locator<ProfileCubit>(),
+      create: (context) => locator<ProfileCubit>()..getProfile(),
       child: Scaffold(
           backgroundColor: AppColors.lightGreyBackground,
           body: SafeArea(
             bottom: false,
             child: BlocBuilder<ProfileCubit, ProfileState>(
               builder: (context, state) {
+                final user = state.userProfileModel;
+
                 if (state.helpAndContact.isEmpty ||
                     state.settingsOptions.isEmpty) {
                   return Center(

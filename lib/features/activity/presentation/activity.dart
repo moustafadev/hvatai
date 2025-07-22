@@ -12,7 +12,7 @@ import 'package:hvatai/features/activity/data/models/auction_product.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
 import 'package:hvatai/features/activity/presentation/cubit/featured_activity/featured_activity_cubit.dart';
 import 'package:hvatai/features/activity/presentation/cubit/rates_activity/rates_activity_cubit.dart';
-import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
+import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/locator.dart';
 

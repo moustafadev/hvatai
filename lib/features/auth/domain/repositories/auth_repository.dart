@@ -1,5 +1,5 @@
-import 'package:hvatai/features/auth/data/models/login_model.dart';
-import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
+import 'package:hvatai/features/auth/data/models/login_model/login_model.dart';
+import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
 import 'package:dartz/dartz.dart';

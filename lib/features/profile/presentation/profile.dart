@@ -14,6 +14,7 @@ import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/activity/data/models/auction_product.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
+import 'package:hvatai/features/profile/data/model/user_profile_model.dart';
 import 'package:hvatai/features/profile/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';

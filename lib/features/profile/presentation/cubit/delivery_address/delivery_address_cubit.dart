@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
+import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 
 part 'delivery_address_cubit.freezed.dart';
 part 'delivery_address_state.dart';
@@ -52,15 +52,15 @@ class UpdateDeliveryAddressCubit extends Cubit<UpdateDeliveryAddressState> {
   void submit(BuildContext context, UserRegistrationData baseData) {
     if (!formKey.currentState!.validate()) return;
 
-    final updatedData = baseData.copyWith(
-      country: state.country,
-      city: state.city,
-      street: state.street,
-      house: state.house,
-      apartment: state.apartment,
-      entrance: state.entrance,
-      index: state.index,
-    );
+    // final updatedData = baseData.copyWith(
+    //   country: state.country,
+    //   city: state.city,
+    //   street: state.street,
+    //   house: state.house,
+    //   apartment: state.apartment,
+    //   entrance: state.entrance,
+    //   index: state.index,
+    // );
 
     // context.push(
     //   AppRoutes.interests,

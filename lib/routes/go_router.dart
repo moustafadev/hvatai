@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
+import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
+import 'package:hvatai/features/profile/data/model/user_profile_model.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
@@ -15,7 +16,7 @@ import 'package:hvatai/routes/shell_route.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter router = GoRouter(
   // observers: [MyNavigatorObserver()],
-  initialLocation: AppRoutes.home,
+  initialLocation: AppRoutes.splash,
   navigatorKey: navigatorKey,
   routes: <RouteBase>[
     GoRoute(
@@ -123,12 +124,14 @@ final GoRouter router = GoRouter(
           return NotificationSettingsScreen();
         }),
     GoRoute(
-      path: AppRoutes.settings,
-      builder: (context, state) => BlocProvider(
-        create: (context) => locator<ProfileCubit>(),
-        child: const SettingsScreen(),
-      ),
-    ),
+        path: AppRoutes.settings,
+        builder: (context, state) {
+          final userData = state.extra as UserProfileModel;
+
+          return BlocProvider(
+              create: (context) => locator<ProfileCubit>(),
+              child: SettingsScreen(user: userData));
+        }),
     GoRoute(
       path: AppRoutes.interestsDetail,
       builder: (context, state) {

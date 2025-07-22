@@ -25,8 +25,10 @@ class ProfileState with _$ProfileState {
     @Default(false) bool obscurePassword,
     @Default(0.0) double passwordStrength,
     @Default('') String passwordStrengthText,
+    @Default('') String errorMessage,
     required int uid,
     required String channelId,
+    required UserProfileModel userProfileModel,
     String? type,
   }) = _ProfileState;
 }

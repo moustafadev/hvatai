@@ -11,9 +11,7 @@ class ReferralsPointsAndAward extends StatelessWidget {
       children: [
         Expanded(
           child: GestureDetector(
-            onTap: () {
-              // Get.to(() => InviteFriendScreen());
-            },
+            onTap: () {},
             child: Container(
               decoration: BoxDecoration(
                   boxShadow: [
@@ -24,7 +22,7 @@ class ReferralsPointsAndAward extends StatelessWidget {
                       offset: const Offset(0, 4),
                     ),
                   ],
-                  color: Colors.white,
+                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(15.r),
                   border: Border.all(color: Colors.grey.withOpacity(0.2))),
               child: Padding(
@@ -43,7 +41,6 @@ class ReferralsPointsAndAward extends StatelessWidget {
                     FittedBox(
                       child: CustomText(
                         text: "referralsPoints".tr(),
-                        fontFamily: "Manrope",
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w700,
                       ),

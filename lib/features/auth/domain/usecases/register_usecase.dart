@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
-import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
+import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/domain/repositories/auth_repository.dart';
 
 class RegisterUseCase implements UseCase<UserRegistrationData, RegisterParams> {

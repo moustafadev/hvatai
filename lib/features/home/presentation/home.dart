@@ -7,13 +7,13 @@ import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
-import 'package:hvatai/features/auth/data/models/user_registration_data.dart';
 import 'package:hvatai/features/home/data/model/live_stream_model.dart';
 import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_tabs_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_tabs_state.dart';
 import 'package:hvatai/locator.dart';
 
-part 'screens/home_screen.dart';
+part 'screens/feed_screen.dart';
+part 'screens/notification_screen.dart';
 part 'widgets/top_bar_widget.dart';
 part 'widgets/notification_icon_widget.dart';
 part 'widgets/category_tabs_widget.dart';
