@@ -37,7 +37,7 @@ class CustomGradientButton extends StatelessWidget {
       height: height,
       decoration: BoxDecoration(
         color: isDisabled
-            ? AppColors.disabledColor
+            ? buttonColor ?? AppColors.disabledColor
             : buttonColor ?? AppColors.primaryColor,
         borderRadius: BorderRadius.circular(borderRadius),
       ),

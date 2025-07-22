@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.lightGreyBackground,
       body: BlocProvider(
         create: (_) => locator<CategoryTabsCubit>()..fetchCategories(),
         child: SafeArea(

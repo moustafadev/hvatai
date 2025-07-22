@@ -10,6 +10,7 @@ class NotificationSettingsScreen extends StatelessWidget {
       value: notificationCubit,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: AppColors.lightGreyBackground,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
             onPressed: () {
@@ -17,7 +18,7 @@ class NotificationSettingsScreen extends StatelessWidget {
             },
           ),
         ),
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.lightGreyBackground,
         body: BlocBuilder<NotificationCubit, NotificationState>(
           builder: (context, state) {
             final cubit = context.read<NotificationCubit>();

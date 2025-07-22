@@ -6,7 +6,7 @@ class AddNewPaymentMethod extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.lightGreyBackground,
       appBar: AppBar(
         backgroundColor: AppColors.background,
         leading: IconButton(

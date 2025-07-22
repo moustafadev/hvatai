@@ -8,9 +8,9 @@ class DeliveryAddressUpdateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.lightGreyBackground,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.lightGreyBackground,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
           onPressed: () {

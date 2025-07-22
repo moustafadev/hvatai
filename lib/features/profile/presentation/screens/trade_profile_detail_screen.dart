@@ -8,7 +8,7 @@ class TradeProfileDetail extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.lightGreyBackground,
       body: BlocProvider(
         create: (BuildContext context) => locator<ProfileCubit>(),
         child:

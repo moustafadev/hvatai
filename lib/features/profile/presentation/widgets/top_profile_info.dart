@@ -21,23 +21,8 @@ class TopProfileInfo extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image:
-
-                      // (snapshot.data
-                      //                 .data()?['image'] !=
-                      //             null &&
-                      //         snapshot.data!
-                      //             .data()!['image']
-                      //             .toString()
-                      //             .isNotEmpty)
-                      //     ?
-
-                      //     NetworkImage(
-                      //         snapshot.data!.data()?['image'])
-                      //     :
-
-                      AssetImage(Assets.assetsImagesProfileImage)
-                          as ImageProvider,
+                  image: AssetImage(Assets.assetsImagesProfileImage)
+                      as ImageProvider,
                   fit: BoxFit.fill,
                 ),
               ),
@@ -48,9 +33,7 @@ class TopProfileInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                fontFamily: "Manrope",
                 text: "Ahmed Ramadan".tr(),
-                // snapshot.data!.data()!.firstName.toString(),
                 fontWeight: FontWeight.w800,
                 fontSize: 14.sp,
               ),

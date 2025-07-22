@@ -44,7 +44,7 @@ class ReferralsPointsAndAward extends StatelessWidget {
                       child: CustomText(
                         text: "referralsPoints".tr(),
                         fontFamily: "Manrope",
-                        fontSize: 16.sp,
+                        fontSize: 14.sp,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -52,17 +52,15 @@ class ReferralsPointsAndAward extends StatelessWidget {
                       children: [
                         CustomText(
                           text: "balance".tr(),
-                          fontFamily: "Gilroy-Bold",
                           color: AppColors.blackDark,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w600,
                         ),
                         CustomText(
                           text: '1000 ₽',
-                          fontFamily: "Gilroy-Bold",
                           color: AppColors.primary,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w400,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w600,
                         ),
                       ],
                     ),
@@ -104,20 +102,16 @@ class ReferralsPointsAndAward extends StatelessWidget {
                       height: 25.h,
                       width: 25.w,
                     ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
+                    10.ph,
                     FittedBox(
                       child: CustomText(
                         text: "myAward".tr(),
-                        fontFamily: "Manrope",
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     CustomText(
                       text: "viewCoupons".tr(),
-                      fontFamily: "Manrope",
                       color: AppColors.blackDark,
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w400,
