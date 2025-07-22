@@ -48,7 +48,7 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
     final place = placemarks.first;
 
     return {
-      'country': normalizeCountry(place.country),
+      'country': place.country ?? '',
       'city': place.locality ?? '',
       'street': place.street ?? '',
       'index': place.postalCode ?? '',

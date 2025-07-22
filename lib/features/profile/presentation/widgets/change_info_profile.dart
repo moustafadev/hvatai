@@ -1,7 +1,7 @@
 part of '../profile.dart';
 
 class ChangeInfoProfile extends StatelessWidget {
-  final ProfileState state;
+  final EditProfileState state;
 
   const ChangeInfoProfile({super.key, required this.state});
 

@@ -4,6 +4,7 @@ import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_with_google_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 import 'package:hvatai/locator.dart';
 
 void locatorUseCase() {
@@ -14,4 +15,5 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => DeliveryAddressUseCase(locator()));
   locator.registerLazySingleton(() => LoginWithGoogleUseCase(locator()));
   locator.registerLazySingleton(() => GetProfileDataUsecase(locator()));
+  locator.registerLazySingleton(() => UpdateProfileDataUsecase(locator()));
 }

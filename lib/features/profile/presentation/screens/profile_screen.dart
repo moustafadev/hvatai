@@ -6,7 +6,9 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => locator<ProfileCubit>()..getProfile(),
+      create: (context) => locator<ProfileCubit>()
+        ..getProfile()
+        ..reloadProfile(),
       child: Scaffold(
           backgroundColor: AppColors.lightGreyBackground,
           body: SafeArea(

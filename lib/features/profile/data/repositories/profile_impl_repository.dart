@@ -3,6 +3,7 @@ import 'package:hvatai/features/profile/data/datasources/api_service_profile.dar
 import 'package:hvatai/features/profile/data/model/user_profile_model.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
 import 'package:dartz/dartz.dart';
+import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 
 class ProfileImplRepository implements ProfileRepository {
   final ApiServiceProfile _apiServiceProfile;
@@ -13,6 +14,15 @@ class ProfileImplRepository implements ProfileRepository {
   Future<Either<String, UserProfileModel>> getProfileData() async {
     return executeAndHandleError<UserProfileModel>(() async {
       final res = await _apiServiceProfile.getProfileData();
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, UserProfileModel>> updateProfileData(
+      UpdateProfileParams params) async {
+    return executeAndHandleError<UserProfileModel>(() async {
+      final res = await _apiServiceProfile.updateProfileData(params);
       return res;
     });
   }

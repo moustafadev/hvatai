@@ -57,12 +57,12 @@ class DeliveryAddressScreen extends StatelessWidget {
                               cubit.updateField('country', v ?? ''),
                           prefix: cubit.state.country == 'Russia'
                               ? const Text('🇷🇺')
-                              : cubit.state.country == 'USA'
+                              : cubit.state.country == 'United States'
                                   ? const Text('🇺🇸')
                                   : cubit.state.country == 'India'
                                       ? const Text('🇮🇳')
                                       : null,
-                          items: const ['Russia', 'USA', 'India']
+                          items: const ['Russia', 'United States', 'India']
                               .map((val) => DropdownMenuItem<String>(
                                     value: val,
                                     child: Text(val),

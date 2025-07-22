@@ -26,15 +26,17 @@ class ProfileCubit extends Cubit<ProfileState> {
     loadProfile();
   }
   GetProfileDataUsecase getProfileDataUseCase;
+  Future<void> reloadProfile() async {
+    await getProfile();
+  }
+
   Future<void> getProfile() async {
     emit(state.copyWith(
       isLoading: true,
       errorMessage: '',
     ));
 
-    final result = await getProfileDataUseCase.call(
-      unit,
-    );
+    final result = await getProfileDataUseCase.call(unit);
 
     result.fold((failure) {
       emit(state.copyWith(

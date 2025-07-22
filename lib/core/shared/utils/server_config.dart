@@ -11,4 +11,5 @@ abstract class ServerConfig {
   static const String loginWithGoogle = "auth/google";
   static const String deliveryAddress = "addresses";
   static const String profile = "profile";
+  static const String updateProfile = "profile";
 }

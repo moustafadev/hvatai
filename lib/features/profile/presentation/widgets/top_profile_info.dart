@@ -42,8 +42,12 @@ class TopProfileInfo extends StatelessWidget {
               2.ph,
               Row(
                 children: [
-                  Image.asset(Assets.assetsIconsStar,
-                      color: AppColors.goldenColor, height: 16.h, width: 16.w),
+                  Image.asset(
+                    Assets.assetsIconsStar,
+                    color: AppColors.goldenColor,
+                    height: 16.h,
+                    width: 16.w,
+                  ),
                   3.pw,
                   CustomText(
                     text: user.data!.personalRating.toString(),
@@ -66,11 +70,15 @@ class TopProfileInfo extends StatelessWidget {
           ),
           const Spacer(),
           GestureDetector(
-            onTap: () {
-              context.push(
+            onTap: () async {
+              final updated = await context.push<bool>(
                 AppRoutes.settings,
                 extra: user,
               );
+
+              if (updated == true) {
+                context.read<ProfileCubit>().reloadProfile();
+              }
             },
             child: CircleAvatar(
               backgroundColor: AppColors.gray,

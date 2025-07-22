@@ -4,7 +4,6 @@ import 'package:hvatai/features/auth/data/models/registration_model/user_registr
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/data/model/user_profile_model.dart';
-import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/locator.dart';
@@ -58,12 +57,16 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.changeEmail, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return const ChangeEmailUser();
+        final userData = state.extra as UserProfileModel;
+        return ChangeEmailUser(
+          user: userData,
+        );
       },
     ),
     GoRoute(
       path: AppRoutes.changePassword, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
+        final userData = state.extra as UserProfileModel;
         return const ChangePasswordUser();
       },
     ),
@@ -128,9 +131,7 @@ final GoRouter router = GoRouter(
         builder: (context, state) {
           final userData = state.extra as UserProfileModel;
 
-          return BlocProvider(
-              create: (context) => locator<ProfileCubit>(),
-              child: SettingsScreen(user: userData));
+          return SettingsScreen(user: userData);
         }),
     GoRoute(
       path: AppRoutes.interestsDetail,

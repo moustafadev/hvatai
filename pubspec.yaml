@@ -33,6 +33,7 @@ dependencies:
   one_context: ^4.0.0
   auto_route: ^9.3.0+1
   json_annotation: ^4.9.0
+  country_picker: ^2.0.21
   flutter_local_notifications: ^18.0.1
   persistent_bottom_nav_bar: ^6.2.1
   permission_handler: ^11.3.1
