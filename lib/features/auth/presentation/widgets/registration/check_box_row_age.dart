@@ -11,7 +11,8 @@ class CheckboxRowAge extends StatelessWidget {
         BlocBuilder<RegistrationCubit, RegistrationState>(
           builder: (context, state) {
             return GradientCheckbox(
-                selected: cubit.state.isAbove18, onTap: cubit.toggleAbove18);
+                selected: cubit.state.user.isAbove18 ?? false,
+                onTap: cubit.toggleAbove18);
           },
         ),
         Expanded(

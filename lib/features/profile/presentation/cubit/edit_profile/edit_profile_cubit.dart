@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -6,9 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/theme/assets.dart';
-import 'package:hvatai/features/profile/data/model/user_profile_model.dart';
+import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart'; // استخدمنا UseCase لجلب البيانات
+import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -18,13 +17,13 @@ part 'edit_profile_cubit.freezed.dart';
 class EditProfileCubit extends Cubit<EditProfileState> {
   EditProfileCubit(
     this.updateProfileDataUseCase,
-    this.getProfileDataUsecase, // Injected
-  ) : super(EditProfileState(user: UserProfileModel())) {
-    loadProfile();
+    this.getProfileDataUsecase,
+  ) : super(EditProfileState(user: UserRegistrationData())) {
+    prefillData();
   }
 
   final UpdateProfileDataUsecase updateProfileDataUseCase;
-  final GetProfileDataUsecase getProfileDataUsecase; // New
+  final GetProfileDataUsecase getProfileDataUsecase;
 
   final firstNameController = TextEditingController();
   final emailController = TextEditingController();
@@ -33,86 +32,178 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   final confirmPasswordController = TextEditingController();
   final lastNameController = TextEditingController();
 
-  void initProfileModel(UserProfileModel user) {
+  void initProfileModel(UserRegistrationData user) {
     emit(state.copyWith(user: user));
   }
 
   void prefillData() {
-    final userData = state.user.data;
-    final firstName = userData?.name ?? '';
-    final lastName = userData?.lastName ?? '';
-    final email = userData?.email ?? '';
-    final phone = userData?.phone ?? '';
-    final country = userData?.country ?? '';
-    final gender = userData?.gender ?? '';
+    final userData = state.user;
 
-    firstNameController.text = firstName;
-    lastNameController.text = lastName;
-    emailController.text = email;
+    final updatedUser = state.user.copyWith(
+      firstName: userData.firstName ?? '',
+      lastName: userData.lastName ?? '',
+      email: userData.email ?? '',
+      phone: userData.phone ?? '',
+      country: userData.country ?? '',
+      gender: userData.gender ?? '',
+      sms: userData.sms,
+      push: userData.push,
+      sendEmail: userData.sendEmail,
+    );
 
     emit(state.copyWith(
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      phone: phone,
-      country: country,
-      gender: gender,
-      sms: userData?.sms == 1,
-      push: userData?.push == 1,
-      sendEmail: userData?.sendEmail == 1,
+      user: updatedUser,
+      changeInfoProfile: _buildChangeInfoProfile(),
+    ));
+
+    firstNameController.text = updatedUser.firstName ?? '';
+    lastNameController.text = updatedUser.lastName ?? '';
+    emailController.text = updatedUser.email ?? '';
+  }
+
+  void setNewGender(String? gender) {
+    final updatedUser = state.user.copyWith(gender: gender);
+    emit(state.copyWith(user: updatedUser));
+  }
+
+  void toggleStreamsFromSubscriptions() {
+    emit(state.copyWith(
+      streamsFromSubscriptions: !state.streamsFromSubscriptions,
     ));
   }
 
-  void setNewGender(String? gender) => emit(state.copyWith(gender: gender!));
+  void toggleStreamsISaved() {
+    emit(state.copyWith(
+      streamsISaved: !state.streamsISaved,
+    ));
+  }
 
-  Future<void> loadProfile() async {
-    emit(state.copyWith(isLoading: true));
-    final result = await getProfileDataUsecase
-        .call(unit); // Use API to fetch latest user data
+  String? validateConfirmPassword(String? value, String originalPassword) {
+    if (value == null || value.isEmpty) return 'Please confirm your password';
+    if (value != originalPassword) return 'Passwords do not match';
+    return null;
+  }
 
-    result.fold(
-      (failure) {
-        emit(state.copyWith(isLoading: false));
-        showFloatingMessageError(failure);
-      },
-      (user) {
-        emit(state.copyWith(
-          user: user,
-          isLoading: false,
-          changeInfoProfile: _buildChangeInfoProfile(),
-        ));
-        prefillData(); // ← تحديث الحقول بعد تحميل البيانات
-      },
-    );
+  (double, String) _evaluatePassword(String password) {
+    double strength = 0.0;
+    String label = 'Weak';
+
+    if (password.isEmpty) return (0.0, '');
+    if (password.length < 6) return (0.2, 'Weak');
+    if (password.length < 8) return (0.4, 'Fair');
+
+    final hasLetters = RegExp(r'[A-Za-z]').hasMatch(password);
+    final hasDigits = RegExp(r'\d').hasMatch(password);
+    final hasSpecial = RegExp(r'[@$!%*?&]').hasMatch(password);
+    final hasUpper = RegExp(r'[A-Z]').hasMatch(password);
+    final hasLower = RegExp(r'[a-z]').hasMatch(password);
+
+    if (hasLetters && hasDigits) strength = 0.6;
+    if (hasLetters && hasDigits && hasSpecial) strength = 0.8;
+    if (password.length >= 10 &&
+        hasUpper &&
+        hasLower &&
+        hasDigits &&
+        hasSpecial) strength = 1.0;
+
+    if (strength == 0.6)
+      label = 'Good';
+    else if (strength == 0.8)
+      label = 'Very Good';
+    else if (strength == 1.0) label = 'Strong';
+
+    return (strength, label);
+  }
+
+  void toggleRecommendedStreams() {
+    emit(state.copyWith(
+      recommendedStreams: !state.recommendedStreams,
+    ));
+  }
+
+  void toggleNewSubscriber() {
+    emit(state.copyWith(
+      newSubscriber: !state.newSubscriber,
+    ));
+  }
+
+  void toggleBookmarksFromStreams() {
+    emit(state.copyWith(
+      bookmarksFromStreams: !state.bookmarksFromStreams,
+    ));
+  }
+
+  String? validateEmail(String? value) {
+    if (value == null || value.isEmpty) return 'Please enter your email.';
+    if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(value))
+      return 'Please enter a valid email.';
+    return null;
+  }
+
+  void setType(String? type) => emit(state.copyWith(type: type));
+
+  String? validatePassword(String? value) {
+    if (value == null || value.isEmpty) return 'Please enter a password.';
+    if (value.length < 8) return 'At least 8 characters.';
+    if (!RegExp(r'(?=.*[A-Z])').hasMatch(value)) return 'Must have uppercase.';
+    if (!RegExp(r'(?=.*[a-z])').hasMatch(value)) return 'Must have lowercase.';
+    if (!RegExp(r'(?=.*\d)').hasMatch(value)) return 'Must have a digit.';
+    if (!RegExp(r'(?=.*[@$!%*?&])').hasMatch(value))
+      return 'Must have special character.';
+    return null;
+  }
+
+// Toggle All Notifications
+  void toggleSelectAll() {
+    final newValue = !state.isAllSelected;
+
+    emit(state.copyWith(
+      isAllSelected: newValue,
+      streamsFromSubscriptions: newValue,
+      streamsISaved: newValue,
+      recommendedStreams: newValue,
+      newSubscriber: newValue,
+      bookmarksFromStreams: newValue,
+    ));
+  }
+
+  void toggleObscurePassword() {
+    emit(state.copyWith(obscurePassword: !state.obscurePassword));
   }
 
   void updateNewField(String field, String value) {
+    UserRegistrationData updatedUser;
+
     switch (field) {
       case 'country':
-        emit(state.copyWith(country: value));
+        updatedUser = state.user.copyWith(country: value);
         break;
       case 'name':
-        emit(state.copyWith(firstName: value));
+        updatedUser = state.user.copyWith(firstName: value);
         break;
       case 'lastName':
-        emit(state.copyWith(lastName: value));
+        updatedUser = state.user.copyWith(lastName: value);
         break;
       case 'gender':
-        emit(state.copyWith(gender: value));
+        updatedUser = state.user.copyWith(gender: value);
         break;
       case 'email':
-        emit(state.copyWith(email: value));
+        updatedUser = state.user.copyWith(email: value);
         break;
       case 'phone':
-        emit(state.copyWith(phone: value));
+        updatedUser = state.user.copyWith(phone: value);
         break;
       case 'image':
-        emit(state.copyWith(image: File(value)));
+        updatedUser = state.user.copyWith(image: value);
         break;
       case 'imageBusiness':
-        emit(state.copyWith(imageBusiness: File(value)));
+        updatedUser = state.user.copyWith(imageBusiness: value);
         break;
+      default:
+        updatedUser = state.user;
     }
+
+    emit(state.copyWith(user: updatedUser));
   }
 
   List<Map<String, dynamic>> _buildChangeInfoProfile() {
@@ -121,18 +212,14 @@ class EditProfileCubit extends Cubit<EditProfileState> {
         "icon": Assets.assetsIconsEmail,
         "title": "changeEmail".tr(),
         "screen": (BuildContext context) async {
-          final result =
-              await context.push(AppRoutes.changeEmail, extra: state.user);
-          if (result == true) {
-            await loadProfile(); // تحديث البيانات عند الرجوع من الشاشة
-          }
+          context.push(AppRoutes.changeEmail, extra: state.user);
         },
       },
       {
         "icon": Assets.assetsIconsPasswordMinimalisticInput,
         "title": "changePassword".tr(),
         "screen": (BuildContext context) {
-          context.push(AppRoutes.changePassword, extra: state.user.data?.email);
+          context.push(AppRoutes.changePassword, extra: state.user.email);
         },
       },
       {
@@ -168,20 +255,15 @@ class EditProfileCubit extends Cubit<EditProfileState> {
           isLoading: false,
           success: true,
           user: updatedUser,
-          firstName: updatedUser.data?.name ?? state.firstName,
-          lastName: updatedUser.data?.lastName ?? state.lastName,
-          country: updatedUser.data?.country ?? state.country,
-          gender: updatedUser.data?.gender ?? state.gender,
-          email: updatedUser.data?.email ?? state.email,
         ));
 
-        firstNameController.text = updatedUser.data?.name ?? '';
-        lastNameController.text = updatedUser.data?.lastName ?? '';
-        newEmailController.text = updatedUser.data?.email ?? '';
+        firstNameController.text = updatedUser.firstName ?? '';
+        lastNameController.text = updatedUser.lastName ?? '';
+        newEmailController.text = updatedUser.email ?? '';
 
         showFloatingMessageSuccess('profileUpdated'.tr());
 
-        context.pop(true); // رجوع مع نتيجة true
+        context.pop(true);
       },
     );
   }

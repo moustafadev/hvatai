@@ -16,25 +16,20 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$EditProfileState {
-  String get firstName => throw _privateConstructorUsedError;
-  String get lastName => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
-  String get gender => throw _privateConstructorUsedError;
-  String get country => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  bool get sms =>
-      throw _privateConstructorUsedError; // تغيير من String إلى bool
-  bool get push =>
-      throw _privateConstructorUsedError; // تغيير من String إلى bool
-  bool get sendEmail =>
-      throw _privateConstructorUsedError; // تغيير من String إلى bool
-  String get fcmToken => throw _privateConstructorUsedError;
-  String get phone => throw _privateConstructorUsedError;
   bool get success => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
-  UserProfileModel get user => throw _privateConstructorUsedError;
-  File? get image => throw _privateConstructorUsedError;
-  File? get imageBusiness => throw _privateConstructorUsedError;
+  UserRegistrationData get user => throw _privateConstructorUsedError;
+  bool get streamsFromSubscriptions => throw _privateConstructorUsedError;
+  bool get streamsISaved => throw _privateConstructorUsedError;
+  bool get obscurePassword => throw _privateConstructorUsedError;
+  double get passwordStrength => throw _privateConstructorUsedError;
+  String get passwordStrengthText => throw _privateConstructorUsedError;
+  bool get recommendedStreams => throw _privateConstructorUsedError;
+  bool get newSubscriber => throw _privateConstructorUsedError;
+  bool get bookmarksFromStreams => throw _privateConstructorUsedError;
+  bool get isAllSelected => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get changeInfoProfile =>
       throw _privateConstructorUsedError;
 
@@ -52,25 +47,23 @@ abstract class $EditProfileStateCopyWith<$Res> {
       _$EditProfileStateCopyWithImpl<$Res, EditProfileState>;
   @useResult
   $Res call(
-      {String firstName,
-      String lastName,
-      bool isLoading,
-      String gender,
-      String country,
-      String email,
-      bool sms,
-      bool push,
-      bool sendEmail,
-      String fcmToken,
-      String phone,
+      {bool isLoading,
       bool success,
       String errorMessage,
-      UserProfileModel user,
-      File? image,
-      File? imageBusiness,
+      UserRegistrationData user,
+      bool streamsFromSubscriptions,
+      bool streamsISaved,
+      bool obscurePassword,
+      double passwordStrength,
+      String passwordStrengthText,
+      bool recommendedStreams,
+      bool newSubscriber,
+      bool bookmarksFromStreams,
+      bool isAllSelected,
+      String? type,
       List<Map<String, dynamic>> changeInfoProfile});
 
-  $UserProfileModelCopyWith<$Res> get user;
+  $UserRegistrationDataCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -88,69 +81,27 @@ class _$EditProfileStateCopyWithImpl<$Res, $Val extends EditProfileState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? firstName = null,
-    Object? lastName = null,
     Object? isLoading = null,
-    Object? gender = null,
-    Object? country = null,
-    Object? email = null,
-    Object? sms = null,
-    Object? push = null,
-    Object? sendEmail = null,
-    Object? fcmToken = null,
-    Object? phone = null,
     Object? success = null,
     Object? errorMessage = null,
     Object? user = null,
-    Object? image = freezed,
-    Object? imageBusiness = freezed,
+    Object? streamsFromSubscriptions = null,
+    Object? streamsISaved = null,
+    Object? obscurePassword = null,
+    Object? passwordStrength = null,
+    Object? passwordStrengthText = null,
+    Object? recommendedStreams = null,
+    Object? newSubscriber = null,
+    Object? bookmarksFromStreams = null,
+    Object? isAllSelected = null,
+    Object? type = freezed,
     Object? changeInfoProfile = null,
   }) {
     return _then(_value.copyWith(
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      gender: null == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      country: null == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      sms: null == sms
-          ? _value.sms
-          : sms // ignore: cast_nullable_to_non_nullable
-              as bool,
-      push: null == push
-          ? _value.push
-          : push // ignore: cast_nullable_to_non_nullable
-              as bool,
-      sendEmail: null == sendEmail
-          ? _value.sendEmail
-          : sendEmail // ignore: cast_nullable_to_non_nullable
-              as bool,
-      fcmToken: null == fcmToken
-          ? _value.fcmToken
-          : fcmToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
       success: null == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
@@ -162,15 +113,47 @@ class _$EditProfileStateCopyWithImpl<$Res, $Val extends EditProfileState>
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as UserProfileModel,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as File?,
-      imageBusiness: freezed == imageBusiness
-          ? _value.imageBusiness
-          : imageBusiness // ignore: cast_nullable_to_non_nullable
-              as File?,
+              as UserRegistrationData,
+      streamsFromSubscriptions: null == streamsFromSubscriptions
+          ? _value.streamsFromSubscriptions
+          : streamsFromSubscriptions // ignore: cast_nullable_to_non_nullable
+              as bool,
+      streamsISaved: null == streamsISaved
+          ? _value.streamsISaved
+          : streamsISaved // ignore: cast_nullable_to_non_nullable
+              as bool,
+      obscurePassword: null == obscurePassword
+          ? _value.obscurePassword
+          : obscurePassword // ignore: cast_nullable_to_non_nullable
+              as bool,
+      passwordStrength: null == passwordStrength
+          ? _value.passwordStrength
+          : passwordStrength // ignore: cast_nullable_to_non_nullable
+              as double,
+      passwordStrengthText: null == passwordStrengthText
+          ? _value.passwordStrengthText
+          : passwordStrengthText // ignore: cast_nullable_to_non_nullable
+              as String,
+      recommendedStreams: null == recommendedStreams
+          ? _value.recommendedStreams
+          : recommendedStreams // ignore: cast_nullable_to_non_nullable
+              as bool,
+      newSubscriber: null == newSubscriber
+          ? _value.newSubscriber
+          : newSubscriber // ignore: cast_nullable_to_non_nullable
+              as bool,
+      bookmarksFromStreams: null == bookmarksFromStreams
+          ? _value.bookmarksFromStreams
+          : bookmarksFromStreams // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAllSelected: null == isAllSelected
+          ? _value.isAllSelected
+          : isAllSelected // ignore: cast_nullable_to_non_nullable
+              as bool,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
       changeInfoProfile: null == changeInfoProfile
           ? _value.changeInfoProfile
           : changeInfoProfile // ignore: cast_nullable_to_non_nullable
@@ -182,8 +165,8 @@ class _$EditProfileStateCopyWithImpl<$Res, $Val extends EditProfileState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserProfileModelCopyWith<$Res> get user {
-    return $UserProfileModelCopyWith<$Res>(_value.user, (value) {
+  $UserRegistrationDataCopyWith<$Res> get user {
+    return $UserRegistrationDataCopyWith<$Res>(_value.user, (value) {
       return _then(_value.copyWith(user: value) as $Val);
     });
   }
@@ -198,26 +181,24 @@ abstract class _$$EditProfileStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String firstName,
-      String lastName,
-      bool isLoading,
-      String gender,
-      String country,
-      String email,
-      bool sms,
-      bool push,
-      bool sendEmail,
-      String fcmToken,
-      String phone,
+      {bool isLoading,
       bool success,
       String errorMessage,
-      UserProfileModel user,
-      File? image,
-      File? imageBusiness,
+      UserRegistrationData user,
+      bool streamsFromSubscriptions,
+      bool streamsISaved,
+      bool obscurePassword,
+      double passwordStrength,
+      String passwordStrengthText,
+      bool recommendedStreams,
+      bool newSubscriber,
+      bool bookmarksFromStreams,
+      bool isAllSelected,
+      String? type,
       List<Map<String, dynamic>> changeInfoProfile});
 
   @override
-  $UserProfileModelCopyWith<$Res> get user;
+  $UserRegistrationDataCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -233,69 +214,27 @@ class __$$EditProfileStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? firstName = null,
-    Object? lastName = null,
     Object? isLoading = null,
-    Object? gender = null,
-    Object? country = null,
-    Object? email = null,
-    Object? sms = null,
-    Object? push = null,
-    Object? sendEmail = null,
-    Object? fcmToken = null,
-    Object? phone = null,
     Object? success = null,
     Object? errorMessage = null,
     Object? user = null,
-    Object? image = freezed,
-    Object? imageBusiness = freezed,
+    Object? streamsFromSubscriptions = null,
+    Object? streamsISaved = null,
+    Object? obscurePassword = null,
+    Object? passwordStrength = null,
+    Object? passwordStrengthText = null,
+    Object? recommendedStreams = null,
+    Object? newSubscriber = null,
+    Object? bookmarksFromStreams = null,
+    Object? isAllSelected = null,
+    Object? type = freezed,
     Object? changeInfoProfile = null,
   }) {
     return _then(_$EditProfileStateImpl(
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      gender: null == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      country: null == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      sms: null == sms
-          ? _value.sms
-          : sms // ignore: cast_nullable_to_non_nullable
-              as bool,
-      push: null == push
-          ? _value.push
-          : push // ignore: cast_nullable_to_non_nullable
-              as bool,
-      sendEmail: null == sendEmail
-          ? _value.sendEmail
-          : sendEmail // ignore: cast_nullable_to_non_nullable
-              as bool,
-      fcmToken: null == fcmToken
-          ? _value.fcmToken
-          : fcmToken // ignore: cast_nullable_to_non_nullable
-              as String,
-      phone: null == phone
-          ? _value.phone
-          : phone // ignore: cast_nullable_to_non_nullable
-              as String,
       success: null == success
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
@@ -307,15 +246,47 @@ class __$$EditProfileStateImplCopyWithImpl<$Res>
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as UserProfileModel,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
-              as File?,
-      imageBusiness: freezed == imageBusiness
-          ? _value.imageBusiness
-          : imageBusiness // ignore: cast_nullable_to_non_nullable
-              as File?,
+              as UserRegistrationData,
+      streamsFromSubscriptions: null == streamsFromSubscriptions
+          ? _value.streamsFromSubscriptions
+          : streamsFromSubscriptions // ignore: cast_nullable_to_non_nullable
+              as bool,
+      streamsISaved: null == streamsISaved
+          ? _value.streamsISaved
+          : streamsISaved // ignore: cast_nullable_to_non_nullable
+              as bool,
+      obscurePassword: null == obscurePassword
+          ? _value.obscurePassword
+          : obscurePassword // ignore: cast_nullable_to_non_nullable
+              as bool,
+      passwordStrength: null == passwordStrength
+          ? _value.passwordStrength
+          : passwordStrength // ignore: cast_nullable_to_non_nullable
+              as double,
+      passwordStrengthText: null == passwordStrengthText
+          ? _value.passwordStrengthText
+          : passwordStrengthText // ignore: cast_nullable_to_non_nullable
+              as String,
+      recommendedStreams: null == recommendedStreams
+          ? _value.recommendedStreams
+          : recommendedStreams // ignore: cast_nullable_to_non_nullable
+              as bool,
+      newSubscriber: null == newSubscriber
+          ? _value.newSubscriber
+          : newSubscriber // ignore: cast_nullable_to_non_nullable
+              as bool,
+      bookmarksFromStreams: null == bookmarksFromStreams
+          ? _value.bookmarksFromStreams
+          : bookmarksFromStreams // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAllSelected: null == isAllSelected
+          ? _value.isAllSelected
+          : isAllSelected // ignore: cast_nullable_to_non_nullable
+              as bool,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
       changeInfoProfile: null == changeInfoProfile
           ? _value._changeInfoProfile
           : changeInfoProfile // ignore: cast_nullable_to_non_nullable
@@ -328,61 +299,26 @@ class __$$EditProfileStateImplCopyWithImpl<$Res>
 
 class _$EditProfileStateImpl implements _EditProfileState {
   const _$EditProfileStateImpl(
-      {this.firstName = '',
-      this.lastName = '',
-      this.isLoading = false,
-      this.gender = '',
-      this.country = '',
-      this.email = '',
-      this.sms = false,
-      this.push = false,
-      this.sendEmail = false,
-      this.fcmToken = '',
-      this.phone = '',
+      {this.isLoading = false,
       this.success = false,
       this.errorMessage = '',
       required this.user,
-      this.image,
-      this.imageBusiness,
+      this.streamsFromSubscriptions = true,
+      this.streamsISaved = false,
+      this.obscurePassword = false,
+      this.passwordStrength = 0.0,
+      this.passwordStrengthText = '',
+      this.recommendedStreams = true,
+      this.newSubscriber = true,
+      this.bookmarksFromStreams = true,
+      this.isAllSelected = false,
+      this.type,
       final List<Map<String, dynamic>> changeInfoProfile = const []})
       : _changeInfoProfile = changeInfoProfile;
 
   @override
   @JsonKey()
-  final String firstName;
-  @override
-  @JsonKey()
-  final String lastName;
-  @override
-  @JsonKey()
   final bool isLoading;
-  @override
-  @JsonKey()
-  final String gender;
-  @override
-  @JsonKey()
-  final String country;
-  @override
-  @JsonKey()
-  final String email;
-  @override
-  @JsonKey()
-  final bool sms;
-// تغيير من String إلى bool
-  @override
-  @JsonKey()
-  final bool push;
-// تغيير من String إلى bool
-  @override
-  @JsonKey()
-  final bool sendEmail;
-// تغيير من String إلى bool
-  @override
-  @JsonKey()
-  final String fcmToken;
-  @override
-  @JsonKey()
-  final String phone;
   @override
   @JsonKey()
   final bool success;
@@ -390,11 +326,36 @@ class _$EditProfileStateImpl implements _EditProfileState {
   @JsonKey()
   final String errorMessage;
   @override
-  final UserProfileModel user;
+  final UserRegistrationData user;
   @override
-  final File? image;
+  @JsonKey()
+  final bool streamsFromSubscriptions;
   @override
-  final File? imageBusiness;
+  @JsonKey()
+  final bool streamsISaved;
+  @override
+  @JsonKey()
+  final bool obscurePassword;
+  @override
+  @JsonKey()
+  final double passwordStrength;
+  @override
+  @JsonKey()
+  final String passwordStrengthText;
+  @override
+  @JsonKey()
+  final bool recommendedStreams;
+  @override
+  @JsonKey()
+  final bool newSubscriber;
+  @override
+  @JsonKey()
+  final bool bookmarksFromStreams;
+  @override
+  @JsonKey()
+  final bool isAllSelected;
+  @override
+  final String? type;
   final List<Map<String, dynamic>> _changeInfoProfile;
   @override
   @JsonKey()
@@ -407,7 +368,7 @@ class _$EditProfileStateImpl implements _EditProfileState {
 
   @override
   String toString() {
-    return 'EditProfileState(firstName: $firstName, lastName: $lastName, isLoading: $isLoading, gender: $gender, country: $country, email: $email, sms: $sms, push: $push, sendEmail: $sendEmail, fcmToken: $fcmToken, phone: $phone, success: $success, errorMessage: $errorMessage, user: $user, image: $image, imageBusiness: $imageBusiness, changeInfoProfile: $changeInfoProfile)';
+    return 'EditProfileState(isLoading: $isLoading, success: $success, errorMessage: $errorMessage, user: $user, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, obscurePassword: $obscurePassword, passwordStrength: $passwordStrength, passwordStrengthText: $passwordStrengthText, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, type: $type, changeInfoProfile: $changeInfoProfile)';
   }
 
   @override
@@ -415,29 +376,32 @@ class _$EditProfileStateImpl implements _EditProfileState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$EditProfileStateImpl &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            (identical(other.gender, gender) || other.gender == gender) &&
-            (identical(other.country, country) || other.country == country) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.sms, sms) || other.sms == sms) &&
-            (identical(other.push, push) || other.push == push) &&
-            (identical(other.sendEmail, sendEmail) ||
-                other.sendEmail == sendEmail) &&
-            (identical(other.fcmToken, fcmToken) ||
-                other.fcmToken == fcmToken) &&
-            (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.image, image) || other.image == image) &&
-            (identical(other.imageBusiness, imageBusiness) ||
-                other.imageBusiness == imageBusiness) &&
+            (identical(
+                    other.streamsFromSubscriptions, streamsFromSubscriptions) ||
+                other.streamsFromSubscriptions == streamsFromSubscriptions) &&
+            (identical(other.streamsISaved, streamsISaved) ||
+                other.streamsISaved == streamsISaved) &&
+            (identical(other.obscurePassword, obscurePassword) ||
+                other.obscurePassword == obscurePassword) &&
+            (identical(other.passwordStrength, passwordStrength) ||
+                other.passwordStrength == passwordStrength) &&
+            (identical(other.passwordStrengthText, passwordStrengthText) ||
+                other.passwordStrengthText == passwordStrengthText) &&
+            (identical(other.recommendedStreams, recommendedStreams) ||
+                other.recommendedStreams == recommendedStreams) &&
+            (identical(other.newSubscriber, newSubscriber) ||
+                other.newSubscriber == newSubscriber) &&
+            (identical(other.bookmarksFromStreams, bookmarksFromStreams) ||
+                other.bookmarksFromStreams == bookmarksFromStreams) &&
+            (identical(other.isAllSelected, isAllSelected) ||
+                other.isAllSelected == isAllSelected) &&
+            (identical(other.type, type) || other.type == type) &&
             const DeepCollectionEquality()
                 .equals(other._changeInfoProfile, _changeInfoProfile));
   }
@@ -445,22 +409,20 @@ class _$EditProfileStateImpl implements _EditProfileState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      firstName,
-      lastName,
       isLoading,
-      gender,
-      country,
-      email,
-      sms,
-      push,
-      sendEmail,
-      fcmToken,
-      phone,
       success,
       errorMessage,
       user,
-      image,
-      imageBusiness,
+      streamsFromSubscriptions,
+      streamsISaved,
+      obscurePassword,
+      passwordStrength,
+      passwordStrengthText,
+      recommendedStreams,
+      newSubscriber,
+      bookmarksFromStreams,
+      isAllSelected,
+      type,
       const DeepCollectionEquality().hash(_changeInfoProfile));
 
   /// Create a copy of EditProfileState
@@ -475,57 +437,51 @@ class _$EditProfileStateImpl implements _EditProfileState {
 
 abstract class _EditProfileState implements EditProfileState {
   const factory _EditProfileState(
-          {final String firstName,
-          final String lastName,
-          final bool isLoading,
-          final String gender,
-          final String country,
-          final String email,
-          final bool sms,
-          final bool push,
-          final bool sendEmail,
-          final String fcmToken,
-          final String phone,
+          {final bool isLoading,
           final bool success,
           final String errorMessage,
-          required final UserProfileModel user,
-          final File? image,
-          final File? imageBusiness,
+          required final UserRegistrationData user,
+          final bool streamsFromSubscriptions,
+          final bool streamsISaved,
+          final bool obscurePassword,
+          final double passwordStrength,
+          final String passwordStrengthText,
+          final bool recommendedStreams,
+          final bool newSubscriber,
+          final bool bookmarksFromStreams,
+          final bool isAllSelected,
+          final String? type,
           final List<Map<String, dynamic>> changeInfoProfile}) =
       _$EditProfileStateImpl;
 
   @override
-  String get firstName;
-  @override
-  String get lastName;
-  @override
   bool get isLoading;
-  @override
-  String get gender;
-  @override
-  String get country;
-  @override
-  String get email;
-  @override
-  bool get sms; // تغيير من String إلى bool
-  @override
-  bool get push; // تغيير من String إلى bool
-  @override
-  bool get sendEmail; // تغيير من String إلى bool
-  @override
-  String get fcmToken;
-  @override
-  String get phone;
   @override
   bool get success;
   @override
   String get errorMessage;
   @override
-  UserProfileModel get user;
+  UserRegistrationData get user;
   @override
-  File? get image;
+  bool get streamsFromSubscriptions;
   @override
-  File? get imageBusiness;
+  bool get streamsISaved;
+  @override
+  bool get obscurePassword;
+  @override
+  double get passwordStrength;
+  @override
+  String get passwordStrengthText;
+  @override
+  bool get recommendedStreams;
+  @override
+  bool get newSubscriber;
+  @override
+  bool get bookmarksFromStreams;
+  @override
+  bool get isAllSelected;
+  @override
+  String? get type;
   @override
   List<Map<String, dynamic>> get changeInfoProfile;
 

@@ -2,7 +2,7 @@ part of '../profile.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key, required this.user});
-  final UserProfileModel user;
+  final UserRegistrationData user;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class SettingsScreen extends StatelessWidget {
           builder: (context, state) {
             final cubit = context.read<EditProfileCubit>();
 
-            if (state.changeInfoProfile.isEmpty) {
+            if (state.changeInfoProfile.isEmpty || state.isLoading) {
               return Center(
                   child: CircularProgressIndicator(
                 color: AppColors.grey,
@@ -79,17 +79,19 @@ class SettingsScreen extends StatelessWidget {
                           12.ph,
                           CustomSelectGender(
                             value: _normalizeGender(
-                              state.gender.isEmpty
-                                  ? user.data!.gender ?? ''
-                                  : state.gender,
+                              (state.user.gender == null ||
+                                      state.user.gender!.isEmpty)
+                                  ? user.gender ?? ''
+                                  : state.user.gender,
                             ),
                             onChanged: (val) => cubit.setNewGender(val),
                           ),
                           12.ph,
                           UpdateCountryDropdown(
-                            country: state.country.isEmpty
-                                ? user.data!.country!
-                                : state.country,
+                            country: (state.user.country == null ||
+                                    state.user.country!.isEmpty)
+                                ? user.country ?? ''
+                                : state.user.country!,
                           ),
                           12.ph,
                           ChangeInfoProfile(state: state),

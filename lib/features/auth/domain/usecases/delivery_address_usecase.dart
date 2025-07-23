@@ -17,33 +17,12 @@ class DeliveryAddressUseCase
 }
 
 class DeliveryAddressParams {
-  final String street;
-  final String house;
-  final String apartment;
-  final String entrance;
-  final String index;
-  final String city;
-
+  final UserRegistrationData userRegistrationData;
   DeliveryAddressParams({
-    required this.street,
-    required this.house,
-    required this.apartment,
-    required this.entrance,
-    required this.index,
-    required this.city,
+    required this.userRegistrationData,
   });
 
   Map<String, dynamic> toJson() {
-    return {
-      "city": city,
-      "street": street,
-      "Apartment": apartment,
-      "Floor": house,
-      "Front_door": entrance,
-      "Intercom_code": index,
-      "is_primary": false,
-      "latitude": "37.7749",
-      "longitude": "-122.4194"
-    };
+    return userRegistrationData.toJson();
   }
 }

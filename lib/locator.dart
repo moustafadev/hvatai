@@ -19,7 +19,7 @@ import 'package:hvatai/features/auth/presentation/cubit/verification/verificatio
 import 'package:hvatai/features/profile/data/datasources/api_service_profile.dart';
 import 'package:hvatai/features/profile/data/repositories/profile_impl_repository.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
-import 'package:hvatai/features/profile/presentation/cubit/delivery_address/delivery_address_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/delivery_address/update_delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
@@ -50,7 +50,7 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(() => CategoryTabsCubit());
   locator.registerFactory(() => SearchTabsCubit());
-  locator.registerFactory(() => UpdateDeliveryAddressCubit());
+  // locator.registerFactory(() => UpdateDeliveryAddressCubit(locator()));
   locator.registerFactory(() => PaymentMethodCubit());
   locator.registerFactory(() => EditProfileCubit(locator(), locator()));
   locator.registerFactory(() => MyGoodsCubit());

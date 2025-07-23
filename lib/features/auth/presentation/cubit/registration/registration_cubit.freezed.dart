@@ -16,14 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$RegistrationState {
-  String get firstName => throw _privateConstructorUsedError;
-  String get lastName => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
-  bool get isAbove18 => throw _privateConstructorUsedError;
-  bool get agreedToTerms => throw _privateConstructorUsedError;
-  String? get gender => throw _privateConstructorUsedError;
-  String? get country => throw _privateConstructorUsedError;
   bool get obscurePassword => throw _privateConstructorUsedError;
   double get passwordStrength => throw _privateConstructorUsedError;
   String get passwordStrengthText => throw _privateConstructorUsedError;
@@ -47,15 +39,7 @@ abstract class $RegistrationStateCopyWith<$Res> {
       _$RegistrationStateCopyWithImpl<$Res, RegistrationState>;
   @useResult
   $Res call(
-      {String firstName,
-      String lastName,
-      String email,
-      String password,
-      bool isAbove18,
-      bool agreedToTerms,
-      String? gender,
-      String? country,
-      bool obscurePassword,
+      {bool obscurePassword,
       double passwordStrength,
       String passwordStrengthText,
       String? emailError,
@@ -82,14 +66,6 @@ class _$RegistrationStateCopyWithImpl<$Res, $Val extends RegistrationState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? firstName = null,
-    Object? lastName = null,
-    Object? email = null,
-    Object? password = null,
-    Object? isAbove18 = null,
-    Object? agreedToTerms = null,
-    Object? gender = freezed,
-    Object? country = freezed,
     Object? obscurePassword = null,
     Object? passwordStrength = null,
     Object? passwordStrengthText = null,
@@ -100,38 +76,6 @@ class _$RegistrationStateCopyWithImpl<$Res, $Val extends RegistrationState>
     Object? user = null,
   }) {
     return _then(_value.copyWith(
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      isAbove18: null == isAbove18
-          ? _value.isAbove18
-          : isAbove18 // ignore: cast_nullable_to_non_nullable
-              as bool,
-      agreedToTerms: null == agreedToTerms
-          ? _value.agreedToTerms
-          : agreedToTerms // ignore: cast_nullable_to_non_nullable
-              as bool,
-      gender: freezed == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as String?,
-      country: freezed == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String?,
       obscurePassword: null == obscurePassword
           ? _value.obscurePassword
           : obscurePassword // ignore: cast_nullable_to_non_nullable
@@ -187,15 +131,7 @@ abstract class _$$RegistrationStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String firstName,
-      String lastName,
-      String email,
-      String password,
-      bool isAbove18,
-      bool agreedToTerms,
-      String? gender,
-      String? country,
-      bool obscurePassword,
+      {bool obscurePassword,
       double passwordStrength,
       String passwordStrengthText,
       String? emailError,
@@ -221,14 +157,6 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? firstName = null,
-    Object? lastName = null,
-    Object? email = null,
-    Object? password = null,
-    Object? isAbove18 = null,
-    Object? agreedToTerms = null,
-    Object? gender = freezed,
-    Object? country = freezed,
     Object? obscurePassword = null,
     Object? passwordStrength = null,
     Object? passwordStrengthText = null,
@@ -239,38 +167,6 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
     Object? user = null,
   }) {
     return _then(_$RegistrationStateImpl(
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastName: null == lastName
-          ? _value.lastName
-          : lastName // ignore: cast_nullable_to_non_nullable
-              as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
-              as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      isAbove18: null == isAbove18
-          ? _value.isAbove18
-          : isAbove18 // ignore: cast_nullable_to_non_nullable
-              as bool,
-      agreedToTerms: null == agreedToTerms
-          ? _value.agreedToTerms
-          : agreedToTerms // ignore: cast_nullable_to_non_nullable
-              as bool,
-      gender: freezed == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as String?,
-      country: freezed == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String?,
       obscurePassword: null == obscurePassword
           ? _value.obscurePassword
           : obscurePassword // ignore: cast_nullable_to_non_nullable
@@ -311,15 +207,7 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
 
 class _$RegistrationStateImpl implements _RegistrationState {
   const _$RegistrationStateImpl(
-      {this.firstName = '',
-      this.lastName = '',
-      this.email = '',
-      this.password = '',
-      this.isAbove18 = false,
-      this.agreedToTerms = false,
-      this.gender,
-      this.country,
-      this.obscurePassword = false,
+      {this.obscurePassword = false,
       this.passwordStrength = 0.0,
       this.passwordStrengthText = '',
       this.emailError,
@@ -328,28 +216,6 @@ class _$RegistrationStateImpl implements _RegistrationState {
       this.errorMessage = '',
       required this.user});
 
-  @override
-  @JsonKey()
-  final String firstName;
-  @override
-  @JsonKey()
-  final String lastName;
-  @override
-  @JsonKey()
-  final String email;
-  @override
-  @JsonKey()
-  final String password;
-  @override
-  @JsonKey()
-  final bool isAbove18;
-  @override
-  @JsonKey()
-  final bool agreedToTerms;
-  @override
-  final String? gender;
-  @override
-  final String? country;
   @override
   @JsonKey()
   final bool obscurePassword;
@@ -375,7 +241,7 @@ class _$RegistrationStateImpl implements _RegistrationState {
 
   @override
   String toString() {
-    return 'RegistrationState(firstName: $firstName, lastName: $lastName, email: $email, password: $password, isAbove18: $isAbove18, agreedToTerms: $agreedToTerms, gender: $gender, country: $country, obscurePassword: $obscurePassword, passwordStrength: $passwordStrength, passwordStrengthText: $passwordStrengthText, emailError: $emailError, isRegisterLoading: $isRegisterLoading, successRegister: $successRegister, errorMessage: $errorMessage, user: $user)';
+    return 'RegistrationState(obscurePassword: $obscurePassword, passwordStrength: $passwordStrength, passwordStrengthText: $passwordStrengthText, emailError: $emailError, isRegisterLoading: $isRegisterLoading, successRegister: $successRegister, errorMessage: $errorMessage, user: $user)';
   }
 
   @override
@@ -383,19 +249,6 @@ class _$RegistrationStateImpl implements _RegistrationState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RegistrationStateImpl &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.lastName, lastName) ||
-                other.lastName == lastName) &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.isAbove18, isAbove18) ||
-                other.isAbove18 == isAbove18) &&
-            (identical(other.agreedToTerms, agreedToTerms) ||
-                other.agreedToTerms == agreedToTerms) &&
-            (identical(other.gender, gender) || other.gender == gender) &&
-            (identical(other.country, country) || other.country == country) &&
             (identical(other.obscurePassword, obscurePassword) ||
                 other.obscurePassword == obscurePassword) &&
             (identical(other.passwordStrength, passwordStrength) ||
@@ -416,14 +269,6 @@ class _$RegistrationStateImpl implements _RegistrationState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      firstName,
-      lastName,
-      email,
-      password,
-      isAbove18,
-      agreedToTerms,
-      gender,
-      country,
       obscurePassword,
       passwordStrength,
       passwordStrengthText,
@@ -445,15 +290,7 @@ class _$RegistrationStateImpl implements _RegistrationState {
 
 abstract class _RegistrationState implements RegistrationState {
   const factory _RegistrationState(
-      {final String firstName,
-      final String lastName,
-      final String email,
-      final String password,
-      final bool isAbove18,
-      final bool agreedToTerms,
-      final String? gender,
-      final String? country,
-      final bool obscurePassword,
+      {final bool obscurePassword,
       final double passwordStrength,
       final String passwordStrengthText,
       final String? emailError,
@@ -462,22 +299,6 @@ abstract class _RegistrationState implements RegistrationState {
       final String errorMessage,
       required final UserRegistrationData user}) = _$RegistrationStateImpl;
 
-  @override
-  String get firstName;
-  @override
-  String get lastName;
-  @override
-  String get email;
-  @override
-  String get password;
-  @override
-  bool get isAbove18;
-  @override
-  bool get agreedToTerms;
-  @override
-  String? get gender;
-  @override
-  String? get country;
   @override
   bool get obscurePassword;
   @override

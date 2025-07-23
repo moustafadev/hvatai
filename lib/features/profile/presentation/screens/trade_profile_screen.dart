@@ -6,11 +6,11 @@ class TradeProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => locator<ProfileCubit>(),
+      create: (context) => locator<EditProfileCubit>(),
       child: Scaffold(
-        backgroundColor: AppColors.grey100,
+        backgroundColor: AppColors.lightGreyBackground,
         appBar: AppBar(
-          backgroundColor: AppColors.grey100,
+          backgroundColor: AppColors.lightGreyBackground,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
             onPressed: () {
@@ -18,9 +18,9 @@ class TradeProfileScreen extends StatelessWidget {
             },
           ),
         ),
-        body:
-            BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
-          final cubit = context.read<ProfileCubit>();
+        body: BlocBuilder<EditProfileCubit, EditProfileState>(
+            builder: (context, state) {
+          final cubit = context.read<EditProfileCubit>();
           return Column(
             children: [
               Padding(
@@ -66,7 +66,7 @@ class TradeProfileScreen extends StatelessWidget {
                   image: DecorationImage(
                     image: AssetImage(
                         Assets.assetsImagesProfileAdvertisementImage),
-                    fit: BoxFit.fill, // أو BoxFit.cover حسب الحاجة
+                    fit: BoxFit.fill,
                   ),
                 ),
                 child: Column(

@@ -15,9 +15,8 @@ class ProfileScreen extends StatelessWidget {
             bottom: false,
             child: BlocBuilder<ProfileCubit, ProfileState>(
               builder: (context, state) {
-                final user = state.userProfileModel;
-
                 if (state.helpAndContact.isEmpty ||
+                    state.isLoading ||
                     state.settingsOptions.isEmpty) {
                   return Center(
                       child: CircularProgressIndicator(

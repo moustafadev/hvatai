@@ -21,8 +21,8 @@ class TopProfileInfo extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: user.data!.image != null
-                      ? CachedNetworkImageProvider(user.data!.image!)
+                  image: user.image != null
+                      ? CachedNetworkImageProvider(user.image ?? '')
                       : AssetImage(Assets.assetsImagesProfileImage)
                           as ImageProvider,
                   fit: BoxFit.fill,
@@ -35,7 +35,7 @@ class TopProfileInfo extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                text: user.data!.name!,
+                text: user.firstName ?? '',
                 fontWeight: FontWeight.w800,
                 fontSize: 14.sp,
               ),
@@ -50,7 +50,7 @@ class TopProfileInfo extends StatelessWidget {
                   ),
                   3.pw,
                   CustomText(
-                    text: user.data!.personalRating.toString(),
+                    text: user.personalRating.toString(),
                   ),
                   12.pw,
                   CustomGradientButton(

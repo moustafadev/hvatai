@@ -16,20 +16,14 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ProfileState {
-  String get firstName => throw _privateConstructorUsedError;
-  String? get profileImageUrl => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
-  String get gender => throw _privateConstructorUsedError;
-  String get country => throw _privateConstructorUsedError;
   bool get streamsFromSubscriptions => throw _privateConstructorUsedError;
   bool get streamsISaved => throw _privateConstructorUsedError;
   bool get recommendedStreams => throw _privateConstructorUsedError;
   bool get newSubscriber => throw _privateConstructorUsedError;
   bool get bookmarksFromStreams => throw _privateConstructorUsedError;
   bool get isAllSelected => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
   String get passwordError => throw _privateConstructorUsedError;
-  String get confirmPassword => throw _privateConstructorUsedError;
   String? get emailError => throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get settingsOptions =>
       throw _privateConstructorUsedError;
@@ -43,9 +37,8 @@ mixin _$ProfileState {
   double get passwordStrength => throw _privateConstructorUsedError;
   String get passwordStrengthText => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
-  int get uid => throw _privateConstructorUsedError;
-  String get channelId => throw _privateConstructorUsedError;
-  UserProfileModel get userProfileModel => throw _privateConstructorUsedError;
+  UserRegistrationData get userProfileModel =>
+      throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
 
   /// Create a copy of ProfileState
@@ -62,20 +55,14 @@ abstract class $ProfileStateCopyWith<$Res> {
       _$ProfileStateCopyWithImpl<$Res, ProfileState>;
   @useResult
   $Res call(
-      {String firstName,
-      String? profileImageUrl,
-      bool isLoading,
-      String gender,
-      String country,
+      {bool isLoading,
       bool streamsFromSubscriptions,
       bool streamsISaved,
       bool recommendedStreams,
       bool newSubscriber,
       bool bookmarksFromStreams,
       bool isAllSelected,
-      String password,
       String passwordError,
-      String confirmPassword,
       String? emailError,
       List<Map<String, dynamic>> settingsOptions,
       List<Map<String, dynamic>> helpAndContact,
@@ -85,12 +72,10 @@ abstract class $ProfileStateCopyWith<$Res> {
       double passwordStrength,
       String passwordStrengthText,
       String errorMessage,
-      int uid,
-      String channelId,
-      UserProfileModel userProfileModel,
+      UserRegistrationData userProfileModel,
       String? type});
 
-  $UserProfileModelCopyWith<$Res> get userProfileModel;
+  $UserRegistrationDataCopyWith<$Res> get userProfileModel;
 }
 
 /// @nodoc
@@ -108,20 +93,14 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? firstName = null,
-    Object? profileImageUrl = freezed,
     Object? isLoading = null,
-    Object? gender = null,
-    Object? country = null,
     Object? streamsFromSubscriptions = null,
     Object? streamsISaved = null,
     Object? recommendedStreams = null,
     Object? newSubscriber = null,
     Object? bookmarksFromStreams = null,
     Object? isAllSelected = null,
-    Object? password = null,
     Object? passwordError = null,
-    Object? confirmPassword = null,
     Object? emailError = freezed,
     Object? settingsOptions = null,
     Object? helpAndContact = null,
@@ -131,32 +110,14 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? passwordStrength = null,
     Object? passwordStrengthText = null,
     Object? errorMessage = null,
-    Object? uid = null,
-    Object? channelId = null,
     Object? userProfileModel = null,
     Object? type = freezed,
   }) {
     return _then(_value.copyWith(
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      profileImageUrl: freezed == profileImageUrl
-          ? _value.profileImageUrl
-          : profileImageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      gender: null == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      country: null == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String,
       streamsFromSubscriptions: null == streamsFromSubscriptions
           ? _value.streamsFromSubscriptions
           : streamsFromSubscriptions // ignore: cast_nullable_to_non_nullable
@@ -181,17 +142,9 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.isAllSelected
           : isAllSelected // ignore: cast_nullable_to_non_nullable
               as bool,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
       passwordError: null == passwordError
           ? _value.passwordError
           : passwordError // ignore: cast_nullable_to_non_nullable
-              as String,
-      confirmPassword: null == confirmPassword
-          ? _value.confirmPassword
-          : confirmPassword // ignore: cast_nullable_to_non_nullable
               as String,
       emailError: freezed == emailError
           ? _value.emailError
@@ -229,18 +182,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as int,
-      channelId: null == channelId
-          ? _value.channelId
-          : channelId // ignore: cast_nullable_to_non_nullable
-              as String,
       userProfileModel: null == userProfileModel
           ? _value.userProfileModel
           : userProfileModel // ignore: cast_nullable_to_non_nullable
-              as UserProfileModel,
+              as UserRegistrationData,
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -252,8 +197,9 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserProfileModelCopyWith<$Res> get userProfileModel {
-    return $UserProfileModelCopyWith<$Res>(_value.userProfileModel, (value) {
+  $UserRegistrationDataCopyWith<$Res> get userProfileModel {
+    return $UserRegistrationDataCopyWith<$Res>(_value.userProfileModel,
+        (value) {
       return _then(_value.copyWith(userProfileModel: value) as $Val);
     });
   }
@@ -268,20 +214,14 @@ abstract class _$$ProfileStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String firstName,
-      String? profileImageUrl,
-      bool isLoading,
-      String gender,
-      String country,
+      {bool isLoading,
       bool streamsFromSubscriptions,
       bool streamsISaved,
       bool recommendedStreams,
       bool newSubscriber,
       bool bookmarksFromStreams,
       bool isAllSelected,
-      String password,
       String passwordError,
-      String confirmPassword,
       String? emailError,
       List<Map<String, dynamic>> settingsOptions,
       List<Map<String, dynamic>> helpAndContact,
@@ -291,13 +231,11 @@ abstract class _$$ProfileStateImplCopyWith<$Res>
       double passwordStrength,
       String passwordStrengthText,
       String errorMessage,
-      int uid,
-      String channelId,
-      UserProfileModel userProfileModel,
+      UserRegistrationData userProfileModel,
       String? type});
 
   @override
-  $UserProfileModelCopyWith<$Res> get userProfileModel;
+  $UserRegistrationDataCopyWith<$Res> get userProfileModel;
 }
 
 /// @nodoc
@@ -313,20 +251,14 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? firstName = null,
-    Object? profileImageUrl = freezed,
     Object? isLoading = null,
-    Object? gender = null,
-    Object? country = null,
     Object? streamsFromSubscriptions = null,
     Object? streamsISaved = null,
     Object? recommendedStreams = null,
     Object? newSubscriber = null,
     Object? bookmarksFromStreams = null,
     Object? isAllSelected = null,
-    Object? password = null,
     Object? passwordError = null,
-    Object? confirmPassword = null,
     Object? emailError = freezed,
     Object? settingsOptions = null,
     Object? helpAndContact = null,
@@ -336,32 +268,14 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
     Object? passwordStrength = null,
     Object? passwordStrengthText = null,
     Object? errorMessage = null,
-    Object? uid = null,
-    Object? channelId = null,
     Object? userProfileModel = null,
     Object? type = freezed,
   }) {
     return _then(_$ProfileStateImpl(
-      firstName: null == firstName
-          ? _value.firstName
-          : firstName // ignore: cast_nullable_to_non_nullable
-              as String,
-      profileImageUrl: freezed == profileImageUrl
-          ? _value.profileImageUrl
-          : profileImageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      gender: null == gender
-          ? _value.gender
-          : gender // ignore: cast_nullable_to_non_nullable
-              as String,
-      country: null == country
-          ? _value.country
-          : country // ignore: cast_nullable_to_non_nullable
-              as String,
       streamsFromSubscriptions: null == streamsFromSubscriptions
           ? _value.streamsFromSubscriptions
           : streamsFromSubscriptions // ignore: cast_nullable_to_non_nullable
@@ -386,17 +300,9 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
           ? _value.isAllSelected
           : isAllSelected // ignore: cast_nullable_to_non_nullable
               as bool,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
       passwordError: null == passwordError
           ? _value.passwordError
           : passwordError // ignore: cast_nullable_to_non_nullable
-              as String,
-      confirmPassword: null == confirmPassword
-          ? _value.confirmPassword
-          : confirmPassword // ignore: cast_nullable_to_non_nullable
               as String,
       emailError: freezed == emailError
           ? _value.emailError
@@ -434,18 +340,10 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      uid: null == uid
-          ? _value.uid
-          : uid // ignore: cast_nullable_to_non_nullable
-              as int,
-      channelId: null == channelId
-          ? _value.channelId
-          : channelId // ignore: cast_nullable_to_non_nullable
-              as String,
       userProfileModel: null == userProfileModel
           ? _value.userProfileModel
           : userProfileModel // ignore: cast_nullable_to_non_nullable
-              as UserProfileModel,
+              as UserRegistrationData,
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
@@ -458,20 +356,14 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
 
 class _$ProfileStateImpl implements _ProfileState {
   const _$ProfileStateImpl(
-      {this.firstName = 'User',
-      this.profileImageUrl,
-      this.isLoading = false,
-      this.gender = '',
-      this.country = '',
+      {this.isLoading = false,
       this.streamsFromSubscriptions = true,
       this.streamsISaved = false,
       this.recommendedStreams = true,
       this.newSubscriber = true,
       this.bookmarksFromStreams = true,
       this.isAllSelected = false,
-      this.password = '',
       this.passwordError = '',
-      this.confirmPassword = '',
       this.emailError,
       final List<Map<String, dynamic>> settingsOptions = const [],
       final List<Map<String, dynamic>> helpAndContact = const [],
@@ -481,8 +373,6 @@ class _$ProfileStateImpl implements _ProfileState {
       this.passwordStrength = 0.0,
       this.passwordStrengthText = '',
       this.errorMessage = '',
-      required this.uid,
-      required this.channelId,
       required this.userProfileModel,
       this.type})
       : _settingsOptions = settingsOptions,
@@ -492,18 +382,7 @@ class _$ProfileStateImpl implements _ProfileState {
 
   @override
   @JsonKey()
-  final String firstName;
-  @override
-  final String? profileImageUrl;
-  @override
-  @JsonKey()
   final bool isLoading;
-  @override
-  @JsonKey()
-  final String gender;
-  @override
-  @JsonKey()
-  final String country;
   @override
   @JsonKey()
   final bool streamsFromSubscriptions;
@@ -524,13 +403,7 @@ class _$ProfileStateImpl implements _ProfileState {
   final bool isAllSelected;
   @override
   @JsonKey()
-  final String password;
-  @override
-  @JsonKey()
   final String passwordError;
-  @override
-  @JsonKey()
-  final String confirmPassword;
   @override
   final String? emailError;
   final List<Map<String, dynamic>> _settingsOptions;
@@ -583,17 +456,13 @@ class _$ProfileStateImpl implements _ProfileState {
   @JsonKey()
   final String errorMessage;
   @override
-  final int uid;
-  @override
-  final String channelId;
-  @override
-  final UserProfileModel userProfileModel;
+  final UserRegistrationData userProfileModel;
   @override
   final String? type;
 
   @override
   String toString() {
-    return 'ProfileState(firstName: $firstName, profileImageUrl: $profileImageUrl, isLoading: $isLoading, gender: $gender, country: $country, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, password: $password, passwordError: $passwordError, confirmPassword: $confirmPassword, emailError: $emailError, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, changeInfoProfile: $changeInfoProfile, streamerOptions: $streamerOptions, obscurePassword: $obscurePassword, passwordStrength: $passwordStrength, passwordStrengthText: $passwordStrengthText, errorMessage: $errorMessage, uid: $uid, channelId: $channelId, userProfileModel: $userProfileModel, type: $type)';
+    return 'ProfileState(isLoading: $isLoading, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, passwordError: $passwordError, emailError: $emailError, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, changeInfoProfile: $changeInfoProfile, streamerOptions: $streamerOptions, obscurePassword: $obscurePassword, passwordStrength: $passwordStrength, passwordStrengthText: $passwordStrengthText, errorMessage: $errorMessage, userProfileModel: $userProfileModel, type: $type)';
   }
 
   @override
@@ -601,14 +470,8 @@ class _$ProfileStateImpl implements _ProfileState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProfileStateImpl &&
-            (identical(other.firstName, firstName) ||
-                other.firstName == firstName) &&
-            (identical(other.profileImageUrl, profileImageUrl) ||
-                other.profileImageUrl == profileImageUrl) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            (identical(other.gender, gender) || other.gender == gender) &&
-            (identical(other.country, country) || other.country == country) &&
             (identical(
                     other.streamsFromSubscriptions, streamsFromSubscriptions) ||
                 other.streamsFromSubscriptions == streamsFromSubscriptions) &&
@@ -622,12 +485,8 @@ class _$ProfileStateImpl implements _ProfileState {
                 other.bookmarksFromStreams == bookmarksFromStreams) &&
             (identical(other.isAllSelected, isAllSelected) ||
                 other.isAllSelected == isAllSelected) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
             (identical(other.passwordError, passwordError) ||
                 other.passwordError == passwordError) &&
-            (identical(other.confirmPassword, confirmPassword) ||
-                other.confirmPassword == confirmPassword) &&
             (identical(other.emailError, emailError) ||
                 other.emailError == emailError) &&
             const DeepCollectionEquality()
@@ -646,9 +505,6 @@ class _$ProfileStateImpl implements _ProfileState {
                 other.passwordStrengthText == passwordStrengthText) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
-            (identical(other.uid, uid) || other.uid == uid) &&
-            (identical(other.channelId, channelId) ||
-                other.channelId == channelId) &&
             (identical(other.userProfileModel, userProfileModel) ||
                 other.userProfileModel == userProfileModel) &&
             (identical(other.type, type) || other.type == type));
@@ -657,20 +513,14 @@ class _$ProfileStateImpl implements _ProfileState {
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        firstName,
-        profileImageUrl,
         isLoading,
-        gender,
-        country,
         streamsFromSubscriptions,
         streamsISaved,
         recommendedStreams,
         newSubscriber,
         bookmarksFromStreams,
         isAllSelected,
-        password,
         passwordError,
-        confirmPassword,
         emailError,
         const DeepCollectionEquality().hash(_settingsOptions),
         const DeepCollectionEquality().hash(_helpAndContact),
@@ -680,8 +530,6 @@ class _$ProfileStateImpl implements _ProfileState {
         passwordStrength,
         passwordStrengthText,
         errorMessage,
-        uid,
-        channelId,
         userProfileModel,
         type
       ]);
@@ -697,20 +545,14 @@ class _$ProfileStateImpl implements _ProfileState {
 
 abstract class _ProfileState implements ProfileState {
   const factory _ProfileState(
-      {final String firstName,
-      final String? profileImageUrl,
-      final bool isLoading,
-      final String gender,
-      final String country,
+      {final bool isLoading,
       final bool streamsFromSubscriptions,
       final bool streamsISaved,
       final bool recommendedStreams,
       final bool newSubscriber,
       final bool bookmarksFromStreams,
       final bool isAllSelected,
-      final String password,
       final String passwordError,
-      final String confirmPassword,
       final String? emailError,
       final List<Map<String, dynamic>> settingsOptions,
       final List<Map<String, dynamic>> helpAndContact,
@@ -720,21 +562,11 @@ abstract class _ProfileState implements ProfileState {
       final double passwordStrength,
       final String passwordStrengthText,
       final String errorMessage,
-      required final int uid,
-      required final String channelId,
-      required final UserProfileModel userProfileModel,
+      required final UserRegistrationData userProfileModel,
       final String? type}) = _$ProfileStateImpl;
 
   @override
-  String get firstName;
-  @override
-  String? get profileImageUrl;
-  @override
   bool get isLoading;
-  @override
-  String get gender;
-  @override
-  String get country;
   @override
   bool get streamsFromSubscriptions;
   @override
@@ -748,11 +580,7 @@ abstract class _ProfileState implements ProfileState {
   @override
   bool get isAllSelected;
   @override
-  String get password;
-  @override
   String get passwordError;
-  @override
-  String get confirmPassword;
   @override
   String? get emailError;
   @override
@@ -772,11 +600,7 @@ abstract class _ProfileState implements ProfileState {
   @override
   String get errorMessage;
   @override
-  int get uid;
-  @override
-  String get channelId;
-  @override
-  UserProfileModel get userProfileModel;
+  UserRegistrationData get userProfileModel;
   @override
   String? get type;
 

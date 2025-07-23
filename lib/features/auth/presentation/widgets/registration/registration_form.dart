@@ -42,8 +42,12 @@ class RegistrationForm extends StatelessWidget {
               PasswordField(),
               15.ph,
               CustomSelectGender(
-                value: state.gender,
-                onChanged: (val) => cubit.setGender(val),
+                value: state.user.gender != null
+                    ? capitalize(state.user.gender!)
+                    : null,
+                onChanged: (val) {
+                  cubit.setGender(val?.toLowerCase());
+                },
               ),
               10.ph,
               CountryDropdown(),
@@ -60,4 +64,7 @@ class RegistrationForm extends StatelessWidget {
       );
     });
   }
+
+  String capitalize(String s) =>
+      s.isEmpty ? s : s[0].toUpperCase() + s.substring(1);
 }

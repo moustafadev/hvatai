@@ -40,7 +40,7 @@ class ChangePasswordUser extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                     20.ph,
-                    PasswordField(),
+                    // PasswordField(),
                   ],
                 ),
               ),

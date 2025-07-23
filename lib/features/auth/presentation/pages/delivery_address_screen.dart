@@ -11,38 +11,39 @@ class DeliveryAddressScreen extends StatelessWidget {
       create: (_) => locator<DeliveryAddressCubit>()
         ..initRegistrationModel(data)
         ..prefill(data.country),
-      child: Scaffold(
-        backgroundColor: AppColors.grey100,
-        appBar: AppBar(
-          backgroundColor: AppColors.grey100,
-          leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios,
-                  color: AppColors.blackColorIcon),
-              onPressed: () => context.pop()),
-          centerTitle: true,
-          title: CustomText(
-            text: 'deliveryAddress'.tr(),
-            fontSize: 20.sp,
-            fontWeight: FontWeight.bold,
-            color: AppColors.blackDark,
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () => context.replaceNamed(AppRoutes.login),
-              tooltip: 'close'.tr(),
-              color: AppColors.blackDark,
-            ),
-          ],
-        ),
-        body: SafeArea(
+      child: BlocBuilder<DeliveryAddressCubit, DeliveryAddressState>(
+          builder: (context, state) {
+        final cubit = context.read<DeliveryAddressCubit>();
+        final user = state.user;
+        return SafeArea(
           bottom: false,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 28),
-            child: BlocBuilder<DeliveryAddressCubit, DeliveryAddressState>(
-              builder: (context, state) {
-                final cubit = context.read<DeliveryAddressCubit>();
-                return Form(
+          child: Scaffold(
+            backgroundColor: AppColors.lightGreyBackground,
+            appBar: AppBar(
+              backgroundColor: AppColors.lightGreyBackground,
+              leading: IconButton(
+                  icon: const Icon(Icons.arrow_back_ios,
+                      color: AppColors.blackColorIcon),
+                  onPressed: () => context.pop()),
+              centerTitle: true,
+              title: CustomText(
+                text: 'deliveryAddress'.tr(),
+                fontSize: 20.sp,
+                fontWeight: FontWeight.bold,
+                color: AppColors.blackDark,
+              ),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.close),
+                  onPressed: () => context.push(AppRoutes.login),
+                  tooltip: 'close'.tr(),
+                  color: AppColors.blackDark,
+                ),
+              ],
+            ),
+            body: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Form(
                   key: cubit.formKey,
                   child: SingleChildScrollView(
                     child: Column(
@@ -50,16 +51,16 @@ class DeliveryAddressScreen extends StatelessWidget {
                         20.ph,
                         CustomDropdown(
                           hintText: 'country'.tr(),
-                          value: cubit.state.country.isEmpty
+                          value: (user.country ?? '').isEmpty
                               ? null
-                              : cubit.state.country,
+                              : user.country,
                           onChanged: (v) =>
                               cubit.updateField('country', v ?? ''),
-                          prefix: cubit.state.country == 'Russia'
+                          prefix: user.country == 'Russia'
                               ? const Text('🇷🇺')
-                              : cubit.state.country == 'United States'
+                              : user.country == 'United States'
                                   ? const Text('🇺🇸')
-                                  : cubit.state.country == 'India'
+                                  : user.country == 'India'
                                       ? const Text('🇮🇳')
                                       : null,
                           items: const ['Russia', 'United States', 'India']
@@ -71,12 +72,11 @@ class DeliveryAddressScreen extends StatelessWidget {
                         ),
                         20.ph,
                         CustomTextField(
+                          controller: cubit.cityController,
                           hintText: 'city'.tr(),
                           isRequired: false,
                           validator: (v) =>
                               v!.isEmpty ? 'enterCity'.tr() : null,
-                          onChanged: (v) => cubit.updateField('city', v),
-                          controller: TextEditingController(text: state.city),
                         ),
                         20.ph,
                         CustomTextField(
@@ -84,8 +84,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                           hintText: 'street'.tr(),
                           validator: (v) =>
                               v!.isEmpty ? 'enterStreet'.tr() : null,
-                          onChanged: (v) => cubit.updateField('street', v),
-                          controller: TextEditingController(text: state.street),
+                          controller: cubit.streetController,
                         ),
                         20.ph,
                         Row(
@@ -96,9 +95,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                                 hintText: 'house'.tr(),
                                 validator: (v) =>
                                     v!.isEmpty ? 'enterHouse'.tr() : null,
-                                onChanged: (v) => cubit.updateField('house', v),
-                                controller:
-                                    TextEditingController(text: state.house),
+                                controller: cubit.houseController,
                               ),
                             ),
                             10.pw,
@@ -106,10 +103,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                               child: CustomTextField(
                                 isRequired: false,
                                 hintText: 'apartment'.tr(),
-                                onChanged: (v) =>
-                                    cubit.updateField('apartment', v),
-                                controller: TextEditingController(
-                                    text: state.apartment),
+                                controller: cubit.apartmentController,
                               ),
                             ),
                           ],
@@ -121,10 +115,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                               child: CustomTextField(
                                 isRequired: false,
                                 hintText: 'entrance'.tr(),
-                                onChanged: (v) =>
-                                    cubit.updateField('entrance', v),
-                                controller:
-                                    TextEditingController(text: state.entrance),
+                                controller: cubit.entranceController,
                               ),
                             ),
                             10.pw,
@@ -134,9 +125,7 @@ class DeliveryAddressScreen extends StatelessWidget {
                                 hintText: 'index'.tr(),
                                 validator: (v) =>
                                     v!.isEmpty ? 'enterIndex'.tr() : null,
-                                onChanged: (v) => cubit.updateField('index', v),
-                                controller:
-                                    TextEditingController(text: state.index),
+                                controller: cubit.indexController,
                               ),
                             ),
                           ],
@@ -153,7 +142,6 @@ class DeliveryAddressScreen extends StatelessWidget {
                               final addressData =
                                   await cubit.getAddressFromPosition(position);
 
-                              // ✅ استبدال القيم المرسلة من الشاشة السابقة بالقيم الجديدة من الموقع
                               cubit.updateField(
                                   'country', addressData['country']!);
                               cubit.updateField('city', addressData['city']!);
@@ -161,11 +149,8 @@ class DeliveryAddressScreen extends StatelessWidget {
                                   'street', addressData['street']!);
                               cubit.updateField('index', addressData['index']!);
                             } catch (e) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                    content:
-                                        Text('Error getting location: $e')),
-                              );
+                              floatingSnackBar(
+                                  message: e.toString(), context: context);
                             }
                           },
                           child: Row(
@@ -182,28 +167,27 @@ class DeliveryAddressScreen extends StatelessWidget {
                         ),
                         30.ph,
                         CustomGradientButton(
-                            text: 'save'.tr(),
-                            isLoading: cubit.state.isLoading,
-                            isDisabled: !(cubit.state.apartment.isNotEmpty &&
-                                cubit.state.city.isNotEmpty &&
-                                cubit.state.entrance.isNotEmpty &&
-                                cubit.state.house.isNotEmpty &&
-                                cubit.state.index.isNotEmpty &&
-                                cubit.state.street.isNotEmpty &&
-                                cubit.state.country.isNotEmpty),
-                            onPressed: () {
-                              cubit.submit(context);
-                            }),
+                          text: 'save'.tr(),
+                          isLoading: state.isLoading,
+                          isDisabled: ![
+                            user.apartment,
+                            user.city,
+                            user.floor,
+                            user.frontDoor,
+                            user.intercomCode,
+                            user.street,
+                            user.country,
+                          ].every((field) => (field ?? '').isNotEmpty),
+                          onPressed: () => cubit.submit(context),
+                        ),
                         20.ph,
                       ],
                     ),
                   ),
-                );
-              },
-            ),
+                )),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

@@ -6,6 +6,7 @@ class CustomTextField extends StatelessWidget {
   final int? maxLines;
   final AutovalidateMode? autovalidateMode;
   final TextEditingController? controller;
+  final String? initialValue; // ✅ تمت إضافتها
   final bool isPassword;
   final bool obscureText;
   final bool readOnly;
@@ -16,7 +17,6 @@ class CustomTextField extends StatelessWidget {
   final Function(String)? onChanged;
   final Color? fillColor;
   final BorderRadius? borderRadius;
-
   final BorderSide? borderSide;
   final double? height;
   final List<TextInputFormatter>? inputFormatters;
@@ -28,6 +28,7 @@ class CustomTextField extends StatelessWidget {
     this.maxLines,
     this.autovalidateMode,
     this.controller,
+    this.initialValue, // ✅ تمت إضافتها
     this.isPassword = false,
     this.obscureText = false,
     this.validator,
@@ -48,9 +49,11 @@ class CustomTextField extends StatelessWidget {
     return SizedBox(
       height: height,
       child: TextFormField(
+        key: key, // مهم للحفاظ على الحالة في بعض الحالات
         maxLines: maxLines ?? 1,
         minLines: maxLines ?? 1,
         controller: controller,
+        initialValue: controller == null ? initialValue : null, // ✅ منع التداخل
         obscureText: obscureText,
         readOnly: readOnly,
         validator: validator,

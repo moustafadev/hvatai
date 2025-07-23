@@ -18,32 +18,20 @@ class RegistrationCubit extends Cubit<RegistrationState> {
 
   void updateField(String field, String value) {
     final updatedUser = state.user.copyWith(
-      firstName: field == 'firstName' ? value : state.firstName,
-      lastName: field == 'lastName' ? value : state.lastName,
-      email: field == 'email' ? value : state.email,
-      password: field == 'password' ? value : state.password,
+      firstName: field == 'firstName' ? value : state.user.firstName,
+      lastName: field == 'lastName' ? value : state.user.lastName,
+      email: field == 'email' ? value : state.user.email,
+      password: field == 'password' ? value : state.user.password,
     );
 
-    switch (field) {
-      case 'firstName':
-        emit(state.copyWith(firstName: value, user: updatedUser));
-        break;
-      case 'lastName':
-        emit(state.copyWith(lastName: value, user: updatedUser));
-        break;
-      case 'email':
-        emit(state.copyWith(email: value, emailError: null, user: updatedUser));
-        break;
-      case 'password':
-        final strength = _evaluatePassword(value);
-        emit(state.copyWith(
-          password: value,
-          passwordStrength: strength.$1,
-          passwordStrengthText: strength.$2,
-          user: updatedUser,
-        ));
-        break;
-    }
+    final strength = field == 'password' ? _evaluatePassword(value) : null;
+
+    emit(state.copyWith(
+      user: updatedUser,
+      passwordStrength: strength?.$1 ?? state.passwordStrength,
+      passwordStrengthText: strength?.$2 ?? state.passwordStrengthText,
+      emailError: field == 'email' ? null : state.emailError,
+    ));
   }
 
   void toggleObscurePassword() {
@@ -52,31 +40,27 @@ class RegistrationCubit extends Cubit<RegistrationState> {
 
   void setGender(String? gender) {
     emit(state.copyWith(
-      gender: gender,
       user: state.user.copyWith(gender: gender ?? ''),
     ));
   }
 
   void setCountry(String? country) {
     emit(state.copyWith(
-      country: country,
       user: state.user.copyWith(country: country ?? ''),
     ));
   }
 
   void toggleAgreed() {
-    final updated = !state.agreedToTerms;
+    final updated = state.user.agreedToTerms ?? false;
     emit(state.copyWith(
-      agreedToTerms: updated,
-      user: state.user.copyWith(agreedToTerms: updated),
+      user: state.user.copyWith(agreedToTerms: !updated),
     ));
   }
 
   void toggleAbove18() {
-    final updated = !state.isAbove18;
+    final updated = state.user.isAbove18 ?? false;
     emit(state.copyWith(
-      isAbove18: updated,
-      user: state.user.copyWith(isAbove18: updated),
+      user: state.user.copyWith(isAbove18: !updated),
     ));
   }
 
@@ -86,7 +70,7 @@ class RegistrationCubit extends Cubit<RegistrationState> {
       return;
     }
 
-    if (!state.agreedToTerms || !state.isAbove18) {
+    if (!state.user.agreedToTerms! || !state.user.isAbove18!) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text("You must agree to terms and be over 18")),
       );
@@ -96,7 +80,7 @@ class RegistrationCubit extends Cubit<RegistrationState> {
     emit(state.copyWith(isRegisterLoading: true, errorMessage: ''));
 
     final result = await registerUseCase.call(
-      state.toUserRegistrationData(),
+      RegisterParams(userRegistrationData: state.user),
     );
 
     result.fold(

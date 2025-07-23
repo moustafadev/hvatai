@@ -12,7 +12,7 @@ class CheckboxRowTerms extends StatelessWidget {
         BlocBuilder<RegistrationCubit, RegistrationState>(
           builder: (context, state) {
             return GradientCheckbox(
-              selected: state.agreedToTerms,
+              selected: state.user.agreedToTerms ?? false,
               onTap: cubit.toggleAgreed,
             );
           },

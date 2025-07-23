@@ -11,7 +11,9 @@ class UpdateCountryDropdown extends StatelessWidget {
         final cubit = context.read<EditProfileCubit>();
 
         final selectedCountry =
-            state.country.isNotEmpty ? state.country : country;
+            (state.user.country != null && state.user.country!.isNotEmpty)
+                ? state.user.country
+                : country;
 
         return CustomDropdown(
           hintText: 'country'.tr(),

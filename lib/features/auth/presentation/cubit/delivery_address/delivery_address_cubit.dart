@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -11,15 +13,73 @@ part 'delivery_address_cubit.freezed.dart';
 part 'delivery_address_state.dart';
 
 class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
-  DeliveryAddressCubit(
-    this.deliveryAddressUseCase,
-  ) : super(DeliveryAddressState(user: UserRegistrationData()));
-  DeliveryAddressUseCase deliveryAddressUseCase;
+  DeliveryAddressCubit(this.deliveryAddressUseCase)
+      : super(DeliveryAddressState(user: UserRegistrationData()));
 
+  final DeliveryAddressUseCase deliveryAddressUseCase;
   final formKey = GlobalKey<FormState>();
 
+  final cityController = TextEditingController();
+  final streetController = TextEditingController();
+  final houseController = TextEditingController();
+  final apartmentController = TextEditingController();
+  final entranceController = TextEditingController();
+  final indexController = TextEditingController();
+
   void initRegistrationModel(UserRegistrationData user) {
+    _removeControllersListeners();
+
     emit(state.copyWith(user: user));
+
+    cityController.text = user.city ?? '';
+    streetController.text = user.street ?? '';
+    houseController.text = user.floor ?? '';
+    apartmentController.text = user.apartment ?? '';
+    entranceController.text = user.frontDoor ?? '';
+    indexController.text = user.intercomCode ?? '';
+
+    _addControllersListeners();
+  }
+
+  void _addControllersListeners() {
+    cityController.addListener(_updateCity);
+    streetController.addListener(_updateStreet);
+    houseController.addListener(_updateHouse);
+    apartmentController.addListener(_updateApartment);
+    entranceController.addListener(_updateEntrance);
+    indexController.addListener(_updateIndex);
+  }
+
+  void _removeControllersListeners() {
+    cityController.removeListener(_updateCity);
+    streetController.removeListener(_updateStreet);
+    houseController.removeListener(_updateHouse);
+    apartmentController.removeListener(_updateApartment);
+    entranceController.removeListener(_updateEntrance);
+    indexController.removeListener(_updateIndex);
+  }
+
+  void _updateCity() => _updateUserField('city', cityController.text);
+  void _updateStreet() => _updateUserField('street', streetController.text);
+  void _updateHouse() => _updateUserField('house', houseController.text);
+  void _updateApartment() =>
+      _updateUserField('apartment', apartmentController.text);
+  void _updateEntrance() =>
+      _updateUserField('entrance', entranceController.text);
+  void _updateIndex() => _updateUserField('index', indexController.text);
+
+  void _updateUserField(String field, String value) {
+    final user = state.user;
+    final updatedUser = user.copyWith(
+      country: field == 'country' ? value : user.country,
+      city: field == 'city' ? value : user.city,
+      street: field == 'street' ? value : user.street,
+      floor: field == 'house' ? value : user.floor,
+      apartment: field == 'apartment' ? value : user.apartment,
+      frontDoor: field == 'entrance' ? value : user.frontDoor,
+      intercomCode: field == 'index' ? value : user.intercomCode,
+    );
+    emit(state.copyWith(user: updatedUser));
   }
 
   Future<Position?> determinePosition() async {
@@ -55,86 +115,86 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
     };
   }
 
-  String normalizeCountry(String? raw) {
-    switch (raw?.toLowerCase().trim()) {
-      case 'united states':
-        return 'USA';
-      case 'russia':
-        return 'Russia';
-      case 'india':
-        return 'India';
-      default:
-        return '';
-    }
-  }
-
   void updateField(String field, String value) {
-    final updatedUser = state.user.copyWith(
-        country: field == 'country' ? value : state.user.country,
-        city: field == 'city' ? value : state.user.city,
-        street: field == 'street' ? value : state.user.street,
-        house: field == 'house' ? value : state.user.house,
-        apartment: field == 'apartment' ? value : state.user.apartment,
-        entrance: field == 'entrance' ? value : state.user.entrance,
-        index: field == 'index' ? value : state.user.index);
+    _removeControllersListeners();
+
     switch (field) {
-      case 'country':
-        emit(state.copyWith(country: value, user: updatedUser));
-        break;
       case 'city':
-        emit(state.copyWith(city: value, user: updatedUser));
+        cityController.text = value;
         break;
       case 'street':
-        emit(state.copyWith(street: value, user: updatedUser));
+        streetController.text = value;
         break;
       case 'house':
-        emit(state.copyWith(house: value, user: updatedUser));
+        houseController.text = value;
         break;
       case 'apartment':
-        emit(state.copyWith(apartment: value, user: updatedUser));
+        apartmentController.text = value;
         break;
       case 'entrance':
-        emit(state.copyWith(entrance: value, user: updatedUser));
+        entranceController.text = value;
         break;
       case 'index':
-        emit(state.copyWith(index: value, user: updatedUser));
+        indexController.text = value;
         break;
     }
+
+    _updateUserField(field, value);
+    _addControllersListeners();
   }
 
   void prefill(String? country) {
     if (country != null && country.isNotEmpty) {
-      emit(state.copyWith(country: country));
+      updateField('country', country);
     }
   }
 
-  void submit(BuildContext context) async {
+  Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
       emit(state.copyWith(errorMessage: 'Please fill all fields correctly.'));
+      floatingSnackBar(message: 'error_fill_all_fields'.tr(), context: context);
       return;
     }
 
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
-    final addressData = state.toUserDeliveryAddressData();
+    try {
+      final position = await determinePosition();
 
-    final result = await deliveryAddressUseCase.call(addressData);
+      final updatedUser = state.user.copyWith(
+        latitude: position?.latitude.toString() ?? '',
+        longitude: position?.longitude.toString() ?? '',
+        isPrimary: state.user.isPrimary ?? 1,
+      );
 
-    result.fold(
-      (failure) {
-        emit(state.copyWith(
-          isLoading: false,
-          errorMessage: failure,
-        ));
-      },
-      (userData) {
-        emit(state.copyWith(isLoading: false));
+      final result = await deliveryAddressUseCase.call(
+        DeliveryAddressParams(userRegistrationData: updatedUser),
+      );
 
-        context.push(
-          AppRoutes.interests,
-          extra: state.user,
-        );
-      },
-    );
+      result.fold(
+        (failure) {
+          emit(state.copyWith(isLoading: false, errorMessage: failure));
+        },
+        (userData) {
+          emit(state.copyWith(isLoading: false));
+          context.push(AppRoutes.interests, extra: userData);
+        },
+      );
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
+      floatingSnackBar(message: e.toString(), context: context);
+    }
+  }
+
+  @override
+  Future<void> close() {
+    _removeControllersListeners();
+    cityController.dispose();
+    streetController.dispose();
+    houseController.dispose();
+    apartmentController.dispose();
+    entranceController.dispose();
+    indexController.dispose();
+    return super.close();
   }
 }

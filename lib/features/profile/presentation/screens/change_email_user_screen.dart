@@ -5,7 +5,7 @@ class ChangeEmailUser extends StatelessWidget {
     super.key,
     required this.user,
   });
-  final UserProfileModel user;
+  final user;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

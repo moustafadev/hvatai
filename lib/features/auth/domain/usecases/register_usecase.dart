@@ -15,37 +15,11 @@ class RegisterUseCase implements UseCase<UserRegistrationData, RegisterParams> {
 }
 
 class RegisterParams {
-  final String name;
-  final String lastName;
-  final String email;
-  final String password;
-  final String gender;
-  final String country;
-  final bool ageConfirmation;
-  final bool termsAgreement;
+  final UserRegistrationData userRegistrationData;
 
-  RegisterParams({
-    required this.name,
-    required this.lastName,
-    required this.email,
-    required this.password,
-    required this.gender,
-    required this.country,
-    required this.ageConfirmation,
-    required this.termsAgreement,
-  });
+  RegisterParams({required this.userRegistrationData});
 
   Map<String, dynamic> toJson() {
-    return {
-      "name": name,
-      "last_name": lastName,
-      "email": email,
-      "password": password,
-      "gender": gender.toLowerCase(),
-      "country": country,
-      "password_confirmation": password,
-      "age_confirmation": ageConfirmation,
-      "terms_agreement": termsAgreement,
-    };
+    return userRegistrationData.toJson();
   }
 }

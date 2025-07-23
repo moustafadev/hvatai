@@ -10,13 +10,13 @@ class CountryDropdown extends StatelessWidget {
         final cubit = context.read<RegistrationCubit>();
         return CustomDropdown(
           hintText: 'Select Country',
-          value: cubit.state.country,
+          value: cubit.state.user.country,
           onChanged: cubit.setCountry,
-          prefix: cubit.state.country == 'Russia'
+          prefix: cubit.state.user.country == 'Russia'
               ? Text('🇷🇺')
-              : cubit.state.country == 'USA'
+              : cubit.state.user.country == 'USA'
                   ? Text('🇺🇸')
-                  : cubit.state.country == 'India'
+                  : cubit.state.user.country == 'India'
                       ? Text('🇮🇳')
                       : null,
           items: const ['Russia', 'USA', 'India']
