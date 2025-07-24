@@ -13,7 +13,7 @@ class TopProfileInfo extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              context.push(AppRoutes.tradeProfileDetail);
+              context.push(extra: user, AppRoutes.tradeProfileDetail);
             },
             child: Container(
               height: 41.h,
@@ -77,7 +77,7 @@ class TopProfileInfo extends StatelessWidget {
               );
 
               if (updated == true) {
-                context.read<ProfileCubit>().reloadProfile();
+                context.read<ProfileCubit>().getProfile();
               }
             },
             child: CircleAvatar(

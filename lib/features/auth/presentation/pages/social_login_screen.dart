@@ -8,6 +8,7 @@ class SocialsLoginScreen extends StatelessWidget {
     return BlocProvider<SocialLoginCubit>(
       create: (context) => locator<SocialLoginCubit>(),
       child: Scaffold(
+        backgroundColor: AppColors.lightGreyBackground,
         body: SafeArea(
           bottom: false,
           child: CustomBackgroundScaffold(
@@ -17,11 +18,11 @@ class SocialsLoginScreen extends StatelessWidget {
                 children: [
                   TopBar(),
                   Image(image: AssetImage(Assets.assetsImagesBackground)),
-                  SizedBox(height: 20.h),
+                  20.ph,
                   TextSection(),
-                  SizedBox(height: 20.h),
+                  20.ph,
                   ActionButtons(),
-                  SizedBox(height: 20.h),
+                  20.ph,
                   TermsAndPrivacy(),
                 ],
               ),

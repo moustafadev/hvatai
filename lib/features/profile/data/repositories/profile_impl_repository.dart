@@ -1,9 +1,11 @@
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/datasources/api_service_profile.dart';
+import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 
@@ -30,6 +32,14 @@ class ProfileImplRepository implements ProfileRepository {
   }
 
   @override
+  Future<Either<String, List<CardModel>>> getAllCards() async {
+    return executeAndHandleError<List<CardModel>>(() async {
+      final res = await _apiServiceProfile.getAllCards();
+      return res;
+    });
+  }
+
+  @override
   Future<Either<String, UserRegistrationData>> updateProfileData(
       UpdateProfileParams params) async {
     return executeAndHandleError<UserRegistrationData>(() async {
@@ -43,6 +53,14 @@ class ProfileImplRepository implements ProfileRepository {
       AddNewAddressParams params) async {
     return executeAndHandleError<UserRegistrationData>(() async {
       final res = await _apiServiceProfile.addNewAddress(params);
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, CardModel>> addNewCard(AddNewCardParams params) async {
+    return executeAndHandleError<CardModel>(() async {
+      final res = await _apiServiceProfile.addNewCard(params);
       return res;
     });
   }

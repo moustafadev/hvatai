@@ -8,7 +8,6 @@ class ProfileState with _$ProfileState {
     String? emailError,
     @Default([]) List<Map<String, dynamic>> settingsOptions,
     @Default([]) List<Map<String, dynamic>> helpAndContact,
-    @Default([]) List<Map<String, dynamic>> changeInfoProfile,
     @Default([]) List<Map<String, dynamic>> streamerOptions,
     @Default('') String errorMessage,
     required UserRegistrationData userProfileModel,

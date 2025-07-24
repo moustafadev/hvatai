@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -55,7 +57,7 @@ class OtpCubit extends Cubit<OtpState> {
           user: updatedUser,
         ));
 
-        debugPrint('Navigating to Delivery with: ${updatedUser.toJson()}');
+        showFloatingMessageSuccess('emailVerified'.tr());
         context.push(AppRoutes.deliveryAddress, extra: updatedUser);
       },
     );

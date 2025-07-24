@@ -37,6 +37,7 @@ class CustomItemFourContainer extends StatelessWidget {
                 assetPath,
                 height: 28.h,
                 width: 28.w,
+                color: AppColors.blackDark,
               ),
               12.ph,
               CustomText(

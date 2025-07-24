@@ -151,8 +151,8 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
 
   Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
-      emit(state.copyWith(errorMessage: 'Please fill all fields correctly.'));
-      floatingSnackBar(message: 'error_fill_all_fields'.tr(), context: context);
+      emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
+      showFloatingMessageSuccess('fillAllFields'.tr());
       return;
     }
 
@@ -177,12 +177,14 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
         },
         (userData) {
           emit(state.copyWith(isLoading: false));
+          showFloatingMessageSuccess('addressAdded'.tr());
+
           context.push(AppRoutes.interests, extra: userData);
         },
       );
     } catch (e) {
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
-      floatingSnackBar(message: e.toString(), context: context);
+      showFloatingMessageSuccess('fillAllFields'.tr() + e.toString());
     }
   }
 

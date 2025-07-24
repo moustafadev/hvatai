@@ -12,20 +12,7 @@ class TermsAndPolicyText extends StatelessWidget {
           text:
               "Нажимая на «Войти или зарегистрироваться», вы даете согласие на обработку персональных данных, согласно",
           style: const TextStyle(color: AppColors.graniteGray, fontSize: 14),
-          children: [
-            // TextSpan(
-            //   text: " Политике конфиденциальности",
-            //   recognizer:
-            //       TapGestureRecognizer()
-            //         ..onTap = () {
-            //           launchUrl(Uri.parse(AppConst.privacyPolicyUrl));
-            //         },
-            //   style: const TextStyle(
-            //     color: AppColors.vibrantShadeOfGreen,
-            //     fontSize: 14,
-            //   ),
-            // ),
-          ],
+          children: [],
         ),
       ),
     );

@@ -12,13 +12,6 @@ class TextSection extends StatelessWidget {
           fontSize: 40.sp,
           fontWeight: FontWeight.w800,
         ),
-        // CustomText(
-        //   text: 'YourPurchaseisProtected'.tr(),
-        //   textAlign: TextAlign.center,
-        //   fontSize: 25.sp,
-        //   fontWeight: FontWeight.bold,
-        //   fontFamily: 'SFProRounded',
-        // ),
         CustomText(
           text: 'joinCommunity'.tr(),
           textAlign: TextAlign.center,

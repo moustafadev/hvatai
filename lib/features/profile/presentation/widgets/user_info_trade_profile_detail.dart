@@ -2,9 +2,14 @@ part of '../profile.dart';
 
 class UserInfoTradeProfileDetail extends StatelessWidget {
   const UserInfoTradeProfileDetail({
+    required this.name,
     super.key,
+    required this.nickname,
+    required this.lastName,
   });
-
+  final String nickname;
+  final String name;
+  final String lastName;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -32,14 +37,14 @@ class UserInfoTradeProfileDetail extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                text: "Ahmed AR",
+                text: nickname,
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w700,
                 color: AppColors.white,
               ),
               4.ph,
               CustomText(
-                text: "Ahmed Ramadan",
+                text: "$name $lastName",
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
                 color: AppColors.white,

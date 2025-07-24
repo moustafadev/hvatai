@@ -4,6 +4,7 @@ import 'package:hvatai/features/auth/data/models/registration_model/user_registr
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/delivery_address/update_delivery_address_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/locator.dart';
@@ -171,7 +172,8 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.tradeProfile,
       builder: (BuildContext context, GoRouterState state) {
-        return TradeProfileScreen();
+        return BlocProvider.value(
+            value: locator<EditProfileCubit>(), child: TradeProfileScreen());
       },
     ),
     GoRoute(

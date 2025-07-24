@@ -5,8 +5,8 @@ class TradeProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => locator<EditProfileCubit>(),
+    return SafeArea(
+      bottom: false,
       child: Scaffold(
         backgroundColor: AppColors.lightGreyBackground,
         appBar: AppBar(

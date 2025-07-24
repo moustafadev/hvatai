@@ -1,12 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
-// import 'package:firebase_auth/firebase_auth.dart'; // to add later
-// import 'package:cloud_firestore/cloud_firestore.dart';
-
 part 'login_state.dart';
 part 'login_cubit.freezed.dart';
 
@@ -46,6 +45,7 @@ class LoginCubit extends Cubit<LoginState> {
           isLoading: false,
           successLogin: true,
         ));
+        showFloatingMessageSuccess('loginSuccessful'.tr());
         context.push(AppRoutes.home);
       },
     );

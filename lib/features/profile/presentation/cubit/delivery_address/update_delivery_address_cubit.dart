@@ -37,11 +37,8 @@ class UpdateDeliveryAddressCubit extends Cubit<UpdateDeliveryAddressState> {
   };
 
   void loadInitialData(UserRegistrationData data) {
-    _removeControllersListeners();
-
     emit(state.copyWith(user: data));
 
-    // تعبئة الحقول من البيانات
     controllers['city']!.text = data.city ?? '';
     controllers['street']!.text = data.street ?? '';
     controllers['house']!.text = data.floor ?? '';
@@ -49,29 +46,9 @@ class UpdateDeliveryAddressCubit extends Cubit<UpdateDeliveryAddressState> {
     controllers['entrance']!.text = data.frontDoor ?? '';
     controllers['index']!.text = data.intercomCode ?? '';
 
-    _addControllersListeners();
-
-    // تأكد من تحديث country في الـ state
     if ((data.country ?? '').isNotEmpty) {
-      // استخدم updateField بدلاً من _updateUserField للتأكد من التحديث الصحيح
       updateField('country', data.country!);
     }
-  }
-
-  void _addControllersListeners() {
-    controllers.forEach((key, controller) {
-      controller.addListener(() {
-        _updateUserField(key, controller.text);
-      });
-    });
-  }
-
-  void _removeControllersListeners() {
-    controllers.forEach((key, controller) {
-      controller.removeListener(() {
-        _updateUserField(key, controller.text);
-      });
-    });
   }
 
   void _updateUserField(String field, String value) {
@@ -88,22 +65,19 @@ class UpdateDeliveryAddressCubit extends Cubit<UpdateDeliveryAddressState> {
     emit(state.copyWith(user: updatedUser));
   }
 
-  void updateField(String field, String value) {
-    _removeControllersListeners();
+  void toggleMainAddress() {
+    final current = state.user.isPrimary == 1;
+    emit(state.copyWith(
+      user: state.user.copyWith(isPrimary: current ? 0 : 1),
+    ));
+  }
 
-    // تحديث الـ controller إذا كان موجوداً
+  void updateField(String field, String value) {
     if (controllers.containsKey(field)) {
       controllers[field]!.text = value;
     }
 
-    // تحديث الـ state دائماً
     _updateUserField(field, value);
-
-    _addControllersListeners();
-
-    // إضافة log للتأكد من التحديث (يمكن حذفه لاحقاً)
-    print('Updated field: $field with value: $value');
-    print('Current user country: ${state.user.country}');
   }
 
   void prefill(Map<String, String?> data) {
@@ -161,8 +135,8 @@ class UpdateDeliveryAddressCubit extends Cubit<UpdateDeliveryAddressState> {
 
   Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
-      emit(state.copyWith(errorMessage: 'Please fill all fields correctly.'));
-      floatingSnackBar(message: 'error_fill_all_fields'.tr(), context: context);
+      emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
+      showFloatingMessageSuccess('fillAllFields'.tr());
       return;
     }
 
@@ -185,13 +159,13 @@ class UpdateDeliveryAddressCubit extends Cubit<UpdateDeliveryAddressState> {
             emit(state.copyWith(isLoading: false, errorMessage: failure)),
         (_) {
           emit(state.copyWith(isLoading: false));
-          showFloatingMessageSuccess('profileUpdated'.tr());
+          showFloatingMessageSuccess('addressAdded'.tr());
           context.pop(true);
         },
       );
     } catch (e) {
       emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
-      floatingSnackBar(message: e.toString(), context: context);
+      showFloatingMessageSuccess('fillAllFields'.tr() + e.toString());
     }
   }
 
@@ -217,7 +191,7 @@ class UpdateDeliveryAddressCubit extends Cubit<UpdateDeliveryAddressState> {
         },
         (userData) {
           emit(state.copyWith(isLoading: false, user: userData));
-          showFloatingMessageSuccess('profileUpdated'.tr());
+          showFloatingMessageSuccess('AddressUpdated'.tr());
           context.pop(true);
         },
       );
@@ -233,7 +207,6 @@ class UpdateDeliveryAddressCubit extends Cubit<UpdateDeliveryAddressState> {
 
   @override
   Future<void> close() {
-    _removeControllersListeners();
     controllers.forEach((_, controller) => controller.dispose());
     return super.close();
   }

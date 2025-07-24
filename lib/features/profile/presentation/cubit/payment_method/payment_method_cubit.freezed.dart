@@ -16,10 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PaymentMethodState {
-  String get cardNumber => throw _privateConstructorUsedError;
-  String get cardName => throw _privateConstructorUsedError;
-  String get cardDate => throw _privateConstructorUsedError;
-  String get cardCvv => throw _privateConstructorUsedError;
+  List<CardModel> get cards => throw _privateConstructorUsedError;
+  CardModel get addCard => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
+  String get errorMessage => throw _privateConstructorUsedError;
   bool get doMainMethod => throw _privateConstructorUsedError;
 
   /// Create a copy of PaymentMethodState
@@ -36,11 +36,13 @@ abstract class $PaymentMethodStateCopyWith<$Res> {
       _$PaymentMethodStateCopyWithImpl<$Res, PaymentMethodState>;
   @useResult
   $Res call(
-      {String cardNumber,
-      String cardName,
-      String cardDate,
-      String cardCvv,
+      {List<CardModel> cards,
+      CardModel addCard,
+      bool isLoading,
+      String errorMessage,
       bool doMainMethod});
+
+  $CardModelCopyWith<$Res> get addCard;
 }
 
 /// @nodoc
@@ -58,34 +60,44 @@ class _$PaymentMethodStateCopyWithImpl<$Res, $Val extends PaymentMethodState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cardNumber = null,
-    Object? cardName = null,
-    Object? cardDate = null,
-    Object? cardCvv = null,
+    Object? cards = null,
+    Object? addCard = null,
+    Object? isLoading = null,
+    Object? errorMessage = null,
     Object? doMainMethod = null,
   }) {
     return _then(_value.copyWith(
-      cardNumber: null == cardNumber
-          ? _value.cardNumber
-          : cardNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      cardName: null == cardName
-          ? _value.cardName
-          : cardName // ignore: cast_nullable_to_non_nullable
-              as String,
-      cardDate: null == cardDate
-          ? _value.cardDate
-          : cardDate // ignore: cast_nullable_to_non_nullable
-              as String,
-      cardCvv: null == cardCvv
-          ? _value.cardCvv
-          : cardCvv // ignore: cast_nullable_to_non_nullable
+      cards: null == cards
+          ? _value.cards
+          : cards // ignore: cast_nullable_to_non_nullable
+              as List<CardModel>,
+      addCard: null == addCard
+          ? _value.addCard
+          : addCard // ignore: cast_nullable_to_non_nullable
+              as CardModel,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
       doMainMethod: null == doMainMethod
           ? _value.doMainMethod
           : doMainMethod // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
+  }
+
+  /// Create a copy of PaymentMethodState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CardModelCopyWith<$Res> get addCard {
+    return $CardModelCopyWith<$Res>(_value.addCard, (value) {
+      return _then(_value.copyWith(addCard: value) as $Val);
+    });
   }
 }
 
@@ -98,11 +110,14 @@ abstract class _$$PaymentMethodStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String cardNumber,
-      String cardName,
-      String cardDate,
-      String cardCvv,
+      {List<CardModel> cards,
+      CardModel addCard,
+      bool isLoading,
+      String errorMessage,
       bool doMainMethod});
+
+  @override
+  $CardModelCopyWith<$Res> get addCard;
 }
 
 /// @nodoc
@@ -118,28 +133,28 @@ class __$$PaymentMethodStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? cardNumber = null,
-    Object? cardName = null,
-    Object? cardDate = null,
-    Object? cardCvv = null,
+    Object? cards = null,
+    Object? addCard = null,
+    Object? isLoading = null,
+    Object? errorMessage = null,
     Object? doMainMethod = null,
   }) {
     return _then(_$PaymentMethodStateImpl(
-      cardNumber: null == cardNumber
-          ? _value.cardNumber
-          : cardNumber // ignore: cast_nullable_to_non_nullable
-              as String,
-      cardName: null == cardName
-          ? _value.cardName
-          : cardName // ignore: cast_nullable_to_non_nullable
-              as String,
-      cardDate: null == cardDate
-          ? _value.cardDate
-          : cardDate // ignore: cast_nullable_to_non_nullable
-              as String,
-      cardCvv: null == cardCvv
-          ? _value.cardCvv
-          : cardCvv // ignore: cast_nullable_to_non_nullable
+      cards: null == cards
+          ? _value._cards
+          : cards // ignore: cast_nullable_to_non_nullable
+              as List<CardModel>,
+      addCard: null == addCard
+          ? _value.addCard
+          : addCard // ignore: cast_nullable_to_non_nullable
+              as CardModel,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
       doMainMethod: null == doMainMethod
           ? _value.doMainMethod
@@ -153,31 +168,37 @@ class __$$PaymentMethodStateImplCopyWithImpl<$Res>
 
 class _$PaymentMethodStateImpl implements _PaymentMethodState {
   const _$PaymentMethodStateImpl(
-      {this.cardNumber = '',
-      this.cardName = '',
-      this.cardDate = '',
-      this.cardCvv = '',
-      this.doMainMethod = true});
+      {final List<CardModel> cards = const [],
+      required this.addCard,
+      this.isLoading = false,
+      this.errorMessage = '',
+      this.doMainMethod = true})
+      : _cards = cards;
+
+  final List<CardModel> _cards;
+  @override
+  @JsonKey()
+  List<CardModel> get cards {
+    if (_cards is EqualUnmodifiableListView) return _cards;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_cards);
+  }
 
   @override
-  @JsonKey()
-  final String cardNumber;
+  final CardModel addCard;
   @override
   @JsonKey()
-  final String cardName;
+  final bool isLoading;
   @override
   @JsonKey()
-  final String cardDate;
-  @override
-  @JsonKey()
-  final String cardCvv;
+  final String errorMessage;
   @override
   @JsonKey()
   final bool doMainMethod;
 
   @override
   String toString() {
-    return 'PaymentMethodState(cardNumber: $cardNumber, cardName: $cardName, cardDate: $cardDate, cardCvv: $cardCvv, doMainMethod: $doMainMethod)';
+    return 'PaymentMethodState(cards: $cards, addCard: $addCard, isLoading: $isLoading, errorMessage: $errorMessage, doMainMethod: $doMainMethod)';
   }
 
   @override
@@ -185,20 +206,24 @@ class _$PaymentMethodStateImpl implements _PaymentMethodState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PaymentMethodStateImpl &&
-            (identical(other.cardNumber, cardNumber) ||
-                other.cardNumber == cardNumber) &&
-            (identical(other.cardName, cardName) ||
-                other.cardName == cardName) &&
-            (identical(other.cardDate, cardDate) ||
-                other.cardDate == cardDate) &&
-            (identical(other.cardCvv, cardCvv) || other.cardCvv == cardCvv) &&
+            const DeepCollectionEquality().equals(other._cards, _cards) &&
+            (identical(other.addCard, addCard) || other.addCard == addCard) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
             (identical(other.doMainMethod, doMainMethod) ||
                 other.doMainMethod == doMainMethod));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, cardNumber, cardName, cardDate, cardCvv, doMainMethod);
+      runtimeType,
+      const DeepCollectionEquality().hash(_cards),
+      addCard,
+      isLoading,
+      errorMessage,
+      doMainMethod);
 
   /// Create a copy of PaymentMethodState
   /// with the given fields replaced by the non-null parameter values.
@@ -212,20 +237,20 @@ class _$PaymentMethodStateImpl implements _PaymentMethodState {
 
 abstract class _PaymentMethodState implements PaymentMethodState {
   const factory _PaymentMethodState(
-      {final String cardNumber,
-      final String cardName,
-      final String cardDate,
-      final String cardCvv,
+      {final List<CardModel> cards,
+      required final CardModel addCard,
+      final bool isLoading,
+      final String errorMessage,
       final bool doMainMethod}) = _$PaymentMethodStateImpl;
 
   @override
-  String get cardNumber;
+  List<CardModel> get cards;
   @override
-  String get cardName;
+  CardModel get addCard;
   @override
-  String get cardDate;
+  bool get isLoading;
   @override
-  String get cardCvv;
+  String get errorMessage;
   @override
   bool get doMainMethod;
 

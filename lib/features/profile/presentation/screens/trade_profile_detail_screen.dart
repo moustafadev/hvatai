@@ -1,25 +1,22 @@
 part of '../profile.dart';
 
 class TradeProfileDetail extends StatelessWidget {
-  const TradeProfileDetail({super.key});
-
+  const TradeProfileDetail({super.key, required this.userRegistrationData});
+  final UserRegistrationData userRegistrationData;
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-
     return Scaffold(
       backgroundColor: AppColors.lightGreyBackground,
-      body: BlocProvider(
-        create: (BuildContext context) => locator<ProfileCubit>(),
-        child:
-            BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
-          // final cubit = context.read<ProfileCubit>();
-          if (state.streamerOptions.isEmpty) {
-            return Center(
-                child: CircularProgressIndicator(
-              color: AppColors.grey,
-            ));
+      body: BlocBuilder<ProfileCubit, ProfileState>(
+        builder: (context, state) {
+          final user = state.userProfileModel;
+          if (state.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(color: AppColors.grey),
+            );
           }
+
           return SingleChildScrollView(
             child: Stack(
               children: [
@@ -28,26 +25,31 @@ class TradeProfileDetail extends StatelessWidget {
                   color: AppColors.primaryPink,
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(
-                        left: 16.0, right: 16.0, top: 30.0),
-                    child: Column(children: [
+                  padding:
+                      const EdgeInsets.only(left: 16.0, right: 16.0, top: 30.0),
+                  child: Column(
+                    children: [
                       const AppBarTradeProfileDetail(),
                       22.ph,
-                      UserInfoTradeProfileDetail(),
-                      32.ph,
-                      InfoTradeProfileDetailBottom(),
-                      24.ph,
-                      FourContainerTradeProfileDetail(),
-                      24.ph,
-                      StreamerProfileTradeOptions(
-                        state: state,
+                      UserInfoTradeProfileDetail(
+                        name: user.firstName ?? '',
+                        nickname: user.firstName ?? '',
+                        lastName: user.lastName ?? '',
                       ),
+                      32.ph,
+                      const InfoTradeProfileDetailBottom(),
+                      24.ph,
+                      const FourContainerTradeProfileDetail(),
+                      24.ph,
+                      StreamerProfileTradeOptions(),
                       80.ph
-                    ]))
+                    ],
+                  ),
+                )
               ],
             ),
           );
-        }),
+        },
       ),
     );
   }

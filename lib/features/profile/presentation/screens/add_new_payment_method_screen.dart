@@ -8,7 +8,7 @@ class AddNewPaymentMethod extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.lightGreyBackground,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.lightGreyBackground,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
           onPressed: () {
@@ -17,7 +17,7 @@ class AddNewPaymentMethod extends StatelessWidget {
         ),
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 28),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: BlocProvider(
           create: (context) => locator<PaymentMethodCubit>(),
           child: BlocBuilder<PaymentMethodCubit, PaymentMethodState>(
@@ -27,13 +27,14 @@ class AddNewPaymentMethod extends StatelessWidget {
               final cardNumberFormatter = MaskTextInputFormatter(
                 mask: '#### #### #### ####',
                 filter: {"#": RegExp(r'[0-9]')},
-                initialText: state.cardNumber,
+                type: MaskAutoCompletionType.lazy,
+                initialText: state.addCard.cardNumber,
               );
 
               final maskFormatter = MaskTextInputFormatter(
                 mask: '## / ##',
                 filter: {"#": RegExp(r'[0-9]')},
-                initialText: state.cardDate,
+                initialText: state.addCard.expiryDate,
               );
 
               return Form(
@@ -56,9 +57,8 @@ class AddNewPaymentMethod extends StatelessWidget {
                             isRequired: false,
                             validator: (v) =>
                                 v!.isEmpty ? 'enter Card number'.tr() : null,
-                            onChanged: (v) =>
-                                cubit.updateField('cardNumber', v),
-                            controller: cubit.cardNumberController,
+                            onChanged: (v) => cubit.updateField('cardNumber',
+                                cardNumberFormatter.getUnmaskedText()),
                             inputFormatters: [cardNumberFormatter],
                             keyboardType: TextInputType.number,
                           ),
@@ -69,8 +69,6 @@ class AddNewPaymentMethod extends StatelessWidget {
                             validator: (v) =>
                                 v!.isEmpty ? 'enter Name card'.tr() : null,
                             onChanged: (v) => cubit.updateField('cardName', v),
-                            controller:
-                                TextEditingController(text: state.cardName),
                           ),
                           20.ph,
                           Row(
@@ -99,9 +97,12 @@ class AddNewPaymentMethod extends StatelessWidget {
 
                                     return null;
                                   },
-                                  onChanged: (v) =>
-                                      cubit.updateField('cardDate', v),
-                                  controller: cubit.cardDateController,
+                                  onChanged: (v) {
+                                    final cleanDate = v.replaceAll(
+                                        ' ', ''); // يحذف كل المسافات
+                                    cubit.updateField('expiryDate',
+                                        cleanDate); // أو 'cardDate' إذا الحقل بهذا الاسم
+                                  },
                                   inputFormatters: [maskFormatter],
                                   keyboardType: TextInputType.number,
                                 ),
@@ -113,8 +114,6 @@ class AddNewPaymentMethod extends StatelessWidget {
                                   hintText: 'cvv'.tr(),
                                   onChanged: (v) =>
                                       cubit.updateField('cardCvv', v),
-                                  controller: TextEditingController(
-                                      text: state.cardCvv),
                                   inputFormatters: [
                                     FilteringTextInputFormatter.digitsOnly,
                                     LengthLimitingTextInputFormatter(3),
@@ -143,12 +142,17 @@ class AddNewPaymentMethod extends StatelessWidget {
                         children: [
                           CustomGradientButton(
                             text: 'save'.tr(),
-                            isDisabled: cubit.state.cardCvv.isEmpty ||
-                                cubit.state.cardDate.isEmpty ||
-                                cubit.state.cardName.isEmpty ||
-                                cubit.state.cardNumber.isEmpty,
+                            isLoading: cubit.state.isLoading,
+                            isDisabled: !((cubit
+                                        .state.addCard.brand?.isNotEmpty ??
+                                    false) &&
+                                (cubit.state.addCard.cardNumber?.isNotEmpty ??
+                                    false) &&
+                                (cubit.state.addCard.expiryDate?.isNotEmpty ??
+                                    false) &&
+                                (cubit.state.addCard.cvv?.isNotEmpty ?? false)),
                             onPressed: () {
-                              // تنفيذ عملية الحفظ
+                              cubit.submit(context);
                             },
                           ),
                           40.ph,

@@ -12,16 +12,11 @@ part 'profile_state.dart';
 part 'profile_cubit.freezed.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
+  final GetProfileDataUsecase getProfileDataUseCase;
+
   ProfileCubit(this.getProfileDataUseCase)
-      : super(ProfileState(
-          userProfileModel: UserRegistrationData(),
-        )) {
-    loadProfile();
+      : super(ProfileState(userProfileModel: UserRegistrationData())) {
     getProfile();
-  }
-  GetProfileDataUsecase getProfileDataUseCase;
-  Future<void> reloadProfile() async {
-    await getProfile();
   }
 
   Future<void> getProfile() async {
@@ -41,20 +36,11 @@ class ProfileCubit extends Cubit<ProfileState> {
       emit(state.copyWith(
         isLoading: false,
         userProfileModel: userProfile,
+        settingsOptions: _buildSettingsOptions(),
+        helpAndContact: _buildHelpOptions(),
+        streamerOptions: _buildTradeStreamerOptions(),
       ));
     });
-  }
-
-  Future<void> loadProfile() async {
-    emit(state.copyWith(isLoading: true));
-
-    await Future.delayed(Duration(milliseconds: 500));
-
-    emit(state.copyWith(
-      settingsOptions: _buildSettingsOptions(),
-      helpAndContact: _buildHelpOptions(),
-      isLoading: false,
-    ));
   }
 
   List<Map<String, dynamic>> _buildSettingsOptions() {
@@ -62,29 +48,45 @@ class ProfileCubit extends Cubit<ProfileState> {
       {
         "icon": Assets.assetsIconsMessage,
         "title": "chat".tr(),
-        // "onTap": () => Get.to(
-        //       () => PaymentDeliveryScreen(),
-        //       //PaymentScreen()
-        //     ),
       },
       {
         "icon": Assets.assetsIconsCard,
         "title": "paymentMethod".tr(),
         "screen": (BuildContext context) {
-          context.push(
-            AppRoutes.payments,
-          );
+          context.push(AppRoutes.payments);
         },
       },
       {
         "icon": Assets.assetsIconsMapPoint,
         "title": "addresses".tr(),
         "screen": (BuildContext context) {
-          context.push(
-            AppRoutes.newAddress,
-          );
+          context.push(AppRoutes.newAddress);
         },
-        // "onTap": () => Get.to(() => DeliveryAddressUpdateScreen()),
+      },
+    ];
+  }
+
+  List<Map<String, dynamic>> _buildTradeStreamerOptions() {
+    return [
+      {
+        "icon": Assets.assetsIconsUsersGroupRoundedIcon,
+        "title": "Invite a friend and get up to 10,000 ₽\nBalance: 300 ₽".tr(),
+      },
+      {
+        "icon": Assets.assetsIconsStar2,
+        "title": "My reviews".tr(),
+      },
+      {
+        "icon": Assets.assetsIconsMessage,
+        "title": "Chat".tr(),
+      },
+      {
+        "icon": Assets.assetsImagesAnalyticsIcon,
+        "title": "Analytics".tr(),
+      },
+      {
+        "icon": Assets.assetsImagesDeliveryIcon,
+        "title": "Delivery settings".tr(),
       },
     ];
   }
@@ -102,12 +104,10 @@ class ProfileCubit extends Cubit<ProfileState> {
       {
         "icon": Assets.assetsIconsInfoCircle,
         "title": "privacyPolicy".tr(),
-        // "screen": () => Get.to(() => PrivacyPolicy())
       },
       {
         "icon": Assets.assetsIconsFile,
         "title": "termsConditions".tr(),
-        // "screen": () => Get.to(() => TermsAndCondition())
       },
     ];
   }

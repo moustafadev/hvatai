@@ -1,13 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/features/activity/presentation/activity.dart';
+import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
+import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
+import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:hvatai/routes/go_router.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
@@ -146,13 +150,20 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
         ),
         StatefulShellBranch(routes: <RouteBase>[
           GoRoute(
-            path: AppRoutes.tradeProfileDetail,
-            pageBuilder: (context, state) => buildCupertinoTransitionPage(
-              context: context,
-              state: state,
-              child: const TradeProfileDetail(),
-            ),
-          ),
+              path: AppRoutes.tradeProfileDetail,
+              pageBuilder: (context, state) {
+                final user = state.extra as UserRegistrationData;
+
+                return buildCupertinoTransitionPage(
+                  context: context,
+                  state: state,
+                  child: BlocProvider<ProfileCubit>.value(
+                      value: locator<ProfileCubit>(),
+                      child: TradeProfileDetail(
+                        userRegistrationData: user,
+                      )),
+                );
+              }),
         ]),
       ],
     );

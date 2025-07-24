@@ -115,6 +115,14 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                           ),
                         ],
                       ),
+                      24.ph,
+                      CustomSwitchWidget(
+                        title: 'makeItThePrimaryAddress'.tr(),
+                        value: state.user.isPrimary == 1,
+                        onChanged: (val) {
+                          cubit.toggleMainAddress();
+                        },
+                      ),
                       18.ph,
                       GestureDetector(
                         onTap: () async {

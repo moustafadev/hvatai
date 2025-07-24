@@ -24,7 +24,7 @@ class PasswordStrengthIndicator extends StatelessWidget {
               backgroundColor: Colors.grey[300],
               valueColor: AlwaysStoppedAnimation(color),
             ),
-            SizedBox(height: 4.h),
+            4.ph,
             CustomText(
               text: state.passwordStrengthText,
               color: color,

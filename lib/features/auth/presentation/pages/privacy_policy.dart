@@ -6,9 +6,9 @@ class PrivacyPolicy extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.lightGreyBackground,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: AppColors.lightGreyBackground,
         title: CustomText(text: 'Privacy Policy'),
       ),
       body: SingleChildScrollView(

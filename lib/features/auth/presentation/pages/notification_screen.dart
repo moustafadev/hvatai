@@ -7,6 +7,7 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final userData = GoRouterState.of(context).extra as UserRegistrationData;
     return Scaffold(
+      backgroundColor: AppColors.lightGreyBackground,
       body: SafeArea(
         bottom: false,
         child: Padding(
@@ -92,31 +93,18 @@ class NotificationScreen extends StatelessWidget {
                                               fontSize: 28.sp,
                                               fontWeight: FontWeight.bold,
                                               color: AppColors.primaryColor,
-
-                                              // foreground: Paint()
-                                              //   ..shader = const LinearGradient(
-                                              //     colors: [
-                                              //       AppColors.blueLite,
-                                              //       AppColors.purpleLite,
-                                              //       AppColors.deepPurple,
-                                              //     ],
-                                              //     begin: Alignment.topLeft,
-                                              //     end: Alignment.bottomRight,
-                                              //   ).createShader(
-                                              //       const Rect.fromLTWH(
-                                              //           0, 0, 100, 30)),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 20.h),
+                                  20.ph,
                                   Container(
                                     width: 500.w,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(14.r),
-                                      color: Colors.white,
+                                      color: AppColors.white,
                                     ),
                                     child: Column(
                                       children: [
@@ -144,7 +132,7 @@ class NotificationScreen extends StatelessWidget {
                                             ],
                                           ),
                                         ),
-                                        SizedBox(height: 20.h),
+                                        20.ph,
                                         Row(
                                           children: [
                                             Expanded(
