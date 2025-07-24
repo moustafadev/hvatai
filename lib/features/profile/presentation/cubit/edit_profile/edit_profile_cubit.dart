@@ -9,7 +9,6 @@ import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usec
 import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 part 'edit_profile_state.dart';
 part 'edit_profile_cubit.freezed.dart';
 

@@ -36,72 +36,91 @@ class PaymentMethodsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   12.ph,
+                  // ✅ عنوان ثابت لا يتحرك مع السكول
                   CustomText(
-                      text: 'paymentMethods'.tr(),
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w800),
-                  state.cards.isEmpty ? 0.ph : 12.ph,
-                  ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: state.cards.length,
-                    padding: EdgeInsets.symmetric(vertical: 16.h),
-                    itemBuilder: (context, index) {
-                      final card = state.cards[index];
+                    text: 'paymentMethods'.tr(),
+                    fontSize: 20.sp,
+                    fontWeight: FontWeight.w800,
+                  ),
+                  12.ph,
 
-                      return Row(
+                  // ✅ باقي الشاشة قابلة للتمرير
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          SvgPicture.asset(
-                            card.brand == 'visa'
-                                ? Assets.assetsIconsVisa
-                                : Assets.assetsIconsMasterCard,
-                            width: 35.w,
-                            height: 12.h,
+                          if (state.cards.isNotEmpty) 12.ph,
+                          ListView.separated(
+                            shrinkWrap: true,
+                            physics:
+                                NeverScrollableScrollPhysics(), // لا تجعلها scrollable داخليًا
+                            itemCount: state.cards.length,
+                            padding: EdgeInsets.symmetric(vertical: 16.h),
+                            itemBuilder: (context, index) {
+                              final card = state.cards[index];
+                              return Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    card.brand == 'visa'
+                                        ? Assets.assetsIconsVisa
+                                        : Assets.assetsIconsMasterCard,
+                                    width: 35.w,
+                                    height: 12.h,
+                                  ),
+                                  8.pw,
+                                  CustomText(
+                                    text: '**** ${card.lastFour}',
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ],
+                              );
+                            },
+                            separatorBuilder: (context, index) => Divider(
+                              height: 50.h,
+                              color: AppColors.gray,
+                              thickness: 1,
+                            ),
                           ),
-                          8.pw,
-                          CustomText(
-                            text: '**** ${card.lastFour}',
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w500,
+                          ListTile(
+                            onTap: () async {
+                              final updated = await context.push<bool>(
+                                AppRoutes.addNewPaymentMethod,
+                              );
+                              if (updated == true) {
+                                context
+                                    .read<PaymentMethodCubit>()
+                                    .getPaymentMethods();
+                              }
+                            },
+                            contentPadding: EdgeInsets.all(0),
+                            leading: SvgPicture.asset(
+                              Assets.assetsIconsCardAdd,
+                              height: 24.h,
+                              width: 24.w,
+                            ),
+                            title: CustomText(
+                              text: 'addNewMethod'.tr(),
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            trailing: Icon(
+                              Icons.chevron_right,
+                              color: AppColors.blackDark,
+                              size: 28,
+                            ),
                           ),
+                          Divider(
+                            height: 1.h,
+                            color: AppColors.gray,
+                            thickness: 1,
+                          ),
+                          30.ph,
                         ],
-                      );
-                    },
-                    separatorBuilder: (context, index) => Divider(
-                      height: 50.h,
-                      color: AppColors.gray,
-                      thickness: 1,
+                      ),
                     ),
-                  ),
-                  ListTile(
-                    onTap: () async {
-                      final updated = await context.push<bool>(
-                        AppRoutes.addNewPaymentMethod,
-                      );
-                      if (updated == true) {
-                        context.read<PaymentMethodCubit>().getPaymentMethods();
-                      }
-                    },
-                    contentPadding: EdgeInsets.all(0),
-                    leading: SvgPicture.asset(
-                      Assets.assetsIconsCardAdd,
-                      height: 24.h,
-                      width: 24.w,
-                    ),
-                    title: CustomText(
-                      text: 'addNewMethod'.tr(),
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    trailing: Icon(
-                      Icons.chevron_right,
-                      color: AppColors.blackDark,
-                      size: 28,
-                    ),
-                  ),
-                  Divider(
-                    height: 1.h,
-                    color: AppColors.gray,
-                    thickness: 1,
                   ),
                 ],
               ),

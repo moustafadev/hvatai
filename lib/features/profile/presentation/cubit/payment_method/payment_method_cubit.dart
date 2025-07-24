@@ -40,8 +40,8 @@ class PaymentMethodCubit extends Cubit<PaymentMethodState> {
 
   Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
-      emit(state.copyWith(errorMessage: 'Please fill all fields correctly.'));
-      floatingSnackBar(message: 'error_fill_all_fields'.tr(), context: context);
+      emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
+      floatingSnackBar(message: 'fillAllFields'.tr(), context: context);
       return;
     }
 
