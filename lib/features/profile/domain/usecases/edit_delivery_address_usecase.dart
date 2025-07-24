@@ -3,23 +3,23 @@ import 'package:hvatai/core/shared/utils/usecase.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
 
-class AddNewAddressUsecase
-    implements UseCase<UserRegistrationData, AddNewAddressParams> {
+class EditDeliveryAddressUsecase
+    implements UseCase<UserRegistrationData, EditDeliveryAddressParams> {
   final ProfileRepository _profileRepository;
 
-  AddNewAddressUsecase(this._profileRepository);
+  EditDeliveryAddressUsecase(this._profileRepository);
 
   @override
   Future<Either<String, UserRegistrationData>> call(
-      AddNewAddressParams params) {
-    return _profileRepository.addNewAddress(params);
+      EditDeliveryAddressParams params) {
+    return _profileRepository.editDeliveryAddress(params);
   }
 }
 
-class AddNewAddressParams {
+class EditDeliveryAddressParams {
   final UserRegistrationData userRegistrationData;
 
-  AddNewAddressParams({
+  EditDeliveryAddressParams({
     required this.userRegistrationData,
   });
 

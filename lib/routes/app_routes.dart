@@ -32,7 +32,8 @@ class AppRoutes {
   static const String notificationSettings = '/notification_settings';
   static const String tradeProfile = '/trade_profile';
   static const String interestsDetail = '/interests-detail';
-  static const String deliveryAddressUpdate = '/delivery_address_update';
+  static const String addDeliveryAddress = '/add_delivery_address';
+  static const String editDeliveryAddress = '/edit_delivery_address';
   static const String tradeProfileDetail = '/trade_profile_detail';
   static const String addProduct = '/add_product';
   static const String otp = '/otp';

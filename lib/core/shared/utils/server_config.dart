@@ -10,5 +10,6 @@ abstract class ServerConfig {
   static const String interestsCategories = "interestsCategories";
   static const String loginWithGoogle = "auth/google";
   static const String deliveryAddress = "addresses";
+  static String editDeliveryAddress(int addressId) => 'addresses/$addressId';
   static const String profile = "profile";
 }

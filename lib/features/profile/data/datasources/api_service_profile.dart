@@ -2,8 +2,8 @@ import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
-import 'package:hvatai/features/profile/data/model/delivery_model/delivery_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 
 class ApiServiceProfile extends ApiBase {
@@ -23,15 +23,16 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-  Future<List<DeliveryModel>> getDeliveryAddress() async {
-    return executeAndHandleErrorServer<List<DeliveryModel>>(() async {
+  Future<List<UserRegistrationData>> getDeliveryAddress() async {
+    return executeAndHandleErrorServer<List<UserRegistrationData>>(() async {
       final response = await get(ServerConfig.deliveryAddress);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<dynamic> data = response.json;
 
         return data
-            .map((e) => DeliveryModel.fromJson(e as Map<String, dynamic>))
+            .map(
+                (e) => UserRegistrationData.fromJson(e as Map<String, dynamic>))
             .toList();
       } else {
         throw Exception;
@@ -58,14 +59,35 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-  Future<DeliveryModel> addNewAddress(AddNewAddressParams params) async {
-    return executeAndHandleErrorServer<DeliveryModel>(() async {
+  Future<UserRegistrationData> addNewAddress(AddNewAddressParams params) async {
+    return executeAndHandleErrorServer<UserRegistrationData>(() async {
       final response =
           await post(ServerConfig.deliveryAddress, body: params.toJson());
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return DeliveryModel.fromJson(response.json);
+        return UserRegistrationData.fromJson(response.json);
       } else {
         throw Exception;
+      }
+    });
+  }
+
+  Future<UserRegistrationData> editDeliveryAddress(
+      EditDeliveryAddressParams params) async {
+    return executeAndHandleErrorServer<UserRegistrationData>(() async {
+      final addressId = params.userRegistrationData.id;
+
+      if (addressId == null) {
+        throw Exception('Address ID is required for editing');
+      }
+
+      final endpoint = ServerConfig.editDeliveryAddress(addressId);
+
+      final response = await patch(endpoint, body: params.toJson());
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return UserRegistrationData.fromJson(response.json);
+      } else {
+        throw Exception('Failed to update address: ${response.statusCode}');
       }
     });
   }

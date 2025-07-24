@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/delivery_address/update_delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/locator.dart';
@@ -35,12 +36,25 @@ final GoRouter router = GoRouter(
         return const SocialsLoginScreen();
       },
     ),
-    // GoRoute(
-    //   path: AppRoutes.deliveryAddressUpdate, // Remove the leading '/'
-    //   builder: (BuildContext context, GoRouterState state) {
-    //     return const DeliveryAddressUpdateScreen();
-    //   },
-    // ),
+    GoRoute(
+      path: AppRoutes.addDeliveryAddress, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        return BlocProvider<UpdateDeliveryAddressCubit>.value(
+            value: locator<UpdateDeliveryAddressCubit>(),
+            child: const AddDeliveryAddressScreen());
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.editDeliveryAddress, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        final userData = state.extra as UserRegistrationData;
+        return BlocProvider<UpdateDeliveryAddressCubit>.value(
+            value: locator<UpdateDeliveryAddressCubit>(),
+            child: EditDeliveryAddressScreen(
+              data: userData,
+            ));
+      },
+    ),
     GoRoute(
       path: AppRoutes.payments, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
@@ -150,13 +164,10 @@ final GoRouter router = GoRouter(
         return MyAwardsScreen();
       },
     ),
-    // GoRoute(
-    //   path: AppRoutes.newAddress,
-    //   builder: (context, state) => BlocProvider(
-    //     create: (context) => locator<DeliveryAddressCubit>(),
-    //     child: const InitNewAddress(),
-    //   ),
-    // ),
+    GoRoute(
+      path: AppRoutes.newAddress,
+      builder: (context, state) => const InitNewAddress(),
+    ),
     GoRoute(
       path: AppRoutes.tradeProfile,
       builder: (BuildContext context, GoRouterState state) {
