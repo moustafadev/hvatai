@@ -6,7 +6,6 @@ class TopBarWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      // crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         GestureDetector(
             onTap: () {
@@ -19,11 +18,7 @@ class TopBarWidget extends StatelessWidget {
                   height: 40,
                   fillColor: AppColors.white,
                   borderRadius: BorderRadius.circular(10.r),
-                  onChanged: (value) {
-                    // setState(() {
-                    //   _searchQuery = value.toLowerCase().trim();
-                    // });
-                  },
+                  onChanged: (value) {},
                   hintText: 'find'.tr(),
                   prefixIcon: Image.asset(
                     Assets.assetsIconsSearch,
@@ -37,9 +32,9 @@ class TopBarWidget extends StatelessWidget {
         8.pw,
         GestureDetector(
           onTap: () {
-            // Get.to(() => NotificationScreen1());
+            context.push(AppRoutes.mainNotification);
           },
-          child: NotificationIconWidget(count: 2),
+          child: NotificationIconWidget(count: 1),
         ),
         10.pw,
         GestureDetector(

@@ -13,4 +13,5 @@ abstract class ServerConfig {
   static String editDeliveryAddress(int addressId) => 'addresses/$addressId';
   static const String profile = "profile";
   static const String cards = "cards";
+  static const String notifications = "notifications";
 }

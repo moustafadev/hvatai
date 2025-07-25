@@ -474,6 +474,8 @@ class Assets {
   /// Assets for assetsIconsViewNote
   /// assets/icons/view_note.png
   static const String assetsIconsViewNote = "assets/icons/view_note.png";
+  static const String assetsImagesEmptyNotification =
+      "assets/images/empty_notification.png";
 
   /// Assets for assetsIconsWadmoney
   /// assets/icons/wadmoney.png

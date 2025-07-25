@@ -161,6 +161,8 @@
   "addresses": "Addresses",
   "newAddress": "New address",
   "notifications": "Notifications",
+  "noNotifications": "You don't have any notifications yet.",
+
   "changeEmail": "Change E-Mail",
   "changePassword": "Change password",
   "settings": "Settings",

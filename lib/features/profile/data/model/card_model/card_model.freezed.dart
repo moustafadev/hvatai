@@ -30,7 +30,7 @@ mixin _$CardModel {
   @JsonKey(name: 'card_number')
   String? get cardNumber => throw _privateConstructorUsedError;
   @JsonKey(name: 'expiry_date')
-  String? get expiryDate => throw _privateConstructorUsedError; // ✅ التغيير هنا
+  String? get expiryDate => throw _privateConstructorUsedError;
   String? get cvv => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
   int? get userId => throw _privateConstructorUsedError;
@@ -277,7 +277,6 @@ class _$CardModelImpl implements _CardModel {
   @override
   @JsonKey(name: 'expiry_date')
   final String? expiryDate;
-// ✅ التغيير هنا
   @override
   final String? cvv;
   @override
@@ -387,7 +386,7 @@ abstract class _CardModel implements CardModel {
   String? get cardNumber;
   @override
   @JsonKey(name: 'expiry_date')
-  String? get expiryDate; // ✅ التغيير هنا
+  String? get expiryDate;
   @override
   String? get cvv;
   @override

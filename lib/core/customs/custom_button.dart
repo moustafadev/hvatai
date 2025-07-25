@@ -23,7 +23,7 @@ class CustomButton extends StatelessWidget {
   final bool spacerInSuffixIcon;
   final bool isSizedBetweenIcon;
   final bool? disabled;
-  final double? height; // ✅ هنا أضفنا height
+  final double? height;
 
   CustomButton({
     super.key,
@@ -48,7 +48,7 @@ class CustomButton extends StatelessWidget {
     this.spacerInSuffixIcon = true,
     this.isSizedBetweenIcon = true,
     this.disabled = false,
-    this.height, // ✅ وهنا أيضًا
+    this.height,
   });
 
   @override
@@ -56,7 +56,7 @@ class CustomButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: isLoading || disabled! ? null : onPressed,
       style: ElevatedButton.styleFrom(
-        minimumSize: Size.fromHeight(height ?? 40), // ✅ استخدم height هنا
+        minimumSize: Size.fromHeight(height ?? 40),
         backgroundColor: color ?? AppColors.hotPink,
         disabledBackgroundColor: color ?? AppColors.hotPink,
         shape: RoundedRectangleBorder(

@@ -36,15 +36,12 @@ class PaymentMethodsScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   12.ph,
-                  // ✅ عنوان ثابت لا يتحرك مع السكول
                   CustomText(
                     text: 'paymentMethods'.tr(),
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w800,
                   ),
                   12.ph,
-
-                  // ✅ باقي الشاشة قابلة للتمرير
                   Expanded(
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),

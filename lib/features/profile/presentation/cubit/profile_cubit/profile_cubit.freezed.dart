@@ -23,8 +23,6 @@ mixin _$ProfileState {
       throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get helpAndContact =>
       throw _privateConstructorUsedError;
-  List<Map<String, dynamic>> get changeInfoProfile =>
-      throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get streamerOptions =>
       throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
@@ -50,7 +48,6 @@ abstract class $ProfileStateCopyWith<$Res> {
       String? emailError,
       List<Map<String, dynamic>> settingsOptions,
       List<Map<String, dynamic>> helpAndContact,
-      List<Map<String, dynamic>> changeInfoProfile,
       List<Map<String, dynamic>> streamerOptions,
       String errorMessage,
       UserRegistrationData userProfileModel});
@@ -78,7 +75,6 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? emailError = freezed,
     Object? settingsOptions = null,
     Object? helpAndContact = null,
-    Object? changeInfoProfile = null,
     Object? streamerOptions = null,
     Object? errorMessage = null,
     Object? userProfileModel = null,
@@ -103,10 +99,6 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
       helpAndContact: null == helpAndContact
           ? _value.helpAndContact
           : helpAndContact // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
-      changeInfoProfile: null == changeInfoProfile
-          ? _value.changeInfoProfile
-          : changeInfoProfile // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
       streamerOptions: null == streamerOptions
           ? _value.streamerOptions
@@ -149,7 +141,6 @@ abstract class _$$ProfileStateImplCopyWith<$Res>
       String? emailError,
       List<Map<String, dynamic>> settingsOptions,
       List<Map<String, dynamic>> helpAndContact,
-      List<Map<String, dynamic>> changeInfoProfile,
       List<Map<String, dynamic>> streamerOptions,
       String errorMessage,
       UserRegistrationData userProfileModel});
@@ -176,7 +167,6 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
     Object? emailError = freezed,
     Object? settingsOptions = null,
     Object? helpAndContact = null,
-    Object? changeInfoProfile = null,
     Object? streamerOptions = null,
     Object? errorMessage = null,
     Object? userProfileModel = null,
@@ -201,10 +191,6 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
       helpAndContact: null == helpAndContact
           ? _value._helpAndContact
           : helpAndContact // ignore: cast_nullable_to_non_nullable
-              as List<Map<String, dynamic>>,
-      changeInfoProfile: null == changeInfoProfile
-          ? _value._changeInfoProfile
-          : changeInfoProfile // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
       streamerOptions: null == streamerOptions
           ? _value._streamerOptions
@@ -231,13 +217,11 @@ class _$ProfileStateImpl implements _ProfileState {
       this.emailError,
       final List<Map<String, dynamic>> settingsOptions = const [],
       final List<Map<String, dynamic>> helpAndContact = const [],
-      final List<Map<String, dynamic>> changeInfoProfile = const [],
       final List<Map<String, dynamic>> streamerOptions = const [],
       this.errorMessage = '',
       required this.userProfileModel})
       : _settingsOptions = settingsOptions,
         _helpAndContact = helpAndContact,
-        _changeInfoProfile = changeInfoProfile,
         _streamerOptions = streamerOptions;
 
   @override
@@ -266,16 +250,6 @@ class _$ProfileStateImpl implements _ProfileState {
     return EqualUnmodifiableListView(_helpAndContact);
   }
 
-  final List<Map<String, dynamic>> _changeInfoProfile;
-  @override
-  @JsonKey()
-  List<Map<String, dynamic>> get changeInfoProfile {
-    if (_changeInfoProfile is EqualUnmodifiableListView)
-      return _changeInfoProfile;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_changeInfoProfile);
-  }
-
   final List<Map<String, dynamic>> _streamerOptions;
   @override
   @JsonKey()
@@ -293,7 +267,7 @@ class _$ProfileStateImpl implements _ProfileState {
 
   @override
   String toString() {
-    return 'ProfileState(isLoading: $isLoading, passwordError: $passwordError, emailError: $emailError, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, changeInfoProfile: $changeInfoProfile, streamerOptions: $streamerOptions, errorMessage: $errorMessage, userProfileModel: $userProfileModel)';
+    return 'ProfileState(isLoading: $isLoading, passwordError: $passwordError, emailError: $emailError, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, streamerOptions: $streamerOptions, errorMessage: $errorMessage, userProfileModel: $userProfileModel)';
   }
 
   @override
@@ -312,8 +286,6 @@ class _$ProfileStateImpl implements _ProfileState {
             const DeepCollectionEquality()
                 .equals(other._helpAndContact, _helpAndContact) &&
             const DeepCollectionEquality()
-                .equals(other._changeInfoProfile, _changeInfoProfile) &&
-            const DeepCollectionEquality()
                 .equals(other._streamerOptions, _streamerOptions) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
@@ -329,7 +301,6 @@ class _$ProfileStateImpl implements _ProfileState {
       emailError,
       const DeepCollectionEquality().hash(_settingsOptions),
       const DeepCollectionEquality().hash(_helpAndContact),
-      const DeepCollectionEquality().hash(_changeInfoProfile),
       const DeepCollectionEquality().hash(_streamerOptions),
       errorMessage,
       userProfileModel);
@@ -350,7 +321,6 @@ abstract class _ProfileState implements ProfileState {
           final String? emailError,
           final List<Map<String, dynamic>> settingsOptions,
           final List<Map<String, dynamic>> helpAndContact,
-          final List<Map<String, dynamic>> changeInfoProfile,
           final List<Map<String, dynamic>> streamerOptions,
           final String errorMessage,
           required final UserRegistrationData userProfileModel}) =
@@ -366,8 +336,6 @@ abstract class _ProfileState implements ProfileState {
   List<Map<String, dynamic>> get settingsOptions;
   @override
   List<Map<String, dynamic>> get helpAndContact;
-  @override
-  List<Map<String, dynamic>> get changeInfoProfile;
   @override
   List<Map<String, dynamic>> get streamerOptions;
   @override
