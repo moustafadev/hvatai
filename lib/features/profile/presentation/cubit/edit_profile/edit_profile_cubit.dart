@@ -1,3 +1,4 @@
+import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
+import 'package:hvatai/features/profile/domain/usecases/delete_account_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -14,21 +16,14 @@ part 'edit_profile_cubit.freezed.dart';
 
 class EditProfileCubit extends Cubit<EditProfileState> {
   EditProfileCubit(
+    this.deleteAccountUseCase,
     this.updateProfileDataUseCase,
     this.getProfileDataUsecase,
-  ) : super(EditProfileState(user: UserRegistrationData())) {
-    prefillData();
-  }
+  ) : super(EditProfileState(user: UserRegistrationData()));
 
   final UpdateProfileDataUsecase updateProfileDataUseCase;
   final GetProfileDataUsecase getProfileDataUsecase;
-
-  final firstNameController = TextEditingController();
-  final emailController = TextEditingController();
-  final newEmailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmPasswordController = TextEditingController();
-  final lastNameController = TextEditingController();
+  final DeleteAccountUsecase deleteAccountUseCase;
 
   void initProfileModel(UserRegistrationData user) {
     emit(state.copyWith(user: user));
@@ -53,10 +48,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       user: updatedUser,
       changeInfoProfile: _buildChangeInfoProfile(),
     ));
-
-    firstNameController.text = updatedUser.firstName ?? '';
-    lastNameController.text = updatedUser.lastName ?? '';
-    emailController.text = updatedUser.email ?? '';
   }
 
   void setNewGender(String? gender) {
@@ -210,7 +201,10 @@ class EditProfileCubit extends Cubit<EditProfileState> {
         "icon": Assets.assetsIconsEmail,
         "title": "changeEmail".tr(),
         "screen": (BuildContext context) async {
-          context.push(AppRoutes.changeEmail, extra: state.user);
+          context.push(AppRoutes.changeEmail, extra: {
+            'model': state.user,
+            'cubit': this,
+          });
         },
       },
       {
@@ -237,6 +231,26 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     ];
   }
 
+  Future<void> deleteAccount(BuildContext context) async {
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
+
+    final result = await deleteAccountUseCase.call(unit);
+
+    result.fold(
+      (failure) {
+        emit(
+            state.copyWith(isLoading: false, errorMessage: failure.toString()));
+        showFloatingMessageError('somethingWentWrong'.tr());
+      },
+      (_) {
+        emit(state.copyWith(isLoading: false));
+        context.go(AppRoutes.socialLogin);
+
+        showFloatingMessageSuccess('accountDeleted'.tr());
+      },
+    );
+  }
+
   Future<void> submit(BuildContext context) async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
@@ -246,7 +260,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     result.fold(
       (failure) {
         emit(state.copyWith(isLoading: false, errorMessage: failure));
-        showFloatingMessageError(failure);
+        showFloatingMessageError('somethingWentWrong'.tr());
       },
       (updatedUser) {
         emit(state.copyWith(
@@ -254,10 +268,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
           success: true,
           user: updatedUser,
         ));
-
-        firstNameController.text = updatedUser.firstName ?? '';
-        lastNameController.text = updatedUser.lastName ?? '';
-        newEmailController.text = updatedUser.email ?? '';
 
         showFloatingMessageSuccess('profileUpdated'.tr());
 

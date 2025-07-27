@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -43,3 +45,5 @@ part 'custom_stat_column.dart';
 part 'custom_vertical_divider.dart';
 part 'custom_awards_card.dart';
 part 'custom_pinput_widget.dart';
+part 'custom_dialog.dart';
+part 'custom_swipeable_list_title.dart';

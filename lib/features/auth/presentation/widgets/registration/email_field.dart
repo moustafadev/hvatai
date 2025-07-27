@@ -5,9 +5,10 @@ class EmailField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<RegistrationCubit>();
     return BlocBuilder<RegistrationCubit, RegistrationState>(
       builder: (context, state) {
+        final cubit = context.read<RegistrationCubit>();
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

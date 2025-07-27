@@ -1,3 +1,4 @@
+import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/datasources/api_service_profile.dart';
@@ -6,13 +7,16 @@ import 'package:hvatai/features/profile/domain/repositories/profile_repository.d
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/delete_address_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/delete_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 
 class ProfileImplRepository implements ProfileRepository {
   final ApiServiceProfile _apiServiceProfile;
+  final AppLocal _appLocal;
 
-  ProfileImplRepository(this._apiServiceProfile);
+  ProfileImplRepository(this._apiServiceProfile, this._appLocal);
 
   @override
   Future<Either<String, UserRegistrationData>> getProfileData() async {
@@ -53,6 +57,7 @@ class ProfileImplRepository implements ProfileRepository {
       AddNewAddressParams params) async {
     return executeAndHandleError<UserRegistrationData>(() async {
       final res = await _apiServiceProfile.addNewAddress(params);
+
       return res;
     });
   }
@@ -70,6 +75,40 @@ class ProfileImplRepository implements ProfileRepository {
       EditDeliveryAddressParams params) async {
     return executeAndHandleError<UserRegistrationData>(() async {
       final res = await _apiServiceProfile.editDeliveryAddress(params);
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, Unit>> deleteAccount() {
+    return executeAndHandleError<Unit>(() async {
+      final res = await _apiServiceProfile.deleteAccount();
+      _appLocal.removeToken();
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, Unit>> deleteAddress(DeleteAddressParams params) {
+    return executeAndHandleError<Unit>(() async {
+      final res = await _apiServiceProfile.deleteAddress(params);
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, Unit>> deleteCard(DeleteCardParams params) {
+    return executeAndHandleError<Unit>(() async {
+      final res = await _apiServiceProfile.deleteCard(params);
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, Unit>> signOut() {
+    return executeAndHandleError<Unit>(() async {
+      final res = await _apiServiceProfile.signOut();
+      _appLocal.removeToken();
       return res;
     });
   }

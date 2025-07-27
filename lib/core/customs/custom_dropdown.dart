@@ -5,7 +5,7 @@ class CustomDropdown extends StatelessWidget {
   final List<DropdownMenuItem<String>> items;
   final ValueChanged<String?> onChanged;
   final String hintText;
-  final Widget? prefix; // ⬅️ المتغير الجديد
+  final Widget? prefix;
   final bool isRequired;
   const CustomDropdown({
     super.key,

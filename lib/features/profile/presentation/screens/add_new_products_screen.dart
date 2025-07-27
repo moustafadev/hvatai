@@ -1,7 +1,7 @@
 part of '../profile.dart';
 
-class AddNewGoods extends StatelessWidget {
-  const AddNewGoods({super.key});
+class AddNewProductsScreen extends StatelessWidget {
+  const AddNewProductsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

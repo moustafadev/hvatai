@@ -1,7 +1,7 @@
 part of '../profile.dart';
 
-class ChangePasswordUser extends StatelessWidget {
-  const ChangePasswordUser({super.key});
+class ChangePasswordUserScreen extends StatelessWidget {
+  const ChangePasswordUserScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -9,11 +9,11 @@ class AppLocal extends CacheHelper {
     return await saveData(key: _token, value: token);
   }
 
-  String getToken() {
+  String? getToken() {
     try {
       return getData(_token);
     } catch (e) {
-      return "";
+      return null;
     }
   }
 
@@ -30,19 +30,9 @@ class AppLocal extends CacheHelper {
     }
   }
 
-  // Future<bool> saveUser(User user) async {
-  //   final userJson = jsonEncode(user.toJson());
-  //   return await saveData(key: _user, value: userJson);
-  // }
-
-  // User get getUser {
-  //   try {
-  //     final userJson = getData(_user);
-  //     return User.fromJson(jsonDecode(userJson));
-  //   } catch (e) {
-  //     return User();
-  //   }
-  // }
+  Future<bool> removeToken() async {
+    return await removeData(key: _token);
+  }
 
   Future clearCache() async {
     return await clearData();

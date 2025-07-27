@@ -7,6 +7,7 @@ class UpdateDeliveryAddressState with _$UpdateDeliveryAddressState {
     @Default(false) bool isLoading,
     @Default('') String errorMessage,
     @Default([]) List<UserRegistrationData> deliveryModel,
+    @Default(0) int lastUpdated,
     required UserRegistrationData user,
   }) = _UpdateDeliveryAddressState;
 }

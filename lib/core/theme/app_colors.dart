@@ -4,6 +4,7 @@ class AppColors {
   // ✅ Existing Colors
 
   static const Color white = Color(0xFFFFFFFF);
+  static const Color backgroundAwesome = Color(0xFFF5F5F5);
   static const Color hotPink = Color(0xFFEC3078);
   static const Color raspberryRed = Color(0xFFF24259);
   static const Color graniteGray = Color(0xFF707070);

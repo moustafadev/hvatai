@@ -26,7 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
   checkLogin() {
     final appLocal = locator<AppLocal>();
     final token = appLocal.getToken();
-    if (token.isNotEmpty) {
+    if (token != null && token.isNotEmpty) {
       context.go(AppRoutes.home);
     } else {
       context.go(AppRoutes.socialLogin);

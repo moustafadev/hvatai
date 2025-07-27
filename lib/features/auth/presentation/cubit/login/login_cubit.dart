@@ -23,7 +23,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   void login(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
-      emit(state.copyWith(errorMessage: 'Please fill all fields correctly.'));
+      emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
       return;
     }
 
@@ -39,6 +39,7 @@ class LoginCubit extends Cubit<LoginState> {
           isLoading: false,
           errorMessage: failure,
         ));
+        showFloatingMessageError('invalidEmailOrPassword'.tr());
       },
       (_) {
         emit(state.copyWith(

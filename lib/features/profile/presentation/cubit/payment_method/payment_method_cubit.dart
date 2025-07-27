@@ -7,18 +7,20 @@ import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/delete_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_card_usecase.dart';
-
 part 'payment_method_cubit.freezed.dart';
 part 'payment_method_state.dart';
 
 class PaymentMethodCubit extends Cubit<PaymentMethodState> {
-  PaymentMethodCubit(this.getCardUsecase, this.addNewCardUsecase)
+  PaymentMethodCubit(
+      this.getCardUsecase, this.addNewCardUsecase, this.deleteCardUsecase)
       : super(const PaymentMethodState(addCard: CardModel()));
 
   final formKey = GlobalKey<FormState>();
   final GetCardUsecase getCardUsecase;
   final AddNewCardUsecase addNewCardUsecase;
+  final DeleteCardUsecase deleteCardUsecase;
   void updateField(String field, String value) {
     final updatedUser = state.addCard.copyWith(
       brand: field == 'cardName' ? value : state.addCard.brand,
@@ -41,7 +43,9 @@ class PaymentMethodCubit extends Cubit<PaymentMethodState> {
   Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
       emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
-      floatingSnackBar(message: 'fillAllFields'.tr(), context: context);
+      showFloatingMessageError(
+        'fillAllFields'.tr(),
+      );
       return;
     }
 
@@ -52,12 +56,45 @@ class PaymentMethodCubit extends Cubit<PaymentMethodState> {
     );
 
     result.fold(
-      (failure) =>
-          emit(state.copyWith(isLoading: false, errorMessage: failure)),
+      (failure) {
+        emit(state.copyWith(isLoading: false, errorMessage: failure));
+        showFloatingMessageError('somethingWentWrong'.tr());
+      },
       (_) {
         emit(state.copyWith(isLoading: false));
         showFloatingMessageSuccess('paymentMethodAdded'.tr());
-        context.pop(true);
+        getPaymentMethods();
+        context.pop();
+      },
+    );
+  }
+
+  Future<void> deleteCard(int cardId) async {
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
+
+    final result = await deleteCardUsecase.call(
+      DeleteCardParams(cardId: cardId),
+    );
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(
+          errorMessage: failure,
+          isLoading: false,
+        ));
+        showFloatingMessageError('failedToDeleteCard'.tr());
+      },
+      (success) {
+        final updateCards =
+            state.cards.where((card) => card.id != cardId).toList();
+
+        emit(state.copyWith(
+          cards: updateCards,
+          errorMessage: '',
+          isLoading: false,
+        ));
+
+        showFloatingMessageSuccess('cardDeleted'.tr());
       },
     );
   }

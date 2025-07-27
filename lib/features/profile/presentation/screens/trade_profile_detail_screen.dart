@@ -1,7 +1,8 @@
 part of '../profile.dart';
 
-class TradeProfileDetail extends StatelessWidget {
-  const TradeProfileDetail({super.key, required this.userRegistrationData});
+class TradeProfileDetailScreen extends StatelessWidget {
+  const TradeProfileDetailScreen(
+      {super.key, required this.userRegistrationData});
   final UserRegistrationData userRegistrationData;
   @override
   Widget build(BuildContext context) {

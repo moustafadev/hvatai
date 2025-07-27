@@ -7,6 +7,7 @@ class CustomTextField extends StatelessWidget {
   final AutovalidateMode? autovalidateMode;
   final TextEditingController? controller;
   final bool isPassword;
+  final String? initialValue;
   final bool obscureText;
   final bool readOnly;
   final String? Function(String?)? validator;
@@ -35,6 +36,7 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType,
     this.onChanged,
     this.readOnly = false,
+    this.initialValue,
     this.fillColor,
     this.borderRadius,
     this.borderSide,
@@ -54,6 +56,7 @@ class CustomTextField extends StatelessWidget {
         obscureText: obscureText,
         readOnly: readOnly,
         validator: validator,
+        initialValue: controller == null ? initialValue : null,
         autovalidateMode: autovalidateMode,
         keyboardType: keyboardType,
         onChanged: onChanged,

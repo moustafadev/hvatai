@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/sign_out_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
 part 'profile_state.dart';
 part 'profile_cubit.freezed.dart';
@@ -14,9 +16,25 @@ part 'profile_cubit.freezed.dart';
 class ProfileCubit extends Cubit<ProfileState> {
   final GetProfileDataUsecase getProfileDataUseCase;
 
-  ProfileCubit(this.getProfileDataUseCase)
-      : super(ProfileState(userProfileModel: UserRegistrationData())) {
-    getProfile();
+  ProfileCubit(this.getProfileDataUseCase, this.signOutUsecase)
+      : super(ProfileState(userProfileModel: UserRegistrationData()));
+  SignOutUsecase signOutUsecase;
+  Future<void> signOut(BuildContext context) async {
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
+
+    final result = await signOutUsecase.call(unit);
+
+    result.fold(
+      (failure) {
+        emit(
+            state.copyWith(isLoading: false, errorMessage: failure.toString()));
+        showFloatingMessageError('somethingWentWrong'.tr());
+      },
+      (_) {
+        emit(state.copyWith(isLoading: false));
+        context.go(AppRoutes.socialLogin);
+      },
+    );
   }
 
   Future<void> getProfile() async {

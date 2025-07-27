@@ -24,6 +24,11 @@ abstract class ApiBase {
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
       sendTimeout: const Duration(seconds: 30),
+      // حذف إضافة Authorization هنا لأنها في Interceptor
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
     );
     _dio
       ..interceptors.add(LogInterceptor(responseBody: true, requestBody: true))
@@ -34,7 +39,7 @@ abstract class ApiBase {
   Future<RequestResult> request({
     required String method,
     required String path,
-    required Map<String, String> headers,
+    Map<String, String>? headers,
     dynamic body,
     Map<String, String>? queryParameters,
     bool customPath = false,
@@ -45,28 +50,24 @@ abstract class ApiBase {
     Response? resp;
     dynamic decodedJson;
 
-    final token = appLocal.getToken();
-    print('Token from local storage: $token');
-
-    final requestHeaders = Map<String, String>.from(headers);
-    if (token != null && token.isNotEmpty) {
-      requestHeaders['Authorization'] = 'Bearer $token';
+    print("🔗 Requesting: $fullPath");
+    print("📦 Method: $method");
+    if (headers != null && headers.isNotEmpty) {
+      print("📋 Headers: $headers");
     }
 
-    _dio.options.headers['Accept'] = 'application/json';
-
-    print("🔗 Requesting: $fullPath");
-
     try {
-      switch (method) {
+      Options options = Options(
+        contentType: contentType,
+        headers: headers,
+      );
+
+      switch (method.toLowerCase()) {
         case 'post':
           resp = await _dio.post(
             fullPath,
             data: body,
-            options: Options(
-              contentType: contentType,
-              headers: headers,
-            ),
+            options: options,
             queryParameters: queryParameters,
           );
           break;
@@ -74,14 +75,14 @@ abstract class ApiBase {
           resp = await _dio.get(
             fullPath,
             queryParameters: queryParameters,
-            options: Options(headers: headers),
+            options: options,
           );
           break;
         case 'delete':
           resp = await _dio.delete(
             fullPath,
             queryParameters: queryParameters,
-            options: Options(headers: headers),
+            options: options,
           );
           break;
         case 'put':
@@ -89,10 +90,7 @@ abstract class ApiBase {
             fullPath,
             data: body,
             queryParameters: queryParameters,
-            options: Options(
-              contentType: contentType,
-              headers: headers,
-            ),
+            options: options,
           );
           break;
         case 'patch':
@@ -100,14 +98,14 @@ abstract class ApiBase {
             fullPath,
             data: body,
             queryParameters: queryParameters,
-            options: Options(
-              contentType: contentType,
-              headers: headers,
-            ),
+            options: options,
           );
           break;
+        default:
+          throw UnsupportedError('HTTP method $method is not supported.');
       }
-      decodedJson = resp?.data;
+
+      decodedJson = resp.data;
     } catch (e, st) {
       log("""❌ HTTP Request Error:
         statusCode: ${resp?.statusCode}
@@ -135,8 +133,8 @@ abstract class ApiBase {
 
   Future<RequestResult> post(
     String path, {
-    Map<String, String> headers = const {},
-    dynamic body = '',
+    Map<String, String>? headers,
+    dynamic body,
     bool customPath = false,
     String contentType = "application/json",
     Map<String, String>? queryParameters,
@@ -144,7 +142,7 @@ abstract class ApiBase {
     return request(
       method: 'post',
       path: path,
-      headers: Map.from(headers),
+      headers: headers,
       body: body,
       contentType: contentType,
       customPath: customPath,
@@ -154,14 +152,14 @@ abstract class ApiBase {
 
   Future<RequestResult> delete(
     String path, {
-    Map<String, String> headers = const {},
+    Map<String, String>? headers,
     bool customPath = false,
     Map<String, String>? queryParameters,
   }) async {
     return request(
       method: 'delete',
       path: path,
-      headers: Map.from(headers),
+      headers: headers,
       customPath: customPath,
       queryParameters: queryParameters,
     );
@@ -169,8 +167,8 @@ abstract class ApiBase {
 
   Future<RequestResult> put(
     String path, {
-    Map<String, String> headers = const {},
-    dynamic body = '',
+    Map<String, String>? headers,
+    dynamic body,
     bool customPath = false,
     String contentType = "application/json",
     Map<String, String>? queryParameters,
@@ -178,7 +176,7 @@ abstract class ApiBase {
     return request(
       method: 'put',
       path: path,
-      headers: Map.from(headers),
+      headers: headers,
       body: body,
       contentType: contentType,
       customPath: customPath,
@@ -188,8 +186,8 @@ abstract class ApiBase {
 
   Future<RequestResult> patch(
     String path, {
-    Map<String, String> headers = const {},
-    dynamic body = '',
+    Map<String, String>? headers,
+    dynamic body,
     bool customPath = false,
     String contentType = "application/json",
     Map<String, String>? queryParameters,
@@ -197,7 +195,7 @@ abstract class ApiBase {
     return request(
       method: 'patch',
       path: path,
-      headers: Map.from(headers),
+      headers: headers,
       body: body,
       contentType: contentType,
       customPath: customPath,
@@ -207,20 +205,21 @@ abstract class ApiBase {
 
   Future<RequestResult> get(
     String path, {
-    Map<String, String> headers = const {},
+    Map<String, String>? headers,
     bool customPath = false,
     Map<String, String>? queryParameters,
   }) async {
     return request(
       method: 'get',
       path: path,
-      headers: Map.from(headers),
+      headers: headers,
       customPath: customPath,
       queryParameters: queryParameters,
     );
   }
 }
 
+// Interceptor خاص بك
 class CustomInterceptors extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
@@ -236,7 +235,7 @@ class CustomInterceptors extends Interceptor {
   }
 
   @override
-  Future onError(DioException err, ErrorInterceptorHandler handler) async {
+  void onError(DioException err, ErrorInterceptorHandler handler) {
     print(
         '❗️ ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.uri}');
     super.onError(err, handler);

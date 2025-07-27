@@ -6,5 +6,6 @@ class DeliveryAddressState with _$DeliveryAddressState {
     required UserRegistrationData user,
     @Default(false) bool isLoading,
     @Default('') String errorMessage,
+    @Default(0) int lastUpdated,
   }) = _DeliveryAddressState;
 }

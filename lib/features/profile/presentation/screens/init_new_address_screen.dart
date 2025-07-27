@@ -1,7 +1,7 @@
 part of '../profile.dart';
 
-class InitNewAddress extends StatelessWidget {
-  const InitNewAddress({super.key});
+class InitNewAddressScreen extends StatelessWidget {
+  const InitNewAddressScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +11,8 @@ class InitNewAddress extends StatelessWidget {
       child:
           BlocBuilder<UpdateDeliveryAddressCubit, UpdateDeliveryAddressState>(
         builder: (context, state) {
-          if (state.isLoading || state.deliveryModel.isEmpty) {
+          final cubit = context.read<UpdateDeliveryAddressCubit>();
+          if (state.isLoading) {
             return const Center(
               child: CircularProgressIndicator(
                 color: AppColors.grey,
@@ -56,7 +57,10 @@ class InitNewAddress extends StatelessWidget {
                         ),
                         itemBuilder: (context, index) {
                           final address = state.deliveryModel[index];
-                          return ListTile(
+                          return CustomSwipeableListTitle(
+                            onDelete: () {
+                              cubit.deleteAddress(address.id!);
+                            },
                             contentPadding: EdgeInsets.all(0),
                             leading: Image.asset(
                               height: 26.h,
@@ -75,15 +79,14 @@ class InitNewAddress extends StatelessWidget {
                               size: 28,
                             ),
                             onTap: () async {
-                              final updated = await context.push<bool>(
+                              await context.push(
                                 AppRoutes.editDeliveryAddress,
-                                extra: state.deliveryModel[index],
+                                extra: {
+                                  'model': state.deliveryModel[index],
+                                  'cubit': context
+                                      .read<UpdateDeliveryAddressCubit>(),
+                                },
                               );
-                              if (updated == true) {
-                                context
-                                    .read<UpdateDeliveryAddressCubit>()
-                                    .getDeliveryAddress();
-                              }
                             },
                           );
                         },
@@ -95,15 +98,10 @@ class InitNewAddress extends StatelessWidget {
                       ),
                       ListTile(
                         onTap: () async {
-                          final updated = await context.push<bool>(
+                          await context.push(
                             AppRoutes.addDeliveryAddress,
+                            extra: context.read<UpdateDeliveryAddressCubit>(),
                           );
-
-                          if (updated == true) {
-                            context
-                                .read<UpdateDeliveryAddressCubit>()
-                                .getDeliveryAddress();
-                          }
                         },
                         contentPadding: EdgeInsets.all(0),
                         leading: Image.asset(

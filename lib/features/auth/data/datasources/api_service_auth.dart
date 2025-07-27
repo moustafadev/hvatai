@@ -55,11 +55,17 @@ class ApiServiceAuth extends ApiBase {
 
   Future<UserRegistrationData> register(RegisterParams params) async {
     return executeAndHandleErrorServer<UserRegistrationData>(() async {
-      final response = await post(ServerConfig.register, body: params.toJson());
+      final requestBody = {
+        ...params.toJson(),
+        'role': 'user',
+      };
+
+      final response = await post(ServerConfig.register, body: requestBody);
+
       if (response.statusCode == 200 || response.statusCode == 201) {
         return UserRegistrationData.fromJson(response.json);
       } else {
-        throw Exception;
+        throw Exception();
       }
     });
   }

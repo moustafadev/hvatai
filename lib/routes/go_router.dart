@@ -5,9 +5,9 @@ import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/cubit/delivery_address/update_delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
-import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -40,20 +40,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.addDeliveryAddress, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return BlocProvider<UpdateDeliveryAddressCubit>.value(
-            value: locator<UpdateDeliveryAddressCubit>(),
-            child: const AddDeliveryAddressScreen());
-      },
-    ),
-    GoRoute(
-      path: AppRoutes.editDeliveryAddress, // Remove the leading '/'
-      builder: (BuildContext context, GoRouterState state) {
-        final userData = state.extra as UserRegistrationData;
-        return BlocProvider<UpdateDeliveryAddressCubit>.value(
-            value: locator<UpdateDeliveryAddressCubit>(),
-            child: EditDeliveryAddressScreen(
-              data: userData,
-            ));
+        final cubit = state.extra as UpdateDeliveryAddressCubit
+          ..clearUserData();
+        return BlocProvider.value(
+            value: cubit, child: const AddDeliveryAddressScreen());
       },
     ),
     GoRoute(
@@ -63,30 +53,58 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: AppRoutes.addNewPaymentMethod, // Remove the leading '/'
+      path: AppRoutes.addNewPaymentMethod,
+      builder: (context, state) {
+        final cubit = state.extra as PaymentMethodCubit;
+
+        return BlocProvider.value(
+          value: cubit,
+          child: AddNewPaymentMethodScreen(),
+        );
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.editDeliveryAddress,
       builder: (BuildContext context, GoRouterState state) {
-        return const AddNewPaymentMethod();
+        final extra = state.extra as Map<String, Object>;
+
+        final model = extra['model'] as UserRegistrationData;
+        final cubit = extra['cubit'] as UpdateDeliveryAddressCubit
+          ..loadInitialData(model);
+
+        return BlocProvider.value(
+          value: cubit,
+          child: EditDeliveryAddressScreen(
+            data: model,
+          ),
+        );
       },
     ),
     GoRoute(
       path: AppRoutes.changeEmail, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        final userData = state.extra as UserRegistrationData;
-        return ChangeEmailUser(
-          user: userData,
+        final extra = state.extra as Map<String, Object>;
+
+        final model = extra['model'] as UserRegistrationData;
+        final cubit = extra['cubit'] as EditProfileCubit
+          ..initProfileModel(model)
+          ..prefillData();
+        return BlocProvider.value(
+          value: cubit,
+          child: ChangeEmailUserScreen(),
         );
       },
     ),
     GoRoute(
       path: AppRoutes.changePassword, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return const ChangePasswordUser();
+        return const ChangePasswordUserScreen();
       },
     ),
     GoRoute(
       path: AppRoutes.addProduct, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return const AddNewGoods();
+        return const AddNewProductsScreen();
       },
     ),
     GoRoute(
@@ -173,13 +191,13 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.newAddress,
-      builder: (context, state) => const InitNewAddress(),
+      builder: (context, state) => const InitNewAddressScreen(),
     ),
     GoRoute(
       path: AppRoutes.tradeProfile,
       builder: (BuildContext context, GoRouterState state) {
-        return BlocProvider.value(
-            value: locator<EditProfileCubit>(), child: TradeProfileScreen());
+        final cubit = state.extra as EditProfileCubit;
+        return BlocProvider.value(value: cubit, child: TradeProfileScreen());
       },
     ),
     GoRoute(

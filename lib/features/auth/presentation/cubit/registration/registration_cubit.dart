@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -66,14 +68,12 @@ class RegistrationCubit extends Cubit<RegistrationState> {
 
   void register(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
-      emit(state.copyWith(errorMessage: 'Please fill all fields correctly.'));
+      emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
       return;
     }
 
     if (!state.user.agreedToTerms! || !state.user.isAbove18!) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("You must agree to terms and be over 18")),
-      );
+      showFloatingMessageError('agreedToTerms'.tr());
       return;
     }
 
@@ -89,6 +89,7 @@ class RegistrationCubit extends Cubit<RegistrationState> {
           isRegisterLoading: false,
           errorMessage: failure,
         ));
+        showFloatingMessageError('somethingWentWrong'.tr());
       },
       (_) {
         emit(state.copyWith(
@@ -96,7 +97,7 @@ class RegistrationCubit extends Cubit<RegistrationState> {
           successRegister: true,
           errorMessage: '',
         ));
-        context.push(AppRoutes.otp, extra: state.user);
+        context.push(AppRoutes.deliveryAddress, extra: state.user);
       },
     );
   }

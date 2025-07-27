@@ -15,7 +15,7 @@ class SettingsScreen extends StatelessWidget {
           builder: (context, state) {
             final cubit = context.read<EditProfileCubit>();
 
-            if (state.changeInfoProfile.isEmpty || state.isLoading) {
+            if (state.isLoading) {
               return Center(
                   child: CircularProgressIndicator(
                 color: AppColors.grey,
@@ -29,9 +29,11 @@ class SettingsScreen extends StatelessWidget {
                     actions: [
                       TextButton(
                           onPressed: () {
-                            if (cubit.firstNameController.text.isNotEmpty &&
-                                cubit.lastNameController.text.isNotEmpty) {
+                            if ((state.user.firstName?.isNotEmpty ?? false) &&
+                                (state.user.lastName?.isNotEmpty ?? false)) {
                               cubit.submit(context);
+                            } else {
+                              showFloatingMessageError('fillAllFields'.tr());
                             }
                           },
                           child: CustomText(
@@ -63,14 +65,16 @@ class SettingsScreen extends StatelessWidget {
                           ),
                           12.ph,
                           CustomTextField(
-                            controller: cubit.firstNameController,
+                            initialValue: state.user.firstName,
+                            //controller: cubit.firstNameController,
                             onChanged: (v) => cubit.updateNewField('name', v),
                             hintText: 'firstName'.tr(),
                             isRequired: false,
                           ),
                           12.ph,
                           CustomTextField(
-                            controller: cubit.lastNameController,
+                            // controller: cubit.lastNameController,
+                            initialValue: state.user.lastName,
                             onChanged: (v) =>
                                 cubit.updateNewField('lastName', v),
                             hintText: 'lastName'.tr(),
@@ -79,11 +83,9 @@ class SettingsScreen extends StatelessWidget {
                           12.ph,
                           CustomSelectGender(
                             value: _normalizeGender(
-                              (state.user.gender == null ||
-                                      state.user.gender!.isEmpty)
-                                  ? user.gender ?? ''
-                                  : state.user.gender,
-                            ),
+                                (state.user.gender?.isEmpty ?? true)
+                                    ? user.gender ?? ''
+                                    : state.user.gender),
                             onChanged: (val) => cubit.setNewGender(val),
                           ),
                           12.ph,
@@ -94,10 +96,21 @@ class SettingsScreen extends StatelessWidget {
                                 : state.user.country!,
                           ),
                           12.ph,
-                          ChangeInfoProfile(state: state),
+                          ChangeInfoProfile(),
                           50.ph,
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              CustomDialog.show(
+                                context,
+                                title: 'deleteAccount'.tr(),
+                                content: 'deleteAccountWarning'.tr(),
+                                confirmText: 'delete'.tr(),
+                                isDestructive: true,
+                                onConfirm: () {
+                                  cubit.deleteAccount(context);
+                                },
+                              );
+                            },
                             child: CustomContainer(
                               height: 40.h,
                               width: double.infinity,
@@ -120,14 +133,13 @@ class SettingsScreen extends StatelessWidget {
                                       text: "deleteAccount".tr(),
                                       fontWeight: FontWeight.w700,
                                       fontSize: 16,
-                                      fontFamily: "Manrope",
                                     ),
                                   ],
                                 ),
                               ),
                             ),
                           ),
-                          12.ph,
+                          30.ph,
                         ],
                       ),
                     ),

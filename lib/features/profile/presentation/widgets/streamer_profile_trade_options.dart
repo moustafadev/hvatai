@@ -33,7 +33,7 @@ class StreamerProfileTradeOptions extends StatelessWidget {
             title: Column(
               children: [
                 CustomText(
-                  text: 'Invite a friend and get up to 10,000 ₽',
+                  text: 'inviteFriendTitle'.tr(),
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.blackDark,
@@ -41,7 +41,7 @@ class StreamerProfileTradeOptions extends StatelessWidget {
                 Row(
                   children: [
                     CustomText(
-                      text: 'Balance:',
+                      text: 'balanceAmount'.tr(),
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                       color: AppColors.grey,

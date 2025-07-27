@@ -13,6 +13,7 @@ class ProfileScreen extends StatelessWidget {
               bottom: false,
               child: BlocBuilder<ProfileCubit, ProfileState>(
                 builder: (context, state) {
+                  final cubit = context.read<ProfileCubit>();
                   if (state.isLoading) {
                     return Center(
                       child: CircularProgressIndicator(
@@ -55,7 +56,16 @@ class ProfileScreen extends StatelessWidget {
                           30.ph,
                           GestureDetector(
                             onTap: () {
-                              // _showLogoutDialog();
+                              CustomDialog.show(
+                                context,
+                                title: 'logout'.tr(),
+                                content: 'logoutConfirmation'.tr(),
+                                confirmText: 'logout'.tr(),
+                                isDestructive: true,
+                                onConfirm: () {
+                                  cubit.signOut(context);
+                                },
+                              );
                             },
                             child: CustomContainer(
                               height: 40.h,
@@ -110,92 +120,3 @@ class ProfileScreen extends StatelessWidget {
 
 
 
-
-// void _showLogoutDialog() {
-  //   Get.dialog(
-  //     Dialog(
-  //       shape: RoundedRectangleBorder(
-  //         borderRadius: BorderRadius.circular(20),
-  //       ),
-  //       child: Container(
-  //         padding: EdgeInsets.all(20),
-  //         decoration: BoxDecoration(
-  //             borderRadius: BorderRadius.circular(20),
-  //             gradient: primaryGradientColor),
-  //         child: Column(
-  //           mainAxisSize: MainAxisSize.min,
-  //           children: [
-  //             Icon(
-  //               Icons.warning_amber_rounded,
-  //               size: 60,
-  //               color: Colors.white,
-  //             ),
-  //             SizedBox(height: 15),
-  //             Text(
-  //               "confirm_logout".tr,
-  //               style: TextStyle(
-  //                 fontSize: 22,
-  //                 fontWeight: FontWeight.bold,
-  //                 color: Colors.white,
-  //               ),
-  //             ),
-  //             SizedBox(height: 10),
-  //             Text(
-  //               "logout_confirmation".tr,
-  //               textAlign: TextAlign.center,
-  //               style: TextStyle(fontSize: 16, color: Colors.white70),
-  //             ),
-  //             SizedBox(height: 20),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //               children: [
-  //                 // Cancel Button
-  //                 Expanded(
-  //                   child: ElevatedButton(
-  //                     onPressed: () {
-  //                       Get.back(); // Close dialog
-  //                     },
-  //                     style: ElevatedButton.styleFrom(
-  //                       backgroundColor: Colors.white.withOpacity(0.3),
-  //                       shape: RoundedRectangleBorder(
-  //                         borderRadius: BorderRadius.circular(10),
-  //                       ),
-  //                     ),
-  //                     child: Text(
-  //                       "cancel".tr,
-  //                       style: TextStyle(fontSize: 16, color: Colors.white),
-  //                     ),
-  //                   ),
-  //                 ),
-  //                 SizedBox(width: 10),
-  //                 // Logout Button
-  //                 Expanded(
-  //                   child: ElevatedButton(
-  //                     onPressed: () async {
-  //                       await StorageService.logout();
-  //                       await FirebaseAuth.instance.signOut();
-  //                       Get.back(); // Close dialog
-  //                       Get.offAll(() =>
-  //                           SocialsLoginScreen()); // Navigate to login screen
-  //                     },
-  //                     style: ElevatedButton.styleFrom(
-  //                       backgroundColor: Colors.white,
-  //                       shape: RoundedRectangleBorder(
-  //                         borderRadius: BorderRadius.circular(10),
-  //                       ),
-  //                     ),
-  //                     child: Text(
-  //                       "logout".tr,
-  //                       style:
-  //                           TextStyle(fontSize: 16, color: Colors.red.shade800),
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ],
-  //             )
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }

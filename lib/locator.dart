@@ -44,17 +44,19 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => VerificationCubit());
   locator.registerFactory(() => InterestsCubit());
   locator.registerFactory(() => InterestsDetailCubit());
-  locator.registerFactory(() => ProfileCubit(locator()));
+  locator.registerFactory(() => ProfileCubit(locator(), locator()));
   locator.registerFactory(() => ActivityCubit());
   locator.registerLazySingleton(() => NotificationCubit());
   locator.registerLazySingleton(() => AuctionSearchCubit());
 
   locator.registerFactory(() => CategoryTabsCubit());
   locator.registerFactory(() => SearchTabsCubit());
+  locator.registerFactory(() =>
+      UpdateDeliveryAddressCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(
-      () => UpdateDeliveryAddressCubit(locator(), locator(), locator()));
-  locator.registerFactory(() => PaymentMethodCubit(locator(), locator()));
-  locator.registerFactory(() => EditProfileCubit(locator(), locator()));
+      () => PaymentMethodCubit(locator(), locator(), locator()));
+  locator
+      .registerFactory(() => EditProfileCubit(locator(), locator(), locator()));
   locator.registerFactory(() => MyGoodsCubit());
   locator.registerFactory(() => MainNotificationCubit(locator()));
 
@@ -73,11 +75,11 @@ Future<void> setupLocator() async {
 
   // //REPOSITORISE
   locator.registerLazySingleton<AuthRepository>(
-      () => AuthImplRepository(locator()));
+      () => AuthImplRepository(locator(), locator()));
   locator.registerLazySingleton<HomeRepository>(
       () => HomeImplRepository(locator()));
   locator.registerLazySingleton<ProfileRepository>(
-      () => ProfileImplRepository(locator()));
+      () => ProfileImplRepository(locator(), locator()));
   // //DATASOURSE
   locator.registerLazySingleton(() => ApiServiceAuth());
   locator.registerLazySingleton(() => ApiServiceHome());

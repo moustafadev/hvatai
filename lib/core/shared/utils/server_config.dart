@@ -6,12 +6,14 @@ abstract class ServerConfig {
   static const String login = "sign-in";
   static const String register = "sign-up";
   static const String checkOtp = "submit-otp";
-  static const String logout = "sign-out";
   static const String interestsCategories = "interestsCategories";
   static const String loginWithGoogle = "auth/google";
   static const String deliveryAddress = "addresses";
-  static String editDeliveryAddress(int addressId) => 'addresses/$addressId';
+  static String deliveryAddressId(int addressId) => 'addresses/$addressId';
+  static String cardId(int cardId) => 'cards/$cardId';
   static const String profile = "profile";
   static const String cards = "cards";
   static const String notifications = "notifications";
+  static const String deleteAccount = "delete-account";
+  static const String signOut = "sign-out";
 }

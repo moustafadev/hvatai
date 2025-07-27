@@ -29,6 +29,9 @@ class OtpCubit extends Cubit<OtpState> {
   Future<void> verifyOtp(BuildContext context) async {
     if (state.code.length != 4) {
       emit(state.copyWith(errorMessage: 'Please enter a valid code.'));
+
+      showFloatingMessageError('enterValidCode'.tr());
+
       return;
     }
 
@@ -45,6 +48,7 @@ class OtpCubit extends Cubit<OtpState> {
           isVerifying: false,
           errorMessage: failure,
         ));
+        showFloatingMessageError('codeNotRight'.tr());
       },
       (userData) {
         final updatedUser = currentUser.copyWith(

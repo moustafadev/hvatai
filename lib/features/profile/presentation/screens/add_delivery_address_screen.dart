@@ -58,37 +58,46 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                       ),
                       20.ph,
                       CustomTextField(
-                        controller: cubit.controllers['city'],
+                        key: ValueKey('city_${state.lastUpdated}'),
+                        onChanged: (v) => cubit.updateField('city', v),
+                        initialValue: user.city,
                         hintText: 'city'.tr(),
                         isRequired: false,
                         validator: (v) => v!.isEmpty ? 'enterCity'.tr() : null,
                       ),
                       20.ph,
                       CustomTextField(
+                        key: ValueKey('street_${state.lastUpdated}'),
                         isRequired: false,
                         hintText: 'street'.tr(),
                         validator: (v) =>
                             v!.isEmpty ? 'enterStreet'.tr() : null,
-                        controller: cubit.controllers['street'],
+                        onChanged: (v) => cubit.updateField('street', v),
+                        initialValue: user.street,
                       ),
                       20.ph,
                       Row(
                         children: [
                           Expanded(
                             child: CustomTextField(
+                              key: ValueKey('house_${state.lastUpdated}'),
                               isRequired: false,
                               hintText: 'house'.tr(),
                               validator: (v) =>
                                   v!.isEmpty ? 'enterHouse'.tr() : null,
-                              controller: cubit.controllers['house'],
+                              onChanged: (v) => cubit.updateField('house', v),
+                              initialValue: user.frontDoor,
                             ),
                           ),
                           10.pw,
                           Expanded(
                             child: CustomTextField(
                               isRequired: false,
+                              key: ValueKey('apartment_${state.lastUpdated}'),
                               hintText: 'apartment'.tr(),
-                              controller: cubit.controllers['apartment'],
+                              onChanged: (v) =>
+                                  cubit.updateField('apartment', v),
+                              initialValue: user.apartment,
                             ),
                           ),
                         ],
@@ -100,17 +109,24 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                             child: CustomTextField(
                               isRequired: false,
                               hintText: 'entrance'.tr(),
-                              controller: cubit.controllers['entrance'],
+                              key: ValueKey('entrance_${state.lastUpdated}'),
+                              validator: (v) =>
+                                  v!.isEmpty ? 'enterEntrance'.tr() : null,
+                              onChanged: (v) =>
+                                  cubit.updateField('entrance', v),
+                              initialValue: user.floor,
                             ),
                           ),
                           10.pw,
                           Expanded(
                             child: CustomTextField(
                               isRequired: false,
+                              key: ValueKey('index_${state.lastUpdated}'),
                               hintText: 'index'.tr(),
                               validator: (v) =>
                                   v!.isEmpty ? 'enterIndex'.tr() : null,
-                              controller: cubit.controllers['index'],
+                              onChanged: (v) => cubit.updateField('index', v),
+                              initialValue: user.intercomCode,
                             ),
                           ),
                         ],
@@ -125,26 +141,8 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                       ),
                       18.ph,
                       GestureDetector(
-                        onTap: () async {
-                          final cubit =
-                              context.read<UpdateDeliveryAddressCubit>();
-
-                          try {
-                            final position = await cubit.determinePosition();
-                            if (position == null) return;
-
-                            final addressData =
-                                await cubit.getAddressFromPosition(position);
-
-                            cubit.updateField(
-                                'country', addressData['country']!);
-                            cubit.updateField('city', addressData['city']!);
-                            cubit.updateField('street', addressData['street']!);
-                            cubit.updateField('index', addressData['index']!);
-                          } catch (e) {
-                            floatingSnackBar(
-                                message: e.toString(), context: context);
-                          }
+                        onTap: () {
+                          cubit.addMyLocation();
                         },
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -162,15 +160,13 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                       CustomGradientButton(
                         text: 'save'.tr(),
                         isLoading: state.isLoading,
-                        isDisabled: ![
-                          user.apartment,
-                          user.city,
-                          user.floor,
-                          user.frontDoor,
-                          user.intercomCode,
-                          user.street,
-                          user.country,
-                        ].every((field) => (field ?? '').isNotEmpty),
+                        isDisabled: !((state.user.city?.isNotEmpty ?? false) &&
+                            (state.user.street?.isNotEmpty ?? false) &&
+                            (state.user.country?.isNotEmpty ?? false) &&
+                            (state.user.frontDoor?.isNotEmpty ?? false) &&
+                            (state.user.apartment?.isNotEmpty ?? false) &&
+                            (state.user.floor?.isNotEmpty ?? false) &&
+                            (state.user.intercomCode?.isNotEmpty ?? false)),
                         onPressed: () => cubit.submit(context),
                       ),
                       20.ph,

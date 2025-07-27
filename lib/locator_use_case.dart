@@ -6,10 +6,14 @@ import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
 import 'package:hvatai/features/home/domain/usecases/get_notification_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/delete_account_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/delete_address_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/delete_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_delivery_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/sign_out_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 import 'package:hvatai/locator.dart';
 
@@ -28,4 +32,8 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => GetCardUsecase(locator()));
   locator.registerLazySingleton(() => GetNotificationUsecase(locator()));
   locator.registerLazySingleton(() => AddNewCardUsecase(locator()));
+  locator.registerLazySingleton(() => DeleteAccountUsecase(locator()));
+  locator.registerLazySingleton(() => SignOutUsecase(locator()));
+  locator.registerLazySingleton(() => DeleteAddressUsecase(locator()));
+  locator.registerLazySingleton(() => DeleteCardUsecase(locator()));
 }

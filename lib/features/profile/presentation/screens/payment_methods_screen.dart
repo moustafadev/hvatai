@@ -9,6 +9,7 @@ class PaymentMethodsScreen extends StatelessWidget {
       create: (context) => locator<PaymentMethodCubit>()..getPaymentMethods(),
       child: BlocBuilder<PaymentMethodCubit, PaymentMethodState>(
           builder: (context, state) {
+        final cubit = context.read<PaymentMethodCubit>();
         if (state.isLoading) {
           return const Center(
             child: CircularProgressIndicator(
@@ -57,40 +58,42 @@ class PaymentMethodsScreen extends StatelessWidget {
                             padding: EdgeInsets.symmetric(vertical: 16.h),
                             itemBuilder: (context, index) {
                               final card = state.cards[index];
-                              return Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    card.brand == 'visa'
-                                        ? Assets.assetsIconsVisa
-                                        : Assets.assetsIconsMasterCard,
-                                    width: 35.w,
-                                    height: 12.h,
-                                  ),
-                                  8.pw,
-                                  CustomText(
-                                    text: '**** ${card.lastFour}',
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ],
+                              return CustomSwipeableListTitle(
+                                onDelete: () {
+                                  cubit.deleteCard(card.id!);
+                                },
+                                contentPadding: EdgeInsets.all(0),
+                                leading: SvgPicture.asset(
+                                  card.brand == 'visa'
+                                      ? Assets.assetsIconsVisa
+                                      : Assets.assetsIconsMasterCard,
+                                  width: 35.w,
+                                  height: 12.h,
+                                ),
+                                title: CustomText(
+                                  text: '**** ${card.lastFour}',
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                                trailing: Icon(
+                                  Icons.chevron_right,
+                                  color: AppColors.blackDark,
+                                  size: 28,
+                                ),
                               );
                             },
                             separatorBuilder: (context, index) => Divider(
-                              height: 50.h,
+                              height: 15.h,
                               color: AppColors.gray,
                               thickness: 1,
                             ),
                           ),
                           ListTile(
                             onTap: () async {
-                              final updated = await context.push<bool>(
+                              await context.push(
                                 AppRoutes.addNewPaymentMethod,
+                                extra: context.read<PaymentMethodCubit>(),
                               );
-                              if (updated == true) {
-                                context
-                                    .read<PaymentMethodCubit>()
-                                    .getPaymentMethods();
-                              }
                             },
                             contentPadding: EdgeInsets.all(0),
                             leading: SvgPicture.asset(

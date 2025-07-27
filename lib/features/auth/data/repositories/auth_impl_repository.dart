@@ -8,21 +8,20 @@ import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.da
 import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
-import 'package:hvatai/locator.dart';
 import 'package:dartz/dartz.dart';
 
 class AuthImplRepository implements AuthRepository {
   final ApiServiceAuth _apiServiceAuth;
-  final AppLocal appLocal = locator<AppLocal>();
+  final AppLocal _appLocal;
 
-  AuthImplRepository(this._apiServiceAuth);
+  AuthImplRepository(this._apiServiceAuth, this._appLocal);
 
   @override
   Future<Either<String, LoginModel>> login(LoginParams params) async {
     return executeAndHandleError<LoginModel>(() async {
       final res = await _apiServiceAuth.login(params);
       if (res.token != null) {
-        appLocal.saveToken(res.token!);
+        _appLocal.saveToken(res.token!);
         print('Token saved: ${res.token}');
       }
       return res;
@@ -35,7 +34,7 @@ class AuthImplRepository implements AuthRepository {
       final res = await _apiServiceAuth.checkOtp(params);
 
       if (res.token != null) {
-        appLocal.saveToken(res.token!);
+        _appLocal.saveToken(res.token!);
         print('Token saved: ${res.token}');
       }
 
@@ -48,6 +47,7 @@ class AuthImplRepository implements AuthRepository {
       RegisterParams params) async {
     return executeAndHandleError<UserRegistrationData>(() async {
       final res = await _apiServiceAuth.register(params);
+
       return res;
     });
   }
