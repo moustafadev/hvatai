@@ -97,7 +97,7 @@ class RegistrationCubit extends Cubit<RegistrationState> {
           successRegister: true,
           errorMessage: '',
         ));
-        context.push(AppRoutes.deliveryAddress, extra: state.user);
+        context.push(AppRoutes.otp, extra: state.user);
       },
     );
   }

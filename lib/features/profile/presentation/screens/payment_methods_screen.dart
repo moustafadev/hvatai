@@ -55,12 +55,22 @@ class PaymentMethodsScreen extends StatelessWidget {
                             physics:
                                 NeverScrollableScrollPhysics(), // لا تجعلها scrollable داخليًا
                             itemCount: state.cards.length,
-                            padding: EdgeInsets.symmetric(vertical: 16.h),
+                            padding: EdgeInsets.symmetric(vertical: 5.h),
                             itemBuilder: (context, index) {
                               final card = state.cards[index];
                               return CustomSwipeableListTitle(
                                 onDelete: () {
-                                  cubit.deleteCard(card.id!);
+                                  CustomDialog.show(
+                                    context,
+                                    title: 'deletePaymentMethod'.tr(),
+                                    content: 'deletePaymentMethodMessage'.tr(),
+                                    confirmText: 'delete'.tr(),
+                                    isDestructive: true,
+                                    onConfirm: () {
+                                      cubit.deleteCard(card.id!);
+                                      context.pop();
+                                    },
+                                  );
                                 },
                                 contentPadding: EdgeInsets.all(0),
                                 leading: SvgPicture.asset(
@@ -68,26 +78,27 @@ class PaymentMethodsScreen extends StatelessWidget {
                                       ? Assets.assetsIconsVisa
                                       : Assets.assetsIconsMasterCard,
                                   width: 35.w,
-                                  height: 12.h,
+                                  height: 20.h,
                                 ),
                                 title: CustomText(
                                   text: '**** ${card.lastFour}',
                                   fontSize: 14.sp,
                                   fontWeight: FontWeight.w500,
                                 ),
-                                trailing: Icon(
-                                  Icons.chevron_right,
-                                  color: AppColors.blackDark,
-                                  size: 28,
-                                ),
                               );
                             },
                             separatorBuilder: (context, index) => Divider(
-                              height: 15.h,
+                              height: 1.h,
                               color: AppColors.gray,
                               thickness: 1,
                             ),
                           ),
+                          Divider(
+                            height: 1.h,
+                            color: AppColors.gray,
+                            thickness: 1,
+                          ),
+                          5.ph,
                           ListTile(
                             onTap: () async {
                               await context.push(
@@ -112,6 +123,7 @@ class PaymentMethodsScreen extends StatelessWidget {
                               size: 28,
                             ),
                           ),
+                          5.ph,
                           Divider(
                             height: 1.h,
                             color: AppColors.gray,

@@ -23,7 +23,13 @@ class CheckOtpParams {
   Map<String, dynamic> toJson() {
     return {
       'email': email,
-      'otp': code,
+      'otp': code, // تأكد إنه string مش int
     };
+  }
+
+  // أضف method للـ debugging
+  @override
+  String toString() {
+    return 'CheckOtpParams(email: $email, otp: $code, otp_type: ${code.runtimeType})';
   }
 }

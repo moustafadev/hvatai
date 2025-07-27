@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
@@ -10,6 +12,18 @@ import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
 
 class ApiServiceAuth extends ApiBase {
+  Future<LoginModel> checkOtp(CheckOtpParams params) async {
+    return executeAndHandleErrorServer<LoginModel>(() async {
+      final response = await post(ServerConfig.checkOtp, body: params.toJson());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return LoginModel.fromJson(response.json);
+      } else {
+        throw Exception;
+      }
+    });
+  }
+
+//
   Future<LoginModel> login(LoginParams params) async {
     return executeAndHandleErrorServer<LoginModel>(() async {
       final response = await post(ServerConfig.login, body: params.toJson());
@@ -36,17 +50,6 @@ class ApiServiceAuth extends ApiBase {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return UserRegistrationData.fromJson(response.json);
-      } else {
-        throw Exception;
-      }
-    });
-  }
-
-  Future<LoginModel> checkOtp(CheckOtpParams params) async {
-    return executeAndHandleErrorServer<LoginModel>(() async {
-      final response = await post(ServerConfig.checkOtp, body: params.toJson());
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return LoginModel.fromJson(response.json);
       } else {
         throw Exception;
       }

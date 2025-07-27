@@ -17,18 +17,6 @@ class AuthImplRepository implements AuthRepository {
   AuthImplRepository(this._apiServiceAuth, this._appLocal);
 
   @override
-  Future<Either<String, LoginModel>> login(LoginParams params) async {
-    return executeAndHandleError<LoginModel>(() async {
-      final res = await _apiServiceAuth.login(params);
-      if (res.token != null) {
-        _appLocal.saveToken(res.token!);
-        print('Token saved: ${res.token}');
-      }
-      return res;
-    });
-  }
-
-  @override
   Future<Either<String, LoginModel>> checkOtp(CheckOtpParams params) async {
     return executeAndHandleError<LoginModel>(() async {
       final res = await _apiServiceAuth.checkOtp(params);
@@ -38,6 +26,18 @@ class AuthImplRepository implements AuthRepository {
         print('Token saved: ${res.token}');
       }
 
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, LoginModel>> login(LoginParams params) async {
+    return executeAndHandleError<LoginModel>(() async {
+      final res = await _apiServiceAuth.login(params);
+      if (res.token != null) {
+        _appLocal.saveToken(res.token!);
+        print('Token saved: ${res.token}');
+      }
       return res;
     });
   }

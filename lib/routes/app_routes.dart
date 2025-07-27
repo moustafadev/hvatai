@@ -13,7 +13,7 @@ class AppRoutes {
   static const String registration = '/registration';
   static const String deliveryAddress = '/delivery_address';
   static const String verificationCode = '/verification_code';
-
+  static const String analytics = '/analytics';
   static const String socialLogin = '/social_login';
   static const String termAndConditions = '/term_and_conditions';
   static const String privacyPolicy = '/privacy_policy';

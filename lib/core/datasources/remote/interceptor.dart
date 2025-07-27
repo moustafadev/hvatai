@@ -14,14 +14,23 @@ class AuthInterceptor extends QueuedInterceptor {
   bool _isHandling401 = false;
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final token = appLocal.getToken();
+  void onRequest(
+      RequestOptions options, RequestInterceptorHandler handler) async {
+    final token = await appLocal.getToken();
+
     print('Token in interceptor: $token');
-    if (token != null && token.isNotEmpty) {
+
+    if (token != null && token.isNotEmpty && token != 'null') {
       options.headers['Authorization'] = 'Bearer $token';
+      print('Authorization header added: Bearer $token');
+    } else {
+      options.headers.remove('Authorization');
+      print('No valid token found, Authorization header removed');
     }
+
     options.headers['Content-Type'] = 'application/json';
     options.headers['Accept'] = 'application/json';
+
     super.onRequest(options, handler);
   }
 

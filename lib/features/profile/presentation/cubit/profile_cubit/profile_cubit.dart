@@ -101,6 +101,9 @@ class ProfileCubit extends Cubit<ProfileState> {
       {
         "icon": Assets.assetsImagesAnalyticsIcon,
         "title": "Analytics".tr(),
+        "screen": (BuildContext context) {
+          context.push(AppRoutes.analytics);
+        },
       },
       {
         "icon": Assets.assetsImagesDeliveryIcon,

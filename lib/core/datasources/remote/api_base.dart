@@ -24,7 +24,6 @@ abstract class ApiBase {
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
       sendTimeout: const Duration(seconds: 30),
-      // حذف إضافة Authorization هنا لأنها في Interceptor
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
@@ -45,7 +44,17 @@ abstract class ApiBase {
     bool customPath = false,
     String contentType = 'application/json',
   }) async {
-    final fullPath = customPath ? path : ServerConfig.baseUrl + path;
+    String fullPath;
+    if (customPath) {
+      fullPath = path;
+    } else {
+      final cleanPath = path.startsWith('/') ? path.substring(1) : path;
+      final cleanBaseUrl = ServerConfig.baseUrl.endsWith('/')
+          ? ServerConfig.baseUrl.substring(0, ServerConfig.baseUrl.length - 1)
+          : ServerConfig.baseUrl;
+
+      fullPath = '$cleanBaseUrl/$cleanPath';
+    }
 
     Response? resp;
     dynamic decodedJson;
@@ -54,6 +63,9 @@ abstract class ApiBase {
     print("📦 Method: $method");
     if (headers != null && headers.isNotEmpty) {
       print("📋 Headers: $headers");
+    }
+    if (queryParameters != null && queryParameters.isNotEmpty) {
+      print("🔍 Query Parameters: $queryParameters");
     }
 
     try {
@@ -108,6 +120,8 @@ abstract class ApiBase {
       decodedJson = resp.data;
     } catch (e, st) {
       log("""❌ HTTP Request Error:
+        URL: $fullPath
+        Method: $method
         statusCode: ${resp?.statusCode}
         body: ${resp?.data}
         exception: $e
@@ -216,28 +230,5 @@ abstract class ApiBase {
       customPath: customPath,
       queryParameters: queryParameters,
     );
-  }
-}
-
-// Interceptor خاص بك
-class CustomInterceptors extends Interceptor {
-  @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    print('➡️ REQUEST[${options.method}] => PATH: ${options.uri}');
-    super.onRequest(options, handler);
-  }
-
-  @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
-    print(
-        '✅ RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.uri}');
-    super.onResponse(response, handler);
-  }
-
-  @override
-  void onError(DioException err, ErrorInterceptorHandler handler) {
-    print(
-        '❗️ ERROR[${err.response?.statusCode}] => PATH: ${err.requestOptions.uri}');
-    super.onError(err, handler);
   }
 }

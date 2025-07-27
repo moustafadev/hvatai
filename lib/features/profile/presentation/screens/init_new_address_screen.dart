@@ -59,7 +59,17 @@ class InitNewAddressScreen extends StatelessWidget {
                           final address = state.deliveryModel[index];
                           return CustomSwipeableListTitle(
                             onDelete: () {
-                              cubit.deleteAddress(address.id!);
+                              CustomDialog.show(
+                                context,
+                                title: 'deleteAddress'.tr(),
+                                content: 'deleteAddressMessage'.tr(),
+                                confirmText: 'delete'.tr(),
+                                isDestructive: true,
+                                onConfirm: () {
+                                  cubit.deleteAddress(address.id!);
+                                  context.pop();
+                                },
+                              );
                             },
                             contentPadding: EdgeInsets.all(0),
                             leading: Image.asset(
