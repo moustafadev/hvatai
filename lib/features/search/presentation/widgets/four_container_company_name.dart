@@ -21,6 +21,7 @@ class FourContainerCompanyName extends StatelessWidget {
         CustomItemFourContainer(
           text: 'clips'.tr(),
           assetPath: Assets.assetsImagesOrderIcon,
+          onTap: () => context.push(AppRoutes.clipsCompany),
         ),
         8.pw,
         CustomItemFourContainer(
