@@ -44,6 +44,12 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
+      path: AppRoutes.inviteFriends, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        return const InviteFriendScreen();
+      },
+    ),
+    GoRoute(
       path: AppRoutes.addDeliveryAddress, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         final cubit = state.extra as UpdateDeliveryAddressCubit

@@ -89,6 +89,9 @@ class ProfileCubit extends Cubit<ProfileState> {
       {
         "icon": Assets.assetsIconsUsersGroupRoundedIcon,
         "title": "Invite a friend and get up to 10,000 ₽\nBalance: 300 ₽".tr(),
+        "screen": (BuildContext context) {
+          context.push(AppRoutes.inviteFriends);
+        },
       },
       {
         "icon": Assets.assetsIconsStar2,

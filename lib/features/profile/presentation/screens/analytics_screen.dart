@@ -9,7 +9,6 @@ class AnalyticsScreen extends StatelessWidget {
       create: (_) => locator<AnalyticsCubit>(),
       child: BlocBuilder<AnalyticsCubit, AnalyticsState>(
           builder: (context, state) {
-        final cubit = context.read<AnalyticsCubit>();
         return DefaultTabController(
           length: 2,
           initialIndex: state.selectedTabIndex,

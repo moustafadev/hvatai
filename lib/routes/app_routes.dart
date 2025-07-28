@@ -9,6 +9,7 @@ class AppRoutes {
   static const String activity = '/activity';
   static const String menu = '/menu';
   static const String favorite = '/favorite';
+  static const String inviteFriends = '/invite_friends';
   static const String login = '/login';
   static const String registration = '/registration';
   static const String deliveryAddress = '/delivery_address';
