@@ -1,7 +1,8 @@
 part of '../search.dart';
 
 class TopBarSearchWidget extends StatelessWidget {
-  const TopBarSearchWidget({super.key});
+  const TopBarSearchWidget({super.key, required this.image});
+  final String image;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class TopBarSearchWidget extends StatelessWidget {
               // Get.to(() => NotificationScreen1());
             },
             child: Image.asset(
-              Assets.assetsIconsShare,
+              image,
               width: 24,
               height: 24,
             ),

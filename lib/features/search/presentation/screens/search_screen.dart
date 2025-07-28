@@ -30,16 +30,18 @@ class SearchScreen extends StatelessWidget {
       child: BlocConsumer<SearchTabsCubit, SearchTabsState>(
         listener: (context, state) {},
         builder: (context, state) {
-          return Scaffold(
-            backgroundColor: AppColors.lightGreyBackground,
-            body: SafeArea(
-              bottom: false,
-              child: Column(
+          return SafeArea(
+            bottom: false,
+            child: Scaffold(
+              backgroundColor: AppColors.lightGreyBackground,
+              body: Column(
                 children: [
                   10.ph,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: TopBarSearchWidget(),
+                    child: TopBarSearchWidget(
+                      image: Assets.assetsIconsShare,
+                    ),
                   ),
                   16.ph,
                   Expanded(

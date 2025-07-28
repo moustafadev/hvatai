@@ -1,7 +1,7 @@
 part of '../search.dart';
 
-class AuctionSearchWidget extends StatelessWidget {
-  const AuctionSearchWidget({super.key});
+class ProductCardCompany extends StatelessWidget {
+  const ProductCardCompany({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,11 +14,11 @@ class AuctionSearchWidget extends StatelessWidget {
             children: [
               ...state.products.map(
                 (item) => AuctionCardSearch(
-                  isCurrentRate: true,
+                  isCurrentRate: false,
                   product: item,
                   selectedCategoryIndex: state.selectedCategoryIndex,
                   currentUserId: '',
-                  isProductCompany: false,
+                  isProductCompany: true,
                 ),
               ),
             ],

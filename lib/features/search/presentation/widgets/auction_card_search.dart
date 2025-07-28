@@ -4,12 +4,16 @@ class AuctionCardSearch extends StatelessWidget {
   final AuctionProductSearch product;
   final int selectedCategoryIndex;
   final String currentUserId;
+  final bool isCurrentRate;
+  final bool isProductCompany;
 
   const AuctionCardSearch({
     super.key,
     required this.product,
     required this.selectedCategoryIndex,
     required this.currentUserId,
+    required this.isCurrentRate,
+    required this.isProductCompany,
   });
 
   @override
@@ -35,7 +39,7 @@ class AuctionCardSearch extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 6.h),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: AppColors.lightGreyBackground,
           borderRadius: BorderRadius.circular(12.r),
         ),
         child: Row(
@@ -86,7 +90,6 @@ class AuctionCardSearch extends StatelessWidget {
                   CustomText(
                     text: product.title,
                     fontSize: 16,
-                    fontFamily: "Manrope",
                     fontWeight: FontWeight.w700,
                   ),
                   4.ph,
@@ -94,20 +97,36 @@ class AuctionCardSearch extends StatelessWidget {
                     text: product.description,
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    fontFamily: "Manrope",
                     color: AppColors.blackTransparent40,
                   ),
-                  20.ph,
-                  CustomText(
-                    text: "Current rate:",
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    fontFamily: "Manrope",
-                  ),
-                  CustomText(
-                    text: "${product.price} ₽",
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
+                  isCurrentRate ? 20.ph : 40.ph,
+                  isCurrentRate
+                      ? CustomText(
+                          text: "Current rate:",
+                          fontSize: 14,
+                          fontWeight: FontWeight.w700,
+                        )
+                      : Container(),
+                  Row(
+                    children: [
+                      CustomText(
+                        text: "${product.price} ₽",
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                      ),
+                      isProductCompany ? Spacer() : Container(),
+                      isProductCompany
+                          ? CircleAvatar(
+                              radius: 17.r,
+                              backgroundColor: AppColors.blackLite,
+                              child: Image.asset(
+                                height: 20.h,
+                                width: 20.h,
+                                Assets.assetsIconsStore,
+                              ),
+                            )
+                          : Container(),
+                    ],
                   ),
                 ],
               ),

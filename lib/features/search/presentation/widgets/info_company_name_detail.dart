@@ -40,10 +40,9 @@ class InfoCompanyNameDetail extends StatelessWidget {
                 height: 20.h,
                 width: 20.w,
                 decoration: BoxDecoration(
-                  border: Border.all(color: Colors.white, width: 3),
                   shape: BoxShape.circle,
                   image: DecorationImage(
-                    image: AssetImage(Assets.assetsIconsLiveCount)
+                    image: AssetImage(Assets.assetsImagesCircleButton)
                         as ImageProvider,
                     fit: BoxFit.fill,
                   ),

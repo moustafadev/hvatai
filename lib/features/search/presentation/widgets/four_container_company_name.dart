@@ -10,6 +10,7 @@ class FourContainerCompanyName extends StatelessWidget {
         CustomItemFourContainer(
           text: 'goods'.tr(),
           assetPath: Assets.assetsIconsUsersGroupRoundedIcon,
+          onTap: () => context.push(AppRoutes.productsCompany),
         ),
         8.pw,
         CustomItemFourContainer(
