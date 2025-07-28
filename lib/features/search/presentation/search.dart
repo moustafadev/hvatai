@@ -37,3 +37,5 @@ part 'widgets/info_company_name_bottom.dart';
 part 'widgets/four_container_company_name.dart';
 part 'widgets/custom_row_company_name.dart';
 part 'widgets/product_card_company.dart';
+part 'screens/reviews_company_screen.dart';
+part 'widgets/review_item.dart';

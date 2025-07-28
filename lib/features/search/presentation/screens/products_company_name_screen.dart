@@ -32,6 +32,7 @@ class ProductsCompanyNameScreen extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
               child: TopBarSearchWidget(
+                isSearch: true,
                 image: Assets.assetsIconsTune,
               ),
             ),

@@ -207,6 +207,10 @@ final GoRouter router = GoRouter(
       builder: (context, state) => const InitNewAddressScreen(),
     ),
     GoRoute(
+      path: AppRoutes.reviewCompany,
+      builder: (context, state) => const ReviewsCompanyScreen(),
+    ),
+    GoRoute(
       path: AppRoutes.productsCompany,
       builder: (context, state) => const ProductsCompanyNameScreen(),
     ),

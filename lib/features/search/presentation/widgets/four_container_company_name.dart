@@ -26,6 +26,7 @@ class FourContainerCompanyName extends StatelessWidget {
         CustomItemFourContainer(
           text: 'reviews'.tr(),
           assetPath: Assets.assetsIconsStar2,
+          onTap: () => context.push(AppRoutes.reviewCompany),
         ),
       ],
     );
