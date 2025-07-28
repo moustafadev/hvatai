@@ -7,6 +7,7 @@ import 'package:hvatai/features/profile/presentation/cubit/delivery_address/upda
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
+import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:flutter/material.dart';
@@ -204,6 +205,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.newAddress,
       builder: (context, state) => const InitNewAddressScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.companyName,
+      builder: (context, state) => const CompanyNameScreen(),
     ),
     GoRoute(
       path: AppRoutes.tradeProfile,

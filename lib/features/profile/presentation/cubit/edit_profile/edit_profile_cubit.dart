@@ -218,7 +218,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
         "icon": Assets.assetsIconsProfileType,
         "title": "profileType".tr(),
         "screen": (BuildContext context) {
-          context.push(AppRoutes.tradeProfile);
+          context.push(AppRoutes.tradeProfile, extra: this);
         },
       },
       {

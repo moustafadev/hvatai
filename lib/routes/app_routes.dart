@@ -11,6 +11,7 @@ class AppRoutes {
   static const String favorite = '/favorite';
   static const String inviteFriends = '/invite_friends';
   static const String login = '/login';
+  static const String companyName = '/company_name';
   static const String registration = '/registration';
   static const String deliveryAddress = '/delivery_address';
   static const String verificationCode = '/verification_code';

@@ -68,4 +68,3 @@ part 'widgets/everything_analytics_widget.dart';
 part 'widgets/streams_analytics_widget.dart';
 part 'widgets/category_everything_tabs.dart';
 part 'widgets/line_chart_widget.dart';
-part 'widgets/custom_row_invite_friend.dart';

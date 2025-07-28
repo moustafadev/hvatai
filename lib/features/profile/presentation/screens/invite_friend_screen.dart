@@ -42,20 +42,18 @@ class InviteFriendScreen extends StatelessWidget {
               ),
               8.ph,
               CustomRowInviteFriend(
-                title: 'Invite your friends',
-                description:
-                    'Your friend receives a random amount between 100 ₽ and 2000 ₽',
+                title: 'inviteFriends'.tr(),
+                description: 'yourFriendReceives'.tr(),
               ),
               16.ph,
               CustomRowInviteFriend(
-                title: 'Get rewards',
-                description:
-                    'You will receive the corresponding amount if your friend makes his first purchase',
+                title: 'getRewards'.tr(),
+                description: 'youWillReceive'.tr(),
               ),
               16.ph,
               CustomRowInviteFriend(
-                title: 'No restrictions',
-                description: 'The more friends you invite, the more you earn',
+                title: 'noRestrictions'.tr(),
+                description: 'theMoreFriends'.tr(),
               ),
               16.ph,
               Container(
@@ -107,14 +105,14 @@ class InviteFriendScreen extends StatelessWidget {
               Row(
                 children: [
                   CustomText(
-                    text: 'Earned: 300 ₽'.tr(),
+                    text: 'earned'.tr(),
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
                     color: AppColors.blackDark,
                   ),
                   Spacer(),
                   CustomText(
-                    text: 'View rules'.tr(),
+                    text: 'viewRules'.tr(),
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w400,
                     color: AppColors.primaryPink,

@@ -1,4 +1,4 @@
-part of '../profile.dart';
+part of 'customs.dart';
 
 class CustomRowInviteFriend extends StatelessWidget {
   const CustomRowInviteFriend(

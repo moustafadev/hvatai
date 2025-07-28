@@ -9,16 +9,10 @@ class TopProfileInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
       final user = state.userProfileModel;
-      final cubit = context.read<ProfileCubit>();
       return Row(
         children: [
           GestureDetector(
-            onTap: () {
-              context.push(extra: {
-                'user': user,
-                'cubit': cubit,
-              }, AppRoutes.tradeProfileDetail);
-            },
+            onTap: () {},
             child: Container(
               height: 41.h,
               width: 41.w,

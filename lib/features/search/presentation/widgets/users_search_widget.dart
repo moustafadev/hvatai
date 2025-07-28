@@ -32,6 +32,7 @@ class UserTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () => context.push(AppRoutes.companyName),
       contentPadding: EdgeInsets.all(0),
       leading: CircleAvatar(
         radius: 20.r,

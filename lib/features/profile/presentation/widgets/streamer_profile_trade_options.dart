@@ -11,6 +11,7 @@ class StreamerProfileTradeOptions extends StatelessWidget {
       final firstItem = state.streamerOptions.first;
       final remainingItems = state.streamerOptions.sublist(1);
       return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           ListTile(
             contentPadding: EdgeInsets.zero,
@@ -31,6 +32,7 @@ class StreamerProfileTradeOptions extends StatelessWidget {
               ),
             ),
             title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomText(
                   text: 'inviteFriendTitle'.tr(),

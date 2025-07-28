@@ -15,10 +15,12 @@ import 'package:hvatai/features/search/presentation/cubit/auction_search_cubit/a
 import 'package:hvatai/features/search/presentation/cubit/search_tabs_cubit/search_tabs_cubit.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_tabs_cubit/search_tabs_state.dart';
 import 'package:hvatai/locator.dart';
+import 'package:hvatai/routes/app_routes.dart';
 
 part 'widgets/top_search_bar_widget.dart';
 part 'widgets/search_recently.dart';
 part 'screens/search_screen.dart';
+part 'screens/company_name_screen.dart';
 part 'widgets/categories_tabs_search_widget.dart';
 part 'widgets/subscribe_electronics.dart';
 part 'widgets/search_live_video_widget.dart';
@@ -29,3 +31,7 @@ part 'widgets/my_category_search.dart';
 part 'widgets/auction_card_search.dart';
 part 'widgets/auction_search_widget.dart';
 part 'widgets/users_search_widget.dart';
+part 'widgets/info_company_name_detail.dart';
+part 'widgets/info_company_name_bottom.dart';
+part 'widgets/four_container_company_name.dart';
+part 'widgets/custom_row_company_name.dart';
