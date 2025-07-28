@@ -27,37 +27,55 @@ class ReusableLiveVideosGrid<T> extends StatelessWidget {
     final filtered = items.where(filter).toList();
 
     if (filtered.isEmpty) {
-      return const Center(child: Text('no_matching_results'));
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                Icons.favorite_border,
+                size: 48,
+                color: AppColors.grey,
+              ),
+              16.ph,
+              CustomText(
+                text: 'No favorites yet',
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w600,
+                color: AppColors.grey,
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
+      );
     }
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return GridView.builder(
-          padding: const EdgeInsets.all(0),
-          physics: const BouncingScrollPhysics(),
-          shrinkWrap: true,
-          itemCount: filtered.length,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 11,
-            mainAxisSpacing: 8,
-            mainAxisExtent: 400,
-          ),
-          itemBuilder: (context, index) {
-            final item = filtered[index];
+    return GridView.builder(
+      padding: const EdgeInsets.all(0),
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemCount: filtered.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 11.w,
+        mainAxisSpacing: 12.h,
+        childAspectRatio: 0.6,
+      ),
+      itemBuilder: (context, index) {
+        final item = filtered[index];
 
-            if (isBlocked != null &&
-                isOwner != null &&
-                isBlocked!(item) &&
-                isOwner!(item)) {
-              if (blockedCardBuilder != null) {
-                return blockedCardBuilder!(context, item);
-              }
-            }
+        if (isBlocked != null &&
+            isOwner != null &&
+            isBlocked!(item) &&
+            isOwner!(item)) {
+          if (blockedCardBuilder != null) {
+            return blockedCardBuilder!(context, item);
+          }
+        }
 
-            return liveCardBuilder(context, item);
-          },
-        );
+        return liveCardBuilder(context, item);
       },
     );
   }

@@ -18,7 +18,8 @@ class CustomGradiantTabButton extends StatelessWidget {
       onTap: onPressed,
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: 16.w,
+          horizontal: 12.w,
+          vertical: 8.h,
         ),
         decoration: BoxDecoration(
           color: AppColors.gray,
@@ -32,7 +33,6 @@ class CustomGradiantTabButton extends StatelessWidget {
             text: text,
             fontSize: 14.sp,
             color: AppColors.blackDark,
-            fontFamily: "Manrope",
             fontWeight: FontWeight.w600,
           ),
         ),

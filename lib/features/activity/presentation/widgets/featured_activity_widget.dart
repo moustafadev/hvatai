@@ -16,7 +16,7 @@ class FeaturedActivityWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 12.h),
-                  CategoryTabs(
+                  CustomCategoryTabs(
                     categories: const ["All", "Streams", "Goods", "Tags"],
                     selectedIndex: state.selectedCategoryIndex,
                     onCategorySelected: (index) {
@@ -95,41 +95,6 @@ class FeaturedActivityWidget extends StatelessWidget {
             ),
           );
         },
-      ),
-    );
-  }
-}
-
-class CategoryTabs extends StatelessWidget {
-  final List<String> categories;
-  final int selectedIndex;
-  final ValueChanged<int> onCategorySelected;
-
-  const CategoryTabs({
-    super.key,
-    required this.categories,
-    required this.selectedIndex,
-    required this.onCategorySelected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: List.generate(categories.length, (index) {
-            return Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: CustomGradiantTabButton(
-                text: categories[index],
-                isSelected: selectedIndex == index,
-                onPressed: () => onCategorySelected(index),
-              ),
-            );
-          }),
-        ),
       ),
     );
   }

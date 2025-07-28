@@ -29,9 +29,7 @@ class AuctionCard extends StatelessWidget {
     } else if (selectedCategoryIndex == 2 && currentUserBid < highestBid) {}
 
     return GestureDetector(
-      onTap: () {
-        // TODO: Handle navigation with GoRouter and pass product
-      },
+      onTap: () {},
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 6.h),
         decoration: BoxDecoration(
@@ -53,8 +51,8 @@ class AuctionCard extends StatelessWidget {
                             fit: BoxFit.cover,
                           )
                         : Image.asset(
-                            height: 140,
-                            width: 140,
+                            height: 140.h,
+                            width: 140.w,
                             Assets.assetsImagesIphone,
                           )),
                 Positioned(
@@ -72,7 +70,6 @@ class AuctionCard extends StatelessWidget {
                       text: 'Auction',
                       fontWeight: FontWeight.w600,
                       fontSize: 10.sp,
-                      fontFamily: "Manrope",
                     ),
                   ),
                 ),
@@ -97,43 +94,33 @@ class AuctionCard extends StatelessWidget {
                         ),
                       ),
                       2.pw,
-
-                      /// اسم الشركة مع overflow
-                      Expanded(
-                        child: FittedBox(
-                          child: CustomText(
-                            text: 'company_name ',
-                            fontWeight: FontWeight.w800,
-                            fontFamily: 'Manrope',
-                            fontSize: 12.sp,
-                            maxLines: 1,
-                            // overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
+                      CustomText(
+                        text: 'company_name ',
+                        fontWeight: FontWeight.w800,
+                        fontSize: 12.sp,
+                        maxLines: 1,
+                        // overflow: TextOverflow.ellipsis,
                       ),
-                      SizedBox(width: 8.w),
-
-                      /// التقييم
+                      8.pw,
                       Image.asset(
                         Assets.assetsIconsStar,
                         color: AppColors.goldenColor,
                         height: 16.h,
                         width: 16.w,
                       ),
-                      SizedBox(width: 4.w),
+                      4.pw,
                       CustomText(
                         text: "4.5",
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w700,
-                        fontFamily: 'GManrope',
                         color: AppColors.blackDark,
                       ),
                     ],
                   ),
+                  4.ph,
                   CustomText(
                     text: product.title,
                     fontSize: 16,
-                    fontFamily: "Manrope",
                     fontWeight: FontWeight.w700,
                   ),
                   4.ph,
@@ -141,7 +128,6 @@ class AuctionCard extends StatelessWidget {
                     text: product.description,
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    fontFamily: "Manrope",
                     color: AppColors.blackTransparent40,
                   ),
                   35.ph,

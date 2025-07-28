@@ -8,7 +8,7 @@ class AppRoutes {
   static const String profile = '/profile';
   static const String activity = '/activity';
   static const String menu = '/menu';
-
+  static const String favorite = '/favorite';
   static const String login = '/login';
   static const String registration = '/registration';
   static const String deliveryAddress = '/delivery_address';

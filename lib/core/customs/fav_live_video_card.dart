@@ -1,6 +1,6 @@
 part of 'customs.dart';
 
-class CustomLiveVideoCard extends StatelessWidget {
+class FavLiveVideoCard extends StatelessWidget {
   final String adminName;
   final String adminImage;
   final int viewsCount;
@@ -12,7 +12,7 @@ class CustomLiveVideoCard extends StatelessWidget {
   final bool? isFavorite;
   final VoidCallback? onFavoriteToggle;
 
-  const CustomLiveVideoCard({
+  const FavLiveVideoCard({
     super.key,
     required this.adminName,
     required this.price,
@@ -27,41 +27,10 @@ class CustomLiveVideoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final String imageUrl = liveImage.isNotEmpty
-    //     ? liveImage
-    //     : adminImage.isNotEmpty
-    //         ? adminImage
-    //         : '';
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min, // مهم: استخدام الحد الأدنى من المساحة
-
+      mainAxisSize: MainAxisSize.min,
       children: [
-        // Admin Info
-        Row(
-          children: [
-            CircleAvatar(
-              radius: 12.r,
-              backgroundColor: AppColors.transparent,
-              backgroundImage: AssetImage(
-                Assets.assetsIconsApple1,
-              ),
-            ),
-            5.pw,
-            Flexible(
-              child: CustomText(
-                text: adminName,
-                color: AppColors.blackDark,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.bold,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
-        6.ph,
-        // Live Image + Favorite Overlay
         Expanded(
           flex: 3,
           child: Stack(
@@ -77,29 +46,7 @@ class CustomLiveVideoCard extends StatelessWidget {
                   image: AssetImage(Assets.assetsImagesLive),
                   fit: BoxFit.fill,
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 6, vertical: 3),
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryPink,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: CustomText(
-                        text: "Live • $viewsCount",
-                        textAlign: TextAlign.center,
-                        color: AppColors.white,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                ),
               ),
-              // if (isFavorite != null && onFavoriteToggle != null)
               Positioned(
                 top: 10,
                 right: 10,
@@ -133,9 +80,8 @@ class CustomLiveVideoCard extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 10),
                   padding: const EdgeInsets.symmetric(
                     horizontal: 8,
-                    vertical: 2,
+                    vertical: 4,
                   ),
-                  height: 20.h,
                   decoration: BoxDecoration(
                     color: AppColors.primary,
                     borderRadius: BorderRadius.circular(10.r),
@@ -146,7 +92,6 @@ class CustomLiveVideoCard extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                     color: AppColors.green,
                     textAlign: TextAlign.center,
-                    fontFamily: 'Manrope',
                   ),
                 ),
               ),
@@ -154,15 +99,6 @@ class CustomLiveVideoCard extends StatelessWidget {
           ),
         ),
         8.ph,
-        CustomText(
-          text: price,
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-          color: AppColors.primaryPink,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-
         CustomText(
           text: title,
           fontSize: 14,
@@ -179,6 +115,27 @@ class CustomLiveVideoCard extends StatelessWidget {
           color: AppColors.grey,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
+        ),
+        Row(
+          children: [
+            CircleAvatar(
+              radius: 12.r,
+              backgroundColor: AppColors.transparent,
+              backgroundImage: AssetImage(
+                Assets.assetsIconsApple1,
+              ),
+            ),
+            5.pw,
+            Flexible(
+              child: CustomText(
+                text: adminName,
+                color: AppColors.blackDark,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.bold,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
         ),
       ],
     );

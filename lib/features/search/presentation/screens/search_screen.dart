@@ -59,7 +59,6 @@ class SearchScreen extends StatelessWidget {
                             16.ph,
                             CustomText(
                               text: 'recentlySearched'.tr(),
-                              fontFamily: "Manrope",
                               fontWeight: FontWeight.w800,
                               fontSize: 20.sp,
                             ),
@@ -68,7 +67,6 @@ class SearchScreen extends StatelessWidget {
                             24.ph,
                             CustomText(
                               text: 'category'.tr(),
-                              fontFamily: "Manrope",
                               fontWeight: FontWeight.w800,
                               fontSize: 20.sp,
                             ),
@@ -77,7 +75,6 @@ class SearchScreen extends StatelessWidget {
                             24.ph,
                             CustomText(
                               text: 'goods'.tr(),
-                              fontFamily: "Manrope",
                               fontWeight: FontWeight.w800,
                               fontSize: 20.sp,
                             ),
@@ -86,7 +83,6 @@ class SearchScreen extends StatelessWidget {
                             24.ph,
                             CustomText(
                               text: 'streams'.tr(),
-                              fontFamily: "Manrope",
                               fontWeight: FontWeight.w800,
                               fontSize: 20.sp,
                             ),
@@ -98,7 +94,6 @@ class SearchScreen extends StatelessWidget {
                             24.ph,
                             CustomText(
                               text: 'users'.tr(),
-                              fontFamily: "Manrope",
                               fontWeight: FontWeight.w800,
                               fontSize: 20.sp,
                             ),

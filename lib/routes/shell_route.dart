@@ -6,6 +6,7 @@ import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/features/activity/presentation/activity.dart';
+import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
@@ -147,6 +148,19 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
             ),
           ],
         ),
+        StatefulShellBranch(routes: <RouteBase>[
+          GoRoute(
+              path: AppRoutes.favorite,
+              pageBuilder: (context, state) {
+                final cubit = state.extra as ActivityCubit..loadProducts();
+                return buildCupertinoTransitionPage(
+                  context: context,
+                  state: state,
+                  child:
+                      BlocProvider.value(value: cubit, child: FavoriteScreen()),
+                );
+              }),
+        ]),
         StatefulShellBranch(routes: <RouteBase>[
           GoRoute(
               path: AppRoutes.tradeProfileDetail,

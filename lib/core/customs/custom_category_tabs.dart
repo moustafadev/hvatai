@@ -1,33 +1,29 @@
-part of '../activity.dart';
+part of 'customs.dart';
 
-class CategoryTabsRates extends StatelessWidget {
+class CustomCategoryTabs extends StatelessWidget {
+  final List<String> categories;
   final int selectedIndex;
-  final void Function(int) onSelect;
+  final ValueChanged<int> onCategorySelected;
 
-  const CategoryTabsRates({
+  const CustomCategoryTabs({
     super.key,
+    required this.categories,
     required this.selectedIndex,
-    required this.onSelect,
+    required this.onCategorySelected,
   });
 
   @override
   Widget build(BuildContext context) {
-    final categories = [
-      "All".tr(),
-      "You are in the lead".tr(),
-      "The bid has been outbid".tr(),
-    ];
-
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
         children: List.generate(categories.length, (index) {
           return Padding(
-            padding: EdgeInsets.only(right: 10.w),
+            padding: const EdgeInsets.only(right: 10),
             child: CustomGradiantTabButton(
               text: categories[index],
               isSelected: selectedIndex == index,
-              onPressed: () => onSelect(index),
+              onPressed: () => onCategorySelected(index),
             ),
           );
         }),

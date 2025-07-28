@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ActivityState {
   int get selectedTabIndex => throw _privateConstructorUsedError;
+  int get selectedCategoryIndex => throw _privateConstructorUsedError;
+  List<AuctionProduct> get products => throw _privateConstructorUsedError;
 
   /// Create a copy of ActivityState
   /// with the given fields replaced by the non-null parameter values.
@@ -31,7 +33,10 @@ abstract class $ActivityStateCopyWith<$Res> {
           ActivityState value, $Res Function(ActivityState) then) =
       _$ActivityStateCopyWithImpl<$Res, ActivityState>;
   @useResult
-  $Res call({int selectedTabIndex});
+  $Res call(
+      {int selectedTabIndex,
+      int selectedCategoryIndex,
+      List<AuctionProduct> products});
 }
 
 /// @nodoc
@@ -50,12 +55,22 @@ class _$ActivityStateCopyWithImpl<$Res, $Val extends ActivityState>
   @override
   $Res call({
     Object? selectedTabIndex = null,
+    Object? selectedCategoryIndex = null,
+    Object? products = null,
   }) {
     return _then(_value.copyWith(
       selectedTabIndex: null == selectedTabIndex
           ? _value.selectedTabIndex
           : selectedTabIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      selectedCategoryIndex: null == selectedCategoryIndex
+          ? _value.selectedCategoryIndex
+          : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      products: null == products
+          ? _value.products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<AuctionProduct>,
     ) as $Val);
   }
 }
@@ -68,7 +83,10 @@ abstract class _$$ActivityStateImplCopyWith<$Res>
       __$$ActivityStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int selectedTabIndex});
+  $Res call(
+      {int selectedTabIndex,
+      int selectedCategoryIndex,
+      List<AuctionProduct> products});
 }
 
 /// @nodoc
@@ -85,12 +103,22 @@ class __$$ActivityStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? selectedTabIndex = null,
+    Object? selectedCategoryIndex = null,
+    Object? products = null,
   }) {
     return _then(_$ActivityStateImpl(
       selectedTabIndex: null == selectedTabIndex
           ? _value.selectedTabIndex
           : selectedTabIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      selectedCategoryIndex: null == selectedCategoryIndex
+          ? _value.selectedCategoryIndex
+          : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      products: null == products
+          ? _value._products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<AuctionProduct>,
     ));
   }
 }
@@ -98,15 +126,30 @@ class __$$ActivityStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$ActivityStateImpl implements _ActivityState {
-  const _$ActivityStateImpl({this.selectedTabIndex = 0});
+  const _$ActivityStateImpl(
+      {this.selectedTabIndex = 0,
+      this.selectedCategoryIndex = 0,
+      final List<AuctionProduct> products = const []})
+      : _products = products;
 
   @override
   @JsonKey()
   final int selectedTabIndex;
+  @override
+  @JsonKey()
+  final int selectedCategoryIndex;
+  final List<AuctionProduct> _products;
+  @override
+  @JsonKey()
+  List<AuctionProduct> get products {
+    if (_products is EqualUnmodifiableListView) return _products;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_products);
+  }
 
   @override
   String toString() {
-    return 'ActivityState(selectedTabIndex: $selectedTabIndex)';
+    return 'ActivityState(selectedTabIndex: $selectedTabIndex, selectedCategoryIndex: $selectedCategoryIndex, products: $products)';
   }
 
   @override
@@ -115,11 +158,15 @@ class _$ActivityStateImpl implements _ActivityState {
         (other.runtimeType == runtimeType &&
             other is _$ActivityStateImpl &&
             (identical(other.selectedTabIndex, selectedTabIndex) ||
-                other.selectedTabIndex == selectedTabIndex));
+                other.selectedTabIndex == selectedTabIndex) &&
+            (identical(other.selectedCategoryIndex, selectedCategoryIndex) ||
+                other.selectedCategoryIndex == selectedCategoryIndex) &&
+            const DeepCollectionEquality().equals(other._products, _products));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, selectedTabIndex);
+  int get hashCode => Object.hash(runtimeType, selectedTabIndex,
+      selectedCategoryIndex, const DeepCollectionEquality().hash(_products));
 
   /// Create a copy of ActivityState
   /// with the given fields replaced by the non-null parameter values.
@@ -131,11 +178,17 @@ class _$ActivityStateImpl implements _ActivityState {
 }
 
 abstract class _ActivityState implements ActivityState {
-  const factory _ActivityState({final int selectedTabIndex}) =
-      _$ActivityStateImpl;
+  const factory _ActivityState(
+      {final int selectedTabIndex,
+      final int selectedCategoryIndex,
+      final List<AuctionProduct> products}) = _$ActivityStateImpl;
 
   @override
   int get selectedTabIndex;
+  @override
+  int get selectedCategoryIndex;
+  @override
+  List<AuctionProduct> get products;
 
   /// Create a copy of ActivityState
   /// with the given fields replaced by the non-null parameter values.

@@ -37,7 +37,6 @@ class _CustomSwipeableListTitleState extends State<CustomSwipeableListTitle>
   static OverlayEntry? _currentOverlay;
   static _CustomSwipeableListTitleState? _activeInstance;
 
-  // Global key للحصول على موقع زر الحذف
   final GlobalKey _deleteButtonKey = GlobalKey();
 
   @override
@@ -64,16 +63,14 @@ class _CustomSwipeableListTitleState extends State<CustomSwipeableListTitle>
   }
 
   void _addGlobalOverlay() {
-    _removeGlobalOverlay(); // Remove any existing overlay
+    _removeGlobalOverlay();
     _activeInstance = this;
 
     _currentOverlay = OverlayEntry(
       builder: (context) => Positioned.fill(
         child: GestureDetector(
           onTapDown: (details) {
-            // التحقق من أن النقرة ليست على زر الحذف
             if (_isDeleteButtonTapped(details.globalPosition)) {
-              // إذا كانت النقرة على زر الحذف، قم بتنفيذ عملية الحذف
               Future.delayed(const Duration(milliseconds: 10), () {
                 _handleDelete();
               });
@@ -147,7 +144,6 @@ class _CustomSwipeableListTitleState extends State<CustomSwipeableListTitle>
 
   void _handleDelete() {
     _resetSwipe();
-    // استخدام Future.delayed للتأكد من أن الـ overlay تم إزالته أولاً
     Future.delayed(const Duration(milliseconds: 50), () {
       widget.onDelete?.call();
     });
@@ -178,8 +174,7 @@ class _CustomSwipeableListTitleState extends State<CustomSwipeableListTitle>
                           children: [
                             Positioned.fill(
                               child: Container(
-                                key:
-                                    _deleteButtonKey, // نقل الـ key إلى الـ Container
+                                key: _deleteButtonKey,
                                 height: double.infinity,
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(

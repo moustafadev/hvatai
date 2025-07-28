@@ -8,11 +8,7 @@ part 'rates_activity_state.dart';
 
 class RatesActivityCubit extends Cubit<RatesActivityState> {
   RatesActivityCubit()
-      : super(
-            const RatesActivityState(selectedCategoryIndex: 0, products: [])) {
-    loadProducts();
-  }
-
+      : super(const RatesActivityState(selectedCategoryIndex: 0, products: []));
   void changeCategory(int index) {
     emit(state.copyWith(selectedCategoryIndex: index));
   }

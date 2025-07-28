@@ -14,11 +14,14 @@ import 'package:hvatai/features/activity/presentation/cubit/featured_activity/fe
 import 'package:hvatai/features/activity/presentation/cubit/rates_activity/rates_activity_cubit.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
+import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
 import 'package:hvatai/locator.dart';
+import 'package:hvatai/routes/app_routes.dart';
 
 part 'screens/activity_screen.dart';
+part 'screens/favorite_screen.dart';
 part 'widgets/rates_activity_widget.dart';
 part 'widgets/auction_card.dart';
-part 'widgets/category_tabs.dart';
 part 'widgets/message_list_widget.dart';
 part 'widgets/featured_activity_widget.dart';
+part 'widgets/fav_live_video_widget.dart';

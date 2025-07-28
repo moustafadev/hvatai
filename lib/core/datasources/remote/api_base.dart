@@ -131,7 +131,7 @@ abstract class ApiBase {
       rethrow;
     }
 
-    return RequestResult(decodedJson, resp?.statusCode);
+    return RequestResult(decodedJson, resp.statusCode);
   }
 
   void initAdapter() {

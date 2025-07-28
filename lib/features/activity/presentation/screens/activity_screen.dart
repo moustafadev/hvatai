@@ -38,8 +38,7 @@ class ActivityScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
                           child: CustomText(
                             text: "activity".tr(),
-                            color: Colors.black,
-                            fontFamily: 'Manrope',
+                            color: AppColors.blackDark,
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w800,
                           ),
@@ -48,7 +47,12 @@ class ActivityScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 13.0),
                           child: GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              context.push(
+                                AppRoutes.favorite,
+                                extra: context.read<ActivityCubit>(),
+                              );
+                            },
                             child: Row(
                               children: [
                                 CircleAvatar(
