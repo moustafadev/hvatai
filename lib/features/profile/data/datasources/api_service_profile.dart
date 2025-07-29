@@ -159,8 +159,11 @@ class ApiServiceProfile extends ApiBase {
       EditDeliveryAddressParams params) async {
     return executeAndHandleErrorServer<UserRegistrationData>(() async {
       final addressId = params.userRegistrationData.id;
+      if (addressId == null) {
+        throw Exception("Address ID is null, cannot update");
+      }
       final endpoint = ServerConfig.deliveryAddressId(addressId!);
-      final response = await patch(endpoint, body: params.toJson());
+      final response = await put(endpoint, body: params.toJson());
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return UserRegistrationData.fromJson(response.json);

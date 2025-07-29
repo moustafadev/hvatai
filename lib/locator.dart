@@ -52,8 +52,7 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(() => CategoryTabsCubit());
   locator.registerFactory(() => SearchTabsCubit());
-  locator.registerFactory(() =>
-      UpdateDeliveryAddressCubit(locator(), locator(), locator(), locator()));
+
   locator.registerFactory(
       () => PaymentMethodCubit(locator(), locator(), locator()));
   locator
@@ -66,7 +65,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => RegistrationCubit(
         locator(),
       ));
-  locator.registerFactory(() => DeliveryAddressCubit(locator()));
+  locator.registerFactory(() => DeliveryAddressCubit(
+      locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => OtpCubit(locator()));
   locator.registerFactory(() => RatesActivityCubit());
   locator.registerFactory(() => FeaturedActivityCubit());

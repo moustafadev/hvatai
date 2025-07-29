@@ -48,6 +48,5 @@ part 'custom_awards_card.dart';
 part 'custom_pinput_widget.dart';
 part 'custom_dialog.dart';
 part 'custom_swipeable_list_title.dart';
-part 'info_card.dart';
 part 'custom_category_tabs.dart';
 part 'custom_row_invite_friend.dart';

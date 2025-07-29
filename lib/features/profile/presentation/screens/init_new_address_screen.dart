@@ -6,12 +6,10 @@ class InitNewAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) =>
-          locator<UpdateDeliveryAddressCubit>()..getDeliveryAddress(),
-      child:
-          BlocBuilder<UpdateDeliveryAddressCubit, UpdateDeliveryAddressState>(
+      create: (_) => locator<DeliveryAddressCubit>()..getDeliveryAddress(),
+      child: BlocBuilder<DeliveryAddressCubit, DeliveryAddressState>(
         builder: (context, state) {
-          final cubit = context.read<UpdateDeliveryAddressCubit>();
+          final cubit = context.read<DeliveryAddressCubit>();
           if (state.isLoading) {
             return const Center(
               child: CircularProgressIndicator(
@@ -93,8 +91,7 @@ class InitNewAddressScreen extends StatelessWidget {
                                 AppRoutes.editDeliveryAddress,
                                 extra: {
                                   'model': state.deliveryModel[index],
-                                  'cubit': context
-                                      .read<UpdateDeliveryAddressCubit>(),
+                                  'cubit': cubit,
                                 },
                               );
                             },
@@ -110,7 +107,7 @@ class InitNewAddressScreen extends StatelessWidget {
                         onTap: () async {
                           await context.push(
                             AppRoutes.addDeliveryAddress,
-                            extra: context.read<UpdateDeliveryAddressCubit>(),
+                            extra: cubit,
                           );
                         },
                         contentPadding: EdgeInsets.all(0),

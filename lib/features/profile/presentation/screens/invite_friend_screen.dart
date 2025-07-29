@@ -6,6 +6,7 @@ class InviteFriendScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      bottom: false,
       child: Scaffold(
           body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),

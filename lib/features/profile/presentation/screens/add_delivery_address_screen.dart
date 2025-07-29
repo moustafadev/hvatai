@@ -7,9 +7,9 @@ class AddDeliveryAddressScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UpdateDeliveryAddressCubit, UpdateDeliveryAddressState>(
+    return BlocBuilder<DeliveryAddressCubit, DeliveryAddressState>(
         builder: (context, state) {
-      final cubit = context.read<UpdateDeliveryAddressCubit>();
+      final cubit = context.read<DeliveryAddressCubit>();
       final user = state.user;
       return SafeArea(
         bottom: false,
@@ -167,7 +167,7 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                             (state.user.apartment?.isNotEmpty ?? false) &&
                             (state.user.floor?.isNotEmpty ?? false) &&
                             (state.user.intercomCode?.isNotEmpty ?? false)),
-                        onPressed: () => cubit.submit(context),
+                        onPressed: () => cubit.updateAddress(context),
                       ),
                       20.ph,
                     ],

@@ -20,6 +20,8 @@ mixin _$DeliveryAddressState {
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   int get lastUpdated => throw _privateConstructorUsedError;
+  List<UserRegistrationData> get deliveryModel =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of DeliveryAddressState
   /// with the given fields replaced by the non-null parameter values.
@@ -38,7 +40,8 @@ abstract class $DeliveryAddressStateCopyWith<$Res> {
       {UserRegistrationData user,
       bool isLoading,
       String errorMessage,
-      int lastUpdated});
+      int lastUpdated,
+      List<UserRegistrationData> deliveryModel});
 
   $UserRegistrationDataCopyWith<$Res> get user;
 }
@@ -63,6 +66,7 @@ class _$DeliveryAddressStateCopyWithImpl<$Res,
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? lastUpdated = null,
+    Object? deliveryModel = null,
   }) {
     return _then(_value.copyWith(
       user: null == user
@@ -81,6 +85,10 @@ class _$DeliveryAddressStateCopyWithImpl<$Res,
           ? _value.lastUpdated
           : lastUpdated // ignore: cast_nullable_to_non_nullable
               as int,
+      deliveryModel: null == deliveryModel
+          ? _value.deliveryModel
+          : deliveryModel // ignore: cast_nullable_to_non_nullable
+              as List<UserRegistrationData>,
     ) as $Val);
   }
 
@@ -107,7 +115,8 @@ abstract class _$$DeliveryAddressStateImplCopyWith<$Res>
       {UserRegistrationData user,
       bool isLoading,
       String errorMessage,
-      int lastUpdated});
+      int lastUpdated,
+      List<UserRegistrationData> deliveryModel});
 
   @override
   $UserRegistrationDataCopyWith<$Res> get user;
@@ -130,6 +139,7 @@ class __$$DeliveryAddressStateImplCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? lastUpdated = null,
+    Object? deliveryModel = null,
   }) {
     return _then(_$DeliveryAddressStateImpl(
       user: null == user
@@ -148,6 +158,10 @@ class __$$DeliveryAddressStateImplCopyWithImpl<$Res>
           ? _value.lastUpdated
           : lastUpdated // ignore: cast_nullable_to_non_nullable
               as int,
+      deliveryModel: null == deliveryModel
+          ? _value._deliveryModel
+          : deliveryModel // ignore: cast_nullable_to_non_nullable
+              as List<UserRegistrationData>,
     ));
   }
 }
@@ -159,7 +173,9 @@ class _$DeliveryAddressStateImpl implements _DeliveryAddressState {
       {required this.user,
       this.isLoading = false,
       this.errorMessage = '',
-      this.lastUpdated = 0});
+      this.lastUpdated = 0,
+      final List<UserRegistrationData> deliveryModel = const []})
+      : _deliveryModel = deliveryModel;
 
   @override
   final UserRegistrationData user;
@@ -172,10 +188,18 @@ class _$DeliveryAddressStateImpl implements _DeliveryAddressState {
   @override
   @JsonKey()
   final int lastUpdated;
+  final List<UserRegistrationData> _deliveryModel;
+  @override
+  @JsonKey()
+  List<UserRegistrationData> get deliveryModel {
+    if (_deliveryModel is EqualUnmodifiableListView) return _deliveryModel;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_deliveryModel);
+  }
 
   @override
   String toString() {
-    return 'DeliveryAddressState(user: $user, isLoading: $isLoading, errorMessage: $errorMessage, lastUpdated: $lastUpdated)';
+    return 'DeliveryAddressState(user: $user, isLoading: $isLoading, errorMessage: $errorMessage, lastUpdated: $lastUpdated, deliveryModel: $deliveryModel)';
   }
 
   @override
@@ -189,12 +213,14 @@ class _$DeliveryAddressStateImpl implements _DeliveryAddressState {
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.lastUpdated, lastUpdated) ||
-                other.lastUpdated == lastUpdated));
+                other.lastUpdated == lastUpdated) &&
+            const DeepCollectionEquality()
+                .equals(other._deliveryModel, _deliveryModel));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, user, isLoading, errorMessage, lastUpdated);
+  int get hashCode => Object.hash(runtimeType, user, isLoading, errorMessage,
+      lastUpdated, const DeepCollectionEquality().hash(_deliveryModel));
 
   /// Create a copy of DeliveryAddressState
   /// with the given fields replaced by the non-null parameter values.
@@ -209,10 +235,12 @@ class _$DeliveryAddressStateImpl implements _DeliveryAddressState {
 
 abstract class _DeliveryAddressState implements DeliveryAddressState {
   const factory _DeliveryAddressState(
-      {required final UserRegistrationData user,
-      final bool isLoading,
-      final String errorMessage,
-      final int lastUpdated}) = _$DeliveryAddressStateImpl;
+          {required final UserRegistrationData user,
+          final bool isLoading,
+          final String errorMessage,
+          final int lastUpdated,
+          final List<UserRegistrationData> deliveryModel}) =
+      _$DeliveryAddressStateImpl;
 
   @override
   UserRegistrationData get user;
@@ -222,6 +250,8 @@ abstract class _DeliveryAddressState implements DeliveryAddressState {
   String get errorMessage;
   @override
   int get lastUpdated;
+  @override
+  List<UserRegistrationData> get deliveryModel;
 
   /// Create a copy of DeliveryAddressState
   /// with the given fields replaced by the non-null parameter values.

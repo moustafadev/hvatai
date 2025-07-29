@@ -40,7 +40,7 @@ class ReusableCategoryWidget<TCubit, TState> extends StatelessWidget {
                   ],
                   border: isSelected
                       ? Border.all(
-                          width: 0.1,
+                          width: 1,
                           color: AppColors.primaryColor,
                         )
                       : Border.all(
@@ -48,73 +48,70 @@ class ReusableCategoryWidget<TCubit, TState> extends StatelessWidget {
                           width: 1,
                         ),
                 ),
-                child: Padding(
-                  padding: isSelected ? EdgeInsets.all(1.5.r) : EdgeInsets.zero,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.gray,
-                      borderRadius: BorderRadius.circular(8.r),
-                    ),
-                    padding: EdgeInsets.only(left: 8, right: 8, top: 4),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Center(
-                          child: FittedBox(
-                            child: CustomText(
-                              text: interestKeys[index].tr(),
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.blackDark,
-                              textAlign: TextAlign.center,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.gray,
+                    borderRadius: BorderRadius.circular(8.r),
+                  ),
+                  padding: EdgeInsets.only(left: 8, right: 8, top: 4),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Center(
+                        child: FittedBox(
+                          child: CustomText(
+                            text: interestKeys[index].tr(),
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.blackDark,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ),
+                      6.ph,
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 10, vertical: 2.5),
+                        decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.circular(10.r),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircleAvatar(
+                              radius: 4.r,
+                              backgroundColor: AppColors.primaryPink,
                             ),
-                          ),
-                        ),
-                        6.ph,
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 2.5),
-                          decoration: BoxDecoration(
-                            color: AppColors.white,
-                            borderRadius: BorderRadius.circular(10.r),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              CircleAvatar(
-                                radius: 4.r,
-                                backgroundColor: AppColors.primaryPink,
+                            5.pw,
+                            FittedBox(
+                              child: CustomText(
+                                text: '2.5k',
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.black,
+                                textAlign: TextAlign.center,
                               ),
-                              5.pw,
-                              FittedBox(
-                                child: CustomText(
-                                  text: '2.5k',
-                                  fontSize: 14.sp,
-                                  fontWeight: FontWeight.w600,
-                                  color: Colors.black,
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
-                              2.pw,
-                              Icon(
-                                Icons.remove_red_eye_outlined,
-                                size: 14.sp,
-                              ),
-                            ],
-                          ),
+                            ),
+                            2.pw,
+                            Icon(
+                              Icons.remove_red_eye_outlined,
+                              size: 14.sp,
+                            ),
+                          ],
                         ),
-                        6.ph,
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(8.r),
-                          child: Image.asset(
-                            interestImages[index],
-                            width: 100.w,
-                            height: 80.h,
-                            fit: BoxFit.cover,
-                          ),
+                      ),
+                      6.ph,
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8.r),
+                        child: Image.asset(
+                          interestImages[index],
+                          width: 100.w,
+                          height: 80.h,
+                          fit: BoxFit.cover,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),

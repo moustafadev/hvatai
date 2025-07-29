@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
+import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/cubit/delivery_address/update_delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
@@ -53,8 +54,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.addDeliveryAddress, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        final cubit = state.extra as UpdateDeliveryAddressCubit
-          ..clearUserData();
+        final cubit = state.extra as DeliveryAddressCubit..clearUserData();
         return BlocProvider.value(
             value: cubit, child: const AddDeliveryAddressScreen());
       },
@@ -82,8 +82,8 @@ final GoRouter router = GoRouter(
         final extra = state.extra as Map<String, Object>;
 
         final model = extra['model'] as UserRegistrationData;
-        final cubit = extra['cubit'] as UpdateDeliveryAddressCubit
-          ..loadInitialData(model);
+        final cubit = extra['cubit'] as DeliveryAddressCubit
+          ..initRegistrationModel(model);
 
         return BlocProvider.value(
           value: cubit,
@@ -100,8 +100,7 @@ final GoRouter router = GoRouter(
 
         final model = extra['model'] as UserRegistrationData;
         final cubit = extra['cubit'] as EditProfileCubit
-          ..initProfileModel(model)
-          ..prefillData();
+          ..initProfileModel(model);
         return BlocProvider.value(
           value: cubit,
           child: ChangeEmailUserScreen(),

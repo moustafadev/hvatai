@@ -1,4 +1,4 @@
-part of 'customs.dart';
+part of '../profile.dart';
 
 class InfoCard extends StatelessWidget {
   final String title;

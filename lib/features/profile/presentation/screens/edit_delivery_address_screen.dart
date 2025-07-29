@@ -9,9 +9,9 @@ class EditDeliveryAddressScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UpdateDeliveryAddressCubit, UpdateDeliveryAddressState>(
+    return BlocBuilder<DeliveryAddressCubit, DeliveryAddressState>(
         builder: (context, state) {
-      final cubit = context.read<UpdateDeliveryAddressCubit>();
+      final cubit = context.read<DeliveryAddressCubit>();
       final user = state.user;
       return SafeArea(
         bottom: false,
