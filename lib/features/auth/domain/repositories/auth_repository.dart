@@ -1,5 +1,6 @@
 import 'package:hvatai/features/auth/data/models/login_model/login_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
+import 'package:hvatai/features/auth/data/models/social_login_response.dart/social_login_response.dart';
 import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
 import 'package:dartz/dartz.dart';
@@ -13,8 +14,8 @@ abstract class AuthRepository {
 
   Future<Either<String, UserRegistrationData>> register(RegisterParams params);
 
-  Future<Either<String, UserRegistrationData>> loginWithGoogle();
-  Future<Either<String, UserRegistrationData>> loginWithApple();
+  Future<Either<String, SocialLoginResponse>> loginWithGoogle();
+  Future<Either<String, SocialLoginResponse>> loginWithApple();
 
   Future<Either<String, UserRegistrationData>> deliveryAddress(
       DeliveryAddressParams params);

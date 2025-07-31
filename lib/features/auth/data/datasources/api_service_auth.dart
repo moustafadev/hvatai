@@ -7,6 +7,7 @@ import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/auth/data/models/login_model/login_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
+import 'package:hvatai/features/auth/data/models/social_login_response.dart/social_login_response.dart';
 import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
@@ -16,8 +17,8 @@ import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 class ApiServiceAuth extends ApiBase {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 /// 🔹 Google Sign-In
-Future<UserRegistrationData> loginWithGoogle() async {
-  return executeAndHandleErrorServer<UserRegistrationData>(() async {
+Future<SocialLoginResponse> loginWithGoogle() async {
+  return executeAndHandleErrorServer<SocialLoginResponse>(() async {
     print("[Google] 🚀 Starting Google Sign-In...");
 
     // 1️⃣ Google Sign-In
@@ -65,7 +66,7 @@ Future<UserRegistrationData> loginWithGoogle() async {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print("[Google] ✅ Login successful, parsing user data...");
-      return UserRegistrationData.fromJson(response.json);
+      return SocialLoginResponse.fromJson(response.json);
     } else {
       print("[Google] ❌ Server returned error ${response.statusCode}");
       throw Exception("Server error ${response.statusCode}");
@@ -74,8 +75,8 @@ Future<UserRegistrationData> loginWithGoogle() async {
 }
 
 /// 🔹 Apple Sign-In
-Future<UserRegistrationData> loginWithApple() async {
-  return executeAndHandleErrorServer<UserRegistrationData>(() async {
+Future<SocialLoginResponse> loginWithApple() async {
+  return executeAndHandleErrorServer<SocialLoginResponse>(() async {
     print("[Apple] 🚀 Starting Apple Sign-In...");
 
     // 1️⃣ Apple Sign-In
@@ -122,7 +123,7 @@ Future<UserRegistrationData> loginWithApple() async {
 
     if (response.statusCode == 200 || response.statusCode == 201) {
       print("[Apple] ✅ Login successful, parsing user data...");
-      return UserRegistrationData.fromJson(response.json);
+      return SocialLoginResponse.fromJson(response.json);
     } else {
       print("[Apple] ❌ Server returned error ${response.statusCode}");
       throw Exception("Server error ${response.statusCode}");

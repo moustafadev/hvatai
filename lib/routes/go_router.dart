@@ -18,7 +18,7 @@ import 'package:hvatai/routes/shell_route.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter router = GoRouter(
   // observers: [MyNavigatorObserver()],
-  initialLocation: AppRoutes.socialLogin,
+  initialLocation: AppRoutes.splash,
   navigatorKey: navigatorKey,
   routes: <RouteBase>[
     GoRoute(

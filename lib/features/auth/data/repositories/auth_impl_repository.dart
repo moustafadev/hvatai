@@ -3,6 +3,7 @@ import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/features/auth/data/datasources/api_service_auth.dart';
 import 'package:hvatai/features/auth/data/models/login_model/login_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
+import 'package:hvatai/features/auth/data/models/social_login_response.dart/social_login_response.dart';
 import 'package:hvatai/features/auth/domain/repositories/auth_repository.dart';
 import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
@@ -62,17 +63,21 @@ class AuthImplRepository implements AuthRepository {
   }
 
   @override
-  Future<Either<String, UserRegistrationData>> loginWithGoogle() async {
-    return executeAndHandleError<UserRegistrationData>(() async {
+  Future<Either<String, SocialLoginResponse>> loginWithGoogle() async {
+    return executeAndHandleError<SocialLoginResponse>(() async {
       final res = await _apiServiceAuth.loginWithGoogle();
+      _appLocal.saveToken(res.data?.accessToken);
+
       return res;
     });
   }
 
   @override
-  Future<Either<String, UserRegistrationData>> loginWithApple() async {
-    return executeAndHandleError<UserRegistrationData>(() async {
+  Future<Either<String, SocialLoginResponse>> loginWithApple() async {
+    return executeAndHandleError<SocialLoginResponse>(() async {
       final res = await _apiServiceAuth.loginWithApple();
+      _appLocal.saveToken(res.data?.accessToken);
+
       return res;
     });
   }
