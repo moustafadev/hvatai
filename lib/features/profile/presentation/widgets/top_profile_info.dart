@@ -19,8 +19,11 @@ class TopProfileInfo extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: user.image != null
-                      ? CachedNetworkImageProvider(user.image ?? '')
+                  image: user.image != null && user.image!.isNotEmpty
+                      ? (user.image!.startsWith('http')
+                          ? CachedNetworkImageProvider(user.image!)
+                          : CachedNetworkImageProvider(
+                              'https://khvatai.ru/${user.image!}'))
                       : AssetImage(Assets.assetsImagesProfileImage)
                           as ImageProvider,
                   fit: BoxFit.fill,

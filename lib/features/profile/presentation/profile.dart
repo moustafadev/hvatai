@@ -18,7 +18,6 @@ import 'package:hvatai/features/auth/data/models/registration_model/user_registr
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/cubit/analytics_cubit/analytics_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/delivery_address/update_delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
@@ -70,3 +69,6 @@ part 'widgets/streams_analytics_widget.dart';
 part 'widgets/category_everything_tabs.dart';
 part 'widgets/line_chart_widget.dart';
 part 'widgets/info_card.dart';
+part 'widgets/custom_row_invite_friend.dart';
+part 'widgets/custom_awards_card.dart';
+part 'widgets/build_profile_image.dart';

@@ -21,7 +21,6 @@ import 'package:hvatai/features/profile/data/datasources/api_service_profile.dar
 import 'package:hvatai/features/profile/data/repositories/profile_impl_repository.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
 import 'package:hvatai/features/profile/presentation/cubit/analytics_cubit/analytics_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/delivery_address/update_delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
@@ -43,8 +42,8 @@ Future<void> setupLocator() async {
   //BLOC
   locator.registerFactory(() => LoginCubit(locator()));
   locator.registerFactory(() => VerificationCubit());
-  locator.registerFactory(() => InterestsCubit());
-  locator.registerFactory(() => InterestsDetailCubit());
+  locator.registerFactory(() => InterestsCubit(locator(), locator()));
+  locator.registerFactory(() => InterestsDetailCubit(locator(), locator()));
   locator.registerFactory(() => ProfileCubit(locator(), locator()));
   locator.registerFactory(() => ActivityCubit());
   locator.registerLazySingleton(() => NotificationCubit());

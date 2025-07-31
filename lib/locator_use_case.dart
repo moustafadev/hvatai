@@ -1,5 +1,8 @@
+import 'package:hvatai/features/auth/domain/usecases/add_fav_category_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
+import 'package:hvatai/features/auth/domain/usecases/get_category_usecase.dart';
+import 'package:hvatai/features/auth/domain/usecases/get_fav_category_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_with_google_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
@@ -36,4 +39,7 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => SignOutUsecase(locator()));
   locator.registerLazySingleton(() => DeleteAddressUsecase(locator()));
   locator.registerLazySingleton(() => DeleteCardUsecase(locator()));
+  locator.registerLazySingleton(() => GetCategoryUsecase(locator()));
+  locator.registerLazySingleton(() => AddFavCategoryUsecase(locator()));
+  locator.registerLazySingleton(() => GetFavCategoryUsecase(locator()));
 }

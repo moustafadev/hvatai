@@ -1,60 +1,34 @@
 part of '../auth.dart';
 
 class InterestsScreen extends StatelessWidget {
-  final UserRegistrationData data;
-  const InterestsScreen({super.key, required this.data});
-
-  static const interestKeys = [
-    'Clothes',
-    'shoes',
-    'electronics',
-    'sport',
-    'toys',
-    'beauty',
-    'accessories',
-    'furniture',
-    'pet_supplies',
-    'automotive',
-    'video_games',
-    'for_children',
-    'books',
-    'hobby',
-  ];
-
-  static const interestImages = [
-    Assets.assetsImagesCloth,
-    Assets.assetsImagesShose,
-    Assets.assetsImagesHearPod,
-    Assets.assetsImagesGym,
-    Assets.assetsImagesMan,
-    Assets.assetsImagesLipstick,
-    Assets.assetsImagesWatch,
-    Assets.assetsImagesDaraz,
-    Assets.assetsImagesCat,
-    Assets.assetsImagesTire,
-    Assets.assetsImagesGamingPod,
-    Assets.assetsImagesBaby,
-    Assets.assetsImagesBooks,
-    Assets.assetsImagesDaga,
-  ];
+  const InterestsScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => locator<InterestsCubit>()..initVariable(data),
+      create: (_) => locator<InterestsCubit>()..getCategories(),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios,
                 color: AppColors.blackColorIcon),
-            onPressed: () => GoRouter.of(context).pop(),
+            onPressed: () => context.pop(),
           ),
         ),
         body: SafeArea(
           bottom: false,
           child: BlocBuilder<InterestsCubit, InterestsState>(
             builder: (context, state) {
+              final interests = state.categories;
               final cubit = context.read<InterestsCubit>();
+              if (state.categories?.data == null) {
+                return Center(
+                    child: CircularProgressIndicator(
+                  color: AppColors.primaryColor,
+                ));
+              }
 
               return Stack(
                 children: [
@@ -88,12 +62,14 @@ class InterestsScreen extends StatelessWidget {
                             children: items,
                           ),
                           gridItems:
-                              List.generate(interestImages.length, (index) {
+                              List.generate(interests!.data!.length, (index) {
+                            final category = interests.data![index];
                             final isSelected =
                                 state.selectedIndices.contains(index);
+
                             return GestureDetector(
-                              onTap: () => cubit.toggleInterest(
-                                  index, interestKeys[index].tr()),
+                              onTap: () =>
+                                  cubit.toggleInterest(index, category.id ?? 0),
                               child: Container(
                                 height: 120.h,
                                 decoration: BoxDecoration(
@@ -120,16 +96,16 @@ class InterestsScreen extends StatelessWidget {
                                       : EdgeInsets.zero,
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      color: Colors.white,
+                                      color: AppColors.white,
                                       borderRadius: BorderRadius.circular(8.r),
                                     ),
                                     child: Column(
                                       children: [
                                         Center(
                                           child: CustomText(
-                                            text: interestKeys[index].tr(),
+                                            text: category.name ?? '',
                                             fontSize: 12.sp,
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: FontWeight.w700,
                                             color: Colors.black,
                                             textAlign: TextAlign.center,
                                           ),
@@ -139,12 +115,21 @@ class InterestsScreen extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(8.r),
-                                              image: DecorationImage(
-                                                image: AssetImage(
-                                                    interestImages[index]),
-                                                fit: BoxFit.cover,
-                                              ),
+                                              image: category.image != null
+                                                  ? DecorationImage(
+                                                      image:
+                                                          CachedNetworkImageProvider(
+                                                              category.image!),
+                                                      fit: BoxFit.cover,
+                                                    )
+                                                  : null,
                                             ),
+                                            child: category.image == null
+                                                ? Icon(
+                                                    Icons.image_not_supported,
+                                                    size: 30,
+                                                    color: Colors.grey)
+                                                : null,
                                           ),
                                         ),
                                       ],
@@ -158,17 +143,16 @@ class InterestsScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // الزر الثابت في الأسفل
                   Positioned(
                     left: 16,
                     right: 16,
                     bottom: 20,
                     child: CustomGradientButton(
                       isLoading: state.isLoading,
-                      isDisabled: !(state.selectedInterests.isNotEmpty),
+                      isDisabled: !(state.selectedCategoryIds.isNotEmpty),
                       text: "continue".tr(),
                       onPressed: () {
-                        cubit.submitInterests(context);
+                        cubit.addFavCategories(context);
                       },
                     ),
                   ),

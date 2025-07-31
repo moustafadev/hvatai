@@ -1,4 +1,7 @@
+import 'dart:io';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
@@ -83,22 +86,68 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
+  Future<File> compressImage(File file) async {
+    final compressedFile = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path,
+      file.absolute.path.replaceAll('.jpg', '_compressed.jpg'),
+      quality: 70,
+    );
+    return compressedFile ?? file;
+  }
+
+  Future<MultipartFile?> _prepareImageFile(String? imagePath) async {
+    if (imagePath == null || imagePath.isEmpty) return null;
+
+    File file = File(imagePath);
+
+    if (!await file.exists()) {
+      return null;
+    }
+
+    if (await file.length() > 2 * 1024 * 1024) {
+      file = await compressImage(file);
+      if (await file.length() > 2 * 1024 * 1024) {
+        throw Exception;
+      }
+    }
+
+    return MultipartFile.fromFile(file.path,
+        filename: file.path.split('/').last);
+  }
+
   Future<UserRegistrationData> updateProfileData(
       UpdateProfileParams params) async {
     return executeAndHandleErrorServer<UserRegistrationData>(() async {
-      final body = params.toJson();
-      body['phone'] = '3553224324';
-      final response = await post(ServerConfig.profile, body: body);
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final data = Map<String, dynamic>.from(response.json['data']);
+      final dataMap = Map<String, dynamic>.from(params.toJson());
+      dataMap['terms_agreement'] =
+          params.userRegistrationData.agreedToTerms ?? false ? 1 : 0;
+      dataMap['age_confirmation'] =
+          params.userRegistrationData.isAbove18 ?? false ? 1 : 0;
+      dataMap['phone'] = "243535345";
 
-        data['terms_agreement'] = (data['terms_agreement'] == 1);
-        data['age_confirmation'] = (data['age_confirmation'] == 1);
-
-        return UserRegistrationData.fromJson(data);
-      } else {
-        throw Exception;
+      MultipartFile? imageFile;
+      if (params.userRegistrationData.image != null &&
+          File(params.userRegistrationData.image!).existsSync()) {
+        imageFile = await _prepareImageFile(params.userRegistrationData.image);
       }
+
+      if (imageFile != null) {
+        dataMap['image'] = imageFile;
+      } else {
+        dataMap.remove('image');
+      }
+
+      final formData = FormData.fromMap(dataMap);
+      final response = await post(
+        ServerConfig.profile,
+        body: formData,
+        contentType: 'multipart/form-data',
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return UserRegistrationData.fromJson(response.json);
+      }
+      throw Exception;
     });
   }
 
@@ -162,7 +211,7 @@ class ApiServiceProfile extends ApiBase {
       if (addressId == null) {
         throw Exception("Address ID is null, cannot update");
       }
-      final endpoint = ServerConfig.deliveryAddressId(addressId!);
+      final endpoint = ServerConfig.deliveryAddressId(addressId);
       final response = await put(endpoint, body: params.toJson());
 
       if (response.statusCode == 200 || response.statusCode == 201) {

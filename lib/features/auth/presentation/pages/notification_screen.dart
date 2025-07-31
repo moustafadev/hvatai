@@ -5,7 +5,6 @@ class NotificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userData = GoRouterState.of(context).extra as UserRegistrationData;
     return Scaffold(
       backgroundColor: AppColors.lightGreyBackground,
       body: SafeArea(
@@ -162,8 +161,8 @@ class NotificationScreen extends StatelessWidget {
                                             Expanded(
                                               child: GestureDetector(
                                                 onTap: () => context.push(
-                                                    AppRoutes.imageDelay,
-                                                    extra: userData),
+                                                  AppRoutes.imageDelay,
+                                                ),
                                                 child: CustomContainer(
                                                   height: 44.h,
                                                   conColor: AppColors.button,
@@ -199,7 +198,7 @@ class NotificationScreen extends StatelessWidget {
                     );
                   },
                 ),
-                SizedBox(height: 20.h),
+                20.ph,
               ],
             ),
           ),

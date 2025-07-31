@@ -33,22 +33,27 @@ class LoginCubit extends Cubit<LoginState> {
 
     final result = await loginUseCase.call(loginData);
 
-    result.fold(
-      (failure) {
-        emit(state.copyWith(
-          isLoading: false,
-          errorMessage: failure,
-        ));
-        showFloatingMessageError('invalidEmailOrPassword'.tr());
-      },
-      (_) {
-        emit(state.copyWith(
-          isLoading: false,
-          successLogin: true,
-        ));
-        showFloatingMessageSuccess('loginSuccessful'.tr());
-        context.push(AppRoutes.home);
-      },
-    );
+    result.fold((failure) {
+      emit(state.copyWith(
+        isLoading: false,
+        errorMessage: failure,
+      ));
+      showFloatingMessageError('invalidEmailOrPassword'.tr());
+    }, (loginModel) {
+      emit(state.copyWith(
+        isLoading: false,
+        successLogin: true,
+      ));
+
+      showFloatingMessageSuccess('loginSuccessful'.tr());
+
+      final isSetup = loginModel.isSetup ?? false;
+
+      if (isSetup) {
+        context.go(AppRoutes.home);
+      } else {
+        context.push(AppRoutes.interests);
+      }
+    });
   }
 }

@@ -4,9 +4,11 @@ part of 'interests_detail_cubit.dart';
 class InterestsDetailState with _$InterestsDetailState {
   const factory InterestsDetailState({
     required UserRegistrationData user,
-    @Default([]) List<String> generalInterests,
-    @Default({}) Set<String> selectedDetails,
+    @Default({}) Set<int> selectedDetailIds,
+    @Default({}) Set<int> selectedIndices,
     @Default(false) bool isLoading,
     @Default('') String errorMessage,
+    CategoryModel? categories,
+    @Default([]) List<int> selectedCategoryIds,
   }) = _InterestsDetailState;
 }

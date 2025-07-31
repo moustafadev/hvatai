@@ -85,7 +85,7 @@ class _CustomSwipeableListTitleState extends State<CustomSwipeableListTitle>
       ),
     );
 
-    Overlay.of(context)?.insert(_currentOverlay!);
+    Overlay.of(context).insert(_currentOverlay!);
   }
 
   bool _isDeleteButtonTapped(Offset globalPosition) {

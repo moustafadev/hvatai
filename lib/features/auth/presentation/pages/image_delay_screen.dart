@@ -5,8 +5,6 @@ class ImageDelayScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userData = GoRouterState.of(context).extra as UserRegistrationData;
-
     return Scaffold(
       body: Stack(
         children: [
@@ -24,7 +22,9 @@ class ImageDelayScreen extends StatelessWidget {
                 text: "Continue",
                 isDisabled: false,
                 isLoading: false,
-                onPressed: () => context.push(AppRoutes.home, extra: userData),
+                onPressed: () => context.go(
+                  AppRoutes.home,
+                ),
               ),
             ),
           ),

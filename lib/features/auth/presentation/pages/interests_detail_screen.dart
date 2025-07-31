@@ -1,38 +1,14 @@
 part of '../auth.dart';
 
 class InterestsDetailScreen extends StatelessWidget {
-  final UserRegistrationData data;
-
-  const InterestsDetailScreen({super.key, required this.data});
-
-  static const Map<String, List<String>> detailedInterestOptions = {
-    'shoes': ['sneakers', 'trainers', 'boots', 'sandals'],
-    'electronics': ['smartphones', 'headphones', 'computers'],
-    'beauty': ['skincare', 'makeup', 'fragrances'],
-  };
-
-  String getBaseCategoryKey(String category) {
-    switch (category.toLowerCase()) {
-      case 'обувь':
-      case 'shoes':
-        return 'shoes';
-      case 'электроника':
-      case 'electronics':
-        return 'electronics';
-      case 'красота':
-      case 'beauty':
-        return 'beauty';
-      default:
-        return category;
-    }
-  }
+  const InterestsDetailScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => locator<InterestsDetailCubit>()
-        ..init(data.interests ?? [])
-        ..initRegistrationModel(data),
+      create: (_) => locator<InterestsDetailCubit>()..getFavCategories(),
       child: Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -52,7 +28,7 @@ class InterestsDetailScreen extends StatelessWidget {
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
                     color: AppColors.blackDark),
-                onPressed: () => context.push(AppRoutes.home))
+                onPressed: () => context.go(AppRoutes.home))
           ],
         ),
         body: SafeArea(
@@ -64,11 +40,7 @@ class InterestsDetailScreen extends StatelessWidget {
               return Stack(
                 clipBehavior: Clip.none,
                 children: [
-                  InterestsDetailWidget(
-                    state: state,
-                    getBaseCategoryKey: getBaseCategoryKey,
-                    onItemTap: cubit.toggleDetail,
-                  ),
+                  InterestsDetailWidget(),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Padding(
@@ -76,13 +48,13 @@ class InterestsDetailScreen extends StatelessWidget {
                           horizontal: 16, vertical: 20),
                       child: CustomGradientButton(
                         isLoading: state.isLoading,
-                        isDisabled: !(state.selectedDetails.isNotEmpty),
-                        text: state.isLoading ? "Updating..." : "Continue",
+                        isDisabled: !(state.selectedDetailIds.isNotEmpty),
+                        text: 'continue'.tr(),
                         onPressed:
-                            (state.isLoading || state.selectedDetails.isEmpty)
+                            (state.isLoading || state.selectedDetailIds.isEmpty)
                                 ? null
                                 : () {
-                                    cubit.submitDetails(context);
+                                    cubit.addFavCategories(context);
                                   },
                       ),
                     ),

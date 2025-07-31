@@ -63,17 +63,34 @@ class SettingsScreen extends StatelessWidget {
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w800,
                           ),
+                          20.ph,
+                          GestureDetector(
+                            onTap: () {
+                              showDialog(
+                                context: context,
+                                builder: (_) => CustomPhotoOptionsDialog(
+                                  onTakePhoto: () {
+                                    cubit.captureImageFromCamera();
+                                    context.pop();
+                                  },
+                                  onChoosePhoto: () {
+                                    cubit.pickImage();
+                                    context.pop();
+                                  },
+                                ),
+                              );
+                            },
+                            child: BuildProfileImage(image: state.user.image),
+                          ),
                           12.ph,
                           CustomTextField(
                             initialValue: state.user.firstName,
-                            //controller: cubit.firstNameController,
                             onChanged: (v) => cubit.updateNewField('name', v),
                             hintText: 'firstName'.tr(),
                             isRequired: false,
                           ),
                           12.ph,
                           CustomTextField(
-                            // controller: cubit.lastNameController,
                             initialValue: state.user.lastName,
                             onChanged: (v) =>
                                 cubit.updateNewField('lastName', v),

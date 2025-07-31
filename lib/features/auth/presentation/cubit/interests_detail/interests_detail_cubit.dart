@@ -1,70 +1,80 @@
+import 'package:dartz/dartz.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
+import 'package:hvatai/features/auth/domain/usecases/add_fav_category_usecase.dart';
+import 'package:hvatai/features/auth/domain/usecases/get_fav_category_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
 part 'interests_detail_state.dart';
 part 'interests_detail_cubit.freezed.dart';
 
 class InterestsDetailCubit extends Cubit<InterestsDetailState> {
-  InterestsDetailCubit()
+  InterestsDetailCubit(this.getFavCategoryUsecase, this.addFavCategoryUsecase)
       : super(InterestsDetailState(user: UserRegistrationData()));
-  void init(List<String> generalInterests) {
-    emit(state.copyWith(generalInterests: generalInterests));
+  GetFavCategoryUsecase getFavCategoryUsecase;
+  AddFavCategoryUsecase addFavCategoryUsecase;
+
+  Future<void> getFavCategories() async {
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
+    final result = await getFavCategoryUsecase.call(unit);
+    result.fold(
+      (failure) =>
+          emit(state.copyWith(isLoading: false, errorMessage: failure)),
+      (categories) => emit(state.copyWith(
+        isLoading: false,
+        categories: categories,
+      )),
+    );
   }
 
-  void initRegistrationModel(UserRegistrationData user) {
-    emit(state.copyWith(user: user));
-  }
+  void toggleDetail(int detailId, int categoryId) {
+    final updatedDetails = Set<int>.from(state.selectedDetailIds);
+    final updatedCategoryIds = List<int>.from(state.selectedCategoryIds);
 
-  void toggleDetail(String value) {
-    final updated = Set<String>.from(state.selectedDetails);
-    if (updated.contains(value)) {
-      updated.remove(value);
+    if (updatedDetails.contains(detailId)) {
+      updatedDetails.remove(detailId);
+      updatedCategoryIds.remove(detailId);
     } else {
-      updated.add(value);
+      updatedDetails.add(detailId);
+      updatedCategoryIds.add(detailId);
     }
-    emit(state.copyWith(selectedDetails: updated));
+
+    emit(state.copyWith(
+      selectedDetailIds: updatedDetails,
+      selectedCategoryIds: updatedCategoryIds,
+    ));
   }
 
-  void submitDetails(BuildContext context) {
-    if (state.selectedDetails.isEmpty) {
-      emit(state.copyWith(errorMessage: 'select_detailed_interest'));
-      return;
-    }
-
+  Future<void> addFavCategories(BuildContext context) async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
-    final updatedUser = state.user.copyWith(
-      detailedInterests: state.selectedDetails.toList(),
+    final params = AddFavCategoryParams(
+      categoryIds: state.selectedCategoryIds.isNotEmpty
+          ? state.selectedCategoryIds
+          : null,
+      categoryId: state.selectedCategoryIds.isNotEmpty
+          ? null
+          : state.selectedCategoryIds.firstOrNull,
     );
 
-    emit(state.copyWith(user: updatedUser, isLoading: false));
+    final result = await addFavCategoryUsecase.call(params);
 
-    context.push(AppRoutes.notification, extra: updatedUser);
-  }
-
-  Future<void> submit({
-    required Function(List<String> detailedInterests) onSuccess,
-    required Function(String error) onError,
-  }) async {
-    if (state.selectedDetails.isEmpty) {
-      onError("select_detailed_interest");
-      return;
-    }
-
-    emit(state.copyWith(isLoading: true));
-
-    try {
-      // TODO: Implement Firebase update if needed
-      await Future.delayed(Duration(milliseconds: 500));
-      onSuccess(state.selectedDetails.toList());
-    } catch (e) {
-      onError("update_failed");
-    }
-
-    emit(state.copyWith(isLoading: false));
+    result.fold(
+      (failure) {
+        emit(state.copyWith(isLoading: false, errorMessage: failure));
+        showFloatingMessageError('alreadyInFavorites'.tr());
+      },
+      (_) {
+        emit(state.copyWith(isLoading: false));
+        showFloatingMessageSuccess('interestsAdded'.tr());
+        context.push(AppRoutes.notification);
+      },
+    );
   }
 }

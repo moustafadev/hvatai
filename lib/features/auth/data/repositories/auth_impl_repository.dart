@@ -1,9 +1,11 @@
 import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/features/auth/data/datasources/api_service_auth.dart';
+import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/login_model/login_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/domain/repositories/auth_repository.dart';
+import 'package:hvatai/features/auth/domain/usecases/add_fav_category_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
@@ -65,6 +67,30 @@ class AuthImplRepository implements AuthRepository {
   Future<Either<String, UserRegistrationData>> loginWithGoogle() async {
     return executeAndHandleError<UserRegistrationData>(() async {
       final res = await _apiServiceAuth.loginWithGoogle();
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, CategoryModel>> getCategories() {
+    return executeAndHandleError<CategoryModel>(() async {
+      final res = await _apiServiceAuth.getCategories();
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, Unit>> addFavCategory(AddFavCategoryParams params) {
+    return executeAndHandleError<Unit>(() async {
+      final res = await _apiServiceAuth.addFavCategory(params);
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, CategoryModel>> getFavCategories() {
+    return executeAndHandleError<CategoryModel>(() async {
+      final res = await _apiServiceAuth.getFavCategories();
       return res;
     });
   }

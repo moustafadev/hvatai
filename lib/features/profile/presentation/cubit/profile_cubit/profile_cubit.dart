@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,11 @@ part 'profile_cubit.freezed.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   final GetProfileDataUsecase getProfileDataUseCase;
+  final SignOutUsecase signOutUsecase;
 
   ProfileCubit(this.getProfileDataUseCase, this.signOutUsecase)
       : super(ProfileState(userProfileModel: UserRegistrationData()));
-  SignOutUsecase signOutUsecase;
+
   Future<void> signOut(BuildContext context) async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 

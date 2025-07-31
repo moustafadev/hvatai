@@ -2,9 +2,9 @@ part of '../auth.dart';
 
 class CategoryOptionsSection extends StatelessWidget {
   final String category;
-  final List<String> options;
-  final Set<String> selectedDetails;
-  final void Function(String) onItemTap;
+  final List<CategoryChild> options;
+  final Set<int> selectedDetails;
+  final void Function(int) onItemTap;
 
   const CategoryOptionsSection({
     super.key,
@@ -29,10 +29,10 @@ class CategoryOptionsSection extends StatelessWidget {
           spacing: 8,
           runSpacing: 8,
           children: options.map((item) {
-            final isSelected = selectedDetails.contains(item);
+            final isSelected = selectedDetails.contains(item.id);
 
             return GestureDetector(
-              onTap: () => onItemTap(item),
+              onTap: () => onItemTap(item.id!),
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
@@ -44,7 +44,7 @@ class CategoryOptionsSection extends StatelessWidget {
                       : Border.all(color: Colors.transparent),
                 ),
                 child: CustomText(
-                  text: item,
+                  text: item.name ?? '',
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
                 ),

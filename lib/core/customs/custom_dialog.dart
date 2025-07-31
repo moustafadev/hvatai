@@ -39,7 +39,7 @@ class CustomDialog extends StatelessWidget {
         ),
         actions: [
           CupertinoDialogAction(
-            onPressed: onCancel ?? () => Navigator.of(context).pop(),
+            onPressed: onCancel ?? () => context.pop(),
             child: CustomText(
               text: cancelText,
               fontSize: 17,
@@ -63,45 +63,37 @@ class CustomDialog extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
-        title: Text(
-          title,
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w500,
-            color: Colors.white,
-          ),
+        title: CustomText(
+          text: title,
+          fontSize: 20.sp,
+          fontWeight: FontWeight.w500,
+          color: AppColors.white,
         ),
-        content: Text(
-          content,
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.white70,
-            height: 1.4,
-          ),
+        content: CustomText(
+          text: content,
+          fontSize: 16.sp,
+          color: Colors.white70,
+          height: 1.4,
         ),
         actions: [
           TextButton(
             onPressed: onCancel ?? () => context.pop(),
-            child: Text(
-              cancelText.toUpperCase(),
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: Colors.white70,
-                letterSpacing: 0.5,
-              ),
+            child: CustomText(
+              text: cancelText.toUpperCase(),
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
+              color: Colors.white70,
+              letterSpacing: 0.5,
             ),
           ),
           TextButton(
             onPressed: onConfirm ?? () => context.pop(),
-            child: Text(
-              confirmText.toUpperCase(),
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: isDestructive ? Colors.red[400] : Colors.blue[400],
-                letterSpacing: 0.5,
-              ),
+            child: CustomText(
+              text: confirmText.toUpperCase(),
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w500,
+              color: isDestructive ? Colors.red[400] : Colors.blue[400],
+              letterSpacing: 0.5,
             ),
           ),
         ],

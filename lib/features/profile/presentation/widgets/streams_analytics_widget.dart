@@ -7,7 +7,6 @@ class StreamsAnalyticsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AnalyticsCubit, AnalyticsState>(
       builder: (context, state) {
-        final cubit = context.read<AnalyticsCubit>();
         return SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),

@@ -10,10 +10,16 @@ class UpdateCountryDropdown extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<EditProfileCubit>();
 
-        final selectedCountry =
+        final availableCountries = ['Russia', 'USA', 'India'];
+        final selectedCountryRaw =
             (state.user.country != null && state.user.country!.isNotEmpty)
-                ? state.user.country
+                ? state.user.country!
                 : country;
+
+        final selectedCountry = availableCountries.firstWhere(
+          (c) => c.toLowerCase() == selectedCountryRaw.toLowerCase(),
+          orElse: () => availableCountries.first,
+        );
 
         return CustomDropdown(
           hintText: 'country'.tr(),
@@ -29,7 +35,7 @@ class UpdateCountryDropdown extends StatelessWidget {
           items: const ['Russia', 'USA', 'India']
               .map((val) => DropdownMenuItem<String>(
                     value: val,
-                    child: Text(val),
+                    child: CustomText(text: val.toUpperCase()),
                   ))
               .toList(),
         );

@@ -4,7 +4,6 @@ import 'package:hvatai/features/auth/data/models/registration_model/user_registr
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
-import 'package:hvatai/features/profile/presentation/cubit/delivery_address/update_delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
@@ -160,8 +159,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.interests,
       builder: (BuildContext context, GoRouterState state) {
-        final userData = state.extra as UserRegistrationData;
-        return InterestsScreen(data: userData);
+        return InterestsScreen();
       },
     ),
     GoRoute(
@@ -179,8 +177,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.interestsDetail,
       builder: (context, state) {
-        final user = state.extra as UserRegistrationData;
-        return InterestsDetailScreen(data: user);
+        return InterestsDetailScreen();
       },
     ),
     GoRoute(

@@ -17,10 +17,11 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$InterestsState {
   UserRegistrationData get user => throw _privateConstructorUsedError;
-  List<String> get selectedInterests => throw _privateConstructorUsedError;
+  List<int> get selectedCategoryIds => throw _privateConstructorUsedError;
   Set<int> get selectedIndices => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
+  CategoryModel? get categories => throw _privateConstructorUsedError;
 
   /// Create a copy of InterestsState
   /// with the given fields replaced by the non-null parameter values.
@@ -37,12 +38,14 @@ abstract class $InterestsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {UserRegistrationData user,
-      List<String> selectedInterests,
+      List<int> selectedCategoryIds,
       Set<int> selectedIndices,
       bool isLoading,
-      String errorMessage});
+      String errorMessage,
+      CategoryModel? categories});
 
   $UserRegistrationDataCopyWith<$Res> get user;
+  $CategoryModelCopyWith<$Res>? get categories;
 }
 
 /// @nodoc
@@ -61,20 +64,21 @@ class _$InterestsStateCopyWithImpl<$Res, $Val extends InterestsState>
   @override
   $Res call({
     Object? user = null,
-    Object? selectedInterests = null,
+    Object? selectedCategoryIds = null,
     Object? selectedIndices = null,
     Object? isLoading = null,
     Object? errorMessage = null,
+    Object? categories = freezed,
   }) {
     return _then(_value.copyWith(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserRegistrationData,
-      selectedInterests: null == selectedInterests
-          ? _value.selectedInterests
-          : selectedInterests // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      selectedCategoryIds: null == selectedCategoryIds
+          ? _value.selectedCategoryIds
+          : selectedCategoryIds // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       selectedIndices: null == selectedIndices
           ? _value.selectedIndices
           : selectedIndices // ignore: cast_nullable_to_non_nullable
@@ -87,6 +91,10 @@ class _$InterestsStateCopyWithImpl<$Res, $Val extends InterestsState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      categories: freezed == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
     ) as $Val);
   }
 
@@ -97,6 +105,20 @@ class _$InterestsStateCopyWithImpl<$Res, $Val extends InterestsState>
   $UserRegistrationDataCopyWith<$Res> get user {
     return $UserRegistrationDataCopyWith<$Res>(_value.user, (value) {
       return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
+
+  /// Create a copy of InterestsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res>? get categories {
+    if (_value.categories == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.categories!, (value) {
+      return _then(_value.copyWith(categories: value) as $Val);
     });
   }
 }
@@ -111,13 +133,16 @@ abstract class _$$InterestsStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {UserRegistrationData user,
-      List<String> selectedInterests,
+      List<int> selectedCategoryIds,
       Set<int> selectedIndices,
       bool isLoading,
-      String errorMessage});
+      String errorMessage,
+      CategoryModel? categories});
 
   @override
   $UserRegistrationDataCopyWith<$Res> get user;
+  @override
+  $CategoryModelCopyWith<$Res>? get categories;
 }
 
 /// @nodoc
@@ -134,20 +159,21 @@ class __$$InterestsStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? user = null,
-    Object? selectedInterests = null,
+    Object? selectedCategoryIds = null,
     Object? selectedIndices = null,
     Object? isLoading = null,
     Object? errorMessage = null,
+    Object? categories = freezed,
   }) {
     return _then(_$InterestsStateImpl(
       user: null == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as UserRegistrationData,
-      selectedInterests: null == selectedInterests
-          ? _value._selectedInterests
-          : selectedInterests // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+      selectedCategoryIds: null == selectedCategoryIds
+          ? _value._selectedCategoryIds
+          : selectedCategoryIds // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       selectedIndices: null == selectedIndices
           ? _value._selectedIndices
           : selectedIndices // ignore: cast_nullable_to_non_nullable
@@ -160,6 +186,10 @@ class __$$InterestsStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      categories: freezed == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
     ));
   }
 }
@@ -169,23 +199,24 @@ class __$$InterestsStateImplCopyWithImpl<$Res>
 class _$InterestsStateImpl implements _InterestsState {
   const _$InterestsStateImpl(
       {required this.user,
-      final List<String> selectedInterests = const [],
+      final List<int> selectedCategoryIds = const [],
       final Set<int> selectedIndices = const {},
       this.isLoading = false,
-      this.errorMessage = ''})
-      : _selectedInterests = selectedInterests,
+      this.errorMessage = '',
+      this.categories})
+      : _selectedCategoryIds = selectedCategoryIds,
         _selectedIndices = selectedIndices;
 
   @override
   final UserRegistrationData user;
-  final List<String> _selectedInterests;
+  final List<int> _selectedCategoryIds;
   @override
   @JsonKey()
-  List<String> get selectedInterests {
-    if (_selectedInterests is EqualUnmodifiableListView)
-      return _selectedInterests;
+  List<int> get selectedCategoryIds {
+    if (_selectedCategoryIds is EqualUnmodifiableListView)
+      return _selectedCategoryIds;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_selectedInterests);
+    return EqualUnmodifiableListView(_selectedCategoryIds);
   }
 
   final Set<int> _selectedIndices;
@@ -203,10 +234,12 @@ class _$InterestsStateImpl implements _InterestsState {
   @override
   @JsonKey()
   final String errorMessage;
+  @override
+  final CategoryModel? categories;
 
   @override
   String toString() {
-    return 'InterestsState(user: $user, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'InterestsState(user: $user, selectedCategoryIds: $selectedCategoryIds, selectedIndices: $selectedIndices, isLoading: $isLoading, errorMessage: $errorMessage, categories: $categories)';
   }
 
   @override
@@ -216,23 +249,26 @@ class _$InterestsStateImpl implements _InterestsState {
             other is _$InterestsStateImpl &&
             (identical(other.user, user) || other.user == user) &&
             const DeepCollectionEquality()
-                .equals(other._selectedInterests, _selectedInterests) &&
+                .equals(other._selectedCategoryIds, _selectedCategoryIds) &&
             const DeepCollectionEquality()
                 .equals(other._selectedIndices, _selectedIndices) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+                other.errorMessage == errorMessage) &&
+            (identical(other.categories, categories) ||
+                other.categories == categories));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       user,
-      const DeepCollectionEquality().hash(_selectedInterests),
+      const DeepCollectionEquality().hash(_selectedCategoryIds),
       const DeepCollectionEquality().hash(_selectedIndices),
       isLoading,
-      errorMessage);
+      errorMessage,
+      categories);
 
   /// Create a copy of InterestsState
   /// with the given fields replaced by the non-null parameter values.
@@ -247,21 +283,24 @@ class _$InterestsStateImpl implements _InterestsState {
 abstract class _InterestsState implements InterestsState {
   const factory _InterestsState(
       {required final UserRegistrationData user,
-      final List<String> selectedInterests,
+      final List<int> selectedCategoryIds,
       final Set<int> selectedIndices,
       final bool isLoading,
-      final String errorMessage}) = _$InterestsStateImpl;
+      final String errorMessage,
+      final CategoryModel? categories}) = _$InterestsStateImpl;
 
   @override
   UserRegistrationData get user;
   @override
-  List<String> get selectedInterests;
+  List<int> get selectedCategoryIds;
   @override
   Set<int> get selectedIndices;
   @override
   bool get isLoading;
   @override
   String get errorMessage;
+  @override
+  CategoryModel? get categories;
 
   /// Create a copy of InterestsState
   /// with the given fields replaced by the non-null parameter values.

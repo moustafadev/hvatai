@@ -252,6 +252,11 @@
   "editProfile": "Редактировать профиль",
   "myProducts": "Мои товары",
   "all": "Все",
+  "interestsAdded": "Интересы добавлены",
+  "alreadyInFavorites": "Уже в избранном",
+  
+
+  "delete": "Delete",
   "home": "Главная",
   "favorites": "Избранное",
   "categories": "Категории",
@@ -285,6 +290,8 @@
   "deliveryDetails": "Размеры, вес посылки*",
   "ready": "Готово",
   "selectCategory": "Выберите категорию",
+  "selectPhoto": "Выбрать фото",
+  "takePhoto": "Сделать фото",
   "noCategories": "Нет доступных категорий",
   "maxWordsTitle": "Максимум 20 слов",
   "maxWordsDesc": "Максимум 30 слов",

@@ -35,6 +35,22 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     }
   }
 
+  Future<void> captureImageFromCamera() async {
+    if (state.selectedImages.length >= 8) return;
+
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 85,
+    );
+
+    if (pickedFile != null) {
+      final updatedList = List<File>.from(state.selectedImages)
+        ..add(File(pickedFile.path));
+      emit(state.copyWith(selectedImages: updatedList));
+    }
+  }
+
   void toggleSelfDestruction() {
     emit(state.copyWith(
       selfDestruction: !state.selfDestruction,
