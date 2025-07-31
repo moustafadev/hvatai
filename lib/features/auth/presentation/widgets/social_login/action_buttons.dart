@@ -12,7 +12,7 @@ class ActionButtons extends StatelessWidget {
       children: [
         SocialCircleButton(
           assetPath: Assets.assetsIconsApple,
-          onTap: cubit.signUpWithApple,
+          onTap: () => cubit.signUpWithApple(context),
         ),
         16.pw,
         SocialCircleButton(

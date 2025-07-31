@@ -1,6 +1,7 @@
 import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
+import 'package:hvatai/features/auth/domain/usecases/login_with_apple_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_with_google_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
 import 'package:hvatai/features/home/domain/usecases/get_notification_usecase.dart';
@@ -36,4 +37,5 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => SignOutUsecase(locator()));
   locator.registerLazySingleton(() => DeleteAddressUsecase(locator()));
   locator.registerLazySingleton(() => DeleteCardUsecase(locator()));
+  locator.registerLazySingleton(() => LoginWithAppleUsecase(locator()));
 }

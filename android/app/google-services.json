@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "447608090352",
+    "project_id": "stream-984ab",
+    "storage_bucket": "stream-984ab.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:447608090352:android:0a1ffb7bbb2949f2d49c35",
+        "android_client_info": {
+          "package_name": "com.example.hvatai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "447608090352-69cdsnjpuu3ckmvn6n7le4r8dptsrqsn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hvatai",
+            "certificate_hash": "3c02c4f4416deaad08545cf04e31e11152c4ce25"
+          }
+        },
+        {
+          "client_id": "447608090352-me8gpr2itg4ardcnpahfmi1nesnhsipa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNO3DYdtBaSCFevxVDKXjXGaPDAIGEzrk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "447608090352-me8gpr2itg4ardcnpahfmi1nesnhsipa.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "447608090352-2aho7s9rgrgird65qk123nd22750lbt6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.hvatai"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

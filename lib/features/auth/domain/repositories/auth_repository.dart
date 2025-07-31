@@ -14,6 +14,7 @@ abstract class AuthRepository {
   Future<Either<String, UserRegistrationData>> register(RegisterParams params);
 
   Future<Either<String, UserRegistrationData>> loginWithGoogle();
+  Future<Either<String, UserRegistrationData>> loginWithApple();
 
   Future<Either<String, UserRegistrationData>> deliveryAddress(
       DeliveryAddressParams params);

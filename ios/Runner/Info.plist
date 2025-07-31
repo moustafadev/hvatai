@@ -51,16 +51,23 @@
 	<string>We need access to your camera to take a product photo.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We need your location to auto-fill the address</string>
+	<key>GIDClientID</key>
+    <string>447608090352-2aho7s9rgrgird65qk123nd22750lbt6.apps.googleusercontent.com</string>
+
 	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.YOUR_REVERSED_CLIENT_ID</string>
-			</array>
-		</dict>
-	</array>
+    <array>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <!-- Reverse client ID from GoogleService-Info.plist -->
+                <string>com.googleusercontent.apps.447608090352-2aho7s9rgrgird65qk123nd22750lbt6</string>
+            </array>
+        </dict>
+    </array>
+	<key>NSUserAuthenticationUsageDescription</key>
+	<string>Sign in with Apple is used to log in securely.</string>
+
 </dict>
 </plist>

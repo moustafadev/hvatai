@@ -68,4 +68,12 @@ class AuthImplRepository implements AuthRepository {
       return res;
     });
   }
+
+  @override
+  Future<Either<String, UserRegistrationData>> loginWithApple() async {
+    return executeAndHandleError<UserRegistrationData>(() async {
+      final res = await _apiServiceAuth.loginWithApple();
+      return res;
+    });
+  }
 }
