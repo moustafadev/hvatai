@@ -4,6 +4,7 @@ import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.da
 import 'package:hvatai/features/auth/domain/usecases/get_category_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/get_fav_category_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
+import 'package:hvatai/features/auth/domain/usecases/login_with_apple_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_with_google_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
 import 'package:hvatai/features/home/domain/usecases/get_notification_usecase.dart';
@@ -44,4 +45,5 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => AddFavCategoryUsecase(locator()));
   locator.registerLazySingleton(() => GetFavCategoryUsecase(locator()));
   locator.registerLazySingleton(() => MarkReadUsecase(locator()));
+  locator.registerLazySingleton(() => LoginWithAppleUsecase(locator()));
 }

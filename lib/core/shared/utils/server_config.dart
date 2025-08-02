@@ -8,6 +8,8 @@ abstract class ServerConfig {
   static const String checkOtp = "submit-otp";
   static const String interestsCategories = "interestsCategories";
   static const String loginWithGoogle = "auth/google";
+  static const String loginWithApple = "auth/apple";
+
   static const String deliveryAddress = "addresses";
   static String deliveryAddressId(int addressId) =>
       '$deliveryAddress/$addressId';

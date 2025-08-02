@@ -61,7 +61,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AnalyticsCubit());
   locator.registerFactory(() => MainNotificationCubit(locator(), locator()));
 
-  locator.registerFactory(() => SocialLoginCubit(locator()));
+  locator.registerFactory(() => SocialLoginCubit(locator() , locator()));
   locator.registerFactory(() => RegistrationCubit(
         locator(),
       ));
