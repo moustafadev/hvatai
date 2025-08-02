@@ -54,7 +54,7 @@ class UserRegistrationData with _$UserRegistrationData {
     @JsonKey(includeIfNull: false) String? latitude,
     @JsonKey(includeIfNull: false) String? longitude,
     @JsonKey(name: 'created_at', includeIfNull: false) String? createdAt,
-    @JsonKey(name: 'wallet_balance', includeIfNull: false) int? walletBalance,
+    @JsonKey(name: 'wallet_balance', includeIfNull: false) String? walletBalance,
     @JsonKey(name: 'wallet_id', includeIfNull: false) int? walletId,
     @JsonKey(name: 'updated_at', includeIfNull: false) String? updatedAt,
     @JsonKey(includeIfNull: false) List<String>? interests,

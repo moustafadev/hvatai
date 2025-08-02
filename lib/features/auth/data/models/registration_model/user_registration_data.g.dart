@@ -57,7 +57,7 @@ _$UserRegistrationDataImpl _$$UserRegistrationDataImplFromJson(
       latitude: json['latitude'] as String?,
       longitude: json['longitude'] as String?,
       createdAt: json['created_at'] as String?,
-      walletBalance: (json['wallet_balance'] as num?)?.toInt(),
+      walletBalance: json['wallet_balance'] as String?,
       walletId: (json['wallet_id'] as num?)?.toInt(),
       updatedAt: json['updated_at'] as String?,
       interests: (json['interests'] as List<dynamic>?)

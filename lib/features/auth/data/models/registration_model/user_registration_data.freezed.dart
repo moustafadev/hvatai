@@ -113,7 +113,7 @@ mixin _$UserRegistrationData {
   @JsonKey(name: 'created_at', includeIfNull: false)
   String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'wallet_balance', includeIfNull: false)
-  int? get walletBalance => throw _privateConstructorUsedError;
+  String? get walletBalance => throw _privateConstructorUsedError;
   @JsonKey(name: 'wallet_id', includeIfNull: false)
   int? get walletId => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -197,7 +197,8 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       @JsonKey(includeIfNull: false) String? latitude,
       @JsonKey(includeIfNull: false) String? longitude,
       @JsonKey(name: 'created_at', includeIfNull: false) String? createdAt,
-      @JsonKey(name: 'wallet_balance', includeIfNull: false) int? walletBalance,
+      @JsonKey(name: 'wallet_balance', includeIfNull: false)
+      String? walletBalance,
       @JsonKey(name: 'wallet_id', includeIfNull: false) int? walletId,
       @JsonKey(name: 'updated_at', includeIfNull: false) String? updatedAt,
       @JsonKey(includeIfNull: false) List<String>? interests,
@@ -460,7 +461,7 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
       walletBalance: freezed == walletBalance
           ? _value.walletBalance
           : walletBalance // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       walletId: freezed == walletId
           ? _value.walletId
           : walletId // ignore: cast_nullable_to_non_nullable
@@ -547,7 +548,8 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       @JsonKey(includeIfNull: false) String? latitude,
       @JsonKey(includeIfNull: false) String? longitude,
       @JsonKey(name: 'created_at', includeIfNull: false) String? createdAt,
-      @JsonKey(name: 'wallet_balance', includeIfNull: false) int? walletBalance,
+      @JsonKey(name: 'wallet_balance', includeIfNull: false)
+      String? walletBalance,
       @JsonKey(name: 'wallet_id', includeIfNull: false) int? walletId,
       @JsonKey(name: 'updated_at', includeIfNull: false) String? updatedAt,
       @JsonKey(includeIfNull: false) List<String>? interests,
@@ -807,7 +809,7 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
       walletBalance: freezed == walletBalance
           ? _value.walletBalance
           : walletBalance // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as String?,
       walletId: freezed == walletId
           ? _value.walletId
           : walletId // ignore: cast_nullable_to_non_nullable
@@ -1047,7 +1049,7 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   final String? createdAt;
   @override
   @JsonKey(name: 'wallet_balance', includeIfNull: false)
-  final int? walletBalance;
+  final String? walletBalance;
   @override
   @JsonKey(name: 'wallet_id', includeIfNull: false)
   final int? walletId;
@@ -1312,7 +1314,7 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       @JsonKey(name: 'created_at', includeIfNull: false)
       final String? createdAt,
       @JsonKey(name: 'wallet_balance', includeIfNull: false)
-      final int? walletBalance,
+      final String? walletBalance,
       @JsonKey(name: 'wallet_id', includeIfNull: false) final int? walletId,
       @JsonKey(name: 'updated_at', includeIfNull: false)
       final String? updatedAt,
@@ -1463,7 +1465,7 @@ abstract class _UserRegistrationData implements UserRegistrationData {
   String? get createdAt;
   @override
   @JsonKey(name: 'wallet_balance', includeIfNull: false)
-  int? get walletBalance;
+  String? get walletBalance;
   @override
   @JsonKey(name: 'wallet_id', includeIfNull: false)
   int? get walletId;
