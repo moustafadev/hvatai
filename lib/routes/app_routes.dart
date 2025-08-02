@@ -42,5 +42,7 @@ class AppRoutes {
   static const String tradeProfileDetail = '/trade_profile_detail';
   static const String addProduct = '/add_product';
   static const String otp = '/otp';
+  static const String liveStream = '/live_stream';
+
   static const String mainNotification = '/main_notification';
 }
