@@ -16,8 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$MainNotificationState {
-  List<NotificationModel> get notifications =>
-      throw _privateConstructorUsedError;
+  NotificationModel? get notifications => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
 
@@ -35,9 +34,9 @@ abstract class $MainNotificationStateCopyWith<$Res> {
       _$MainNotificationStateCopyWithImpl<$Res, MainNotificationState>;
   @useResult
   $Res call(
-      {List<NotificationModel> notifications,
-      bool isLoading,
-      String errorMessage});
+      {NotificationModel? notifications, bool isLoading, String errorMessage});
+
+  $NotificationModelCopyWith<$Res>? get notifications;
 }
 
 /// @nodoc
@@ -56,15 +55,15 @@ class _$MainNotificationStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? notifications = null,
+    Object? notifications = freezed,
     Object? isLoading = null,
     Object? errorMessage = null,
   }) {
     return _then(_value.copyWith(
-      notifications: null == notifications
+      notifications: freezed == notifications
           ? _value.notifications
           : notifications // ignore: cast_nullable_to_non_nullable
-              as List<NotificationModel>,
+              as NotificationModel?,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -74,6 +73,20 @@ class _$MainNotificationStateCopyWithImpl<$Res,
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
+  }
+
+  /// Create a copy of MainNotificationState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $NotificationModelCopyWith<$Res>? get notifications {
+    if (_value.notifications == null) {
+      return null;
+    }
+
+    return $NotificationModelCopyWith<$Res>(_value.notifications!, (value) {
+      return _then(_value.copyWith(notifications: value) as $Val);
+    });
   }
 }
 
@@ -87,9 +100,10 @@ abstract class _$$MainNotificationStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<NotificationModel> notifications,
-      bool isLoading,
-      String errorMessage});
+      {NotificationModel? notifications, bool isLoading, String errorMessage});
+
+  @override
+  $NotificationModelCopyWith<$Res>? get notifications;
 }
 
 /// @nodoc
@@ -106,15 +120,15 @@ class __$$MainNotificationStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? notifications = null,
+    Object? notifications = freezed,
     Object? isLoading = null,
     Object? errorMessage = null,
   }) {
     return _then(_$MainNotificationStateImpl(
-      notifications: null == notifications
-          ? _value._notifications
+      notifications: freezed == notifications
+          ? _value.notifications
           : notifications // ignore: cast_nullable_to_non_nullable
-              as List<NotificationModel>,
+              as NotificationModel?,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -131,20 +145,10 @@ class __$$MainNotificationStateImplCopyWithImpl<$Res>
 
 class _$MainNotificationStateImpl implements _MainNotificationState {
   const _$MainNotificationStateImpl(
-      {final List<NotificationModel> notifications = const [],
-      this.isLoading = false,
-      this.errorMessage = ''})
-      : _notifications = notifications;
+      {this.notifications, this.isLoading = false, this.errorMessage = ''});
 
-  final List<NotificationModel> _notifications;
   @override
-  @JsonKey()
-  List<NotificationModel> get notifications {
-    if (_notifications is EqualUnmodifiableListView) return _notifications;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_notifications);
-  }
-
+  final NotificationModel? notifications;
   @override
   @JsonKey()
   final bool isLoading;
@@ -162,8 +166,8 @@ class _$MainNotificationStateImpl implements _MainNotificationState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MainNotificationStateImpl &&
-            const DeepCollectionEquality()
-                .equals(other._notifications, _notifications) &&
+            (identical(other.notifications, notifications) ||
+                other.notifications == notifications) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -171,11 +175,8 @@ class _$MainNotificationStateImpl implements _MainNotificationState {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_notifications),
-      isLoading,
-      errorMessage);
+  int get hashCode =>
+      Object.hash(runtimeType, notifications, isLoading, errorMessage);
 
   /// Create a copy of MainNotificationState
   /// with the given fields replaced by the non-null parameter values.
@@ -189,12 +190,12 @@ class _$MainNotificationStateImpl implements _MainNotificationState {
 
 abstract class _MainNotificationState implements MainNotificationState {
   const factory _MainNotificationState(
-      {final List<NotificationModel> notifications,
+      {final NotificationModel? notifications,
       final bool isLoading,
       final String errorMessage}) = _$MainNotificationStateImpl;
 
   @override
-  List<NotificationModel> get notifications;
+  NotificationModel? get notifications;
   @override
   bool get isLoading;
   @override

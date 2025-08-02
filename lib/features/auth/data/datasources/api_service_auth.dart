@@ -24,7 +24,6 @@ class ApiServiceAuth extends ApiBase {
     });
   }
 
-//
   Future<LoginModel> login(LoginParams params) async {
     return executeAndHandleErrorServer<LoginModel>(() async {
       final response = await post(ServerConfig.login, body: params.toJson());
@@ -46,18 +45,6 @@ class ApiServiceAuth extends ApiBase {
       }
     });
   }
-
-  // Future<CategoryModel> getFavCategories() async {
-  //   return executeAndHandleErrorServer<CategoryModel>(() async {
-  //     final response =
-  //         await get("https://khvatai.ru/api/v1/category-favorites");
-  //     if (response.statusCode == 200 || response.statusCode == 201) {
-  //       return CategoryModel.fromJson(response.json);
-  //     } else {
-  //       throw Exception;
-  //     }
-  //   });
-  // }
 
   Future<CategoryModel> getFavCategories() async {
     return executeAndHandleErrorServer<CategoryModel>(() async {

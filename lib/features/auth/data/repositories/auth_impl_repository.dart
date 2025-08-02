@@ -22,12 +22,11 @@ class AuthImplRepository implements AuthRepository {
   Future<Either<String, LoginModel>> checkOtp(CheckOtpParams params) async {
     return executeAndHandleError<LoginModel>(() async {
       final res = await _apiServiceAuth.checkOtp(params);
+      await _appLocal.saveIsSetup(res.isSetup);
 
       if (res.token != null) {
-        _appLocal.saveToken(res.token!);
-        print('Token saved: ${res.token}');
+        await _appLocal.saveToken(res.token!);
       }
-
       return res;
     });
   }
@@ -36,9 +35,9 @@ class AuthImplRepository implements AuthRepository {
   Future<Either<String, LoginModel>> login(LoginParams params) async {
     return executeAndHandleError<LoginModel>(() async {
       final res = await _apiServiceAuth.login(params);
+      await _appLocal.saveIsSetup(res.isSetup);
       if (res.token != null) {
-        _appLocal.saveToken(res.token!);
-        print('Token saved: ${res.token}');
+        await _appLocal.saveToken(res.token!);
       }
       return res;
     });

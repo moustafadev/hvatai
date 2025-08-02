@@ -1,8 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,35 +12,40 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool isLoading = false;
   @override
   void initState() {
-    setState(() => isLoading = true);
+    super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkLogin();
     });
-    setState(() => isLoading = false);
-    super.initState();
   }
 
-  checkLogin() {
+  Future<void> checkLogin() async {
     final appLocal = locator<AppLocal>();
+
     final token = appLocal.getToken();
-    if (token != null && token.isNotEmpty) {
-      context.go(AppRoutes.home);
-    } else {
+    final isSetup = appLocal.getIsSetup();
+    print('token$token');
+    print('isSetup $isSetup');
+    if (token == null || token.isEmpty) {
       context.go(AppRoutes.socialLogin);
+      return;
+    }
+
+    if (!isSetup) {
+      await appLocal.removeToken();
+      print('token removed because isSetup = false');
+      // ignore: use_build_context_synchronously
+      context.go(AppRoutes.socialLogin);
+    } else {
+      context.go(AppRoutes.home);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: isLoading
-            ? const CircularProgressIndicator()
-            : const SizedBox.shrink(),
-      ),
+    return const Scaffold(
+      body: Center(child: CircularProgressIndicator()),
     );
   }
 }

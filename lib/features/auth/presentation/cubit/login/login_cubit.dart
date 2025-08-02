@@ -4,17 +4,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/core/datasources/local/app_local.dart';
+
 import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
+
 part 'login_state.dart';
 part 'login_cubit.freezed.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit(this.loginUseCase) : super(const LoginState());
+  LoginCubit(this.loginUseCase, this.appLocal) : super(const LoginState());
 
   final formKey = GlobalKey<FormState>();
-
   final LoginUseCase loginUseCase;
+  final AppLocal appLocal;
 
   void updateEmail(String value) => emit(state.copyWith(email: value));
   void updatePassword(String value) => emit(state.copyWith(password: value));
@@ -30,30 +33,33 @@ class LoginCubit extends Cubit<LoginState> {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
     final loginData = state.toUserLoginData();
-
     final result = await loginUseCase.call(loginData);
 
-    result.fold((failure) {
-      emit(state.copyWith(
-        isLoading: false,
-        errorMessage: failure,
-      ));
-      showFloatingMessageError('invalidEmailOrPassword'.tr());
-    }, (loginModel) {
-      emit(state.copyWith(
-        isLoading: false,
-        successLogin: true,
-      ));
+    result.fold(
+      (failure) {
+        emit(state.copyWith(
+          isLoading: false,
+          errorMessage: failure,
+        ));
+        showFloatingMessageError('invalidEmailOrPassword'.tr());
+      },
+      (loginModel) async {
+        emit(state.copyWith(
+          isLoading: false,
+          successLogin: true,
+        ));
 
-      showFloatingMessageSuccess('loginSuccessful'.tr());
+        showFloatingMessageSuccess('loginSuccessful'.tr());
 
-      final isSetup = loginModel.isSetup ?? false;
-
-      if (isSetup) {
-        context.go(AppRoutes.home);
-      } else {
-        context.push(AppRoutes.interests);
-      }
-    });
+        final isSetup = loginModel.isSetup ?? false;
+        if (isSetup) {
+          context.push(AppRoutes.home);
+        } else {
+          context.push(
+            AppRoutes.interests,
+          );
+        }
+      },
+    );
   }
 }

@@ -57,7 +57,7 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
         updatedUser = state.user.copyWith(country: value);
         break;
       case 'house':
-        updatedUser = state.user.copyWith(frontDoor: value);
+        updatedUser = state.user.copyWith(floor: value);
         break;
       case 'city':
         updatedUser = state.user.copyWith(city: value);
@@ -66,10 +66,7 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
         updatedUser = state.user.copyWith(street: value);
         break;
       case 'entrance':
-        updatedUser = state.user.copyWith(floor: value);
-        break;
-      case 'name':
-        updatedUser = state.user.copyWith(firstName: value);
+        updatedUser = state.user.copyWith(frontDoor: value);
         break;
       case 'index':
         updatedUser = state.user.copyWith(intercomCode: value);

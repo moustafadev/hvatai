@@ -2,20 +2,36 @@ import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/home/data/model/notification_model/notification_model.dart';
+import 'package:hvatai/features/home/domain/usecases/mark_read_usecase.dart';
 
 class ApiServiceHome extends ApiBase {
-  Future<List<NotificationModel>> getNotifications() async {
-    return executeAndHandleErrorServer<List<NotificationModel>>(() async {
+  Future<NotificationModel> getNotifications() async {
+    return executeAndHandleErrorServer<NotificationModel>(() async {
       final response = await get(ServerConfig.notifications);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        final List<dynamic> data = response.json['data'];
-
-        return data
-            .map((e) => NotificationModel.fromJson(e as Map<String, dynamic>))
-            .toList();
+        return NotificationModel.fromJson(response.json);
       } else {
         throw Exception;
+      }
+    });
+  }
+
+  Future<NotificationModel> markReadNotification(
+      MarkReadUsecaseParams params) async {
+    return executeAndHandleErrorServer<NotificationModel>(() async {
+      final id = params.notificationItem.id;
+      if (id == null) throw Exception("Notification ID is null");
+
+      final url = ServerConfig.notificationMarkRead(id);
+      final response = await patch(url);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return NotificationModel.fromJson({
+          'data': [response.json['data']]
+        });
+      } else {
+        throw Exception("Failed to mark notification as read");
       }
     });
   }

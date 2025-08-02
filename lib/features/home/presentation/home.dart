@@ -14,6 +14,7 @@ import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_t
 import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 part 'screens/feed_screen.dart';
 part 'widgets/notification_detail_bottom_sheet.dart';
