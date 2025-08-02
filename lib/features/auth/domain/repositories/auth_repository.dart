@@ -18,7 +18,7 @@ abstract class AuthRepository {
 
   Future<Either<String, Unit>> addFavCategory(AddFavCategoryParams params);
 
-  Future<Either<String, UserRegistrationData>> loginWithGoogle();
+  Future<Either<String, SocialLoginResponse>> loginWithGoogle();
   Future<Either<String, SocialLoginResponse>> loginWithApple();
 
   Future<Either<String, UserRegistrationData>> deliveryAddress(

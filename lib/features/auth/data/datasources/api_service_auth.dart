@@ -1,7 +1,6 @@
 import 'package:dartz/dartz.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
@@ -191,26 +190,6 @@ Future<SocialLoginResponse> loginWithApple() async {
     });
   }
 
-  Future<UserRegistrationData> loginWithGoogle() async {
-    return executeAndHandleErrorServer<UserRegistrationData>(() async {
-      final googleUser = await GoogleSignIn().signIn();
-      final googleAuth = await googleUser?.authentication;
-      final idToken = googleAuth?.idToken;
-
-      if (idToken == null) throw Exception("Google ID Token is null");
-
-      final response = await post(
-        ServerConfig.loginWithGoogle,
-        body: {'id_token': idToken},
-      );
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return UserRegistrationData.fromJson(response.json);
-      } else {
-        throw Exception;
-      }
-    });
-  }
 
 
   Future<UserRegistrationData> register(RegisterParams params) async {
