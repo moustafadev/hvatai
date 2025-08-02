@@ -9,6 +9,7 @@ class StreamerProfileTradeOptions extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
       final firstItem = state.streamerOptions.first;
+
       final remainingItems = state.streamerOptions.sublist(1);
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -49,7 +50,7 @@ class StreamerProfileTradeOptions extends StatelessWidget {
                       color: AppColors.grey,
                     ),
                     CustomText(
-                      text: '300 ₽',
+                      text: state.userProfileModel.walletBalance.toString(),
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                       color: AppColors.primary,

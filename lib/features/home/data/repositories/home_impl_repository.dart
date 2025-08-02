@@ -3,6 +3,7 @@ import 'package:hvatai/features/home/data/datasources/api_service_home.dart';
 import 'package:hvatai/features/home/data/model/notification_model/notification_model.dart';
 import 'package:hvatai/features/home/domain/repositories/home_repository.dart';
 import 'package:dartz/dartz.dart';
+import 'package:hvatai/features/home/domain/usecases/mark_read_usecase.dart';
 
 class HomeImplRepository implements HomeRepository {
   final ApiServiceHome _apiServiceHome;
@@ -15,9 +16,18 @@ class HomeImplRepository implements HomeRepository {
   }
 
   @override
-  Future<Either<String, List<NotificationModel>>> getNotifications() async {
-    return executeAndHandleError<List<NotificationModel>>(() async {
+  Future<Either<String, NotificationModel>> getNotifications() async {
+    return executeAndHandleError<NotificationModel>(() async {
       final res = await _apiServiceHome.getNotifications();
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, NotificationModel>> markReadNotification(
+      MarkReadUsecaseParams params) {
+    return executeAndHandleError<NotificationModel>(() async {
+      final res = await _apiServiceHome.markReadNotification(params);
       return res;
     });
   }

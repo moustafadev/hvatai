@@ -206,8 +206,7 @@ mixin _$CategoryData {
   int? get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'parent_id')
   int? get parentId => throw _privateConstructorUsedError;
-  dynamic get parent =>
-      throw _privateConstructorUsedError; // ممكن تخليه موديل بعدين لو احتجته
+  dynamic get parent => throw _privateConstructorUsedError;
   List<CategoryChild>? get children => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_favorited')
   bool? get isFavorited => throw _privateConstructorUsedError;
@@ -498,9 +497,7 @@ class _$CategoryDataImpl implements _CategoryData {
   final int? parentId;
   @override
   final dynamic parent;
-// ممكن تخليه موديل بعدين لو احتجته
   final List<CategoryChild>? _children;
-// ممكن تخليه موديل بعدين لو احتجته
   @override
   List<CategoryChild>? get children {
     final value = _children;
@@ -628,7 +625,7 @@ abstract class _CategoryData implements CategoryData {
   @JsonKey(name: 'parent_id')
   int? get parentId;
   @override
-  dynamic get parent; // ممكن تخليه موديل بعدين لو احتجته
+  dynamic get parent;
   @override
   List<CategoryChild>? get children;
   @override

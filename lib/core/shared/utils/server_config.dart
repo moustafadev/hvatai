@@ -9,8 +9,10 @@ abstract class ServerConfig {
   static const String interestsCategories = "interestsCategories";
   static const String loginWithGoogle = "auth/google";
   static const String deliveryAddress = "addresses";
-  static String deliveryAddressId(int addressId) => 'addresses/$addressId';
-  static String cardId(int cardId) => 'cards/$cardId';
+  static String deliveryAddressId(int addressId) =>
+      '$deliveryAddress/$addressId';
+  static String notificationMarkRead(int id) => '$notifications/$id/read';
+  static String cardId(int cardId) => '$cards/$cardId';
   static const String profile = "profile";
   static const String cards = "cards";
   static const String notifications = "notifications";

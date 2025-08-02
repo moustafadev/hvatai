@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/domain/usecases/add_fav_category_usecase.dart';
@@ -15,10 +16,12 @@ part 'interests_detail_state.dart';
 part 'interests_detail_cubit.freezed.dart';
 
 class InterestsDetailCubit extends Cubit<InterestsDetailState> {
-  InterestsDetailCubit(this.getFavCategoryUsecase, this.addFavCategoryUsecase)
+  InterestsDetailCubit(
+      this.appLocal, this.getFavCategoryUsecase, this.addFavCategoryUsecase)
       : super(InterestsDetailState(user: UserRegistrationData()));
   GetFavCategoryUsecase getFavCategoryUsecase;
   AddFavCategoryUsecase addFavCategoryUsecase;
+  final AppLocal appLocal;
 
   Future<void> getFavCategories() async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
@@ -64,15 +67,16 @@ class InterestsDetailCubit extends Cubit<InterestsDetailState> {
     );
 
     final result = await addFavCategoryUsecase.call(params);
-
     result.fold(
       (failure) {
         emit(state.copyWith(isLoading: false, errorMessage: failure));
         showFloatingMessageError('alreadyInFavorites'.tr());
       },
-      (_) {
+      (_) async {
         emit(state.copyWith(isLoading: false));
         showFloatingMessageSuccess('interestsAdded'.tr());
+        await appLocal.saveIsSetup(true);
+        // ignore: use_build_context_synchronously
         context.push(AppRoutes.notification);
       },
     );

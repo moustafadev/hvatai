@@ -1,14 +1,18 @@
 part of '../home.dart';
 
-class NotificationItem extends StatelessWidget {
-  final NotificationModel notification;
+class NotificationItemWidget extends StatelessWidget {
+  final NotificationItem notification;
 
-  const NotificationItem({super.key, required this.notification});
+  const NotificationItemWidget({super.key, required this.notification});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        context
+            .read<MainNotificationCubit>()
+            .markResdNotification(notification.id!);
+
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
@@ -16,7 +20,8 @@ class NotificationItem extends StatelessWidget {
             borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
           ),
           backgroundColor: Colors.white,
-          builder: (context) => const NotificationDetailBottomSheet(),
+          builder: (context) =>
+              NotificationDetailBottomSheet(notification: notification),
         );
       },
       child: Container(
@@ -35,7 +40,7 @@ class NotificationItem extends StatelessWidget {
         child: ListTile(
           contentPadding: EdgeInsets.zero,
           leading: Image.asset(
-            Assets.assetsIconsAppleg, // يمكنك تغييره حسب نوع الإشعار
+            Assets.assetsIconsAppleg,
             height: 40.h,
             width: 40.w,
             fit: BoxFit.cover,
@@ -46,43 +51,54 @@ class NotificationItem extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: notification.companyName ?? 'Company',
+                  text: "${notification.message?.title ?? ''} ",
                   style: TextStyle(
                     color: AppColors.primaryPink,
                     fontSize: 14.sp,
-                    fontFamily: 'Manrope',
                     fontWeight: FontWeight.w700,
+                    fontFamily: 'Manrope',
                   ),
                 ),
                 TextSpan(
-                  text:
-                      ' ${notification.titleNotification ?? "has subscribed to you"}',
+                  text: notification.message?.body ?? '',
                   style: TextStyle(
                     color: AppColors.blackDark,
                     fontSize: 14.sp,
-                    fontFamily: 'Manrope',
                     fontWeight: FontWeight.w700,
+                    fontFamily: 'Manrope',
                   ),
                 ),
               ],
             ),
           ),
           subtitle: CustomText(
-            text: '3 hours ago',
+            text: formatTimestamp(notification.message?.timestamp),
             color: AppColors.grey,
             fontSize: 14.sp,
             fontWeight: FontWeight.w600,
           ),
-          trailing: Container(
-            width: 8.w,
-            height: 8.w,
-            decoration: BoxDecoration(
-              color: AppColors.red,
-              shape: BoxShape.circle,
-            ),
-          ),
+          trailing: notification.read == 0
+              ? Container(
+                  width: 8.w,
+                  height: 8.w,
+                  decoration: BoxDecoration(
+                    color: AppColors.red,
+                    shape: BoxShape.circle,
+                  ),
+                )
+              : null,
         ),
       ),
     );
+  }
+
+  String formatTimestamp(String? timestamp) {
+    if (timestamp == null) return '';
+    try {
+      final parsedTime = DateTime.parse(timestamp);
+      return timeago.format(parsedTime, locale: 'en_short');
+    } catch (e) {
+      return '';
+    }
   }
 }

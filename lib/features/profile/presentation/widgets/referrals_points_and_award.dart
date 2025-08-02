@@ -62,8 +62,9 @@ class ReferralsPointsAndAward extends StatelessWidget {
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w600,
                           ),
+                          4.pw,
                           CustomText(
-                            text: '1000 ₽',
+                            text: user.walletBalance.toString(),
                             color: AppColors.primary,
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w600,

@@ -25,7 +25,7 @@ class CategoryData with _$CategoryData {
     String? color,
     int? status,
     @JsonKey(name: 'parent_id') int? parentId,
-    dynamic parent, // ممكن تخليه موديل بعدين لو احتجته
+    dynamic parent,
     List<CategoryChild>? children,
     @JsonKey(name: 'is_favorited') bool? isFavorited,
     @JsonKey(name: 'favorites_count') int? favoritesCount,

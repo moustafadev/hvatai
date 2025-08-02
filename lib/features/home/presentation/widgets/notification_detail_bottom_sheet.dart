@@ -1,14 +1,16 @@
 part of '../home.dart';
 
 class NotificationDetailBottomSheet extends StatelessWidget {
-  const NotificationDetailBottomSheet({super.key});
+  final NotificationItem notification;
+
+  const NotificationDetailBottomSheet({super.key, required this.notification});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       padding: EdgeInsets.all(16.w),
       child: Column(
-        mainAxisSize: MainAxisSize.min, // ✅ تجعل الحجم حسب المحتوى فقط
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Center(
@@ -34,7 +36,7 @@ class NotificationDetailBottomSheet extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: 'company_name',
+                  text: notification.message?.title ?? 'No Title',
                   style: TextStyle(
                     color: AppColors.primaryPink,
                     fontSize: 14.sp,
@@ -43,7 +45,7 @@ class NotificationDetailBottomSheet extends StatelessWidget {
                   ),
                 ),
                 TextSpan(
-                  text: ' has subscribed to you ',
+                  text: ' ' + (notification.message?.body ?? ''),
                   style: TextStyle(
                     color: AppColors.blackDark,
                     fontSize: 14.sp,
@@ -55,7 +57,7 @@ class NotificationDetailBottomSheet extends StatelessWidget {
             ),
           ),
           CustomText(
-            text: '3 hours ago',
+            text: formatTimestamp(notification.message?.timestamp),
             fontSize: 12.sp,
             color: AppColors.grey,
             fontWeight: FontWeight.w400,
@@ -102,5 +104,15 @@ class NotificationDetailBottomSheet extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  String formatTimestamp(String? timestamp) {
+    if (timestamp == null) return '';
+    try {
+      final parsedTime = DateTime.parse(timestamp);
+      return timeago.format(parsedTime, locale: 'en_short');
+    } catch (e) {
+      return '';
+    }
   }
 }

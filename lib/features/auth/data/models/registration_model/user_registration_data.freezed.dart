@@ -42,6 +42,7 @@ mixin _$UserRegistrationData {
   @JsonKey(name: 'user_id')
   int? get userId => throw _privateConstructorUsedError;
   String? get street => throw _privateConstructorUsedError;
+  int? get index => throw _privateConstructorUsedError;
   String? get city => throw _privateConstructorUsedError;
   String? get country => throw _privateConstructorUsedError;
   String? get phone => throw _privateConstructorUsedError;
@@ -90,6 +91,10 @@ mixin _$UserRegistrationData {
   String? get longitude => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   String? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'wallet_balance')
+  int? get walletBalance => throw _privateConstructorUsedError;
+  @JsonKey(name: 'wallet_id')
+  int? get walletId => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
   List<String>? get interests => throw _privateConstructorUsedError;
@@ -126,6 +131,7 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       int? id,
       @JsonKey(name: 'user_id') int? userId,
       String? street,
+      int? index,
       String? city,
       String? country,
       String? phone,
@@ -157,6 +163,8 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       String? latitude,
       String? longitude,
       @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'wallet_balance') int? walletBalance,
+      @JsonKey(name: 'wallet_id') int? walletId,
       @JsonKey(name: 'updated_at') String? updatedAt,
       List<String>? interests,
       List<String>? detailedInterests});
@@ -192,6 +200,7 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
     Object? id = freezed,
     Object? userId = freezed,
     Object? street = freezed,
+    Object? index = freezed,
     Object? city = freezed,
     Object? country = freezed,
     Object? phone = freezed,
@@ -223,6 +232,8 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
     Object? latitude = freezed,
     Object? longitude = freezed,
     Object? createdAt = freezed,
+    Object? walletBalance = freezed,
+    Object? walletId = freezed,
     Object? updatedAt = freezed,
     Object? interests = freezed,
     Object? detailedInterests = freezed,
@@ -284,6 +295,10 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
           ? _value.street
           : street // ignore: cast_nullable_to_non_nullable
               as String?,
+      index: freezed == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int?,
       city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -408,6 +423,14 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      walletBalance: freezed == walletBalance
+          ? _value.walletBalance
+          : walletBalance // ignore: cast_nullable_to_non_nullable
+              as int?,
+      walletId: freezed == walletId
+          ? _value.walletId
+          : walletId // ignore: cast_nullable_to_non_nullable
+              as int?,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -447,6 +470,7 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       int? id,
       @JsonKey(name: 'user_id') int? userId,
       String? street,
+      int? index,
       String? city,
       String? country,
       String? phone,
@@ -478,6 +502,8 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       String? latitude,
       String? longitude,
       @JsonKey(name: 'created_at') String? createdAt,
+      @JsonKey(name: 'wallet_balance') int? walletBalance,
+      @JsonKey(name: 'wallet_id') int? walletId,
       @JsonKey(name: 'updated_at') String? updatedAt,
       List<String>? interests,
       List<String>? detailedInterests});
@@ -510,6 +536,7 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? userId = freezed,
     Object? street = freezed,
+    Object? index = freezed,
     Object? city = freezed,
     Object? country = freezed,
     Object? phone = freezed,
@@ -541,6 +568,8 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
     Object? latitude = freezed,
     Object? longitude = freezed,
     Object? createdAt = freezed,
+    Object? walletBalance = freezed,
+    Object? walletId = freezed,
     Object? updatedAt = freezed,
     Object? interests = freezed,
     Object? detailedInterests = freezed,
@@ -602,6 +631,10 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
           ? _value.street
           : street // ignore: cast_nullable_to_non_nullable
               as String?,
+      index: freezed == index
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int?,
       city: freezed == city
           ? _value.city
           : city // ignore: cast_nullable_to_non_nullable
@@ -726,6 +759,14 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      walletBalance: freezed == walletBalance
+          ? _value.walletBalance
+          : walletBalance // ignore: cast_nullable_to_non_nullable
+              as int?,
+      walletId: freezed == walletId
+          ? _value.walletId
+          : walletId // ignore: cast_nullable_to_non_nullable
+              as int?,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -760,6 +801,7 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       this.id,
       @JsonKey(name: 'user_id') this.userId,
       this.street,
+      this.index,
       this.city,
       this.country,
       this.phone,
@@ -791,6 +833,8 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       this.latitude,
       this.longitude,
       @JsonKey(name: 'created_at') this.createdAt,
+      @JsonKey(name: 'wallet_balance') this.walletBalance,
+      @JsonKey(name: 'wallet_id') this.walletId,
       @JsonKey(name: 'updated_at') this.updatedAt,
       final List<String>? interests,
       final List<String>? detailedInterests})
@@ -837,6 +881,8 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   final int? userId;
   @override
   final String? street;
+  @override
+  final int? index;
   @override
   final String? city;
   @override
@@ -925,6 +971,12 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   @JsonKey(name: 'created_at')
   final String? createdAt;
   @override
+  @JsonKey(name: 'wallet_balance')
+  final int? walletBalance;
+  @override
+  @JsonKey(name: 'wallet_id')
+  final int? walletId;
+  @override
   @JsonKey(name: 'updated_at')
   final String? updatedAt;
   final List<String>? _interests;
@@ -950,7 +1002,7 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
 
   @override
   String toString() {
-    return 'UserRegistrationData(firstName: $firstName, lastName: $lastName, googleId: $googleId, appleId: $appleId, passwordConfirmation: $passwordConfirmation, agreedToTerms: $agreedToTerms, isAbove18: $isAbove18, email: $email, token: $token, password: $password, gender: $gender, id: $id, userId: $userId, street: $street, city: $city, country: $country, phone: $phone, role: $role, image: $image, imageBusiness: $imageBusiness, description: $description, lang: $lang, businessId: $businessId, visibility: $visibility, sms: $sms, push: $push, sendEmail: $sendEmail, status: $status, fcmTokens: $fcmTokens, emailVerifiedAt: $emailVerifiedAt, address: $address, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount, isFavorited: $isFavorited, favoritesCount: $favoritesCount, floor: $floor, frontDoor: $frontDoor, intercomCode: $intercomCode, apartment: $apartment, isPrimary: $isPrimary, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, updatedAt: $updatedAt, interests: $interests, detailedInterests: $detailedInterests)';
+    return 'UserRegistrationData(firstName: $firstName, lastName: $lastName, googleId: $googleId, appleId: $appleId, passwordConfirmation: $passwordConfirmation, agreedToTerms: $agreedToTerms, isAbove18: $isAbove18, email: $email, token: $token, password: $password, gender: $gender, id: $id, userId: $userId, street: $street, index: $index, city: $city, country: $country, phone: $phone, role: $role, image: $image, imageBusiness: $imageBusiness, description: $description, lang: $lang, businessId: $businessId, visibility: $visibility, sms: $sms, push: $push, sendEmail: $sendEmail, status: $status, fcmTokens: $fcmTokens, emailVerifiedAt: $emailVerifiedAt, address: $address, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount, isFavorited: $isFavorited, favoritesCount: $favoritesCount, floor: $floor, frontDoor: $frontDoor, intercomCode: $intercomCode, apartment: $apartment, isPrimary: $isPrimary, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, walletBalance: $walletBalance, walletId: $walletId, updatedAt: $updatedAt, interests: $interests, detailedInterests: $detailedInterests)';
   }
 
   @override
@@ -979,6 +1031,7 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.street, street) || other.street == street) &&
+            (identical(other.index, index) || other.index == index) &&
             (identical(other.city, city) || other.city == city) &&
             (identical(other.country, country) || other.country == country) &&
             (identical(other.phone, phone) || other.phone == phone) &&
@@ -1030,6 +1083,10 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
                 other.longitude == longitude) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
+            (identical(other.walletBalance, walletBalance) ||
+                other.walletBalance == walletBalance) &&
+            (identical(other.walletId, walletId) ||
+                other.walletId == walletId) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             const DeepCollectionEquality()
@@ -1056,6 +1113,7 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
         id,
         userId,
         street,
+        index,
         city,
         country,
         phone,
@@ -1087,6 +1145,8 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
         latitude,
         longitude,
         createdAt,
+        walletBalance,
+        walletId,
         updatedAt,
         const DeepCollectionEquality().hash(_interests),
         const DeepCollectionEquality().hash(_detailedInterests)
@@ -1127,6 +1187,7 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       final int? id,
       @JsonKey(name: 'user_id') final int? userId,
       final String? street,
+      final int? index,
       final String? city,
       final String? country,
       final String? phone,
@@ -1158,6 +1219,8 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       final String? latitude,
       final String? longitude,
       @JsonKey(name: 'created_at') final String? createdAt,
+      @JsonKey(name: 'wallet_balance') final int? walletBalance,
+      @JsonKey(name: 'wallet_id') final int? walletId,
       @JsonKey(name: 'updated_at') final String? updatedAt,
       final List<String>? interests,
       final List<String>? detailedInterests}) = _$UserRegistrationDataImpl;
@@ -1201,6 +1264,8 @@ abstract class _UserRegistrationData implements UserRegistrationData {
   int? get userId;
   @override
   String? get street;
+  @override
+  int? get index;
   @override
   String? get city;
   @override
@@ -1280,6 +1345,12 @@ abstract class _UserRegistrationData implements UserRegistrationData {
   @override
   @JsonKey(name: 'created_at')
   String? get createdAt;
+  @override
+  @JsonKey(name: 'wallet_balance')
+  int? get walletBalance;
+  @override
+  @JsonKey(name: 'wallet_id')
+  int? get walletId;
   @override
   @JsonKey(name: 'updated_at')
   String? get updatedAt;

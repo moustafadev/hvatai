@@ -23,6 +23,7 @@ _$UserRegistrationDataImpl _$$UserRegistrationDataImplFromJson(
       id: (json['id'] as num?)?.toInt(),
       userId: (json['user_id'] as num?)?.toInt(),
       street: json['street'] as String?,
+      index: (json['index'] as num?)?.toInt(),
       city: json['city'] as String?,
       country: json['country'] as String?,
       phone: json['phone'] as String?,
@@ -56,6 +57,8 @@ _$UserRegistrationDataImpl _$$UserRegistrationDataImplFromJson(
       latitude: json['latitude'] as String?,
       longitude: json['longitude'] as String?,
       createdAt: json['created_at'] as String?,
+      walletBalance: (json['wallet_balance'] as num?)?.toInt(),
+      walletId: (json['wallet_id'] as num?)?.toInt(),
       updatedAt: json['updated_at'] as String?,
       interests: (json['interests'] as List<dynamic>?)
           ?.map((e) => e as String)
@@ -82,6 +85,7 @@ Map<String, dynamic> _$$UserRegistrationDataImplToJson(
       'id': instance.id,
       'user_id': instance.userId,
       'street': instance.street,
+      'index': instance.index,
       'city': instance.city,
       'country': instance.country,
       'phone': instance.phone,
@@ -113,6 +117,8 @@ Map<String, dynamic> _$$UserRegistrationDataImplToJson(
       'latitude': instance.latitude,
       'longitude': instance.longitude,
       'created_at': instance.createdAt,
+      'wallet_balance': instance.walletBalance,
+      'wallet_id': instance.walletId,
       'updated_at': instance.updatedAt,
       'interests': instance.interests,
       'detailedInterests': instance.detailedInterests,

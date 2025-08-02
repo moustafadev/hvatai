@@ -40,10 +40,11 @@ GetIt locator = GetIt.instance;
 
 Future<void> setupLocator() async {
   //BLOC
-  locator.registerFactory(() => LoginCubit(locator()));
+  locator.registerFactory(() => LoginCubit(locator(), locator()));
   locator.registerFactory(() => VerificationCubit());
   locator.registerFactory(() => InterestsCubit(locator(), locator()));
-  locator.registerFactory(() => InterestsDetailCubit(locator(), locator()));
+  locator.registerFactory(
+      () => InterestsDetailCubit(locator(), locator(), locator()));
   locator.registerFactory(() => ProfileCubit(locator(), locator()));
   locator.registerFactory(() => ActivityCubit());
   locator.registerLazySingleton(() => NotificationCubit());
@@ -58,7 +59,7 @@ Future<void> setupLocator() async {
       .registerFactory(() => EditProfileCubit(locator(), locator(), locator()));
   locator.registerFactory(() => MyGoodsCubit());
   locator.registerFactory(() => AnalyticsCubit());
-  locator.registerFactory(() => MainNotificationCubit(locator()));
+  locator.registerFactory(() => MainNotificationCubit(locator(), locator()));
 
   locator.registerFactory(() => SocialLoginCubit(locator()));
   locator.registerFactory(() => RegistrationCubit(
