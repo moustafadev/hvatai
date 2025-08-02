@@ -20,84 +20,107 @@ UserRegistrationData _$UserRegistrationDataFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$UserRegistrationData {
-  @JsonKey(name: 'name')
+  @JsonKey(name: 'name', includeIfNull: false)
   String? get firstName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'last_name')
+  @JsonKey(name: 'last_name', includeIfNull: false)
   String? get lastName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'google_id')
+  @JsonKey(name: 'google_id', includeIfNull: false)
   String? get googleId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'apple_id')
+  @JsonKey(name: 'apple_id', includeIfNull: false)
   String? get appleId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'password_confirmation')
+  @JsonKey(name: 'password_confirmation', includeIfNull: false)
   String? get passwordConfirmation => throw _privateConstructorUsedError;
-  @JsonKey(name: 'terms_agreement')
+  @JsonKey(name: 'terms_agreement', includeIfNull: false)
   bool? get agreedToTerms => throw _privateConstructorUsedError;
-  @JsonKey(name: 'age_confirmation')
+  @JsonKey(name: 'age_confirmation', includeIfNull: false)
   bool? get isAbove18 => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get email => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get token => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get password => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get gender => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   int? get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'user_id', includeIfNull: false)
   int? get userId => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get street => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   int? get index => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get city => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get country => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get phone => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get role => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get image => throw _privateConstructorUsedError;
-  @JsonKey(name: 'image_business')
+  @JsonKey(name: 'image_business', includeIfNull: false)
   String? get imageBusiness => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get description => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get lang => throw _privateConstructorUsedError;
-  @JsonKey(name: 'business_id')
+  @JsonKey(name: 'business_id', includeIfNull: false)
   int? get businessId => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get visibility => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get sms => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get push => throw _privateConstructorUsedError;
-  @JsonKey(name: 'send_email')
+  @JsonKey(name: 'send_email', includeIfNull: false)
   String? get sendEmail => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get status => throw _privateConstructorUsedError;
-  @JsonKey(name: 'fcm_tokens')
+  @JsonKey(name: 'fcm_tokens', includeIfNull: false)
   List<String>? get fcmTokens => throw _privateConstructorUsedError;
-  @JsonKey(name: 'email_verified_at')
+  @JsonKey(name: 'email_verified_at', includeIfNull: false)
   String? get emailVerifiedAt => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get address => throw _privateConstructorUsedError;
-  @JsonKey(name: 'personal_rating')
+  @JsonKey(name: 'personal_rating', includeIfNull: false)
   int? get personalRating => throw _privateConstructorUsedError;
-  @JsonKey(name: 'personal_rating_count')
+  @JsonKey(name: 'personal_rating_count', includeIfNull: false)
   int? get personalRatingCount => throw _privateConstructorUsedError;
-  @JsonKey(name: 'business_rating')
+  @JsonKey(name: 'business_rating', includeIfNull: false)
   int? get businessRating => throw _privateConstructorUsedError;
-  @JsonKey(name: 'business_rating_count')
+  @JsonKey(name: 'business_rating_count', includeIfNull: false)
   int? get businessRatingCount => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_favorited')
+  @JsonKey(name: 'is_favorited', includeIfNull: false)
   bool? get isFavorited => throw _privateConstructorUsedError;
-  @JsonKey(name: 'favorites_count')
+  @JsonKey(name: 'favorites_count', includeIfNull: false)
   int? get favoritesCount => throw _privateConstructorUsedError;
-  @JsonKey(name: 'Floor')
+  @JsonKey(name: 'Floor', includeIfNull: false)
   String? get floor => throw _privateConstructorUsedError;
-  @JsonKey(name: 'Front_door')
+  @JsonKey(name: 'Front_door', includeIfNull: false)
   String? get frontDoor => throw _privateConstructorUsedError;
-  @JsonKey(name: 'Intercom_code')
+  @JsonKey(name: 'Intercom_code', includeIfNull: false)
   String? get intercomCode => throw _privateConstructorUsedError;
-  @JsonKey(name: 'Apartment')
+  @JsonKey(name: 'Apartment', includeIfNull: false)
   String? get apartment => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_primary')
+  @JsonKey(name: 'is_primary', includeIfNull: false)
   int? get isPrimary => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get latitude => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   String? get longitude => throw _privateConstructorUsedError;
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   String? get createdAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wallet_balance')
+  @JsonKey(name: 'wallet_balance', includeIfNull: false)
   int? get walletBalance => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wallet_id')
+  @JsonKey(name: 'wallet_id', includeIfNull: false)
   int? get walletId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'updated_at')
+  @JsonKey(name: 'updated_at', includeIfNull: false)
   String? get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   List<String>? get interests => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
   List<String>? get detailedInterests => throw _privateConstructorUsedError;
 
   /// Serializes this UserRegistrationData to a JSON map.
@@ -117,57 +140,68 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       _$UserRegistrationDataCopyWithImpl<$Res, UserRegistrationData>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'name') String? firstName,
-      @JsonKey(name: 'last_name') String? lastName,
-      @JsonKey(name: 'google_id') String? googleId,
-      @JsonKey(name: 'apple_id') String? appleId,
-      @JsonKey(name: 'password_confirmation') String? passwordConfirmation,
-      @JsonKey(name: 'terms_agreement') bool? agreedToTerms,
-      @JsonKey(name: 'age_confirmation') bool? isAbove18,
-      String? email,
-      String? token,
-      String? password,
-      String? gender,
-      int? id,
-      @JsonKey(name: 'user_id') int? userId,
-      String? street,
-      int? index,
-      String? city,
-      String? country,
-      String? phone,
-      String? role,
-      String? image,
-      @JsonKey(name: 'image_business') String? imageBusiness,
-      String? description,
-      String? lang,
-      @JsonKey(name: 'business_id') int? businessId,
-      String? visibility,
-      String? sms,
-      String? push,
-      @JsonKey(name: 'send_email') String? sendEmail,
-      String? status,
-      @JsonKey(name: 'fcm_tokens') List<String>? fcmTokens,
-      @JsonKey(name: 'email_verified_at') String? emailVerifiedAt,
-      String? address,
-      @JsonKey(name: 'personal_rating') int? personalRating,
-      @JsonKey(name: 'personal_rating_count') int? personalRatingCount,
-      @JsonKey(name: 'business_rating') int? businessRating,
-      @JsonKey(name: 'business_rating_count') int? businessRatingCount,
-      @JsonKey(name: 'is_favorited') bool? isFavorited,
-      @JsonKey(name: 'favorites_count') int? favoritesCount,
-      @JsonKey(name: 'Floor') String? floor,
-      @JsonKey(name: 'Front_door') String? frontDoor,
-      @JsonKey(name: 'Intercom_code') String? intercomCode,
-      @JsonKey(name: 'Apartment') String? apartment,
-      @JsonKey(name: 'is_primary') int? isPrimary,
-      String? latitude,
-      String? longitude,
-      @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'wallet_balance') int? walletBalance,
-      @JsonKey(name: 'wallet_id') int? walletId,
-      @JsonKey(name: 'updated_at') String? updatedAt,
-      List<String>? interests,
-      List<String>? detailedInterests});
+      {@JsonKey(name: 'name', includeIfNull: false) String? firstName,
+      @JsonKey(name: 'last_name', includeIfNull: false) String? lastName,
+      @JsonKey(name: 'google_id', includeIfNull: false) String? googleId,
+      @JsonKey(name: 'apple_id', includeIfNull: false) String? appleId,
+      @JsonKey(name: 'password_confirmation', includeIfNull: false)
+      String? passwordConfirmation,
+      @JsonKey(name: 'terms_agreement', includeIfNull: false)
+      bool? agreedToTerms,
+      @JsonKey(name: 'age_confirmation', includeIfNull: false) bool? isAbove18,
+      @JsonKey(includeIfNull: false) String? email,
+      @JsonKey(includeIfNull: false) String? token,
+      @JsonKey(includeIfNull: false) String? password,
+      @JsonKey(includeIfNull: false) String? gender,
+      @JsonKey(includeIfNull: false) int? id,
+      @JsonKey(name: 'user_id', includeIfNull: false) int? userId,
+      @JsonKey(includeIfNull: false) String? street,
+      @JsonKey(includeIfNull: false) int? index,
+      @JsonKey(includeIfNull: false) String? city,
+      @JsonKey(includeIfNull: false) String? country,
+      @JsonKey(includeIfNull: false) String? phone,
+      @JsonKey(includeIfNull: false) String? role,
+      @JsonKey(includeIfNull: false) String? image,
+      @JsonKey(name: 'image_business', includeIfNull: false)
+      String? imageBusiness,
+      @JsonKey(includeIfNull: false) String? description,
+      @JsonKey(includeIfNull: false) String? lang,
+      @JsonKey(name: 'business_id', includeIfNull: false) int? businessId,
+      @JsonKey(includeIfNull: false) String? visibility,
+      @JsonKey(includeIfNull: false) String? sms,
+      @JsonKey(includeIfNull: false) String? push,
+      @JsonKey(name: 'send_email', includeIfNull: false) String? sendEmail,
+      @JsonKey(includeIfNull: false) String? status,
+      @JsonKey(name: 'fcm_tokens', includeIfNull: false)
+      List<String>? fcmTokens,
+      @JsonKey(name: 'email_verified_at', includeIfNull: false)
+      String? emailVerifiedAt,
+      @JsonKey(includeIfNull: false) String? address,
+      @JsonKey(name: 'personal_rating', includeIfNull: false)
+      int? personalRating,
+      @JsonKey(name: 'personal_rating_count', includeIfNull: false)
+      int? personalRatingCount,
+      @JsonKey(name: 'business_rating', includeIfNull: false)
+      int? businessRating,
+      @JsonKey(name: 'business_rating_count', includeIfNull: false)
+      int? businessRatingCount,
+      @JsonKey(name: 'is_favorited', includeIfNull: false) bool? isFavorited,
+      @JsonKey(name: 'favorites_count', includeIfNull: false)
+      int? favoritesCount,
+      @JsonKey(name: 'Floor', includeIfNull: false) String? floor,
+      @JsonKey(name: 'Front_door', includeIfNull: false) String? frontDoor,
+      @JsonKey(name: 'Intercom_code', includeIfNull: false)
+      String? intercomCode,
+      @JsonKey(name: 'Apartment', includeIfNull: false) String? apartment,
+      @JsonKey(name: 'is_primary', includeIfNull: false) int? isPrimary,
+      @JsonKey(includeIfNull: false) String? latitude,
+      @JsonKey(includeIfNull: false) String? longitude,
+      @JsonKey(name: 'created_at', includeIfNull: false) String? createdAt,
+      @JsonKey(name: 'wallet_balance', includeIfNull: false) int? walletBalance,
+      @JsonKey(name: 'wallet_id', includeIfNull: false) int? walletId,
+      @JsonKey(name: 'updated_at', includeIfNull: false) String? updatedAt,
+      @JsonKey(includeIfNull: false) List<String>? interests,
+      @JsonKey(includeIfNull: false) List<String>? detailedInterests});
 }
 
 /// @nodoc
@@ -456,57 +490,68 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'name') String? firstName,
-      @JsonKey(name: 'last_name') String? lastName,
-      @JsonKey(name: 'google_id') String? googleId,
-      @JsonKey(name: 'apple_id') String? appleId,
-      @JsonKey(name: 'password_confirmation') String? passwordConfirmation,
-      @JsonKey(name: 'terms_agreement') bool? agreedToTerms,
-      @JsonKey(name: 'age_confirmation') bool? isAbove18,
-      String? email,
-      String? token,
-      String? password,
-      String? gender,
-      int? id,
-      @JsonKey(name: 'user_id') int? userId,
-      String? street,
-      int? index,
-      String? city,
-      String? country,
-      String? phone,
-      String? role,
-      String? image,
-      @JsonKey(name: 'image_business') String? imageBusiness,
-      String? description,
-      String? lang,
-      @JsonKey(name: 'business_id') int? businessId,
-      String? visibility,
-      String? sms,
-      String? push,
-      @JsonKey(name: 'send_email') String? sendEmail,
-      String? status,
-      @JsonKey(name: 'fcm_tokens') List<String>? fcmTokens,
-      @JsonKey(name: 'email_verified_at') String? emailVerifiedAt,
-      String? address,
-      @JsonKey(name: 'personal_rating') int? personalRating,
-      @JsonKey(name: 'personal_rating_count') int? personalRatingCount,
-      @JsonKey(name: 'business_rating') int? businessRating,
-      @JsonKey(name: 'business_rating_count') int? businessRatingCount,
-      @JsonKey(name: 'is_favorited') bool? isFavorited,
-      @JsonKey(name: 'favorites_count') int? favoritesCount,
-      @JsonKey(name: 'Floor') String? floor,
-      @JsonKey(name: 'Front_door') String? frontDoor,
-      @JsonKey(name: 'Intercom_code') String? intercomCode,
-      @JsonKey(name: 'Apartment') String? apartment,
-      @JsonKey(name: 'is_primary') int? isPrimary,
-      String? latitude,
-      String? longitude,
-      @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'wallet_balance') int? walletBalance,
-      @JsonKey(name: 'wallet_id') int? walletId,
-      @JsonKey(name: 'updated_at') String? updatedAt,
-      List<String>? interests,
-      List<String>? detailedInterests});
+      {@JsonKey(name: 'name', includeIfNull: false) String? firstName,
+      @JsonKey(name: 'last_name', includeIfNull: false) String? lastName,
+      @JsonKey(name: 'google_id', includeIfNull: false) String? googleId,
+      @JsonKey(name: 'apple_id', includeIfNull: false) String? appleId,
+      @JsonKey(name: 'password_confirmation', includeIfNull: false)
+      String? passwordConfirmation,
+      @JsonKey(name: 'terms_agreement', includeIfNull: false)
+      bool? agreedToTerms,
+      @JsonKey(name: 'age_confirmation', includeIfNull: false) bool? isAbove18,
+      @JsonKey(includeIfNull: false) String? email,
+      @JsonKey(includeIfNull: false) String? token,
+      @JsonKey(includeIfNull: false) String? password,
+      @JsonKey(includeIfNull: false) String? gender,
+      @JsonKey(includeIfNull: false) int? id,
+      @JsonKey(name: 'user_id', includeIfNull: false) int? userId,
+      @JsonKey(includeIfNull: false) String? street,
+      @JsonKey(includeIfNull: false) int? index,
+      @JsonKey(includeIfNull: false) String? city,
+      @JsonKey(includeIfNull: false) String? country,
+      @JsonKey(includeIfNull: false) String? phone,
+      @JsonKey(includeIfNull: false) String? role,
+      @JsonKey(includeIfNull: false) String? image,
+      @JsonKey(name: 'image_business', includeIfNull: false)
+      String? imageBusiness,
+      @JsonKey(includeIfNull: false) String? description,
+      @JsonKey(includeIfNull: false) String? lang,
+      @JsonKey(name: 'business_id', includeIfNull: false) int? businessId,
+      @JsonKey(includeIfNull: false) String? visibility,
+      @JsonKey(includeIfNull: false) String? sms,
+      @JsonKey(includeIfNull: false) String? push,
+      @JsonKey(name: 'send_email', includeIfNull: false) String? sendEmail,
+      @JsonKey(includeIfNull: false) String? status,
+      @JsonKey(name: 'fcm_tokens', includeIfNull: false)
+      List<String>? fcmTokens,
+      @JsonKey(name: 'email_verified_at', includeIfNull: false)
+      String? emailVerifiedAt,
+      @JsonKey(includeIfNull: false) String? address,
+      @JsonKey(name: 'personal_rating', includeIfNull: false)
+      int? personalRating,
+      @JsonKey(name: 'personal_rating_count', includeIfNull: false)
+      int? personalRatingCount,
+      @JsonKey(name: 'business_rating', includeIfNull: false)
+      int? businessRating,
+      @JsonKey(name: 'business_rating_count', includeIfNull: false)
+      int? businessRatingCount,
+      @JsonKey(name: 'is_favorited', includeIfNull: false) bool? isFavorited,
+      @JsonKey(name: 'favorites_count', includeIfNull: false)
+      int? favoritesCount,
+      @JsonKey(name: 'Floor', includeIfNull: false) String? floor,
+      @JsonKey(name: 'Front_door', includeIfNull: false) String? frontDoor,
+      @JsonKey(name: 'Intercom_code', includeIfNull: false)
+      String? intercomCode,
+      @JsonKey(name: 'Apartment', includeIfNull: false) String? apartment,
+      @JsonKey(name: 'is_primary', includeIfNull: false) int? isPrimary,
+      @JsonKey(includeIfNull: false) String? latitude,
+      @JsonKey(includeIfNull: false) String? longitude,
+      @JsonKey(name: 'created_at', includeIfNull: false) String? createdAt,
+      @JsonKey(name: 'wallet_balance', includeIfNull: false) int? walletBalance,
+      @JsonKey(name: 'wallet_id', includeIfNull: false) int? walletId,
+      @JsonKey(name: 'updated_at', includeIfNull: false) String? updatedAt,
+      @JsonKey(includeIfNull: false) List<String>? interests,
+      @JsonKey(includeIfNull: false) List<String>? detailedInterests});
 }
 
 /// @nodoc
@@ -787,57 +832,66 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$UserRegistrationDataImpl implements _UserRegistrationData {
   const _$UserRegistrationDataImpl(
-      {@JsonKey(name: 'name') this.firstName,
-      @JsonKey(name: 'last_name') this.lastName,
-      @JsonKey(name: 'google_id') this.googleId,
-      @JsonKey(name: 'apple_id') this.appleId,
-      @JsonKey(name: 'password_confirmation') this.passwordConfirmation,
-      @JsonKey(name: 'terms_agreement') this.agreedToTerms,
-      @JsonKey(name: 'age_confirmation') this.isAbove18,
-      this.email,
-      this.token,
-      this.password,
-      this.gender,
-      this.id,
-      @JsonKey(name: 'user_id') this.userId,
-      this.street,
-      this.index,
-      this.city,
-      this.country,
-      this.phone,
-      this.role,
-      this.image,
-      @JsonKey(name: 'image_business') this.imageBusiness,
-      this.description,
-      this.lang,
-      @JsonKey(name: 'business_id') this.businessId,
-      this.visibility,
-      this.sms,
-      this.push,
-      @JsonKey(name: 'send_email') this.sendEmail,
-      this.status,
-      @JsonKey(name: 'fcm_tokens') final List<String>? fcmTokens,
-      @JsonKey(name: 'email_verified_at') this.emailVerifiedAt,
-      this.address,
-      @JsonKey(name: 'personal_rating') this.personalRating,
-      @JsonKey(name: 'personal_rating_count') this.personalRatingCount,
-      @JsonKey(name: 'business_rating') this.businessRating,
-      @JsonKey(name: 'business_rating_count') this.businessRatingCount,
-      @JsonKey(name: 'is_favorited') this.isFavorited,
-      @JsonKey(name: 'favorites_count') this.favoritesCount,
-      @JsonKey(name: 'Floor') this.floor,
-      @JsonKey(name: 'Front_door') this.frontDoor,
-      @JsonKey(name: 'Intercom_code') this.intercomCode,
-      @JsonKey(name: 'Apartment') this.apartment,
-      @JsonKey(name: 'is_primary') this.isPrimary,
-      this.latitude,
-      this.longitude,
-      @JsonKey(name: 'created_at') this.createdAt,
-      @JsonKey(name: 'wallet_balance') this.walletBalance,
-      @JsonKey(name: 'wallet_id') this.walletId,
-      @JsonKey(name: 'updated_at') this.updatedAt,
-      final List<String>? interests,
-      final List<String>? detailedInterests})
+      {@JsonKey(name: 'name', includeIfNull: false) this.firstName,
+      @JsonKey(name: 'last_name', includeIfNull: false) this.lastName,
+      @JsonKey(name: 'google_id', includeIfNull: false) this.googleId,
+      @JsonKey(name: 'apple_id', includeIfNull: false) this.appleId,
+      @JsonKey(name: 'password_confirmation', includeIfNull: false)
+      this.passwordConfirmation,
+      @JsonKey(name: 'terms_agreement', includeIfNull: false)
+      this.agreedToTerms,
+      @JsonKey(name: 'age_confirmation', includeIfNull: false) this.isAbove18,
+      @JsonKey(includeIfNull: false) this.email,
+      @JsonKey(includeIfNull: false) this.token,
+      @JsonKey(includeIfNull: false) this.password,
+      @JsonKey(includeIfNull: false) this.gender,
+      @JsonKey(includeIfNull: false) this.id,
+      @JsonKey(name: 'user_id', includeIfNull: false) this.userId,
+      @JsonKey(includeIfNull: false) this.street,
+      @JsonKey(includeIfNull: false) this.index,
+      @JsonKey(includeIfNull: false) this.city,
+      @JsonKey(includeIfNull: false) this.country,
+      @JsonKey(includeIfNull: false) this.phone,
+      @JsonKey(includeIfNull: false) this.role,
+      @JsonKey(includeIfNull: false) this.image,
+      @JsonKey(name: 'image_business', includeIfNull: false) this.imageBusiness,
+      @JsonKey(includeIfNull: false) this.description,
+      @JsonKey(includeIfNull: false) this.lang,
+      @JsonKey(name: 'business_id', includeIfNull: false) this.businessId,
+      @JsonKey(includeIfNull: false) this.visibility,
+      @JsonKey(includeIfNull: false) this.sms,
+      @JsonKey(includeIfNull: false) this.push,
+      @JsonKey(name: 'send_email', includeIfNull: false) this.sendEmail,
+      @JsonKey(includeIfNull: false) this.status,
+      @JsonKey(name: 'fcm_tokens', includeIfNull: false)
+      final List<String>? fcmTokens,
+      @JsonKey(name: 'email_verified_at', includeIfNull: false)
+      this.emailVerifiedAt,
+      @JsonKey(includeIfNull: false) this.address,
+      @JsonKey(name: 'personal_rating', includeIfNull: false)
+      this.personalRating,
+      @JsonKey(name: 'personal_rating_count', includeIfNull: false)
+      this.personalRatingCount,
+      @JsonKey(name: 'business_rating', includeIfNull: false)
+      this.businessRating,
+      @JsonKey(name: 'business_rating_count', includeIfNull: false)
+      this.businessRatingCount,
+      @JsonKey(name: 'is_favorited', includeIfNull: false) this.isFavorited,
+      @JsonKey(name: 'favorites_count', includeIfNull: false)
+      this.favoritesCount,
+      @JsonKey(name: 'Floor', includeIfNull: false) this.floor,
+      @JsonKey(name: 'Front_door', includeIfNull: false) this.frontDoor,
+      @JsonKey(name: 'Intercom_code', includeIfNull: false) this.intercomCode,
+      @JsonKey(name: 'Apartment', includeIfNull: false) this.apartment,
+      @JsonKey(name: 'is_primary', includeIfNull: false) this.isPrimary,
+      @JsonKey(includeIfNull: false) this.latitude,
+      @JsonKey(includeIfNull: false) this.longitude,
+      @JsonKey(name: 'created_at', includeIfNull: false) this.createdAt,
+      @JsonKey(name: 'wallet_balance', includeIfNull: false) this.walletBalance,
+      @JsonKey(name: 'wallet_id', includeIfNull: false) this.walletId,
+      @JsonKey(name: 'updated_at', includeIfNull: false) this.updatedAt,
+      @JsonKey(includeIfNull: false) final List<String>? interests,
+      @JsonKey(includeIfNull: false) final List<String>? detailedInterests})
       : _fcmTokens = fcmTokens,
         _interests = interests,
         _detailedInterests = detailedInterests;
@@ -846,77 +900,95 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       _$$UserRegistrationDataImplFromJson(json);
 
   @override
-  @JsonKey(name: 'name')
+  @JsonKey(name: 'name', includeIfNull: false)
   final String? firstName;
   @override
-  @JsonKey(name: 'last_name')
+  @JsonKey(name: 'last_name', includeIfNull: false)
   final String? lastName;
   @override
-  @JsonKey(name: 'google_id')
+  @JsonKey(name: 'google_id', includeIfNull: false)
   final String? googleId;
   @override
-  @JsonKey(name: 'apple_id')
+  @JsonKey(name: 'apple_id', includeIfNull: false)
   final String? appleId;
   @override
-  @JsonKey(name: 'password_confirmation')
+  @JsonKey(name: 'password_confirmation', includeIfNull: false)
   final String? passwordConfirmation;
   @override
-  @JsonKey(name: 'terms_agreement')
+  @JsonKey(name: 'terms_agreement', includeIfNull: false)
   final bool? agreedToTerms;
   @override
-  @JsonKey(name: 'age_confirmation')
+  @JsonKey(name: 'age_confirmation', includeIfNull: false)
   final bool? isAbove18;
   @override
+  @JsonKey(includeIfNull: false)
   final String? email;
   @override
+  @JsonKey(includeIfNull: false)
   final String? token;
   @override
+  @JsonKey(includeIfNull: false)
   final String? password;
   @override
+  @JsonKey(includeIfNull: false)
   final String? gender;
   @override
+  @JsonKey(includeIfNull: false)
   final int? id;
   @override
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'user_id', includeIfNull: false)
   final int? userId;
   @override
+  @JsonKey(includeIfNull: false)
   final String? street;
   @override
+  @JsonKey(includeIfNull: false)
   final int? index;
   @override
+  @JsonKey(includeIfNull: false)
   final String? city;
   @override
+  @JsonKey(includeIfNull: false)
   final String? country;
   @override
+  @JsonKey(includeIfNull: false)
   final String? phone;
   @override
+  @JsonKey(includeIfNull: false)
   final String? role;
   @override
+  @JsonKey(includeIfNull: false)
   final String? image;
   @override
-  @JsonKey(name: 'image_business')
+  @JsonKey(name: 'image_business', includeIfNull: false)
   final String? imageBusiness;
   @override
+  @JsonKey(includeIfNull: false)
   final String? description;
   @override
+  @JsonKey(includeIfNull: false)
   final String? lang;
   @override
-  @JsonKey(name: 'business_id')
+  @JsonKey(name: 'business_id', includeIfNull: false)
   final int? businessId;
   @override
+  @JsonKey(includeIfNull: false)
   final String? visibility;
   @override
+  @JsonKey(includeIfNull: false)
   final String? sms;
   @override
+  @JsonKey(includeIfNull: false)
   final String? push;
   @override
-  @JsonKey(name: 'send_email')
+  @JsonKey(name: 'send_email', includeIfNull: false)
   final String? sendEmail;
   @override
+  @JsonKey(includeIfNull: false)
   final String? status;
   final List<String>? _fcmTokens;
   @override
-  @JsonKey(name: 'fcm_tokens')
+  @JsonKey(name: 'fcm_tokens', includeIfNull: false)
   List<String>? get fcmTokens {
     final value = _fcmTokens;
     if (value == null) return null;
@@ -926,61 +998,65 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   }
 
   @override
-  @JsonKey(name: 'email_verified_at')
+  @JsonKey(name: 'email_verified_at', includeIfNull: false)
   final String? emailVerifiedAt;
   @override
+  @JsonKey(includeIfNull: false)
   final String? address;
   @override
-  @JsonKey(name: 'personal_rating')
+  @JsonKey(name: 'personal_rating', includeIfNull: false)
   final int? personalRating;
   @override
-  @JsonKey(name: 'personal_rating_count')
+  @JsonKey(name: 'personal_rating_count', includeIfNull: false)
   final int? personalRatingCount;
   @override
-  @JsonKey(name: 'business_rating')
+  @JsonKey(name: 'business_rating', includeIfNull: false)
   final int? businessRating;
   @override
-  @JsonKey(name: 'business_rating_count')
+  @JsonKey(name: 'business_rating_count', includeIfNull: false)
   final int? businessRatingCount;
   @override
-  @JsonKey(name: 'is_favorited')
+  @JsonKey(name: 'is_favorited', includeIfNull: false)
   final bool? isFavorited;
   @override
-  @JsonKey(name: 'favorites_count')
+  @JsonKey(name: 'favorites_count', includeIfNull: false)
   final int? favoritesCount;
   @override
-  @JsonKey(name: 'Floor')
+  @JsonKey(name: 'Floor', includeIfNull: false)
   final String? floor;
   @override
-  @JsonKey(name: 'Front_door')
+  @JsonKey(name: 'Front_door', includeIfNull: false)
   final String? frontDoor;
   @override
-  @JsonKey(name: 'Intercom_code')
+  @JsonKey(name: 'Intercom_code', includeIfNull: false)
   final String? intercomCode;
   @override
-  @JsonKey(name: 'Apartment')
+  @JsonKey(name: 'Apartment', includeIfNull: false)
   final String? apartment;
   @override
-  @JsonKey(name: 'is_primary')
+  @JsonKey(name: 'is_primary', includeIfNull: false)
   final int? isPrimary;
   @override
+  @JsonKey(includeIfNull: false)
   final String? latitude;
   @override
+  @JsonKey(includeIfNull: false)
   final String? longitude;
   @override
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   final String? createdAt;
   @override
-  @JsonKey(name: 'wallet_balance')
+  @JsonKey(name: 'wallet_balance', includeIfNull: false)
   final int? walletBalance;
   @override
-  @JsonKey(name: 'wallet_id')
+  @JsonKey(name: 'wallet_id', includeIfNull: false)
   final int? walletId;
   @override
-  @JsonKey(name: 'updated_at')
+  @JsonKey(name: 'updated_at', includeIfNull: false)
   final String? updatedAt;
   final List<String>? _interests;
   @override
+  @JsonKey(includeIfNull: false)
   List<String>? get interests {
     final value = _interests;
     if (value == null) return null;
@@ -991,6 +1067,7 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
 
   final List<String>? _detailedInterests;
   @override
+  @JsonKey(includeIfNull: false)
   List<String>? get detailedInterests {
     final value = _detailedInterests;
     if (value == null) return null;
@@ -1172,191 +1249,232 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
 
 abstract class _UserRegistrationData implements UserRegistrationData {
   const factory _UserRegistrationData(
-      {@JsonKey(name: 'name') final String? firstName,
-      @JsonKey(name: 'last_name') final String? lastName,
-      @JsonKey(name: 'google_id') final String? googleId,
-      @JsonKey(name: 'apple_id') final String? appleId,
-      @JsonKey(name: 'password_confirmation')
+      {@JsonKey(name: 'name', includeIfNull: false) final String? firstName,
+      @JsonKey(name: 'last_name', includeIfNull: false) final String? lastName,
+      @JsonKey(name: 'google_id', includeIfNull: false) final String? googleId,
+      @JsonKey(name: 'apple_id', includeIfNull: false) final String? appleId,
+      @JsonKey(name: 'password_confirmation', includeIfNull: false)
       final String? passwordConfirmation,
-      @JsonKey(name: 'terms_agreement') final bool? agreedToTerms,
-      @JsonKey(name: 'age_confirmation') final bool? isAbove18,
-      final String? email,
-      final String? token,
-      final String? password,
-      final String? gender,
-      final int? id,
-      @JsonKey(name: 'user_id') final int? userId,
-      final String? street,
-      final int? index,
-      final String? city,
-      final String? country,
-      final String? phone,
-      final String? role,
-      final String? image,
-      @JsonKey(name: 'image_business') final String? imageBusiness,
-      final String? description,
-      final String? lang,
-      @JsonKey(name: 'business_id') final int? businessId,
-      final String? visibility,
-      final String? sms,
-      final String? push,
-      @JsonKey(name: 'send_email') final String? sendEmail,
-      final String? status,
-      @JsonKey(name: 'fcm_tokens') final List<String>? fcmTokens,
-      @JsonKey(name: 'email_verified_at') final String? emailVerifiedAt,
-      final String? address,
-      @JsonKey(name: 'personal_rating') final int? personalRating,
-      @JsonKey(name: 'personal_rating_count') final int? personalRatingCount,
-      @JsonKey(name: 'business_rating') final int? businessRating,
-      @JsonKey(name: 'business_rating_count') final int? businessRatingCount,
-      @JsonKey(name: 'is_favorited') final bool? isFavorited,
-      @JsonKey(name: 'favorites_count') final int? favoritesCount,
-      @JsonKey(name: 'Floor') final String? floor,
-      @JsonKey(name: 'Front_door') final String? frontDoor,
-      @JsonKey(name: 'Intercom_code') final String? intercomCode,
-      @JsonKey(name: 'Apartment') final String? apartment,
-      @JsonKey(name: 'is_primary') final int? isPrimary,
-      final String? latitude,
-      final String? longitude,
-      @JsonKey(name: 'created_at') final String? createdAt,
-      @JsonKey(name: 'wallet_balance') final int? walletBalance,
-      @JsonKey(name: 'wallet_id') final int? walletId,
-      @JsonKey(name: 'updated_at') final String? updatedAt,
-      final List<String>? interests,
+      @JsonKey(name: 'terms_agreement', includeIfNull: false)
+      final bool? agreedToTerms,
+      @JsonKey(name: 'age_confirmation', includeIfNull: false)
+      final bool? isAbove18,
+      @JsonKey(includeIfNull: false) final String? email,
+      @JsonKey(includeIfNull: false) final String? token,
+      @JsonKey(includeIfNull: false) final String? password,
+      @JsonKey(includeIfNull: false) final String? gender,
+      @JsonKey(includeIfNull: false) final int? id,
+      @JsonKey(name: 'user_id', includeIfNull: false) final int? userId,
+      @JsonKey(includeIfNull: false) final String? street,
+      @JsonKey(includeIfNull: false) final int? index,
+      @JsonKey(includeIfNull: false) final String? city,
+      @JsonKey(includeIfNull: false) final String? country,
+      @JsonKey(includeIfNull: false) final String? phone,
+      @JsonKey(includeIfNull: false) final String? role,
+      @JsonKey(includeIfNull: false) final String? image,
+      @JsonKey(name: 'image_business', includeIfNull: false)
+      final String? imageBusiness,
+      @JsonKey(includeIfNull: false) final String? description,
+      @JsonKey(includeIfNull: false) final String? lang,
+      @JsonKey(name: 'business_id', includeIfNull: false) final int? businessId,
+      @JsonKey(includeIfNull: false) final String? visibility,
+      @JsonKey(includeIfNull: false) final String? sms,
+      @JsonKey(includeIfNull: false) final String? push,
+      @JsonKey(name: 'send_email', includeIfNull: false)
+      final String? sendEmail,
+      @JsonKey(includeIfNull: false) final String? status,
+      @JsonKey(name: 'fcm_tokens', includeIfNull: false)
+      final List<String>? fcmTokens,
+      @JsonKey(name: 'email_verified_at', includeIfNull: false)
+      final String? emailVerifiedAt,
+      @JsonKey(includeIfNull: false) final String? address,
+      @JsonKey(name: 'personal_rating', includeIfNull: false)
+      final int? personalRating,
+      @JsonKey(name: 'personal_rating_count', includeIfNull: false)
+      final int? personalRatingCount,
+      @JsonKey(name: 'business_rating', includeIfNull: false)
+      final int? businessRating,
+      @JsonKey(name: 'business_rating_count', includeIfNull: false)
+      final int? businessRatingCount,
+      @JsonKey(name: 'is_favorited', includeIfNull: false)
+      final bool? isFavorited,
+      @JsonKey(name: 'favorites_count', includeIfNull: false)
+      final int? favoritesCount,
+      @JsonKey(name: 'Floor', includeIfNull: false) final String? floor,
+      @JsonKey(name: 'Front_door', includeIfNull: false)
+      final String? frontDoor,
+      @JsonKey(name: 'Intercom_code', includeIfNull: false)
+      final String? intercomCode,
+      @JsonKey(name: 'Apartment', includeIfNull: false) final String? apartment,
+      @JsonKey(name: 'is_primary', includeIfNull: false) final int? isPrimary,
+      @JsonKey(includeIfNull: false) final String? latitude,
+      @JsonKey(includeIfNull: false) final String? longitude,
+      @JsonKey(name: 'created_at', includeIfNull: false)
+      final String? createdAt,
+      @JsonKey(name: 'wallet_balance', includeIfNull: false)
+      final int? walletBalance,
+      @JsonKey(name: 'wallet_id', includeIfNull: false) final int? walletId,
+      @JsonKey(name: 'updated_at', includeIfNull: false)
+      final String? updatedAt,
+      @JsonKey(includeIfNull: false) final List<String>? interests,
+      @JsonKey(includeIfNull: false)
       final List<String>? detailedInterests}) = _$UserRegistrationDataImpl;
 
   factory _UserRegistrationData.fromJson(Map<String, dynamic> json) =
       _$UserRegistrationDataImpl.fromJson;
 
   @override
-  @JsonKey(name: 'name')
+  @JsonKey(name: 'name', includeIfNull: false)
   String? get firstName;
   @override
-  @JsonKey(name: 'last_name')
+  @JsonKey(name: 'last_name', includeIfNull: false)
   String? get lastName;
   @override
-  @JsonKey(name: 'google_id')
+  @JsonKey(name: 'google_id', includeIfNull: false)
   String? get googleId;
   @override
-  @JsonKey(name: 'apple_id')
+  @JsonKey(name: 'apple_id', includeIfNull: false)
   String? get appleId;
   @override
-  @JsonKey(name: 'password_confirmation')
+  @JsonKey(name: 'password_confirmation', includeIfNull: false)
   String? get passwordConfirmation;
   @override
-  @JsonKey(name: 'terms_agreement')
+  @JsonKey(name: 'terms_agreement', includeIfNull: false)
   bool? get agreedToTerms;
   @override
-  @JsonKey(name: 'age_confirmation')
+  @JsonKey(name: 'age_confirmation', includeIfNull: false)
   bool? get isAbove18;
   @override
+  @JsonKey(includeIfNull: false)
   String? get email;
   @override
+  @JsonKey(includeIfNull: false)
   String? get token;
   @override
+  @JsonKey(includeIfNull: false)
   String? get password;
   @override
+  @JsonKey(includeIfNull: false)
   String? get gender;
   @override
+  @JsonKey(includeIfNull: false)
   int? get id;
   @override
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'user_id', includeIfNull: false)
   int? get userId;
   @override
+  @JsonKey(includeIfNull: false)
   String? get street;
   @override
+  @JsonKey(includeIfNull: false)
   int? get index;
   @override
+  @JsonKey(includeIfNull: false)
   String? get city;
   @override
+  @JsonKey(includeIfNull: false)
   String? get country;
   @override
+  @JsonKey(includeIfNull: false)
   String? get phone;
   @override
+  @JsonKey(includeIfNull: false)
   String? get role;
   @override
+  @JsonKey(includeIfNull: false)
   String? get image;
   @override
-  @JsonKey(name: 'image_business')
+  @JsonKey(name: 'image_business', includeIfNull: false)
   String? get imageBusiness;
   @override
+  @JsonKey(includeIfNull: false)
   String? get description;
   @override
+  @JsonKey(includeIfNull: false)
   String? get lang;
   @override
-  @JsonKey(name: 'business_id')
+  @JsonKey(name: 'business_id', includeIfNull: false)
   int? get businessId;
   @override
+  @JsonKey(includeIfNull: false)
   String? get visibility;
   @override
+  @JsonKey(includeIfNull: false)
   String? get sms;
   @override
+  @JsonKey(includeIfNull: false)
   String? get push;
   @override
-  @JsonKey(name: 'send_email')
+  @JsonKey(name: 'send_email', includeIfNull: false)
   String? get sendEmail;
   @override
+  @JsonKey(includeIfNull: false)
   String? get status;
   @override
-  @JsonKey(name: 'fcm_tokens')
+  @JsonKey(name: 'fcm_tokens', includeIfNull: false)
   List<String>? get fcmTokens;
   @override
-  @JsonKey(name: 'email_verified_at')
+  @JsonKey(name: 'email_verified_at', includeIfNull: false)
   String? get emailVerifiedAt;
   @override
+  @JsonKey(includeIfNull: false)
   String? get address;
   @override
-  @JsonKey(name: 'personal_rating')
+  @JsonKey(name: 'personal_rating', includeIfNull: false)
   int? get personalRating;
   @override
-  @JsonKey(name: 'personal_rating_count')
+  @JsonKey(name: 'personal_rating_count', includeIfNull: false)
   int? get personalRatingCount;
   @override
-  @JsonKey(name: 'business_rating')
+  @JsonKey(name: 'business_rating', includeIfNull: false)
   int? get businessRating;
   @override
-  @JsonKey(name: 'business_rating_count')
+  @JsonKey(name: 'business_rating_count', includeIfNull: false)
   int? get businessRatingCount;
   @override
-  @JsonKey(name: 'is_favorited')
+  @JsonKey(name: 'is_favorited', includeIfNull: false)
   bool? get isFavorited;
   @override
-  @JsonKey(name: 'favorites_count')
+  @JsonKey(name: 'favorites_count', includeIfNull: false)
   int? get favoritesCount;
   @override
-  @JsonKey(name: 'Floor')
+  @JsonKey(name: 'Floor', includeIfNull: false)
   String? get floor;
   @override
-  @JsonKey(name: 'Front_door')
+  @JsonKey(name: 'Front_door', includeIfNull: false)
   String? get frontDoor;
   @override
-  @JsonKey(name: 'Intercom_code')
+  @JsonKey(name: 'Intercom_code', includeIfNull: false)
   String? get intercomCode;
   @override
-  @JsonKey(name: 'Apartment')
+  @JsonKey(name: 'Apartment', includeIfNull: false)
   String? get apartment;
   @override
-  @JsonKey(name: 'is_primary')
+  @JsonKey(name: 'is_primary', includeIfNull: false)
   int? get isPrimary;
   @override
+  @JsonKey(includeIfNull: false)
   String? get latitude;
   @override
+  @JsonKey(includeIfNull: false)
   String? get longitude;
   @override
-  @JsonKey(name: 'created_at')
+  @JsonKey(name: 'created_at', includeIfNull: false)
   String? get createdAt;
   @override
-  @JsonKey(name: 'wallet_balance')
+  @JsonKey(name: 'wallet_balance', includeIfNull: false)
   int? get walletBalance;
   @override
-  @JsonKey(name: 'wallet_id')
+  @JsonKey(name: 'wallet_id', includeIfNull: false)
   int? get walletId;
   @override
-  @JsonKey(name: 'updated_at')
+  @JsonKey(name: 'updated_at', includeIfNull: false)
   String? get updatedAt;
   @override
+  @JsonKey(includeIfNull: false)
   List<String>? get interests;
   @override
+  @JsonKey(includeIfNull: false)
   List<String>? get detailedInterests;
 
   /// Create a copy of UserRegistrationData
