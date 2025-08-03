@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +8,6 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_account_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
@@ -22,11 +19,9 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   EditProfileCubit(
     this.deleteAccountUseCase,
     this.updateProfileDataUseCase,
-    this.getProfileDataUsecase,
   ) : super(EditProfileState(user: UserRegistrationData()));
 
   final UpdateProfileDataUsecase updateProfileDataUseCase;
-  final GetProfileDataUsecase getProfileDataUsecase;
   final DeleteAccountUsecase deleteAccountUseCase;
 
   void initProfileModel(UserRegistrationData user) {
@@ -46,6 +41,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       sms: userData.sms,
       push: userData.push,
       sendEmail: userData.sendEmail,
+      role: userData.role,
       image: userData.image ?? '',
     );
 
@@ -182,7 +178,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     return null;
   }
 
-// Toggle All Notifications
   void toggleSelectAll() {
     final newValue = !state.isAllSelected;
 
@@ -201,38 +196,40 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   }
 
   void updateNewField(String field, String value) {
+    final currentUser = state.user;
     UserRegistrationData updatedUser;
 
     switch (field) {
       case 'country':
-        updatedUser = state.user.copyWith(country: value);
+        updatedUser = currentUser.copyWith(country: value);
         break;
       case 'name':
-        updatedUser = state.user.copyWith(firstName: value);
+        updatedUser = currentUser.copyWith(firstName: value);
         break;
       case 'lastName':
-        updatedUser = state.user.copyWith(lastName: value);
+        updatedUser = currentUser.copyWith(lastName: value);
         break;
       case 'gender':
-        updatedUser = state.user.copyWith(gender: value);
+        updatedUser = currentUser.copyWith(gender: value);
         break;
       case 'email':
-        updatedUser = state.user.copyWith(email: value);
+        updatedUser = currentUser.copyWith(email: value);
         break;
       case 'phone':
-        updatedUser = state.user.copyWith(phone: value);
+        updatedUser = currentUser.copyWith(phone: value);
         break;
-      case 'image':
-        updatedUser = state.user.copyWith(image: value);
-        break;
-      case 'imageBusiness':
-        updatedUser = state.user.copyWith(imageBusiness: value);
+      case 'role':
+        updatedUser = currentUser.copyWith(role: value);
         break;
       default:
-        updatedUser = state.user;
+        updatedUser = currentUser;
     }
 
     emit(state.copyWith(user: updatedUser));
+  }
+
+  void updateUserData(UserRegistrationData user) {
+    emit(state.copyWith(user: user));
   }
 
   List<Map<String, dynamic>> _buildChangeInfoProfile() {
@@ -241,24 +238,32 @@ class EditProfileCubit extends Cubit<EditProfileState> {
         "icon": Assets.assetsIconsEmail,
         "title": "changeEmail".tr(),
         "screen": (BuildContext context) async {
-          context.push(AppRoutes.changeEmail, extra: {
+          final updatedUser = await context
+              .push<UserRegistrationData>(AppRoutes.changeEmail, extra: {
             'model': state.user,
             'cubit': this,
           });
+
+          if (updatedUser != null) {
+            updateUserData(updatedUser);
+          }
         },
       },
       {
         "icon": Assets.assetsIconsPasswordMinimalisticInput,
         "title": "changePassword".tr(),
         "screen": (BuildContext context) {
-          context.push(AppRoutes.changePassword, extra: state.user.email);
+          context.push(AppRoutes.changePassword, extra: state.user);
         },
       },
       {
         "icon": Assets.assetsIconsProfileType,
         "title": "profileType".tr(),
         "screen": (BuildContext context) {
-          context.push(AppRoutes.tradeProfile, extra: this);
+          context.push(AppRoutes.tradeProfile, extra: {
+            'model': state.user,
+            'cubit': this,
+          });
         },
       },
       {
@@ -311,7 +316,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
         showFloatingMessageSuccess('profileUpdated'.tr());
 
-        context.pop(true);
+        context.pop(updatedUser);
       },
     );
   }

@@ -1,8 +1,14 @@
-part of '../home.dart';
+part of 'customs.dart';
 
 class TopBarWidget extends StatelessWidget {
-  const TopBarWidget({this.isSearch = true, super.key});
+  const TopBarWidget(
+      {this.isSearch = true,
+      this.isCircle = false,
+      this.isGift = true,
+      super.key});
   final bool isSearch;
+  final bool isGift;
+  final bool isCircle;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -40,23 +46,31 @@ class TopBarWidget extends StatelessWidget {
               onTap: () {
                 context.push(AppRoutes.mainNotification, extra: cubit);
               },
-              child: NotificationIconWidget(count: count),
+              child: isCircle
+                  ? CircleAvatar(
+                      backgroundColor: AppColors.white,
+                      radius: 20.r,
+                      child: NotificationIconWidget(count: count),
+                    )
+                  : NotificationIconWidget(count: count),
             ),
-            10.pw,
+            isGift ? 10.pw : const SizedBox.shrink(),
             GestureDetector(
               onTap: () {
                 // Get.to(() => GiftScreen());
               },
-              child: CircleAvatar(
-                backgroundColor: AppColors.purple,
-                radius: 16.r,
-                child: Image.asset(
-                  height: 16.h,
-                  width: 16.w,
-                  Assets.assetsIconsGift,
-                  color: AppColors.white,
-                ),
-              ),
+              child: isGift
+                  ? CircleAvatar(
+                      backgroundColor: AppColors.purple,
+                      radius: 16.r,
+                      child: Image.asset(
+                        height: 16.h,
+                        width: 16.w,
+                        Assets.assetsIconsGift,
+                        color: AppColors.white,
+                      ),
+                    )
+                  : const SizedBox.shrink(),
             ),
           ],
         );

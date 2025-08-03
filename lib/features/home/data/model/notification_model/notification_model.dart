@@ -22,8 +22,6 @@ class NotificationItem with _$NotificationItem {
     @JsonKey(name: 'notification_type') String? notificationType,
     String? type,
     Message? message,
-
-    // 👇 هنا التحويل اليدوي من 0/1 أو true/false إلى bool
     @JsonKey(
       fromJson: _readFromJson,
       toJson: _readToJson,
@@ -37,7 +35,6 @@ class NotificationItem with _$NotificationItem {
       _$NotificationItemFromJson(json);
 }
 
-// ✅ الدوال المساعدة
 bool? _readFromJson(dynamic value) {
   if (value is bool) return value;
   if (value is int) return value == 1;

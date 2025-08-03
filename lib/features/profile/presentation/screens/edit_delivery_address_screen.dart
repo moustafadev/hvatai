@@ -155,9 +155,13 @@ class EditDeliveryAddressScreen extends StatelessWidget {
                       24.ph,
                       CustomSwitchWidget(
                         title: 'makeItThePrimaryAddress'.tr(),
-                        value: state.user.isPrimary == 1,
+                        value: user.isPrimary == 1,
                         onChanged: (val) {
                           cubit.toggleMainAddress();
+                          print({
+                            'isPrimary ccccdssfddsfdsfsdfsfqweewfregrebfbvmcv':
+                                user.isPrimary
+                          });
                         },
                       ),
                       30.ph,

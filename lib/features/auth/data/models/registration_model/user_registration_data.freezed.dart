@@ -30,9 +30,9 @@ mixin _$UserRegistrationData {
   String? get appleId => throw _privateConstructorUsedError;
   @JsonKey(name: 'password_confirmation', includeIfNull: false)
   String? get passwordConfirmation => throw _privateConstructorUsedError;
-  @JsonKey(name: 'terms_agreement', includeIfNull: false)
+  @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
   bool? get agreedToTerms => throw _privateConstructorUsedError;
-  @JsonKey(name: 'age_confirmation', includeIfNull: false)
+  @JsonKey(name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
   bool? get isAbove18 => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
   String? get email => throw _privateConstructorUsedError;
@@ -70,11 +70,11 @@ mixin _$UserRegistrationData {
   int? get businessId => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
   String? get visibility => throw _privateConstructorUsedError;
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
   String? get sms => throw _privateConstructorUsedError;
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
   String? get push => throw _privateConstructorUsedError;
-  @JsonKey(name: 'send_email', includeIfNull: false)
+  @JsonKey(name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
   String? get sendEmail => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
   String? get status => throw _privateConstructorUsedError;
@@ -106,13 +106,14 @@ mixin _$UserRegistrationData {
   String? get apartment => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_primary', includeIfNull: false)
   int? get isPrimary => throw _privateConstructorUsedError;
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
   String? get latitude => throw _privateConstructorUsedError;
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
   String? get longitude => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at', includeIfNull: false)
   String? get createdAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'wallet_balance', includeIfNull: false)
+  @JsonKey(
+      name: 'wallet_balance', includeIfNull: false, fromJson: toStringNullable)
   String? get walletBalance => throw _privateConstructorUsedError;
   @JsonKey(name: 'wallet_id', includeIfNull: false)
   int? get walletId => throw _privateConstructorUsedError;
@@ -146,9 +147,12 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       @JsonKey(name: 'apple_id', includeIfNull: false) String? appleId,
       @JsonKey(name: 'password_confirmation', includeIfNull: false)
       String? passwordConfirmation,
-      @JsonKey(name: 'terms_agreement', includeIfNull: false)
+      @JsonKey(
+          name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
       bool? agreedToTerms,
-      @JsonKey(name: 'age_confirmation', includeIfNull: false) bool? isAbove18,
+      @JsonKey(
+          name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
+      bool? isAbove18,
       @JsonKey(includeIfNull: false) String? email,
       @JsonKey(includeIfNull: false) String? token,
       @JsonKey(includeIfNull: false) String? password,
@@ -168,9 +172,11 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       @JsonKey(includeIfNull: false) String? lang,
       @JsonKey(name: 'business_id', includeIfNull: false) int? businessId,
       @JsonKey(includeIfNull: false) String? visibility,
-      @JsonKey(includeIfNull: false) String? sms,
-      @JsonKey(includeIfNull: false) String? push,
-      @JsonKey(name: 'send_email', includeIfNull: false) String? sendEmail,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable) String? sms,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable) String? push,
+      @JsonKey(
+          name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
+      String? sendEmail,
       @JsonKey(includeIfNull: false) String? status,
       @JsonKey(name: 'fcm_tokens', includeIfNull: false)
       List<String>? fcmTokens,
@@ -194,10 +200,15 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       String? intercomCode,
       @JsonKey(name: 'Apartment', includeIfNull: false) String? apartment,
       @JsonKey(name: 'is_primary', includeIfNull: false) int? isPrimary,
-      @JsonKey(includeIfNull: false) String? latitude,
-      @JsonKey(includeIfNull: false) String? longitude,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable)
+      String? latitude,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable)
+      String? longitude,
       @JsonKey(name: 'created_at', includeIfNull: false) String? createdAt,
-      @JsonKey(name: 'wallet_balance', includeIfNull: false)
+      @JsonKey(
+          name: 'wallet_balance',
+          includeIfNull: false,
+          fromJson: toStringNullable)
       String? walletBalance,
       @JsonKey(name: 'wallet_id', includeIfNull: false) int? walletId,
       @JsonKey(name: 'updated_at', includeIfNull: false) String? updatedAt,
@@ -497,9 +508,12 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       @JsonKey(name: 'apple_id', includeIfNull: false) String? appleId,
       @JsonKey(name: 'password_confirmation', includeIfNull: false)
       String? passwordConfirmation,
-      @JsonKey(name: 'terms_agreement', includeIfNull: false)
+      @JsonKey(
+          name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
       bool? agreedToTerms,
-      @JsonKey(name: 'age_confirmation', includeIfNull: false) bool? isAbove18,
+      @JsonKey(
+          name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
+      bool? isAbove18,
       @JsonKey(includeIfNull: false) String? email,
       @JsonKey(includeIfNull: false) String? token,
       @JsonKey(includeIfNull: false) String? password,
@@ -519,9 +533,11 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       @JsonKey(includeIfNull: false) String? lang,
       @JsonKey(name: 'business_id', includeIfNull: false) int? businessId,
       @JsonKey(includeIfNull: false) String? visibility,
-      @JsonKey(includeIfNull: false) String? sms,
-      @JsonKey(includeIfNull: false) String? push,
-      @JsonKey(name: 'send_email', includeIfNull: false) String? sendEmail,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable) String? sms,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable) String? push,
+      @JsonKey(
+          name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
+      String? sendEmail,
       @JsonKey(includeIfNull: false) String? status,
       @JsonKey(name: 'fcm_tokens', includeIfNull: false)
       List<String>? fcmTokens,
@@ -545,10 +561,15 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       String? intercomCode,
       @JsonKey(name: 'Apartment', includeIfNull: false) String? apartment,
       @JsonKey(name: 'is_primary', includeIfNull: false) int? isPrimary,
-      @JsonKey(includeIfNull: false) String? latitude,
-      @JsonKey(includeIfNull: false) String? longitude,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable)
+      String? latitude,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable)
+      String? longitude,
       @JsonKey(name: 'created_at', includeIfNull: false) String? createdAt,
-      @JsonKey(name: 'wallet_balance', includeIfNull: false)
+      @JsonKey(
+          name: 'wallet_balance',
+          includeIfNull: false,
+          fromJson: toStringNullable)
       String? walletBalance,
       @JsonKey(name: 'wallet_id', includeIfNull: false) int? walletId,
       @JsonKey(name: 'updated_at', includeIfNull: false) String? updatedAt,
@@ -840,9 +861,12 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       @JsonKey(name: 'apple_id', includeIfNull: false) this.appleId,
       @JsonKey(name: 'password_confirmation', includeIfNull: false)
       this.passwordConfirmation,
-      @JsonKey(name: 'terms_agreement', includeIfNull: false)
+      @JsonKey(
+          name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
       this.agreedToTerms,
-      @JsonKey(name: 'age_confirmation', includeIfNull: false) this.isAbove18,
+      @JsonKey(
+          name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
+      this.isAbove18,
       @JsonKey(includeIfNull: false) this.email,
       @JsonKey(includeIfNull: false) this.token,
       @JsonKey(includeIfNull: false) this.password,
@@ -861,9 +885,11 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       @JsonKey(includeIfNull: false) this.lang,
       @JsonKey(name: 'business_id', includeIfNull: false) this.businessId,
       @JsonKey(includeIfNull: false) this.visibility,
-      @JsonKey(includeIfNull: false) this.sms,
-      @JsonKey(includeIfNull: false) this.push,
-      @JsonKey(name: 'send_email', includeIfNull: false) this.sendEmail,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable) this.sms,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable) this.push,
+      @JsonKey(
+          name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
+      this.sendEmail,
       @JsonKey(includeIfNull: false) this.status,
       @JsonKey(name: 'fcm_tokens', includeIfNull: false)
       final List<String>? fcmTokens,
@@ -886,10 +912,14 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       @JsonKey(name: 'Intercom_code', includeIfNull: false) this.intercomCode,
       @JsonKey(name: 'Apartment', includeIfNull: false) this.apartment,
       @JsonKey(name: 'is_primary', includeIfNull: false) this.isPrimary,
-      @JsonKey(includeIfNull: false) this.latitude,
-      @JsonKey(includeIfNull: false) this.longitude,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable) this.latitude,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable) this.longitude,
       @JsonKey(name: 'created_at', includeIfNull: false) this.createdAt,
-      @JsonKey(name: 'wallet_balance', includeIfNull: false) this.walletBalance,
+      @JsonKey(
+          name: 'wallet_balance',
+          includeIfNull: false,
+          fromJson: toStringNullable)
+      this.walletBalance,
       @JsonKey(name: 'wallet_id', includeIfNull: false) this.walletId,
       @JsonKey(name: 'updated_at', includeIfNull: false) this.updatedAt,
       @JsonKey(includeIfNull: false) final List<String>? interests,
@@ -917,10 +947,10 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   @JsonKey(name: 'password_confirmation', includeIfNull: false)
   final String? passwordConfirmation;
   @override
-  @JsonKey(name: 'terms_agreement', includeIfNull: false)
+  @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
   final bool? agreedToTerms;
   @override
-  @JsonKey(name: 'age_confirmation', includeIfNull: false)
+  @JsonKey(name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
   final bool? isAbove18;
   @override
   @JsonKey(includeIfNull: false)
@@ -977,13 +1007,13 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   @JsonKey(includeIfNull: false)
   final String? visibility;
   @override
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
   final String? sms;
   @override
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
   final String? push;
   @override
-  @JsonKey(name: 'send_email', includeIfNull: false)
+  @JsonKey(name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
   final String? sendEmail;
   @override
   @JsonKey(includeIfNull: false)
@@ -1039,16 +1069,17 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   @JsonKey(name: 'is_primary', includeIfNull: false)
   final int? isPrimary;
   @override
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
   final String? latitude;
   @override
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
   final String? longitude;
   @override
   @JsonKey(name: 'created_at', includeIfNull: false)
   final String? createdAt;
   @override
-  @JsonKey(name: 'wallet_balance', includeIfNull: false)
+  @JsonKey(
+      name: 'wallet_balance', includeIfNull: false, fromJson: toStringNullable)
   final String? walletBalance;
   @override
   @JsonKey(name: 'wallet_id', includeIfNull: false)
@@ -1257,9 +1288,11 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       @JsonKey(name: 'apple_id', includeIfNull: false) final String? appleId,
       @JsonKey(name: 'password_confirmation', includeIfNull: false)
       final String? passwordConfirmation,
-      @JsonKey(name: 'terms_agreement', includeIfNull: false)
+      @JsonKey(
+          name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
       final bool? agreedToTerms,
-      @JsonKey(name: 'age_confirmation', includeIfNull: false)
+      @JsonKey(
+          name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
       final bool? isAbove18,
       @JsonKey(includeIfNull: false) final String? email,
       @JsonKey(includeIfNull: false) final String? token,
@@ -1280,9 +1313,12 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       @JsonKey(includeIfNull: false) final String? lang,
       @JsonKey(name: 'business_id', includeIfNull: false) final int? businessId,
       @JsonKey(includeIfNull: false) final String? visibility,
-      @JsonKey(includeIfNull: false) final String? sms,
-      @JsonKey(includeIfNull: false) final String? push,
-      @JsonKey(name: 'send_email', includeIfNull: false)
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable)
+      final String? sms,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable)
+      final String? push,
+      @JsonKey(
+          name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
       final String? sendEmail,
       @JsonKey(includeIfNull: false) final String? status,
       @JsonKey(name: 'fcm_tokens', includeIfNull: false)
@@ -1309,11 +1345,16 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       final String? intercomCode,
       @JsonKey(name: 'Apartment', includeIfNull: false) final String? apartment,
       @JsonKey(name: 'is_primary', includeIfNull: false) final int? isPrimary,
-      @JsonKey(includeIfNull: false) final String? latitude,
-      @JsonKey(includeIfNull: false) final String? longitude,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable)
+      final String? latitude,
+      @JsonKey(includeIfNull: false, fromJson: toStringNullable)
+      final String? longitude,
       @JsonKey(name: 'created_at', includeIfNull: false)
       final String? createdAt,
-      @JsonKey(name: 'wallet_balance', includeIfNull: false)
+      @JsonKey(
+          name: 'wallet_balance',
+          includeIfNull: false,
+          fromJson: toStringNullable)
       final String? walletBalance,
       @JsonKey(name: 'wallet_id', includeIfNull: false) final int? walletId,
       @JsonKey(name: 'updated_at', includeIfNull: false)
@@ -1341,10 +1382,10 @@ abstract class _UserRegistrationData implements UserRegistrationData {
   @JsonKey(name: 'password_confirmation', includeIfNull: false)
   String? get passwordConfirmation;
   @override
-  @JsonKey(name: 'terms_agreement', includeIfNull: false)
+  @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
   bool? get agreedToTerms;
   @override
-  @JsonKey(name: 'age_confirmation', includeIfNull: false)
+  @JsonKey(name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
   bool? get isAbove18;
   @override
   @JsonKey(includeIfNull: false)
@@ -1401,13 +1442,13 @@ abstract class _UserRegistrationData implements UserRegistrationData {
   @JsonKey(includeIfNull: false)
   String? get visibility;
   @override
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
   String? get sms;
   @override
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
   String? get push;
   @override
-  @JsonKey(name: 'send_email', includeIfNull: false)
+  @JsonKey(name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
   String? get sendEmail;
   @override
   @JsonKey(includeIfNull: false)
@@ -1455,16 +1496,17 @@ abstract class _UserRegistrationData implements UserRegistrationData {
   @JsonKey(name: 'is_primary', includeIfNull: false)
   int? get isPrimary;
   @override
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
   String? get latitude;
   @override
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
   String? get longitude;
   @override
   @JsonKey(name: 'created_at', includeIfNull: false)
   String? get createdAt;
   @override
-  @JsonKey(name: 'wallet_balance', includeIfNull: false)
+  @JsonKey(
+      name: 'wallet_balance', includeIfNull: false, fromJson: toStringNullable)
   String? get walletBalance;
   @override
   @JsonKey(name: 'wallet_id', includeIfNull: false)

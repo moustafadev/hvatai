@@ -44,7 +44,7 @@ class SettingsScreen extends StatelessWidget {
                     ],
                     leading: GestureDetector(
                       onTap: () {
-                        context.pop();
+                        context.pop(state.user);
                       },
                       child: const Icon(Icons.arrow_back_ios),
                     ),

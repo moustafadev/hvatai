@@ -62,7 +62,9 @@ class TopProfileInfo extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     isDisabled: true,
                     buttonColor: AppColors.primary,
-                    text: "tradeProfile".tr(),
+                    text: user.role == 'seller'
+                        ? 'sellerProfile'.tr()
+                        : 'tradeProfile'.tr(),
                     textColor: AppColors.blackDark,
                   ),
                 ],
@@ -72,13 +74,13 @@ class TopProfileInfo extends StatelessWidget {
           const Spacer(),
           GestureDetector(
             onTap: () async {
-              final updated = await context.push<bool>(
+              final updatedUser = await context.push<UserRegistrationData>(
                 AppRoutes.settings,
                 extra: user,
               );
 
-              if (updated == true) {
-                context.read<ProfileCubit>().getProfile();
+              if (updatedUser != null) {
+                context.read<ProfileCubit>().updateUserData(updatedUser);
               }
             },
             child: CircleAvatar(

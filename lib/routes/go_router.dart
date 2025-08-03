@@ -83,7 +83,8 @@ final GoRouter router = GoRouter(
 
         final model = extra['model'] as UserRegistrationData;
         final cubit = extra['cubit'] as DeliveryAddressCubit
-          ..initRegistrationModel(model);
+          ..initRegistrationModel(model)
+          ..prefill(model.country);
 
         return BlocProvider.value(
           value: cubit,
@@ -225,7 +226,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.tradeProfile,
       builder: (BuildContext context, GoRouterState state) {
-        final cubit = state.extra as EditProfileCubit;
+        final extra = state.extra as Map<String, Object>;
+        final model = extra['model'] as UserRegistrationData;
+        final cubit = extra['cubit'] as EditProfileCubit
+          ..initProfileModel(model);
         return BlocProvider.value(value: cubit, child: TradeProfileScreen());
       },
     ),

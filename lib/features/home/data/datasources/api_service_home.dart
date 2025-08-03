@@ -31,7 +31,7 @@ class ApiServiceHome extends ApiBase {
           'data': [response.json['data']]
         });
       } else {
-        throw Exception("Failed to mark notification as read");
+        throw Exception;
       }
     });
   }

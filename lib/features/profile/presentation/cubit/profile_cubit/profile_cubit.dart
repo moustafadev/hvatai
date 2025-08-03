@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +36,25 @@ class ProfileCubit extends Cubit<ProfileState> {
         context.go(AppRoutes.socialLogin);
       },
     );
+  }
+
+  void updateUserData(UserRegistrationData updatedUser) {
+    final currentUser = state.userProfileModel;
+
+    final mergedUser = currentUser.copyWith(
+      firstName: updatedUser.firstName ?? currentUser.firstName,
+      lastName: updatedUser.lastName ?? currentUser.lastName,
+      email: updatedUser.email ?? currentUser.email,
+      phone: updatedUser.phone ?? currentUser.phone,
+      country: updatedUser.country ?? currentUser.country,
+      gender: updatedUser.gender ?? currentUser.gender,
+      image: updatedUser.image ?? currentUser.image,
+      walletBalance: updatedUser.walletBalance ?? currentUser.walletBalance,
+      personalRating: updatedUser.personalRating ?? currentUser.personalRating,
+      role: updatedUser.role ?? currentUser.role,
+    );
+
+    emit(state.copyWith(userProfileModel: mergedUser));
   }
 
   Future<void> getProfile() async {

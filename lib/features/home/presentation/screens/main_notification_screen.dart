@@ -23,6 +23,14 @@ class MainNotificationScreen extends StatelessWidget {
         ),
         body: BlocBuilder<MainNotificationCubit, MainNotificationState>(
           builder: (context, state) {
+            if (state.isLoading) {
+              return Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.grey,
+                ),
+              );
+            }
+
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(

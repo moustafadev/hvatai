@@ -9,9 +9,11 @@ class NotificationItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context
-            .read<MainNotificationCubit>()
-            .markResdNotification(notification.id!);
+        if (notification.read == false) {
+          context
+              .read<MainNotificationCubit>()
+              .markResdNotification(notification.id!);
+        }
 
         showModalBottomSheet(
           context: context,

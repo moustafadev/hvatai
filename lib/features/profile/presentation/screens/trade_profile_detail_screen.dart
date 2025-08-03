@@ -30,7 +30,11 @@ class TradeProfileDetailScreen extends StatelessWidget {
                       const EdgeInsets.only(left: 16.0, right: 16.0, top: 30.0),
                   child: Column(
                     children: [
-                      const AppBarTradeProfileDetail(),
+                      const TopBarWidget(
+                        isSearch: false,
+                        isGift: false,
+                        isCircle: true,
+                      ),
                       22.ph,
                       UserInfoTradeProfileDetail(
                         name: user.firstName ?? '',

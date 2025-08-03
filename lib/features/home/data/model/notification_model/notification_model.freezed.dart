@@ -205,8 +205,7 @@ mixin _$NotificationItem {
   @JsonKey(name: 'notification_type')
   String? get notificationType => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
-  Message? get message =>
-      throw _privateConstructorUsedError; // 👇 هنا التحويل اليدوي من 0/1 أو true/false إلى bool
+  Message? get message => throw _privateConstructorUsedError;
   @JsonKey(fromJson: _readFromJson, toJson: _readToJson)
   bool? get read => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
@@ -427,7 +426,6 @@ class _$NotificationItemImpl implements _NotificationItem {
   final String? type;
   @override
   final Message? message;
-// 👇 هنا التحويل اليدوي من 0/1 أو true/false إلى bool
   @override
   @JsonKey(fromJson: _readFromJson, toJson: _readToJson)
   final bool? read;
@@ -509,7 +507,7 @@ abstract class _NotificationItem implements NotificationItem {
   @override
   String? get type;
   @override
-  Message? get message; // 👇 هنا التحويل اليدوي من 0/1 أو true/false إلى bool
+  Message? get message;
   @override
   @JsonKey(fromJson: _readFromJson, toJson: _readToJson)
   bool? get read;

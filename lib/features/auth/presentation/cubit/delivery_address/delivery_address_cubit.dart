@@ -46,6 +46,7 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
       intercomCode: user.intercomCode ?? '',
       city: user.city ?? '',
       apartment: user.apartment ?? '',
+      isPrimary: user.isPrimary,
     )));
   }
 
@@ -253,9 +254,20 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
   }
 
   void toggleMainAddress() {
-    final current = state.user.isPrimary == 1;
+    final newValue = state.user.isPrimary == 1 ? 0 : 1;
+
+    final updatedUser = state.user.copyWith(isPrimary: newValue);
+
+    final updatedDeliveryModel = state.deliveryModel.map((address) {
+      if (address.id == state.user.id) {
+        return address.copyWith(isPrimary: newValue);
+      }
+      return address;
+    }).toList();
+
     emit(state.copyWith(
-      user: state.user.copyWith(isPrimary: current ? 0 : 1),
+      user: updatedUser,
+      deliveryModel: updatedDeliveryModel,
     ));
   }
 

@@ -13,13 +13,11 @@ import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_t
 import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_tabs_state.dart';
 import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
 import 'package:hvatai/locator.dart';
-import 'package:hvatai/routes/app_routes.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 part 'screens/feed_screen.dart';
 part 'widgets/notification_detail_bottom_sheet.dart';
 part 'screens/main_notification_screen.dart';
-part 'widgets/top_bar_widget.dart';
 part 'widgets/notification_icon_widget.dart';
 part 'widgets/category_tabs_widget.dart';
 part 'widgets/live_video_widget.dart';

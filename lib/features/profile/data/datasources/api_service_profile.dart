@@ -123,7 +123,7 @@ class ApiServiceProfile extends ApiBase {
           params.userRegistrationData.agreedToTerms ?? false ? 1 : 0;
       dataMap['age_confirmation'] =
           params.userRegistrationData.isAbove18 ?? false ? 1 : 0;
-      dataMap['phone'] = "243535345";
+      dataMap['phone'] = "043535345";
 
       MultipartFile? imageFile;
       if (params.userRegistrationData.image != null &&
@@ -145,7 +145,7 @@ class ApiServiceProfile extends ApiBase {
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return UserRegistrationData.fromJson(response.json);
+        return UserRegistrationData.fromJson(response.json['data']);
       }
       throw Exception;
     });

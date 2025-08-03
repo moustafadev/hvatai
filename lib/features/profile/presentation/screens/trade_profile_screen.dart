@@ -21,6 +21,7 @@ class TradeProfileScreen extends StatelessWidget {
         body: BlocBuilder<EditProfileCubit, EditProfileState>(
             builder: (context, state) {
           final cubit = context.read<EditProfileCubit>();
+          final user = state.user;
           return Column(
             children: [
               Padding(
@@ -41,17 +42,14 @@ class TradeProfileScreen extends StatelessWidget {
                       color: AppColors.grey,
                     ),
                     8.ph,
-                    CustomDropdown(
-                      hintText: 'Trade',
+                    CustomTextField(
+                      hintText: 'profileType'.tr(),
+                      initialValue: user.role == 'seller'
+                          ? 'sellerProfile'.tr()
+                          : 'tradeProfile'.tr(),
+                      keyboardType: TextInputType.text,
                       isRequired: false,
-                      value: state.type,
-                      onChanged: cubit.setType,
-                      items: const ['Trade', 'Buyer', 'Seller']
-                          .map((val) => DropdownMenuItem(
-                                value: val,
-                                child: Text(val),
-                              ))
-                          .toList(),
+                      readOnly: true,
                     ),
                     16.ph,
                   ],
@@ -73,22 +71,20 @@ class TradeProfileScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     CustomText(
-                      text: 'Become a seller'.tr(),
+                      text: 'becomeSeller'.tr(),
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w700,
                       color: AppColors.grey,
                     ),
                     2.ph,
                     CustomText(
-                      text: 'Low commission'.tr(),
+                      text: 'lowCommission'.tr(),
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w800,
                     ),
                     2.ph,
                     CustomText(
-                      text:
-                          'Grab!\'s 8% commission is one of\n the lowest in the industry.'
-                              .tr(),
+                      text: 'lowCommissionDescription'.tr(),
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w700,
                       textAlign: TextAlign.center,
@@ -101,8 +97,11 @@ class TradeProfileScreen extends StatelessWidget {
                       ),
                       child: CustomButton(
                         color: AppColors.primaryColor,
-                        title: 'Get started'.tr(),
-                        onPressed: () {},
+                        title: 'startSelling'.tr(),
+                        onPressed: () async {
+                          cubit.updateNewField('role', 'seller');
+                          await cubit.submit(context);
+                        },
                       ),
                     ),
                     60.ph
