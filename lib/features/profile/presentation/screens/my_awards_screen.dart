@@ -17,21 +17,12 @@ class MyAwardsScreen extends StatelessWidget {
       backgroundColor: AppColors.lightGreyBackground,
       appBar: AppBar(
         backgroundColor: AppColors.lightGreyBackground,
-
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
           onPressed: () {
             context.pop(context);
           },
         ),
-        // centerTitle: true,
-        // title: CustomText(
-        //   text: "My awards".tr(),
-        //   fontWeight: FontWeight.w600,
-        //   fontSize: 16,
-        //   fontFamily: "SF Pro Rounded",
-        //   color: AppColors.blackDark,
-        // ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
@@ -42,7 +33,6 @@ class MyAwardsScreen extends StatelessWidget {
               text: "My awards".tr(),
               fontWeight: FontWeight.w800,
               fontSize: 20.sp,
-              fontFamily: "Manrope",
               color: AppColors.blackDark,
             ),
             16.ph,

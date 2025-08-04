@@ -38,9 +38,11 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             children: [
               10.ph,
-              const Padding(
+              Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: TopBarWidget(),
+                child: TopBarWidget(
+                  onGiftTap: () => context.push(AppRoutes.awardsGift),
+                ),
               ),
               16.ph,
               Expanded(

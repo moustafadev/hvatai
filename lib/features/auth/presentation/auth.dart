@@ -56,3 +56,4 @@ part 'widgets/social_login/action_buttons.dart';
 part 'widgets/social_login/terms_and_privacy.dart';
 part 'widgets/interests_detail_widget.dart';
 part 'widgets/category_options_section.dart';
+part 'widgets/custom_pinput_widget.dart';

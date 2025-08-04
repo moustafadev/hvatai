@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
+import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
@@ -63,6 +64,29 @@ final GoRouter router = GoRouter(
       path: AppRoutes.payments, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const PaymentMethodsScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.awardsGift, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        return AwardsClubScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.sendReward, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        final cubit = state.extra as AwardsClubCubit;
+
+        return BlocProvider.value(value: cubit, child: SendRewardScreen());
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.selectAwaySend, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        final cubit = state.extra as AwardsClubCubit;
+
+        return BlocProvider.value(
+            value: cubit, child: SelectAwayRewardsScreen());
       },
     ),
     GoRoute(

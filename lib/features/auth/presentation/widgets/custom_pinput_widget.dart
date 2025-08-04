@@ -1,4 +1,4 @@
-part of 'customs.dart';
+part of '../auth.dart';
 
 class PinputWidget extends StatelessWidget {
   const PinputWidget({

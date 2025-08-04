@@ -18,6 +18,9 @@ class NotificationItemWidget extends StatelessWidget {
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width,
+          ),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
           ),
@@ -58,7 +61,6 @@ class NotificationItemWidget extends StatelessWidget {
                     color: AppColors.primaryPink,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w700,
-                    fontFamily: 'Manrope',
                   ),
                 ),
                 TextSpan(
@@ -67,14 +69,14 @@ class NotificationItemWidget extends StatelessWidget {
                     color: AppColors.blackDark,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w700,
-                    fontFamily: 'Manrope',
                   ),
                 ),
               ],
             ),
           ),
           subtitle: CustomText(
-            text: formatTimestamp(notification.message?.timestamp),
+            text:
+                '${formatTimestamp(notification.message?.timestamp)} ago'.tr(),
             color: AppColors.grey,
             fontSize: 14.sp,
             fontWeight: FontWeight.w600,

@@ -21,7 +21,6 @@ import 'package:hvatai/routes/app_routes.dart';
 import 'package:hvatai/routes/go_router.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pinput/pinput.dart';
 
 part 'custom_gradient_button.dart';
 part 'custom_dropdown.dart';
@@ -48,7 +47,6 @@ part 'custom_select_gender.dart';
 part 'custom_item_four_container.dart';
 part 'custom_stat_column.dart';
 part 'custom_vertical_divider.dart';
-part 'custom_pinput_widget.dart';
 part 'custom_dialog.dart';
 part 'custom_swipeable_list_title.dart';
 part 'custom_category_tabs.dart';

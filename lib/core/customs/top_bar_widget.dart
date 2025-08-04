@@ -4,11 +4,13 @@ class TopBarWidget extends StatelessWidget {
   const TopBarWidget(
       {this.isSearch = true,
       this.isCircle = false,
+      this.onGiftTap,
       this.isGift = true,
       super.key});
   final bool isSearch;
   final bool isGift;
   final bool isCircle;
+  final VoidCallback? onGiftTap;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -56,9 +58,7 @@ class TopBarWidget extends StatelessWidget {
             ),
             isGift ? 10.pw : const SizedBox.shrink(),
             GestureDetector(
-              onTap: () {
-                // Get.to(() => GiftScreen());
-              },
+              onTap: onGiftTap,
               child: isGift
                   ? CircleAvatar(
                       backgroundColor: AppColors.purple,

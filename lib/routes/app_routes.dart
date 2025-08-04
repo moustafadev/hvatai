@@ -11,10 +11,13 @@ class AppRoutes {
   static const String favorite = '/favorite';
   static const String inviteFriends = '/invite_friends';
   static const String login = '/login';
+  static const String selectAwaySend = '/select_away_send';
   static const String clipsCompany = '/clips_company';
   static const String productsCompany = '/products_company';
   static const String reviewCompany = '/review_company';
   static const String companyName = '/company_name';
+  static const String sendReward = '/send_reward';
+  static const String awardsGift = '/awards_gift';
   static const String registration = '/registration';
   static const String deliveryAddress = '/delivery_address';
   static const String verificationCode = '/verification_code';
