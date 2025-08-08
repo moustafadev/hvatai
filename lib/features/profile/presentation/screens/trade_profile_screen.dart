@@ -96,6 +96,7 @@ class TradeProfileScreen extends StatelessWidget {
                         horizontal: 90,
                       ),
                       child: CustomButton(
+                        isLoading: state.isLoading,
                         color: AppColors.primaryColor,
                         title: 'startSelling'.tr(),
                         onPressed: () async {

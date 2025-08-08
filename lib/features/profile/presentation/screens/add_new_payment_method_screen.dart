@@ -140,7 +140,7 @@ class AddNewPaymentMethodScreen extends StatelessWidget {
                           text: 'save'.tr(),
                           isLoading: cubit.state.isLoading,
                           isDisabled: !((cubit
-                                      .state.addCard.brand?.isNotEmpty ??
+                                      .state.addCard.cardName?.isNotEmpty ??
                                   false) &&
                               (cubit.state.addCard.cardNumber?.isNotEmpty ??
                                   false) &&

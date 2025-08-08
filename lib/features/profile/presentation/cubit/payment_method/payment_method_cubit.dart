@@ -23,7 +23,7 @@ class PaymentMethodCubit extends Cubit<PaymentMethodState> {
   final DeleteCardUsecase deleteCardUsecase;
   void updateField(String field, String value) {
     final updatedUser = state.addCard.copyWith(
-      brand: field == 'cardName' ? value : state.addCard.brand,
+      cardName: field == 'cardName' ? value : state.addCard.cardName,
       cardNumber: field == 'cardNumber' ? value : state.addCard.cardNumber,
       expiryDate: field == 'expiryDate' ? value : state.addCard.expiryDate,
       cvv: field == 'cardCvv' ? value : state.addCard.cvv,

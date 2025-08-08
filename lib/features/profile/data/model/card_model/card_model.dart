@@ -11,6 +11,7 @@ class CardModel with _$CardModel {
     @JsonKey(name: 'expiry_month') String? expiryMonth,
     @JsonKey(name: 'expiry_year') String? expiryYear,
     @JsonKey(name: 'card_number') String? cardNumber,
+    @JsonKey(name: 'card_name') String? cardName,
     @JsonKey(name: 'expiry_date') String? expiryDate,
     String? cvv,
     @JsonKey(name: 'user_id') int? userId,

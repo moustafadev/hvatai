@@ -29,6 +29,8 @@ mixin _$CardModel {
   String? get expiryYear => throw _privateConstructorUsedError;
   @JsonKey(name: 'card_number')
   String? get cardNumber => throw _privateConstructorUsedError;
+  @JsonKey(name: 'card_name')
+  String? get cardName => throw _privateConstructorUsedError;
   @JsonKey(name: 'expiry_date')
   String? get expiryDate => throw _privateConstructorUsedError;
   String? get cvv => throw _privateConstructorUsedError;
@@ -61,6 +63,7 @@ abstract class $CardModelCopyWith<$Res> {
       @JsonKey(name: 'expiry_month') String? expiryMonth,
       @JsonKey(name: 'expiry_year') String? expiryYear,
       @JsonKey(name: 'card_number') String? cardNumber,
+      @JsonKey(name: 'card_name') String? cardName,
       @JsonKey(name: 'expiry_date') String? expiryDate,
       String? cvv,
       @JsonKey(name: 'user_id') int? userId,
@@ -89,6 +92,7 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
     Object? expiryMonth = freezed,
     Object? expiryYear = freezed,
     Object? cardNumber = freezed,
+    Object? cardName = freezed,
     Object? expiryDate = freezed,
     Object? cvv = freezed,
     Object? userId = freezed,
@@ -116,6 +120,10 @@ class _$CardModelCopyWithImpl<$Res, $Val extends CardModel>
       cardNumber: freezed == cardNumber
           ? _value.cardNumber
           : cardNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cardName: freezed == cardName
+          ? _value.cardName
+          : cardName // ignore: cast_nullable_to_non_nullable
               as String?,
       expiryDate: freezed == expiryDate
           ? _value.expiryDate
@@ -159,6 +167,7 @@ abstract class _$$CardModelImplCopyWith<$Res>
       @JsonKey(name: 'expiry_month') String? expiryMonth,
       @JsonKey(name: 'expiry_year') String? expiryYear,
       @JsonKey(name: 'card_number') String? cardNumber,
+      @JsonKey(name: 'card_name') String? cardName,
       @JsonKey(name: 'expiry_date') String? expiryDate,
       String? cvv,
       @JsonKey(name: 'user_id') int? userId,
@@ -185,6 +194,7 @@ class __$$CardModelImplCopyWithImpl<$Res>
     Object? expiryMonth = freezed,
     Object? expiryYear = freezed,
     Object? cardNumber = freezed,
+    Object? cardName = freezed,
     Object? expiryDate = freezed,
     Object? cvv = freezed,
     Object? userId = freezed,
@@ -212,6 +222,10 @@ class __$$CardModelImplCopyWithImpl<$Res>
       cardNumber: freezed == cardNumber
           ? _value.cardNumber
           : cardNumber // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cardName: freezed == cardName
+          ? _value.cardName
+          : cardName // ignore: cast_nullable_to_non_nullable
               as String?,
       expiryDate: freezed == expiryDate
           ? _value.expiryDate
@@ -250,6 +264,7 @@ class _$CardModelImpl implements _CardModel {
       @JsonKey(name: 'expiry_month') this.expiryMonth,
       @JsonKey(name: 'expiry_year') this.expiryYear,
       @JsonKey(name: 'card_number') this.cardNumber,
+      @JsonKey(name: 'card_name') this.cardName,
       @JsonKey(name: 'expiry_date') this.expiryDate,
       this.cvv,
       @JsonKey(name: 'user_id') this.userId,
@@ -275,6 +290,9 @@ class _$CardModelImpl implements _CardModel {
   @JsonKey(name: 'card_number')
   final String? cardNumber;
   @override
+  @JsonKey(name: 'card_name')
+  final String? cardName;
+  @override
   @JsonKey(name: 'expiry_date')
   final String? expiryDate;
   @override
@@ -293,7 +311,7 @@ class _$CardModelImpl implements _CardModel {
 
   @override
   String toString() {
-    return 'CardModel(brand: $brand, lastFour: $lastFour, expiryMonth: $expiryMonth, expiryYear: $expiryYear, cardNumber: $cardNumber, expiryDate: $expiryDate, cvv: $cvv, userId: $userId, updatedAt: $updatedAt, createdAt: $createdAt, id: $id)';
+    return 'CardModel(brand: $brand, lastFour: $lastFour, expiryMonth: $expiryMonth, expiryYear: $expiryYear, cardNumber: $cardNumber, cardName: $cardName, expiryDate: $expiryDate, cvv: $cvv, userId: $userId, updatedAt: $updatedAt, createdAt: $createdAt, id: $id)';
   }
 
   @override
@@ -310,6 +328,8 @@ class _$CardModelImpl implements _CardModel {
                 other.expiryYear == expiryYear) &&
             (identical(other.cardNumber, cardNumber) ||
                 other.cardNumber == cardNumber) &&
+            (identical(other.cardName, cardName) ||
+                other.cardName == cardName) &&
             (identical(other.expiryDate, expiryDate) ||
                 other.expiryDate == expiryDate) &&
             (identical(other.cvv, cvv) || other.cvv == cvv) &&
@@ -330,6 +350,7 @@ class _$CardModelImpl implements _CardModel {
       expiryMonth,
       expiryYear,
       cardNumber,
+      cardName,
       expiryDate,
       cvv,
       userId,
@@ -360,6 +381,7 @@ abstract class _CardModel implements CardModel {
       @JsonKey(name: 'expiry_month') final String? expiryMonth,
       @JsonKey(name: 'expiry_year') final String? expiryYear,
       @JsonKey(name: 'card_number') final String? cardNumber,
+      @JsonKey(name: 'card_name') final String? cardName,
       @JsonKey(name: 'expiry_date') final String? expiryDate,
       final String? cvv,
       @JsonKey(name: 'user_id') final int? userId,
@@ -384,6 +406,9 @@ abstract class _CardModel implements CardModel {
   @override
   @JsonKey(name: 'card_number')
   String? get cardNumber;
+  @override
+  @JsonKey(name: 'card_name')
+  String? get cardName;
   @override
   @JsonKey(name: 'expiry_date')
   String? get expiryDate;
