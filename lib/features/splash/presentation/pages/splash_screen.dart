@@ -23,7 +23,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> checkLogin() async {
     final appLocal = locator<AppLocal>();
 
-    final token = appLocal.getToken();
+    final token = await appLocal.getToken();
     final isSetup = appLocal.getIsSetup();
     print('token$token');
     print('isSetup $isSetup');

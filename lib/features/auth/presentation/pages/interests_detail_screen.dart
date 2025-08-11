@@ -37,25 +37,31 @@ class InterestsDetailScreen extends StatelessWidget {
             builder: (context, state) {
               final cubit = context.read<InterestsDetailCubit>();
 
-              return Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  InterestsDetailWidget(),
-                  Align(
-                    alignment: Alignment.bottomCenter,
+              return CustomScrollView(
+                physics: BouncingScrollPhysics(),
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: InterestsDetailWidget(),
+                  ),
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    fillOverscroll: true,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 16, vertical: 20),
-                      child: CustomGradientButton(
-                        isLoading: state.isLoading,
-                        isDisabled: !(state.selectedDetailIds.isNotEmpty),
-                        text: 'continue'.tr(),
-                        onPressed:
-                            (state.isLoading || state.selectedDetailIds.isEmpty)
-                                ? null
-                                : () {
-                                    cubit.addFavCategories(context);
-                                  },
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: CustomGradientButton(
+                          isLoading: state.isLoading,
+                          isDisabled: !(state.selectedDetailIds.isNotEmpty),
+                          text: 'continue'.tr(),
+                          onPressed: (state.isLoading ||
+                                  state.selectedDetailIds.isEmpty)
+                              ? null
+                              : () {
+                                  cubit.addFavCategories(context);
+                                },
+                        ),
                       ),
                     ),
                   ),

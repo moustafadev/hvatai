@@ -16,6 +16,7 @@ class FourContainerTradeProfileDetail extends StatelessWidget {
         CustomItemFourContainer(
           text: 'streams'.tr(),
           assetPath: Assets.assetsImagesStreamIcon,
+          onTap: () => context.push(AppRoutes.addStream),
         ),
         8.pw,
         CustomItemFourContainer(

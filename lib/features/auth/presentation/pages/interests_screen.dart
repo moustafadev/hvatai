@@ -30,14 +30,13 @@ class InterestsScreen extends StatelessWidget {
                 ));
               }
 
-              return Stack(
-                children: [
-                  SingleChildScrollView(
+              return CustomScrollView(
+                physics: const BouncingScrollPhysics(),
+                slivers: [
+                  SliverPadding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
-                    physics: BouncingScrollPhysics(),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                    sliver: SliverList(
+                      delegate: SliverChildListDelegate([
                         20.ph,
                         CustomText(
                           text: 'interestsTitle'.tr(),
@@ -140,20 +139,27 @@ class InterestsScreen extends StatelessWidget {
                             );
                           }),
                         ),
-                      ],
+                        const SizedBox(
+                            height: 100), // space for button when scrolling
+                      ]),
                     ),
                   ),
-                  Positioned(
-                    left: 16,
-                    right: 16,
-                    bottom: 20,
-                    child: CustomGradientButton(
-                      isLoading: state.isLoading,
-                      isDisabled: !(state.selectedCategoryIds.isNotEmpty),
-                      text: "continue".tr(),
-                      onPressed: () {
-                        cubit.addFavCategories(context);
-                      },
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 20),
+                      child: Align(
+                        alignment: Alignment.bottomCenter,
+                        child: CustomGradientButton(
+                          isLoading: state.isLoading,
+                          isDisabled: !(state.selectedCategoryIds.isNotEmpty),
+                          text: "continue".tr(),
+                          onPressed: () {
+                            cubit.addFavCategories(context);
+                          },
+                        ),
+                      ),
                     ),
                   ),
                 ],
