@@ -54,6 +54,11 @@ class InterestsDetailCubit extends Cubit<InterestsDetailState> {
     ));
   }
 
+  Future<void> saveIsSetupTrue(BuildContext context) async {
+    context.go(AppRoutes.home);
+    await appLocal.saveIsSetup(true);
+  }
+
   Future<void> addFavCategories(BuildContext context) async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
