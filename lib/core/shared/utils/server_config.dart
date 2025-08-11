@@ -20,7 +20,7 @@ abstract class ServerConfig {
   static const String notifications = "notifications";
   static const String deleteAccount = "delete-account";
   static const String signOut = "sign-out";
-  static const String categories = "business-categories?parent_id=null";
+  static const String categories = "categories";
   static const String favCategory = "category-favorites";
   static const String favFilter = "category-favorites/filtered";
 }

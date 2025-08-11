@@ -20,8 +20,8 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$CategoryModel {
-  List<CategoryData>? get data => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
+  List<CategoryData>? get data => throw _privateConstructorUsedError;
 
   /// Serializes this CategoryModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $CategoryModelCopyWith<$Res> {
           CategoryModel value, $Res Function(CategoryModel) then) =
       _$CategoryModelCopyWithImpl<$Res, CategoryModel>;
   @useResult
-  $Res call({List<CategoryData>? data, String? message});
+  $Res call({String? message, List<CategoryData>? data});
 }
 
 /// @nodoc
@@ -57,18 +57,18 @@ class _$CategoryModelCopyWithImpl<$Res, $Val extends CategoryModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = freezed,
     Object? message = freezed,
+    Object? data = freezed,
   }) {
     return _then(_value.copyWith(
-      data: freezed == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as List<CategoryData>?,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
+      data: freezed == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<CategoryData>?,
     ) as $Val);
   }
 }
@@ -81,7 +81,7 @@ abstract class _$$CategoryModelImplCopyWith<$Res>
       __$$CategoryModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<CategoryData>? data, String? message});
+  $Res call({String? message, List<CategoryData>? data});
 }
 
 /// @nodoc
@@ -97,18 +97,18 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? data = freezed,
     Object? message = freezed,
+    Object? data = freezed,
   }) {
     return _then(_$CategoryModelImpl(
-      data: freezed == data
-          ? _value._data
-          : data // ignore: cast_nullable_to_non_nullable
-              as List<CategoryData>?,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
+      data: freezed == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<CategoryData>?,
     ));
   }
 }
@@ -116,12 +116,14 @@ class __$$CategoryModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$CategoryModelImpl implements _CategoryModel {
-  const _$CategoryModelImpl({final List<CategoryData>? data, this.message})
+  const _$CategoryModelImpl({this.message, final List<CategoryData>? data})
       : _data = data;
 
   factory _$CategoryModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CategoryModelImplFromJson(json);
 
+  @override
+  final String? message;
   final List<CategoryData>? _data;
   @override
   List<CategoryData>? get data {
@@ -133,11 +135,8 @@ class _$CategoryModelImpl implements _CategoryModel {
   }
 
   @override
-  final String? message;
-
-  @override
   String toString() {
-    return 'CategoryModel(data: $data, message: $message)';
+    return 'CategoryModel(message: $message, data: $data)';
   }
 
   @override
@@ -145,14 +144,14 @@ class _$CategoryModelImpl implements _CategoryModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CategoryModelImpl &&
-            const DeepCollectionEquality().equals(other._data, _data) &&
-            (identical(other.message, message) || other.message == message));
+            (identical(other.message, message) || other.message == message) &&
+            const DeepCollectionEquality().equals(other._data, _data));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_data), message);
+      runtimeType, message, const DeepCollectionEquality().hash(_data));
 
   /// Create a copy of CategoryModel
   /// with the given fields replaced by the non-null parameter values.
@@ -172,16 +171,16 @@ class _$CategoryModelImpl implements _CategoryModel {
 
 abstract class _CategoryModel implements CategoryModel {
   const factory _CategoryModel(
-      {final List<CategoryData>? data,
-      final String? message}) = _$CategoryModelImpl;
+      {final String? message,
+      final List<CategoryData>? data}) = _$CategoryModelImpl;
 
   factory _CategoryModel.fromJson(Map<String, dynamic> json) =
       _$CategoryModelImpl.fromJson;
 
   @override
-  List<CategoryData>? get data;
-  @override
   String? get message;
+  @override
+  List<CategoryData>? get data;
 
   /// Create a copy of CategoryModel
   /// with the given fields replaced by the non-null parameter values.
@@ -198,24 +197,20 @@ CategoryData _$CategoryDataFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$CategoryData {
   int? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-  String? get image => throw _privateConstructorUsedError;
-  String? get type => throw _privateConstructorUsedError;
-  String? get page => throw _privateConstructorUsedError;
-  String? get color => throw _privateConstructorUsedError;
-  int? get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'parent_id')
   int? get parentId => throw _privateConstructorUsedError;
-  dynamic get parent => throw _privateConstructorUsedError;
-  List<CategoryChild>? get children => throw _privateConstructorUsedError;
-  @JsonKey(name: 'is_favorited')
-  bool? get isFavorited => throw _privateConstructorUsedError;
-  @JsonKey(name: 'favorites_count')
-  int? get favoritesCount => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
+  String? get icon => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_id')
+  int? get userId => throw _privateConstructorUsedError;
+  bool? get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
+  List<CategoryChild>? get children => throw _privateConstructorUsedError;
 
   /// Serializes this CategoryData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -235,19 +230,16 @@ abstract class $CategoryDataCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
-      String? name,
-      String? image,
-      String? type,
-      String? page,
-      String? color,
-      int? status,
       @JsonKey(name: 'parent_id') int? parentId,
-      dynamic parent,
-      List<CategoryChild>? children,
-      @JsonKey(name: 'is_favorited') bool? isFavorited,
-      @JsonKey(name: 'favorites_count') int? favoritesCount,
+      String? name,
+      String? type,
+      String? icon,
+      String? description,
+      @JsonKey(name: 'user_id') int? userId,
+      bool? status,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'updated_at') String? updatedAt});
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      List<CategoryChild>? children});
 }
 
 /// @nodoc
@@ -266,69 +258,50 @@ class _$CategoryDataCopyWithImpl<$Res, $Val extends CategoryData>
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
-    Object? image = freezed,
-    Object? type = freezed,
-    Object? page = freezed,
-    Object? color = freezed,
-    Object? status = freezed,
     Object? parentId = freezed,
-    Object? parent = freezed,
-    Object? children = freezed,
-    Object? isFavorited = freezed,
-    Object? favoritesCount = freezed,
+    Object? name = freezed,
+    Object? type = freezed,
+    Object? icon = freezed,
+    Object? description = freezed,
+    Object? userId = freezed,
+    Object? status = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? children = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      parentId: freezed == parentId
+          ? _value.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as int?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
               as String?,
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
-      page: freezed == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
+      icon: freezed == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
               as String?,
-      color: freezed == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as int?,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      parent: freezed == parent
-          ? _value.parent
-          : parent // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      children: freezed == children
-          ? _value.children
-          : children // ignore: cast_nullable_to_non_nullable
-              as List<CategoryChild>?,
-      isFavorited: freezed == isFavorited
-          ? _value.isFavorited
-          : isFavorited // ignore: cast_nullable_to_non_nullable
               as bool?,
-      favoritesCount: freezed == favoritesCount
-          ? _value.favoritesCount
-          : favoritesCount // ignore: cast_nullable_to_non_nullable
-              as int?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -337,6 +310,10 @@ class _$CategoryDataCopyWithImpl<$Res, $Val extends CategoryData>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      children: freezed == children
+          ? _value.children
+          : children // ignore: cast_nullable_to_non_nullable
+              as List<CategoryChild>?,
     ) as $Val);
   }
 }
@@ -351,19 +328,16 @@ abstract class _$$CategoryDataImplCopyWith<$Res>
   @useResult
   $Res call(
       {int? id,
-      String? name,
-      String? image,
-      String? type,
-      String? page,
-      String? color,
-      int? status,
       @JsonKey(name: 'parent_id') int? parentId,
-      dynamic parent,
-      List<CategoryChild>? children,
-      @JsonKey(name: 'is_favorited') bool? isFavorited,
-      @JsonKey(name: 'favorites_count') int? favoritesCount,
+      String? name,
+      String? type,
+      String? icon,
+      String? description,
+      @JsonKey(name: 'user_id') int? userId,
+      bool? status,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'updated_at') String? updatedAt});
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      List<CategoryChild>? children});
 }
 
 /// @nodoc
@@ -380,69 +354,50 @@ class __$$CategoryDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? name = freezed,
-    Object? image = freezed,
-    Object? type = freezed,
-    Object? page = freezed,
-    Object? color = freezed,
-    Object? status = freezed,
     Object? parentId = freezed,
-    Object? parent = freezed,
-    Object? children = freezed,
-    Object? isFavorited = freezed,
-    Object? favoritesCount = freezed,
+    Object? name = freezed,
+    Object? type = freezed,
+    Object? icon = freezed,
+    Object? description = freezed,
+    Object? userId = freezed,
+    Object? status = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? children = freezed,
   }) {
     return _then(_$CategoryDataImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
+      parentId: freezed == parentId
+          ? _value.parentId
+          : parentId // ignore: cast_nullable_to_non_nullable
+              as int?,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      image: freezed == image
-          ? _value.image
-          : image // ignore: cast_nullable_to_non_nullable
               as String?,
       type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
               as String?,
-      page: freezed == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
+      icon: freezed == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
               as String?,
-      color: freezed == color
-          ? _value.color
-          : color // ignore: cast_nullable_to_non_nullable
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as int?,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      parent: freezed == parent
-          ? _value.parent
-          : parent // ignore: cast_nullable_to_non_nullable
-              as dynamic,
-      children: freezed == children
-          ? _value._children
-          : children // ignore: cast_nullable_to_non_nullable
-              as List<CategoryChild>?,
-      isFavorited: freezed == isFavorited
-          ? _value.isFavorited
-          : isFavorited // ignore: cast_nullable_to_non_nullable
               as bool?,
-      favoritesCount: freezed == favoritesCount
-          ? _value.favoritesCount
-          : favoritesCount // ignore: cast_nullable_to_non_nullable
-              as int?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -451,6 +406,10 @@ class __$$CategoryDataImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      children: freezed == children
+          ? _value._children
+          : children // ignore: cast_nullable_to_non_nullable
+              as List<CategoryChild>?,
     ));
   }
 }
@@ -460,19 +419,16 @@ class __$$CategoryDataImplCopyWithImpl<$Res>
 class _$CategoryDataImpl implements _CategoryData {
   const _$CategoryDataImpl(
       {this.id,
-      this.name,
-      this.image,
-      this.type,
-      this.page,
-      this.color,
-      this.status,
       @JsonKey(name: 'parent_id') this.parentId,
-      this.parent,
-      final List<CategoryChild>? children,
-      @JsonKey(name: 'is_favorited') this.isFavorited,
-      @JsonKey(name: 'favorites_count') this.favoritesCount,
+      this.name,
+      this.type,
+      this.icon,
+      this.description,
+      @JsonKey(name: 'user_id') this.userId,
+      this.status,
       @JsonKey(name: 'created_at') this.createdAt,
-      @JsonKey(name: 'updated_at') this.updatedAt})
+      @JsonKey(name: 'updated_at') this.updatedAt,
+      final List<CategoryChild>? children})
       : _children = children;
 
   factory _$CategoryDataImpl.fromJson(Map<String, dynamic> json) =>
@@ -481,22 +437,27 @@ class _$CategoryDataImpl implements _CategoryData {
   @override
   final int? id;
   @override
-  final String? name;
-  @override
-  final String? image;
-  @override
-  final String? type;
-  @override
-  final String? page;
-  @override
-  final String? color;
-  @override
-  final int? status;
-  @override
   @JsonKey(name: 'parent_id')
   final int? parentId;
   @override
-  final dynamic parent;
+  final String? name;
+  @override
+  final String? type;
+  @override
+  final String? icon;
+  @override
+  final String? description;
+  @override
+  @JsonKey(name: 'user_id')
+  final int? userId;
+  @override
+  final bool? status;
+  @override
+  @JsonKey(name: 'created_at')
+  final String? createdAt;
+  @override
+  @JsonKey(name: 'updated_at')
+  final String? updatedAt;
   final List<CategoryChild>? _children;
   @override
   List<CategoryChild>? get children {
@@ -508,21 +469,8 @@ class _$CategoryDataImpl implements _CategoryData {
   }
 
   @override
-  @JsonKey(name: 'is_favorited')
-  final bool? isFavorited;
-  @override
-  @JsonKey(name: 'favorites_count')
-  final int? favoritesCount;
-  @override
-  @JsonKey(name: 'created_at')
-  final String? createdAt;
-  @override
-  @JsonKey(name: 'updated_at')
-  final String? updatedAt;
-
-  @override
   String toString() {
-    return 'CategoryData(id: $id, name: $name, image: $image, type: $type, page: $page, color: $color, status: $status, parentId: $parentId, parent: $parent, children: $children, isFavorited: $isFavorited, favoritesCount: $favoritesCount, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'CategoryData(id: $id, parentId: $parentId, name: $name, type: $type, icon: $icon, description: $description, userId: $userId, status: $status, createdAt: $createdAt, updatedAt: $updatedAt, children: $children)';
   }
 
   @override
@@ -531,24 +479,20 @@ class _$CategoryDataImpl implements _CategoryData {
         (other.runtimeType == runtimeType &&
             other is _$CategoryDataImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.image, image) || other.image == image) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.page, page) || other.page == page) &&
-            (identical(other.color, color) || other.color == color) &&
-            (identical(other.status, status) || other.status == status) &&
             (identical(other.parentId, parentId) ||
                 other.parentId == parentId) &&
-            const DeepCollectionEquality().equals(other.parent, parent) &&
-            const DeepCollectionEquality().equals(other._children, _children) &&
-            (identical(other.isFavorited, isFavorited) ||
-                other.isFavorited == isFavorited) &&
-            (identical(other.favoritesCount, favoritesCount) ||
-                other.favoritesCount == favoritesCount) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.status, status) || other.status == status) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            const DeepCollectionEquality().equals(other._children, _children));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -556,19 +500,16 @@ class _$CategoryDataImpl implements _CategoryData {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      name,
-      image,
-      type,
-      page,
-      color,
-      status,
       parentId,
-      const DeepCollectionEquality().hash(parent),
-      const DeepCollectionEquality().hash(_children),
-      isFavorited,
-      favoritesCount,
+      name,
+      type,
+      icon,
+      description,
+      userId,
+      status,
       createdAt,
-      updatedAt);
+      updatedAt,
+      const DeepCollectionEquality().hash(_children));
 
   /// Create a copy of CategoryData
   /// with the given fields replaced by the non-null parameter values.
@@ -588,21 +529,17 @@ class _$CategoryDataImpl implements _CategoryData {
 
 abstract class _CategoryData implements CategoryData {
   const factory _CategoryData(
-          {final int? id,
-          final String? name,
-          final String? image,
-          final String? type,
-          final String? page,
-          final String? color,
-          final int? status,
-          @JsonKey(name: 'parent_id') final int? parentId,
-          final dynamic parent,
-          final List<CategoryChild>? children,
-          @JsonKey(name: 'is_favorited') final bool? isFavorited,
-          @JsonKey(name: 'favorites_count') final int? favoritesCount,
-          @JsonKey(name: 'created_at') final String? createdAt,
-          @JsonKey(name: 'updated_at') final String? updatedAt}) =
-      _$CategoryDataImpl;
+      {final int? id,
+      @JsonKey(name: 'parent_id') final int? parentId,
+      final String? name,
+      final String? type,
+      final String? icon,
+      final String? description,
+      @JsonKey(name: 'user_id') final int? userId,
+      final bool? status,
+      @JsonKey(name: 'created_at') final String? createdAt,
+      @JsonKey(name: 'updated_at') final String? updatedAt,
+      final List<CategoryChild>? children}) = _$CategoryDataImpl;
 
   factory _CategoryData.fromJson(Map<String, dynamic> json) =
       _$CategoryDataImpl.fromJson;
@@ -610,36 +547,29 @@ abstract class _CategoryData implements CategoryData {
   @override
   int? get id;
   @override
-  String? get name;
-  @override
-  String? get image;
-  @override
-  String? get type;
-  @override
-  String? get page;
-  @override
-  String? get color;
-  @override
-  int? get status;
-  @override
   @JsonKey(name: 'parent_id')
   int? get parentId;
   @override
-  dynamic get parent;
+  String? get name;
   @override
-  List<CategoryChild>? get children;
+  String? get type;
   @override
-  @JsonKey(name: 'is_favorited')
-  bool? get isFavorited;
+  String? get icon;
   @override
-  @JsonKey(name: 'favorites_count')
-  int? get favoritesCount;
+  String? get description;
+  @override
+  @JsonKey(name: 'user_id')
+  int? get userId;
+  @override
+  bool? get status;
   @override
   @JsonKey(name: 'created_at')
   String? get createdAt;
   @override
   @JsonKey(name: 'updated_at')
   String? get updatedAt;
+  @override
+  List<CategoryChild>? get children;
 
   /// Create a copy of CategoryData
   /// with the given fields replaced by the non-null parameter values.

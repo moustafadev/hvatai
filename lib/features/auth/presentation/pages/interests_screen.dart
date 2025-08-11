@@ -115,16 +115,16 @@ class InterestsScreen extends StatelessWidget {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(8.r),
-                                              image: category.image != null
+                                              image: category.icon != null
                                                   ? DecorationImage(
                                                       image:
                                                           CachedNetworkImageProvider(
-                                                              category.image!),
+                                                              category.icon!),
                                                       fit: BoxFit.cover,
                                                     )
                                                   : null,
                                             ),
-                                            child: category.image == null
+                                            child: category.icon == null
                                                 ? Icon(
                                                     Icons.image_not_supported,
                                                     size: 30,
