@@ -19,7 +19,7 @@ import 'package:hvatai/routes/shell_route.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter router = GoRouter(
   // observers: [MyNavigatorObserver()],
-  initialLocation: AppRoutes.splash,
+  initialLocation: AppRoutes.addStream,
   navigatorKey: navigatorKey,
   routes: <RouteBase>[
     GoRoute(
@@ -32,6 +32,12 @@ final GoRouter router = GoRouter(
       path: AppRoutes.splash, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const SplashScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.addStream, // Remove the leading '/'
+      builder: (BuildContext context, GoRouterState state) {
+        return const AddStreamScreen();
       },
     ),
     GoRoute(

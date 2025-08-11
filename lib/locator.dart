@@ -21,6 +21,7 @@ import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_
 import 'package:hvatai/features/profile/data/datasources/api_service_profile.dart';
 import 'package:hvatai/features/profile/data/repositories/profile_impl_repository.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
+import 'package:hvatai/features/profile/presentation/cubit/add_stream/add_stream_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/analytics_cubit/analytics_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
@@ -51,6 +52,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => NotificationCubit());
   locator.registerLazySingleton(() => AwardsClubCubit());
   locator.registerLazySingleton(() => AuctionSearchCubit());
+  locator.registerLazySingleton(() => AddStreamCubit());
 
   locator.registerFactory(() => CategoryTabsCubit());
   locator.registerFactory(() => SearchTabsCubit());

@@ -5,12 +5,12 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/features/activity/data/models/auction_product.dart';
 import 'package:image_picker/image_picker.dart';
 
-part 'my_goods_cubit.freezed.dart';
-part 'my_goods_state.dart';
+part 'add_stream_cubit.freezed.dart';
+part 'add_stream_state.dart';
 
-class MyGoodsCubit extends Cubit<MyGoodsState> {
-  MyGoodsCubit()
-      : super(const MyGoodsState(selectedCategoryIndex: 0, products: [])) {
+class AddStreamCubit extends Cubit<AddStreamState> {
+  AddStreamCubit()
+      : super(const AddStreamState(selectedCategoryIndex: 0, products: [])) {
     loadProducts();
   }
 
