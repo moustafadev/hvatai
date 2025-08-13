@@ -15,10 +15,10 @@ class ReferralsPointsAndAward extends StatelessWidget {
           Expanded(
             child: GestureDetector(
               onTap: () {
-                context.push(extra: {
-                  'user': user,
-                  'cubit': cubit,
-                }, AppRoutes.tradeProfileDetail);
+                // context.push(extra: {
+                //   'user': user,
+                //   'cubit': cubit,
+                // }, AppRoutes.tradeProfileDetail);
               },
               child: Container(
                 decoration: BoxDecoration(

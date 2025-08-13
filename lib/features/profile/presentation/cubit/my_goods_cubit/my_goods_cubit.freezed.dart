@@ -17,12 +17,15 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$MyGoodsState {
   int get selectedCategoryIndex => throw _privateConstructorUsedError;
-  List<AuctionProduct> get products => throw _privateConstructorUsedError;
   List<File> get selectedImages => throw _privateConstructorUsedError;
   int get selectedButtonIndex => throw _privateConstructorUsedError;
   bool get selfDestruction => throw _privateConstructorUsedError;
   bool get bookParticipation => throw _privateConstructorUsedError;
-  bool get pickupFree => throw _privateConstructorUsedError;
+  ProductModel get product => throw _privateConstructorUsedError;
+  CategoryModel get category => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
+  String get errorMessage => throw _privateConstructorUsedError;
+  List<ProductModel> get products => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
 
   /// Create a copy of MyGoodsState
@@ -40,13 +43,18 @@ abstract class $MyGoodsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {int selectedCategoryIndex,
-      List<AuctionProduct> products,
       List<File> selectedImages,
       int selectedButtonIndex,
       bool selfDestruction,
       bool bookParticipation,
-      bool pickupFree,
+      ProductModel product,
+      CategoryModel category,
+      bool isLoading,
+      String errorMessage,
+      List<ProductModel> products,
       int quantity});
+
+  $ProductModelCopyWith<$Res> get product;
 }
 
 /// @nodoc
@@ -65,12 +73,15 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
   @override
   $Res call({
     Object? selectedCategoryIndex = null,
-    Object? products = null,
     Object? selectedImages = null,
     Object? selectedButtonIndex = null,
     Object? selfDestruction = null,
     Object? bookParticipation = null,
-    Object? pickupFree = null,
+    Object? product = null,
+    Object? category = freezed,
+    Object? isLoading = null,
+    Object? errorMessage = null,
+    Object? products = null,
     Object? quantity = null,
   }) {
     return _then(_value.copyWith(
@@ -78,10 +89,6 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
           ? _value.selectedCategoryIndex
           : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      products: null == products
-          ? _value.products
-          : products // ignore: cast_nullable_to_non_nullable
-              as List<AuctionProduct>,
       selectedImages: null == selectedImages
           ? _value.selectedImages
           : selectedImages // ignore: cast_nullable_to_non_nullable
@@ -98,15 +105,41 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
           ? _value.bookParticipation
           : bookParticipation // ignore: cast_nullable_to_non_nullable
               as bool,
-      pickupFree: null == pickupFree
-          ? _value.pickupFree
-          : pickupFree // ignore: cast_nullable_to_non_nullable
+      product: null == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ProductModel,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as CategoryModel,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      products: null == products
+          ? _value.products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>,
       quantity: null == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
+  }
+
+  /// Create a copy of MyGoodsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProductModelCopyWith<$Res> get product {
+    return $ProductModelCopyWith<$Res>(_value.product, (value) {
+      return _then(_value.copyWith(product: value) as $Val);
+    });
   }
 }
 
@@ -120,13 +153,19 @@ abstract class _$$MyGoodsStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {int selectedCategoryIndex,
-      List<AuctionProduct> products,
       List<File> selectedImages,
       int selectedButtonIndex,
       bool selfDestruction,
       bool bookParticipation,
-      bool pickupFree,
+      ProductModel product,
+      CategoryModel category,
+      bool isLoading,
+      String errorMessage,
+      List<ProductModel> products,
       int quantity});
+
+  @override
+  $ProductModelCopyWith<$Res> get product;
 }
 
 /// @nodoc
@@ -143,12 +182,15 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? selectedCategoryIndex = null,
-    Object? products = null,
     Object? selectedImages = null,
     Object? selectedButtonIndex = null,
     Object? selfDestruction = null,
     Object? bookParticipation = null,
-    Object? pickupFree = null,
+    Object? product = null,
+    Object? category = freezed,
+    Object? isLoading = null,
+    Object? errorMessage = null,
+    Object? products = null,
     Object? quantity = null,
   }) {
     return _then(_$MyGoodsStateImpl(
@@ -156,10 +198,6 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
           ? _value.selectedCategoryIndex
           : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      products: null == products
-          ? _value._products
-          : products // ignore: cast_nullable_to_non_nullable
-              as List<AuctionProduct>,
       selectedImages: null == selectedImages
           ? _value._selectedImages
           : selectedImages // ignore: cast_nullable_to_non_nullable
@@ -176,10 +214,26 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
           ? _value.bookParticipation
           : bookParticipation // ignore: cast_nullable_to_non_nullable
               as bool,
-      pickupFree: null == pickupFree
-          ? _value.pickupFree
-          : pickupFree // ignore: cast_nullable_to_non_nullable
+      product: null == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ProductModel,
+      category: freezed == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as CategoryModel,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      products: null == products
+          ? _value._products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>,
       quantity: null == quantity
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
@@ -193,28 +247,22 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
 class _$MyGoodsStateImpl implements _MyGoodsState {
   const _$MyGoodsStateImpl(
       {this.selectedCategoryIndex = 0,
-      final List<AuctionProduct> products = const [],
       final List<File> selectedImages = const [],
       this.selectedButtonIndex = 0,
       this.selfDestruction = false,
       this.bookParticipation = false,
-      this.pickupFree = false,
+      required this.product,
+      required this.category,
+      this.isLoading = false,
+      this.errorMessage = '',
+      final List<ProductModel> products = const [],
       this.quantity = 1})
-      : _products = products,
-        _selectedImages = selectedImages;
+      : _selectedImages = selectedImages,
+        _products = products;
 
   @override
   @JsonKey()
   final int selectedCategoryIndex;
-  final List<AuctionProduct> _products;
-  @override
-  @JsonKey()
-  List<AuctionProduct> get products {
-    if (_products is EqualUnmodifiableListView) return _products;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_products);
-  }
-
   final List<File> _selectedImages;
   @override
   @JsonKey()
@@ -234,15 +282,31 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
   @JsonKey()
   final bool bookParticipation;
   @override
+  final ProductModel product;
+  @override
+  final CategoryModel category;
+  @override
   @JsonKey()
-  final bool pickupFree;
+  final bool isLoading;
+  @override
+  @JsonKey()
+  final String errorMessage;
+  final List<ProductModel> _products;
+  @override
+  @JsonKey()
+  List<ProductModel> get products {
+    if (_products is EqualUnmodifiableListView) return _products;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_products);
+  }
+
   @override
   @JsonKey()
   final int quantity;
 
   @override
   String toString() {
-    return 'MyGoodsState(selectedCategoryIndex: $selectedCategoryIndex, products: $products, selectedImages: $selectedImages, selectedButtonIndex: $selectedButtonIndex, selfDestruction: $selfDestruction, bookParticipation: $bookParticipation, pickupFree: $pickupFree, quantity: $quantity)';
+    return 'MyGoodsState(selectedCategoryIndex: $selectedCategoryIndex, selectedImages: $selectedImages, selectedButtonIndex: $selectedButtonIndex, selfDestruction: $selfDestruction, bookParticipation: $bookParticipation, product: $product, category: $category, isLoading: $isLoading, errorMessage: $errorMessage, products: $products, quantity: $quantity)';
   }
 
   @override
@@ -252,7 +316,6 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
             other is _$MyGoodsStateImpl &&
             (identical(other.selectedCategoryIndex, selectedCategoryIndex) ||
                 other.selectedCategoryIndex == selectedCategoryIndex) &&
-            const DeepCollectionEquality().equals(other._products, _products) &&
             const DeepCollectionEquality()
                 .equals(other._selectedImages, _selectedImages) &&
             (identical(other.selectedButtonIndex, selectedButtonIndex) ||
@@ -261,8 +324,13 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
                 other.selfDestruction == selfDestruction) &&
             (identical(other.bookParticipation, bookParticipation) ||
                 other.bookParticipation == bookParticipation) &&
-            (identical(other.pickupFree, pickupFree) ||
-                other.pickupFree == pickupFree) &&
+            (identical(other.product, product) || other.product == product) &&
+            const DeepCollectionEquality().equals(other.category, category) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
+            const DeepCollectionEquality().equals(other._products, _products) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity));
   }
@@ -271,12 +339,15 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
   int get hashCode => Object.hash(
       runtimeType,
       selectedCategoryIndex,
-      const DeepCollectionEquality().hash(_products),
       const DeepCollectionEquality().hash(_selectedImages),
       selectedButtonIndex,
       selfDestruction,
       bookParticipation,
-      pickupFree,
+      product,
+      const DeepCollectionEquality().hash(category),
+      isLoading,
+      errorMessage,
+      const DeepCollectionEquality().hash(_products),
       quantity);
 
   /// Create a copy of MyGoodsState
@@ -291,18 +362,19 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
 abstract class _MyGoodsState implements MyGoodsState {
   const factory _MyGoodsState(
       {final int selectedCategoryIndex,
-      final List<AuctionProduct> products,
       final List<File> selectedImages,
       final int selectedButtonIndex,
       final bool selfDestruction,
       final bool bookParticipation,
-      final bool pickupFree,
+      required final ProductModel product,
+      required final CategoryModel category,
+      final bool isLoading,
+      final String errorMessage,
+      final List<ProductModel> products,
       final int quantity}) = _$MyGoodsStateImpl;
 
   @override
   int get selectedCategoryIndex;
-  @override
-  List<AuctionProduct> get products;
   @override
   List<File> get selectedImages;
   @override
@@ -312,7 +384,15 @@ abstract class _MyGoodsState implements MyGoodsState {
   @override
   bool get bookParticipation;
   @override
-  bool get pickupFree;
+  ProductModel get product;
+  @override
+  CategoryModel get category;
+  @override
+  bool get isLoading;
+  @override
+  String get errorMessage;
+  @override
+  List<ProductModel> get products;
   @override
   int get quantity;
 

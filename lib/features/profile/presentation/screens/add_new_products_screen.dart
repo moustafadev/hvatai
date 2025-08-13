@@ -56,11 +56,19 @@ class AddNewProductsScreen extends StatelessWidget {
                         onChanged: (String? value) {},
                       ),
                       12.ph,
-                      CustomTextField(hintText: 'name'.tr()),
+                      CustomTextField(
+                        key: ValueKey('title_field'),
+                        hintText: 'title'.tr(),
+                        initialValue: state.product.productName,
+                        onChanged: (value) => cubit.updateField('name', value),
+                      ),
                       12.ph,
                       CustomTextField(
-                        isRequired: false,
+                        key: ValueKey('description_field'),
                         hintText: 'description'.tr(),
+                        initialValue: state.product.productDescription,
+                        onChanged: (value) =>
+                            cubit.updateField('description', value),
                         maxLines: 5,
                       ),
                       12.ph,
@@ -73,18 +81,30 @@ class AddNewProductsScreen extends StatelessWidget {
                       ),
                       12.ph,
                       SaleTypeButton(
-                        selectedButtonIndex: state.selectedButtonIndex,
-                        onTap: (index) => cubit.changeTab(index),
+                        selectedSaleType: state.product.saleType ?? "Auction",
+                        onTap: (value) {
+                          cubit.setSaleType(value);
+                        },
                       ),
                       12.ph,
-                      CustomTextField(hintText: 'startingBid'.tr()),
-                      12.ph,
-                      CustomDropdown(
-                        hintText: 'selectStream'.tr(),
-                        value: 'selectStream'.tr(),
-                        items: [],
-                        onChanged: (String? value) {},
+                      CustomTextField(
+                        key: ValueKey('startingBid_field'),
+                        hintText: 'startingBid'.tr(),
+                        initialValue: state.product.deliveryPrice == null
+                            ? ''
+                            : state.product.deliveryPrice.toString(),
+                        onChanged: (value) =>
+                            cubit.updateField('startingBid', value),
                       ),
+                      12.ph,
+                      state.product.saleType == "Buy Now"
+                          ? SizedBox()
+                          : CustomDropdown(
+                              hintText: 'selectStream'.tr(),
+                              value: 'selectStream'.tr(),
+                              items: [],
+                              onChanged: (String? value) {},
+                            ),
                       12.ph,
                       CustomSwitchWidget(
                         title: 'selfDestruction'.tr(),
@@ -125,30 +145,58 @@ class AddNewProductsScreen extends StatelessWidget {
                       Row(
                         children: [
                           Expanded(
-                              child: CustomTextField(hintText: 'length'.tr())),
+                              child: CustomTextField(
+                            key: ValueKey('length_field'),
+                            hintText: 'length'.tr(),
+                            initialValue: state.product.deliveryLengthCm == null
+                                ? ''
+                                : state.product.deliveryLengthCm.toString(),
+                            onChanged: (value) =>
+                                cubit.updateField('length', value),
+                          )),
                           9.5.pw,
                           Expanded(
-                              child: CustomTextField(hintText: 'width'.tr())),
+                              child: CustomTextField(
+                            key: ValueKey('width_field'),
+                            hintText: 'width'.tr(),
+                            initialValue: state.product.deliveryWidthCm == null
+                                ? ''
+                                : state.product.deliveryWidthCm.toString(),
+                            onChanged: (value) =>
+                                cubit.updateField('width', value),
+                          )),
                           9.5.pw,
                           Expanded(
-                              child: CustomTextField(hintText: 'height'.tr())),
+                              child: CustomTextField(
+                            key: ValueKey('height_field'),
+                            hintText: 'height'.tr(),
+                            initialValue: state.product.deliveryHeightCm == null
+                                ? ''
+                                : state.product.deliveryHeightCm.toString(),
+                            onChanged: (value) =>
+                                cubit.updateField('height', value),
+                          )),
                         ],
                       ),
                       12.ph,
-                      CustomTextField(hintText: 'weight'.tr()),
-                      12.ph,
-                      CustomDropdown(
-                        hintText: 'deliveryOption'.tr(),
-                        value: 'deliveryOption'.tr(),
-                        items: [],
-                        onChanged: (String? value) {},
+                      CustomTextField(
+                        key: ValueKey('weight_field'),
+                        hintText: 'weight'.tr(),
+                        initialValue: state.product.deliveryWeightKg == null
+                            ? ''
+                            : state.product.deliveryWeightKg.toString(),
+                        onChanged: (value) =>
+                            cubit.updateField('weight', value),
                       ),
+                      12.ph,
+                      AddDeliveryOptionDropdown(),
                       12.ph,
                       CustomSwitchWidget(
                         title: 'pickupFree'.tr(),
-                        value: state.pickupFree,
+                        value: state.product.selfPickup ?? false,
                         onChanged: (val) => cubit.togglePickupFree(),
                       ),
+                      30.ph,
                     ]),
                   ),
                 ),

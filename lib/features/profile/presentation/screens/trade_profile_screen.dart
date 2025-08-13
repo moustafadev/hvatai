@@ -19,99 +19,100 @@ class TradeProfileScreen extends StatelessWidget {
           ),
         ),
         body: BlocBuilder<EditProfileCubit, EditProfileState>(
-            builder: (context, state) {
-          final cubit = context.read<EditProfileCubit>();
-          final user = state.user;
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                      text: 'profileType'.tr(),
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w800,
-                    ),
-                    12.ph,
-                    CustomText(
-                      text: 'currentProfileType'.tr(),
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.grey,
-                    ),
-                    8.ph,
-                    CustomTextField(
-                      hintText: 'profileType'.tr(),
-                      initialValue: user.role == 'seller'
-                          ? 'sellerProfile'.tr()
-                          : 'tradeProfile'.tr(),
-                      keyboardType: TextInputType.text,
-                      isRequired: false,
-                      readOnly: true,
-                    ),
-                    16.ph,
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 16,
-                ),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  image: DecorationImage(
-                    image: AssetImage(
-                        Assets.assetsImagesProfileAdvertisementImage),
-                    fit: BoxFit.fill,
+          builder: (context, state) {
+            final cubit = context.read<EditProfileCubit>();
+            final user = state.user;
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                        text: 'profileType'.tr(),
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w800,
+                      ),
+                      12.ph,
+                      CustomText(
+                        text: 'currentProfileType'.tr(),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.grey,
+                      ),
+                      8.ph,
+                      CustomTextField(
+                        hintText: 'profileType'.tr(),
+                        initialValue: user.role == 'business_user'
+                            ? 'sellerProfile'.tr()
+                            : 'tradeProfile'.tr(),
+                        keyboardType: TextInputType.text,
+                        isRequired: false,
+                        readOnly: true,
+                      ),
+                      16.ph,
+                    ],
                   ),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    CustomText(
-                      text: 'becomeSeller'.tr(),
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.grey,
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 16,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    image: DecorationImage(
+                      image: AssetImage(
+                          Assets.assetsImagesProfileAdvertisementImage),
+                      fit: BoxFit.fill,
                     ),
-                    2.ph,
-                    CustomText(
-                      text: 'lowCommission'.tr(),
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w800,
-                    ),
-                    2.ph,
-                    CustomText(
-                      text: 'lowCommissionDescription'.tr(),
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w700,
-                      textAlign: TextAlign.center,
-                      color: AppColors.grey,
-                    ),
-                    16.ph,
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 90,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      CustomText(
+                        text: 'becomeSeller'.tr(),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.grey,
                       ),
-                      child: CustomButton(
-                        isLoading: state.isLoading,
-                        color: AppColors.primaryColor,
-                        title: 'startSelling'.tr(),
-                        onPressed: () async {
-                          cubit.updateNewField('role', 'seller');
-                          await cubit.submit(context);
-                        },
+                      2.ph,
+                      CustomText(
+                        text: 'lowCommission'.tr(),
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w800,
                       ),
-                    ),
-                    60.ph
-                  ],
+                      2.ph,
+                      CustomText(
+                        text: 'lowCommissionDescription'.tr(),
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w700,
+                        textAlign: TextAlign.center,
+                        color: AppColors.grey,
+                      ),
+                      16.ph,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 90,
+                        ),
+                        child: CustomButton(
+                          isLoading: state.isLoading,
+                          color: AppColors.primaryColor,
+                          title: 'startSelling'.tr(),
+                          onPressed: () {
+                            cubit.updateNewField('role', 'business_user');
+                            cubit.updateProfileType(context);
+                          },
+                        ),
+                      ),
+                      60.ph
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          );
-        }),
+              ],
+            );
+          },
+        ),
       ),
     );
   }

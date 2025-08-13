@@ -35,46 +35,63 @@ class MyGoodsScreen extends StatelessWidget {
           padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
         ),
         body: BlocProvider(
-          create: (_) => locator<MyGoodsCubit>(),
+          create: (_) => locator<MyGoodsCubit>()..getMyProducts(),
           child: BlocBuilder<MyGoodsCubit, MyGoodsState>(
             builder: (context, state) {
               final cubit = context.read<MyGoodsCubit>();
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    12.ph,
-                    CustomText(
-                      text: 'my Goods'.tr(),
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w800,
-                    ),
-                    16.ph,
-                    Expanded(
-                      child: ListView(
-                        children: [
-                          SizedBox(
-                            height: 35.h,
-                            child: MyGoodsTabs(
-                              selectedIndex: state.selectedCategoryIndex,
-                              onSelect: cubit.changeCategory,
-                            ),
-                          ),
-                          12.ph,
-                          ...state.products.map(
-                            (e) => MyGoodsCard(
-                              product: e,
+
+              if (state.isLoading) {
+                return const Center(
+                    child: CircularProgressIndicator(
+                  color: AppColors.grey,
+                ));
+              }
+
+              if (state.errorMessage.isNotEmpty) {
+                return Center(child: Text(state.errorMessage));
+              }
+
+              return SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      12.ph,
+                      CustomText(
+                        text: 'myProducts'.tr(),
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w800,
+                      ),
+                      16.ph,
+                      SizedBox(
+                        height: 35.h,
+                        child: MyGoodsTabs(
+                          selectedIndex: state.selectedCategoryIndex,
+                          onSelect: cubit.changeCategory,
+                        ),
+                      ),
+                      12.ph,
+                      ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: state.products.length,
+                        itemBuilder: (context, index) {
+                          final product = state.products[index];
+                          return Padding(
+                            padding: const EdgeInsets.only(bottom: 12),
+                            child: MyGoodsCard(
+                              product: product,
                               selectedCategoryIndex:
                                   state.selectedCategoryIndex,
-                              currentUserId: '',
                             ),
-                          ),
-                          20.ph,
-                        ],
+                          );
+                        },
                       ),
-                    ),
-                  ],
+                      20.ph,
+                    ],
+                  ),
                 ),
               );
             },

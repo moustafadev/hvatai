@@ -59,11 +59,11 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(
       () => PaymentMethodCubit(locator(), locator(), locator()));
-  locator.registerFactory(() => EditProfileCubit(
-        locator(),
+  locator
+      .registerFactory(() => EditProfileCubit(locator(), locator(), locator()));
+  locator.registerFactory(() => MyGoodsCubit(
         locator(),
       ));
-  locator.registerFactory(() => MyGoodsCubit());
   locator.registerFactory(() => AnalyticsCubit());
   locator.registerFactory(() => MainNotificationCubit(locator(), locator()));
 

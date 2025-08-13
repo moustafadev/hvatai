@@ -9,7 +9,7 @@ class CountryDropdown extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<RegistrationCubit>();
         return CustomDropdown(
-          hintText: 'Select Country',
+          hintText: 'selectCountry'.tr(),
           value: cubit.state.user.country,
           onChanged: cubit.setCountry,
           prefix: cubit.state.user.country == 'Russia'

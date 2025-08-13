@@ -7,8 +7,10 @@ import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
+import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_usecase.dart';
@@ -86,6 +88,34 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
+  Future<List<ProductModel>> getMyProducts() async {
+    return executeAndHandleErrorServer<List<ProductModel>>(() async {
+      final response = await get(ServerConfig.addProduct);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final List<dynamic> data = response.json['data'];
+
+        return data
+            .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+      } else {
+        throw Exception;
+      }
+    });
+  }
+
+  Future<UserRegistrationData> updateProfileType() async {
+    return executeAndHandleErrorServer<UserRegistrationData>(() async {
+      final response = await post(ServerConfig.upgrade);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return UserRegistrationData.fromJson(response.json['data']);
+      } else {
+        throw Exception;
+      }
+    });
+  }
+
   Future<File> compressImage(File file) async {
     final compressedFile = await FlutterImageCompress.compressAndGetFile(
       file.absolute.path,
@@ -123,7 +153,7 @@ class ApiServiceProfile extends ApiBase {
           params.userRegistrationData.agreedToTerms ?? false ? 1 : 0;
       dataMap['age_confirmation'] =
           params.userRegistrationData.isAbove18 ?? false ? 1 : 0;
-      dataMap['phone'] = "843535345";
+      dataMap['phone'] = "043535345";
 
       MultipartFile? imageFile;
       if (params.userRegistrationData.image != null &&
@@ -198,6 +228,18 @@ class ApiServiceProfile extends ApiBase {
       final response = await post(ServerConfig.cards, body: params.toJson());
       if (response.statusCode == 200 || response.statusCode == 201) {
         return CardModel.fromJson(response.json);
+      } else {
+        throw Exception;
+      }
+    });
+  }
+
+  Future<ProductModel> addNewProduct(AddNewProductParams params) async {
+    return executeAndHandleErrorServer<ProductModel>(() async {
+      final response =
+          await post(ServerConfig.addProduct, body: params.toJson());
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return ProductModel.fromJson(response.json);
       } else {
         throw Exception;
       }

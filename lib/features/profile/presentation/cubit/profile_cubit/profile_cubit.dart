@@ -17,8 +17,10 @@ class ProfileCubit extends Cubit<ProfileState> {
   final GetProfileDataUsecase getProfileDataUseCase;
   final SignOutUsecase signOutUsecase;
 
-  ProfileCubit(this.getProfileDataUseCase, this.signOutUsecase)
-      : super(ProfileState(userProfileModel: UserRegistrationData()));
+  ProfileCubit(
+    this.getProfileDataUseCase,
+    this.signOutUsecase,
+  ) : super(ProfileState(userProfileModel: UserRegistrationData()));
 
   Future<void> signOut(BuildContext context) async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
@@ -115,22 +117,22 @@ class ProfileCubit extends Cubit<ProfileState> {
       },
       {
         "icon": Assets.assetsIconsStar2,
-        "title": "My reviews".tr(),
+        "title": "myReviews".tr(),
       },
       {
         "icon": Assets.assetsIconsMessage,
-        "title": "Chat".tr(),
+        "title": "chat".tr(),
       },
       {
         "icon": Assets.assetsImagesAnalyticsIcon,
-        "title": "Analytics".tr(),
+        "title": "analytics".tr(),
         "screen": (BuildContext context) {
           context.push(AppRoutes.analytics);
         },
       },
       {
         "icon": Assets.assetsImagesDeliveryIcon,
-        "title": "Delivery settings".tr(),
+        "title": "deliverySettings".tr(),
       },
     ];
   }

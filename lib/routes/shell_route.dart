@@ -9,7 +9,6 @@ import 'package:hvatai/features/activity/presentation/activity.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
-import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -143,7 +142,7 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
               pageBuilder: (context, state) => buildCupertinoTransitionPage(
                 context: context,
                 state: state,
-                child: const ProfileScreen(),
+                child: ProfileScreen(),
               ),
             ),
           ],
@@ -165,18 +164,10 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
           GoRoute(
               path: AppRoutes.tradeProfileDetail,
               pageBuilder: (context, state) {
-                final extra = state.extra as Map<String, Object>;
-                final user = extra['user'] as UserRegistrationData;
-                final cubit = extra['cubit'] as ProfileCubit;
-
                 return buildCupertinoTransitionPage(
                   context: context,
                   state: state,
-                  child: BlocProvider.value(
-                      value: cubit,
-                      child: TradeProfileDetailScreen(
-                        userRegistrationData: user,
-                      )),
+                  child: TradeProfileDetailScreen(),
                 );
               }),
         ]),

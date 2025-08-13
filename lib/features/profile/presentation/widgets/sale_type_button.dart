@@ -1,67 +1,88 @@
 part of '../profile.dart';
 
 class SaleTypeButton extends StatelessWidget {
-  final int selectedButtonIndex;
-  final void Function(int index) onTap;
+  final String selectedSaleType;
+  final void Function(String value) onTap;
 
   const SaleTypeButton({
     super.key,
-    required this.selectedButtonIndex,
+    required this.selectedSaleType,
     required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    double indicatorWidth = (MediaQuery.of(context).size.width - 26) / 2;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double indicatorWidth = constraints.maxWidth / 2;
 
-    return SizedBox(
-      height: 40.h,
-      child: Stack(
-        children: [
-          AnimatedContainer(
-            duration: const Duration(milliseconds: 300),
-            padding: EdgeInsets.all(4.r),
-            decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-          ),
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeInOut,
-            left: selectedButtonIndex * indicatorWidth,
-            width: indicatorWidth,
-            top: 0,
-            bottom: 0,
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor,
-                borderRadius: BorderRadius.circular(10.r),
+        return SizedBox(
+          height: 40.h,
+          child: Stack(
+            children: [
+              // الخلفية
+              AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
               ),
-            ),
-          ),
-          Row(
-            children: List.generate(2, (index) {
-              final isSelected = selectedButtonIndex == index;
-              return Expanded(
-                child: GestureDetector(
-                  onTap: () => onTap(index),
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: CustomText(
-                      text: index == 0 ? "auction".tr() : "buyNow".tr(),
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: 'Manrope',
-                      color: isSelected ? AppColors.white : AppColors.blackDark,
-                    ),
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 300),
+                curve: Curves.easeInOut,
+                left: (selectedSaleType == "Auction" ? 0 : 1) * indicatorWidth,
+                width: indicatorWidth,
+                top: 0,
+                bottom: 0,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.circular(10.r),
                   ),
                 ),
-              );
-            }),
+              ),
+
+              Row(
+                children: [
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => onTap("Auction"),
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: CustomText(
+                          text: "auction".tr(),
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w700,
+                          color: selectedSaleType == "Auction"
+                              ? AppColors.white
+                              : AppColors.blackDark,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => onTap("Buy Now"),
+                      child: Container(
+                        alignment: Alignment.center,
+                        child: CustomText(
+                          text: "buyNow".tr(),
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w700,
+                          color: selectedSaleType == "Buy Now"
+                              ? AppColors.white
+                              : AppColors.blackDark,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }

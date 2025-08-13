@@ -8,6 +8,8 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_account_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/update_profile_type_usecase.dart';
+
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,13 +18,13 @@ part 'edit_profile_state.dart';
 part 'edit_profile_cubit.freezed.dart';
 
 class EditProfileCubit extends Cubit<EditProfileState> {
-  EditProfileCubit(
-    this.deleteAccountUseCase,
-    this.updateProfileDataUseCase,
-  ) : super(EditProfileState(user: UserRegistrationData()));
+  EditProfileCubit(this.deleteAccountUseCase, this.updateProfileDataUseCase,
+      this.updateProfileTypeUsecase)
+      : super(EditProfileState(user: UserRegistrationData()));
 
   final UpdateProfileDataUsecase updateProfileDataUseCase;
   final DeleteAccountUsecase deleteAccountUseCase;
+  final UpdateProfileTypeUsecase updateProfileTypeUsecase;
 
   void initProfileModel(UserRegistrationData user) {
     emit(state.copyWith(user: user));
@@ -165,8 +167,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     return null;
   }
 
-  void setType(String? type) => emit(state.copyWith(type: type));
-
   String? validatePassword(String? value) {
     if (value == null || value.isEmpty) return 'Please enter a password.';
     if (value.length < 8) return 'At least 8 characters.';
@@ -259,11 +259,16 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       {
         "icon": Assets.assetsIconsProfileType,
         "title": "profileType".tr(),
-        "screen": (BuildContext context) {
-          context.push(AppRoutes.tradeProfile, extra: {
+        "screen": (BuildContext context) async {
+          final updatedUser = await context
+              .push<UserRegistrationData>(AppRoutes.tradeProfile, extra: {
             'model': state.user,
             'cubit': this,
           });
+
+          if (updatedUser != null) {
+            updateUserData(updatedUser);
+          }
         },
       },
       {
@@ -292,6 +297,28 @@ class EditProfileCubit extends Cubit<EditProfileState> {
         context.go(AppRoutes.socialLogin);
 
         showFloatingMessageSuccess('accountDeleted'.tr());
+      },
+    );
+  }
+
+  Future<void> updateProfileType(BuildContext context) async {
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
+
+    final result = await updateProfileTypeUsecase.call(unit);
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(isLoading: false, errorMessage: failure));
+        showFloatingMessageError('somethingWentWrong'.tr());
+      },
+      (updatedUser) {
+        emit(state.copyWith(
+          isLoading: false,
+          success: true,
+          user: updatedUser,
+        ));
+        context.go(AppRoutes.profile, extra: updatedUser);
+        showFloatingMessageSuccess('profileUpdated'.tr());
       },
     );
   }

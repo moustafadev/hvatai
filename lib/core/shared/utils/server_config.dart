@@ -22,5 +22,7 @@ abstract class ServerConfig {
   static const String signOut = "sign-out";
   static const String categories = "categories";
   static const String favCategory = "category-favorites";
+  static const String upgrade = "upgrade-to-business";
+  static const String addProduct = "products";
   static const String favFilter = "category-favorites/filtered";
 }

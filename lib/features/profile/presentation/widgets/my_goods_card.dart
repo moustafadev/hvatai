@@ -1,37 +1,22 @@
 part of '../profile.dart';
 
 class MyGoodsCard extends StatelessWidget {
-  final AuctionProduct product;
+  final ProductModel product;
   final int selectedCategoryIndex;
-  final String currentUserId;
 
   const MyGoodsCard({
     super.key,
     required this.product,
     required this.selectedCategoryIndex,
-    required this.currentUserId,
   });
 
   @override
   Widget build(BuildContext context) {
-    final String imageUrl =
-        product.images.isNotEmpty ? product.images.first : '';
-    final double currentUserBid =
-        double.tryParse(product.bidders[currentUserId]?.toString() ?? '0') ??
-            0.0;
-    final double highestBid = product.bidders.values.isNotEmpty
-        ? product.bidders.values
-            .map((e) => double.tryParse(e.toString()) ?? 0.0)
-            .reduce((a, b) => a > b ? a : b)
-        : 0.0;
-
-    if (selectedCategoryIndex == 1 && currentUserBid == highestBid) {
-    } else if (selectedCategoryIndex == 2 && currentUserBid < highestBid) {}
+    final variant = product.variants?.firstOrNull;
+    final String imageUrl = product.images?.firstOrNull ?? '';
 
     return GestureDetector(
-      onTap: () {
-        // TODO: Handle navigation with GoRouter and pass product
-      },
+      onTap: () {},
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 6.h),
         decoration: BoxDecoration(
@@ -44,71 +29,93 @@ class MyGoodsCard extends StatelessWidget {
             Stack(
               children: [
                 ClipRRect(
-                    borderRadius: BorderRadius.circular(12.r),
-                    child: imageUrl.isNotEmpty
-                        ? CachedNetworkImage(
-                            imageUrl: imageUrl,
-                            width: 140.w,
-                            height: 140.h,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.asset(
-                            height: 140,
-                            width: 140,
-                            Assets.assetsImagesIphone,
-                          )),
-                Positioned(
-                  top: 8.h,
-                  left: 8.w,
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                    decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    child: CustomText(
-                      // '${product.saveCount}',
-                      text: 'Auction',
-                      fontWeight: FontWeight.w600,
-                      fontSize: 10.sp,
-                      fontFamily: "Manrope",
+                  borderRadius: BorderRadius.circular(12.r),
+                  child: imageUrl.isNotEmpty
+                      ? CachedNetworkImage(
+                          imageUrl: imageUrl,
+                          width: 140.w,
+                          height: 140.h,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => _buildPlaceholder(),
+                          errorWidget: (context, url, error) =>
+                              _buildPlaceholder(),
+                        )
+                      : _buildPlaceholder(),
+                ),
+                if (variant?.discountType != null)
+                  Positioned(
+                    top: 8.h,
+                    left: 8.w,
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                      decoration: BoxDecoration(
+                        color: variant!.discountType == 'fixed'
+                            ? AppColors.primary
+                            : AppColors.primaryColor,
+                        borderRadius: BorderRadius.circular(10.r),
+                      ),
+                      child: CustomText(
+                        text: variant?.discountType ?? '',
+                        fontWeight: FontWeight.w600,
+                        fontSize: 10.sp,
+                      ),
                     ),
                   ),
-                ),
               ],
             ),
             10.pw,
             Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  CustomText(
-                    //text: product.title,
-                    text: 'Phone 15 Pro Max',
-                    fontSize: 16,
-                    fontFamily: "Manrope",
-                    fontWeight: FontWeight.w700,
-                  ),
-                  4.ph,
-                  CustomText(
-                    // text: product.description,
-                    text: 'Apple products, Apple design, Iphone mockup psd',
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    fontFamily: "Manrope",
-                    color: AppColors.blackTransparent40,
-                  ),
-                  20.ph,
-                  CustomText(
-                    text: "${product.price} ₽",
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ],
+              child: SizedBox(
+                height: 140.h,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: product.productName ?? '',
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        4.ph,
+                        CustomText(
+                          text: product.productDescription ?? '',
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.blackTransparent40,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ],
+                    ),
+                    CustomText(
+                      text: "${variant?.price ?? 0.0} ₽",
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w700,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPlaceholder() {
+    return Container(
+      width: 140.w,
+      height: 140.h,
+      color: AppColors.gray,
+      child: Center(
+        child: Icon(
+          Icons.image,
+          size: 40.w,
+          color: AppColors.grey,
         ),
       ),
     );
