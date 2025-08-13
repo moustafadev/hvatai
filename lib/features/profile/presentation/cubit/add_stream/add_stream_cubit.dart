@@ -1,106 +1,176 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hvatai/features/activity/data/models/auction_product.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
+import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
+import 'package:hvatai/features/profile/domain/usecases/create_stream_uscecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
 
 part 'add_stream_cubit.freezed.dart';
 part 'add_stream_state.dart';
 
 class AddStreamCubit extends Cubit<AddStreamState> {
-  AddStreamCubit()
-      : super(const AddStreamState(selectedCategoryIndex: 0, products: [])) {
-    loadProducts();
-  }
+  final GetMyProductsUsecase _getMyProductsUsecase;
+  final CreateStreamUsecase _createStreamUsecase;
 
-  void changeCategory(int index) {
-    emit(state.copyWith(selectedCategoryIndex: index));
-  }
+  AddStreamCubit(this._getMyProductsUsecase, this._createStreamUsecase)
+      : super(
+          AddStreamState(
+            createStreamModel: CreateStreamModel(
+              title: '',
+              description: '',
+              scheduledAt: DateTime.now(),
+              isRecordingEnabled: false,
+              isPublic: false,
+              enableComments: false,
+              enableBidding: false,
+              minimumBidIncrement: 1,
+              autoDeleteAfterEnd: false,
+              autoDeleteHours: 24,
+              saveRecording: false,
+              productIds: [],
+            ),
+          ),
+        );
 
-  Future<void> pickImage() async {
-    if (state.selectedImages.length >= 8) return;
+  // ----------------------------
+  // Product Loading Logic
+  // ----------------------------
+  Future<void> loadProducts() async {
+    emit(state.copyWith(isProductsLoading: true, error: null));
+    final result = await _getMyProductsUsecase(unit);
 
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 85,
+    result.fold(
+      (failure) =>
+          emit(state.copyWith(isProductsLoading: false, error: failure)),
+      (products) =>
+          emit(state.copyWith(isProductsLoading: false, products: products)),
     );
-
-    if (pickedFile != null) {
-      final updatedList = List<File>.from(state.selectedImages)
-        ..add(File(pickedFile.path));
-      emit(state.copyWith(selectedImages: updatedList));
-    }
   }
 
-  Future<void> captureImageFromCamera() async {
-    if (state.selectedImages.length >= 8) return;
+  // ----------------------------
+  // CreateStreamModel Updaters
+  // ----------------------------
 
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.camera,
-      imageQuality: 85,
-    );
-
-    if (pickedFile != null) {
-      final updatedList = List<File>.from(state.selectedImages)
-        ..add(File(pickedFile.path));
-      emit(state.copyWith(selectedImages: updatedList));
-    }
-  }
-
-  void toggleSelfDestruction() {
+  void updateTitle(String value) {
     emit(state.copyWith(
-      selfDestruction: !state.selfDestruction,
+      createStreamModel: state.createStreamModel.copyWith(title: value),
     ));
   }
 
-  void togglePickupFree() {
+  void updateDescription(String value) {
     emit(state.copyWith(
-      pickupFree: !state.pickupFree,
+      createStreamModel: state.createStreamModel.copyWith(description: value),
     ));
   }
 
-  void toggleBookParticipation() {
+  void updateScheduledAt(DateTime value) {
     emit(state.copyWith(
-      bookParticipation: !state.bookParticipation,
+      createStreamModel: state.createStreamModel.copyWith(scheduledAt: value),
     ));
   }
 
-  int currentTab = 0;
-  void changeTab(int index) {
-    currentTab = index;
-    emit(state.copyWith(selectedButtonIndex: index));
-  }
-
-  void loadProducts() async {
+  void toggleIsRecordingEnabled() {
     emit(state.copyWith(
-      products: List.generate(
-        5,
-        (index) => AuctionProduct(
-          id: '$index',
-          title: 'Product $index',
-          description: 'Description $index',
-          price: '${100 * (index + 1)}',
-          images: [],
-          bidders: {},
-          isSold: index % 2 == 0,
-          ownerId: 'owner_$index',
-        ),
+      createStreamModel: state.createStreamModel.copyWith(
+        isRecordingEnabled: !state.createStreamModel.isRecordingEnabled,
       ),
     ));
   }
 
-  void increaseQuantity() {
-    if (state.quantity < 999) {
-      emit(state.copyWith(quantity: state.quantity + 1));
+  void toggleIsPublic() {
+    emit(state.copyWith(
+      createStreamModel: state.createStreamModel.copyWith(
+        isPublic: !state.createStreamModel.isPublic,
+      ),
+    ));
+  }
+
+  void toggleEnableComments() {
+    emit(state.copyWith(
+      createStreamModel: state.createStreamModel.copyWith(
+        enableComments: !state.createStreamModel.enableComments,
+      ),
+    ));
+  }
+
+  void toggleEnableBidding() {
+    emit(state.copyWith(
+      createStreamModel: state.createStreamModel.copyWith(
+        enableBidding: !state.createStreamModel.enableBidding,
+      ),
+    ));
+  }
+
+  void updateMinimumBidIncrement(double value) {
+    emit(state.copyWith(
+      createStreamModel: state.createStreamModel.copyWith(
+        minimumBidIncrement: value,
+      ),
+    ));
+  }
+
+  void toggleAutoDeleteAfterEnd() {
+    emit(state.copyWith(
+      createStreamModel: state.createStreamModel.copyWith(
+        autoDeleteAfterEnd: !state.createStreamModel.autoDeleteAfterEnd,
+      ),
+    ));
+  }
+
+  void updateAutoDeleteHours(int hours) {
+    emit(state.copyWith(
+      createStreamModel: state.createStreamModel.copyWith(
+        autoDeleteHours: hours,
+      ),
+    ));
+  }
+
+  void toggleSaveRecording() {
+    emit(state.copyWith(
+      createStreamModel: state.createStreamModel.copyWith(
+        saveRecording: !state.createStreamModel.saveRecording,
+      ),
+    ));
+  }
+
+  void updateProductIds(List<int> ids) {
+    emit(state.copyWith(
+      createStreamModel: state.createStreamModel.copyWith(productIds: ids),
+    ));
+  }
+
+  void addProductId(int id) {
+    final ids = List<int>.from(state.createStreamModel.productIds);
+    if (!ids.contains(id)) {
+      ids.add(id);
+      updateProductIds(ids);
     }
   }
 
-  void decreaseQuantity() {
-    if (state.quantity > 1) {
-      emit(state.copyWith(quantity: state.quantity - 1));
-    }
+  void removeProductId(int id) {
+    final ids = List<int>.from(state.createStreamModel.productIds)..remove(id);
+    updateProductIds(ids);
+  }
+
+  Future<void> createStream(BuildContext context) async {
+    emit(state.copyWith(isLoading: true, error: null));
+
+    final result = await _createStreamUsecase(state.createStreamModel);
+
+    result.fold(
+      (failure) {
+        showFloatingMessageError(failure);
+        emit(state.copyWith(isLoading: false, error: failure));
+      },
+      (_) {
+        showFloatingMessageSuccess('Stream created successfully');
+        context.pop();
+        emit(state.copyWith(isLoading: false));
+      },
+    );
   }
 }

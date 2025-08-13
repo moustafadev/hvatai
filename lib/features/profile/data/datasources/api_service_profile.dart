@@ -7,6 +7,7 @@ import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
+import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
@@ -245,6 +246,19 @@ class ApiServiceProfile extends ApiBase {
       }
     });
   }
+
+  Future<Unit> createStream(CreateStreamModel model) async {
+  return executeAndHandleErrorServer<Unit>(() async {
+    final response = await post(ServerConfig.streams, body: model.toJson());
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return unit;
+    } else {
+      throw Exception('Failed to create stream');
+    }
+  });
+}
+
 
   Future<UserRegistrationData> editDeliveryAddress(
       EditDeliveryAddressParams params) async {

@@ -55,6 +55,7 @@ abstract class $MyGoodsStateCopyWith<$Res> {
       int quantity});
 
   $ProductModelCopyWith<$Res> get product;
+  $CategoryModelCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -78,7 +79,7 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
     Object? selfDestruction = null,
     Object? bookParticipation = null,
     Object? product = null,
-    Object? category = freezed,
+    Object? category = null,
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? products = null,
@@ -109,7 +110,7 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as ProductModel,
-      category: freezed == category
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryModel,
@@ -141,6 +142,16 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
       return _then(_value.copyWith(product: value) as $Val);
     });
   }
+
+  /// Create a copy of MyGoodsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res> get category {
+    return $CategoryModelCopyWith<$Res>(_value.category, (value) {
+      return _then(_value.copyWith(category: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -166,6 +177,8 @@ abstract class _$$MyGoodsStateImplCopyWith<$Res>
 
   @override
   $ProductModelCopyWith<$Res> get product;
+  @override
+  $CategoryModelCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -187,7 +200,7 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
     Object? selfDestruction = null,
     Object? bookParticipation = null,
     Object? product = null,
-    Object? category = freezed,
+    Object? category = null,
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? products = null,
@@ -218,7 +231,7 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as ProductModel,
-      category: freezed == category
+      category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as CategoryModel,
@@ -325,7 +338,8 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
             (identical(other.bookParticipation, bookParticipation) ||
                 other.bookParticipation == bookParticipation) &&
             (identical(other.product, product) || other.product == product) &&
-            const DeepCollectionEquality().equals(other.category, category) &&
+            (identical(other.category, category) ||
+                other.category == category) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -344,7 +358,7 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
       selfDestruction,
       bookParticipation,
       product,
-      const DeepCollectionEquality().hash(category),
+      category,
       isLoading,
       errorMessage,
       const DeepCollectionEquality().hash(_products),

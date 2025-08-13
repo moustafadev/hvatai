@@ -12,6 +12,7 @@ import 'package:hvatai/features/home/domain/usecases/mark_read_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/create_stream_uscecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_account_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_card_usecase.dart';
@@ -52,4 +53,5 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => UpdateProfileTypeUsecase(locator()));
   locator.registerLazySingleton(() => GetMyProductsUsecase(locator()));
   locator.registerLazySingleton(() => AddNewProductUsecase(locator()));
+  locator.registerLazySingleton(() => CreateStreamUsecase(locator()));
 }

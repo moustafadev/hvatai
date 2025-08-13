@@ -49,10 +49,10 @@ Future<void> setupLocator() async {
       () => InterestsDetailCubit(locator(), locator(), locator()));
   locator.registerFactory(() => ProfileCubit(locator(), locator()));
   locator.registerFactory(() => ActivityCubit());
-  locator.registerLazySingleton(() => NotificationCubit());
-  locator.registerLazySingleton(() => AwardsClubCubit());
-  locator.registerLazySingleton(() => AuctionSearchCubit());
-  locator.registerLazySingleton(() => AddStreamCubit());
+  locator.registerFactory(() => NotificationCubit());
+  locator.registerFactory(() => AwardsClubCubit());
+  locator.registerFactory(() => AuctionSearchCubit());
+  locator.registerFactory(() => AddStreamCubit(locator(), locator()));
 
   locator.registerFactory(() => CategoryTabsCubit());
   locator.registerFactory(() => SearchTabsCubit());

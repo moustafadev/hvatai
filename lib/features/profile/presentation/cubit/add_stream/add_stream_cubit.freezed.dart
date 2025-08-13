@@ -16,14 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AddStreamState {
-  int get selectedCategoryIndex => throw _privateConstructorUsedError;
-  List<AuctionProduct> get products => throw _privateConstructorUsedError;
-  List<File> get selectedImages => throw _privateConstructorUsedError;
-  int get selectedButtonIndex => throw _privateConstructorUsedError;
-  bool get selfDestruction => throw _privateConstructorUsedError;
-  bool get bookParticipation => throw _privateConstructorUsedError;
-  bool get pickupFree => throw _privateConstructorUsedError;
-  int get quantity => throw _privateConstructorUsedError;
+  CreateStreamModel get createStreamModel => throw _privateConstructorUsedError;
+  List<ProductModel> get products => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
+  bool get isProductsLoading => throw _privateConstructorUsedError;
+  String? get error => throw _privateConstructorUsedError;
 
   /// Create a copy of AddStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -39,14 +36,13 @@ abstract class $AddStreamStateCopyWith<$Res> {
       _$AddStreamStateCopyWithImpl<$Res, AddStreamState>;
   @useResult
   $Res call(
-      {int selectedCategoryIndex,
-      List<AuctionProduct> products,
-      List<File> selectedImages,
-      int selectedButtonIndex,
-      bool selfDestruction,
-      bool bookParticipation,
-      bool pickupFree,
-      int quantity});
+      {CreateStreamModel createStreamModel,
+      List<ProductModel> products,
+      bool isLoading,
+      bool isProductsLoading,
+      String? error});
+
+  $CreateStreamModelCopyWith<$Res> get createStreamModel;
 }
 
 /// @nodoc
@@ -64,49 +60,44 @@ class _$AddStreamStateCopyWithImpl<$Res, $Val extends AddStreamState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selectedCategoryIndex = null,
+    Object? createStreamModel = null,
     Object? products = null,
-    Object? selectedImages = null,
-    Object? selectedButtonIndex = null,
-    Object? selfDestruction = null,
-    Object? bookParticipation = null,
-    Object? pickupFree = null,
-    Object? quantity = null,
+    Object? isLoading = null,
+    Object? isProductsLoading = null,
+    Object? error = freezed,
   }) {
     return _then(_value.copyWith(
-      selectedCategoryIndex: null == selectedCategoryIndex
-          ? _value.selectedCategoryIndex
-          : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      createStreamModel: null == createStreamModel
+          ? _value.createStreamModel
+          : createStreamModel // ignore: cast_nullable_to_non_nullable
+              as CreateStreamModel,
       products: null == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<AuctionProduct>,
-      selectedImages: null == selectedImages
-          ? _value.selectedImages
-          : selectedImages // ignore: cast_nullable_to_non_nullable
-              as List<File>,
-      selectedButtonIndex: null == selectedButtonIndex
-          ? _value.selectedButtonIndex
-          : selectedButtonIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      selfDestruction: null == selfDestruction
-          ? _value.selfDestruction
-          : selfDestruction // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      bookParticipation: null == bookParticipation
-          ? _value.bookParticipation
-          : bookParticipation // ignore: cast_nullable_to_non_nullable
+      isProductsLoading: null == isProductsLoading
+          ? _value.isProductsLoading
+          : isProductsLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      pickupFree: null == pickupFree
-          ? _value.pickupFree
-          : pickupFree // ignore: cast_nullable_to_non_nullable
-              as bool,
-      quantity: null == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as int,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
+  }
+
+  /// Create a copy of AddStreamState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CreateStreamModelCopyWith<$Res> get createStreamModel {
+    return $CreateStreamModelCopyWith<$Res>(_value.createStreamModel, (value) {
+      return _then(_value.copyWith(createStreamModel: value) as $Val);
+    });
   }
 }
 
@@ -119,14 +110,14 @@ abstract class _$$AddStreamStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int selectedCategoryIndex,
-      List<AuctionProduct> products,
-      List<File> selectedImages,
-      int selectedButtonIndex,
-      bool selfDestruction,
-      bool bookParticipation,
-      bool pickupFree,
-      int quantity});
+      {CreateStreamModel createStreamModel,
+      List<ProductModel> products,
+      bool isLoading,
+      bool isProductsLoading,
+      String? error});
+
+  @override
+  $CreateStreamModelCopyWith<$Res> get createStreamModel;
 }
 
 /// @nodoc
@@ -142,48 +133,33 @@ class __$$AddStreamStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selectedCategoryIndex = null,
+    Object? createStreamModel = null,
     Object? products = null,
-    Object? selectedImages = null,
-    Object? selectedButtonIndex = null,
-    Object? selfDestruction = null,
-    Object? bookParticipation = null,
-    Object? pickupFree = null,
-    Object? quantity = null,
+    Object? isLoading = null,
+    Object? isProductsLoading = null,
+    Object? error = freezed,
   }) {
     return _then(_$AddStreamStateImpl(
-      selectedCategoryIndex: null == selectedCategoryIndex
-          ? _value.selectedCategoryIndex
-          : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+      createStreamModel: null == createStreamModel
+          ? _value.createStreamModel
+          : createStreamModel // ignore: cast_nullable_to_non_nullable
+              as CreateStreamModel,
       products: null == products
           ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<AuctionProduct>,
-      selectedImages: null == selectedImages
-          ? _value._selectedImages
-          : selectedImages // ignore: cast_nullable_to_non_nullable
-              as List<File>,
-      selectedButtonIndex: null == selectedButtonIndex
-          ? _value.selectedButtonIndex
-          : selectedButtonIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      selfDestruction: null == selfDestruction
-          ? _value.selfDestruction
-          : selfDestruction // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      bookParticipation: null == bookParticipation
-          ? _value.bookParticipation
-          : bookParticipation // ignore: cast_nullable_to_non_nullable
+      isProductsLoading: null == isProductsLoading
+          ? _value.isProductsLoading
+          : isProductsLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      pickupFree: null == pickupFree
-          ? _value.pickupFree
-          : pickupFree // ignore: cast_nullable_to_non_nullable
-              as bool,
-      quantity: null == quantity
-          ? _value.quantity
-          : quantity // ignore: cast_nullable_to_non_nullable
-              as int,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -192,57 +168,36 @@ class __$$AddStreamStateImplCopyWithImpl<$Res>
 
 class _$AddStreamStateImpl implements _AddStreamState {
   const _$AddStreamStateImpl(
-      {this.selectedCategoryIndex = 0,
-      final List<AuctionProduct> products = const [],
-      final List<File> selectedImages = const [],
-      this.selectedButtonIndex = 0,
-      this.selfDestruction = false,
-      this.bookParticipation = false,
-      this.pickupFree = false,
-      this.quantity = 1})
-      : _products = products,
-        _selectedImages = selectedImages;
+      {required this.createStreamModel,
+      final List<ProductModel> products = const [],
+      this.isLoading = false,
+      this.isProductsLoading = false,
+      this.error})
+      : _products = products;
 
   @override
-  @JsonKey()
-  final int selectedCategoryIndex;
-  final List<AuctionProduct> _products;
+  final CreateStreamModel createStreamModel;
+  final List<ProductModel> _products;
   @override
   @JsonKey()
-  List<AuctionProduct> get products {
+  List<ProductModel> get products {
     if (_products is EqualUnmodifiableListView) return _products;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_products);
   }
 
-  final List<File> _selectedImages;
   @override
   @JsonKey()
-  List<File> get selectedImages {
-    if (_selectedImages is EqualUnmodifiableListView) return _selectedImages;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_selectedImages);
-  }
-
+  final bool isLoading;
   @override
   @JsonKey()
-  final int selectedButtonIndex;
+  final bool isProductsLoading;
   @override
-  @JsonKey()
-  final bool selfDestruction;
-  @override
-  @JsonKey()
-  final bool bookParticipation;
-  @override
-  @JsonKey()
-  final bool pickupFree;
-  @override
-  @JsonKey()
-  final int quantity;
+  final String? error;
 
   @override
   String toString() {
-    return 'AddStreamState(selectedCategoryIndex: $selectedCategoryIndex, products: $products, selectedImages: $selectedImages, selectedButtonIndex: $selectedButtonIndex, selfDestruction: $selfDestruction, bookParticipation: $bookParticipation, pickupFree: $pickupFree, quantity: $quantity)';
+    return 'AddStreamState(createStreamModel: $createStreamModel, products: $products, isLoading: $isLoading, isProductsLoading: $isProductsLoading, error: $error)';
   }
 
   @override
@@ -250,34 +205,24 @@ class _$AddStreamStateImpl implements _AddStreamState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$AddStreamStateImpl &&
-            (identical(other.selectedCategoryIndex, selectedCategoryIndex) ||
-                other.selectedCategoryIndex == selectedCategoryIndex) &&
+            (identical(other.createStreamModel, createStreamModel) ||
+                other.createStreamModel == createStreamModel) &&
             const DeepCollectionEquality().equals(other._products, _products) &&
-            const DeepCollectionEquality()
-                .equals(other._selectedImages, _selectedImages) &&
-            (identical(other.selectedButtonIndex, selectedButtonIndex) ||
-                other.selectedButtonIndex == selectedButtonIndex) &&
-            (identical(other.selfDestruction, selfDestruction) ||
-                other.selfDestruction == selfDestruction) &&
-            (identical(other.bookParticipation, bookParticipation) ||
-                other.bookParticipation == bookParticipation) &&
-            (identical(other.pickupFree, pickupFree) ||
-                other.pickupFree == pickupFree) &&
-            (identical(other.quantity, quantity) ||
-                other.quantity == quantity));
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            (identical(other.isProductsLoading, isProductsLoading) ||
+                other.isProductsLoading == isProductsLoading) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      selectedCategoryIndex,
+      createStreamModel,
       const DeepCollectionEquality().hash(_products),
-      const DeepCollectionEquality().hash(_selectedImages),
-      selectedButtonIndex,
-      selfDestruction,
-      bookParticipation,
-      pickupFree,
-      quantity);
+      isLoading,
+      isProductsLoading,
+      error);
 
   /// Create a copy of AddStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -291,31 +236,22 @@ class _$AddStreamStateImpl implements _AddStreamState {
 
 abstract class _AddStreamState implements AddStreamState {
   const factory _AddStreamState(
-      {final int selectedCategoryIndex,
-      final List<AuctionProduct> products,
-      final List<File> selectedImages,
-      final int selectedButtonIndex,
-      final bool selfDestruction,
-      final bool bookParticipation,
-      final bool pickupFree,
-      final int quantity}) = _$AddStreamStateImpl;
+      {required final CreateStreamModel createStreamModel,
+      final List<ProductModel> products,
+      final bool isLoading,
+      final bool isProductsLoading,
+      final String? error}) = _$AddStreamStateImpl;
 
   @override
-  int get selectedCategoryIndex;
+  CreateStreamModel get createStreamModel;
   @override
-  List<AuctionProduct> get products;
+  List<ProductModel> get products;
   @override
-  List<File> get selectedImages;
+  bool get isLoading;
   @override
-  int get selectedButtonIndex;
+  bool get isProductsLoading;
   @override
-  bool get selfDestruction;
-  @override
-  bool get bookParticipation;
-  @override
-  bool get pickupFree;
-  @override
-  int get quantity;
+  String? get error;
 
   /// Create a copy of AddStreamState
   /// with the given fields replaced by the non-null parameter values.

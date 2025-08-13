@@ -32,7 +32,7 @@ Future<T> executeAndHandleErrorServer<T>(Future<T> Function() function) async {
     }
     print(error.response?.data);
     throw DioException(
-      message: error.response?.data?["error_status"].toString(),
+      message: error.response?.data?["errors"].toString(),
       requestOptions: error.requestOptions,
     );
   } on NoInternetException {

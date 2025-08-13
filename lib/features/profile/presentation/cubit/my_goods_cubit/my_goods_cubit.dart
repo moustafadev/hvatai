@@ -5,6 +5,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/features/activity/data/models/auction_product.dart';
+import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,6 +17,7 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
   MyGoodsCubit(this.getProductsUsecase)
       : super(MyGoodsState(
           selectedCategoryIndex: 0,
+          category: CategoryModel(),
           product: ProductModel(),
         ));
   final GetMyProductsUsecase getProductsUsecase;

@@ -133,7 +133,6 @@
   "addThanks": "Add a thank you note",
   "awardsDanger": "Report Abuse and Block",
   "selectReward": "Select reward amount",
-  
   "rewardDescription": "The recipient will receive 100% of this tip.",
   "friends": "friends",
   "wantContactsTitle": "'Want!'\nGain access to your contacts",
@@ -189,7 +188,6 @@
   "newAddress": "New address",
   "notifications": "Notifications",
   "noNotifications": "You don't have any notifications yet.",
-
   "changeEmail": "Change E-Mail",
   "changePassword": "Change password",
   "settings": "Settings",
@@ -206,7 +204,6 @@
   "and2": "and",
   "logout": "Log out",
   "confirmLogout": "Confirm Logout",
-
   "logoutConfirmation": "Are you sure you want to log out?",
   "cancel": "Cancel",
   "rating": "Rating",
@@ -234,7 +231,7 @@
   "sold": "Sold",
   "fix": "Fix",
   "auction": "Auction",
-  "find":"Find...",
+  "find": "Find...",
   "search": "Search",
   "buyNow": "Buy Now",
   "noProducts": "No products found",
@@ -526,6 +523,15 @@
   "maximum30WordsAllowed": "Maximum 30 words allowed",
   "accountSettings": "Account Settings",
   "eg100": "e.g. 100",
-  "eg999": "e.g. 999"
-
+  "eg999": "e.g. 999",
+  "minimum bid increment": "Minimum Bid Increment",
+  "auto delete hours": "Auto Delete After Hours",
+  "recording enabled": "Recording Enabled",
+  "public": "Public",
+  "enable comments": "Enable Comments",
+  "enable bidding": "Enable Bidding",
+  "auto_delete_after_end": "Auto Delete After End",
+  "save recording": "Save Recording",
+  "select products": "Select Products",
+  "select product": "Select Product"
 }

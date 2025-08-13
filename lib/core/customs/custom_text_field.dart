@@ -8,6 +8,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController? controller;
   final bool isPassword;
   final String? initialValue;
+  final void Function()? onTap;
   final bool obscureText;
   final bool readOnly;
   final String? Function(String?)? validator;
@@ -41,7 +42,7 @@ class CustomTextField extends StatelessWidget {
     this.borderRadius,
     this.borderSide,
     this.height,
-    this.inputFormatters,
+    this.inputFormatters, this.onTap,
   });
 
   @override
@@ -52,6 +53,7 @@ class CustomTextField extends StatelessWidget {
         key: key,
         maxLines: maxLines ?? 1,
         minLines: maxLines ?? 1,
+        onTap: onTap,
         controller: controller,
         obscureText: obscureText,
         readOnly: readOnly,

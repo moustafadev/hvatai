@@ -527,5 +527,17 @@
   "maximum10WordsAllowed": "Максимум 10 слов",
   "maximum30WordsAllowed": "Максимум 30 слов",
   "eg100": "например, 100",
-  "eg999": "например, 999"
+  "eg999": "например, 999",
+ 
+  "minimum bid increment": "Минимальный шаг ставки",
+  "auto delete hours": "Часы до удаления",
+  "recording enabled": "Запись включена",
+  "public": "Публичный",
+  "enable comments": "Включить комментарии",
+  "enable bidding": "Включить ставки",
+  "auto_delete_after_end": "Удалить после завершения",
+  "save recording": "Сохранить запись",
+  "select products": "Выберите продукты",
+  "select product": "Выберите продукт",
+  "create": "Создать"
 }
