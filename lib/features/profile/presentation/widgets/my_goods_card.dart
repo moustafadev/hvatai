@@ -16,7 +16,15 @@ class MyGoodsCard extends StatelessWidget {
     final String imageUrl = product.images?.firstOrNull ?? '';
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        context.push(
+          AppRoutes.productDetails,
+          extra: {
+            'model': product,
+            'cubit': context.read<MyGoodsCubit>(),
+          },
+        );
+      },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 6.h),
         decoration: BoxDecoration(
@@ -42,7 +50,7 @@ class MyGoodsCard extends StatelessWidget {
                         )
                       : _buildPlaceholder(),
                 ),
-                if (variant?.discountType != null)
+                if (variant.discountType != null)
                   Positioned(
                     top: 8.h,
                     left: 8.w,
@@ -92,10 +100,14 @@ class MyGoodsCard extends StatelessWidget {
                       ],
                     ),
                     CustomText(
-                      text: "${variant?.price?.toInt()} ₽",
+                      text: variant.price != null
+                          ? (variant.price! % 1 == 0
+                              ? "${variant.price!.toInt()} ₽"
+                              : "${variant.price} ₽")
+                          : "",
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
-                    ),
+                    )
                   ],
                 ),
               ),

@@ -10,6 +10,7 @@ class MyGoodsState with _$MyGoodsState {
     required CategoryModel category,
     @Default(false) bool isLoading,
     @Default('') String errorMessage,
+    @Default(0) int currentImageIndex,
     @Default([]) List<ProductModel> products,
   }) = _MyGoodsState;
 }

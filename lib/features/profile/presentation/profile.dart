@@ -80,3 +80,4 @@ part 'widgets/cart_item_actions_button.dart';
 part 'widgets/checkbox_courier_delivery.dart';
 part 'widgets/checkbox_myself_delivery.dart';
 part 'widgets/row_time_delivery.dart';
+part 'screens/product_details_screen.dart';

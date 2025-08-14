@@ -23,6 +23,7 @@ mixin _$MyGoodsState {
   CategoryModel get category => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
+  int get currentImageIndex => throw _privateConstructorUsedError;
   List<ProductModel> get products => throw _privateConstructorUsedError;
 
   /// Create a copy of MyGoodsState
@@ -46,6 +47,7 @@ abstract class $MyGoodsStateCopyWith<$Res> {
       CategoryModel category,
       bool isLoading,
       String errorMessage,
+      int currentImageIndex,
       List<ProductModel> products});
 
   $ProductModelCopyWith<$Res> get product;
@@ -74,6 +76,7 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
     Object? category = null,
     Object? isLoading = null,
     Object? errorMessage = null,
+    Object? currentImageIndex = null,
     Object? products = null,
   }) {
     return _then(_value.copyWith(
@@ -105,6 +108,10 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      currentImageIndex: null == currentImageIndex
+          ? _value.currentImageIndex
+          : currentImageIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       products: null == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
@@ -149,6 +156,7 @@ abstract class _$$MyGoodsStateImplCopyWith<$Res>
       CategoryModel category,
       bool isLoading,
       String errorMessage,
+      int currentImageIndex,
       List<ProductModel> products});
 
   @override
@@ -177,6 +185,7 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
     Object? category = null,
     Object? isLoading = null,
     Object? errorMessage = null,
+    Object? currentImageIndex = null,
     Object? products = null,
   }) {
     return _then(_$MyGoodsStateImpl(
@@ -208,6 +217,10 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      currentImageIndex: null == currentImageIndex
+          ? _value.currentImageIndex
+          : currentImageIndex // ignore: cast_nullable_to_non_nullable
+              as int,
       products: null == products
           ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
@@ -227,6 +240,7 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
       required this.category,
       this.isLoading = false,
       this.errorMessage = '',
+      this.currentImageIndex = 0,
       final List<ProductModel> products = const []})
       : _selectedImages = selectedImages,
         _products = products;
@@ -256,6 +270,9 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
   @override
   @JsonKey()
   final String errorMessage;
+  @override
+  @JsonKey()
+  final int currentImageIndex;
   final List<ProductModel> _products;
   @override
   @JsonKey()
@@ -267,7 +284,7 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
 
   @override
   String toString() {
-    return 'MyGoodsState(selectedCategoryIndex: $selectedCategoryIndex, selectedImages: $selectedImages, selfDestruction: $selfDestruction, product: $product, category: $category, isLoading: $isLoading, errorMessage: $errorMessage, products: $products)';
+    return 'MyGoodsState(selectedCategoryIndex: $selectedCategoryIndex, selectedImages: $selectedImages, selfDestruction: $selfDestruction, product: $product, category: $category, isLoading: $isLoading, errorMessage: $errorMessage, currentImageIndex: $currentImageIndex, products: $products)';
   }
 
   @override
@@ -288,6 +305,8 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
+            (identical(other.currentImageIndex, currentImageIndex) ||
+                other.currentImageIndex == currentImageIndex) &&
             const DeepCollectionEquality().equals(other._products, _products));
   }
 
@@ -301,6 +320,7 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
       category,
       isLoading,
       errorMessage,
+      currentImageIndex,
       const DeepCollectionEquality().hash(_products));
 
   /// Create a copy of MyGoodsState
@@ -321,6 +341,7 @@ abstract class _MyGoodsState implements MyGoodsState {
       required final CategoryModel category,
       final bool isLoading,
       final String errorMessage,
+      final int currentImageIndex,
       final List<ProductModel> products}) = _$MyGoodsStateImpl;
 
   @override
@@ -337,6 +358,8 @@ abstract class _MyGoodsState implements MyGoodsState {
   bool get isLoading;
   @override
   String get errorMessage;
+  @override
+  int get currentImageIndex;
   @override
   List<ProductModel> get products;
 

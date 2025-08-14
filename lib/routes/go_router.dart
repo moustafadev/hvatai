@@ -6,6 +6,7 @@ import 'package:hvatai/features/auth/presentation/cubit/delivery_address/deliver
 import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
+import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
@@ -119,9 +120,7 @@ final GoRouter router = GoRouter(
 
         return BlocProvider.value(
           value: cubit,
-          child: EditDeliveryAddressScreen(
-            data: model,
-          ),
+          child: EditDeliveryAddressScreen(),
         );
       },
     ),
@@ -158,6 +157,27 @@ final GoRouter router = GoRouter(
       path: AppRoutes.termAndConditions, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const TermsAndCondition();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.tradeProfile,
+      builder: (BuildContext context, GoRouterState state) {
+        final extra = state.extra as Map<String, Object>;
+        final model = extra['model'] as UserRegistrationData;
+        final cubit = extra['cubit'] as EditProfileCubit
+          ..initProfileModel(model);
+        return BlocProvider.value(value: cubit, child: TradeProfileScreen());
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.productDetails,
+      builder: (BuildContext context, GoRouterState state) {
+        final extra = state.extra as Map<String, Object>;
+        final model = extra['model'] as ProductModel;
+        final cubit = extra['cubit'] as MyGoodsCubit..initProductModel(model);
+
+        return BlocProvider.value(
+            value: cubit, child: const ProductDetailsScreen());
       },
     ),
     GoRoute(
@@ -256,16 +276,6 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.companyName,
       builder: (context, state) => const CompanyNameScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.tradeProfile,
-      builder: (BuildContext context, GoRouterState state) {
-        final extra = state.extra as Map<String, Object>;
-        final model = extra['model'] as UserRegistrationData;
-        final cubit = extra['cubit'] as EditProfileCubit
-          ..initProfileModel(model);
-        return BlocProvider.value(value: cubit, child: TradeProfileScreen());
-      },
     ),
     GoRoute(
       path: AppRoutes.imageDelay,

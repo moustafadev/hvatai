@@ -42,6 +42,10 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     ));
   }
 
+  void changeImageIndex(int index) {
+    emit(state.copyWith(currentImageIndex: index));
+  }
+
   Future<void> getMyProducts() async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
     final result = await getProductsUsecase.call(unit);
@@ -80,6 +84,10 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     );
 
     emit(state.copyWith(product: updatedProduct));
+  }
+
+  void initProductModel(ProductModel product) {
+    emit(state.copyWith(product: product));
   }
 
   void updateField(String field, var value) {
@@ -218,7 +226,7 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
   }
 
   void increaseQuantity() {
-    final currentVariant = state.product.variants?.firstOrNull;
+    final currentVariant = state.product.variants.firstOrNull;
     final currentStock = currentVariant?.stock ?? 1;
 
     if (currentStock >= 999) return;
