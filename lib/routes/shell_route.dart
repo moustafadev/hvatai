@@ -7,7 +7,6 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/features/activity/presentation/activity.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
-import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/search/presentation/search.dart';

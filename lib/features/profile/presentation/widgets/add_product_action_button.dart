@@ -31,8 +31,11 @@ class AddProductActionButton extends StatelessWidget {
               ),
               child: Center(
                 child: CustomText(
-                  text: state.quantity.toString(),
-                  fontSize: 13,
+                  text: (state.product.variants.isNotEmpty
+                          ? state.product.variants.first.stock
+                          : 1)
+                      .toString(),
+                  fontSize: 13.sp,
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -46,29 +49,6 @@ class AddProductActionButton extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-}
-
-class CartItemActionsButton extends StatelessWidget {
-  const CartItemActionsButton(
-      {super.key,
-      required this.icon,
-      required this.onTap,
-      required this.iconColor});
-  final IconData icon;
-
-  final VoidCallback onTap;
-  final Color iconColor;
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Icon(
-        size: 30,
-        icon,
-        color: iconColor,
-      ),
     );
   }
 }

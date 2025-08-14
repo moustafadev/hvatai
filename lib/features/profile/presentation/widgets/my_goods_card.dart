@@ -12,7 +12,7 @@ class MyGoodsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final variant = product.variants?.firstOrNull;
+    final variant = product.variants.first;
     final String imageUrl = product.images?.firstOrNull ?? '';
 
     return GestureDetector(
@@ -56,7 +56,7 @@ class MyGoodsCard extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: CustomText(
-                        text: variant?.discountType ?? '',
+                        text: variant.discountType ?? '',
                         fontWeight: FontWeight.w600,
                         fontSize: 10.sp,
                       ),
@@ -92,7 +92,7 @@ class MyGoodsCard extends StatelessWidget {
                       ],
                     ),
                     CustomText(
-                      text: "${variant?.price ?? 0.0} ₽",
+                      text: "${variant?.price?.toInt()} ₽",
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
                     ),

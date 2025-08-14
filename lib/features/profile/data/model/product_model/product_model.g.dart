@@ -13,14 +13,18 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
       productName: json['product_name'] as String?,
       productDescription: json['product_description'] as String?,
       categoryId: (json['category_id'] as num?)?.toInt(),
-      saleType: json['sale_type'] as String?,
-      deliveryAvailable: _boolFromInt(json['delivery_available']),
+      saleType: json['sale_type'] as String? ?? 'auction',
+      deliveryAvailable: json['delivery_available'] == null
+          ? false
+          : _boolFromInt(json['delivery_available']),
       deliveryType: json['delivery_type'] as String?,
       deliveryTime: json['delivery_time'] as String?,
       deliveryPrice: _parseDouble(json['delivery_price']),
       deliveryDiscount: _parseDouble(json['delivery_discount']),
       deliveryRadius: _parseDouble(json['delivery_radius']),
-      selfPickup: _boolFromInt(json['self_pickup']),
+      selfPickup: json['self_pickup'] == null
+          ? false
+          : _boolFromInt(json['self_pickup']),
       deliveryLengthCm: _parseDouble(json['delivery_length_cm']),
       deliveryWidthCm: _parseDouble(json['delivery_width_cm']),
       deliveryHeightCm: _parseDouble(json['delivery_height_cm']),
@@ -47,8 +51,9 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
       status: _boolFromInt(json['status']),
       productPictures: json['product_pictures'],
       variants: (json['variants'] as List<dynamic>?)
-          ?.map((e) => VariantModel.fromJson(e as Map<String, dynamic>))
-          .toList(),
+              ?.map((e) => VariantModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
@@ -88,7 +93,7 @@ Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
 _$VariantModelImpl _$$VariantModelImplFromJson(Map<String, dynamic> json) =>
     _$VariantModelImpl(
       price: _parseDouble(json['price']),
-      stock: (json['stock'] as num?)?.toInt(),
+      stock: (json['stock'] as num?)?.toInt() ?? 1,
       attributes: json['attributes'] as Map<String, dynamic>?,
       discount: _parseDouble(json['discount']),
       discountType: json['discount_type'] as String?,

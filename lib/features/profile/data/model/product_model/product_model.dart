@@ -10,9 +10,10 @@ class ProductModel with _$ProductModel {
     @JsonKey(name: 'product_name') String? productName,
     @JsonKey(name: 'product_description') String? productDescription,
     @JsonKey(name: 'category_id') int? categoryId,
-    @JsonKey(name: 'sale_type') String? saleType,
+    @JsonKey(name: 'sale_type') @Default('auction') String saleType,
     @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
-    bool? deliveryAvailable,
+    @Default(false)
+    bool deliveryAvailable,
     @JsonKey(name: 'delivery_type') String? deliveryType,
     @JsonKey(name: 'delivery_time') String? deliveryTime,
     @JsonKey(name: 'delivery_price', fromJson: _parseDouble)
@@ -21,7 +22,9 @@ class ProductModel with _$ProductModel {
     double? deliveryDiscount,
     @JsonKey(name: 'delivery_radius', fromJson: _parseDouble)
     double? deliveryRadius,
-    @JsonKey(name: 'self_pickup', fromJson: _boolFromInt) bool? selfPickup,
+    @JsonKey(name: 'self_pickup', fromJson: _boolFromInt)
+    @Default(false)
+    bool selfPickup,
     @JsonKey(name: 'delivery_length_cm', fromJson: _parseDouble)
     double? deliveryLengthCm,
     @JsonKey(name: 'delivery_width_cm', fromJson: _parseDouble)
@@ -43,21 +46,21 @@ class ProductModel with _$ProductModel {
     @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
     @JsonKey(fromJson: _boolFromInt) bool? status,
     @JsonKey(name: 'product_pictures') dynamic productPictures,
-    List<VariantModel>? variants,
+    @Default([]) List<VariantModel> variants,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>
       _$ProductModelFromJson(json);
 }
 
-bool? _boolFromInt(dynamic value) {
-  if (value == null) return null;
+bool _boolFromInt(dynamic value) {
+  if (value == null) return false;
   if (value is bool) return value;
   if (value is int) return value == 1;
   if (value is String) {
     return value.toLowerCase() == 'true' || value == '1';
   }
-  return null;
+  return false;
 }
 
 double? _parseDouble(dynamic value) {
@@ -72,7 +75,7 @@ double? _parseDouble(dynamic value) {
 class VariantModel with _$VariantModel {
   const factory VariantModel({
     @JsonKey(fromJson: _parseDouble) double? price,
-    int? stock,
+    @Default(1) int stock,
     Map<String, dynamic>? attributes,
     @JsonKey(fromJson: _parseDouble) double? discount,
     @JsonKey(name: 'discount_type') String? discountType,

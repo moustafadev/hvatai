@@ -52,3 +52,4 @@ part 'custom_swipeable_list_title.dart';
 part 'custom_category_tabs.dart';
 part 'custom_photo_options_dialog.dart';
 part 'top_bar_widget.dart';
+part 'gradient_check_box.dart';

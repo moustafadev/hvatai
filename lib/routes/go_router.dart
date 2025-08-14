@@ -7,6 +7,7 @@ import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_
 import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
@@ -147,7 +148,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.addProduct, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return const AddNewProductsScreen();
+        final cubit = state.extra as MyGoodsCubit..getProductCategory();
+
+        return BlocProvider.value(
+            value: cubit, child: const AddNewProductsScreen());
       },
     ),
     GoRoute(

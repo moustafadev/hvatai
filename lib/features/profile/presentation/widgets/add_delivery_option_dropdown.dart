@@ -12,16 +12,16 @@ class AddDeliveryOptionDropdown extends StatelessWidget {
         final itemsKeys = ['courier', 'post', 'pickup'];
 
         String? currentValue;
-        if (product?.deliveryMethods != null &&
-            product!.deliveryMethods!.isNotEmpty) {
+        if (product.deliveryMethods != null &&
+            product.deliveryMethods!.isNotEmpty) {
           currentValue = product.deliveryMethods!.first;
           print('Current Delivery Method: $currentValue'); // Debug print
         }
 
         return CustomDropdown(
           hintText: 'deliveryOption'.tr(),
-          value: product?.deliveryMethods?.isNotEmpty == true
-              ? product!.deliveryMethods!.first
+          value: product.deliveryMethods?.isNotEmpty == true
+              ? product.deliveryMethods!.first
               : null,
           onChanged: (value) {
             if (value != null) {

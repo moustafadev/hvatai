@@ -20,7 +20,6 @@ class SaleTypeButton extends StatelessWidget {
           height: 40.h,
           child: Stack(
             children: [
-              // الخلفية
               AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 decoration: BoxDecoration(
@@ -31,7 +30,7 @@ class SaleTypeButton extends StatelessWidget {
               AnimatedPositioned(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
-                left: (selectedSaleType == "Auction" ? 0 : 1) * indicatorWidth,
+                left: (selectedSaleType == "auction" ? 0 : 1) * indicatorWidth,
                 width: indicatorWidth,
                 top: 0,
                 bottom: 0,
@@ -42,19 +41,18 @@ class SaleTypeButton extends StatelessWidget {
                   ),
                 ),
               ),
-
               Row(
                 children: [
                   Expanded(
                     child: GestureDetector(
-                      onTap: () => onTap("Auction"),
+                      onTap: () => onTap("auction"),
                       child: Container(
                         alignment: Alignment.center,
                         child: CustomText(
                           text: "auction".tr(),
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w700,
-                          color: selectedSaleType == "Auction"
+                          color: selectedSaleType == "auction"
                               ? AppColors.white
                               : AppColors.blackDark,
                         ),
@@ -63,14 +61,14 @@ class SaleTypeButton extends StatelessWidget {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () => onTap("Buy Now"),
+                      onTap: () => onTap("fixed"),
                       child: Container(
                         alignment: Alignment.center,
                         child: CustomText(
                           text: "buyNow".tr(),
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w700,
-                          color: selectedSaleType == "Buy Now"
+                          color: selectedSaleType == "fixed"
                               ? AppColors.white
                               : AppColors.blackDark,
                         ),

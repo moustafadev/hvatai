@@ -12,10 +12,13 @@ class PaymentMethodsScreen extends StatelessWidget {
         final cubit = context.read<PaymentMethodCubit>();
         if (state.isLoading) {
           return const Center(
-            child: CircularProgressIndicator(
-              color: AppColors.grey,
-            ),
-          );
+              child: CircularProgressIndicator(
+            color: AppColors.grey,
+          ));
+        }
+
+        if (state.errorMessage.isNotEmpty) {
+          return Center(child: Text(state.errorMessage));
         }
         return SafeArea(
           bottom: false,

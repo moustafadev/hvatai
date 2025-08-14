@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
@@ -28,6 +29,7 @@ abstract class ProfileRepository {
   Future<Either<String, List<CardModel>>> getAllCards();
 
   Future<Either<String, List<ProductModel>>> getMyProducts();
+  Future<Either<String, CategoryModel>> getProductCategory();
 
   Future<Either<String, UserRegistrationData>> addNewAddress(
       AddNewAddressParams params);
