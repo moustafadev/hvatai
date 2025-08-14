@@ -58,7 +58,7 @@ class MyGoodsCard extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                       decoration: BoxDecoration(
-                        color: variant!.discountType == 'fixed'
+                        color: variant.discountType == 'fixed'
                             ? AppColors.primary
                             : AppColors.primaryColor,
                         borderRadius: BorderRadius.circular(10.r),
