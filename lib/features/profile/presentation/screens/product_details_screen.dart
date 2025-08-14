@@ -158,15 +158,17 @@ class ProductDetailsScreen extends StatelessWidget {
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w700),
                         CustomText(
-                            text: !product.selfPickup
-                                ? 'free'.tr()
-                                : 'notFree'.tr(),
+                            text:
+                                product.selfPickup ? 'free'.tr() : 'paid'.tr(),
                             color: AppColors.blackDark,
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w700),
                       ],
                     ),
-                    30.ph,
+                    20.ph,
+                    CustomGradientButton(
+                        text: 'bookInLive'.tr(), onPressed: () {}),
+                    30.ph
                   ],
                 ),
               ),
