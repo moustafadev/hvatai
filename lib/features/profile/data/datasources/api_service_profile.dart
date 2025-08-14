@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
+import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
@@ -105,6 +106,18 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
+  Future<CategoryModel> getProductCategory() async {
+    return executeAndHandleErrorServer<CategoryModel>(() async {
+      final response = await get(ServerConfig.categories);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return CategoryModel.fromJson(response.json);
+      } else {
+        throw Exception;
+      }
+    });
+  }
+
   Future<UserRegistrationData> updateProfileType() async {
     return executeAndHandleErrorServer<UserRegistrationData>(() async {
       final response = await post(ServerConfig.upgrade);
@@ -144,6 +157,56 @@ class ApiServiceProfile extends ApiBase {
 
     return MultipartFile.fromFile(file.path,
         filename: file.path.split('/').last);
+  }
+
+  Future<ProductModel> addNewProduct(AddNewProductParams params) async {
+    return executeAndHandleErrorServer<ProductModel>(() async {
+      final dataMap = Map<String, dynamic>.from(params.toJson());
+
+      if (params.productModel.deliveryMethods != null &&
+          params.productModel.deliveryMethods!.isNotEmpty) {
+        for (final method in params.productModel.deliveryMethods!) {
+          dataMap['delivery_methods[]'] = (dataMap['delivery_methods[]'] ?? [])
+            ..add(method.toLowerCase());
+        }
+      }
+
+      dataMap['delivery_available'] =
+          params.productModel.deliveryAvailable ? 1 : 0;
+      dataMap['self_pickup'] = params.productModel.selfPickup ? 1 : 0;
+      dataMap['status'] =
+          params.productModel.status == params.productModel.status ? 1 : 0;
+
+      final variantsJson =
+          params.productModel.variants?.map((v) => v.toJson()).toList();
+      dataMap['variants'] = variantsJson;
+
+      List<MultipartFile> imageFiles = [];
+      if (params.productModel.images != null &&
+          params.productModel.images!.isNotEmpty) {
+        for (final imagePath in params.productModel.images!) {
+          if (File(imagePath).existsSync()) {
+            imageFiles.add(await MultipartFile.fromFile(imagePath,
+                filename: imagePath.split('/').last));
+          }
+        }
+      }
+      if (imageFiles.isNotEmpty) {
+        dataMap['images[]'] = imageFiles;
+      }
+
+      final formData = FormData.fromMap(dataMap);
+      final response = await post(
+        ServerConfig.addProduct,
+        body: formData,
+        contentType: 'multipart/form-data',
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return ProductModel.fromJson(response.json);
+      }
+      throw Exception;
+    });
   }
 
   Future<UserRegistrationData> updateProfileData(
@@ -235,18 +298,7 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-  Future<ProductModel> addNewProduct(AddNewProductParams params) async {
-    return executeAndHandleErrorServer<ProductModel>(() async {
-      final response =
-          await post(ServerConfig.addProduct, body: params.toJson());
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return ProductModel.fromJson(response.json);
-      } else {
-        throw Exception;
-      }
-    });
-  }
-
+ 
   Future<Unit> createStream(CreateStreamModel model) async {
   return executeAndHandleErrorServer<Unit>(() async {
     final response = await post(ServerConfig.streams, body: model.toJson());
@@ -258,7 +310,6 @@ class ApiServiceProfile extends ApiBase {
     }
   });
 }
-
 
   Future<UserRegistrationData> editDeliveryAddress(
       EditDeliveryAddressParams params) async {

@@ -3,9 +3,7 @@ part of '../profile.dart';
 class EditDeliveryAddressScreen extends StatelessWidget {
   const EditDeliveryAddressScreen({
     super.key,
-    required this.data,
   });
-  final UserRegistrationData data;
 
   @override
   Widget build(BuildContext context) {

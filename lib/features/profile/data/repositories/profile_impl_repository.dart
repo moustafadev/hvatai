@@ -1,5 +1,6 @@
 import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
+import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/datasources/api_service_profile.dart';
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
@@ -145,6 +146,15 @@ class ProfileImplRepository implements ProfileRepository {
   Future<Either<String, Unit>> createStream(CreateStreamModel model) {
     return executeAndHandleError<Unit>(() async {
       final res = await _apiServiceProfile.createStream(model);
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, CategoryModel>> getProductCategory() {
+    return executeAndHandleError<CategoryModel>(() async {
+      final res = await _apiServiceProfile.getProductCategory();
+
       return res;
     });
   }

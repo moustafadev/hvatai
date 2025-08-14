@@ -34,8 +34,6 @@ class CategoryData with _$CategoryData {
       _$CategoryDataFromJson(json);
 }
 
-
-
 @freezed
 class CategoryChild with _$CategoryChild {
   const factory CategoryChild({

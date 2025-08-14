@@ -1,29 +1,51 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/features/activity/data/models/auction_product.dart';
+import 'package:go_router/go_router.dart';
+import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
+import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/get_product_category_usecase.dart';
 import 'package:image_picker/image_picker.dart';
 
 part 'my_goods_cubit.freezed.dart';
 part 'my_goods_state.dart';
 
 class MyGoodsCubit extends Cubit<MyGoodsState> {
-  MyGoodsCubit(this.getProductsUsecase)
+  MyGoodsCubit(this.getProductsUsecase, this.getProductCategoryUsecase,
+      this.addNewProductUsecase)
       : super(MyGoodsState(
           selectedCategoryIndex: 0,
+
+          product: ProductModel(variants: [VariantModel()]),
           category: CategoryModel(),
-          product: ProductModel(),
-        ));
+        )) {
+    deliveryTimeController.text = state.product.deliveryTime ?? '';
+  }
   final GetMyProductsUsecase getProductsUsecase;
+  final GetProductCategoryUsecase getProductCategoryUsecase;
+  final AddNewProductUsecase addNewProductUsecase;
+  final TextEditingController deliveryTimeController = TextEditingController();
 
   void changeCategory(int index) {
     emit(state.copyWith(selectedCategoryIndex: index));
+  }
+
+  void setCategory(int categoryId) {
+    emit(state.copyWith(
+      product: state.product.copyWith(categoryId: categoryId),
+    ));
+  }
+
+  void changeImageIndex(int index) {
+    emit(state.copyWith(currentImageIndex: index));
   }
 
   Future<void> getMyProducts() async {
@@ -39,13 +61,35 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     );
   }
 
+  Future<void> getProductCategory() async {
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
+    final result = await getProductCategoryUsecase.call(unit);
+    result.fold(
+      (failure) =>
+          emit(state.copyWith(isLoading: false, errorMessage: failure)),
+      (productsCategory) => emit(state.copyWith(
+        isLoading: false,
+        category: productsCategory,
+      )),
+    );
+  }
+
   void setOptionDelivery(String option) {
-    final newDeliveryMethods = [option];
+    List<String> newMethods = [];
+
+    if (option.isNotEmpty) {
+      newMethods = [option];
+    }
+
     final updatedProduct = state.product.copyWith(
-      deliveryMethods: newDeliveryMethods,
+      deliveryMethods: newMethods.isNotEmpty ? newMethods : null,
     );
 
     emit(state.copyWith(product: updatedProduct));
+  }
+
+  void initProductModel(ProductModel product) {
+    emit(state.copyWith(product: product));
   }
 
   void updateField(String field, var value) {
@@ -54,6 +98,14 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     switch (field) {
       case 'deliveryMethods':
         product = state.product.copyWith(deliveryMethods: value);
+        break;
+      case 'deliveryTime':
+        product = state.product.copyWith(deliveryTime: value);
+        deliveryTimeController.text = value;
+        break;
+      case 'deliveryPrice':
+        final doubleValue = double.tryParse(value) ?? 0.0;
+        product = state.product.copyWith(deliveryPrice: doubleValue);
         break;
       case 'name':
         product = state.product.copyWith(productName: value);
@@ -79,7 +131,13 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
         break;
       case 'startingBid':
         final doubleValue = double.tryParse(value) ?? 0.0;
-        product = state.product.copyWith(deliveryPrice: doubleValue);
+        final updatedVariants = (state.product.variants?.isNotEmpty ?? false)
+            ? [
+                state.product.variants!.first.copyWith(price: doubleValue),
+                ...state.product.variants!.skip(1),
+              ]
+            : [VariantModel(price: doubleValue)];
+        product = state.product.copyWith(variants: updatedVariants);
         break;
 
       default:
@@ -90,7 +148,8 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
   }
 
   void setSaleType(String value) {
-    final updatedProduct = state.product.copyWith(saleType: value);
+    final updatedProduct =
+        state.product.copyWith(saleType: value.isNotEmpty ? value : "auction");
     emit(state.copyWith(product: updatedProduct));
   }
 
@@ -155,46 +214,74 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
   }
 
   void togglePickupFree() {
-    final updated = state.product.selfPickup ?? false;
-
+    final updated = state.product.selfPickup;
     emit(state.copyWith(
       product: state.product.copyWith(selfPickup: !updated),
     ));
   }
 
-  void toggleBookParticipation() {
+  void toggleDeliveryAvailable() {
+    final updated = state.product.deliveryAvailable;
     emit(state.copyWith(
-      bookParticipation: !state.bookParticipation,
+      product: state.product.copyWith(deliveryAvailable: !updated),
     ));
   }
 
-  // void loadProducts() async {
-  //   emit(state.copyWith(
-  //     products: List.generate(
-  //       5,
-  //       (index) => AuctionProduct(
-  //         id: '$index',
-  //         title: 'Product $index',
-  //         description: 'Description $index',
-  //         price: '${100 * (index + 1)}',
-  //         images: [],
-  //         bidders: {},
-  //         isSold: index % 2 == 0,
-  //         ownerId: 'owner_$index',
-  //       ),
-  //     ),
-  //   ));
-  // }
-
   void increaseQuantity() {
-    if (state.quantity < 999) {
-      emit(state.copyWith(quantity: state.quantity + 1));
-    }
+    final currentVariant = state.product.variants.firstOrNull;
+    final currentStock = currentVariant?.stock ?? 1;
+
+    if (currentStock >= 999) return;
+
+    final updatedVariant = (currentVariant ?? VariantModel()).copyWith(
+      stock: currentStock + 1,
+    );
+
+    final updatedProduct = state.product.copyWith(
+      variants: [updatedVariant],
+    );
+
+    emit(state.copyWith(product: updatedProduct));
   }
 
   void decreaseQuantity() {
-    if (state.quantity > 1) {
-      emit(state.copyWith(quantity: state.quantity - 1));
-    }
+    final currentVariant = state.product.variants?.firstOrNull;
+    final currentStock = currentVariant?.stock ?? 1;
+
+    if (currentStock <= 1) return;
+
+    final updatedVariant = (currentVariant ?? VariantModel()).copyWith(
+      stock: currentStock - 1,
+    );
+
+    final updatedProduct = state.product.copyWith(
+      variants: [updatedVariant],
+    );
+
+    emit(state.copyWith(product: updatedProduct));
+  }
+
+  Future<void> addProduct(BuildContext context) async {
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
+
+    final result = await addNewProductUsecase.call(
+      AddNewProductParams(productModel: state.product),
+    );
+    result.fold((failure) {
+      emit(state.copyWith(isLoading: false, errorMessage: failure));
+      showFloatingMessageError('somethingWentWrong'.tr());
+    }, (newProduct) async {
+      showFloatingMessageSuccess('productAdded'.tr());
+      context.pop();
+      await getMyProducts();
+
+      emit(state.copyWith(
+        isLoading: false,
+        product: ProductModel(),
+        selectedImages: [],
+      ));
+
+      deliveryTimeController.clear();
+    });
   }
 }

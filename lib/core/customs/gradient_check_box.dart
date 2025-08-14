@@ -1,4 +1,4 @@
-part of '../../auth.dart';
+part of 'customs.dart';
 
 class GradientCheckbox extends StatelessWidget {
   final bool selected;

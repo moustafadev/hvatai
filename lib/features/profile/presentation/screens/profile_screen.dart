@@ -13,6 +13,16 @@ class ProfileScreen extends StatelessWidget {
         create: (context) => locator<ProfileCubit>()..getProfile(),
         child: BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, state) {
+            if (state.isLoading) {
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: AppColors.grey,
+              ));
+            }
+
+            if (state.errorMessage.isNotEmpty) {
+              return Center(child: Text(state.errorMessage));
+            }
             if (extra != null) {
               context.read<ProfileCubit>().updateUserData(extra);
             }

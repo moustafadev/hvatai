@@ -9,12 +9,6 @@ class TradeProfileDetailScreen extends StatelessWidget {
 
     return BlocBuilder<ProfileCubit, ProfileState>(
       builder: (context, state) {
-        if (state.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(color: AppColors.grey),
-          );
-        }
-
         final user = state.userProfileModel;
         return _buildTradeProfileContent(screenHeight, user);
       },
@@ -39,20 +33,20 @@ class TradeProfileDetailScreen extends StatelessWidget {
                   isGift: false,
                   isCircle: true,
                 ),
-                const SizedBox(height: 22),
+                22.ph,
                 UserInfoTradeProfileDetail(
                   name: user.firstName ?? '',
                   nickname: user.firstName ?? '',
                   lastName: user.lastName ?? '',
                   image: user.image ?? '',
                 ),
-                const SizedBox(height: 32),
+                32.ph,
                 const InfoTradeProfileDetailBottom(),
-                const SizedBox(height: 24),
+                24.ph,
                 const FourContainerTradeProfileDetail(),
-                const SizedBox(height: 24),
+                24.ph,
                 const StreamerProfileTradeOptions(),
-                const SizedBox(height: 80),
+                100.ph,
               ],
             ),
           ),

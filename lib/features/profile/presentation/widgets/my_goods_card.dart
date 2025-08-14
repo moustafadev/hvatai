@@ -12,11 +12,19 @@ class MyGoodsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final variant = product.variants?.firstOrNull;
+    final variant = product.variants.first;
     final String imageUrl = product.images?.firstOrNull ?? '';
 
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        context.push(
+          AppRoutes.productDetails,
+          extra: {
+            'model': product,
+            'cubit': context.read<MyGoodsCubit>(),
+          },
+        );
+      },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 6.h),
         decoration: BoxDecoration(
@@ -42,7 +50,7 @@ class MyGoodsCard extends StatelessWidget {
                         )
                       : _buildPlaceholder(),
                 ),
-                if (variant?.discountType != null)
+                if (variant.discountType != null)
                   Positioned(
                     top: 8.h,
                     left: 8.w,
@@ -50,13 +58,13 @@ class MyGoodsCard extends StatelessWidget {
                       padding:
                           EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                       decoration: BoxDecoration(
-                        color: variant!.discountType == 'fixed'
+                        color: variant.discountType == 'fixed'
                             ? AppColors.primary
                             : AppColors.primaryColor,
                         borderRadius: BorderRadius.circular(10.r),
                       ),
                       child: CustomText(
-                        text: variant?.discountType ?? '',
+                        text: variant.discountType ?? '',
                         fontWeight: FontWeight.w600,
                         fontSize: 10.sp,
                       ),
@@ -92,10 +100,14 @@ class MyGoodsCard extends StatelessWidget {
                       ],
                     ),
                     CustomText(
-                      text: "${variant?.price ?? 0.0} ₽",
+                      text: variant.price != null
+                          ? (variant.price! % 1 == 0
+                              ? "${variant.price!.toInt()} ₽"
+                              : "${variant.price} ₽")
+                          : "",
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
-                    ),
+                    )
                   ],
                 ),
               ),
