@@ -18,7 +18,7 @@ class MyGoodsScreen extends StatelessWidget {
         }
 
         if (state.errorMessage.isNotEmpty) {
-          return Center(child: Text(state.errorMessage));
+          return Center(child: CustomText(text: state.errorMessage));
         }
         return SafeArea(
           bottom: false,
@@ -27,8 +27,9 @@ class MyGoodsScreen extends StatelessWidget {
             floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
             floatingActionButton: GestureDetector(
               onTap: () async {
-                await context.push(AppRoutes.addProduct,
-                    extra: context.read<MyGoodsCubit>());
+                final cubit = context.read<MyGoodsCubit>();
+                cubit.resetProduct();
+                await context.push(AppRoutes.addProduct, extra: cubit);
               },
               child: Container(
                 margin: const EdgeInsets.only(bottom: 50),
@@ -50,7 +51,8 @@ class MyGoodsScreen extends StatelessWidget {
               showSearch: true,
               showGift: false,
               showNotification: false,
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 20),
+              padding: const EdgeInsets.only(
+                  left: 16, right: 16, top: 20, bottom: 10),
             ),
             body: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),

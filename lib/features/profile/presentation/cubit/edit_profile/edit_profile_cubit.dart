@@ -111,37 +111,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     return null;
   }
 
-  (double, String) _evaluatePassword(String password) {
-    double strength = 0.0;
-    String label = 'Weak';
-
-    if (password.isEmpty) return (0.0, '');
-    if (password.length < 6) return (0.2, 'Weak');
-    if (password.length < 8) return (0.4, 'Fair');
-
-    final hasLetters = RegExp(r'[A-Za-z]').hasMatch(password);
-    final hasDigits = RegExp(r'\d').hasMatch(password);
-    final hasSpecial = RegExp(r'[@$!%*?&]').hasMatch(password);
-    final hasUpper = RegExp(r'[A-Z]').hasMatch(password);
-    final hasLower = RegExp(r'[a-z]').hasMatch(password);
-
-    if (hasLetters && hasDigits) strength = 0.6;
-    if (hasLetters && hasDigits && hasSpecial) strength = 0.8;
-    if (password.length >= 10 &&
-        hasUpper &&
-        hasLower &&
-        hasDigits &&
-        hasSpecial) strength = 1.0;
-
-    if (strength == 0.6)
-      label = 'Good';
-    else if (strength == 0.8)
-      label = 'Very Good';
-    else if (strength == 1.0) label = 'Strong';
-
-    return (strength, label);
-  }
-
   void toggleRecommendedStreams() {
     emit(state.copyWith(
       recommendedStreams: !state.recommendedStreams,

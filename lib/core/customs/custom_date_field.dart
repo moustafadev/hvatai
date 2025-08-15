@@ -52,6 +52,7 @@ class _CustomDateFieldState extends State<CustomDateField> {
       readOnly: widget.readOnly,
       borderRadius: BorderRadius.circular(10),
       hintText: widget.label,
+      suffixIcon: const Icon(Icons.calendar_month_outlined),
       onTap: () async {
         DateTime? pickedDate = await showDatePicker(
           context: context,

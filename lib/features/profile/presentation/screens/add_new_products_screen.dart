@@ -193,8 +193,8 @@ class AddNewProductsScreen extends StatelessWidget {
                                     state.product.deliveryTime!.isEmpty ||
                                     state.product.deliveryPrice == null ||
                                     state.product.deliveryPrice == 0.0 ||
-                                    state.product.deliveryMethods == null ||
-                                    state.product.deliveryMethods!.isEmpty))),
+                                    state.product.deliveryType == null ||
+                                    state.product.deliveryType!.isEmpty))),
                         isLoading: state.isLoading,
                         onPressed: () {
                           cubit.addProduct(context);

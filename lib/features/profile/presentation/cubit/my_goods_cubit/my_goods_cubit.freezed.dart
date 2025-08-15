@@ -20,11 +20,11 @@ mixin _$MyGoodsState {
   List<File> get selectedImages => throw _privateConstructorUsedError;
   bool get selfDestruction => throw _privateConstructorUsedError;
   ProductModel get product => throw _privateConstructorUsedError;
-  CategoryModel get category => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   int get currentImageIndex => throw _privateConstructorUsedError;
   List<ProductModel> get products => throw _privateConstructorUsedError;
+  List<MainCategoryModel> get category => throw _privateConstructorUsedError;
 
   /// Create a copy of MyGoodsState
   /// with the given fields replaced by the non-null parameter values.
@@ -44,14 +44,13 @@ abstract class $MyGoodsStateCopyWith<$Res> {
       List<File> selectedImages,
       bool selfDestruction,
       ProductModel product,
-      CategoryModel category,
       bool isLoading,
       String errorMessage,
       int currentImageIndex,
-      List<ProductModel> products});
+      List<ProductModel> products,
+      List<MainCategoryModel> category});
 
   $ProductModelCopyWith<$Res> get product;
-  $CategoryModelCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -73,11 +72,11 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
     Object? selectedImages = null,
     Object? selfDestruction = null,
     Object? product = null,
-    Object? category = null,
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? currentImageIndex = null,
     Object? products = null,
+    Object? category = null,
   }) {
     return _then(_value.copyWith(
       selectedCategoryIndex: null == selectedCategoryIndex
@@ -96,10 +95,6 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as ProductModel,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -116,6 +111,10 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<ProductModel>,
+      category: null == category
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as List<MainCategoryModel>,
     ) as $Val);
   }
 
@@ -126,16 +125,6 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
   $ProductModelCopyWith<$Res> get product {
     return $ProductModelCopyWith<$Res>(_value.product, (value) {
       return _then(_value.copyWith(product: value) as $Val);
-    });
-  }
-
-  /// Create a copy of MyGoodsState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CategoryModelCopyWith<$Res> get category {
-    return $CategoryModelCopyWith<$Res>(_value.category, (value) {
-      return _then(_value.copyWith(category: value) as $Val);
     });
   }
 }
@@ -153,16 +142,14 @@ abstract class _$$MyGoodsStateImplCopyWith<$Res>
       List<File> selectedImages,
       bool selfDestruction,
       ProductModel product,
-      CategoryModel category,
       bool isLoading,
       String errorMessage,
       int currentImageIndex,
-      List<ProductModel> products});
+      List<ProductModel> products,
+      List<MainCategoryModel> category});
 
   @override
   $ProductModelCopyWith<$Res> get product;
-  @override
-  $CategoryModelCopyWith<$Res> get category;
 }
 
 /// @nodoc
@@ -182,11 +169,11 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
     Object? selectedImages = null,
     Object? selfDestruction = null,
     Object? product = null,
-    Object? category = null,
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? currentImageIndex = null,
     Object? products = null,
+    Object? category = null,
   }) {
     return _then(_$MyGoodsStateImpl(
       selectedCategoryIndex: null == selectedCategoryIndex
@@ -205,10 +192,6 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as ProductModel,
-      category: null == category
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
-              as CategoryModel,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -225,6 +208,10 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
           ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
               as List<ProductModel>,
+      category: null == category
+          ? _value._category
+          : category // ignore: cast_nullable_to_non_nullable
+              as List<MainCategoryModel>,
     ));
   }
 }
@@ -237,13 +224,14 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
       final List<File> selectedImages = const [],
       this.selfDestruction = false,
       required this.product,
-      required this.category,
       this.isLoading = false,
       this.errorMessage = '',
       this.currentImageIndex = 0,
-      final List<ProductModel> products = const []})
+      final List<ProductModel> products = const [],
+      final List<MainCategoryModel> category = const []})
       : _selectedImages = selectedImages,
-        _products = products;
+        _products = products,
+        _category = category;
 
   @override
   @JsonKey()
@@ -263,8 +251,6 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
   @override
   final ProductModel product;
   @override
-  final CategoryModel category;
-  @override
   @JsonKey()
   final bool isLoading;
   @override
@@ -282,9 +268,18 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
     return EqualUnmodifiableListView(_products);
   }
 
+  final List<MainCategoryModel> _category;
+  @override
+  @JsonKey()
+  List<MainCategoryModel> get category {
+    if (_category is EqualUnmodifiableListView) return _category;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_category);
+  }
+
   @override
   String toString() {
-    return 'MyGoodsState(selectedCategoryIndex: $selectedCategoryIndex, selectedImages: $selectedImages, selfDestruction: $selfDestruction, product: $product, category: $category, isLoading: $isLoading, errorMessage: $errorMessage, currentImageIndex: $currentImageIndex, products: $products)';
+    return 'MyGoodsState(selectedCategoryIndex: $selectedCategoryIndex, selectedImages: $selectedImages, selfDestruction: $selfDestruction, product: $product, isLoading: $isLoading, errorMessage: $errorMessage, currentImageIndex: $currentImageIndex, products: $products, category: $category)';
   }
 
   @override
@@ -299,15 +294,14 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
             (identical(other.selfDestruction, selfDestruction) ||
                 other.selfDestruction == selfDestruction) &&
             (identical(other.product, product) || other.product == product) &&
-            (identical(other.category, category) ||
-                other.category == category) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.currentImageIndex, currentImageIndex) ||
                 other.currentImageIndex == currentImageIndex) &&
-            const DeepCollectionEquality().equals(other._products, _products));
+            const DeepCollectionEquality().equals(other._products, _products) &&
+            const DeepCollectionEquality().equals(other._category, _category));
   }
 
   @override
@@ -317,11 +311,11 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
       const DeepCollectionEquality().hash(_selectedImages),
       selfDestruction,
       product,
-      category,
       isLoading,
       errorMessage,
       currentImageIndex,
-      const DeepCollectionEquality().hash(_products));
+      const DeepCollectionEquality().hash(_products),
+      const DeepCollectionEquality().hash(_category));
 
   /// Create a copy of MyGoodsState
   /// with the given fields replaced by the non-null parameter values.
@@ -338,11 +332,11 @@ abstract class _MyGoodsState implements MyGoodsState {
       final List<File> selectedImages,
       final bool selfDestruction,
       required final ProductModel product,
-      required final CategoryModel category,
       final bool isLoading,
       final String errorMessage,
       final int currentImageIndex,
-      final List<ProductModel> products}) = _$MyGoodsStateImpl;
+      final List<ProductModel> products,
+      final List<MainCategoryModel> category}) = _$MyGoodsStateImpl;
 
   @override
   int get selectedCategoryIndex;
@@ -353,8 +347,6 @@ abstract class _MyGoodsState implements MyGoodsState {
   @override
   ProductModel get product;
   @override
-  CategoryModel get category;
-  @override
   bool get isLoading;
   @override
   String get errorMessage;
@@ -362,6 +354,8 @@ abstract class _MyGoodsState implements MyGoodsState {
   int get currentImageIndex;
   @override
   List<ProductModel> get products;
+  @override
+  List<MainCategoryModel> get category;
 
   /// Create a copy of MyGoodsState
   /// with the given fields replaced by the non-null parameter values.

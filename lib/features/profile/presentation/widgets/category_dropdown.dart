@@ -8,24 +8,24 @@ class CategoryDropdown extends StatelessWidget {
     return BlocBuilder<MyGoodsCubit, MyGoodsState>(
       builder: (context, state) {
         final cubit = context.read<MyGoodsCubit>();
-        final categories = state.category.data ?? [];
+        final categories = state.category;
 
         return CustomDropdown(
           hintText: 'selectCategory'.tr(),
           value: categories
               .firstWhere(
                 (c) => c.id == state.product.categoryId,
-                orElse: () => CategoryData(),
+                orElse: () => MainCategoryModel(),
               )
               .name,
           onChanged: (value) {
             if (value != null) {
               final selected = categories.firstWhere(
                 (c) => c.name == value,
-                orElse: () => CategoryData(),
+                orElse: () => MainCategoryModel(),
               );
               if (selected.id != null) {
-                cubit.setCategory(selected.id!);
+                cubit.setCategory(selected.id!, selected.name);
               }
             }
           },

@@ -23,9 +23,11 @@ class AddStreamScreen extends StatelessWidget {
               final model = state.createStreamModel;
               if (state.isProductsLoading) {
                 return const Center(
-                  child: CircularProgressIndicator(),
-                );
+                    child: CircularProgressIndicator(
+                  color: AppColors.grey,
+                ));
               }
+
               return CustomScrollView(
                 slivers: [
                   SliverPadding(
@@ -39,8 +41,6 @@ class AddStreamScreen extends StatelessWidget {
                           fontWeight: FontWeight.w800,
                         ),
                         12.ph,
-
-                        // title
                         CustomTextField(
                           hintText: 'title'.tr(),
                           onChanged: cubit.updateTitle,
@@ -159,7 +159,8 @@ class AddStreamScreen extends StatelessWidget {
                               orElse: () => ProductModel(id: id),
                             );
                             return InputChip(
-                              label: Text(product.productName ?? 'Product $id'),
+                              label: CustomText(
+                                  text: product.productName ?? 'Product $id'),
                               onDeleted: () => cubit.removeProductId(id),
                             );
                           }).toList(),

@@ -106,12 +106,15 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-  Future<CategoryModel> getProductCategory() async {
-    return executeAndHandleErrorServer<CategoryModel>(() async {
+  Future<List<MainCategoryModel>> getProductCategory() async {
+    return executeAndHandleErrorServer<List<MainCategoryModel>>(() async {
       final response = await get(ServerConfig.categories);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return CategoryModel.fromJson(response.json);
+        final List<dynamic> data = response.json['data'];
+        return data
+            .map((e) => MainCategoryModel.fromJson(e as Map<String, dynamic>))
+            .toList();
       } else {
         throw Exception;
       }
@@ -298,18 +301,17 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
- 
   Future<Unit> createStream(CreateStreamModel model) async {
-  return executeAndHandleErrorServer<Unit>(() async {
-    final response = await post(ServerConfig.streams, body: model.toJson());
+    return executeAndHandleErrorServer<Unit>(() async {
+      final response = await post(ServerConfig.streams, body: model.toJson());
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return unit;
-    } else {
-      throw Exception('Failed to create stream');
-    }
-  });
-}
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return unit;
+      } else {
+        throw Exception('Failed to create stream');
+      }
+    });
+  }
 
   Future<UserRegistrationData> editDeliveryAddress(
       EditDeliveryAddressParams params) async {

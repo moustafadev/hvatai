@@ -61,14 +61,14 @@ class SaleTypeButton extends StatelessWidget {
                   ),
                   Expanded(
                     child: GestureDetector(
-                      onTap: () => onTap("fixed"),
+                      onTap: () => onTap("buy_now"),
                       child: Container(
                         alignment: Alignment.center,
                         child: CustomText(
                           text: "buyNow".tr(),
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w700,
-                          color: selectedSaleType == "fixed"
+                          color: selectedSaleType == "buy_now"
                               ? AppColors.white
                               : AppColors.blackDark,
                         ),

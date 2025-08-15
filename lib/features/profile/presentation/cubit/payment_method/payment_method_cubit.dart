@@ -61,7 +61,7 @@ class PaymentMethodCubit extends Cubit<PaymentMethodState> {
       (newCard) {
         emit(state.copyWith(
           isLoading: false,
-          cards: [...state.cards, newCard],
+          cards: [newCard, ...state.cards],
         ));
         showFloatingMessageSuccess('paymentMethodAdded'.tr());
         context.pop();

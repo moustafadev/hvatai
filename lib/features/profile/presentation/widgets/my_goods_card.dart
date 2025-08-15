@@ -12,7 +12,7 @@ class MyGoodsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final variant = product.variants.first;
+    final variant = product.variants.firstOrNull ?? VariantModel();
     final String imageUrl = product.images?.firstOrNull ?? '';
 
     return GestureDetector(

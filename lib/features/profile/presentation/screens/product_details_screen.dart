@@ -32,6 +32,7 @@ class ProductDetailsScreen extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 height: 300.h,
@@ -74,10 +75,12 @@ class ProductDetailsScreen extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CustomText(
-                          text: product.productName ?? '',
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w800,
+                        Flexible(
+                          child: CustomText(
+                            text: product.productName ?? '',
+                            fontSize: 20.sp,
+                            fontWeight: FontWeight.w800,
+                          ),
                         ),
                         Container(
                           padding: const EdgeInsets.symmetric(
@@ -103,7 +106,7 @@ class ProductDetailsScreen extends StatelessWidget {
                     Row(
                       children: [
                         CustomText(
-                          text: 'Электроника • Смартфоны',
+                          text: '${product.category?.name} ',
                           color: AppColors.blackLite,
                           fontSize: 14.sp,
                         ),
@@ -149,6 +152,32 @@ class ProductDetailsScreen extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                     17.ph,
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 9),
+                      decoration: BoxDecoration(
+                        color: AppColors.gray,
+                        borderRadius: BorderRadius.circular(6.r),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomText(
+                              text: 'delivery'.tr(),
+                              color: AppColors.blackDark,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w700),
+                          CustomText(
+                              text: product.deliveryType!.isNotEmpty
+                                  ? "${product.deliveryType?[0].toUpperCase()}${product.deliveryType?.substring(1)}"
+                                  : 'notAvailable'.tr(),
+                              color: AppColors.blackDark,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w700),
+                        ],
+                      ),
+                    ),
+                    9.ph,
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -165,9 +194,6 @@ class ProductDetailsScreen extends StatelessWidget {
                             fontWeight: FontWeight.w700),
                       ],
                     ),
-                    20.ph,
-                    CustomGradientButton(
-                        text: 'bookInLive'.tr(), onPressed: () {}),
                     30.ph
                   ],
                 ),

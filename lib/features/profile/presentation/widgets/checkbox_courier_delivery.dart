@@ -11,11 +11,11 @@ class CheckboxCourierDelivery extends StatelessWidget {
         BlocBuilder<MyGoodsCubit, MyGoodsState>(
           builder: (context, state) {
             final isSelected =
-                state.product.deliveryMethods?.contains('courier') ?? false;
+                state.product.deliveryType?.contains('courier') ?? false;
             return GradientCheckbox(
               selected: isSelected,
               onTap: () {
-                cubit.setOptionDelivery(isSelected ? '' : 'courier');
+                cubit.setDeliverType(isSelected ? '' : 'courier');
               },
             );
           },

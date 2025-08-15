@@ -5,10 +5,8 @@ import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hvatai/features/activity/data/models/auction_product.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
-import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
@@ -23,9 +21,7 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
       this.addNewProductUsecase)
       : super(MyGoodsState(
           selectedCategoryIndex: 0,
-
           product: ProductModel(variants: [VariantModel()]),
-          category: CategoryModel(),
         )) {
     deliveryTimeController.text = state.product.deliveryTime ?? '';
   }
@@ -38,9 +34,12 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     emit(state.copyWith(selectedCategoryIndex: index));
   }
 
-  void setCategory(int categoryId) {
+  void setCategory(int id, String? name) {
     emit(state.copyWith(
-      product: state.product.copyWith(categoryId: categoryId),
+      product: state.product.copyWith(
+        categoryId: id,
+        category: MainCategoryModel(id: id, name: name),
+      ),
     ));
   }
 
@@ -131,10 +130,10 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
         break;
       case 'startingBid':
         final doubleValue = double.tryParse(value) ?? 0.0;
-        final updatedVariants = (state.product.variants?.isNotEmpty ?? false)
+        final updatedVariants = (state.product.variants.isNotEmpty)
             ? [
-                state.product.variants!.first.copyWith(price: doubleValue),
-                ...state.product.variants!.skip(1),
+                state.product.variants.first.copyWith(price: doubleValue),
+                ...state.product.variants.skip(1),
               ]
             : [VariantModel(price: doubleValue)];
         product = state.product.copyWith(variants: updatedVariants);
@@ -150,6 +149,11 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
   void setSaleType(String value) {
     final updatedProduct =
         state.product.copyWith(saleType: value.isNotEmpty ? value : "auction");
+    emit(state.copyWith(product: updatedProduct));
+  }
+
+  void setDeliverType(String value) {
+    final updatedProduct = state.product.copyWith(deliveryType: value);
     emit(state.copyWith(product: updatedProduct));
   }
 
@@ -244,8 +248,16 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     emit(state.copyWith(product: updatedProduct));
   }
 
+  void resetProduct() {
+    emit(state.copyWith(
+      product: ProductModel(variants: [VariantModel()]),
+      selectedImages: [],
+    ));
+    deliveryTimeController.clear();
+  }
+
   void decreaseQuantity() {
-    final currentVariant = state.product.variants?.firstOrNull;
+    final currentVariant = state.product.variants.firstOrNull;
     final currentStock = currentVariant?.stock ?? 1;
 
     if (currentStock <= 1) return;
@@ -271,15 +283,13 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
       emit(state.copyWith(isLoading: false, errorMessage: failure));
       showFloatingMessageError('somethingWentWrong'.tr());
     }, (newProduct) async {
-      showFloatingMessageSuccess('productAdded'.tr());
-      context.pop();
-      await getMyProducts();
-
       emit(state.copyWith(
         isLoading: false,
-        product: ProductModel(),
-        selectedImages: [],
+        products: [state.product, ...state.products],
       ));
+
+      showFloatingMessageSuccess('productAdded'.tr());
+      context.pop();
 
       deliveryTimeController.clear();
     });

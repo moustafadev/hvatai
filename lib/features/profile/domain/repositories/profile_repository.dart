@@ -30,7 +30,7 @@ abstract class ProfileRepository {
   Future<Either<String, List<CardModel>>> getAllCards();
 
   Future<Either<String, List<ProductModel>>> getMyProducts();
-  Future<Either<String, CategoryModel>> getProductCategory();
+  Future<Either<String, List<MainCategoryModel>>> getProductCategory();
 
   Future<Either<String, UserRegistrationData>> addNewAddress(
       AddNewAddressParams params);
@@ -44,5 +44,4 @@ abstract class ProfileRepository {
       EditDeliveryAddressParams params);
 
   Future<Either<String, Unit>> createStream(CreateStreamModel model);
-
 }

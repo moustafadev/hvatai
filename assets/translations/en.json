@@ -251,6 +251,7 @@
   "bookInLive": "Book in Live",
 "paid": "Paid",
   "free": "Free",
+  "notAvailable": "Not available",
     "selfDelivery":"Self (I will deliver)",
   "courierFromPlatform":"Courier from Grab!'s platform",
   "deliveryPrice": "Delivery price (₽)",

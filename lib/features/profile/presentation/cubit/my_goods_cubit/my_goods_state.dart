@@ -7,10 +7,10 @@ class MyGoodsState with _$MyGoodsState {
     @Default([]) List<File> selectedImages,
     @Default(false) bool selfDestruction,
     required ProductModel product,
-    required CategoryModel category,
     @Default(false) bool isLoading,
     @Default('') String errorMessage,
     @Default(0) int currentImageIndex,
     @Default([]) List<ProductModel> products,
+    @Default([]) List<MainCategoryModel> category,
   }) = _MyGoodsState;
 }

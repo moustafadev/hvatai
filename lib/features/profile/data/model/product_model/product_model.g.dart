@@ -54,6 +54,10 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => VariantModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
+      category: json['category'] == null
+          ? null
+          : MainCategoryModel.fromJson(
+              json['category'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
@@ -88,6 +92,7 @@ Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
       'status': instance.status,
       'product_pictures': instance.productPictures,
       'variants': instance.variants,
+      'category': instance.category,
     };
 
 _$VariantModelImpl _$$VariantModelImplFromJson(Map<String, dynamic> json) =>
@@ -106,4 +111,38 @@ Map<String, dynamic> _$$VariantModelImplToJson(_$VariantModelImpl instance) =>
       'attributes': instance.attributes,
       'discount': instance.discount,
       'discount_type': instance.discountType,
+    };
+
+_$MainCategoryModelImpl _$$MainCategoryModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$MainCategoryModelImpl(
+      id: (json['id'] as num?)?.toInt(),
+      parentId: (json['parent_id'] as num?)?.toInt(),
+      name: json['name'] as String?,
+      type: json['type'] as String?,
+      icon: json['icon'] as String?,
+      description: json['description'] as String?,
+      userId: (json['user_id'] as num?)?.toInt(),
+      status: json['status'] as bool?,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+    );
+
+Map<String, dynamic> _$$MainCategoryModelImplToJson(
+        _$MainCategoryModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'parent_id': instance.parentId,
+      'name': instance.name,
+      'type': instance.type,
+      'icon': instance.icon,
+      'description': instance.description,
+      'user_id': instance.userId,
+      'status': instance.status,
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
     };

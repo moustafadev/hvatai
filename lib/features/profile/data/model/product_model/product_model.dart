@@ -47,6 +47,7 @@ class ProductModel with _$ProductModel {
     @JsonKey(fromJson: _boolFromInt) bool? status,
     @JsonKey(name: 'product_pictures') dynamic productPictures,
     @Default([]) List<VariantModel> variants,
+    MainCategoryModel? category,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>
@@ -83,4 +84,23 @@ class VariantModel with _$VariantModel {
 
   factory VariantModel.fromJson(Map<String, dynamic> json) =>
       _$VariantModelFromJson(json);
+}
+
+@freezed
+class MainCategoryModel with _$MainCategoryModel {
+  const factory MainCategoryModel({
+    int? id,
+    @JsonKey(name: 'parent_id') int? parentId,
+    String? name,
+    String? type,
+    String? icon,
+    String? description,
+    @JsonKey(name: 'user_id') int? userId,
+    bool? status,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
+    @JsonKey(name: 'updated_at') DateTime? updatedAt,
+  }) = _MainCategoryModel;
+
+  factory MainCategoryModel.fromJson(Map<String, dynamic> json) =>
+      _$MainCategoryModelFromJson(json);
 }

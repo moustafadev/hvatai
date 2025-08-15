@@ -11,11 +11,11 @@ class CheckboxMyselfDelivery extends StatelessWidget {
         BlocBuilder<MyGoodsCubit, MyGoodsState>(
           builder: (context, state) {
             final isSelected =
-                state.product.deliveryMethods?.contains('myself') ?? false;
+                state.product.deliveryType?.contains('myself') ?? false;
             return GradientCheckbox(
               selected: isSelected,
               onTap: () {
-                cubit.setOptionDelivery(isSelected ? '' : 'myself');
+                cubit.setDeliverType(isSelected ? '' : 'myself');
               },
             );
           },

@@ -151,8 +151,8 @@ class ProfileImplRepository implements ProfileRepository {
   }
 
   @override
-  Future<Either<String, CategoryModel>> getProductCategory() {
-    return executeAndHandleError<CategoryModel>(() async {
+  Future<Either<String, List<MainCategoryModel>>> getProductCategory() {
+    return executeAndHandleError<List<MainCategoryModel>>(() async {
       final res = await _apiServiceProfile.getProductCategory();
 
       return res;
