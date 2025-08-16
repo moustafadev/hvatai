@@ -11,24 +11,13 @@ class TopProfileInfo extends StatelessWidget {
       final user = state.userProfileModel;
       return Row(
         children: [
-          GestureDetector(
-            onTap: () {},
-            child: Container(
+          ClipRRect(
+            borderRadius: BorderRadius.circular(50.r),
+            child: CustomImage(
               height: 41.h,
               width: 41.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: user.image != null && user.image!.isNotEmpty
-                      ? (user.image!.startsWith('http')
-                          ? CachedNetworkImageProvider(user.image!)
-                          : CachedNetworkImageProvider(
-                              'https://khvatai.ru/${user.image!}'))
-                      : AssetImage(Assets.assetsImagesProfileImage)
-                          as ImageProvider,
-                  fit: BoxFit.fill,
-                ),
-              ),
+              imageSource: user.image!,
+              fit: BoxFit.cover,
             ),
           ),
           15.pw,

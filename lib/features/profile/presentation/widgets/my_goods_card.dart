@@ -38,17 +38,12 @@ class MyGoodsCard extends StatelessWidget {
               children: [
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12.r),
-                  child: imageUrl.isNotEmpty
-                      ? CachedNetworkImage(
-                          imageUrl: imageUrl,
-                          width: 140.w,
-                          height: 140.h,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => _buildPlaceholder(),
-                          errorWidget: (context, url, error) =>
-                              _buildPlaceholder(),
-                        )
-                      : _buildPlaceholder(),
+                  child: CustomImage(
+                    width: 140.w,
+                    height: 140.h,
+                    imageSource: imageUrl,
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 if (variant.discountType != null)
                   Positioned(
@@ -113,21 +108,6 @@ class MyGoodsCard extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPlaceholder() {
-    return Container(
-      width: 140.w,
-      height: 140.h,
-      color: AppColors.gray,
-      child: Center(
-        child: Icon(
-          Icons.image,
-          size: 40.w,
-          color: AppColors.grey,
         ),
       ),
     );

@@ -21,13 +21,12 @@ class ProfileScreen extends StatelessWidget {
             }
 
             if (state.errorMessage.isNotEmpty) {
-              return Center(child: Text(state.errorMessage));
+              return Center(child: CustomText(text: state.errorMessage));
             }
             if (extra != null) {
               context.read<ProfileCubit>().updateUserData(extra);
             }
 
-            debugPrint('Current role: ${state.userProfileModel.role}');
             return state.userProfileModel.role == 'business_user'
                 ? const TradeProfileDetailScreen()
                 : const BodyNormalProfile();

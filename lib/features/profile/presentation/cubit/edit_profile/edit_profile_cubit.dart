@@ -12,8 +12,6 @@ import 'package:hvatai/features/profile/domain/usecases/update_profile_type_usec
 
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:permission_handler/permission_handler.dart';
 part 'edit_profile_state.dart';
 part 'edit_profile_cubit.freezed.dart';
 
@@ -70,39 +68,8 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     ));
   }
 
-  Future<void> pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 85,
-    );
-
-    if (pickedFile != null) {
-      final updatedPhoto = pickedFile.path;
-      emit(state.copyWith(user: state.user.copyWith(image: updatedPhoto)));
-    }
-  }
-
-  Future<void> captureImageFromCamera() async {
-    final status = await Permission.camera.status;
-    if (!status.isGranted) {
-      final result = await Permission.camera.request();
-      if (!result.isGranted) {
-        print('Camera permission denied');
-        return;
-      }
-    }
-
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.camera,
-      imageQuality: 85,
-    );
-
-    if (pickedFile != null) {
-      final updatedPhoto = pickedFile.path;
-      emit(state.copyWith(user: state.user.copyWith(image: updatedPhoto)));
-    }
+  void updateUserImages(String imagePaths) {
+    emit(state.copyWith(user: state.user.copyWith(image: imagePaths)));
   }
 
   String? validateConfirmPassword(String? value, String originalPassword) {

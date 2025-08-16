@@ -67,24 +67,15 @@ class SettingsScreen extends StatelessWidget {
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w800,
                           ),
-                          20.ph,
-                          GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (_) => CustomPhotoOptionsDialog(
-                                  onTakePhoto: () {
-                                    cubit.captureImageFromCamera();
-                                    context.pop();
-                                  },
-                                  onChoosePhoto: () {
-                                    cubit.pickImage();
-                                    context.pop();
-                                  },
-                                ),
-                              );
+                          CustomUploadImageWidget(
+                            hideMainAndEdit: true,
+                            subTitle:
+                                "Минимальный размер для изображений — 450x450 пикселей. Изображение не должно весить более 120 Кб.",
+                            padding: 40,
+                            updateImage: (imageUpdate) {
+                              cubit.updateUserImages(imageUpdate ?? '');
                             },
-                            child: BuildProfileImage(image: state.user.image),
+                            title: '',
                           ),
                           12.ph,
                           CustomTextField(

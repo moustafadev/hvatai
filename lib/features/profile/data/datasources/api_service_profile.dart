@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
-import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
@@ -19,6 +18,52 @@ import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_us
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 
 class ApiServiceProfile extends ApiBase {
+  Future<ProductModel> addNewProduct(AddNewProductParams params) async {
+    return executeAndHandleErrorServer<ProductModel>(() async {
+      final formData = await _prepareProductFormData(params);
+      final response = await post(
+        ServerConfig.addProduct,
+        body: formData,
+        contentType: 'multipart/form-data',
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return ProductModel.fromJson(response.json);
+      }
+      throw Exception;
+    });
+  }
+
+  Future<FormData> _prepareProductFormData(AddNewProductParams params) async {
+    final dataMap = Map<String, dynamic>.from(params.toJson());
+    dataMap['delivery_available'] =
+        params.productModel.deliveryAvailable ? 1 : 0;
+    dataMap['status'] =
+        params.productModel.status == params.productModel.status ? 1 : 0;
+    dataMap['self_pickup'] = params.productModel.selfPickup ? 1 : 0;
+
+    final variantsJson =
+        params.productModel.variants.map((v) => v.toJson()).toList();
+    dataMap['variants'] = variantsJson;
+
+    List<MultipartFile> imageFiles = [];
+    if (params.productModel.images != null &&
+        params.productModel.images!.isNotEmpty) {
+      for (final imagePath in params.productModel.images!) {
+        final file = await _prepareImageFile(imagePath); // ✅ هنا
+        if (file != null) {
+          imageFiles.add(file);
+        }
+      }
+    }
+
+    if (imageFiles.isNotEmpty) {
+      dataMap['images[]'] = imageFiles;
+    }
+
+    return FormData.fromMap(dataMap);
+  }
+
   Future<UserRegistrationData> getProfileData() async {
     return executeAndHandleErrorServer<UserRegistrationData>(() async {
       final response = await get(ServerConfig.profile);
@@ -162,79 +207,10 @@ class ApiServiceProfile extends ApiBase {
         filename: file.path.split('/').last);
   }
 
-  Future<ProductModel> addNewProduct(AddNewProductParams params) async {
-    return executeAndHandleErrorServer<ProductModel>(() async {
-      final dataMap = Map<String, dynamic>.from(params.toJson());
-
-      if (params.productModel.deliveryMethods != null &&
-          params.productModel.deliveryMethods!.isNotEmpty) {
-        for (final method in params.productModel.deliveryMethods!) {
-          dataMap['delivery_methods[]'] = (dataMap['delivery_methods[]'] ?? [])
-            ..add(method.toLowerCase());
-        }
-      }
-
-      dataMap['delivery_available'] =
-          params.productModel.deliveryAvailable ? 1 : 0;
-      dataMap['self_pickup'] = params.productModel.selfPickup ? 1 : 0;
-      dataMap['status'] =
-          params.productModel.status == params.productModel.status ? 1 : 0;
-
-      final variantsJson =
-          params.productModel.variants?.map((v) => v.toJson()).toList();
-      dataMap['variants'] = variantsJson;
-
-      List<MultipartFile> imageFiles = [];
-      if (params.productModel.images != null &&
-          params.productModel.images!.isNotEmpty) {
-        for (final imagePath in params.productModel.images!) {
-          if (File(imagePath).existsSync()) {
-            imageFiles.add(await MultipartFile.fromFile(imagePath,
-                filename: imagePath.split('/').last));
-          }
-        }
-      }
-      if (imageFiles.isNotEmpty) {
-        dataMap['images[]'] = imageFiles;
-      }
-
-      final formData = FormData.fromMap(dataMap);
-      final response = await post(
-        ServerConfig.addProduct,
-        body: formData,
-        contentType: 'multipart/form-data',
-      );
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return ProductModel.fromJson(response.json);
-      }
-      throw Exception;
-    });
-  }
-
   Future<UserRegistrationData> updateProfileData(
       UpdateProfileParams params) async {
     return executeAndHandleErrorServer<UserRegistrationData>(() async {
-      final dataMap = Map<String, dynamic>.from(params.toJson());
-      dataMap['terms_agreement'] =
-          params.userRegistrationData.agreedToTerms ?? false ? 1 : 0;
-      dataMap['age_confirmation'] =
-          params.userRegistrationData.isAbove18 ?? false ? 1 : 0;
-      dataMap['phone'] = "043535345";
-
-      MultipartFile? imageFile;
-      if (params.userRegistrationData.image != null &&
-          File(params.userRegistrationData.image!).existsSync()) {
-        imageFile = await _prepareImageFile(params.userRegistrationData.image);
-      }
-
-      if (imageFile != null) {
-        dataMap['image'] = imageFile;
-      } else {
-        dataMap.remove('image');
-      }
-
-      final formData = FormData.fromMap(dataMap);
+      final formData = await _prepareProfileFormData(params);
       final response = await post(
         ServerConfig.profile,
         body: formData,
@@ -246,6 +222,30 @@ class ApiServiceProfile extends ApiBase {
       }
       throw Exception;
     });
+  }
+
+  Future<FormData> _prepareProfileFormData(UpdateProfileParams params) async {
+    final dataMap = Map<String, dynamic>.from(params.toJson());
+    dataMap['terms_agreement'] =
+        params.userRegistrationData.agreedToTerms ?? false ? 1 : 0;
+    dataMap['age_confirmation'] =
+        params.userRegistrationData.isAbove18 ?? false ? 1 : 0;
+    dataMap['phone'] = "043535345";
+
+    // Handle image file only
+    MultipartFile? imageFile;
+    if (params.userRegistrationData.image != null &&
+        File(params.userRegistrationData.image!).existsSync()) {
+      imageFile = await _prepareImageFile(params.userRegistrationData.image);
+    }
+
+    if (imageFile != null) {
+      dataMap['image'] = imageFile;
+    } else {
+      dataMap.remove('image');
+    }
+
+    return FormData.fromMap(dataMap);
   }
 
   Future<UserRegistrationData> addNewAddress(AddNewAddressParams params) async {

@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:dotted_border/dotted_border.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
-import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
@@ -26,7 +24,9 @@ import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile
 import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 part 'screens/profile_screen.dart';
 part 'widgets/custom_profile_background_scaffold.dart';
@@ -62,7 +62,6 @@ part 'screens/my_goods_screen.dart';
 part 'widgets/my_goods_tabs.dart';
 part 'widgets/my_goods_card.dart';
 part 'screens/add_new_products_screen.dart';
-part 'widgets/upload_photo.dart';
 part 'widgets/add_product_action_button.dart';
 part 'widgets/sale_type_button.dart';
 part 'widgets/update_country_dropdown.dart';

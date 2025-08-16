@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';

@@ -40,17 +40,19 @@ class AddNewProductsScreen extends StatelessWidget {
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w800,
                     ),
+                    // 12.ph,
+                    // CustomText(
+                    //   text: 'photo'.tr(),
+                    //   fontSize: 20.sp,
+                    //   fontWeight: FontWeight.w800,
+                    // ),
                     12.ph,
-                    CustomText(
-                      text: 'photo'.tr(),
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w800,
-                    ),
-                    12.ph,
-                    UploadPhoto(
-                      selectedImages: state.selectedImages,
-                      onPickImage: () => cubit.pickImage(),
-                    ),
+                    CustomProductImageWidget(
+                        updateImage: (List<String> imageUpdate) {
+                          cubit.updateProductImages(imageUpdate);
+                        },
+                        initialImages: state.product.images,
+                        title: 'photo'.tr()),
                     24.ph,
                     CustomText(
                       text: 'productDetails'.tr(),

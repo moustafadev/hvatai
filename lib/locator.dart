@@ -1,3 +1,4 @@
+import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/core/datasources/local/cache_helper.dart';
 import 'package:hvatai/core/shared/utils/network_info.dart';
@@ -67,6 +68,7 @@ Future<void> setupLocator() async {
         locator(),
       ));
   locator.registerFactory(() => AnalyticsCubit());
+  locator.registerFactory(() => ProductImageCubit());
   locator.registerFactory(() => MainNotificationCubit(locator(), locator()));
 
   locator.registerFactory(() => SocialLoginCubit(locator(), locator()));

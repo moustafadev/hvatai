@@ -7,13 +7,19 @@ class ProductDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MyGoodsCubit, MyGoodsState>(builder: (context, state) {
       final product = state.product;
-      final variant = product.variants.first;
+      final variant =
+          product.variants.isNotEmpty ? product.variants.first : VariantModel();
+
       final pageController =
           PageController(initialPage: state.currentImageIndex);
 
-      final images = product.images ??
-          [
-          ];
+      final deliveryType = product.deliveryType ?? '';
+      final deliveryText = deliveryType.isNotEmpty
+          ? '${deliveryType[0].toUpperCase()}${deliveryType.substring(1)}'
+          : 'notAvailable'.tr();
+
+      final images = product.images ?? [];
+
       return Scaffold(
         backgroundColor: AppColors.lightGreyBackground,
         appBar: AppBar(
@@ -43,26 +49,25 @@ class ProductDetailsScreen extends StatelessWidget {
                     context.read<MyGoodsCubit>().changeImageIndex(index);
                   },
                   itemBuilder: (context, index) {
-                    if (images.isEmpty) {
-                      return _buildPlaceholder();
-                    }
-                    return CachedNetworkImage(
-                      imageUrl: images[index],
-                      width: double.infinity,
-                      height: 300.h,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => _buildPlaceholder(),
-                      errorWidget: (context, url, error) => _buildPlaceholder(),
-                    );
+                    return images.isEmpty
+                        ? _buildPlaceholder()
+                        : CustomImage(
+                            height: 300.h,
+                            imageSource: images[index],
+                            fit: BoxFit.cover,
+                          );
                   },
                 ),
               ),
               8.ph,
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: List.generate(
-                  images.isEmpty ? 1 : images.length,
-                  (index) => _buildDot(index == state.currentImageIndex),
+              Visibility(
+                visible: images.isNotEmpty,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: List.generate(
+                    images.length,
+                    (index) => _buildDot(index == state.currentImageIndex),
+                  ),
                 ),
               ),
               12.ph,
@@ -82,36 +87,36 @@ class ProductDetailsScreen extends StatelessWidget {
                             fontWeight: FontWeight.w800,
                           ),
                         ),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 2),
-                          decoration: BoxDecoration(
-                            color: AppColors.primaryColor,
-                            borderRadius: BorderRadius.circular(10.r),
+                        if (variant.price != null)
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 2),
+                            decoration: BoxDecoration(
+                              color: AppColors.primaryColor,
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                            child: CustomText(
+                              text: variant.price! % 1 == 0
+                                  ? "${variant.price!.toInt()} ₽"
+                                  : "${variant.price} ₽",
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.white,
+                            ),
                           ),
-                          child: CustomText(
-                            text: variant.price != null
-                                ? (variant.price! % 1 == 0
-                                    ? "${variant.price!.toInt()} ₽"
-                                    : "${variant.price} ₽")
-                                : "",
-                            fontSize: 20.sp,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.white,
-                          ),
-                        ),
                       ],
                     ),
                     8.ph,
-                    Row(
-                      children: [
-                        CustomText(
-                          text: '${product.category?.name} ',
-                          color: AppColors.blackLite,
-                          fontSize: 14.sp,
-                        ),
-                      ],
-                    ),
+                    if (product.category?.name != null)
+                      Row(
+                        children: [
+                          CustomText(
+                            text: '${product.category?.name} ',
+                            color: AppColors.blackLite,
+                            fontSize: 14.sp,
+                          ),
+                        ],
+                      ),
                     8.ph,
                     Row(
                       children: [
@@ -129,28 +134,29 @@ class ProductDetailsScreen extends StatelessWidget {
                           ),
                         ),
                         8.pw,
-                        Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 8, vertical: 3),
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10.r),
-                                color: AppColors.gray),
-                            child: CustomText(
-                              text: product.saleType.isNotEmpty
-                                  ? "${product.saleType[0].toUpperCase()}${product.saleType.substring(1)}"
-                                  : "",
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.blackLite,
-                            )),
+                        if (product.saleType.isNotEmpty)
+                          Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 3),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10.r),
+                                  color: AppColors.gray),
+                              child: CustomText(
+                                text:
+                                    "${product.saleType[0].toUpperCase()}${product.saleType.substring(1)}",
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.blackLite,
+                              )),
                       ],
                     ),
                     8.ph,
-                    CustomText(
-                      text: product.productDescription ?? '',
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                    ),
+                    if (product.productDescription?.isNotEmpty ?? false)
+                      CustomText(
+                        text: product.productDescription ?? '',
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     17.ph,
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -168,9 +174,7 @@ class ProductDetailsScreen extends StatelessWidget {
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w700),
                           CustomText(
-                              text: product.deliveryType!.isNotEmpty
-                                  ? "${product.deliveryType?[0].toUpperCase()}${product.deliveryType?.substring(1)}"
-                                  : 'notAvailable'.tr(),
+                              text: deliveryText,
                               color: AppColors.blackDark,
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w700),
@@ -207,6 +211,7 @@ class ProductDetailsScreen extends StatelessWidget {
 
   Widget _buildPlaceholder() {
     return Container(
+      height: 300.h,
       color: AppColors.gray,
       child: Center(
         child: Icon(

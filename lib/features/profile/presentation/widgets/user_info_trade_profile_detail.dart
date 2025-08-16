@@ -20,14 +20,27 @@ class UserInfoTradeProfileDetail extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            radius: 36.r,
-            backgroundColor: AppColors.gray,
-            backgroundImage: image.isNotEmpty
-                ? (image.startsWith('http')
-                    ? CachedNetworkImageProvider(image)
-                    : CachedNetworkImageProvider('https://khvatai.ru/${image}'))
-                : AssetImage(Assets.assetsImagesProfileImage) as ImageProvider,
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(
+                100.r,
+              ),
+              border: Border.all(
+                color: AppColors.gray,
+                width: 1,
+              ),
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(
+                100.r,
+              ),
+              child: CustomImage(
+                width: 72.w,
+                height: 72.h,
+                imageSource: image,
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           8.pw,
           Expanded(

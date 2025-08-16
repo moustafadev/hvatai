@@ -263,6 +263,8 @@
   "selectStream": "Select a stream",
   "deliveryDetails": "Dimensions, weight of the parcel*",
   "ready": "Ready",
+  "openSettings": "Open settings",
+  "photoAccess": "To upload photos, please allow access to photos in the app settings.",
   "selectCategory": "Select Category",
   "noCategories": "No categories available",
   "maxWordsTitle": "Maximum 20 words allowed",

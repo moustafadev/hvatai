@@ -1,16 +1,20 @@
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:device_info_plus/device_info_plus.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/shared/utils/app_const.dart';
+import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +23,7 @@ import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:hvatai/routes/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -53,4 +58,9 @@ part 'custom_swipeable_list_title.dart';
 part 'custom_category_tabs.dart';
 part 'custom_photo_options_dialog.dart';
 part 'top_bar_widget.dart';
+part 'custom_product_image_widget.dart';
 part 'gradient_check_box.dart';
+part 'custom_upload_image.dart';
+part 'custom_show_image_product.dart';
+part 'show_dialog_cupertino.dart';
+part 'custom_image.dart';

@@ -11,7 +11,6 @@ import 'package:hvatai/features/profile/data/model/product_model/product_model.d
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_product_category_usecase.dart';
-import 'package:image_picker/image_picker.dart';
 
 part 'my_goods_cubit.freezed.dart';
 part 'my_goods_state.dart';
@@ -157,58 +156,13 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     emit(state.copyWith(product: updatedProduct));
   }
 
-  Future<void> pickImage() async {
-    if (state.selectedImages.length >= 8) return;
-
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
-      imageQuality: 85,
-    );
-
-    if (pickedFile != null) {
-      final imagePath = pickedFile.path;
-
-      final updatedFiles = List<File>.from(state.selectedImages)
-        ..add(File(imagePath));
-
-      final updatedPaths = List<String>.from(state.product.images ?? [])
-        ..add(imagePath);
-
-      emit(state.copyWith(
-        selectedImages: updatedFiles,
-        product: state.product.copyWith(
-          images: updatedPaths,
-        ),
-      ));
-    }
+  void updateProductImages(List<String> imagePaths) {
+    emit(state.copyWith(product: state.product.copyWith(images: imagePaths)));
   }
 
-  Future<void> captureImageFromCamera() async {
-    if (state.selectedImages.length >= 8) return;
-
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(
-      source: ImageSource.camera,
-      imageQuality: 85,
-    );
-
-    if (pickedFile != null) {
-      final imagePath = pickedFile.path;
-
-      final updatedFiles = List<File>.from(state.selectedImages)
-        ..add(File(imagePath));
-
-      final updatedPaths = List<String>.from(state.product.images ?? [])
-        ..add(imagePath);
-
-      emit(state.copyWith(
-        selectedImages: updatedFiles,
-        product: state.product.copyWith(
-          images: updatedPaths,
-        ),
-      ));
-    }
+  void setProductMainImage(String imagePath) {
+    emit(state.copyWith(
+        product: state.product.copyWith(productPictures: imagePath)));
   }
 
   void toggleSelfDestruction() {
