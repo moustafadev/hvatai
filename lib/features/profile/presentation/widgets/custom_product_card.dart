@@ -1,13 +1,15 @@
 part of '../profile.dart';
 
-class MyGoodsCard extends StatelessWidget {
+class MyCustomProductCard<T extends Cubit> extends StatelessWidget {
   final ProductModel product;
   final int selectedCategoryIndex;
+  final T cubit;
 
-  const MyGoodsCard({
+  const MyCustomProductCard({
     super.key,
     required this.product,
     required this.selectedCategoryIndex,
+    required this.cubit,
   });
 
   @override
@@ -18,10 +20,10 @@ class MyGoodsCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         context.push(
-          AppRoutes.productDetails,
+          AppRoutes.myProductDetails,
           extra: {
             'model': product,
-            'cubit': context.read<MyGoodsCubit>(),
+            'cubit': cubit,
           },
         );
       },

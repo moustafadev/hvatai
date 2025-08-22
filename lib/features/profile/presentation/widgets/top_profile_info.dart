@@ -16,7 +16,7 @@ class TopProfileInfo extends StatelessWidget {
             child: CustomImage(
               height: 41.h,
               width: 41.w,
-              imageSource: user.image!,
+              imageSource: user.image ?? '',
               fit: BoxFit.cover,
             ),
           ),

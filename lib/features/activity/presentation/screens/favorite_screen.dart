@@ -87,12 +87,22 @@ class FavoriteScreen extends StatelessWidget {
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w700),
                         9.ph,
-                        ...state.products.map(
-                          (item) => AuctionCard(
-                            product: item,
-                            selectedCategoryIndex: state.selectedCategoryIndex,
-                            currentUserId: '',
-                          ),
+                        ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: state.products.length,
+                          itemBuilder: (context, index) {
+                            final product = state.products[index];
+                            return Padding(
+                              padding: const EdgeInsets.only(bottom: 12),
+                              child: CustomProductCard(
+                                isNameCompany: true,
+                                products: state.products,
+                                product: product,
+                                selectedCategoryIndex: index,
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),

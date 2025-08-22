@@ -1,6 +1,5 @@
 import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
-import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/datasources/api_service_profile.dart';
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';

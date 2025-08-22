@@ -27,6 +27,7 @@ class ProductsCompanyNameScreen extends StatelessWidget {
         ),
         backgroundColor: AppColors.lightGreyBackground,
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
               padding:
@@ -38,19 +39,25 @@ class ProductsCompanyNameScreen extends StatelessWidget {
             ),
             Expanded(
               child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      12.ph,
-                      CustomText(
-                        text: 'goods',
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w800,
-                      ),
-                      ProductCardCompany(),
-                    ],
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight:
+                        MediaQuery.of(context).size.height - kToolbarHeight,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        12.ph,
+                        CustomText(
+                          text: 'goods',
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w800,
+                        ),
+                        ProductCardCompany(),
+                      ],
+                    ),
                   ),
                 ),
               ),

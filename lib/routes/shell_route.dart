@@ -150,7 +150,7 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
           GoRoute(
               path: AppRoutes.favorite,
               pageBuilder: (context, state) {
-                final cubit = state.extra as ActivityCubit..loadProducts();
+                final cubit = state.extra as ActivityCubit..getFavProducts();
                 return buildCupertinoTransitionPage(
                   context: context,
                   state: state,

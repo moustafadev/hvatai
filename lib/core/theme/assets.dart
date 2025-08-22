@@ -134,6 +134,10 @@ class Assets {
   /// assets/icons/fav.png
   static const String assetsIconsFav = "assets/icons/fav.png";
 
+  /// Assets for assetsIconsFavsav
+  /// assets/icons/favsav.png
+  static const String assetsIconsFavsav = "assets/icons/favsav.png";
+
   /// Assets for assetsIconsFile
   /// assets/icons/File.png
   static const String assetsIconsFile = "assets/icons/File.png";

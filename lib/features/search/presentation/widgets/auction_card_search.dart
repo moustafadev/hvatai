@@ -33,9 +33,7 @@ class AuctionCardSearch extends StatelessWidget {
     } else if (selectedCategoryIndex == 2 && currentUserBid < highestBid) {}
 
     return GestureDetector(
-      onTap: () {
-        // TODO: Handle navigation with GoRouter and pass product
-      },
+      onTap: () {},
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 6.h),
         decoration: BoxDecoration(

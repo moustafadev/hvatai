@@ -11,6 +11,7 @@ class MyGoodsState with _$MyGoodsState {
     @Default('') String errorMessage,
     @Default(0) int currentImageIndex,
     @Default([]) List<ProductModel> products,
+    PageController? pageController,
     @Default([]) List<MainCategoryModel> category,
   }) = _MyGoodsState;
 }

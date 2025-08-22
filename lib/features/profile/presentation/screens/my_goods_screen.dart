@@ -84,9 +84,10 @@ class MyGoodsScreen extends StatelessWidget {
                         final product = state.products[index];
                         return Padding(
                           padding: const EdgeInsets.only(bottom: 12),
-                          child: MyGoodsCard(
+                          child: MyCustomProductCard<MyGoodsCubit>(
                             product: product,
-                            selectedCategoryIndex: state.selectedCategoryIndex,
+                            selectedCategoryIndex: index,
+                            cubit: context.read<MyGoodsCubit>(),
                           ),
                         );
                       },

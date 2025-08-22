@@ -6,7 +6,7 @@ part 'product_model.g.dart';
 @freezed
 class ProductModel with _$ProductModel {
   const factory ProductModel({
-    List<String>? images,
+    @JsonKey(fromJson: _imagesFromJson) List<String>? images,
     @JsonKey(name: 'product_name') String? productName,
     @JsonKey(name: 'product_description') String? productDescription,
     @JsonKey(name: 'category_id') int? categoryId,
@@ -48,10 +48,77 @@ class ProductModel with _$ProductModel {
     @JsonKey(name: 'product_pictures') dynamic productPictures,
     @Default([]) List<VariantModel> variants,
     MainCategoryModel? category,
+    UserModel? user,
+    OwnerModel? owner,
+    @JsonKey(name: 'is_favorited') @Default(false) bool isFavorited,
+    @JsonKey(name: 'favorites_count') @Default(0) int favoritesCount,
+    @Default([]) List<dynamic> ratings,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>
       _$ProductModelFromJson(json);
+}
+
+@freezed
+class UserModel with _$UserModel {
+  const factory UserModel({
+    int? id,
+    @JsonKey(name: 'business_id') int? businessId,
+    String? email,
+    String? name,
+    @JsonKey(name: 'last_name') String? lastName,
+    String? gender,
+    String? country,
+    @JsonKey(name: 'age_confirmation') int? ageConfirmation,
+    @JsonKey(name: 'terms_agreement') int? termsAgreement,
+    @JsonKey(name: 'personal_rating') double? personalRating,
+    String? provider,
+    @JsonKey(name: 'provider_id') String? providerId,
+    String? role,
+    String? phone,
+    String? image,
+    @JsonKey(name: 'image_business') String? imageBusiness,
+    String? description,
+    String? lang,
+    String? visibility,
+    String? sms,
+    @JsonKey(name: 'send_email') String? sendEmail,
+    String? push,
+    String? status,
+    @JsonKey(name: 'email_verified_at') DateTime? emailVerifiedAt,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
+    @JsonKey(name: 'updated_at') DateTime? updatedAt,
+    @JsonKey(name: 'personal_rating_count') int? personalRatingCount,
+    @JsonKey(name: 'is_favorited') bool? isFavorited,
+    @JsonKey(name: 'favorites_count') int? favoritesCount,
+  }) = _UserModel;
+
+  factory UserModel.fromJson(Map<String, dynamic> json) =>
+      _$UserModelFromJson(json);
+}
+
+@freezed
+class OwnerModel with _$OwnerModel {
+  const factory OwnerModel({
+    int? id,
+    String? name,
+    String? email,
+    String? image,
+  }) = _OwnerModel;
+
+  factory OwnerModel.fromJson(Map<String, dynamic> json) =>
+      _$OwnerModelFromJson(json);
+}
+
+List<String>? _imagesFromJson(dynamic json) {
+  if (json == null) return [];
+  if (json is List) {
+    return json
+        .map((e) => e is Map<String, dynamic> ? e['url'] as String? : null)
+        .whereType<String>()
+        .toList();
+  }
+  return [];
 }
 
 bool _boolFromInt(dynamic value) {
@@ -77,6 +144,7 @@ class VariantModel with _$VariantModel {
   const factory VariantModel({
     @JsonKey(fromJson: _parseDouble) double? price,
     @Default(1) int stock,
+    int? id,
     Map<String, dynamic>? attributes,
     @JsonKey(fromJson: _parseDouble) double? discount,
     @JsonKey(name: 'discount_type') String? discountType,

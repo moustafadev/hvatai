@@ -72,7 +72,7 @@ class InitNewAddressScreen extends StatelessWidget {
                                 },
                               );
                             },
-                            contentPadding: EdgeInsets.all(0),
+                            contentPadding: EdgeInsets.zero,
                             leading: Image.asset(
                               height: 26.h,
                               width: 26.w,
@@ -94,7 +94,6 @@ class InitNewAddressScreen extends StatelessWidget {
                                 AppRoutes.editDeliveryAddress,
                                 extra: {
                                   'model': state.deliveryModel[index],
-                                  'cubit': cubit,
                                 },
                               );
                             },

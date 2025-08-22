@@ -24,9 +24,7 @@ import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile
 import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 part 'screens/profile_screen.dart';
 part 'widgets/custom_profile_background_scaffold.dart';
@@ -60,7 +58,6 @@ part 'widgets/body_normal_profile.dart';
 //part 'widgets/change_password_field.dart';
 part 'screens/my_goods_screen.dart';
 part 'widgets/my_goods_tabs.dart';
-part 'widgets/my_goods_card.dart';
 part 'screens/add_new_products_screen.dart';
 part 'widgets/add_product_action_button.dart';
 part 'widgets/sale_type_button.dart';
@@ -79,4 +76,5 @@ part 'widgets/cart_item_actions_button.dart';
 part 'widgets/checkbox_courier_delivery.dart';
 part 'widgets/checkbox_myself_delivery.dart';
 part 'widgets/row_time_delivery.dart';
-part 'screens/product_details_screen.dart';
+part 'screens/my_product_details_screen.dart';
+part 'widgets/custom_product_card.dart';

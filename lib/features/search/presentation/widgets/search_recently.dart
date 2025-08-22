@@ -5,8 +5,7 @@ class SearchRecently extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchTabsCubit, SearchTabsState>(
-        builder: (context, state) {
+    return BlocBuilder<SearchCubit, SearchState>(builder: (context, state) {
       return Wrap(
         spacing: 8,
         runSpacing: 8,
@@ -20,7 +19,7 @@ class SearchRecently extends StatelessWidget {
             ),
             backgroundColor: AppColors.gray,
             onDeleted: () {
-              context.read<SearchTabsCubit>().removeItem(item);
+              context.read<SearchCubit>().removeItem(item);
             },
           );
         }).toList(),

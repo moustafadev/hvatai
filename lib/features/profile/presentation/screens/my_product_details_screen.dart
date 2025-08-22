@@ -1,17 +1,15 @@
 part of '../profile.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
-  const ProductDetailsScreen({super.key});
+class MyProductDetailsScreen extends StatelessWidget {
+  const MyProductDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    context.read<MyGoodsCubit>().resetImageIndex();
     return BlocBuilder<MyGoodsCubit, MyGoodsState>(builder: (context, state) {
       final product = state.product;
       final variant =
           product.variants.isNotEmpty ? product.variants.first : VariantModel();
-
-      final pageController =
-          PageController(initialPage: state.currentImageIndex);
 
       final deliveryType = product.deliveryType ?? '';
       final deliveryText = deliveryType.isNotEmpty
@@ -43,7 +41,7 @@ class ProductDetailsScreen extends StatelessWidget {
               SizedBox(
                 height: 300.h,
                 child: PageView.builder(
-                  controller: pageController,
+                  controller: state.pageController,
                   itemCount: images.isEmpty ? 1 : images.length,
                   onPageChanged: (index) {
                     context.read<MyGoodsCubit>().changeImageIndex(index);

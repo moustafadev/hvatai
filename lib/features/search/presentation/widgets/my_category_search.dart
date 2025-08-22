@@ -39,11 +39,11 @@ class MyCategorySearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchTabsCubit, SearchTabsState>(
+    return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
-        final cubit = context.read<SearchTabsCubit>();
+        final cubit = context.read<SearchCubit>();
 
-        return ReusableCategoryWidget<SearchTabsCubit, SearchTabsState>(
+        return ReusableCategoryWidget<SearchCubit, SearchState>(
           interestKeys: MyCategorySearch.interestKeys,
           interestImages: MyCategorySearch.interestImages,
           selectedIndices: state.selectedIndices.toList(),

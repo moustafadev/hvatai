@@ -26,10 +26,18 @@ class SearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => locator<SearchTabsCubit>()..fetchCategories(),
-      child: BlocConsumer<SearchTabsCubit, SearchTabsState>(
-        listener: (context, state) {},
+      create: (_) => locator<SearchCubit>()
+        ..fetchCategories()
+        ..getAllProducts(),
+      child: BlocBuilder<SearchCubit, SearchState>(
         builder: (context, state) {
+          if (state.isLoading) {
+            return const Center(
+                child: CircularProgressIndicator(
+              color: AppColors.grey,
+            ));
+          }
+
           return SafeArea(
             bottom: false,
             child: Scaffold(
@@ -55,7 +63,7 @@ class SearchScreen extends StatelessWidget {
                             ButtonTabBarSearch(onCategorySelected: (category) {
                               if (category != null) {
                                 context
-                                    .read<SearchTabsCubit>()
+                                    .read<SearchCubit>()
                                     .selectCategory(category);
                               }
                             }),
@@ -82,7 +90,7 @@ class SearchScreen extends StatelessWidget {
                               fontSize: 20.sp,
                             ),
                             12.ph,
-                            AuctionSearchWidget(),
+                            ProductsSearchWidget(),
                             24.ph,
                             CustomText(
                               text: 'streams'.tr(),

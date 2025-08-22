@@ -44,25 +44,25 @@ class FeaturedActivityWidget extends StatelessWidget {
                               ),
                             ],
                           );
-                        case "Goods":
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SectionTitle(title: "Goods"),
-                              ...state.products.map(
-                                (item) => Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 12.w),
-                                  child: AuctionCard(
-                                    product: item,
-                                    selectedCategoryIndex:
-                                        state.selectedCategoryIndex,
-                                    currentUserId: '',
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
+                        // case "Goods":
+                        //   return Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       const SectionTitle(title: "Goods"),
+                        //       ...state.products.map(
+                        //         (item) => Padding(
+                        //           padding:
+                        //               EdgeInsets.symmetric(horizontal: 12.w),
+                        //           child: AuctionCard(
+                        //             product: state.products,
+                        //             selectedCategoryIndex:
+                        //                 state.selectedCategoryIndex,
+                        //             currentUserId: '',
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     ],
+                        //   );
                         default:
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,18 +73,18 @@ class FeaturedActivityWidget extends StatelessWidget {
                                 currentUserId: '1',
                               ),
                               const SectionTitle(title: "Goods"),
-                              ...state.products.map(
-                                (item) => Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 12.w),
-                                  child: AuctionCard(
-                                    product: item,
-                                    selectedCategoryIndex:
-                                        state.selectedCategoryIndex,
-                                    currentUserId: '',
-                                  ),
-                                ),
-                              ),
+                              // ...state.products.map(
+                              //   (item) => Padding(
+                              //     padding:
+                              //         EdgeInsets.symmetric(horizontal: 12.w),
+                              //     child: AuctionCard(
+                              //       product: item,
+                              //       selectedCategoryIndex:
+                              //           state.selectedCategoryIndex,
+                              //       currentUserId: '',
+                              //     ),
+                              //   ),
+                              // ),
                             ],
                           );
                       }

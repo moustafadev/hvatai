@@ -40,18 +40,12 @@ class AddNewProductsScreen extends StatelessWidget {
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w800,
                     ),
-                    // 12.ph,
-                    // CustomText(
-                    //   text: 'photo'.tr(),
-                    //   fontSize: 20.sp,
-                    //   fontWeight: FontWeight.w800,
-                    // ),
                     12.ph,
                     CustomProductImageWidget(
                         updateImage: (List<String> imageUpdate) {
                           cubit.updateProductImages(imageUpdate);
                         },
-                        initialImages: state.product.images,
+                        initialImages: state.product.productPictures,
                         title: 'photo'.tr()),
                     24.ph,
                     CustomText(

@@ -42,6 +42,15 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     ));
   }
 
+  void createPageController() {
+    final controller = PageController(initialPage: state.currentImageIndex);
+    emit(state.copyWith(pageController: controller));
+  }
+
+  void resetImageIndex() {
+    emit(state.copyWith(currentImageIndex: 0, pageController: null));
+  }
+
   void changeImageIndex(int index) {
     emit(state.copyWith(currentImageIndex: index));
   }
@@ -157,7 +166,8 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
   }
 
   void updateProductImages(List<String> imagePaths) {
-    emit(state.copyWith(product: state.product.copyWith(images: imagePaths)));
+    emit(state.copyWith(
+        product: state.product.copyWith(productPictures: imagePaths)));
   }
 
   void setProductMainImage(String imagePath) {
@@ -202,14 +212,6 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     emit(state.copyWith(product: updatedProduct));
   }
 
-  void resetProduct() {
-    emit(state.copyWith(
-      product: ProductModel(variants: [VariantModel()]),
-      selectedImages: [],
-    ));
-    deliveryTimeController.clear();
-  }
-
   void decreaseQuantity() {
     final currentVariant = state.product.variants.firstOrNull;
     final currentStock = currentVariant?.stock ?? 1;
@@ -227,6 +229,14 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     emit(state.copyWith(product: updatedProduct));
   }
 
+  void resetProduct() {
+    emit(state.copyWith(
+      product: ProductModel(variants: [VariantModel()]),
+      selectedImages: [],
+    ));
+    deliveryTimeController.clear();
+  }
+
   Future<void> addProduct(BuildContext context) async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
@@ -236,12 +246,12 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     result.fold((failure) {
       emit(state.copyWith(isLoading: false, errorMessage: failure));
       showFloatingMessageError('somethingWentWrong'.tr());
-    }, (newProduct) async {
+    }, (newProduct) {
       emit(state.copyWith(
         isLoading: false,
         products: [state.product, ...state.products],
       ));
-
+      getMyProducts();
       showFloatingMessageSuccess('productAdded'.tr());
       context.pop();
 

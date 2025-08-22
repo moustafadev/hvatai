@@ -22,7 +22,7 @@ class ApiServiceProfile extends ApiBase {
     return executeAndHandleErrorServer<ProductModel>(() async {
       final formData = await _prepareProductFormData(params);
       final response = await post(
-        ServerConfig.addProduct,
+        ServerConfig.products,
         body: formData,
         contentType: 'multipart/form-data',
       );
@@ -38,28 +38,28 @@ class ApiServiceProfile extends ApiBase {
     final dataMap = Map<String, dynamic>.from(params.toJson());
     dataMap['delivery_available'] =
         params.productModel.deliveryAvailable ? 1 : 0;
-    dataMap['status'] =
-        params.productModel.status == params.productModel.status ? 1 : 0;
+    dataMap['status'] = params.productModel.status != null ? 1 : 0;
     dataMap['self_pickup'] = params.productModel.selfPickup ? 1 : 0;
 
     final variantsJson =
         params.productModel.variants.map((v) => v.toJson()).toList();
     dataMap['variants'] = variantsJson;
 
-    List<MultipartFile> imageFiles = [];
-    if (params.productModel.images != null &&
-        params.productModel.images!.isNotEmpty) {
-      for (final imagePath in params.productModel.images!) {
-        final file = await _prepareImageFile(imagePath); // ✅ هنا
+    if (params.productModel.productPictures != null &&
+        params.productModel.productPictures!.isNotEmpty) {
+      for (int i = 0; i < params.productModel.productPictures!.length; i++) {
+        final imagePath = params.productModel.productPictures![i];
+        final file = await _prepareImageFile(imagePath);
         if (file != null) {
-          imageFiles.add(file);
+          dataMap['product_pictures[$i]'] = file;
         }
       }
     }
 
-    if (imageFiles.isNotEmpty) {
-      dataMap['images[]'] = imageFiles;
-    }
+    print("📝 FormData:");
+    dataMap.forEach((k, v) {
+      print("$k : $v");
+    });
 
     return FormData.fromMap(dataMap);
   }
@@ -137,7 +137,7 @@ class ApiServiceProfile extends ApiBase {
 
   Future<List<ProductModel>> getMyProducts() async {
     return executeAndHandleErrorServer<List<ProductModel>>(() async {
-      final response = await get(ServerConfig.addProduct);
+      final response = await get(ServerConfig.products);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<dynamic> data = response.json['data'];
@@ -178,33 +178,36 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-  Future<File> compressImage(File file) async {
-    final compressedFile = await FlutterImageCompress.compressAndGetFile(
+  Future<File> compressImage(File file, {int quality = 70}) async {
+    final targetPath = file.absolute.path.replaceAll('.jpg', '_compressed.jpg');
+
+    final result = await FlutterImageCompress.compressAndGetFile(
       file.absolute.path,
-      file.absolute.path.replaceAll('.jpg', '_compressed.jpg'),
-      quality: 70,
+      targetPath,
+      quality: quality,
+      minWidth: 1080,
+      minHeight: 1080,
     );
-    return compressedFile ?? file;
+
+    return result ?? file;
   }
 
   Future<MultipartFile?> _prepareImageFile(String? imagePath) async {
     if (imagePath == null || imagePath.isEmpty) return null;
 
     File file = File(imagePath);
+    if (!await file.exists()) return null;
 
-    if (!await file.exists()) {
-      return null;
+    int quality = 85;
+    while (await file.length() > 1 * 1024 * 1024 && quality > 30) {
+      file = await compressImage(file, quality: quality);
+      quality -= 15;
     }
 
-    if (await file.length() > 2 * 1024 * 1024) {
-      file = await compressImage(file);
-      if (await file.length() > 2 * 1024 * 1024) {
-        throw Exception;
-      }
-    }
-
-    return MultipartFile.fromFile(file.path,
-        filename: file.path.split('/').last);
+    return MultipartFile.fromFile(
+      file.path,
+      filename: file.path.split('/').last,
+    );
   }
 
   Future<UserRegistrationData> updateProfileData(
@@ -232,7 +235,6 @@ class ApiServiceProfile extends ApiBase {
         params.userRegistrationData.isAbove18 ?? false ? 1 : 0;
     dataMap['phone'] = "043535345";
 
-    // Handle image file only
     MultipartFile? imageFile;
     if (params.userRegistrationData.image != null &&
         File(params.userRegistrationData.image!).existsSync()) {

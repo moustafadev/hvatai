@@ -20,9 +20,9 @@ class ButtonTabBarSearch extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<SearchTabsCubit>();
+    final cubit = context.read<SearchCubit>();
 
-    return BlocBuilder<SearchTabsCubit, SearchTabsState>(
+    return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,

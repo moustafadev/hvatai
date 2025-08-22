@@ -44,13 +44,11 @@ class UserTile extends StatelessWidget {
       title: CustomText(
         text: user.firstName ?? '',
         fontWeight: FontWeight.w500,
-        fontFamily: 'Manrope',
         fontSize: 16.sp,
       ),
       subtitle: CustomText(
         text: "15K subscribers".tr(),
         fontWeight: FontWeight.w400,
-        fontFamily: 'Manrope',
         fontSize: 16.sp,
         color: Colors.grey,
       ),

@@ -35,14 +35,14 @@ class RatesActivityWidget extends StatelessWidget {
                       padding: EdgeInsets.symmetric(horizontal: 13.w),
                       child: Column(
                         children: [
-                          ...state.products.map(
-                            (item) => AuctionCard(
-                              product: item,
-                              selectedCategoryIndex:
-                                  state.selectedCategoryIndex,
-                              currentUserId: '',
-                            ),
-                          ),
+                          // ...state.products.map(
+                          //   (item) => AuctionCard(
+                          //     product: item,
+                          //     selectedCategoryIndex:
+                          //         state.selectedCategoryIndex,
+                          //     currentUserId: '',
+                          //   ),
+                          // ),
                           100.ph
                         ],
                       ),

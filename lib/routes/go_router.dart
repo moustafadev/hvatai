@@ -1,5 +1,10 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hvatai/features/activity/presentation/activity.dart';
+import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
+import 'package:hvatai/features/all_app/data/model/cart_model.dart';
+import 'package:hvatai/features/all_app/presentation/basket.dart';
+import 'package:hvatai/features/all_app/presentation/cubit/product_detials/product_details_cubit.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
@@ -11,6 +16,7 @@ import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_pro
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
+import 'package:hvatai/features/search/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -114,13 +120,9 @@ final GoRouter router = GoRouter(
         final extra = state.extra as Map<String, Object>;
 
         final model = extra['model'] as UserRegistrationData;
-        final cubit = extra['cubit'] as DeliveryAddressCubit
-          ..initRegistrationModel(model)
-          ..prefill(model.country);
 
-        return BlocProvider.value(
-          value: cubit,
-          child: EditDeliveryAddressScreen(),
+        return EditDeliveryAddressScreen(
+          address: model,
         );
       },
     ),
@@ -170,14 +172,39 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: AppRoutes.productDetails,
+      path: AppRoutes.myProductDetails,
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, Object>;
         final model = extra['model'] as ProductModel;
         final cubit = extra['cubit'] as MyGoodsCubit..initProductModel(model);
 
         return BlocProvider.value(
-            value: cubit, child: const ProductDetailsScreen());
+            value: cubit, child: const MyProductDetailsScreen());
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.productDetails,
+      builder: (BuildContext context, GoRouterState state) {
+        final extra = state.extra as Map<String, Object>;
+        final model = extra['model'] as ProductModel;
+        final products = extra['products'] as List<ProductModel>;
+        final cubit = extra['cubit'] as ProductDetailsCubit
+          ..initProductModel(model);
+
+        return BlocProvider.value(
+          value: cubit,
+          child: ProductDetailsScreen(
+            product: model,
+            products: products,
+            // cart: cart,
+          ),
+        );
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.allProductCart,
+      builder: (BuildContext context, GoRouterState state) {
+        return AllProductsCartScreen();
       },
     ),
     GoRoute(

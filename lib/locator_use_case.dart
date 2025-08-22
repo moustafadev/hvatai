@@ -1,3 +1,10 @@
+import 'package:hvatai/features/all_app/domain/usecases/add_fav_product_usecase.dart';
+import 'package:hvatai/features/all_app/domain/usecases/add_product_to_cart_usecase.dart';
+import 'package:hvatai/features/all_app/domain/usecases/delete_cart_usecase.dart';
+import 'package:hvatai/features/all_app/domain/usecases/get_all_products_usecase.dart';
+import 'package:hvatai/features/all_app/domain/usecases/get_cart_usecase.dart';
+import 'package:hvatai/features/all_app/domain/usecases/get_fav_products_usecase.dart';
+import 'package:hvatai/features/all_app/domain/usecases/update_cart_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/add_fav_category_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
@@ -53,7 +60,14 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => LoginWithAppleUsecase(locator()));
   locator.registerLazySingleton(() => UpdateProfileTypeUsecase(locator()));
   locator.registerLazySingleton(() => GetMyProductsUsecase(locator()));
+  locator.registerLazySingleton(() => GetAllProductsUsecase(locator()));
   locator.registerLazySingleton(() => GetProductCategoryUsecase(locator()));
   locator.registerLazySingleton(() => AddNewProductUsecase(locator()));
   locator.registerLazySingleton(() => CreateStreamUsecase(locator()));
+  locator.registerLazySingleton(() => AddFavProductUsecase(locator()));
+  locator.registerLazySingleton(() => GetFavProductsUsecase(locator()));
+  locator.registerLazySingleton(() => AddProductToCartUsecase(locator()));
+  locator.registerLazySingleton(() => GetCartUsecase(locator()));
+  locator.registerLazySingleton(() => UpdateCartUsecase(locator()));
+  locator.registerLazySingleton(() => DeleteCartUsecase(locator()));
 }

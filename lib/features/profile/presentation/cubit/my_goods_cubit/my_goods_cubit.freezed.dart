@@ -24,6 +24,7 @@ mixin _$MyGoodsState {
   String get errorMessage => throw _privateConstructorUsedError;
   int get currentImageIndex => throw _privateConstructorUsedError;
   List<ProductModel> get products => throw _privateConstructorUsedError;
+  PageController? get pageController => throw _privateConstructorUsedError;
   List<MainCategoryModel> get category => throw _privateConstructorUsedError;
 
   /// Create a copy of MyGoodsState
@@ -48,6 +49,7 @@ abstract class $MyGoodsStateCopyWith<$Res> {
       String errorMessage,
       int currentImageIndex,
       List<ProductModel> products,
+      PageController? pageController,
       List<MainCategoryModel> category});
 
   $ProductModelCopyWith<$Res> get product;
@@ -76,6 +78,7 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
     Object? errorMessage = null,
     Object? currentImageIndex = null,
     Object? products = null,
+    Object? pageController = freezed,
     Object? category = null,
   }) {
     return _then(_value.copyWith(
@@ -111,6 +114,10 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
               as List<ProductModel>,
+      pageController: freezed == pageController
+          ? _value.pageController
+          : pageController // ignore: cast_nullable_to_non_nullable
+              as PageController?,
       category: null == category
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -146,6 +153,7 @@ abstract class _$$MyGoodsStateImplCopyWith<$Res>
       String errorMessage,
       int currentImageIndex,
       List<ProductModel> products,
+      PageController? pageController,
       List<MainCategoryModel> category});
 
   @override
@@ -173,6 +181,7 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
     Object? errorMessage = null,
     Object? currentImageIndex = null,
     Object? products = null,
+    Object? pageController = freezed,
     Object? category = null,
   }) {
     return _then(_$MyGoodsStateImpl(
@@ -208,6 +217,10 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
           ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
               as List<ProductModel>,
+      pageController: freezed == pageController
+          ? _value.pageController
+          : pageController // ignore: cast_nullable_to_non_nullable
+              as PageController?,
       category: null == category
           ? _value._category
           : category // ignore: cast_nullable_to_non_nullable
@@ -228,6 +241,7 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
       this.errorMessage = '',
       this.currentImageIndex = 0,
       final List<ProductModel> products = const [],
+      this.pageController,
       final List<MainCategoryModel> category = const []})
       : _selectedImages = selectedImages,
         _products = products,
@@ -268,6 +282,8 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
     return EqualUnmodifiableListView(_products);
   }
 
+  @override
+  final PageController? pageController;
   final List<MainCategoryModel> _category;
   @override
   @JsonKey()
@@ -279,7 +295,7 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
 
   @override
   String toString() {
-    return 'MyGoodsState(selectedCategoryIndex: $selectedCategoryIndex, selectedImages: $selectedImages, selfDestruction: $selfDestruction, product: $product, isLoading: $isLoading, errorMessage: $errorMessage, currentImageIndex: $currentImageIndex, products: $products, category: $category)';
+    return 'MyGoodsState(selectedCategoryIndex: $selectedCategoryIndex, selectedImages: $selectedImages, selfDestruction: $selfDestruction, product: $product, isLoading: $isLoading, errorMessage: $errorMessage, currentImageIndex: $currentImageIndex, products: $products, pageController: $pageController, category: $category)';
   }
 
   @override
@@ -301,6 +317,8 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
             (identical(other.currentImageIndex, currentImageIndex) ||
                 other.currentImageIndex == currentImageIndex) &&
             const DeepCollectionEquality().equals(other._products, _products) &&
+            (identical(other.pageController, pageController) ||
+                other.pageController == pageController) &&
             const DeepCollectionEquality().equals(other._category, _category));
   }
 
@@ -315,6 +333,7 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
       errorMessage,
       currentImageIndex,
       const DeepCollectionEquality().hash(_products),
+      pageController,
       const DeepCollectionEquality().hash(_category));
 
   /// Create a copy of MyGoodsState
@@ -336,6 +355,7 @@ abstract class _MyGoodsState implements MyGoodsState {
       final String errorMessage,
       final int currentImageIndex,
       final List<ProductModel> products,
+      final PageController? pageController,
       final List<MainCategoryModel> category}) = _$MyGoodsStateImpl;
 
   @override
@@ -354,6 +374,8 @@ abstract class _MyGoodsState implements MyGoodsState {
   int get currentImageIndex;
   @override
   List<ProductModel> get products;
+  @override
+  PageController? get pageController;
   @override
   List<MainCategoryModel> get category;
 

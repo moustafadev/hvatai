@@ -18,7 +18,11 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ActivityState {
   int get selectedTabIndex => throw _privateConstructorUsedError;
   int get selectedCategoryIndex => throw _privateConstructorUsedError;
-  List<AuctionProduct> get products => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
+  int get currentImageIndex => throw _privateConstructorUsedError;
+  String get errorMessage => throw _privateConstructorUsedError;
+  ProductModel get product => throw _privateConstructorUsedError;
+  List<ProductModel> get products => throw _privateConstructorUsedError;
 
   /// Create a copy of ActivityState
   /// with the given fields replaced by the non-null parameter values.
@@ -36,7 +40,13 @@ abstract class $ActivityStateCopyWith<$Res> {
   $Res call(
       {int selectedTabIndex,
       int selectedCategoryIndex,
-      List<AuctionProduct> products});
+      bool isLoading,
+      int currentImageIndex,
+      String errorMessage,
+      ProductModel product,
+      List<ProductModel> products});
+
+  $ProductModelCopyWith<$Res> get product;
 }
 
 /// @nodoc
@@ -56,6 +66,10 @@ class _$ActivityStateCopyWithImpl<$Res, $Val extends ActivityState>
   $Res call({
     Object? selectedTabIndex = null,
     Object? selectedCategoryIndex = null,
+    Object? isLoading = null,
+    Object? currentImageIndex = null,
+    Object? errorMessage = null,
+    Object? product = null,
     Object? products = null,
   }) {
     return _then(_value.copyWith(
@@ -67,11 +81,37 @@ class _$ActivityStateCopyWithImpl<$Res, $Val extends ActivityState>
           ? _value.selectedCategoryIndex
           : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currentImageIndex: null == currentImageIndex
+          ? _value.currentImageIndex
+          : currentImageIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      product: null == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ProductModel,
       products: null == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<AuctionProduct>,
+              as List<ProductModel>,
     ) as $Val);
+  }
+
+  /// Create a copy of ActivityState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProductModelCopyWith<$Res> get product {
+    return $ProductModelCopyWith<$Res>(_value.product, (value) {
+      return _then(_value.copyWith(product: value) as $Val);
+    });
   }
 }
 
@@ -86,7 +126,14 @@ abstract class _$$ActivityStateImplCopyWith<$Res>
   $Res call(
       {int selectedTabIndex,
       int selectedCategoryIndex,
-      List<AuctionProduct> products});
+      bool isLoading,
+      int currentImageIndex,
+      String errorMessage,
+      ProductModel product,
+      List<ProductModel> products});
+
+  @override
+  $ProductModelCopyWith<$Res> get product;
 }
 
 /// @nodoc
@@ -104,6 +151,10 @@ class __$$ActivityStateImplCopyWithImpl<$Res>
   $Res call({
     Object? selectedTabIndex = null,
     Object? selectedCategoryIndex = null,
+    Object? isLoading = null,
+    Object? currentImageIndex = null,
+    Object? errorMessage = null,
+    Object? product = null,
     Object? products = null,
   }) {
     return _then(_$ActivityStateImpl(
@@ -115,10 +166,26 @@ class __$$ActivityStateImplCopyWithImpl<$Res>
           ? _value.selectedCategoryIndex
           : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currentImageIndex: null == currentImageIndex
+          ? _value.currentImageIndex
+          : currentImageIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      product: null == product
+          ? _value.product
+          : product // ignore: cast_nullable_to_non_nullable
+              as ProductModel,
       products: null == products
           ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
-              as List<AuctionProduct>,
+              as List<ProductModel>,
     ));
   }
 }
@@ -129,7 +196,11 @@ class _$ActivityStateImpl implements _ActivityState {
   const _$ActivityStateImpl(
       {this.selectedTabIndex = 0,
       this.selectedCategoryIndex = 0,
-      final List<AuctionProduct> products = const []})
+      this.isLoading = false,
+      this.currentImageIndex = 0,
+      this.errorMessage = '',
+      required this.product,
+      final List<ProductModel> products = const []})
       : _products = products;
 
   @override
@@ -138,10 +209,21 @@ class _$ActivityStateImpl implements _ActivityState {
   @override
   @JsonKey()
   final int selectedCategoryIndex;
-  final List<AuctionProduct> _products;
   @override
   @JsonKey()
-  List<AuctionProduct> get products {
+  final bool isLoading;
+  @override
+  @JsonKey()
+  final int currentImageIndex;
+  @override
+  @JsonKey()
+  final String errorMessage;
+  @override
+  final ProductModel product;
+  final List<ProductModel> _products;
+  @override
+  @JsonKey()
+  List<ProductModel> get products {
     if (_products is EqualUnmodifiableListView) return _products;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_products);
@@ -149,7 +231,7 @@ class _$ActivityStateImpl implements _ActivityState {
 
   @override
   String toString() {
-    return 'ActivityState(selectedTabIndex: $selectedTabIndex, selectedCategoryIndex: $selectedCategoryIndex, products: $products)';
+    return 'ActivityState(selectedTabIndex: $selectedTabIndex, selectedCategoryIndex: $selectedCategoryIndex, isLoading: $isLoading, currentImageIndex: $currentImageIndex, errorMessage: $errorMessage, product: $product, products: $products)';
   }
 
   @override
@@ -161,12 +243,26 @@ class _$ActivityStateImpl implements _ActivityState {
                 other.selectedTabIndex == selectedTabIndex) &&
             (identical(other.selectedCategoryIndex, selectedCategoryIndex) ||
                 other.selectedCategoryIndex == selectedCategoryIndex) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            (identical(other.currentImageIndex, currentImageIndex) ||
+                other.currentImageIndex == currentImageIndex) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
+            (identical(other.product, product) || other.product == product) &&
             const DeepCollectionEquality().equals(other._products, _products));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, selectedTabIndex,
-      selectedCategoryIndex, const DeepCollectionEquality().hash(_products));
+  int get hashCode => Object.hash(
+      runtimeType,
+      selectedTabIndex,
+      selectedCategoryIndex,
+      isLoading,
+      currentImageIndex,
+      errorMessage,
+      product,
+      const DeepCollectionEquality().hash(_products));
 
   /// Create a copy of ActivityState
   /// with the given fields replaced by the non-null parameter values.
@@ -181,14 +277,26 @@ abstract class _ActivityState implements ActivityState {
   const factory _ActivityState(
       {final int selectedTabIndex,
       final int selectedCategoryIndex,
-      final List<AuctionProduct> products}) = _$ActivityStateImpl;
+      final bool isLoading,
+      final int currentImageIndex,
+      final String errorMessage,
+      required final ProductModel product,
+      final List<ProductModel> products}) = _$ActivityStateImpl;
 
   @override
   int get selectedTabIndex;
   @override
   int get selectedCategoryIndex;
   @override
-  List<AuctionProduct> get products;
+  bool get isLoading;
+  @override
+  int get currentImageIndex;
+  @override
+  String get errorMessage;
+  @override
+  ProductModel get product;
+  @override
+  List<ProductModel> get products;
 
   /// Create a copy of ActivityState
   /// with the given fields replaced by the non-null parameter values.

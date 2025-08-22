@@ -1,7 +1,6 @@
 part of '../search.dart';
 
 class CategoriesTabsSearchWidget extends StatelessWidget {
-  // Dummy data ثابتة بدل جلب بيانات من Firebase
   final List<String> categories = [
     "Electronics",
     "Clothing",
@@ -23,14 +22,12 @@ class CategoriesTabsSearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // نستخدم dummy data بدون فلتر أو تحميل أو بحث
     return DefaultTabController(
       length: 3,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 8),
-          // Search Bar (غير فعّال هنا)
           Container(
             height: 50,
             decoration: BoxDecoration(
