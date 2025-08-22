@@ -16,11 +16,6 @@ class ProductDetailsScreen extends StatelessWidget {
           });
           final cubit = context.read<ProductDetailsCubit>();
 
-          // final totalPrice = state.cartResponse.total;
-          // if (totalPrice != null && totalPrice > 0) {
-          //   cubit.updateTotalPrice(totalPrice);
-          // }
-
           final variant = product.variants.isNotEmpty
               ? product.variants.first
               : VariantModel();

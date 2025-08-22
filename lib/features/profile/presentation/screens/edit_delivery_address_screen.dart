@@ -11,12 +11,12 @@ class EditDeliveryAddressScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => locator<DeliveryAddressCubit>()
+      create: (_) => locator<EditAddressCubit>()
         ..initRegistrationModel(address)
         ..prefill(address.country),
-      child: BlocBuilder<DeliveryAddressCubit, DeliveryAddressState>(
+      child: BlocBuilder<EditAddressCubit, EditAddressState>(
           builder: (context, state) {
-        final cubit = context.read<DeliveryAddressCubit>();
+        final cubit = context.read<EditAddressCubit>();
         final user = state.user;
         return SafeArea(
           bottom: false,
@@ -96,7 +96,7 @@ class EditDeliveryAddressScreen extends StatelessWidget {
                                 validator: (v) =>
                                     v!.isEmpty ? 'enterHouse'.tr() : null,
                                 onChanged: (v) => cubit.updateField('house', v),
-                                initialValue: user.frontDoor,
+                                initialValue: user.floor,
                               ),
                             ),
                             10.pw,
@@ -126,7 +126,7 @@ class EditDeliveryAddressScreen extends StatelessWidget {
                                     v!.isEmpty ? 'enterEntrance'.tr() : null,
                                 onChanged: (v) =>
                                     cubit.updateField('entrance', v),
-                                initialValue: user.floor,
+                                initialValue: user.frontDoor,
                               ),
                             ),
                             10.pw,

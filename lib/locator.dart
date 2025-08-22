@@ -10,6 +10,7 @@ import 'package:hvatai/features/all_app/data/datasources/api_service_app.dart';
 import 'package:hvatai/features/all_app/data/repositories/app_impl_repository.dart';
 import 'package:hvatai/features/all_app/domain/repositories/app_repository.dart';
 import 'package:hvatai/features/all_app/presentation/cubit/basket_cubit/basket_cubit.dart';
+import 'package:hvatai/features/all_app/presentation/cubit/edit_address/edit_address_cubit.dart';
 import 'package:hvatai/features/all_app/presentation/cubit/product_detials/product_details_cubit.dart';
 import 'package:hvatai/features/auth/data/datasources/api_service_auth.dart';
 import 'package:hvatai/features/auth/data/repositories/auth_impl_repository.dart';
@@ -50,7 +51,13 @@ Future<void> setupLocator() async {
   //BLOC
   locator.registerFactory(() => LoginCubit(locator(), locator()));
   locator.registerFactory(() => VerificationCubit());
-  locator.registerFactory(() => InterestsCubit(locator(), locator()));
+  locator.registerFactory(() => InterestsCubit(
+        locator(),
+        locator(),
+      ));
+  locator.registerFactory(() => EditAddressCubit(
+        locator(),
+      ));
   locator.registerFactory(
       () => InterestsDetailCubit(locator(), locator(), locator()));
   locator.registerFactory(() => ProfileCubit(locator(), locator()));

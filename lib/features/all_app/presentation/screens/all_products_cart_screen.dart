@@ -172,16 +172,22 @@ class AllProductsCartScreen extends StatelessWidget {
                           size: 28,
                         ),
                         onTap: () async {
-                          await context.push(
+                          final updatedAddress =
+                              await context.push<UserRegistrationData>(
                             AppRoutes.editDeliveryAddress,
                             extra: {
                               'model': state.deliveryModel[0],
+                              // 'cubit': cubit,
                             },
                           );
+                          if (updatedAddress != null) {
+                            context
+                                .read<BasketCubit>()
+                                .initDeliveryModel(updatedAddress);
+                            print('dsknxbncv,m.bnc.,vbnkfg;nbfdnbklfxmnb,xcv');
+                          }
                         },
                       )
-                    // else
-                    //   _buildNoAddressItem(context),
                   ],
                 ),
               );
@@ -189,62 +195,6 @@ class AllProductsCartScreen extends StatelessWidget {
           ),
         );
       }),
-    );
-  }
-
-  Widget _buildAddressItem(BuildContext context, UserRegistrationData address) {
-    return CustomSwipeableListTitle(
-      contentPadding: EdgeInsets.zero,
-      leading: Image.asset(
-        height: 26.h,
-        width: 26.w,
-        Assets.assetsIconsDelivery,
-      ),
-      title: CustomText(
-        text:
-            '${address.city}, ${address.street}, ${address.apartment}, ${address.intercomCode}, ${address.floor}, ${address.frontDoor}',
-        fontSize: 14.sp,
-        fontWeight: FontWeight.w600,
-      ),
-      trailing: Icon(
-        Icons.chevron_right,
-        color: AppColors.blackDark,
-        size: 28,
-      ),
-      onTap: () async {
-        // await context.push(
-        //   AppRoutes.editDeliveryAddress,
-        //   extra: {
-        //     'model': state.deliveryModel[index],
-
-        //   },
-        // );
-      },
-    );
-  }
-
-  Widget _buildNoAddressItem(BuildContext context) {
-    return CustomSwipeableListTitle(
-      contentPadding: EdgeInsets.zero,
-      leading: Image.asset(
-        height: 26.h,
-        width: 26.w,
-        Assets.assetsIconsDelivery,
-      ),
-      title: CustomText(
-        text: 'noDeliveryAddress'.tr(), // Add this translation key
-        fontSize: 14.sp,
-        fontWeight: FontWeight.w600,
-      ),
-      trailing: Icon(
-        Icons.add,
-        color: AppColors.blackDark,
-        size: 28,
-      ),
-      onTap: () {
-        // Navigate to add address screen
-        // context.push(AppRoutes.addDeliveryAddress);
-      },
     );
   }
 

@@ -11,6 +11,7 @@ import 'package:hvatai/features/all_app/data/model/cart_model.dart';
 import 'package:hvatai/features/all_app/presentation/cubit/basket_cubit/basket_cubit.dart';
 import 'package:hvatai/features/all_app/presentation/cubit/product_detials/product_details_cubit.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
+import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/locator.dart';

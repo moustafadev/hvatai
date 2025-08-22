@@ -1,0 +1,259 @@
+// coverage:ignore-file
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
+
+part of 'edit_address_cubit.dart';
+
+// **************************************************************************
+// FreezedGenerator
+// **************************************************************************
+
+T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+
+/// @nodoc
+mixin _$EditAddressState {
+  UserRegistrationData get user => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
+  String get errorMessage => throw _privateConstructorUsedError;
+  int get lastUpdated => throw _privateConstructorUsedError;
+  List<UserRegistrationData> get deliveryModel =>
+      throw _privateConstructorUsedError;
+
+  /// Create a copy of EditAddressState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $EditAddressStateCopyWith<EditAddressState> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $EditAddressStateCopyWith<$Res> {
+  factory $EditAddressStateCopyWith(
+          EditAddressState value, $Res Function(EditAddressState) then) =
+      _$EditAddressStateCopyWithImpl<$Res, EditAddressState>;
+  @useResult
+  $Res call(
+      {UserRegistrationData user,
+      bool isLoading,
+      String errorMessage,
+      int lastUpdated,
+      List<UserRegistrationData> deliveryModel});
+
+  $UserRegistrationDataCopyWith<$Res> get user;
+}
+
+/// @nodoc
+class _$EditAddressStateCopyWithImpl<$Res, $Val extends EditAddressState>
+    implements $EditAddressStateCopyWith<$Res> {
+  _$EditAddressStateCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of EditAddressState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+    Object? isLoading = null,
+    Object? errorMessage = null,
+    Object? lastUpdated = null,
+    Object? deliveryModel = null,
+  }) {
+    return _then(_value.copyWith(
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserRegistrationData,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastUpdated: null == lastUpdated
+          ? _value.lastUpdated
+          : lastUpdated // ignore: cast_nullable_to_non_nullable
+              as int,
+      deliveryModel: null == deliveryModel
+          ? _value.deliveryModel
+          : deliveryModel // ignore: cast_nullable_to_non_nullable
+              as List<UserRegistrationData>,
+    ) as $Val);
+  }
+
+  /// Create a copy of EditAddressState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $UserRegistrationDataCopyWith<$Res> get user {
+    return $UserRegistrationDataCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$EditAddressStateImplCopyWith<$Res>
+    implements $EditAddressStateCopyWith<$Res> {
+  factory _$$EditAddressStateImplCopyWith(_$EditAddressStateImpl value,
+          $Res Function(_$EditAddressStateImpl) then) =
+      __$$EditAddressStateImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {UserRegistrationData user,
+      bool isLoading,
+      String errorMessage,
+      int lastUpdated,
+      List<UserRegistrationData> deliveryModel});
+
+  @override
+  $UserRegistrationDataCopyWith<$Res> get user;
+}
+
+/// @nodoc
+class __$$EditAddressStateImplCopyWithImpl<$Res>
+    extends _$EditAddressStateCopyWithImpl<$Res, _$EditAddressStateImpl>
+    implements _$$EditAddressStateImplCopyWith<$Res> {
+  __$$EditAddressStateImplCopyWithImpl(_$EditAddressStateImpl _value,
+      $Res Function(_$EditAddressStateImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of EditAddressState
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+    Object? isLoading = null,
+    Object? errorMessage = null,
+    Object? lastUpdated = null,
+    Object? deliveryModel = null,
+  }) {
+    return _then(_$EditAddressStateImpl(
+      user: null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as UserRegistrationData,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      lastUpdated: null == lastUpdated
+          ? _value.lastUpdated
+          : lastUpdated // ignore: cast_nullable_to_non_nullable
+              as int,
+      deliveryModel: null == deliveryModel
+          ? _value._deliveryModel
+          : deliveryModel // ignore: cast_nullable_to_non_nullable
+              as List<UserRegistrationData>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$EditAddressStateImpl implements _EditAddressState {
+  const _$EditAddressStateImpl(
+      {required this.user,
+      this.isLoading = false,
+      this.errorMessage = '',
+      this.lastUpdated = 0,
+      final List<UserRegistrationData> deliveryModel = const []})
+      : _deliveryModel = deliveryModel;
+
+  @override
+  final UserRegistrationData user;
+  @override
+  @JsonKey()
+  final bool isLoading;
+  @override
+  @JsonKey()
+  final String errorMessage;
+  @override
+  @JsonKey()
+  final int lastUpdated;
+  final List<UserRegistrationData> _deliveryModel;
+  @override
+  @JsonKey()
+  List<UserRegistrationData> get deliveryModel {
+    if (_deliveryModel is EqualUnmodifiableListView) return _deliveryModel;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_deliveryModel);
+  }
+
+  @override
+  String toString() {
+    return 'EditAddressState(user: $user, isLoading: $isLoading, errorMessage: $errorMessage, lastUpdated: $lastUpdated, deliveryModel: $deliveryModel)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$EditAddressStateImpl &&
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
+            (identical(other.lastUpdated, lastUpdated) ||
+                other.lastUpdated == lastUpdated) &&
+            const DeepCollectionEquality()
+                .equals(other._deliveryModel, _deliveryModel));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, user, isLoading, errorMessage,
+      lastUpdated, const DeepCollectionEquality().hash(_deliveryModel));
+
+  /// Create a copy of EditAddressState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$EditAddressStateImplCopyWith<_$EditAddressStateImpl> get copyWith =>
+      __$$EditAddressStateImplCopyWithImpl<_$EditAddressStateImpl>(
+          this, _$identity);
+}
+
+abstract class _EditAddressState implements EditAddressState {
+  const factory _EditAddressState(
+      {required final UserRegistrationData user,
+      final bool isLoading,
+      final String errorMessage,
+      final int lastUpdated,
+      final List<UserRegistrationData> deliveryModel}) = _$EditAddressStateImpl;
+
+  @override
+  UserRegistrationData get user;
+  @override
+  bool get isLoading;
+  @override
+  String get errorMessage;
+  @override
+  int get lastUpdated;
+  @override
+  List<UserRegistrationData> get deliveryModel;
+
+  /// Create a copy of EditAddressState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$EditAddressStateImplCopyWith<_$EditAddressStateImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}

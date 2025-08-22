@@ -74,6 +74,10 @@ class BasketCubit extends Cubit<BasketState> {
     );
   }
 
+  void initDeliveryModel(UserRegistrationData user) {
+    emit(state.copyWith(deliveryModel: [user]));
+  }
+
   Future<void> updateProductCart(int itemId, int newQuantity) async {
     final currentQuantity = _getCurrentItemQuantity(itemId);
 

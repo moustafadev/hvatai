@@ -120,6 +120,9 @@ final GoRouter router = GoRouter(
         final extra = state.extra as Map<String, Object>;
 
         final model = extra['model'] as UserRegistrationData;
+        // final cubit = extra['cubit'] as DeliveryAddressCubit
+        //   ..initRegistrationModel(model)
+        //   ..prefill(model.country);
 
         return EditDeliveryAddressScreen(
           address: model,

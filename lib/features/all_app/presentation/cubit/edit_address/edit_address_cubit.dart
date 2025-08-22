@@ -1,37 +1,23 @@
-import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
-import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
-import 'package:go_router/go_router.dart';
-import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/delete_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/get_delivery_address_usecase.dart';
-import 'package:hvatai/routes/app_routes.dart';
 
-part 'delivery_address_state.dart';
-part 'delivery_address_cubit.freezed.dart';
+part 'edit_address_state.dart';
+part 'edit_address_cubit.freezed.dart';
 
-class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
-  DeliveryAddressCubit(
-      this.deliveryAddressUseCase,
-      this.editDeliveryAddressUsecase,
-      this.getDeliveryAddressDataUseCase,
-      this.addNewAddressUsecase,
-      this.deleteAddressUsecase)
-      : super(DeliveryAddressState(user: UserRegistrationData()));
+class EditAddressCubit extends Cubit<EditAddressState> {
+  EditAddressCubit(
+    this.editDeliveryAddressUsecase,
+  ) : super(EditAddressState(user: UserRegistrationData()));
 
-  final DeliveryAddressUseCase deliveryAddressUseCase;
   final EditDeliveryAddressUsecase editDeliveryAddressUsecase;
-  final GetDeliveryAddressUsecase getDeliveryAddressDataUseCase;
-  final AddNewAddressUsecase addNewAddressUsecase;
-  final DeleteAddressUsecase deleteAddressUsecase;
 
   final formKey = GlobalKey<FormState>();
 
@@ -48,10 +34,6 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
       apartment: user.apartment ?? '',
       isPrimary: user.isPrimary,
     )));
-  }
-
-  void initDeliveryModel(UserRegistrationData user) {
-    emit(state.copyWith(deliveryModel: [user]));
   }
 
   void updateField(String field, String value) {
@@ -147,19 +129,6 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
     );
   }
 
-  Future<void> getDeliveryAddress() async {
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
-    final result = await getDeliveryAddressDataUseCase.call(unit);
-    result.fold(
-      (failure) =>
-          emit(state.copyWith(isLoading: false, errorMessage: failure)),
-      (deliveryAddressList) => emit(state.copyWith(
-        isLoading: false,
-        deliveryModel: deliveryAddressList,
-      )),
-    );
-  }
-
   bool isFormValid() {
     final u = state.user;
     return [
@@ -171,42 +140,6 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
       u.frontDoor,
       u.intercomCode,
     ].every((e) => e?.isNotEmpty ?? false);
-  }
-
-  Future<void> updateAddress(BuildContext context) async {
-    if (!formKey.currentState!.validate() || !isFormValid()) {
-      emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
-      showFloatingMessageError('fillAllFields'.tr());
-      return;
-    }
-
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
-
-    final position = await determinePosition();
-
-    final updatedUser = state.user.copyWith(
-      latitude: position?.latitude.toString() ?? '',
-      longitude: position?.longitude.toString() ?? '',
-      isPrimary: state.user.isPrimary ?? 1,
-    );
-
-    final result = await addNewAddressUsecase.call(
-      AddNewAddressParams(userRegistrationData: updatedUser),
-    );
-
-    result.fold(
-      (failure) {
-        emit(state.copyWith(isLoading: false, errorMessage: failure));
-        showFloatingMessageError('somethingWentWrong'.tr());
-      },
-      (newAddress) {
-        emit(state.copyWith(
-            isLoading: false,
-            deliveryModel: [...state.deliveryModel, newAddress]));
-        showFloatingMessageSuccess('addressAdded'.tr());
-        context.pop();
-      },
-    );
   }
 
   Future<void> editNewAddress(BuildContext context) async {
@@ -275,81 +208,9 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
     ));
   }
 
-  Future<void> deleteAddress(int addressId) async {
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
-
-    final result = await deleteAddressUsecase.call(
-      DeleteAddressParams(addressId: addressId),
-    );
-
-    result.fold(
-      (failure) {
-        emit(state.copyWith(
-          errorMessage: failure,
-          isLoading: false,
-        ));
-        showFloatingMessageError('failedToDeleteAddress'.tr());
-      },
-      (success) {
-        final updatedAddresses = state.deliveryModel
-            .where((address) => address.id != addressId)
-            .toList();
-
-        emit(state.copyWith(
-          deliveryModel: updatedAddresses,
-          errorMessage: '',
-          isLoading: false,
-        ));
-
-        showFloatingMessageSuccess('addressDeletedSuccessfully'.tr());
-      },
-    );
-  }
-
   void prefill(String? country) {
     if (country != null && country.isNotEmpty) {
       emit(state.copyWith(user: state.user.copyWith(country: country)));
     }
-  }
-
-  Future<void> submit(BuildContext context) async {
-    if (!formKey.currentState!.validate()) {
-      emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
-      showFloatingMessageError('fillAllFields'.tr());
-      return;
-    }
-
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
-
-    final position = await determinePosition();
-
-    final updatedUser = state.user.copyWith(
-      country: state.user.country,
-      city: state.user.city,
-      street: state.user.street,
-      floor: state.user.floor,
-      apartment: state.user.apartment,
-      frontDoor: state.user.frontDoor,
-      intercomCode: state.user.intercomCode,
-      latitude: position?.latitude.toString() ?? '',
-      longitude: position?.longitude.toString() ?? '',
-      isPrimary: state.user.isPrimary ?? 1,
-    );
-
-    final result = await deliveryAddressUseCase.call(
-      DeliveryAddressParams(userRegistrationData: updatedUser),
-    );
-
-    result.fold(
-      (failure) {
-        emit(state.copyWith(isLoading: false, errorMessage: failure));
-        showFloatingMessageError('somethingWentWrong'.tr());
-      },
-      (userData) {
-        emit(state.copyWith(isLoading: false));
-        showFloatingMessageSuccess('addressAdded'.tr());
-        context.push(AppRoutes.interests, extra: userData);
-      },
-    );
   }
 }

@@ -90,12 +90,28 @@ class InitNewAddressScreen extends StatelessWidget {
                               size: 28,
                             ),
                             onTap: () async {
-                              await context.push(
+                              /* async {
+              final updatedUser = await context.push<UserRegistrationData>(
+                AppRoutes.settings,
+                extra: user,
+              );
+
+              if (updatedUser != null) {
+                context.read<ProfileCubit>().updateUserData(updatedUser);
+              } */
+                              final updatedAddress =
+                                  await context.push<UserRegistrationData>(
                                 AppRoutes.editDeliveryAddress,
                                 extra: {
                                   'model': state.deliveryModel[index],
+                                  // 'cubit': cubit,
                                 },
                               );
+                              if (updatedAddress != null) {
+                                cubit.initDeliveryModel(updatedAddress);
+                                print(
+                                    'dsknxbncv,m.bnc.,vbnkfg;nbfdnbklfxmnb,xcv');
+                              }
                             },
                           );
                         },
