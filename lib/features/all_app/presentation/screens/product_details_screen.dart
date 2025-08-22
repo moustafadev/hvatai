@@ -230,18 +230,16 @@ class ProductDetailsScreen extends StatelessWidget {
                                   cubit.addProductToCart(context, product);
                                 },
                                 child: Container(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 10, vertical: 8),
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 5.w, vertical: 4.h),
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10.r),
                                       color: AppColors.primaryPink),
-                                  child: FittedBox(
-                                    child: CustomText(
-                                      text: 'participate'.tr(),
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.w800,
-                                      color: AppColors.white,
-                                    ),
+                                  child: CustomText(
+                                    text: 'participate'.tr(),
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w800,
+                                    color: AppColors.white,
                                   ),
                                 ),
                               ),
