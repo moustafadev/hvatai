@@ -60,9 +60,11 @@ class AddStreamScreen extends StatelessWidget {
                         CustomDateField(
                           label: 'date'.tr(),
                           onChanged: (val) {
-                            final parsedDate =
-                                DateFormat('dd.MM.yyyy').parse(val);
-                            cubit.updateScheduledAt(parsedDate.toUtc());
+                            // val is already an ISO UTC string like "2025-08-11T21:30:00Z"
+                            final parsed = DateTime.tryParse(val);
+                            if (parsed != null) {
+                              cubit.updateScheduledAt(parsed);
+                            }
                           },
                         ),
                         12.ph,

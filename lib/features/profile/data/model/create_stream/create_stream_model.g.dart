@@ -11,7 +11,9 @@ _$CreateStreamModelImpl _$$CreateStreamModelImplFromJson(
     _$CreateStreamModelImpl(
       title: json['title'] as String,
       description: json['description'] as String,
-      scheduledAt: DateTime.parse(json['scheduled_at'] as String),
+      scheduledAt: json['scheduled_at'] == null
+          ? null
+          : DateTime.parse(json['scheduled_at'] as String),
       isRecordingEnabled: json['is_recording_enabled'] as bool,
       isPublic: json['is_public'] as bool,
       enableComments: json['enable_comments'] as bool,
@@ -30,7 +32,8 @@ Map<String, dynamic> _$$CreateStreamModelImplToJson(
     <String, dynamic>{
       'title': instance.title,
       'description': instance.description,
-      'scheduled_at': instance.scheduledAt.toIso8601String(),
+      if (instance.scheduledAt?.toIso8601String() case final value?)
+        'scheduled_at': value,
       'is_recording_enabled': instance.isRecordingEnabled,
       'is_public': instance.isPublic,
       'enable_comments': instance.enableComments,

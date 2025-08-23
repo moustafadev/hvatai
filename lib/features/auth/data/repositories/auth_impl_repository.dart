@@ -39,6 +39,7 @@ class AuthImplRepository implements AuthRepository {
       await _appLocal.saveIsSetup(res.isSetup);
       if (res.token != null) {
         await _appLocal.saveToken(res.token!);
+        // await _appLocal.saveUserId(res.!);
       }
       return res;
     });
@@ -49,6 +50,7 @@ class AuthImplRepository implements AuthRepository {
       RegisterParams params) async {
     return executeAndHandleError<UserRegistrationData>(() async {
       final res = await _apiServiceAuth.register(params);
+        await _appLocal.saveUserId(res.id);
 
       return res;
     });
@@ -68,6 +70,8 @@ class AuthImplRepository implements AuthRepository {
     return executeAndHandleError<SocialLoginResponse>(() async {
       final res = await _apiServiceAuth.loginWithGoogle();
       _appLocal.saveToken(res.data?.accessToken);
+      await _appLocal.saveUserId(res.data?.user?.id);
+
 
       return res;
     });
@@ -78,6 +82,7 @@ class AuthImplRepository implements AuthRepository {
     return executeAndHandleError<SocialLoginResponse>(() async {
       final res = await _apiServiceAuth.loginWithApple();
       _appLocal.saveToken(res.data?.accessToken);
+      await _appLocal.saveUserId(res.data?.user?.id);
 
       return res;
     });

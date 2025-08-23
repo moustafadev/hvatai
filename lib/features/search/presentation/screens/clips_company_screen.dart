@@ -46,10 +46,10 @@ class ClipsCompanyScreen extends StatelessWidget {
                   fontWeight: FontWeight.w800,
                 ),
                 12.ph,
-                LiveVideosWidget(
-                  liveStreams: generateDummyLiveStreams(10),
-                  currentUserId: '',
-                ),
+                // LiveVideosWidget(
+                //   liveStreams: generateDummyLiveStreams(10),
+                //   currentUserId: '',
+                // ),
               ]),
             ),
           ),

@@ -34,6 +34,7 @@ import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_t
 import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
 import 'package:hvatai/features/search/presentation/cubit/auction_search_cubit/auction_search_cubit.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_tabs_cubit/search_tabs_cubit.dart';
+import 'package:hvatai/features/stream/presentation/cubit/live_stream_cubit.dart';
 import 'package:hvatai/locator_use_case.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -53,8 +54,9 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AwardsClubCubit());
   locator.registerFactory(() => AuctionSearchCubit());
   locator.registerFactory(() => AddStreamCubit(locator(), locator()));
+  locator.registerFactory(() => LiveStreamCubit());
 
-  locator.registerFactory(() => CategoryTabsCubit());
+  locator.registerFactory(() => CategoryTabsCubit(locator() , locator()));
   locator.registerFactory(() => SearchTabsCubit());
 
   locator.registerFactory(

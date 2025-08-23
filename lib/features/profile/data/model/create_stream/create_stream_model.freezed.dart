@@ -22,8 +22,8 @@ CreateStreamModel _$CreateStreamModelFromJson(Map<String, dynamic> json) {
 mixin _$CreateStreamModel {
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  @JsonKey(name: 'scheduled_at')
-  DateTime get scheduledAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'scheduled_at', includeIfNull: false)
+  DateTime? get scheduledAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_recording_enabled')
   bool get isRecordingEnabled => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_public')
@@ -62,7 +62,8 @@ abstract class $CreateStreamModelCopyWith<$Res> {
   $Res call(
       {String title,
       String description,
-      @JsonKey(name: 'scheduled_at') DateTime scheduledAt,
+      @JsonKey(name: 'scheduled_at', includeIfNull: false)
+      DateTime? scheduledAt,
       @JsonKey(name: 'is_recording_enabled') bool isRecordingEnabled,
       @JsonKey(name: 'is_public') bool isPublic,
       @JsonKey(name: 'enable_comments') bool enableComments,
@@ -91,7 +92,7 @@ class _$CreateStreamModelCopyWithImpl<$Res, $Val extends CreateStreamModel>
   $Res call({
     Object? title = null,
     Object? description = null,
-    Object? scheduledAt = null,
+    Object? scheduledAt = freezed,
     Object? isRecordingEnabled = null,
     Object? isPublic = null,
     Object? enableComments = null,
@@ -111,10 +112,10 @@ class _$CreateStreamModelCopyWithImpl<$Res, $Val extends CreateStreamModel>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      scheduledAt: null == scheduledAt
+      scheduledAt: freezed == scheduledAt
           ? _value.scheduledAt
           : scheduledAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       isRecordingEnabled: null == isRecordingEnabled
           ? _value.isRecordingEnabled
           : isRecordingEnabled // ignore: cast_nullable_to_non_nullable
@@ -166,7 +167,8 @@ abstract class _$$CreateStreamModelImplCopyWith<$Res>
   $Res call(
       {String title,
       String description,
-      @JsonKey(name: 'scheduled_at') DateTime scheduledAt,
+      @JsonKey(name: 'scheduled_at', includeIfNull: false)
+      DateTime? scheduledAt,
       @JsonKey(name: 'is_recording_enabled') bool isRecordingEnabled,
       @JsonKey(name: 'is_public') bool isPublic,
       @JsonKey(name: 'enable_comments') bool enableComments,
@@ -193,7 +195,7 @@ class __$$CreateStreamModelImplCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? description = null,
-    Object? scheduledAt = null,
+    Object? scheduledAt = freezed,
     Object? isRecordingEnabled = null,
     Object? isPublic = null,
     Object? enableComments = null,
@@ -213,10 +215,10 @@ class __$$CreateStreamModelImplCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
-      scheduledAt: null == scheduledAt
+      scheduledAt: freezed == scheduledAt
           ? _value.scheduledAt
           : scheduledAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       isRecordingEnabled: null == isRecordingEnabled
           ? _value.isRecordingEnabled
           : isRecordingEnabled // ignore: cast_nullable_to_non_nullable
@@ -263,7 +265,7 @@ class _$CreateStreamModelImpl implements _CreateStreamModel {
   const _$CreateStreamModelImpl(
       {required this.title,
       required this.description,
-      @JsonKey(name: 'scheduled_at') required this.scheduledAt,
+      @JsonKey(name: 'scheduled_at', includeIfNull: false) this.scheduledAt,
       @JsonKey(name: 'is_recording_enabled') required this.isRecordingEnabled,
       @JsonKey(name: 'is_public') required this.isPublic,
       @JsonKey(name: 'enable_comments') required this.enableComments,
@@ -283,8 +285,8 @@ class _$CreateStreamModelImpl implements _CreateStreamModel {
   @override
   final String description;
   @override
-  @JsonKey(name: 'scheduled_at')
-  final DateTime scheduledAt;
+  @JsonKey(name: 'scheduled_at', includeIfNull: false)
+  final DateTime? scheduledAt;
   @override
   @JsonKey(name: 'is_recording_enabled')
   final bool isRecordingEnabled;
@@ -391,7 +393,8 @@ abstract class _CreateStreamModel implements CreateStreamModel {
   const factory _CreateStreamModel(
       {required final String title,
       required final String description,
-      @JsonKey(name: 'scheduled_at') required final DateTime scheduledAt,
+      @JsonKey(name: 'scheduled_at', includeIfNull: false)
+      final DateTime? scheduledAt,
       @JsonKey(name: 'is_recording_enabled')
       required final bool isRecordingEnabled,
       @JsonKey(name: 'is_public') required final bool isPublic,
@@ -414,8 +417,8 @@ abstract class _CreateStreamModel implements CreateStreamModel {
   @override
   String get description;
   @override
-  @JsonKey(name: 'scheduled_at')
-  DateTime get scheduledAt;
+  @JsonKey(name: 'scheduled_at', includeIfNull: false)
+  DateTime? get scheduledAt;
   @override
   @JsonKey(name: 'is_recording_enabled')
   bool get isRecordingEnabled;

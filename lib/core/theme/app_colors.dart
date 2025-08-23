@@ -9,6 +9,7 @@ class AppColors {
   static const Color raspberryRed = Color(0xFFF24259);
   static const Color graniteGray = Color(0xFF707070);
   static const Color eerieBlack = Color(0xFF1B1B1B);
+  static const Color whiteGrey = Color(0xffBEBEBE);
   static const Color gray = Color(0xFFECECEC);
   static const Color primary = Color(0xFFA1F4A8);
   static const Color transparent = Colors.transparent;
@@ -19,6 +20,7 @@ class AppColors {
   // ✅ New Added Colors
   static const Color purple = Color(0xFF8385E6);
   static const Color purple1 = Color(0xFF815BFF);
+  static const Color purple2 = Color(0xffA8A1F4);
   static const Color greyLite = Color(0xFFD0D0D0);
   static const Color raspberryPink = Color(0xFFFF3369);
   static const Color primaryColor = Color(0xFF7BE4EE);

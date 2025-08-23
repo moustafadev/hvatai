@@ -16,10 +16,22 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CategoryTabsState {
+// UI tabs
   List<String> get categories => throw _privateConstructorUsedError;
   int get selectedIndex => throw _privateConstructorUsedError;
   List<String> get selectedInterests => throw _privateConstructorUsedError;
-  Set<int> get selectedIndices => throw _privateConstructorUsedError;
+  Set<int> get selectedIndices =>
+      throw _privateConstructorUsedError; // Live streams
+  List<StreamDataModel> get liveStreams => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
+  String? get error => throw _privateConstructorUsedError; // Pagination
+  int get page => throw _privateConstructorUsedError;
+  int get lastPage => throw _privateConstructorUsedError;
+  bool get hasMore =>
+      throw _privateConstructorUsedError; // ===== Join stream =====
+  bool get isJoining => throw _privateConstructorUsedError;
+  String? get joinError => throw _privateConstructorUsedError;
+  JoinStreamData? get joinData => throw _privateConstructorUsedError;
 
   /// Create a copy of CategoryTabsState
   /// with the given fields replaced by the non-null parameter values.
@@ -38,7 +50,18 @@ abstract class $CategoryTabsStateCopyWith<$Res> {
       {List<String> categories,
       int selectedIndex,
       List<String> selectedInterests,
-      Set<int> selectedIndices});
+      Set<int> selectedIndices,
+      List<StreamDataModel> liveStreams,
+      bool isLoading,
+      String? error,
+      int page,
+      int lastPage,
+      bool hasMore,
+      bool isJoining,
+      String? joinError,
+      JoinStreamData? joinData});
+
+  $JoinStreamDataCopyWith<$Res>? get joinData;
 }
 
 /// @nodoc
@@ -60,6 +83,15 @@ class _$CategoryTabsStateCopyWithImpl<$Res, $Val extends CategoryTabsState>
     Object? selectedIndex = null,
     Object? selectedInterests = null,
     Object? selectedIndices = null,
+    Object? liveStreams = null,
+    Object? isLoading = null,
+    Object? error = freezed,
+    Object? page = null,
+    Object? lastPage = null,
+    Object? hasMore = null,
+    Object? isJoining = null,
+    Object? joinError = freezed,
+    Object? joinData = freezed,
   }) {
     return _then(_value.copyWith(
       categories: null == categories
@@ -78,7 +110,57 @@ class _$CategoryTabsStateCopyWithImpl<$Res, $Val extends CategoryTabsState>
           ? _value.selectedIndices
           : selectedIndices // ignore: cast_nullable_to_non_nullable
               as Set<int>,
+      liveStreams: null == liveStreams
+          ? _value.liveStreams
+          : liveStreams // ignore: cast_nullable_to_non_nullable
+              as List<StreamDataModel>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+      lastPage: null == lastPage
+          ? _value.lastPage
+          : lastPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasMore: null == hasMore
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isJoining: null == isJoining
+          ? _value.isJoining
+          : isJoining // ignore: cast_nullable_to_non_nullable
+              as bool,
+      joinError: freezed == joinError
+          ? _value.joinError
+          : joinError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      joinData: freezed == joinData
+          ? _value.joinData
+          : joinData // ignore: cast_nullable_to_non_nullable
+              as JoinStreamData?,
     ) as $Val);
+  }
+
+  /// Create a copy of CategoryTabsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $JoinStreamDataCopyWith<$Res>? get joinData {
+    if (_value.joinData == null) {
+      return null;
+    }
+
+    return $JoinStreamDataCopyWith<$Res>(_value.joinData!, (value) {
+      return _then(_value.copyWith(joinData: value) as $Val);
+    });
   }
 }
 
@@ -94,7 +176,19 @@ abstract class _$$CategoryTabsStateImplCopyWith<$Res>
       {List<String> categories,
       int selectedIndex,
       List<String> selectedInterests,
-      Set<int> selectedIndices});
+      Set<int> selectedIndices,
+      List<StreamDataModel> liveStreams,
+      bool isLoading,
+      String? error,
+      int page,
+      int lastPage,
+      bool hasMore,
+      bool isJoining,
+      String? joinError,
+      JoinStreamData? joinData});
+
+  @override
+  $JoinStreamDataCopyWith<$Res>? get joinData;
 }
 
 /// @nodoc
@@ -114,6 +208,15 @@ class __$$CategoryTabsStateImplCopyWithImpl<$Res>
     Object? selectedIndex = null,
     Object? selectedInterests = null,
     Object? selectedIndices = null,
+    Object? liveStreams = null,
+    Object? isLoading = null,
+    Object? error = freezed,
+    Object? page = null,
+    Object? lastPage = null,
+    Object? hasMore = null,
+    Object? isJoining = null,
+    Object? joinError = freezed,
+    Object? joinData = freezed,
   }) {
     return _then(_$CategoryTabsStateImpl(
       categories: null == categories
@@ -132,6 +235,42 @@ class __$$CategoryTabsStateImplCopyWithImpl<$Res>
           ? _value._selectedIndices
           : selectedIndices // ignore: cast_nullable_to_non_nullable
               as Set<int>,
+      liveStreams: null == liveStreams
+          ? _value._liveStreams
+          : liveStreams // ignore: cast_nullable_to_non_nullable
+              as List<StreamDataModel>,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
+      page: null == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
+      lastPage: null == lastPage
+          ? _value.lastPage
+          : lastPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      hasMore: null == hasMore
+          ? _value.hasMore
+          : hasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isJoining: null == isJoining
+          ? _value.isJoining
+          : isJoining // ignore: cast_nullable_to_non_nullable
+              as bool,
+      joinError: freezed == joinError
+          ? _value.joinError
+          : joinError // ignore: cast_nullable_to_non_nullable
+              as String?,
+      joinData: freezed == joinData
+          ? _value.joinData
+          : joinData // ignore: cast_nullable_to_non_nullable
+              as JoinStreamData?,
     ));
   }
 }
@@ -143,12 +282,24 @@ class _$CategoryTabsStateImpl implements _CategoryTabsState {
       {required final List<String> categories,
       required this.selectedIndex,
       final List<String> selectedInterests = const [],
-      final Set<int> selectedIndices = const {}})
+      final Set<int> selectedIndices = const {},
+      final List<StreamDataModel> liveStreams = const <StreamDataModel>[],
+      this.isLoading = false,
+      this.error,
+      this.page = 1,
+      this.lastPage = 1,
+      this.hasMore = true,
+      this.isJoining = false,
+      this.joinError,
+      this.joinData})
       : _categories = categories,
         _selectedInterests = selectedInterests,
-        _selectedIndices = selectedIndices;
+        _selectedIndices = selectedIndices,
+        _liveStreams = liveStreams;
 
+// UI tabs
   final List<String> _categories;
+// UI tabs
   @override
   List<String> get categories {
     if (_categories is EqualUnmodifiableListView) return _categories;
@@ -177,9 +328,44 @@ class _$CategoryTabsStateImpl implements _CategoryTabsState {
     return EqualUnmodifiableSetView(_selectedIndices);
   }
 
+// Live streams
+  final List<StreamDataModel> _liveStreams;
+// Live streams
+  @override
+  @JsonKey()
+  List<StreamDataModel> get liveStreams {
+    if (_liveStreams is EqualUnmodifiableListView) return _liveStreams;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_liveStreams);
+  }
+
+  @override
+  @JsonKey()
+  final bool isLoading;
+  @override
+  final String? error;
+// Pagination
+  @override
+  @JsonKey()
+  final int page;
+  @override
+  @JsonKey()
+  final int lastPage;
+  @override
+  @JsonKey()
+  final bool hasMore;
+// ===== Join stream =====
+  @override
+  @JsonKey()
+  final bool isJoining;
+  @override
+  final String? joinError;
+  @override
+  final JoinStreamData? joinData;
+
   @override
   String toString() {
-    return 'CategoryTabsState(categories: $categories, selectedIndex: $selectedIndex, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices)';
+    return 'CategoryTabsState(categories: $categories, selectedIndex: $selectedIndex, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, liveStreams: $liveStreams, isLoading: $isLoading, error: $error, page: $page, lastPage: $lastPage, hasMore: $hasMore, isJoining: $isJoining, joinError: $joinError, joinData: $joinData)';
   }
 
   @override
@@ -194,7 +380,22 @@ class _$CategoryTabsStateImpl implements _CategoryTabsState {
             const DeepCollectionEquality()
                 .equals(other._selectedInterests, _selectedInterests) &&
             const DeepCollectionEquality()
-                .equals(other._selectedIndices, _selectedIndices));
+                .equals(other._selectedIndices, _selectedIndices) &&
+            const DeepCollectionEquality()
+                .equals(other._liveStreams, _liveStreams) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.page, page) || other.page == page) &&
+            (identical(other.lastPage, lastPage) ||
+                other.lastPage == lastPage) &&
+            (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
+            (identical(other.isJoining, isJoining) ||
+                other.isJoining == isJoining) &&
+            (identical(other.joinError, joinError) ||
+                other.joinError == joinError) &&
+            (identical(other.joinData, joinData) ||
+                other.joinData == joinData));
   }
 
   @override
@@ -203,7 +404,16 @@ class _$CategoryTabsStateImpl implements _CategoryTabsState {
       const DeepCollectionEquality().hash(_categories),
       selectedIndex,
       const DeepCollectionEquality().hash(_selectedInterests),
-      const DeepCollectionEquality().hash(_selectedIndices));
+      const DeepCollectionEquality().hash(_selectedIndices),
+      const DeepCollectionEquality().hash(_liveStreams),
+      isLoading,
+      error,
+      page,
+      lastPage,
+      hasMore,
+      isJoining,
+      joinError,
+      joinData);
 
   /// Create a copy of CategoryTabsState
   /// with the given fields replaced by the non-null parameter values.
@@ -220,8 +430,18 @@ abstract class _CategoryTabsState implements CategoryTabsState {
       {required final List<String> categories,
       required final int selectedIndex,
       final List<String> selectedInterests,
-      final Set<int> selectedIndices}) = _$CategoryTabsStateImpl;
+      final Set<int> selectedIndices,
+      final List<StreamDataModel> liveStreams,
+      final bool isLoading,
+      final String? error,
+      final int page,
+      final int lastPage,
+      final bool hasMore,
+      final bool isJoining,
+      final String? joinError,
+      final JoinStreamData? joinData}) = _$CategoryTabsStateImpl;
 
+// UI tabs
   @override
   List<String> get categories;
   @override
@@ -229,7 +449,25 @@ abstract class _CategoryTabsState implements CategoryTabsState {
   @override
   List<String> get selectedInterests;
   @override
-  Set<int> get selectedIndices;
+  Set<int> get selectedIndices; // Live streams
+  @override
+  List<StreamDataModel> get liveStreams;
+  @override
+  bool get isLoading;
+  @override
+  String? get error; // Pagination
+  @override
+  int get page;
+  @override
+  int get lastPage;
+  @override
+  bool get hasMore; // ===== Join stream =====
+  @override
+  bool get isJoining;
+  @override
+  String? get joinError;
+  @override
+  JoinStreamData? get joinData;
 
   /// Create a copy of CategoryTabsState
   /// with the given fields replaced by the non-null parameter values.

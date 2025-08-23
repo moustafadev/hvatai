@@ -10,6 +10,7 @@ import 'package:hvatai/features/auth/data/models/registration_model/user_registr
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
+import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
@@ -136,7 +137,7 @@ class ApiServiceProfile extends ApiBase {
       file.absolute.path.replaceAll('.jpg', '_compressed.jpg'),
       quality: 70,
     );
-    return compressedFile ?? file;
+    return file;
   }
 
   Future<MultipartFile?> _prepareImageFile(String? imagePath) async {
@@ -178,7 +179,7 @@ class ApiServiceProfile extends ApiBase {
           params.productModel.status == params.productModel.status ? 1 : 0;
 
       final variantsJson =
-          params.productModel.variants?.map((v) => v.toJson()).toList();
+          params.productModel.variants.map((v) => v.toJson()).toList();
       dataMap['variants'] = variantsJson;
 
       List<MultipartFile> imageFiles = [];
@@ -298,18 +299,17 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
- 
-  Future<Unit> createStream(CreateStreamModel model) async {
-  return executeAndHandleErrorServer<Unit>(() async {
-    final response = await post(ServerConfig.streams, body: model.toJson());
+  Future<StreamResponseModel> createStream(CreateStreamModel model) async {
+    return executeAndHandleErrorServer<StreamResponseModel>(() async {
+      final response = await post(ServerConfig.streams, body: model.toJson());
 
-    if (response.statusCode == 200 || response.statusCode == 201) {
-      return unit;
-    } else {
-      throw Exception('Failed to create stream');
-    }
-  });
-}
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return StreamResponseModel.fromJson(response.json);
+      } else {
+        throw Exception('Failed to create stream: ${response.statusCode}');
+      }
+    });
+  }
 
   Future<UserRegistrationData> editDeliveryAddress(
       EditDeliveryAddressParams params) async {
