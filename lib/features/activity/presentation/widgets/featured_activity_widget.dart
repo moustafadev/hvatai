@@ -38,10 +38,10 @@ class FeaturedActivityWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SectionTitle(title: "Streams"),
-                              LiveVideosWidget(
-                                liveStreams: state.liveStreams,
-                                currentUserId: '1',
-                              ),
+                              // LiveVideosWidget(
+                              //   liveStreams: state.liveStreams,
+                              //   currentUserId: '1',
+                              // ),
                             ],
                           );
                         // case "Goods":
@@ -68,10 +68,10 @@ class FeaturedActivityWidget extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const SectionTitle(title: "Streams"),
-                              LiveVideosWidget(
-                                liveStreams: state.liveStreams,
-                                currentUserId: '1',
-                              ),
+                              // LiveVideosWidget(
+                              //   liveStreams: state.liveStreams,
+                              //   currentUserId: '1',
+                              // ),
                               const SectionTitle(title: "Goods"),
                               // ...state.products.map(
                               //   (item) => Padding(

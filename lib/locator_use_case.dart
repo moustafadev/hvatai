@@ -15,6 +15,8 @@ import 'package:hvatai/features/auth/domain/usecases/login_with_apple_usecase.da
 import 'package:hvatai/features/auth/domain/usecases/login_with_google_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
 import 'package:hvatai/features/home/domain/usecases/get_notification_usecase.dart';
+import 'package:hvatai/features/home/domain/usecases/get_streams_usecases.dart';
+import 'package:hvatai/features/home/domain/usecases/join_stream_usecase.dart';
 import 'package:hvatai/features/home/domain/usecases/mark_read_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
@@ -70,4 +72,7 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => GetCartUsecase(locator()));
   locator.registerLazySingleton(() => UpdateCartUsecase(locator()));
   locator.registerLazySingleton(() => DeleteCartUsecase(locator()));
+  locator.registerLazySingleton(() => GetLiveStreamsUsecase(locator()));
+  locator.registerLazySingleton(() => GetStreamsUsecase(locator()));
+  locator.registerLazySingleton(() => JoinStreamUsecase(locator()));
 }

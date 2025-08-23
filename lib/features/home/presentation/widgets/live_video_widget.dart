@@ -1,7 +1,7 @@
 part of '../home.dart';
 
 class LiveVideosWidget extends StatelessWidget {
-  final List<LiveStreamModel> liveStreams;
+  final List<StreamDataModel> liveStreams;
   final String currentUserId;
   final String searchQuery;
   final String? selectedCategory;
@@ -16,27 +16,26 @@ class LiveVideosWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ReusableLiveVideosGrid<LiveStreamModel>(
+    return ReusableLiveVideosGrid<StreamDataModel>(
       items: liveStreams,
       filter: (stream) {
-        final title = stream.title.toLowerCase();
-        final admin = stream.adminName.toLowerCase();
-        final category = stream.category.toLowerCase();
+        final title = stream.title?.toLowerCase();
+        final admin = '';
+        final category = '';
 
         final matchesSearch = searchQuery.isEmpty ||
-            title.contains(searchQuery.toLowerCase()) ||
+            title!.contains(searchQuery.toLowerCase()) ||
             admin.contains(searchQuery.toLowerCase());
 
         final matchesCategory = selectedCategory == null ||
             category == selectedCategory!.toLowerCase();
 
-        final isBlockedAndNotOwner =
-            stream.isBlocked && currentUserId != stream.adminId;
+        final isBlockedAndNotOwner = false;
 
         return matchesSearch && matchesCategory && !isBlockedAndNotOwner;
       },
-      isBlocked: (stream) => stream.isBlocked,
-      isOwner: (stream) => currentUserId == stream.adminId,
+      isBlocked: (stream) => false,
+      isOwner: (stream) => false,
       blockedCardBuilder: (context, stream) {
         return Container(
           padding: const EdgeInsets.all(12),
@@ -116,18 +115,23 @@ class LiveVideosWidget extends StatelessWidget {
       },
       liveCardBuilder: (context, stream) => GestureDetector(
         onTap: () {
-          // joinLiveStreamingWithPrefs(stream.channelId);
+          final appLocal = locator<AppLocal>();
+          final userId = appLocal.getUserId(); 
+      
+          context.read<CategoryTabsCubit>().joinStream(
+              channelName: stream.channelName!,
+              userId: userId,
+              isPublisher: false, // viewer
+              context: context);
         },
         child: CustomLiveVideoCard(
-          price: stream.price,
-          title: stream.title,
-          adminName: stream.adminName,
-          adminImage: stream.adminPhoto,
-          viewsCount: stream.viewsCount,
-          description: stream.description,
-          liveImage: stream.selectedProductImage.isNotEmpty
-              ? stream.selectedProductImage
-              : stream.liveImage,
+          price: '12',
+          title: stream.title ?? "",
+          adminName: '',
+          adminImage: '',
+          viewsCount: 5,
+          description: '',
+          liveImage: '',
         ),
       ),
     );

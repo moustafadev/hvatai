@@ -21,6 +21,8 @@ class CustomTextField extends StatelessWidget {
   final BorderSide? borderSide;
   final double? height;
   final List<TextInputFormatter>? inputFormatters;
+  final Color? textColor;
+  final Color? hintColor;
 
   const CustomTextField({
     super.key,
@@ -42,7 +44,10 @@ class CustomTextField extends StatelessWidget {
     this.borderRadius,
     this.borderSide,
     this.height,
-    this.inputFormatters, this.onTap,
+    this.inputFormatters,
+    this.onTap,
+    this.textColor,
+    this.hintColor,
   });
 
   @override
@@ -53,6 +58,7 @@ class CustomTextField extends StatelessWidget {
         key: key,
         maxLines: maxLines ?? 1,
         minLines: maxLines ?? 1,
+        cursorColor: Colors.black,
         onTap: onTap,
         controller: controller,
         obscureText: obscureText,
@@ -63,12 +69,12 @@ class CustomTextField extends StatelessWidget {
         keyboardType: keyboardType,
         onChanged: onChanged,
         inputFormatters: inputFormatters,
-        style: const TextStyle(color: Colors.black),
+        style: TextStyle(color: textColor ?? Colors.black),
         decoration: InputDecoration(
           hintText: isRequired ? '$hintText *' : hintText,
-          hintStyle: const TextStyle(
+          hintStyle: TextStyle(
             fontWeight: FontWeight.bold,
-            color: Colors.grey,
+            color: hintColor ?? Colors.grey,
             fontSize: 16,
           ),
           filled: true,
@@ -76,6 +82,10 @@ class CustomTextField extends StatelessWidget {
           contentPadding:
               const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           border: OutlineInputBorder(
+            borderRadius: borderRadius ?? BorderRadius.circular(10),
+            borderSide: borderSide ?? BorderSide.none,
+          ),
+          focusedBorder: OutlineInputBorder(
             borderRadius: borderRadius ?? BorderRadius.circular(10),
             borderSide: borderSide ?? BorderSide.none,
           ),

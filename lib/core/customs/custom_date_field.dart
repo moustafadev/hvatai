@@ -54,16 +54,37 @@ class _CustomDateFieldState extends State<CustomDateField> {
       hintText: widget.label,
       suffixIcon: const Icon(Icons.calendar_month_outlined),
       onTap: () async {
+        // Step 1: Pick the date
         DateTime? pickedDate = await showDatePicker(
           context: context,
           initialDate: DateTime.now(),
           firstDate: DateTime.now(),
           lastDate: DateTime(2100),
         );
+
         if (pickedDate != null) {
-          String formattedDate = DateFormat('dd.MM.yyyy').format(pickedDate);
-          _controller.text = formattedDate;
-          widget.onChanged?.call(formattedDate);
+          // Step 2: Pick the time
+          TimeOfDay? pickedTime = await showTimePicker(
+            context: context,
+            initialTime: TimeOfDay.now(),
+          );
+
+          if (pickedTime != null) {
+            final fullDateTime = DateTime(
+              pickedDate.year,
+              pickedDate.month,
+              pickedDate.day,
+              pickedTime.hour,
+              pickedTime.minute,
+            );
+
+            final formatted =
+                DateFormat('dd.MM.yyyy HH:mm').format(fullDateTime);
+            _controller.text = formatted;
+
+            // send as ISO 8601 UTC
+            widget.onChanged?.call(fullDateTime.toUtc().toIso8601String());
+          }
         }
       },
     );

@@ -3,6 +3,7 @@ import 'package:hvatai/features/auth/data/models/registration_model/user_registr
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
+import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
@@ -42,5 +43,9 @@ abstract class ProfileRepository {
   Future<Either<String, UserRegistrationData>> editDeliveryAddress(
       EditDeliveryAddressParams params);
 
-  Future<Either<String, Unit>> createStream(CreateStreamModel model);
+
+ 
+
+  Future<Either<String, StreamResponseModel>> createStream(
+      CreateStreamModel model);
 }

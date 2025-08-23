@@ -8,6 +8,8 @@ import 'package:hvatai/features/profile/data/model/create_stream/create_stream_m
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/create_stream_uscecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
+import 'package:hvatai/features/stream/presentation/stream.dart';
+import 'package:hvatai/routes/app_routes.dart';
 
 part 'add_stream_cubit.freezed.dart';
 part 'add_stream_state.dart';
@@ -22,7 +24,6 @@ class AddStreamCubit extends Cubit<AddStreamState> {
             createStreamModel: CreateStreamModel(
               title: '',
               description: '',
-              scheduledAt: DateTime.now(),
               isRecordingEnabled: false,
               isPublic: false,
               enableComments: false,
@@ -166,9 +167,19 @@ class AddStreamCubit extends Cubit<AddStreamState> {
         showFloatingMessageError(failure);
         emit(state.copyWith(isLoading: false, error: failure));
       },
-      (_) {
+      (streamResponse) {
         showFloatingMessageSuccess('Stream created successfully');
-        context.pop();
+        context.push(
+          AppRoutes.liveStream,
+          extra: {
+            'appId': streamResponse.data?.agoraAppId ?? '',
+            'channelName': streamResponse.data?.channelName ?? '',
+            'agoraToken': streamResponse.data?.agoraToken ?? '',
+            'agoraUid': streamResponse.data?.agoraUid ?? 0, // <-- add this
+            'userRole' : UserRole.broadcaster
+        
+          },
+        );
         emit(state.copyWith(isLoading: false));
       },
     );

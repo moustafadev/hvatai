@@ -5,6 +5,7 @@ import 'package:hvatai/features/profile/data/datasources/api_service_profile.dar
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
+import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
@@ -142,12 +143,15 @@ class ProfileImplRepository implements ProfileRepository {
   }
 
   @override
-  Future<Either<String, Unit>> createStream(CreateStreamModel model) {
-    return executeAndHandleError<Unit>(() async {
+  Future<Either<String, StreamResponseModel>> createStream(
+      CreateStreamModel model) {
+    return executeAndHandleError<StreamResponseModel>(() async {
       final res = await _apiServiceProfile.createStream(model);
       return res;
     });
   }
+
+ 
 
   @override
   Future<Either<String, List<MainCategoryModel>>> getProductCategory() {

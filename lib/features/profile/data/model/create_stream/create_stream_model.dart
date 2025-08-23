@@ -8,7 +8,7 @@ class CreateStreamModel with _$CreateStreamModel {
   const factory CreateStreamModel({
     required String title,
     required String description,
-    @JsonKey(name: 'scheduled_at') required DateTime scheduledAt,
+    @JsonKey(name: 'scheduled_at', includeIfNull: false)  DateTime? scheduledAt,
     @JsonKey(name: 'is_recording_enabled') required bool isRecordingEnabled,
     @JsonKey(name: 'is_public') required bool isPublic,
     @JsonKey(name: 'enable_comments') required bool enableComments,

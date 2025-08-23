@@ -19,6 +19,7 @@ import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
+import 'package:hvatai/features/stream/presentation/stream.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -58,6 +59,26 @@ final GoRouter router = GoRouter(
       path: AppRoutes.analytics, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const AnalyticsScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.liveStream,
+      builder: (BuildContext context, GoRouterState state) {
+        final extra = state.extra as Map<String, dynamic>?; // change to dynamic
+
+        final appId = extra?['appId'] as String? ?? '';
+        final channelName = extra?['channelName'] as String? ?? '';
+        final agoraToken = extra?['agoraToken'] as String? ?? '';
+        final agoraUid = extra?['agoraUid'] as int? ?? 0; // ✅ add agoraUid
+        final userRole = extra?['userRole'] as UserRole;
+
+        return LiveStreamScreen(
+          appId: appId,
+          channelName: channelName,
+          agoraToken: agoraToken,
+          agoraUid: agoraUid, // ✅ pass it
+          userRole: userRole,
+        );
       },
     ),
     GoRoute(

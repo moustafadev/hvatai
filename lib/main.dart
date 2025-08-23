@@ -13,7 +13,7 @@ void main() async {
       path: 'assets/translations',
       fallbackLocale: const Locale('ru'),
       child: DevicePreview(
-        enabled: kDebugMode,
+        enabled: false,
         builder: (context) => const Hvatai(),
       ),
     ),
