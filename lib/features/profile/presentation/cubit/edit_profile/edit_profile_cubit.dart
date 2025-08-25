@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/theme/assets.dart';
@@ -259,12 +263,90 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     );
   }
 
+  /*  Future<FormData> _prepareProductFormData(ProductModel product) async {
+    final dataMap = Map<String, dynamic>.from(product.toJson());
+    dataMap['delivery_available'] = product.deliveryAvailable ? 1 : 0;
+    dataMap['status'] = product.status != null ? 1 : 0;
+    dataMap['self_pickup'] = product.selfPickup ? 1 : 0;
+
+    final variantsJson = product.variants.map((v) => v.toJson()).toList();
+    dataMap['variants'] = variantsJson;
+
+    final formData = FormData.fromMap(dataMap);
+
+    if (product.productPictures != null &&
+        product.productPictures!.isNotEmpty) {
+      for (int i = 0; i < product.productPictures!.length; i++) {
+        final file = await _prepareImageFile(product.productPictures![i]);
+        if (file != null) {
+          formData.files.add(MapEntry("product_pictures[$i]", file));
+        }
+      }
+    }
+
+    return formData;
+  } */
+  Future<FormData> _prepareProfileFormData(UserRegistrationData params) async {
+    final dataMap = Map<String, dynamic>.from(params.toJson());
+    dataMap['terms_agreement'] = params.agreedToTerms ?? false ? 1 : 0;
+    dataMap['age_confirmation'] = params.isAbove18 ?? false ? 1 : 0;
+    dataMap['phone'] = "043535345";
+    final formData = FormData.fromMap(dataMap);
+
+    if (params.image != null && params.image!.isNotEmpty) {
+      final file = await _prepareImageFile(params.image);
+      if (file != null) {
+        formData.files.add(MapEntry("image", file));
+      }
+    }
+
+    return formData;
+  }
+
+  Future<File> compressImage(File file, {int quality = 70}) async {
+    final targetPath = file.absolute.path.replaceAll('.jpg', '_compressed.jpg');
+
+    final result = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path,
+      targetPath,
+      quality: quality,
+      minWidth: 1080,
+      minHeight: 1080,
+    );
+    return file;
+  }
+
+  Future<MultipartFile?> _prepareImageFile(String? imagePath) async {
+    if (imagePath == null || imagePath.isEmpty) return null;
+
+    File file = File(imagePath);
+    if (!await file.exists()) return null;
+
+    int quality = 85;
+    while (await file.length() > 1 * 1024 * 1024 && quality > 30) {
+      file = await compressImage(file, quality: quality);
+      quality -= 15;
+    }
+
+    if (await file.length() > 2 * 1024 * 1024) {
+      file = await compressImage(file);
+      if (await file.length() > 2 * 1024 * 1024) {
+        throw Exception;
+      }
+    }
+
+    return MultipartFile.fromFile(file.path,
+        filename: file.path.split('/').last);
+  }
+
   Future<void> submit(BuildContext context) async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
-    final result =
-        await updateProfileDataUseCase.call(state.toUpdateProfileParams());
+    final formData = await _prepareProfileFormData(state.user);
 
+    final result = await updateProfileDataUseCase.call(
+      UpdateProfileParams(formData: formData),
+    );
     result.fold(
       (failure) {
         emit(state.copyWith(isLoading: false, errorMessage: failure));

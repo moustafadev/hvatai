@@ -32,10 +32,12 @@ class SearchScreen extends StatelessWidget {
       child: BlocBuilder<SearchCubit, SearchState>(
         builder: (context, state) {
           if (state.isLoading) {
-            return const Center(
-                child: CircularProgressIndicator(
-              color: AppColors.grey,
-            ));
+            return Scaffold(
+              body: const Center(
+                  child: CircularProgressIndicator(
+                color: AppColors.grey,
+              )),
+            );
           }
 
           return SafeArea(

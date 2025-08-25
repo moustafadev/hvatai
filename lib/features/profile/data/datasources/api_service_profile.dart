@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:hvatai/core/datasources/remote/api_base.dart';
@@ -12,22 +11,19 @@ import 'package:hvatai/features/profile/data/model/product_model/product_model.d
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 
 class ApiServiceProfile extends ApiBase {
-  Future<ProductModel> addNewProduct(AddNewProductParams params) async {
+  Future<ProductModel> addNewProduct(FormData formData) async {
     return executeAndHandleErrorServer<ProductModel>(() async {
-      final formData = await _prepareProductFormData(params);
       final response = await post(
         ServerConfig.products,
         body: formData,
         contentType: 'multipart/form-data',
       );
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         return ProductModel.fromJson(response.json);
       }
@@ -35,45 +31,13 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-  Future<FormData> _prepareProductFormData(AddNewProductParams params) async {
-    final dataMap = Map<String, dynamic>.from(params.toJson());
-    dataMap['delivery_available'] =
-        params.productModel.deliveryAvailable ? 1 : 0;
-    dataMap['status'] = params.productModel.status != null ? 1 : 0;
-    dataMap['self_pickup'] = params.productModel.selfPickup ? 1 : 0;
-
-    final variantsJson =
-        params.productModel.variants.map((v) => v.toJson()).toList();
-    dataMap['variants'] = variantsJson;
-
-    if (params.productModel.productPictures != null &&
-        params.productModel.productPictures!.isNotEmpty) {
-      for (int i = 0; i < params.productModel.productPictures!.length; i++) {
-        final imagePath = params.productModel.productPictures![i];
-        final file = await _prepareImageFile(imagePath);
-        if (file != null) {
-          dataMap['product_pictures[$i]'] = file;
-        }
-      }
-    }
-
-    print("📝 FormData:");
-    dataMap.forEach((k, v) {
-      print("$k : $v");
-    });
-
-    return FormData.fromMap(dataMap);
-  }
-
   Future<UserRegistrationData> getProfileData() async {
     return executeAndHandleErrorServer<UserRegistrationData>(() async {
       final response = await get(ServerConfig.profile);
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = Map<String, dynamic>.from(response.json['data']);
-
         data['terms_agreement'] = (data['terms_agreement'] == 1);
         data['age_confirmation'] = (data['age_confirmation'] == 1);
-
         return UserRegistrationData.fromJson(data);
       } else {
         throw Exception;
@@ -106,14 +70,9 @@ class ApiServiceProfile extends ApiBase {
   Future<List<UserRegistrationData>> getDeliveryAddress() async {
     return executeAndHandleErrorServer<List<UserRegistrationData>>(() async {
       final response = await get(ServerConfig.deliveryAddress);
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<dynamic> data = response.json;
-
-        return data
-            .map(
-                (e) => UserRegistrationData.fromJson(e as Map<String, dynamic>))
-            .toList();
+        return data.map((e) => UserRegistrationData.fromJson(e)).toList();
       } else {
         throw Exception;
       }
@@ -123,13 +82,9 @@ class ApiServiceProfile extends ApiBase {
   Future<List<CardModel>> getAllCards() async {
     return executeAndHandleErrorServer<List<CardModel>>(() async {
       final response = await get(ServerConfig.cards);
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<dynamic> data = response.json;
-
-        return data
-            .map((e) => CardModel.fromJson(e as Map<String, dynamic>))
-            .toList();
+        return data.map((e) => CardModel.fromJson(e)).toList();
       } else {
         throw Exception;
       }
@@ -139,13 +94,9 @@ class ApiServiceProfile extends ApiBase {
   Future<List<ProductModel>> getMyProducts() async {
     return executeAndHandleErrorServer<List<ProductModel>>(() async {
       final response = await get(ServerConfig.products);
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<dynamic> data = response.json['data'];
-
-        return data
-            .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
-            .toList();
+        return data.map((e) => ProductModel.fromJson(e)).toList();
       } else {
         throw Exception;
       }
@@ -155,12 +106,9 @@ class ApiServiceProfile extends ApiBase {
   Future<List<MainCategoryModel>> getProductCategory() async {
     return executeAndHandleErrorServer<List<MainCategoryModel>>(() async {
       final response = await get(ServerConfig.categories);
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<dynamic> data = response.json['data'];
-        return data
-            .map((e) => MainCategoryModel.fromJson(e as Map<String, dynamic>))
-            .toList();
+        return data.map((e) => MainCategoryModel.fromJson(e)).toList();
       } else {
         throw Exception;
       }
@@ -170,7 +118,6 @@ class ApiServiceProfile extends ApiBase {
   Future<UserRegistrationData> updateProfileType() async {
     return executeAndHandleErrorServer<UserRegistrationData>(() async {
       final response = await post(ServerConfig.upgrade);
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         return UserRegistrationData.fromJson(response.json['data']);
       } else {
@@ -179,81 +126,18 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-  Future<File> compressImage(File file, {int quality = 70}) async {
-    final targetPath = file.absolute.path.replaceAll('.jpg', '_compressed.jpg');
-
-    final result = await FlutterImageCompress.compressAndGetFile(
-      file.absolute.path,
-      targetPath,
-      quality: quality,
-      minWidth: 1080,
-      minHeight: 1080,
-    );
-    return file;
-  }
-
-  Future<MultipartFile?> _prepareImageFile(String? imagePath) async {
-    if (imagePath == null || imagePath.isEmpty) return null;
-
-    File file = File(imagePath);
-    if (!await file.exists()) return null;
-
-    int quality = 85;
-    while (await file.length() > 1 * 1024 * 1024 && quality > 30) {
-      file = await compressImage(file, quality: quality);
-      quality -= 15;
-    }
-
-    if (await file.length() > 2 * 1024 * 1024) {
-      file = await compressImage(file);
-      if (await file.length() > 2 * 1024 * 1024) {
-        throw Exception;
-      }
-    }
-
-    return MultipartFile.fromFile(file.path,
-        filename: file.path.split('/').last);
-  }
-
- 
-  Future<UserRegistrationData> updateProfileData(
-      UpdateProfileParams params) async {
+  Future<UserRegistrationData> updateProfileData(FormData formData) async {
     return executeAndHandleErrorServer<UserRegistrationData>(() async {
-      final formData = await _prepareProfileFormData(params);
       final response = await post(
         ServerConfig.profile,
         body: formData,
         contentType: 'multipart/form-data',
       );
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         return UserRegistrationData.fromJson(response.json['data']);
       }
       throw Exception;
     });
-  }
-
-  Future<FormData> _prepareProfileFormData(UpdateProfileParams params) async {
-    final dataMap = Map<String, dynamic>.from(params.toJson());
-    dataMap['terms_agreement'] =
-        params.userRegistrationData.agreedToTerms ?? false ? 1 : 0;
-    dataMap['age_confirmation'] =
-        params.userRegistrationData.isAbove18 ?? false ? 1 : 0;
-    dataMap['phone'] = "043535345";
-
-    MultipartFile? imageFile;
-    if (params.userRegistrationData.image != null &&
-        File(params.userRegistrationData.image!).existsSync()) {
-      imageFile = await _prepareImageFile(params.userRegistrationData.image);
-    }
-
-    if (imageFile != null) {
-      dataMap['image'] = imageFile;
-    } else {
-      dataMap.remove('image');
-    }
-
-    return FormData.fromMap(dataMap);
   }
 
   Future<UserRegistrationData> addNewAddress(AddNewAddressParams params) async {
@@ -270,12 +154,9 @@ class ApiServiceProfile extends ApiBase {
 
   Future<Unit> deleteAddress(DeleteAddressParams params) async {
     return executeAndHandleErrorServer<Unit>(() async {
-      final addressId = params.addressId;
-      final endpoint = ServerConfig.deliveryAddressId(addressId);
-      final response = await delete(endpoint);
-      if (response.statusCode == 200 ||
-          response.statusCode == 201 ||
-          response.statusCode == 204) {
+      final response =
+          await delete(ServerConfig.deliveryAddressId(params.addressId));
+      if ([200, 201, 204].contains(response.statusCode)) {
         return unit;
       } else {
         throw Exception;
@@ -285,12 +166,8 @@ class ApiServiceProfile extends ApiBase {
 
   Future<Unit> deleteCard(DeleteCardParams params) async {
     return executeAndHandleErrorServer<Unit>(() async {
-      final cardId = params.cardId;
-      final endpoint = ServerConfig.cardId(cardId);
-      final response = await delete(endpoint);
-      if (response.statusCode == 200 ||
-          response.statusCode == 201 ||
-          response.statusCode == 204) {
+      final response = await delete(ServerConfig.cardId(params.cardId));
+      if ([200, 201, 204].contains(response.statusCode)) {
         return unit;
       } else {
         throw Exception;
@@ -309,11 +186,9 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-
   Future<StreamResponseModel> createStream(CreateStreamModel model) async {
     return executeAndHandleErrorServer<StreamResponseModel>(() async {
       final response = await post(ServerConfig.streams, body: model.toJson());
-
       if (response.statusCode == 200 || response.statusCode == 201) {
         return StreamResponseModel.fromJson(response.json);
       } else {
@@ -325,13 +200,13 @@ class ApiServiceProfile extends ApiBase {
   Future<UserRegistrationData> editDeliveryAddress(
       EditDeliveryAddressParams params) async {
     return executeAndHandleErrorServer<UserRegistrationData>(() async {
-      final addressId = params.userRegistrationData.id;
-      if (addressId == null) {
+      if (params.userRegistrationData.id == null) {
         throw Exception("Address ID is null, cannot update");
       }
-      final endpoint = ServerConfig.deliveryAddressId(addressId);
-      final response = await put(endpoint, body: params.toJson());
-
+      final response = await put(
+        ServerConfig.deliveryAddressId(params.userRegistrationData.id!),
+        body: params.toJson(),
+      );
       if (response.statusCode == 200 || response.statusCode == 201) {
         return UserRegistrationData.fromJson(response.json);
       } else {

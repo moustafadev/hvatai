@@ -12,7 +12,6 @@ class ProductDetailsState with _$ProductDetailsState {
     @Default('') String errorMessage,
     @Default([]) List<ProductModel> products,
     @Default([]) List<CartModel> carts,
-    @Default([]) List<String> selectedInterests,
     @Default({}) Set<int> selectedIndices,
     @Default([]) List<String> searchedItems,
     @Default(0) int selectedCategoryIndex,

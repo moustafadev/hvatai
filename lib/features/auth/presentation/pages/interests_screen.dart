@@ -66,6 +66,8 @@ class InterestsScreen extends StatelessWidget {
                             final isSelected =
                                 state.selectedIndices.contains(index);
 
+                            final String imageUrl = category.icon ?? '';
+
                             return GestureDetector(
                               onTap: () =>
                                   cubit.toggleInterest(index, category.id ?? 0),
@@ -110,26 +112,21 @@ class InterestsScreen extends StatelessWidget {
                                           ),
                                         ),
                                         Expanded(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.r),
-                                              image: category.icon != null
-                                                  ? DecorationImage(
-                                                      image:
-                                                          CachedNetworkImageProvider(
-                                                              category.icon!),
-                                                      fit: BoxFit.cover,
-                                                    )
-                                                  : null,
-                                            ),
-                                            child: category.icon == null
-                                                ? Icon(
-                                                    Icons.image_not_supported,
-                                                    size: 30,
-                                                    color: Colors.grey)
-                                                : null,
-                                          ),
+                                          child: imageUrl.isEmpty ||
+                                                  imageUrl == null
+                                              ? Icon(Icons.image_not_supported,
+                                                  size: 30, color: Colors.grey)
+                                              : ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.r),
+                                                  child: CustomImage(
+                                                    width: 109.w,
+                                                    height: 109.h,
+                                                    imageSource: imageUrl,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                         ),
                                       ],
                                     ),

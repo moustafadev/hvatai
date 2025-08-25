@@ -8,6 +8,8 @@ import 'package:hvatai/features/all_app/data/model/cart_model.dart';
 import 'package:hvatai/features/all_app/domain/usecases/add_fav_product_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/add_product_to_cart_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/delete_cart_usecase.dart';
+import 'package:hvatai/features/all_app/presentation/event_bus/event_bus.dart';
+import 'package:hvatai/features/all_app/presentation/event_bus/events.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 
 part 'product_details_cubit.freezed.dart';
@@ -36,6 +38,8 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   }
 
   void resetImageIndex() {
+    if (isClosed) return;
+
     emit(state.copyWith(currentImageIndex: 0, pageController: null));
   }
 
@@ -46,6 +50,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   void initProductModel(ProductModel product) {
     emit(state.copyWith(
       product: product,
+      isFavourites: product.isFavorited,
     ));
   }
 
@@ -154,14 +159,17 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
           favoritesCount: response.favoritesCount,
         );
 
-        final updatedProducts = state.products
-            .map((p) => p.id == state.product.id ? updatedProduct : p)
-            .toList();
+        EventBus().publish(FavoriteUpdatedEvent(
+          productId: productId,
+          isFavorite: response.isFavorited,
+          favoritesCount: response.favoritesCount,
+          product: updatedProduct,
+        ));
 
         emit(state.copyWith(
           isLoading: false,
           product: updatedProduct,
-          products: updatedProducts,
+          isFavourites: response.isFavorited,
         ));
       },
     );
@@ -170,41 +178,6 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   void removeItem(String item) {
     final updatedList = List<String>.from(state.searchedItems)..remove(item);
     emit(state.copyWith(searchedItems: updatedList));
-  }
-
-  void setCategories(List<String> interests) {
-    final newCategories = ['All', ...interests];
-    emit(state.copyWith(categories: newCategories));
-  }
-
-  void toggleInterest(int index, String interestKey) {
-    final isSelected = state.selectedIndices.contains(index);
-    final updatedIndices = Set<int>.from(state.selectedIndices);
-    final updatedInterests = List<String>.from(state.selectedInterests);
-
-    if (isSelected) {
-      updatedIndices.remove(index);
-      updatedInterests.remove(interestKey);
-    } else {
-      updatedIndices.add(index);
-      updatedInterests.add(interestKey);
-    }
-
-    emit(state.copyWith(
-      selectedIndices: updatedIndices,
-      selectedInterests: updatedInterests,
-    ));
-  }
-
-  void fetchCategories() => emit(state);
-
-  void selectCategory(dynamic index) {
-    emit(state.copyWith(selectedIndex: index));
-  }
-
-  String? get selectedCategory {
-    final category = state.categories[state.selectedIndex];
-    return category == 'All' ? null : category;
   }
 
   @override

@@ -12,7 +12,6 @@ import 'package:hvatai/features/activity/presentation/cubit/featured_activity/fe
 import 'package:hvatai/features/activity/presentation/cubit/rates_activity/rates_activity_cubit.dart';
 import 'package:hvatai/features/all_app/presentation/basket.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
-import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';

@@ -15,7 +15,6 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/all_app/presentation/cubit/edit_address/edit_address_cubit.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
-import 'package:hvatai/features/auth/presentation/cubit/interests/interests_cubit.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/presentation/cubit/add_stream/add_stream_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/analytics_cubit/analytics_cubit.dart';

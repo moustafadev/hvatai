@@ -40,8 +40,11 @@ class HomeScreen extends StatelessWidget {
           child: BlocBuilder<CategoryTabsCubit, CategoryTabsState>(
             builder: (context, state) {
               if (state.isLoading) {
-                return Center(
-                  child: CircularProgressIndicator(),
+                return Scaffold(
+                  body: const Center(
+                      child: CircularProgressIndicator(
+                    color: AppColors.grey,
+                  )),
                 );
               }
               return Column(

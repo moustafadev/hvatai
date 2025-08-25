@@ -28,6 +28,7 @@ class FavoriteScreen extends StatelessWidget {
     return BlocBuilder<ActivityCubit, ActivityState>(builder: (context, state) {
       final cubit = context.read<ActivityCubit>();
       return SafeArea(
+        bottom: false,
         child: Scaffold(
             backgroundColor: AppColors.lightGreyBackground,
             appBar: AppBar(
@@ -87,6 +88,16 @@ class FavoriteScreen extends StatelessWidget {
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w700),
                         9.ph,
+                        state.products.isEmpty
+                            ? Center(
+                                child: CustomText(
+                                  textAlign: TextAlign.center,
+                                  text: 'noFavoritesYet'.tr(),
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                            : SizedBox(),
                         ListView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
