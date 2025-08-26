@@ -1,33 +1,70 @@
 part of '../home.dart';
 
-class HomeScreen extends StatelessWidget {
+bool inChat = false;
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({
     super.key,
   });
 
-  List<LiveStreamModel> generateDummyLiveStreams(int count) {
-    return List.generate(count, (_) {
-      return LiveStreamModel(
-        price: 'Starting price 12 ₽',
-        title: 'Lorem ipsum dolor sit amet consectetur adipiscing',
-        adminName: 'company_name',
-        liveImage: 'base64_image_string_here',
-        category: 'Category 1',
-        isBlocked: false,
-        channelId: '1',
-        adminPhoto: 'base64_image_string_here',
-        viewsCount: 86,
-        description: 'Lorem ipsum dolor sit amet consectetur adipiscing',
-        adminId: '1',
-        selectedProductImage: 'base64_image_string_here',
-        unblockRequested: false,
-        unblockRequestReason: '',
-      );
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  final _pusherManager = PusherManager();
+  late final PusherClient _pusher;
+  late final Channel _channel;
+
+  @override
+  void initState() {
+    super.initState();
+    _connectToPusher();
+  }
+
+  void _connectToPusher() {
+    final userId = locator<AppLocal>().getUserId();
+    final chatsCubit = BlocProvider.of<ChatsCubit>(context);
+
+    _pusher = _pusherManager.initializePusher();
+    _channel = _pusher.subscribe('private-user.$userId');
+
+    _channel.bind('MessageSent', (data) {
+      final message =
+          SocketMessageModel.fromJson(data).message.toMessageModel();
+      chatsCubit.updateChatWithNewMessage(message);
+      // locator<HomeSummaryCubit>()..loadSummary();
+
+      if (message.chatId == chatsCubit.state.currentChatId &&
+          message.sender?.id != userId) {
+        chatsCubit.addMessage(message);
+        if (inChat) {
+          chatsCubit.markMessageAsRead(message.chatId ?? 0);
+        }
+      }
+    });
+
+    _channel.bind('MessagesRead', (data) {
+      if (inChat) {
+        chatsCubit.markLastMessageAsReadInChat(data['chat_id']);
+      }
+      if (data['chat_id'] == chatsCubit.state.currentChatId) {
+        chatsCubit.markAllMessagesAsReadLocally();
+      }
     });
   }
 
   @override
+  void dispose() {
+    _pusher.unsubscribe('private-user.${locator<AppLocal>().getUserId()}');
+    _pusherManager.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    inChat = false;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.lightGreyBackground,

@@ -11,8 +11,10 @@ class AppColors {
   static const Color eerieBlack = Color(0xFF1B1B1B);
   static const Color whiteGrey = Color(0xffBEBEBE);
   static const Color gray = Color(0xFFECECEC);
+  static const Color gray2 = Color(0xffEBEBEB);
   static const Color primary = Color(0xFFA1F4A8);
   static const Color transparent = Colors.transparent;
+  static const Color gold = Color(0xffF4D1A1);
   static const Color lightGray = Color(0xFFD9D9D9);
   static Color get grey100 =>
       Colors.grey[100]!; // Lightest grey from Material swatch

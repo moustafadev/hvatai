@@ -9,6 +9,7 @@ class LoginModel with _$LoginModel {
     String? message,
     @JsonKey(name: 'is_setup') bool? isSetup,
     String? token,
+    @JsonKey(name: 'user_id') int? userId,
   }) = _LoginModel;
 
   factory LoginModel.fromJson(Map<String, dynamic> json) =>

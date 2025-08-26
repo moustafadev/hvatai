@@ -50,6 +50,10 @@ class AppRoutes {
   static const String addProduct = '/add_product';
   static const String otp = '/otp';
   static const String liveStream = '/live_stream';
+  static const String chatRoot = '/chat_root';
 
+  static const String chat = 'chat';
+  static const String chatDetails = 'chat_details';
+  static const String chatSupportDetails = 'chat_support_details';
   static const String mainNotification = '/main_notification';
 }

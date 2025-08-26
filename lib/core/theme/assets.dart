@@ -54,6 +54,10 @@ class Assets {
   /// assets/icons/Arrows_ALogout_2.png
   static const String assetsIconsArrowsALogout2 = "assets/icons/Arrows_ALogout_2.png";
 
+  /// Assets for assetsIconsAttach
+  /// assets/icons/attach.svg
+  static const String assetsIconsAttach = "assets/icons/attach.svg";
+
   /// Assets for assetsIconsBell
   /// assets/icons/Bell.png
   static const String assetsIconsBell = "assets/icons/Bell.png";
@@ -110,6 +114,10 @@ class Assets {
   /// assets/icons/delivery.png
   static const String assetsIconsDelivery = "assets/icons/delivery.png";
 
+  /// Assets for assetsIconsDisabledSend
+  /// assets/icons/disabled_send.svg
+  static const String assetsIconsDisabledSend = "assets/icons/disabled_send.svg";
+
   /// Assets for assetsIconsDollar
   /// assets/icons/dollar.png
   static const String assetsIconsDollar = "assets/icons/dollar.png";
@@ -121,6 +129,10 @@ class Assets {
   /// Assets for assetsIconsEmail
   /// assets/icons/email.png
   static const String assetsIconsEmail = "assets/icons/email.png";
+
+  /// Assets for assetsIconsEnabledSend
+  /// assets/icons/enabled_send.svg
+  static const String assetsIconsEnabledSend = "assets/icons/enabled_send.svg";
 
   /// Assets for assetsIconsEyeClose
   /// assets/icons/eye_close.png
@@ -562,6 +574,10 @@ class Assets {
   /// assets/images/cat.png
   static const String assetsImagesCat = "assets/images/cat.png";
 
+  /// Assets for assetsImagesChatEmpty
+  /// assets/images/chat_empty.png
+  static const String assetsImagesChatEmpty = "assets/images/chat_empty.png";
+
   /// Assets for assetsImagesCircleAppleImage
   /// assets/images/circle_apple_image.png
   static const String assetsImagesCircleAppleImage = "assets/images/circle_apple_image.png";
@@ -673,6 +689,10 @@ class Assets {
   /// Assets for assetsImagesPirse
   /// assets/images/pirse.png
   static const String assetsImagesPirse = "assets/images/pirse.png";
+
+  /// Assets for assetsImagesPlaceholder
+  /// assets/images/placeholder.png
+  static const String assetsImagesPlaceholder = "assets/images/placeholder.png";
 
   /// Assets for assetsImagesPlatinumAward
   /// assets/images/platinum_award.png

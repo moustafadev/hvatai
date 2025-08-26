@@ -9,6 +9,9 @@ import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
+import 'package:hvatai/features/chat/data/models/socket_message/socket_message_model.dart';
+import 'package:hvatai/features/chat/presentation/cubit/chats_cubit.dart';
+import 'package:hvatai/features/chat/presentation/pages/chat_service.dart';
 import 'package:hvatai/features/home/data/model/live_stream_model.dart';
 import 'package:hvatai/features/home/data/model/notification_model/notification_model.dart';
 import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_cubit.dart';
@@ -19,6 +22,7 @@ import 'package:hvatai/features/profile/data/model/stream_response_model/stream_
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
+import 'package:pusher_client_socket/pusher_client_socket.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 part 'screens/feed_screen.dart';

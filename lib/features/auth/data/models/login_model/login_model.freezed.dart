@@ -24,6 +24,8 @@ mixin _$LoginModel {
   @JsonKey(name: 'is_setup')
   bool? get isSetup => throw _privateConstructorUsedError;
   String? get token => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_id')
+  int? get userId => throw _privateConstructorUsedError;
 
   /// Serializes this LoginModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -44,7 +46,8 @@ abstract class $LoginModelCopyWith<$Res> {
   $Res call(
       {String? message,
       @JsonKey(name: 'is_setup') bool? isSetup,
-      String? token});
+      String? token,
+      @JsonKey(name: 'user_id') int? userId});
 }
 
 /// @nodoc
@@ -65,6 +68,7 @@ class _$LoginModelCopyWithImpl<$Res, $Val extends LoginModel>
     Object? message = freezed,
     Object? isSetup = freezed,
     Object? token = freezed,
+    Object? userId = freezed,
   }) {
     return _then(_value.copyWith(
       message: freezed == message
@@ -79,6 +83,10 @@ class _$LoginModelCopyWithImpl<$Res, $Val extends LoginModel>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -94,7 +102,8 @@ abstract class _$$LoginModelImplCopyWith<$Res>
   $Res call(
       {String? message,
       @JsonKey(name: 'is_setup') bool? isSetup,
-      String? token});
+      String? token,
+      @JsonKey(name: 'user_id') int? userId});
 }
 
 /// @nodoc
@@ -113,6 +122,7 @@ class __$$LoginModelImplCopyWithImpl<$Res>
     Object? message = freezed,
     Object? isSetup = freezed,
     Object? token = freezed,
+    Object? userId = freezed,
   }) {
     return _then(_$LoginModelImpl(
       message: freezed == message
@@ -127,6 +137,10 @@ class __$$LoginModelImplCopyWithImpl<$Res>
           ? _value.token
           : token // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -135,7 +149,10 @@ class __$$LoginModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$LoginModelImpl implements _LoginModel {
   const _$LoginModelImpl(
-      {this.message, @JsonKey(name: 'is_setup') this.isSetup, this.token});
+      {this.message,
+      @JsonKey(name: 'is_setup') this.isSetup,
+      this.token,
+      @JsonKey(name: 'user_id') this.userId});
 
   factory _$LoginModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$LoginModelImplFromJson(json);
@@ -147,10 +164,13 @@ class _$LoginModelImpl implements _LoginModel {
   final bool? isSetup;
   @override
   final String? token;
+  @override
+  @JsonKey(name: 'user_id')
+  final int? userId;
 
   @override
   String toString() {
-    return 'LoginModel(message: $message, isSetup: $isSetup, token: $token)';
+    return 'LoginModel(message: $message, isSetup: $isSetup, token: $token, userId: $userId)';
   }
 
   @override
@@ -160,12 +180,13 @@ class _$LoginModelImpl implements _LoginModel {
             other is _$LoginModelImpl &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.isSetup, isSetup) || other.isSetup == isSetup) &&
-            (identical(other.token, token) || other.token == token));
+            (identical(other.token, token) || other.token == token) &&
+            (identical(other.userId, userId) || other.userId == userId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, message, isSetup, token);
+  int get hashCode => Object.hash(runtimeType, message, isSetup, token, userId);
 
   /// Create a copy of LoginModel
   /// with the given fields replaced by the non-null parameter values.
@@ -187,7 +208,8 @@ abstract class _LoginModel implements LoginModel {
   const factory _LoginModel(
       {final String? message,
       @JsonKey(name: 'is_setup') final bool? isSetup,
-      final String? token}) = _$LoginModelImpl;
+      final String? token,
+      @JsonKey(name: 'user_id') final int? userId}) = _$LoginModelImpl;
 
   factory _LoginModel.fromJson(Map<String, dynamic> json) =
       _$LoginModelImpl.fromJson;
@@ -199,6 +221,9 @@ abstract class _LoginModel implements LoginModel {
   bool? get isSetup;
   @override
   String? get token;
+  @override
+  @JsonKey(name: 'user_id')
+  int? get userId;
 
   /// Create a copy of LoginModel
   /// with the given fields replaced by the non-null parameter values.

@@ -34,7 +34,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             if (showBack)
               GestureDetector(
-                onTap: onBack ?? () => context.pop(),
+                onTap: onBack ??
+                    () {
+                      context.pop();
+                      inChat = false;
+                    },
                 child: const Icon(Icons.arrow_back_ios),
               ),
             if (showSearch)

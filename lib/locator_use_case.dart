@@ -14,6 +14,13 @@ import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_with_apple_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_with_google_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
+import 'package:hvatai/features/chat/domain/usecases/get_chats_usecase.dart';
+import 'package:hvatai/features/chat/domain/usecases/get_messages_usecase.dart';
+import 'package:hvatai/features/chat/domain/usecases/get_support_chat_usecase.dart';
+import 'package:hvatai/features/chat/domain/usecases/get_support_messages_usecase.dart';
+import 'package:hvatai/features/chat/domain/usecases/mark_as_read_usecase.dart';
+import 'package:hvatai/features/chat/domain/usecases/send_message.dart';
+import 'package:hvatai/features/chat/domain/usecases/send_support_messages_usecase.dart';
 import 'package:hvatai/features/home/domain/usecases/get_notification_usecase.dart';
 import 'package:hvatai/features/home/domain/usecases/get_streams_usecases.dart';
 import 'package:hvatai/features/home/domain/usecases/join_stream_usecase.dart';
@@ -75,4 +82,11 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => GetLiveStreamsUsecase(locator()));
   locator.registerLazySingleton(() => GetStreamsUsecase(locator()));
   locator.registerLazySingleton(() => JoinStreamUsecase(locator()));
+  locator.registerLazySingleton(() => GetSupportChatUseCase(locator()));
+  locator.registerLazySingleton(() => GetSupportMessagesUseCase(locator()));
+  locator.registerLazySingleton(() => SendSupportMessagesUseCase(locator()));
+  locator.registerLazySingleton(() => GetChatsUseCase(locator()));
+  locator.registerLazySingleton(() => GetMessagesUseCase(locator()));
+  locator.registerLazySingleton(() => SendMessageUseCase(locator()));
+  locator.registerLazySingleton(() => MarkMessageAsReadUseCase(locator()));
 }

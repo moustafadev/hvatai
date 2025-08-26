@@ -23,6 +23,10 @@ import 'package:hvatai/features/auth/presentation/cubit/otp_cubit/otp_cubit.dart
 import 'package:hvatai/features/auth/presentation/cubit/registration/registration_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/social_login.dart/social_login_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/verification/verification_cubit.dart';
+import 'package:hvatai/features/chat/data/datasources/api_service_chat.dart';
+import 'package:hvatai/features/chat/data/repositories/chat_impl_repository.dart';
+import 'package:hvatai/features/chat/domain/repositories/chat_repository.dart';
+import 'package:hvatai/features/chat/presentation/cubit/chats_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
 import 'package:hvatai/features/profile/data/datasources/api_service_profile.dart';
@@ -70,7 +74,15 @@ Future<void> setupLocator() async {
       () => ProductDetailsCubit(locator(), locator(), locator()));
   locator.registerFactory(() => AddStreamCubit(locator(), locator()));
   locator.registerFactory(() => LiveStreamCubit());
-
+  locator.registerFactory(() => ChatsCubit(
+        locator(),
+        locator(),
+        locator(),
+        locator(),
+        locator(),
+        locator(),
+        locator(),
+      ));
   locator.registerFactory(() => BasketCubit(locator(), locator(), locator()));
   locator.registerFactory(() => SearchCubit(
         locator(),
@@ -79,7 +91,7 @@ Future<void> setupLocator() async {
         locator(),
         locator(),
       ));
-  locator.registerFactory(() => CategoryTabsCubit(locator() , locator()));
+  locator.registerFactory(() => CategoryTabsCubit(locator(), locator()));
 
   locator.registerFactory(
       () => PaymentMethodCubit(locator(), locator(), locator()));
@@ -115,6 +127,8 @@ Future<void> setupLocator() async {
       .registerLazySingleton<AppRepository>(() => AppImplRepository(locator()));
   locator.registerLazySingleton<HomeRepository>(
       () => HomeImplRepository(locator()));
+  locator.registerLazySingleton<ChatRepository>(
+      () => ChatImplRepository(locator()));
   locator.registerLazySingleton<ProfileRepository>(
       () => ProfileImplRepository(locator(), locator()));
   // //DATASOURSE
@@ -122,6 +136,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ApiServiceApp());
   locator.registerLazySingleton(() => ApiServiceHome());
   locator.registerLazySingleton(() => ApiServiceProfile());
+  locator.registerLazySingleton(() => ApiServiceChat());
 
   // //EXTRNAL
   locator.registerLazySingleton(() => SharedPreferences.getInstance());

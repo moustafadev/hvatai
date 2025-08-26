@@ -1,13 +1,12 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hvatai/features/activity/presentation/activity.dart';
-import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
-import 'package:hvatai/features/all_app/data/model/cart_model.dart';
 import 'package:hvatai/features/all_app/presentation/basket.dart';
 import 'package:hvatai/features/all_app/presentation/cubit/product_detials/product_details_cubit.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
+import 'package:hvatai/features/chat/data/models/chat/chat_model.dart';
+import 'package:hvatai/features/chat/presentation/chat.dart';
 import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
@@ -86,6 +85,42 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         return const InviteFriendScreen();
       },
+    ),
+    GoRoute(
+      path: AppRoutes.chatRoot,
+      builder: (context, state) => const ChatScreen(),
+      routes: [
+        GoRoute(
+          path: AppRoutes.chat, // /chat under /chatRoot
+          builder: (context, state) => const ChatScreen(),
+        ),
+        GoRoute(
+          path: AppRoutes.chatDetails, // just the last part
+          builder: (context, state) {
+            final args = state.extra as Map<String, dynamic>?;
+
+            final int chatId = args?['chatId'] as int;
+            final UserChatModel user = args?['user'] as UserChatModel;
+
+            return ChatDetailsScreen(
+              chatId: chatId,
+              user: user,
+            );
+          },
+        ),
+        GoRoute(
+          path: AppRoutes.chatSupportDetails, // just the last part
+          builder: (context, state) {
+            final args = state.extra as Map<String, dynamic>?;
+
+            final int chatId = args?['chatId'] as int;
+
+            return ChatSupportDetailsScreen(
+              chatId: chatId,
+            );
+          },
+        ),
+      ],
     ),
     GoRoute(
       path: AppRoutes.addDeliveryAddress, // Remove the leading '/'

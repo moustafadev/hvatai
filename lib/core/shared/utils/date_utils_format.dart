@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 class DateUtilsFormat {
   static DateTime? dateFormatWithTryParse(String? date) {
     if (date == null) return null;
@@ -30,5 +32,21 @@ class DateUtilsFormat {
     final second = dateTime.second.toString().padLeft(2, '0');
 
     return '$year-$month-$day $hour:$minute:$second';
+  }
+
+  static String formatDate(String dateString) {
+    if (dateString.isEmpty) {
+      return "";
+    }
+    // Parse the input date string into a DateTime object
+    DateTime dateTime = DateTime.parse(dateString);
+
+    // Create a DateFormat object with the desired pattern and locale
+    DateFormat formatter = DateFormat('HH:mm', 'ru');
+
+    // Format the date into a string
+    String formattedDate = formatter.format(dateTime);
+
+    return formattedDate;
   }
 }

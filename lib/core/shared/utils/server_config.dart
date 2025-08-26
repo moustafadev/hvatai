@@ -34,4 +34,13 @@ abstract class ServerConfig {
   static const String addToCart = "cart/items";
   static const String joinStream = 'streams/join-public';
   static const String favFilter = "category-favorites/filtered";
+
+  static String chats = 'chats';
+  static String supportChat = 'support/chat';
+  static String chatMessages(int id) => 'chats/$id/messages';
+  static String sendSupportMessages = 'support/messages';
+  static String supportChatMessages(int id) => 'support/chats/$id/messages';
+
+  static String markAsRead(int id) => 'chats/$id/mark-as-read';
+  static String messages = 'messages';
 }

@@ -1,0 +1,113 @@
+part of '../chat.dart';
+
+class ChatScreen extends StatelessWidget {
+  const ChatScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    inChat = true;
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: const CustomAppBar(
+      ),
+      body: SafeArea(
+        bottom: false,
+        child: Column(
+          children: [
+            const ChatTitle(),
+            const SizedBox(height: 16),
+            Expanded(
+              child: BlocBuilder<ChatsCubit, ChatsState>(
+                builder: (context, state) {
+                  if (state.isLoading || state.isLoadingSupportChat) {
+                    return Container(
+                        color: Colors.white,
+                        child:
+                            const Center(child: CircularProgressIndicator()));
+                  } else if (state.isError) {
+                    return Container(
+                        color: Colors.white,
+                        child: Center(child: Text(state.errorMessage)));
+                  } else if (state.chats.isEmpty &&
+                      state.supportChat?.lastMessage == null) {
+                    return Container(
+                      color: AppColors.background,
+                      width: double.infinity,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(Assets.assetsImagesChatEmpty),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          const CustomText(
+                            text: 'Здесь будут ваши сообщения',
+                          )
+                        ],
+                      ),
+                    );
+                  } else {
+                    return Column(
+                      children: [
+                        // CustomSearchField(
+                        //   controller: TextEditingController(),
+                        //   color: Colors.white,
+                        // ),
+                        // const SizedBox(height: 16),
+                        Expanded(
+                          child: Container(
+                            color: Colors.white,
+                            child: Column(
+                              children: [
+                                // // 🔹 Show support chat first if it has a last message
+                                // if (state.supportChat?.lastMessage != null)
+                                //   SupportChatTile(chat: state.supportChat!),
+
+                                // // 🔹 Divider between support chat and normal chats
+                                // if (state.supportChat?.lastMessage != null &&
+                                //     state.chats.isNotEmpty)
+                                //   const CustomDivider(),
+
+                                // 🔹 Normal chat list
+                                Expanded(
+                                  child: ListView.builder(
+                                    itemCount: state.chats.length,
+                                    itemBuilder: (context, index) {
+                                      final chat = state.chats[index];
+                                      final user = chat.otherUser;
+
+                                      return InkWell(
+                                        onTap: () async {
+                                          final cubit = ChatsCubit.get(context);
+                                          cubit.markMessageAsRead(chat.id ?? 0);
+                                          cubit.getMessages(chat.id ?? 0);
+
+                                          context.push(
+                                            '${AppRoutes.chatRoot}/${AppRoutes.chatDetails}',
+                                            extra: {
+                                              'chatId': chat.id,
+                                              'user': user,
+                                            },
+                                          );
+                                        },
+                                        child: ChatTile(chat: chat),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

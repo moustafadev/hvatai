@@ -201,7 +201,7 @@ class ApiServiceAuth extends ApiBase {
       final response = await post(ServerConfig.register, body: params.toJson());
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return UserRegistrationData.fromJson(response.json);
+        return UserRegistrationData.fromJson(response.json['data']);
       } else {
         throw Exception();
       }

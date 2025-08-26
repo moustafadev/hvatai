@@ -869,6 +869,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.2"
+  iconsax_flutter:
+    dependency: transitive
+    description:
+      name: iconsax_flutter
+      sha256: d14b4cec8586025ac15276bdd40f6eea308cb85748135965bb6255f14beb2564
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.1"
   image_picker:
     dependency: "direct main"
     description:
@@ -989,6 +997,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.9.5"
+  laravel_echo_null:
+    dependency: "direct main"
+    description:
+      name: laravel_echo_null
+      sha256: "043e974e42025f8460e0d6af5271110ee4e4794d74eafb36202feb347b00ec26"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.9"
   leak_tracker:
     dependency: transitive
     description:
@@ -1173,6 +1189,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  pausable_timer:
+    dependency: transitive
+    description:
+      name: pausable_timer
+      sha256: "6ef1a95441ec3439de6fb63f39a011b67e693198e7dae14e20675c3c00e86074"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.0+3"
   permission_handler:
     dependency: "direct main"
     description:
@@ -1245,6 +1269,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.2"
+  pinenacl:
+    dependency: transitive
+    description:
+      name: pinenacl
+      sha256: "57e907beaacbc3c024a098910b6240758e899674de07d6949a67b52fd984cbdf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
   pinput:
     dependency: "direct main"
     description:
@@ -1301,6 +1333,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.5.0"
+  pusher_client_socket:
+    dependency: "direct main"
+    description:
+      name: pusher_client_socket
+      sha256: de40767a2bd826abeca10e2cf474937d6b1d7a6efcd12b605a2e3d189b877971
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.3+1"
   quiver:
     dependency: transitive
     description:
@@ -1450,6 +1490,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  socket_io_client:
+    dependency: transitive
+    description:
+      name: socket_io_client
+      sha256: c8471c2c6843cf308a5532ff653f2bcdb7fa9ae79d84d1179920578a06624f0d
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.2"
+  socket_io_common:
+    dependency: transitive
+    description:
+      name: socket_io_common
+      sha256: "162fbaecbf4bf9a9372a62a341b3550b51dcef2f02f3e5830a297fd48203d45b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   source_gen:
     dependency: transitive
     description:
@@ -1602,6 +1658,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.2"
+  toastification:
+    dependency: "direct main"
+    description:
+      name: toastification
+      sha256: "69db2bff425b484007409650d8bcd5ed1ce2e9666293ece74dcd917dacf23112"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.3"
   typed_data:
     dependency: transitive
     description:
@@ -1706,6 +1770,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.3"
+  web_socket_client:
+    dependency: transitive
+    description:
+      name: web_socket_client
+      sha256: "0ec5230852349191188c013112e4d2be03e3fc83dbe80139ead9bf3a136e53b5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.5"
   win32:
     dependency: transitive
     description:
