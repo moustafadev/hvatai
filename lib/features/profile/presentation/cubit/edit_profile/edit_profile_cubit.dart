@@ -263,44 +263,24 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     );
   }
 
-  /*  Future<FormData> _prepareProductFormData(ProductModel product) async {
-    final dataMap = Map<String, dynamic>.from(product.toJson());
-    dataMap['delivery_available'] = product.deliveryAvailable ? 1 : 0;
-    dataMap['status'] = product.status != null ? 1 : 0;
-    dataMap['self_pickup'] = product.selfPickup ? 1 : 0;
-
-    final variantsJson = product.variants.map((v) => v.toJson()).toList();
-    dataMap['variants'] = variantsJson;
-
-    final formData = FormData.fromMap(dataMap);
-
-    if (product.productPictures != null &&
-        product.productPictures!.isNotEmpty) {
-      for (int i = 0; i < product.productPictures!.length; i++) {
-        final file = await _prepareImageFile(product.productPictures![i]);
-        if (file != null) {
-          formData.files.add(MapEntry("product_pictures[$i]", file));
-        }
-      }
-    }
-
-    return formData;
-  } */
   Future<FormData> _prepareProfileFormData(UserRegistrationData params) async {
     final dataMap = Map<String, dynamic>.from(params.toJson());
     dataMap['terms_agreement'] = params.agreedToTerms ?? false ? 1 : 0;
     dataMap['age_confirmation'] = params.isAbove18 ?? false ? 1 : 0;
     dataMap['phone'] = "043535345";
-    final formData = FormData.fromMap(dataMap);
 
-    if (params.image != null && params.image!.isNotEmpty) {
-      final file = await _prepareImageFile(params.image);
-      if (file != null) {
-        formData.files.add(MapEntry("image", file));
-      }
+    MultipartFile? imageFile;
+    if (params.image != null && File(params.image!).existsSync()) {
+      imageFile = await _prepareImageFile(params.image);
     }
 
-    return formData;
+    if (imageFile != null) {
+      dataMap['image'] = imageFile;
+    } else {
+      dataMap.remove('image');
+    }
+
+    return FormData.fromMap(dataMap);
   }
 
   Future<File> compressImage(File file, {int quality = 70}) async {
@@ -313,30 +293,39 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       minWidth: 1080,
       minHeight: 1080,
     );
-    return file;
+
+    // Return the compressed file instead of the original
+    return result != null ? File(result.path) : file;
   }
 
   Future<MultipartFile?> _prepareImageFile(String? imagePath) async {
     if (imagePath == null || imagePath.isEmpty) return null;
 
-    File file = File(imagePath);
-    if (!await file.exists()) return null;
+    try {
+      File file = File(imagePath);
+      if (!await file.exists()) return null;
 
-    int quality = 85;
-    while (await file.length() > 1 * 1024 * 1024 && quality > 30) {
-      file = await compressImage(file, quality: quality);
-      quality -= 15;
-    }
-
-    if (await file.length() > 2 * 1024 * 1024) {
-      file = await compressImage(file);
-      if (await file.length() > 2 * 1024 * 1024) {
-        throw Exception;
+      int quality = 85;
+      while (await file.length() > 1 * 1024 * 1024 && quality > 30) {
+        file = await compressImage(file, quality: quality);
+        quality -= 15;
       }
-    }
 
-    return MultipartFile.fromFile(file.path,
-        filename: file.path.split('/').last);
+      if (await file.length() > 2 * 1024 * 1024) {
+        file = await compressImage(file, quality: 50);
+        if (await file.length() > 2 * 1024 * 1024) {
+          // Instead of throwing an exception, return null or handle gracefully
+          return null;
+        }
+      }
+
+      return MultipartFile.fromFile(file.path,
+          filename: file.path.split('/').last);
+    } catch (e) {
+      // Log the error and return null instead of crashing
+      debugPrint('Error preparing image file: $e');
+      return null;
+    }
   }
 
   Future<void> submit(BuildContext context) async {

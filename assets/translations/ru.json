@@ -315,6 +315,7 @@
   "description": "Описание*",
   "quantityGoods": "Количество товара:",
   "currentEmail": "Текущий e-mail",
+  "categoriesForYou": "Категории для вас",
   "startingBid": "Начальная ставка* (₽)",
   "price": "Цена* (₽)",
   "selfDestruction": "Самоуничтожение",

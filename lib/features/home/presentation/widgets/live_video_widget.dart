@@ -116,8 +116,8 @@ class LiveVideosWidget extends StatelessWidget {
       liveCardBuilder: (context, stream) => GestureDetector(
         onTap: () {
           final appLocal = locator<AppLocal>();
-          final userId = appLocal.getUserId(); 
-      
+          final userId = appLocal.getUserId();
+
           context.read<CategoryTabsCubit>().joinStream(
               channelName: stream.channelName!,
               userId: userId,

@@ -1,6 +1,11 @@
+import 'dart:async';
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hvatai/features/auth/domain/usecases/add_fav_category_usecase.dart';
+import 'package:hvatai/features/auth/domain/usecases/get_category_usecase.dart';
+import 'package:hvatai/features/auth/domain/usecases/get_fav_category_usecase.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/home/domain/usecases/get_streams_usecases.dart';
 import 'package:hvatai/features/home/domain/usecases/join_stream_usecase.dart';
@@ -11,48 +16,164 @@ import 'package:hvatai/features/profile/data/model/stream_response_model/stream_
 
 class CategoryTabsCubit extends Cubit<CategoryTabsState> {
   final GetLiveStreamsUsecase _getLiveStreams;
-  final JoinStreamUsecase _joinPublicStream; // <-- NEW
+  final GetCategoryUsecase getCategoryUsecase;
+  final GetFavCategoryUsecase getFavCategoryUsecase;
+  final AddFavCategoryUsecase addFavCategoryUsecase;
+  final JoinStreamUsecase _joinPublicStream;
+
+  Timer? _debounceTimer;
 
   CategoryTabsCubit(
     this._getLiveStreams,
     this._joinPublicStream,
+    this.getFavCategoryUsecase,
+    this.getCategoryUsecase,
+    this.addFavCategoryUsecase,
   ) : super(CategoryTabsState.initial());
 
   // ================= Categories =================
 
-  void setCategories(List<String> interests) {
-    final newCategories = ['All', ...interests];
-    emit(state.copyWith(categories: newCategories));
+  Future<void> getCategories() async {
+    emit(state.copyWith(isLoading: true, error: ''));
+    final result = await getCategoryUsecase.call(unit);
+    result.fold(
+      (failure) => emit(state.copyWith(isLoading: false, error: failure)),
+      (categories) => emit(state.copyWith(
+        isLoading: false,
+        categories: categories,
+      )),
+    );
   }
 
-  void toggleInterest(int index, String interestKey) {
+  Future<void> getFavCategories() async {
+    emit(state.copyWith(isLoading: true, error: '', filteredCategories: null));
+    final result = await getFavCategoryUsecase.call(unit);
+    result.fold(
+      (failure) => emit(state.copyWith(isLoading: false, error: failure)),
+      (categories) => emit(state.copyWith(
+        isLoading: false,
+        filteredCategories: categories,
+      )),
+    );
+  }
+
+  Future<void> addCategories() async {
+    _debounceTimer?.cancel();
+
+    _debounceTimer = Timer(const Duration(milliseconds: 800), () async {
+      await _performAddCategories();
+    });
+  }
+
+  Future<void> addCategoriesDetails() async {
+    _debounceTimer?.cancel();
+
+    _debounceTimer = Timer(const Duration(milliseconds: 800), () async {
+      await _performAddCategoriesDetails();
+    });
+  }
+
+  Future<void> _performAddCategoriesDetails() async {
+    final now = DateTime.now();
+
+    if (state.lastRequestTime != null &&
+        now.difference(state.lastRequestTime!) < const Duration(seconds: 2)) {
+      return;
+    }
+
+    emit(state.copyWith(error: '', lastRequestTime: now));
+    final params = AddFavCategoryParams(
+      categoryIds:
+          state.selectedDetailIds.isNotEmpty ? state.selectedDetailIds : null,
+      categoryId: state.selectedDetailIds.isNotEmpty
+          ? null
+          : state.selectedDetailIds.firstOrNull,
+    );
+
+    final result = await addFavCategoryUsecase.call(params);
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(
+          error: failure,
+          lastRequestTime: null,
+        ));
+      },
+      (_) {
+        emit(state.copyWith(
+          lastRequestTime: now,
+        ));
+      },
+    );
+  }
+
+  Future<void> _performAddCategories() async {
+    final now = DateTime.now();
+
+    if (state.lastRequestTime != null &&
+        now.difference(state.lastRequestTime!) < const Duration(seconds: 2)) {
+      return;
+    }
+
+    emit(state.copyWith(error: '', lastRequestTime: now));
+
+    final params = AddFavCategoryParams(categoryIds: state.selectedCategoryIds);
+    final result = await addFavCategoryUsecase.call(params);
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(
+          error: failure,
+          lastRequestTime: null,
+        ));
+      },
+      (_) {
+        emit(state.copyWith(
+          lastRequestTime: now,
+        ));
+      },
+    );
+  }
+
+  void toggleInterest(int index, int categoryId) {
     final isSelected = state.selectedIndices.contains(index);
     final updatedIndices = Set<int>.from(state.selectedIndices);
-    final updatedInterests = List<String>.from(state.selectedInterests);
+    final updatedIds = List<int>.from(state.selectedCategoryIds);
 
     if (isSelected) {
       updatedIndices.remove(index);
-      updatedInterests.remove(interestKey);
+      updatedIds.remove(categoryId);
     } else {
       updatedIndices.add(index);
-      updatedInterests.add(interestKey);
+      updatedIds.add(categoryId);
     }
 
     emit(state.copyWith(
       selectedIndices: updatedIndices,
-      selectedInterests: updatedInterests,
+      selectedCategoryIds: updatedIds,
     ));
+
+    addCategories();
   }
 
-  void fetchCategories() => emit(state);
+  void toggleDetail(int index, int categoryId) {
+    final isSelected = state.selectedIndicesDetails.contains(index);
+    final updatedIndices = Set<int>.from(state.selectedIndicesDetails);
+    final updatedIds = List<int>.from(state.selectedDetailIds);
 
-  void selectCategory(dynamic index) {
-    emit(state.copyWith(selectedIndex: index));
-  }
+    if (isSelected) {
+      updatedIndices.remove(index);
+      updatedIds.remove(categoryId);
+    } else {
+      updatedIndices.add(index);
+      updatedIds.add(categoryId);
+    }
 
-  String? get selectedCategory {
-    final category = state.categories[state.selectedIndex];
-    return category == 'All' ? null : category;
+    emit(state.copyWith(
+      selectedIndicesDetails: updatedIndices,
+      selectedDetailIds: updatedIds,
+    ));
+    addCategoriesDetails();
   }
 
   // ================= Live Streams =================
@@ -114,19 +235,12 @@ class CategoryTabsCubit extends Cubit<CategoryTabsState> {
   }
 
   // ================= JOIN Public Stream =================
-  /// Call your `/streams/join-public` endpoint here.
-  ///
-  /// You mentioned the backend needs the **userId** when joining as viewer.
-  /// Provide `userId` from your `AppLocal` (or pass it in).
-  ///
-  /// Optional: `isPublisher` if you also use it for broadcasters.
   Future<JoinStreamData?> joinStream({
     required String channelName,
     required int userId,
     bool isPublisher = false,
     required BuildContext context,
   }) async {
-    // set loading & clear previous error
     emit(state.copyWith(isJoining: true, joinError: null, joinData: null));
 
     final res = await _joinPublicStream(JoinStreamParams(
@@ -160,5 +274,12 @@ class CategoryTabsCubit extends Cubit<CategoryTabsState> {
       },
     );
     return null;
+  }
+
+  // تأكد من إلغاء ال timer عند إغلاق ال cubit
+  @override
+  Future<void> close() {
+    _debounceTimer?.cancel();
+    return super.close();
   }
 }

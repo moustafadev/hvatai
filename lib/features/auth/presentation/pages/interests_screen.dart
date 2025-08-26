@@ -24,10 +24,12 @@ class InterestsScreen extends StatelessWidget {
               final interests = state.categories;
               final cubit = context.read<InterestsCubit>();
               if (state.categories?.data == null) {
-                return Center(
-                    child: CircularProgressIndicator(
-                  color: AppColors.primaryColor,
-                ));
+                return Scaffold(
+                  body: Center(
+                      child: CircularProgressIndicator(
+                    color: AppColors.graniteGray,
+                  )),
+                );
               }
 
               return CustomScrollView(
