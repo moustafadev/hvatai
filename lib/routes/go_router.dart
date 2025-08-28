@@ -11,11 +11,11 @@ import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_
 import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
+import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
-import 'package:hvatai/features/search/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/features/stream/presentation/stream.dart';
@@ -65,17 +65,11 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, dynamic>?; // change to dynamic
 
-        final appId = extra?['appId'] as String? ?? '';
-        final channelName = extra?['channelName'] as String? ?? '';
-        final agoraToken = extra?['agoraToken'] as String? ?? '';
-        final agoraUid = extra?['agoraUid'] as int? ?? 0; // ✅ add agoraUid
+        final streamDataModel = extra?['streamDataModel'] as StreamDataModel;
         final userRole = extra?['userRole'] as UserRole;
 
         return LiveStreamScreen(
-          appId: appId,
-          channelName: channelName,
-          agoraToken: agoraToken,
-          agoraUid: agoraUid, // ✅ pass it
+          stream: streamDataModel,
           userRole: userRole,
         );
       },

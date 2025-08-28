@@ -60,6 +60,7 @@ class ReusableLiveVideosGrid<T> extends StatelessWidget {
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 11.w,
+        mainAxisExtent: 320.h,
         mainAxisSpacing: 12.h,
         childAspectRatio: 0.6,
       ),

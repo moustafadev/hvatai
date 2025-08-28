@@ -123,6 +123,7 @@ class CategoryTabsCubit extends Cubit<CategoryTabsState> {
   Future<JoinStreamData?> joinStream({
     required String channelName,
     required int userId,
+    required StreamDataModel stream,
     bool isPublisher = false,
     required BuildContext context,
   }) async {
@@ -145,18 +146,28 @@ class CategoryTabsCubit extends Cubit<CategoryTabsState> {
           joinError: null,
           joinData: joinResponse.data,
         ));
+
         final join = joinResponse.data;
-        context.push(
-          AppRoutes.liveStream,
-          extra: {
-            'appId': join?.agoraAppId ?? join?.appId ?? '',
-            'channelName': join?.channelName ?? '',
-            'agoraToken': join?.agoraToken ?? join?.agoraToken ?? '',
-            'agoraUid': join?.uid ?? join?.agoraUid ?? 0,
-            'userRole': UserRole.viewer,
-          },
-        );
-        return joinResponse.data;
+
+        if (join != null) {
+          // Merge join response into the original stream
+          final updatedStream = stream.copyWith(
+            agoraAppId: join.agoraAppId ?? join.appId,
+            channelName: join.channelName,
+            agoraToken: join.agoraToken,
+            agoraUid: join.uid ?? join.agoraUid,
+          );
+
+          context.push(
+            AppRoutes.liveStream,
+            extra: {
+              'streamDataModel': updatedStream,
+              'userRole': UserRole.viewer,
+            },
+          );
+
+          return joinResponse.data;
+        }
       },
     );
     return null;

@@ -21,10 +21,19 @@ mixin _$LiveStreamState {
   int? get remoteUid => throw _privateConstructorUsedError;
   bool get isInitializing => throw _privateConstructorUsedError;
   bool get joined => throw _privateConstructorUsedError; // Timer
-  int get streamSeconds => throw _privateConstructorUsedError; // Comments
-  List<Comment> get comments => throw _privateConstructorUsedError;
-  String get commentText => throw _privateConstructorUsedError; // Errors
+  int get streamSeconds =>
+      throw _privateConstructorUsedError; // Comments (RAW API MODELS)
+  List<StreamCommentModel> get comments => throw _privateConstructorUsedError;
+  String get commentText =>
+      throw _privateConstructorUsedError; // Comments loading/paging
+  bool get isLoadingComments => throw _privateConstructorUsedError;
+  bool get isSendingComment => throw _privateConstructorUsedError;
+  int get commentsPage => throw _privateConstructorUsedError;
+  int get commentsPerPage => throw _privateConstructorUsedError;
+  bool get commentsHasMore => throw _privateConstructorUsedError; // Errors
   String get errorMessage => throw _privateConstructorUsedError;
+  String get commentsError => throw _privateConstructorUsedError;
+  String get sendCommentError => throw _privateConstructorUsedError;
 
   /// Create a copy of LiveStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -46,9 +55,16 @@ abstract class $LiveStreamStateCopyWith<$Res> {
       bool isInitializing,
       bool joined,
       int streamSeconds,
-      List<Comment> comments,
+      List<StreamCommentModel> comments,
       String commentText,
-      String errorMessage});
+      bool isLoadingComments,
+      bool isSendingComment,
+      int commentsPage,
+      int commentsPerPage,
+      bool commentsHasMore,
+      String errorMessage,
+      String commentsError,
+      String sendCommentError});
 }
 
 /// @nodoc
@@ -74,7 +90,14 @@ class _$LiveStreamStateCopyWithImpl<$Res, $Val extends LiveStreamState>
     Object? streamSeconds = null,
     Object? comments = null,
     Object? commentText = null,
+    Object? isLoadingComments = null,
+    Object? isSendingComment = null,
+    Object? commentsPage = null,
+    Object? commentsPerPage = null,
+    Object? commentsHasMore = null,
     Object? errorMessage = null,
+    Object? commentsError = null,
+    Object? sendCommentError = null,
   }) {
     return _then(_value.copyWith(
       role: null == role
@@ -104,14 +127,42 @@ class _$LiveStreamStateCopyWithImpl<$Res, $Val extends LiveStreamState>
       comments: null == comments
           ? _value.comments
           : comments // ignore: cast_nullable_to_non_nullable
-              as List<Comment>,
+              as List<StreamCommentModel>,
       commentText: null == commentText
           ? _value.commentText
           : commentText // ignore: cast_nullable_to_non_nullable
               as String,
+      isLoadingComments: null == isLoadingComments
+          ? _value.isLoadingComments
+          : isLoadingComments // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSendingComment: null == isSendingComment
+          ? _value.isSendingComment
+          : isSendingComment // ignore: cast_nullable_to_non_nullable
+              as bool,
+      commentsPage: null == commentsPage
+          ? _value.commentsPage
+          : commentsPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      commentsPerPage: null == commentsPerPage
+          ? _value.commentsPerPage
+          : commentsPerPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      commentsHasMore: null == commentsHasMore
+          ? _value.commentsHasMore
+          : commentsHasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
       errorMessage: null == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      commentsError: null == commentsError
+          ? _value.commentsError
+          : commentsError // ignore: cast_nullable_to_non_nullable
+              as String,
+      sendCommentError: null == sendCommentError
+          ? _value.sendCommentError
+          : sendCommentError // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -132,9 +183,16 @@ abstract class _$$LiveStreamStateImplCopyWith<$Res>
       bool isInitializing,
       bool joined,
       int streamSeconds,
-      List<Comment> comments,
+      List<StreamCommentModel> comments,
       String commentText,
-      String errorMessage});
+      bool isLoadingComments,
+      bool isSendingComment,
+      int commentsPage,
+      int commentsPerPage,
+      bool commentsHasMore,
+      String errorMessage,
+      String commentsError,
+      String sendCommentError});
 }
 
 /// @nodoc
@@ -158,7 +216,14 @@ class __$$LiveStreamStateImplCopyWithImpl<$Res>
     Object? streamSeconds = null,
     Object? comments = null,
     Object? commentText = null,
+    Object? isLoadingComments = null,
+    Object? isSendingComment = null,
+    Object? commentsPage = null,
+    Object? commentsPerPage = null,
+    Object? commentsHasMore = null,
     Object? errorMessage = null,
+    Object? commentsError = null,
+    Object? sendCommentError = null,
   }) {
     return _then(_$LiveStreamStateImpl(
       role: null == role
@@ -188,14 +253,42 @@ class __$$LiveStreamStateImplCopyWithImpl<$Res>
       comments: null == comments
           ? _value._comments
           : comments // ignore: cast_nullable_to_non_nullable
-              as List<Comment>,
+              as List<StreamCommentModel>,
       commentText: null == commentText
           ? _value.commentText
           : commentText // ignore: cast_nullable_to_non_nullable
               as String,
+      isLoadingComments: null == isLoadingComments
+          ? _value.isLoadingComments
+          : isLoadingComments // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSendingComment: null == isSendingComment
+          ? _value.isSendingComment
+          : isSendingComment // ignore: cast_nullable_to_non_nullable
+              as bool,
+      commentsPage: null == commentsPage
+          ? _value.commentsPage
+          : commentsPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      commentsPerPage: null == commentsPerPage
+          ? _value.commentsPerPage
+          : commentsPerPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      commentsHasMore: null == commentsHasMore
+          ? _value.commentsHasMore
+          : commentsHasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
       errorMessage: null == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      commentsError: null == commentsError
+          ? _value.commentsError
+          : commentsError // ignore: cast_nullable_to_non_nullable
+              as String,
+      sendCommentError: null == sendCommentError
+          ? _value.sendCommentError
+          : sendCommentError // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -213,9 +306,16 @@ class _$LiveStreamStateImpl
       this.isInitializing = false,
       this.joined = false,
       this.streamSeconds = 0,
-      final List<Comment> comments = const <Comment>[],
+      final List<StreamCommentModel> comments = const <StreamCommentModel>[],
       this.commentText = '',
-      this.errorMessage = ''})
+      this.isLoadingComments = false,
+      this.isSendingComment = false,
+      this.commentsPage = 1,
+      this.commentsPerPage = 50,
+      this.commentsHasMore = true,
+      this.errorMessage = '',
+      this.commentsError = '',
+      this.sendCommentError = ''})
       : _comments = comments;
 
   @override
@@ -236,12 +336,12 @@ class _$LiveStreamStateImpl
   @override
   @JsonKey()
   final int streamSeconds;
-// Comments
-  final List<Comment> _comments;
-// Comments
+// Comments (RAW API MODELS)
+  final List<StreamCommentModel> _comments;
+// Comments (RAW API MODELS)
   @override
   @JsonKey()
-  List<Comment> get comments {
+  List<StreamCommentModel> get comments {
     if (_comments is EqualUnmodifiableListView) return _comments;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_comments);
@@ -250,14 +350,36 @@ class _$LiveStreamStateImpl
   @override
   @JsonKey()
   final String commentText;
+// Comments loading/paging
+  @override
+  @JsonKey()
+  final bool isLoadingComments;
+  @override
+  @JsonKey()
+  final bool isSendingComment;
+  @override
+  @JsonKey()
+  final int commentsPage;
+  @override
+  @JsonKey()
+  final int commentsPerPage;
+  @override
+  @JsonKey()
+  final bool commentsHasMore;
 // Errors
   @override
   @JsonKey()
   final String errorMessage;
+  @override
+  @JsonKey()
+  final String commentsError;
+  @override
+  @JsonKey()
+  final String sendCommentError;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LiveStreamState(role: $role, localReady: $localReady, remoteUid: $remoteUid, isInitializing: $isInitializing, joined: $joined, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, errorMessage: $errorMessage)';
+    return 'LiveStreamState(role: $role, localReady: $localReady, remoteUid: $remoteUid, isInitializing: $isInitializing, joined: $joined, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError)';
   }
 
   @override
@@ -273,7 +395,14 @@ class _$LiveStreamStateImpl
       ..add(DiagnosticsProperty('streamSeconds', streamSeconds))
       ..add(DiagnosticsProperty('comments', comments))
       ..add(DiagnosticsProperty('commentText', commentText))
-      ..add(DiagnosticsProperty('errorMessage', errorMessage));
+      ..add(DiagnosticsProperty('isLoadingComments', isLoadingComments))
+      ..add(DiagnosticsProperty('isSendingComment', isSendingComment))
+      ..add(DiagnosticsProperty('commentsPage', commentsPage))
+      ..add(DiagnosticsProperty('commentsPerPage', commentsPerPage))
+      ..add(DiagnosticsProperty('commentsHasMore', commentsHasMore))
+      ..add(DiagnosticsProperty('errorMessage', errorMessage))
+      ..add(DiagnosticsProperty('commentsError', commentsError))
+      ..add(DiagnosticsProperty('sendCommentError', sendCommentError));
   }
 
   @override
@@ -294,8 +423,22 @@ class _$LiveStreamStateImpl
             const DeepCollectionEquality().equals(other._comments, _comments) &&
             (identical(other.commentText, commentText) ||
                 other.commentText == commentText) &&
+            (identical(other.isLoadingComments, isLoadingComments) ||
+                other.isLoadingComments == isLoadingComments) &&
+            (identical(other.isSendingComment, isSendingComment) ||
+                other.isSendingComment == isSendingComment) &&
+            (identical(other.commentsPage, commentsPage) ||
+                other.commentsPage == commentsPage) &&
+            (identical(other.commentsPerPage, commentsPerPage) ||
+                other.commentsPerPage == commentsPerPage) &&
+            (identical(other.commentsHasMore, commentsHasMore) ||
+                other.commentsHasMore == commentsHasMore) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+                other.errorMessage == errorMessage) &&
+            (identical(other.commentsError, commentsError) ||
+                other.commentsError == commentsError) &&
+            (identical(other.sendCommentError, sendCommentError) ||
+                other.sendCommentError == sendCommentError));
   }
 
   @override
@@ -309,7 +452,14 @@ class _$LiveStreamStateImpl
       streamSeconds,
       const DeepCollectionEquality().hash(_comments),
       commentText,
-      errorMessage);
+      isLoadingComments,
+      isSendingComment,
+      commentsPage,
+      commentsPerPage,
+      commentsHasMore,
+      errorMessage,
+      commentsError,
+      sendCommentError);
 
   /// Create a copy of LiveStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -329,9 +479,16 @@ abstract class _LiveStreamState implements LiveStreamState {
       final bool isInitializing,
       final bool joined,
       final int streamSeconds,
-      final List<Comment> comments,
+      final List<StreamCommentModel> comments,
       final String commentText,
-      final String errorMessage}) = _$LiveStreamStateImpl;
+      final bool isLoadingComments,
+      final bool isSendingComment,
+      final int commentsPage,
+      final int commentsPerPage,
+      final bool commentsHasMore,
+      final String errorMessage,
+      final String commentsError,
+      final String sendCommentError}) = _$LiveStreamStateImpl;
 
   @override
   UserRole get role; // Agora / presence
@@ -344,13 +501,27 @@ abstract class _LiveStreamState implements LiveStreamState {
   @override
   bool get joined; // Timer
   @override
-  int get streamSeconds; // Comments
+  int get streamSeconds; // Comments (RAW API MODELS)
   @override
-  List<Comment> get comments;
+  List<StreamCommentModel> get comments;
   @override
-  String get commentText; // Errors
+  String get commentText; // Comments loading/paging
+  @override
+  bool get isLoadingComments;
+  @override
+  bool get isSendingComment;
+  @override
+  int get commentsPage;
+  @override
+  int get commentsPerPage;
+  @override
+  bool get commentsHasMore; // Errors
   @override
   String get errorMessage;
+  @override
+  String get commentsError;
+  @override
+  String get sendCommentError;
 
   /// Create a copy of LiveStreamState
   /// with the given fields replaced by the non-null parameter values.

@@ -172,12 +172,8 @@ class AddStreamCubit extends Cubit<AddStreamState> {
         context.push(
           AppRoutes.liveStream,
           extra: {
-            'appId': streamResponse.data?.agoraAppId ?? '',
-            'channelName': streamResponse.data?.channelName ?? '',
-            'agoraToken': streamResponse.data?.agoraToken ?? '',
-            'agoraUid': streamResponse.data?.agoraUid ?? 0, // <-- add this
-            'userRole' : UserRole.broadcaster
-        
+            'streamDataModel': streamResponse.data,
+            'userRole': UserRole.broadcaster
           },
         );
         emit(state.copyWith(isLoading: false));

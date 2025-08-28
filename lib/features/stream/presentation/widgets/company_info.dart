@@ -1,8 +1,10 @@
 part of '../stream.dart';
 
 class CompanyInfo extends StatelessWidget {
+  final StreamUserModel? streamUserModel;
   const CompanyInfo({
     super.key,
+    this.streamUserModel,
   });
 
   @override
@@ -26,7 +28,7 @@ class CompanyInfo extends StatelessWidget {
         ),
         SizedBox(width: 12.w),
         // Company Details
-        CompanyDetailsWidget(),
+        CompanyDetailsWidget(streamUserModel: streamUserModel,),
       ],
     );
   }

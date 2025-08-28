@@ -1,12 +1,12 @@
 part of '../stream.dart';
 class LiveBottomPanel extends StatelessWidget {
-  final List<Comment> comments;
+  final List<StreamCommentModel> comments;
   final ValueChanged<String> onCommentChanged;
   final VoidCallback onSend;
 
   final String productTitle;
   final String productCategory;
-  final int startPrice;
+  final double startPrice;
   final String timerText;
 
   final VoidCallback? onEditPressed;
@@ -52,6 +52,7 @@ class LiveBottomPanel extends StatelessWidget {
               child: CustomTextField(
                 hintText: 'Сообщение...',
                 fillColor: Colors.transparent,
+                controller: context.read<LiveStreamCubit>().controller,
                 borderRadius: BorderRadius.circular(24),
                 borderSide: const BorderSide(color: Colors.white),
                 hintColor: Colors.black.withOpacity(0.2),

@@ -38,29 +38,6 @@ class CustomLiveVideoCard extends StatelessWidget {
       mainAxisSize: MainAxisSize.min, // مهم: استخدام الحد الأدنى من المساحة
 
       children: [
-        // Admin Info
-        Row(
-          children: [
-            CircleAvatar(
-              radius: 12.r,
-              backgroundColor: AppColors.transparent,
-              backgroundImage: AssetImage(
-                Assets.assetsIconsApple1,
-              ),
-            ),
-            5.pw,
-            Flexible(
-              child: CustomText(
-                text: adminName,
-                color: AppColors.blackDark,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.bold,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
-        6.ph,
         // Live Image + Favorite Overlay
         Expanded(
           flex: 3,
@@ -179,6 +156,30 @@ class CustomLiveVideoCard extends StatelessWidget {
           color: AppColors.grey,
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
+        ),
+        6.ph,
+
+        // Admin Info
+        Row(
+          children: [
+            CircleAvatar(
+              radius: 12.r,
+              backgroundColor: AppColors.transparent,
+              backgroundImage: AssetImage(
+                Assets.assetsIconsApple1,
+              ),
+            ),
+            5.pw,
+            Flexible(
+              child: CustomText(
+                text: adminName,
+                color: AppColors.blackDark,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.bold,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
         ),
       ],
     );

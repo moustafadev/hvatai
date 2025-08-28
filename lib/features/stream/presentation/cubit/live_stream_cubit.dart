@@ -1,7 +1,13 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/features/stream/data/models/stream_comment_model.dart';
+import 'package:hvatai/features/stream/domain/usecases/end_stream_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 
@@ -13,22 +19,34 @@ part 'live_stream_state.dart';
 part 'live_stream_cubit.freezed.dart';
 
 class LiveStreamCubit extends Cubit<LiveStreamState> {
-  LiveStreamCubit()
+  LiveStreamCubit(this._getComments, this._sendComment, this._leaveUsecase, this._endUsecase)
       : super(const LiveStreamState(
           role: UserRole.viewer,
           localReady: false,
           isInitializing: false,
           joined: false,
           streamSeconds: 0,
-          comments: <Comment>[],
           commentText: '',
+          isLoadingComments: false,
+          isSendingComment: false,
+          commentsPage: 1,
+          commentsPerPage: 50,
+          commentsHasMore: true,
           errorMessage: '',
+          commentsError: '',
+          sendCommentError: '',
         ));
 
   late final RtcEngine _engine;
   RtcEngine get engine => _engine;
+  final GetStreamCommentsUsecase _getComments;
+  final SendStreamCommentUsecase _sendComment;
+  final LeaveStreamUsecase _leaveUsecase;
+  final EndStreamUsecase _endUsecase;
 
   Timer? _timer;
+
+  TextEditingController controller = TextEditingController();
 
   Future<void> initialize({
     required String appId,
@@ -36,13 +54,11 @@ class LiveStreamCubit extends Cubit<LiveStreamState> {
     required String token,
     required int uid,
     required UserRole role,
-    List<Comment> initialComments = const [],
     int initialSeconds = 0,
   }) async {
     emit(state.copyWith(
       role: role,
       isInitializing: true,
-      comments: initialComments,
       streamSeconds: initialSeconds,
       errorMessage: '',
     ));
@@ -188,33 +204,162 @@ class LiveStreamCubit extends Cubit<LiveStreamState> {
     }
   }
 
-  // ====== Timer / comments logic ======
-  void _startTimer() {
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      final next = state.streamSeconds + 1;
-      emit(state.copyWith(streamSeconds: next));
-    });
+  Future<void> loadInitialComments({required int streamId}) async {
+    emit(state.copyWith(
+      isLoadingComments: true,
+      commentsError: '',
+      commentsPage: 1,
+      commentsHasMore: true,
+      comments: const [],
+    ));
+
+    final res = await _getComments(GetStreamCommentsParams(
+      streamId: streamId,
+      page: 1,
+      perPage: state.commentsPerPage,
+    ));
+
+    res.fold(
+      (err) => emit(state.copyWith(
+        isLoadingComments: false,
+        commentsError: err,
+      )),
+      (pageData) {
+        final items = pageData.data?.data ?? <StreamCommentModel>[];
+        final hasMore = (pageData.data?.nextPageUrl != null) &&
+            (pageData.data!.currentPage! < (pageData.data!.lastPage ?? 1));
+
+        emit(state.copyWith(
+          isLoadingComments: false,
+          comments: items,
+          commentsPage: 1,
+          commentsHasMore: hasMore,
+        ));
+      },
+    );
+  }
+
+  Future<void> loadMoreComments({required int streamId}) async {
+    if (state.isLoadingComments || !state.commentsHasMore) return;
+
+    emit(state.copyWith(isLoadingComments: true, commentsError: ''));
+
+    final nextPage = state.commentsPage + 1;
+
+    final res = await _getComments(GetStreamCommentsParams(
+      streamId: streamId,
+      page: nextPage,
+      perPage: state.commentsPerPage,
+    ));
+
+    res.fold(
+      (err) => emit(state.copyWith(
+        isLoadingComments: false,
+        commentsError: err,
+      )),
+      (pageData) {
+        final items = pageData.data?.data ?? <StreamCommentModel>[];
+        final current = List<StreamCommentModel>.from(state.comments)
+          ..addAll(items);
+
+        final hasMore = (pageData.data?.nextPageUrl != null) &&
+            (pageData.data!.currentPage! < (pageData.data!.lastPage ?? 1));
+
+        emit(state.copyWith(
+          isLoadingComments: false,
+          comments: current,
+          commentsPage: nextPage,
+          commentsHasMore: hasMore,
+        ));
+      },
+    );
   }
 
   void updateCommentText(String text) {
     emit(state.copyWith(commentText: text));
   }
 
-  void sendComment() {
+  /// Optimistic send with RAW model
+  Future<void> sendCommentToServer({
+    required int streamId,
+    String type = 'comment',
+  }) async {
     final text = state.commentText.trim();
-    if (text.isEmpty) return;
-    final newList = List<Comment>.from(state.comments)
-      ..add(Comment(
-        id: state.comments.length + 1,
-        user: 'You',
-        message: text,
-        avatar: 'Y',
-      ));
-    emit(state.copyWith(comments: newList, commentText: ''));
+    controller.clear();
+
+    emit(state.copyWith(
+      isSendingComment: true,
+      sendCommentError: '',
+      commentText: '',
+    ));
+
+    final res = await _sendComment(SendStreamCommentParams(
+      streamId: streamId,
+      message: text,
+    ));
+
+    res.fold(
+      (err) {
+        // rollback temp on error
+
+        emit(state.copyWith(
+          isSendingComment: false,
+          sendCommentError: err,
+        ));
+      },
+      (created) {
+        emit(state.copyWith(
+          isSendingComment: false,
+        ));
+      },
+    );
   }
 
-  // ====== Cleanup ======
+// live_stream_cubit.dart
+  void addIncomingComment(StreamCommentModel model) {
+    final next = List<StreamCommentModel>.from(state.comments)..add(model);
+    emit(state.copyWith(comments: next));
+  }
+
+  // ===== Timer & cleanup unchanged =====
+  void _startTimer() {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      emit(state.copyWith(streamSeconds: state.streamSeconds + 1));
+    });
+  }
+
+    /// Viewer/broadcaster leave (does NOT end the stream for others)
+  Future<bool> leaveStream({required int streamId}) async {
+    final result = await _leaveUsecase(LeaveStreamParams(streamId: streamId));
+
+    return await result.fold(
+      (err) async {
+        return false;
+      },
+      (ok) async {
+        // gracefully leave RTC
+        return true;
+      },
+    );
+  }
+
+  /// Broadcaster ends the stream for everyone
+  Future<bool> endStream({required int streamId}) async {
+    final result = await _endUsecase(EndStreamParams(streamId: streamId));
+
+    return await result.fold(
+      (err) async {
+        return false;
+      },
+      (ok) async {
+        // end on backend then leave RTC
+        return true;
+      },
+    );
+  }
+
+
   @override
   Future<void> close() async {
     _timer?.cancel();

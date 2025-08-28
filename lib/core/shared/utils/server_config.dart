@@ -43,4 +43,8 @@ abstract class ServerConfig {
 
   static String markAsRead(int id) => 'chats/$id/mark-as-read';
   static String messages = 'messages';
+
+  static String streamComments(int id) => "streams/$id/comments";
+  static String leaveStream(int id) => "streams/$id/leave";
+  static String endStream(int id) => "streams/$id/end";
 }

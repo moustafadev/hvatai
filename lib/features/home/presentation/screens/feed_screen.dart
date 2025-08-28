@@ -52,6 +52,35 @@ class _HomeScreenState extends State<HomeScreen> {
         chatsCubit.markAllMessagesAsReadLocally();
       }
     });
+
+    _channel.bind('CommentAdded', (raw) {
+      try {
+        debugPrint('📥 CommentAdded event received: $raw');
+
+        final root = _asMap(raw);
+        final commentJson = root['data'] is Map
+            ? Map<String, dynamic>.from(root['data'])
+            : root;
+
+        debugPrint('📝 Parsed comment JSON: $commentJson');
+
+        final comment = StreamCommentModel.fromJson(commentJson);
+
+        debugPrint(
+          '✅ StreamCommentModel parsed → id=${comment.id}, '
+          'streamId=${comment.streamId}, user=${comment.user?.name}, '
+          'message=${comment.message}',
+        );
+
+        if (mounted) {
+          final tabs = context.read<CategoryTabsCubit>();
+          // tabs.onStreamCommentAdded(comment);
+        }
+      } catch (e, st) {
+        debugPrint('❌ CommentAdded parse error: $e');
+        debugPrintStack(stackTrace: st);
+      }
+    });
   }
 
   @override
@@ -152,4 +181,17 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+}
+
+Map<String, dynamic> _asMap(dynamic data) {
+  if (data == null) return {};
+  if (data is Map<String, dynamic>) return data;
+  if (data is String) {
+    try {
+      return Map<String, dynamic>.from(jsonDecode(data));
+    } catch (_) {
+      return {};
+    }
+  }
+  return {};
 }
