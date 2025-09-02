@@ -66,15 +66,11 @@ class HomeImplRepository implements HomeRepository {
 
   @override
   Future<Either<String, JoinStreamResponse>> joinStream({
-    required String channelName,
-    required bool isPublisher,
-    required int userId,
+    required int streamId
   }) {
     return executeAndHandleError<JoinStreamResponse>(() async {
       final res = await _apiServiceHome.joinStream(
-        channelName: channelName,
-        isPublisher: isPublisher,
-        userId: userId,
+        streamId: streamId
       );
       return res;
     });

@@ -22,8 +22,6 @@ abstract class HomeRepository {
   });
 
   Future<Either<String, JoinStreamResponse>> joinStream({
-    required String channelName,
-    required bool isPublisher,
-    required int userId,
+    required int streamId
   });
 }

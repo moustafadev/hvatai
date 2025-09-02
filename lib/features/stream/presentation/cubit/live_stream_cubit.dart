@@ -3,8 +3,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/features/stream/data/models/bid_stream_response.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment_model.dart';
+import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/end_stream_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
@@ -19,7 +22,13 @@ part 'live_stream_state.dart';
 part 'live_stream_cubit.freezed.dart';
 
 class LiveStreamCubit extends Cubit<LiveStreamState> {
-  LiveStreamCubit(this._getComments, this._sendComment, this._leaveUsecase, this._endUsecase)
+  LiveStreamCubit(
+      this._getComments,
+      this._sendComment,
+      this._leaveUsecase,
+      this._getBids, // ⬅️ add
+      this._addBidUsecase,
+      this._endUsecase)
       : super(const LiveStreamState(
           role: UserRole.viewer,
           localReady: false,
@@ -43,7 +52,8 @@ class LiveStreamCubit extends Cubit<LiveStreamState> {
   final SendStreamCommentUsecase _sendComment;
   final LeaveStreamUsecase _leaveUsecase;
   final EndStreamUsecase _endUsecase;
-
+  final GetStreamBidsUsecase _getBids;
+  final AddStreamBidUsecase _addBidUsecase;
   Timer? _timer;
 
   TextEditingController controller = TextEditingController();
@@ -54,12 +64,14 @@ class LiveStreamCubit extends Cubit<LiveStreamState> {
     required String token,
     required int uid,
     required UserRole role,
+    required int viewerCount,
     int initialSeconds = 0,
   }) async {
     emit(state.copyWith(
       role: role,
       isInitializing: true,
       streamSeconds: initialSeconds,
+      viewerCount: viewerCount,
       errorMessage: '',
     ));
 
@@ -329,7 +341,7 @@ class LiveStreamCubit extends Cubit<LiveStreamState> {
     });
   }
 
-    /// Viewer/broadcaster leave (does NOT end the stream for others)
+  /// Viewer/broadcaster leave (does NOT end the stream for others)
   Future<bool> leaveStream({required int streamId}) async {
     final result = await _leaveUsecase(LeaveStreamParams(streamId: streamId));
 
@@ -359,6 +371,125 @@ class LiveStreamCubit extends Cubit<LiveStreamState> {
     );
   }
 
+  // ===== BIDS =====
+
+  Future<void> loadInitialBids({required int streamId}) async {
+    emit(state.copyWith(
+      isLoadingBids: true,
+      bidsError: '',
+      bidsPage: 1,
+      bidsHasMore: true,
+      bids: const [],
+    ));
+
+    final res = await _getBids(GetStreamBidsParams(
+      streamId: streamId,
+      page: 1,
+      perPage: state.bidsPerPage,
+    ));
+
+    res.fold(
+      (err) => emit(state.copyWith(
+        isLoadingBids: false,
+        bidsError: err,
+      )),
+      (pageData) {
+        final items = pageData.data.data; // BidStreamResponse.data.data
+        final currentPage = pageData.data.currentPage;
+        final lastPage = pageData.data.lastPage ?? 1;
+        final hasMore =
+            (pageData.data.nextPageUrl != null) && (currentPage < lastPage);
+
+        emit(state.copyWith(
+          isLoadingBids: false,
+          bids: items,
+          bidsPage: 1,
+          bidsHasMore: hasMore,
+        ));
+      },
+    );
+  }
+
+  Future<void> loadMoreBids({required int streamId}) async {
+    if (state.isLoadingBids || !state.bidsHasMore) return;
+
+    emit(state.copyWith(isLoadingBids: true, bidsError: ''));
+
+    final nextPage = state.bidsPage + 1;
+
+    final res = await _getBids(GetStreamBidsParams(
+      streamId: streamId,
+      page: nextPage,
+      perPage: state.bidsPerPage,
+    ));
+
+    res.fold(
+      (err) => emit(state.copyWith(
+        isLoadingBids: false,
+        bidsError: err,
+      )),
+      (pageData) {
+        final items = pageData.data.data;
+        final merged = List<BidStreamItem>.from(state.bids)..addAll(items);
+
+        final currentPage = pageData.data.currentPage;
+        final lastPage = pageData.data.lastPage ?? 1;
+        final hasMore =
+            (pageData.data.nextPageUrl != null) && (currentPage < lastPage);
+
+        emit(state.copyWith(
+          isLoadingBids: false,
+          bids: merged,
+          bidsPage: nextPage,
+          bidsHasMore: hasMore,
+        ));
+      },
+    );
+  }
+
+  /// Place bid and append returned BidStreamItem.
+  Future<void> placeBid({
+    required int streamId,
+    required int productId,
+    required String bidAmount,
+  }) async {
+    emit(state.copyWith(
+      isPlacingBid: true,
+      addBidError: '',
+    ));
+
+    final res = await _addBidUsecase(AddStreamBidParams(
+      streamId: streamId,
+      productId: productId,
+      bidAmount: bidAmount,
+    ));
+
+    res.fold(
+      (err) => emit(state.copyWith(
+        isPlacingBid: false,
+        addBidError: err,
+      )),
+      (createdBid) {
+        final updated = List<BidStreamItem>.from(state.bids)
+          ..insert(0, createdBid);
+        emit(state.copyWith(
+          isPlacingBid: false,
+          bids: updated,
+        ));
+      },
+    );
+  }
+
+  /// Socket/WS hook: add an incoming bid pushed from server
+  void addIncomingBid(BidStreamItem item) {
+    final updated = List<BidStreamItem>.from(state.bids)..insert(0, item);
+    emit(state.copyWith(bids: updated));
+  }
+
+  /// Socket/WS hook: add an incoming bid pushed from server
+  void updateViewerCount(int viewerCount) {
+    emit(state.copyWith(viewerCount: viewerCount));
+  }
 
   @override
   Future<void> close() async {

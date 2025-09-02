@@ -1,8 +1,9 @@
 part of '../stream.dart';
 
 class ViewerCountWidget extends StatelessWidget {
+  final int count;
   const ViewerCountWidget({
-    super.key,
+    super.key, required this.count,
   });
 
   @override
@@ -21,8 +22,8 @@ class ViewerCountWidget extends StatelessWidget {
               children: [
                 SvgPicture.asset(Assets.assetsIconsViewers),
                 SizedBox(width: 8.w),
-                const CustomText(
-                  text: '87',
+                 CustomText(
+                  text: count.toString(),
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: Colors.white,

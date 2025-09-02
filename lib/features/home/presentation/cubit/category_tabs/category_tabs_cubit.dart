@@ -121,8 +121,6 @@ class CategoryTabsCubit extends Cubit<CategoryTabsState> {
   ///
   /// Optional: `isPublisher` if you also use it for broadcasters.
   Future<JoinStreamData?> joinStream({
-    required String channelName,
-    required int userId,
     required StreamDataModel stream,
     bool isPublisher = false,
     required BuildContext context,
@@ -130,11 +128,7 @@ class CategoryTabsCubit extends Cubit<CategoryTabsState> {
     // set loading & clear previous error
     emit(state.copyWith(isJoining: true, joinError: null, joinData: null));
 
-    final res = await _joinPublicStream(JoinStreamParams(
-      channelName: channelName,
-      userId: userId,
-      isPublisher: isPublisher,
-    ));
+    final res = await _joinPublicStream(stream.id ?? 0);
 
     res.fold(
       (err) {

@@ -35,7 +35,7 @@ class CustomLiveVideoCard extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min, // مهم: استخدام الحد الأدنى من المساحة
+      mainAxisSize: MainAxisSize.min, 
 
       children: [
         // Live Image + Favorite Overlay

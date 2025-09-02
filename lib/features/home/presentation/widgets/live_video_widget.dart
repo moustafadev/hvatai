@@ -115,12 +115,10 @@ class LiveVideosWidget extends StatelessWidget {
       },
       liveCardBuilder: (context, stream) => GestureDetector(
         onTap: () {
-          final appLocal = locator<AppLocal>();
-          final userId = appLocal.getUserId();
+          // final appLocal = locator<AppLocal>();
+          // final userId = appLocal.getUserId();
 
           context.read<CategoryTabsCubit>().joinStream(
-              channelName: stream.channelName!,
-              userId: userId,
               stream: stream,
               isPublisher: false, // viewer
               context: context);
@@ -130,7 +128,7 @@ class LiveVideosWidget extends StatelessWidget {
           title: stream.title ?? "",
           adminName: '${stream.user?.name}',
           adminImage: '',
-          viewsCount: 5,
+          viewsCount: stream.viewerCount ?? 0,
           description: stream.streamProducts?.first.product?.description ?? "",
           liveImage: '',
         ),

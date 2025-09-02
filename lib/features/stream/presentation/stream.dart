@@ -13,6 +13,7 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/chat/presentation/pages/chat_service.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment_model.dart';
+import 'package:hvatai/features/stream/data/models/viewer_joined_event.dart';
 import 'package:hvatai/features/stream/presentation/cubit/live_stream_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:permission_handler/permission_handler.dart';

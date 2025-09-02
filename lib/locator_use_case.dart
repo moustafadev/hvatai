@@ -41,7 +41,9 @@ import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase
 import 'package:hvatai/features/profile/domain/usecases/sign_out_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_type_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/end_stream_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
@@ -97,4 +99,6 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => SendStreamCommentUsecase(locator()));
   locator.registerLazySingleton(() => LeaveStreamUsecase(locator()));
   locator.registerLazySingleton(() => EndStreamUsecase(locator()));
+  locator.registerLazySingleton(() => GetStreamBidsUsecase(locator()));
+  locator.registerLazySingleton(() => AddStreamBidUsecase(locator()));
 }

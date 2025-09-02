@@ -1,23 +1,24 @@
 import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
 
-// Adjust the import to your actual path
 import 'package:hvatai/features/stream/data/models/stream_comment_model.dart';
+import 'package:hvatai/features/stream/data/models/bid_stream_response.dart';
+import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 
 class ApiServiceStream extends ApiBase {
   /// GET: streams/{id}/comments?page=&per_page=
-  Future<StreamCommentResponse> getComments({
-    required int streamId,
-    int page = 1,
-    int perPage = 50,
-  }) async {
-    final path = ServerConfig.streamComments(streamId);
+  Future<StreamCommentResponse> getComments(
+      {required GetStreamCommentsParams params}) async {
+    final path = ServerConfig.streamComments(params.streamId);
 
     final res = await get(
       path,
       queryParameters: {
-        'page': '$page',
-        'per_page': '$perPage',
+        'page': '${params.page}',
+        'per_page': '${params.perPage}',
       },
     );
 
@@ -27,20 +28,20 @@ class ApiServiceStream extends ApiBase {
       );
     }
 
-    throw Exception('Failed to fetch stream comments (code: ${res.statusCode})');
+    throw Exception(
+        'Failed to fetch stream comments (code: ${res.statusCode})');
   }
 
   /// POST: streams/{id}/comments
   /// body: { message: "..." }
   Future<StreamCommentModel> sendComment({
-    required int streamId,
-    required String message,
+    required SendStreamCommentParams params,
   }) async {
-    final path = ServerConfig.streamComments(streamId);
+    final path = ServerConfig.streamComments(params.streamId);
 
     final res = await post(
       path,
-      body: {'message': message},
+      body: {'message': params.message},
     );
 
     if (res.statusCode == 200 || res.statusCode == 201) {
@@ -52,8 +53,53 @@ class ApiServiceStream extends ApiBase {
     throw Exception('Failed to send comment (code: ${res.statusCode})');
   }
 
+  /// GET: streams/{id}/bids?page=&per_page=
+  Future<BidStreamResponse> getBids({
+    required GetStreamBidsParams params,
+  }) async {
+    final path = ServerConfig.bidStream(params.streamId);
+
+    final res = await get(
+      path,
+      queryParameters: {
+        'page': '${params.page}',
+        'per_page': '${params.perPage}',
+      },
+    );
+
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      return BidStreamResponse.fromJson(
+        res.json,
+      );
+    }
+
+    throw Exception('Failed to fetch stream bids (code: ${res.statusCode})');
+  }
+
+  /// POST: streams/{streamId}/products/{productId}/bid
+  /// body: { bid_amount: "..." }
+  Future<BidStreamItem> addBid({
+    required AddStreamBidParams addStreamBidParams,
+  }) async {
+    final path = ServerConfig.addBidStream(
+        addStreamBidParams.streamId, addStreamBidParams.productId);
+
+    final res = await post(
+      path,
+      body: {
+        'stream_product_id': addStreamBidParams.productId,
+        'bid_amount': addStreamBidParams.bidAmount,
+      },
+    );
+
+    if (res.statusCode == 200 || res.statusCode == 201) {
+      return BidStreamItem.fromJson(res.json['data']['bid']);
+    }
+
+    throw Exception('Failed to add bid (code: ${res.statusCode})');
+  }
+
   /// POST: streams/{id}/leave
-  /// Returns true on 200/201
   Future<bool> leaveStream({required int streamId}) async {
     final path = ServerConfig.leaveStream(streamId);
 
@@ -67,7 +113,6 @@ class ApiServiceStream extends ApiBase {
   }
 
   /// POST: streams/{id}/end
-  /// Returns true on 200/201
   Future<bool> endStream({required int streamId}) async {
     final path = ServerConfig.endStream(streamId);
 

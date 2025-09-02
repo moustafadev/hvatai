@@ -64,18 +64,11 @@ class ApiServiceHome extends ApiBase {
   }
 
   Future<JoinStreamResponse> joinStream({
-    required String channelName,
-    required bool isPublisher,
-    required int userId,
+    required int streamId
   }) async {
     return executeAndHandleErrorServer<JoinStreamResponse>(() async {
       final response = await post(
-        ServerConfig.joinStream, // <--- your endpoint
-        body: {
-          'channel_name': channelName,
-          'is_publisher': isPublisher,
-          'user_id': userId,
-        },
+        ServerConfig.joinStream(streamId), // <--- your endpoint
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {

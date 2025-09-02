@@ -12,12 +12,8 @@ class GetStreamCommentsUsecase
   @override
   Future<Either<String, StreamCommentResponse>> call(
       GetStreamCommentsParams params) {
-    return _repo.getComments(
-      streamId: params.streamId,
-      page: params.page,
-      perPage: params.perPage,
-    );
-    }
+    return _repo.getComments(params: params);
+  }
 }
 
 class GetStreamCommentsParams {

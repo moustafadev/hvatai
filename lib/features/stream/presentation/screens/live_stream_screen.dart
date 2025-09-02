@@ -43,7 +43,8 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
         token: widget.stream.agoraToken ?? "",
         uid: widget.stream.agoraUid ?? 0,
         role: widget.userRole,
-        initialSeconds: 24,
+        viewerCount: widget.stream.viewerCount ?? 0,
+        initialSeconds: 0,
       )
       ..loadInitialComments(streamId: widget.stream.id ?? 0);
 
@@ -79,6 +80,16 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
     // Fallback casing if backend sends CamelCase names:
     _streamChannel!.bind('CommentAdded', (raw) {
       _handleComment(raw, source: channelName);
+    });
+
+    _streamChannel!.bind("viewer.joined", (raw) {
+      _cubit.updateViewerCount(
+          ViewerJoinedEvent.fromJson(raw).viewerCount);
+    });
+
+    _streamChannel!.bind("viewer.left", (raw) {
+      _cubit.updateViewerCount(
+          ViewerJoinedEvent.fromJson(raw).viewerCount);
     });
 
     // --- Bids ---
@@ -117,7 +128,7 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
       // final productId = bidJson['product_id'];
       // final amount = bidJson['amount'];
       // debugPrint(
-          // '✅ [$source] bid parsed → id=$bidId, productId=$productId, amount=$amount');
+      // '✅ [$source] bid parsed → id=$bidId, productId=$productId, amount=$amount');
 
       // TODO: if you have a cubit for product/bid state, forward it here.
       // e.g., context.read<SomeCubit>().onBidPlaced(widget.stream.id!, productId, amount);
@@ -193,7 +204,9 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CompanyInfo(streamUserModel: widget.stream.user),
-                        const ViewerCountWidget(),
+                        ViewerCountWidget(
+                          count: state.viewerCount,
+                        ),
                       ],
                     ),
                   ),
@@ -311,8 +324,9 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
-                    child: Text(
-                        isBroadcaster ? 'Leave or end stream?' : 'Leave stream?'),
+                    child: Text(isBroadcaster
+                        ? 'Leave or end stream?'
+                        : 'Leave stream?'),
                   ),
                   IconButton(
                     icon: const Icon(Icons.close),
@@ -325,7 +339,6 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
                   ? 'You can end the stream for everyone or just leave.'
                   : 'You will leave the live.'),
               actions: [
-               
                 if (isBroadcaster)
                   TextButton(
                     onPressed: () =>

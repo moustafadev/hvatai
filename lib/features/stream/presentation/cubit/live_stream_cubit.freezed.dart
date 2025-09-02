@@ -20,7 +20,8 @@ mixin _$LiveStreamState {
   bool get localReady => throw _privateConstructorUsedError;
   int? get remoteUid => throw _privateConstructorUsedError;
   bool get isInitializing => throw _privateConstructorUsedError;
-  bool get joined => throw _privateConstructorUsedError; // Timer
+  bool get joined => throw _privateConstructorUsedError;
+  int get viewerCount => throw _privateConstructorUsedError; // Timer
   int get streamSeconds =>
       throw _privateConstructorUsedError; // Comments (RAW API MODELS)
   List<StreamCommentModel> get comments => throw _privateConstructorUsedError;
@@ -30,10 +31,20 @@ mixin _$LiveStreamState {
   bool get isSendingComment => throw _privateConstructorUsedError;
   int get commentsPage => throw _privateConstructorUsedError;
   int get commentsPerPage => throw _privateConstructorUsedError;
-  bool get commentsHasMore => throw _privateConstructorUsedError; // Errors
+  bool get commentsHasMore =>
+      throw _privateConstructorUsedError; // Bids (RAW API MODELS)
+  List<BidStreamItem> get bids => throw _privateConstructorUsedError;
+  bool get isLoadingBids => throw _privateConstructorUsedError;
+  bool get isPlacingBid => throw _privateConstructorUsedError;
+  int get bidsPage => throw _privateConstructorUsedError;
+  int get bidsPerPage => throw _privateConstructorUsedError;
+  bool get bidsHasMore => throw _privateConstructorUsedError; // Errors
   String get errorMessage => throw _privateConstructorUsedError;
   String get commentsError => throw _privateConstructorUsedError;
-  String get sendCommentError => throw _privateConstructorUsedError;
+  String get sendCommentError =>
+      throw _privateConstructorUsedError; // Bid errors
+  String get bidsError => throw _privateConstructorUsedError;
+  String get addBidError => throw _privateConstructorUsedError;
 
   /// Create a copy of LiveStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -54,6 +65,7 @@ abstract class $LiveStreamStateCopyWith<$Res> {
       int? remoteUid,
       bool isInitializing,
       bool joined,
+      int viewerCount,
       int streamSeconds,
       List<StreamCommentModel> comments,
       String commentText,
@@ -62,9 +74,17 @@ abstract class $LiveStreamStateCopyWith<$Res> {
       int commentsPage,
       int commentsPerPage,
       bool commentsHasMore,
+      List<BidStreamItem> bids,
+      bool isLoadingBids,
+      bool isPlacingBid,
+      int bidsPage,
+      int bidsPerPage,
+      bool bidsHasMore,
       String errorMessage,
       String commentsError,
-      String sendCommentError});
+      String sendCommentError,
+      String bidsError,
+      String addBidError});
 }
 
 /// @nodoc
@@ -87,6 +107,7 @@ class _$LiveStreamStateCopyWithImpl<$Res, $Val extends LiveStreamState>
     Object? remoteUid = freezed,
     Object? isInitializing = null,
     Object? joined = null,
+    Object? viewerCount = null,
     Object? streamSeconds = null,
     Object? comments = null,
     Object? commentText = null,
@@ -95,9 +116,17 @@ class _$LiveStreamStateCopyWithImpl<$Res, $Val extends LiveStreamState>
     Object? commentsPage = null,
     Object? commentsPerPage = null,
     Object? commentsHasMore = null,
+    Object? bids = null,
+    Object? isLoadingBids = null,
+    Object? isPlacingBid = null,
+    Object? bidsPage = null,
+    Object? bidsPerPage = null,
+    Object? bidsHasMore = null,
     Object? errorMessage = null,
     Object? commentsError = null,
     Object? sendCommentError = null,
+    Object? bidsError = null,
+    Object? addBidError = null,
   }) {
     return _then(_value.copyWith(
       role: null == role
@@ -120,6 +149,10 @@ class _$LiveStreamStateCopyWithImpl<$Res, $Val extends LiveStreamState>
           ? _value.joined
           : joined // ignore: cast_nullable_to_non_nullable
               as bool,
+      viewerCount: null == viewerCount
+          ? _value.viewerCount
+          : viewerCount // ignore: cast_nullable_to_non_nullable
+              as int,
       streamSeconds: null == streamSeconds
           ? _value.streamSeconds
           : streamSeconds // ignore: cast_nullable_to_non_nullable
@@ -152,6 +185,30 @@ class _$LiveStreamStateCopyWithImpl<$Res, $Val extends LiveStreamState>
           ? _value.commentsHasMore
           : commentsHasMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      bids: null == bids
+          ? _value.bids
+          : bids // ignore: cast_nullable_to_non_nullable
+              as List<BidStreamItem>,
+      isLoadingBids: null == isLoadingBids
+          ? _value.isLoadingBids
+          : isLoadingBids // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPlacingBid: null == isPlacingBid
+          ? _value.isPlacingBid
+          : isPlacingBid // ignore: cast_nullable_to_non_nullable
+              as bool,
+      bidsPage: null == bidsPage
+          ? _value.bidsPage
+          : bidsPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      bidsPerPage: null == bidsPerPage
+          ? _value.bidsPerPage
+          : bidsPerPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      bidsHasMore: null == bidsHasMore
+          ? _value.bidsHasMore
+          : bidsHasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
       errorMessage: null == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -163,6 +220,14 @@ class _$LiveStreamStateCopyWithImpl<$Res, $Val extends LiveStreamState>
       sendCommentError: null == sendCommentError
           ? _value.sendCommentError
           : sendCommentError // ignore: cast_nullable_to_non_nullable
+              as String,
+      bidsError: null == bidsError
+          ? _value.bidsError
+          : bidsError // ignore: cast_nullable_to_non_nullable
+              as String,
+      addBidError: null == addBidError
+          ? _value.addBidError
+          : addBidError // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -182,6 +247,7 @@ abstract class _$$LiveStreamStateImplCopyWith<$Res>
       int? remoteUid,
       bool isInitializing,
       bool joined,
+      int viewerCount,
       int streamSeconds,
       List<StreamCommentModel> comments,
       String commentText,
@@ -190,9 +256,17 @@ abstract class _$$LiveStreamStateImplCopyWith<$Res>
       int commentsPage,
       int commentsPerPage,
       bool commentsHasMore,
+      List<BidStreamItem> bids,
+      bool isLoadingBids,
+      bool isPlacingBid,
+      int bidsPage,
+      int bidsPerPage,
+      bool bidsHasMore,
       String errorMessage,
       String commentsError,
-      String sendCommentError});
+      String sendCommentError,
+      String bidsError,
+      String addBidError});
 }
 
 /// @nodoc
@@ -213,6 +287,7 @@ class __$$LiveStreamStateImplCopyWithImpl<$Res>
     Object? remoteUid = freezed,
     Object? isInitializing = null,
     Object? joined = null,
+    Object? viewerCount = null,
     Object? streamSeconds = null,
     Object? comments = null,
     Object? commentText = null,
@@ -221,9 +296,17 @@ class __$$LiveStreamStateImplCopyWithImpl<$Res>
     Object? commentsPage = null,
     Object? commentsPerPage = null,
     Object? commentsHasMore = null,
+    Object? bids = null,
+    Object? isLoadingBids = null,
+    Object? isPlacingBid = null,
+    Object? bidsPage = null,
+    Object? bidsPerPage = null,
+    Object? bidsHasMore = null,
     Object? errorMessage = null,
     Object? commentsError = null,
     Object? sendCommentError = null,
+    Object? bidsError = null,
+    Object? addBidError = null,
   }) {
     return _then(_$LiveStreamStateImpl(
       role: null == role
@@ -246,6 +329,10 @@ class __$$LiveStreamStateImplCopyWithImpl<$Res>
           ? _value.joined
           : joined // ignore: cast_nullable_to_non_nullable
               as bool,
+      viewerCount: null == viewerCount
+          ? _value.viewerCount
+          : viewerCount // ignore: cast_nullable_to_non_nullable
+              as int,
       streamSeconds: null == streamSeconds
           ? _value.streamSeconds
           : streamSeconds // ignore: cast_nullable_to_non_nullable
@@ -278,6 +365,30 @@ class __$$LiveStreamStateImplCopyWithImpl<$Res>
           ? _value.commentsHasMore
           : commentsHasMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      bids: null == bids
+          ? _value._bids
+          : bids // ignore: cast_nullable_to_non_nullable
+              as List<BidStreamItem>,
+      isLoadingBids: null == isLoadingBids
+          ? _value.isLoadingBids
+          : isLoadingBids // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isPlacingBid: null == isPlacingBid
+          ? _value.isPlacingBid
+          : isPlacingBid // ignore: cast_nullable_to_non_nullable
+              as bool,
+      bidsPage: null == bidsPage
+          ? _value.bidsPage
+          : bidsPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      bidsPerPage: null == bidsPerPage
+          ? _value.bidsPerPage
+          : bidsPerPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      bidsHasMore: null == bidsHasMore
+          ? _value.bidsHasMore
+          : bidsHasMore // ignore: cast_nullable_to_non_nullable
+              as bool,
       errorMessage: null == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -289,6 +400,14 @@ class __$$LiveStreamStateImplCopyWithImpl<$Res>
       sendCommentError: null == sendCommentError
           ? _value.sendCommentError
           : sendCommentError // ignore: cast_nullable_to_non_nullable
+              as String,
+      bidsError: null == bidsError
+          ? _value.bidsError
+          : bidsError // ignore: cast_nullable_to_non_nullable
+              as String,
+      addBidError: null == addBidError
+          ? _value.addBidError
+          : addBidError // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -305,6 +424,7 @@ class _$LiveStreamStateImpl
       this.remoteUid,
       this.isInitializing = false,
       this.joined = false,
+      this.viewerCount = 0,
       this.streamSeconds = 0,
       final List<StreamCommentModel> comments = const <StreamCommentModel>[],
       this.commentText = '',
@@ -313,10 +433,19 @@ class _$LiveStreamStateImpl
       this.commentsPage = 1,
       this.commentsPerPage = 50,
       this.commentsHasMore = true,
+      final List<BidStreamItem> bids = const <BidStreamItem>[],
+      this.isLoadingBids = false,
+      this.isPlacingBid = false,
+      this.bidsPage = 1,
+      this.bidsPerPage = 20,
+      this.bidsHasMore = true,
       this.errorMessage = '',
       this.commentsError = '',
-      this.sendCommentError = ''})
-      : _comments = comments;
+      this.sendCommentError = '',
+      this.bidsError = '',
+      this.addBidError = ''})
+      : _comments = comments,
+        _bids = bids;
 
   @override
   final UserRole role;
@@ -332,6 +461,9 @@ class _$LiveStreamStateImpl
   @override
   @JsonKey()
   final bool joined;
+  @override
+  @JsonKey()
+  final int viewerCount;
 // Timer
   @override
   @JsonKey()
@@ -366,6 +498,32 @@ class _$LiveStreamStateImpl
   @override
   @JsonKey()
   final bool commentsHasMore;
+// Bids (RAW API MODELS)
+  final List<BidStreamItem> _bids;
+// Bids (RAW API MODELS)
+  @override
+  @JsonKey()
+  List<BidStreamItem> get bids {
+    if (_bids is EqualUnmodifiableListView) return _bids;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_bids);
+  }
+
+  @override
+  @JsonKey()
+  final bool isLoadingBids;
+  @override
+  @JsonKey()
+  final bool isPlacingBid;
+  @override
+  @JsonKey()
+  final int bidsPage;
+  @override
+  @JsonKey()
+  final int bidsPerPage;
+  @override
+  @JsonKey()
+  final bool bidsHasMore;
 // Errors
   @override
   @JsonKey()
@@ -376,10 +534,17 @@ class _$LiveStreamStateImpl
   @override
   @JsonKey()
   final String sendCommentError;
+// Bid errors
+  @override
+  @JsonKey()
+  final String bidsError;
+  @override
+  @JsonKey()
+  final String addBidError;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LiveStreamState(role: $role, localReady: $localReady, remoteUid: $remoteUid, isInitializing: $isInitializing, joined: $joined, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError)';
+    return 'LiveStreamState(role: $role, localReady: $localReady, remoteUid: $remoteUid, isInitializing: $isInitializing, joined: $joined, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError)';
   }
 
   @override
@@ -392,6 +557,7 @@ class _$LiveStreamStateImpl
       ..add(DiagnosticsProperty('remoteUid', remoteUid))
       ..add(DiagnosticsProperty('isInitializing', isInitializing))
       ..add(DiagnosticsProperty('joined', joined))
+      ..add(DiagnosticsProperty('viewerCount', viewerCount))
       ..add(DiagnosticsProperty('streamSeconds', streamSeconds))
       ..add(DiagnosticsProperty('comments', comments))
       ..add(DiagnosticsProperty('commentText', commentText))
@@ -400,9 +566,17 @@ class _$LiveStreamStateImpl
       ..add(DiagnosticsProperty('commentsPage', commentsPage))
       ..add(DiagnosticsProperty('commentsPerPage', commentsPerPage))
       ..add(DiagnosticsProperty('commentsHasMore', commentsHasMore))
+      ..add(DiagnosticsProperty('bids', bids))
+      ..add(DiagnosticsProperty('isLoadingBids', isLoadingBids))
+      ..add(DiagnosticsProperty('isPlacingBid', isPlacingBid))
+      ..add(DiagnosticsProperty('bidsPage', bidsPage))
+      ..add(DiagnosticsProperty('bidsPerPage', bidsPerPage))
+      ..add(DiagnosticsProperty('bidsHasMore', bidsHasMore))
       ..add(DiagnosticsProperty('errorMessage', errorMessage))
       ..add(DiagnosticsProperty('commentsError', commentsError))
-      ..add(DiagnosticsProperty('sendCommentError', sendCommentError));
+      ..add(DiagnosticsProperty('sendCommentError', sendCommentError))
+      ..add(DiagnosticsProperty('bidsError', bidsError))
+      ..add(DiagnosticsProperty('addBidError', addBidError));
   }
 
   @override
@@ -418,6 +592,8 @@ class _$LiveStreamStateImpl
             (identical(other.isInitializing, isInitializing) ||
                 other.isInitializing == isInitializing) &&
             (identical(other.joined, joined) || other.joined == joined) &&
+            (identical(other.viewerCount, viewerCount) ||
+                other.viewerCount == viewerCount) &&
             (identical(other.streamSeconds, streamSeconds) ||
                 other.streamSeconds == streamSeconds) &&
             const DeepCollectionEquality().equals(other._comments, _comments) &&
@@ -433,33 +609,58 @@ class _$LiveStreamStateImpl
                 other.commentsPerPage == commentsPerPage) &&
             (identical(other.commentsHasMore, commentsHasMore) ||
                 other.commentsHasMore == commentsHasMore) &&
+            const DeepCollectionEquality().equals(other._bids, _bids) &&
+            (identical(other.isLoadingBids, isLoadingBids) ||
+                other.isLoadingBids == isLoadingBids) &&
+            (identical(other.isPlacingBid, isPlacingBid) ||
+                other.isPlacingBid == isPlacingBid) &&
+            (identical(other.bidsPage, bidsPage) ||
+                other.bidsPage == bidsPage) &&
+            (identical(other.bidsPerPage, bidsPerPage) ||
+                other.bidsPerPage == bidsPerPage) &&
+            (identical(other.bidsHasMore, bidsHasMore) ||
+                other.bidsHasMore == bidsHasMore) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.commentsError, commentsError) ||
                 other.commentsError == commentsError) &&
             (identical(other.sendCommentError, sendCommentError) ||
-                other.sendCommentError == sendCommentError));
+                other.sendCommentError == sendCommentError) &&
+            (identical(other.bidsError, bidsError) ||
+                other.bidsError == bidsError) &&
+            (identical(other.addBidError, addBidError) ||
+                other.addBidError == addBidError));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      role,
-      localReady,
-      remoteUid,
-      isInitializing,
-      joined,
-      streamSeconds,
-      const DeepCollectionEquality().hash(_comments),
-      commentText,
-      isLoadingComments,
-      isSendingComment,
-      commentsPage,
-      commentsPerPage,
-      commentsHasMore,
-      errorMessage,
-      commentsError,
-      sendCommentError);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        role,
+        localReady,
+        remoteUid,
+        isInitializing,
+        joined,
+        viewerCount,
+        streamSeconds,
+        const DeepCollectionEquality().hash(_comments),
+        commentText,
+        isLoadingComments,
+        isSendingComment,
+        commentsPage,
+        commentsPerPage,
+        commentsHasMore,
+        const DeepCollectionEquality().hash(_bids),
+        isLoadingBids,
+        isPlacingBid,
+        bidsPage,
+        bidsPerPage,
+        bidsHasMore,
+        errorMessage,
+        commentsError,
+        sendCommentError,
+        bidsError,
+        addBidError
+      ]);
 
   /// Create a copy of LiveStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -478,6 +679,7 @@ abstract class _LiveStreamState implements LiveStreamState {
       final int? remoteUid,
       final bool isInitializing,
       final bool joined,
+      final int viewerCount,
       final int streamSeconds,
       final List<StreamCommentModel> comments,
       final String commentText,
@@ -486,9 +688,17 @@ abstract class _LiveStreamState implements LiveStreamState {
       final int commentsPage,
       final int commentsPerPage,
       final bool commentsHasMore,
+      final List<BidStreamItem> bids,
+      final bool isLoadingBids,
+      final bool isPlacingBid,
+      final int bidsPage,
+      final int bidsPerPage,
+      final bool bidsHasMore,
       final String errorMessage,
       final String commentsError,
-      final String sendCommentError}) = _$LiveStreamStateImpl;
+      final String sendCommentError,
+      final String bidsError,
+      final String addBidError}) = _$LiveStreamStateImpl;
 
   @override
   UserRole get role; // Agora / presence
@@ -499,7 +709,9 @@ abstract class _LiveStreamState implements LiveStreamState {
   @override
   bool get isInitializing;
   @override
-  bool get joined; // Timer
+  bool get joined;
+  @override
+  int get viewerCount; // Timer
   @override
   int get streamSeconds; // Comments (RAW API MODELS)
   @override
@@ -515,13 +727,29 @@ abstract class _LiveStreamState implements LiveStreamState {
   @override
   int get commentsPerPage;
   @override
-  bool get commentsHasMore; // Errors
+  bool get commentsHasMore; // Bids (RAW API MODELS)
+  @override
+  List<BidStreamItem> get bids;
+  @override
+  bool get isLoadingBids;
+  @override
+  bool get isPlacingBid;
+  @override
+  int get bidsPage;
+  @override
+  int get bidsPerPage;
+  @override
+  bool get bidsHasMore; // Errors
   @override
   String get errorMessage;
   @override
   String get commentsError;
   @override
-  String get sendCommentError;
+  String get sendCommentError; // Bid errors
+  @override
+  String get bidsError;
+  @override
+  String get addBidError;
 
   /// Create a copy of LiveStreamState
   /// with the given fields replaced by the non-null parameter values.

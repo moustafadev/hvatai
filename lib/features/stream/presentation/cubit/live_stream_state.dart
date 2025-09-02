@@ -11,6 +11,7 @@ class LiveStreamState with _$LiveStreamState {
     int? remoteUid,
     @Default(false) bool isInitializing,
     @Default(false) bool joined,
+    @Default(0) int viewerCount,
 
     // Timer
     @Default(0) int streamSeconds,
@@ -26,9 +27,21 @@ class LiveStreamState with _$LiveStreamState {
     @Default(50) int commentsPerPage,
     @Default(true) bool commentsHasMore,
 
+    // Bids (RAW API MODELS)
+    @Default(<BidStreamItem>[]) List<BidStreamItem> bids,
+    @Default(false) bool isLoadingBids,
+    @Default(false) bool isPlacingBid,
+    @Default(1) int bidsPage,
+    @Default(20) int bidsPerPage,
+    @Default(true) bool bidsHasMore,
+
     // Errors
     @Default('') String errorMessage,
     @Default('') String commentsError,
     @Default('') String sendCommentError,
+
+    // Bid errors
+    @Default('') String bidsError,
+    @Default('') String addBidError,
   }) = _LiveStreamState;
 }

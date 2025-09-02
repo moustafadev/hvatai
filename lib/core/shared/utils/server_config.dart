@@ -32,7 +32,6 @@ abstract class ServerConfig {
   static const String getFavProduct = "favorites?type=product";
   static const String streams = "streams";
   static const String addToCart = "cart/items";
-  static const String joinStream = 'streams/join-public';
   static const String favFilter = "category-favorites/filtered";
 
   static String chats = 'chats';
@@ -46,5 +45,10 @@ abstract class ServerConfig {
 
   static String streamComments(int id) => "streams/$id/comments";
   static String leaveStream(int id) => "streams/$id/leave";
+  static String joinStream(int id) => 'streams/$id/join';
+
   static String endStream(int id) => "streams/$id/end";
+  static String bidStream(int id) => "streams/$id/bids";
+  static String addBidStream(int streamId, int productId) =>
+      "streams/$streamId/products/$productId/bid";
 }

@@ -12,10 +12,7 @@ class SendStreamCommentUsecase
   @override
   Future<Either<String, StreamCommentModel>> call(
       SendStreamCommentParams params) {
-    return _repo.sendComment(
-      streamId: params.streamId,
-      message: params.message,
-    );
+    return _repo.sendComment(params: params);
   }
 }
 
