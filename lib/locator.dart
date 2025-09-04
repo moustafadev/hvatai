@@ -93,13 +93,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => SearchCubit(
         locator(),
       ));
-  locator.registerFactory(() => CategoryTabsCubit(
-        locator(),
-        locator(),
-        locator(),
-        locator(),
-        locator(),
-      ));
+
   locator.registerFactory(() => CategoryTabsCubit(locator(), locator(), locator(), locator(),locator()));
 
   locator.registerFactory(

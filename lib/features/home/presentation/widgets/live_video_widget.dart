@@ -124,7 +124,7 @@ class LiveVideosWidget extends StatelessWidget {
               context: context);
         },
         child: CustomLiveVideoCard(
-          price: '${stream.streamProducts?.first.startingPrice ?? ""}',
+          price: stream.streamProducts?.first.startingPrice ?? "",
           title: stream.title ?? "",
           adminName: '${stream.user?.name}',
           adminImage: '',

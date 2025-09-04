@@ -89,6 +89,11 @@ class ProfileCubit extends Cubit<ProfileState> {
       {
         "icon": Assets.assetsIconsMessage,
         "title": "chat".tr(),
+         "screen": (BuildContext context) {
+          ChatsCubit.get(context).getChats();
+          // ChatsCubit.get(context).getSupportChat();
+          context.push('${AppRoutes.chatRoot}/${AppRoutes.chat}');
+        },
       },
       {
         "icon": Assets.assetsIconsCard,

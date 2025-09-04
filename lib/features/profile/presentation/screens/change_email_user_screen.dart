@@ -73,6 +73,7 @@ class ChangeEmailUserScreen extends StatelessWidget {
                   children: [
                     CustomGradientButton(
                       text: 'save'.tr(),
+                      isLoading: state.isLoading,
                       isDisabled: !(state.user.email?.isNotEmpty ?? false),
                       onPressed: () {
                         cubit.submit(context);

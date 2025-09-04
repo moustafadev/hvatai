@@ -142,8 +142,8 @@ _$StreamProductModelImpl _$$StreamProductModelImplFromJson(
       id: (json['id'] as num?)?.toInt(),
       streamId: (json['stream_id'] as num?)?.toInt(),
       productId: (json['product_id'] as num?)?.toInt(),
-      startingPrice: (json['starting_price'] as num?)?.toDouble(),
-      currentBid: (json['current_bid'] as num?)?.toDouble(),
+      startingPrice: json['starting_price'] as String?,
+      currentBid: json['current_bid'] as String?,
       isActive: json['is_active'] as bool?,
       displayOrder: (json['display_order'] as num?)?.toInt(),
       createdAt: json['created_at'] == null

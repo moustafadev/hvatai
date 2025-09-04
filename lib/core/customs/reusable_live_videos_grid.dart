@@ -27,29 +27,7 @@ class ReusableLiveVideosGrid<T> extends StatelessWidget {
     final filtered = items.where(filter).toList();
 
     if (filtered.isEmpty) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(
-                Icons.favorite_border,
-                size: 48,
-                color: AppColors.grey,
-              ),
-              16.ph,
-              CustomText(
-                text: 'No favorites yet',
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w600,
-                color: AppColors.grey,
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
-      );
+      return SizedBox();
     }
 
     return GridView.builder(

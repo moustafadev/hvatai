@@ -138,15 +138,3 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-Map<String, dynamic> _asMap(dynamic data) {
-  if (data == null) return {};
-  if (data is Map<String, dynamic>) return data;
-  if (data is String) {
-    try {
-      return Map<String, dynamic>.from(jsonDecode(data));
-    } catch (_) {
-      return {};
-    }
-  }
-  return {};
-}

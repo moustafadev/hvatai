@@ -265,9 +265,10 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
   Future<FormData> _prepareProfileFormData(UserRegistrationData params) async {
     final dataMap = Map<String, dynamic>.from(params.toJson());
+    dataMap.remove('phone');
+
     dataMap['terms_agreement'] = params.agreedToTerms ?? false ? 1 : 0;
     dataMap['age_confirmation'] = params.isAbove18 ?? false ? 1 : 0;
-    dataMap['phone'] = "043535345";
 
     MultipartFile? imageFile;
     if (params.image != null && File(params.image!).existsSync()) {

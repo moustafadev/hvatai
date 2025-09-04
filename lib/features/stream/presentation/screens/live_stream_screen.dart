@@ -83,13 +83,11 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
     });
 
     _streamChannel!.bind("viewer.joined", (raw) {
-      _cubit.updateViewerCount(
-          ViewerJoinedEvent.fromJson(raw).viewerCount);
+      _cubit.updateViewerCount(ViewerJoinedEvent.fromJson(raw).viewerCount);
     });
 
     _streamChannel!.bind("viewer.left", (raw) {
-      _cubit.updateViewerCount(
-          ViewerJoinedEvent.fromJson(raw).viewerCount);
+      _cubit.updateViewerCount(ViewerJoinedEvent.fromJson(raw).viewerCount);
     });
 
     // --- Bids ---
@@ -235,7 +233,9 @@ class _LiveStreamScreenState extends State<LiveStreamScreen> {
                       productTitle: firstProduct?.product?.name ?? "No product",
                       productCategory:
                           firstProduct?.product?.category?.name ?? "",
-                      startPrice: firstProduct?.startingPrice ?? 0,
+                      startPrice:
+                          double.tryParse(firstProduct?.startingPrice ?? "") ??
+                              0,
                       onEditPressed: () {},
                       onBidPressed: () {},
                     ),

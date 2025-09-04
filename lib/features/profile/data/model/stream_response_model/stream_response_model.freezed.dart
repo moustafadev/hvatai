@@ -1549,9 +1549,9 @@ mixin _$StreamProductModel {
   @JsonKey(name: 'product_id')
   int? get productId => throw _privateConstructorUsedError;
   @JsonKey(name: 'starting_price')
-  double? get startingPrice => throw _privateConstructorUsedError;
+  String? get startingPrice => throw _privateConstructorUsedError;
   @JsonKey(name: 'current_bid')
-  double? get currentBid => throw _privateConstructorUsedError;
+  String? get currentBid => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_active')
   bool? get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: 'display_order')
@@ -1582,8 +1582,8 @@ abstract class $StreamProductModelCopyWith<$Res> {
       {int? id,
       @JsonKey(name: 'stream_id') int? streamId,
       @JsonKey(name: 'product_id') int? productId,
-      @JsonKey(name: 'starting_price') double? startingPrice,
-      @JsonKey(name: 'current_bid') double? currentBid,
+      @JsonKey(name: 'starting_price') String? startingPrice,
+      @JsonKey(name: 'current_bid') String? currentBid,
       @JsonKey(name: 'is_active') bool? isActive,
       @JsonKey(name: 'display_order') int? displayOrder,
       @JsonKey(name: 'created_at') DateTime? createdAt,
@@ -1635,11 +1635,11 @@ class _$StreamProductModelCopyWithImpl<$Res, $Val extends StreamProductModel>
       startingPrice: freezed == startingPrice
           ? _value.startingPrice
           : startingPrice // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
       currentBid: freezed == currentBid
           ? _value.currentBid
           : currentBid // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -1690,8 +1690,8 @@ abstract class _$$StreamProductModelImplCopyWith<$Res>
       {int? id,
       @JsonKey(name: 'stream_id') int? streamId,
       @JsonKey(name: 'product_id') int? productId,
-      @JsonKey(name: 'starting_price') double? startingPrice,
-      @JsonKey(name: 'current_bid') double? currentBid,
+      @JsonKey(name: 'starting_price') String? startingPrice,
+      @JsonKey(name: 'current_bid') String? currentBid,
       @JsonKey(name: 'is_active') bool? isActive,
       @JsonKey(name: 'display_order') int? displayOrder,
       @JsonKey(name: 'created_at') DateTime? createdAt,
@@ -1742,11 +1742,11 @@ class __$$StreamProductModelImplCopyWithImpl<$Res>
       startingPrice: freezed == startingPrice
           ? _value.startingPrice
           : startingPrice // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
       currentBid: freezed == currentBid
           ? _value.currentBid
           : currentBid // ignore: cast_nullable_to_non_nullable
-              as double?,
+              as String?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -1799,10 +1799,10 @@ class _$StreamProductModelImpl implements _StreamProductModel {
   final int? productId;
   @override
   @JsonKey(name: 'starting_price')
-  final double? startingPrice;
+  final String? startingPrice;
   @override
   @JsonKey(name: 'current_bid')
-  final double? currentBid;
+  final String? currentBid;
   @override
   @JsonKey(name: 'is_active')
   final bool? isActive;
@@ -1885,8 +1885,8 @@ abstract class _StreamProductModel implements StreamProductModel {
       {final int? id,
       @JsonKey(name: 'stream_id') final int? streamId,
       @JsonKey(name: 'product_id') final int? productId,
-      @JsonKey(name: 'starting_price') final double? startingPrice,
-      @JsonKey(name: 'current_bid') final double? currentBid,
+      @JsonKey(name: 'starting_price') final String? startingPrice,
+      @JsonKey(name: 'current_bid') final String? currentBid,
       @JsonKey(name: 'is_active') final bool? isActive,
       @JsonKey(name: 'display_order') final int? displayOrder,
       @JsonKey(name: 'created_at') final DateTime? createdAt,
@@ -1906,10 +1906,10 @@ abstract class _StreamProductModel implements StreamProductModel {
   int? get productId;
   @override
   @JsonKey(name: 'starting_price')
-  double? get startingPrice;
+  String? get startingPrice;
   @override
   @JsonKey(name: 'current_bid')
-  double? get currentBid;
+  String? get currentBid;
   @override
   @JsonKey(name: 'is_active')
   bool? get isActive;
