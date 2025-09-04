@@ -14,6 +14,7 @@ import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_with_apple_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/login_with_google_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
+import 'package:hvatai/features/change_password/domain/usecases/change_password_usecase.dart';
 import 'package:hvatai/features/chat/domain/usecases/get_chats_usecase.dart';
 import 'package:hvatai/features/chat/domain/usecases/get_messages_usecase.dart';
 import 'package:hvatai/features/chat/domain/usecases/get_support_chat_usecase.dart';
@@ -101,4 +102,5 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => EndStreamUsecase(locator()));
   locator.registerLazySingleton(() => GetStreamBidsUsecase(locator()));
   locator.registerLazySingleton(() => AddStreamBidUsecase(locator()));
+  locator.registerLazySingleton(() => ChangePasswordUsecase(locator()));
 }

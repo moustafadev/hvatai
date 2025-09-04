@@ -192,8 +192,13 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       {
         "icon": Assets.assetsIconsPasswordMinimalisticInput,
         "title": "changePassword".tr(),
-        "screen": (BuildContext context) {
-          context.push(AppRoutes.changePassword, extra: state.user);
+        "screen": (BuildContext context) async {
+          final updatedUser = await context.push<UserRegistrationData>(
+              AppRoutes.changePassword,
+              extra: state.user);
+          if (updatedUser != null) {
+            updateUserData(updatedUser);
+          }
         },
       },
       {

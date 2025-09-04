@@ -30,6 +30,8 @@ mixin _$UserRegistrationData {
   String? get appleId => throw _privateConstructorUsedError;
   @JsonKey(name: 'password_confirmation', includeIfNull: false)
   String? get passwordConfirmation => throw _privateConstructorUsedError;
+  @JsonKey(name: 'current_password', includeIfNull: false)
+  String? get currentPassword => throw _privateConstructorUsedError;
   @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
   bool? get agreedToTerms => throw _privateConstructorUsedError;
   @JsonKey(name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
@@ -147,6 +149,8 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       @JsonKey(name: 'apple_id', includeIfNull: false) String? appleId,
       @JsonKey(name: 'password_confirmation', includeIfNull: false)
       String? passwordConfirmation,
+      @JsonKey(name: 'current_password', includeIfNull: false)
+      String? currentPassword,
       @JsonKey(
           name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
       bool? agreedToTerms,
@@ -237,6 +241,7 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
     Object? googleId = freezed,
     Object? appleId = freezed,
     Object? passwordConfirmation = freezed,
+    Object? currentPassword = freezed,
     Object? agreedToTerms = freezed,
     Object? isAbove18 = freezed,
     Object? email = freezed,
@@ -304,6 +309,10 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
       passwordConfirmation: freezed == passwordConfirmation
           ? _value.passwordConfirmation
           : passwordConfirmation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currentPassword: freezed == currentPassword
+          ? _value.currentPassword
+          : currentPassword // ignore: cast_nullable_to_non_nullable
               as String?,
       agreedToTerms: freezed == agreedToTerms
           ? _value.agreedToTerms
@@ -508,6 +517,8 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       @JsonKey(name: 'apple_id', includeIfNull: false) String? appleId,
       @JsonKey(name: 'password_confirmation', includeIfNull: false)
       String? passwordConfirmation,
+      @JsonKey(name: 'current_password', includeIfNull: false)
+      String? currentPassword,
       @JsonKey(
           name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
       bool? agreedToTerms,
@@ -595,6 +606,7 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
     Object? googleId = freezed,
     Object? appleId = freezed,
     Object? passwordConfirmation = freezed,
+    Object? currentPassword = freezed,
     Object? agreedToTerms = freezed,
     Object? isAbove18 = freezed,
     Object? email = freezed,
@@ -662,6 +674,10 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
       passwordConfirmation: freezed == passwordConfirmation
           ? _value.passwordConfirmation
           : passwordConfirmation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currentPassword: freezed == currentPassword
+          ? _value.currentPassword
+          : currentPassword // ignore: cast_nullable_to_non_nullable
               as String?,
       agreedToTerms: freezed == agreedToTerms
           ? _value.agreedToTerms
@@ -861,6 +877,8 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       @JsonKey(name: 'apple_id', includeIfNull: false) this.appleId,
       @JsonKey(name: 'password_confirmation', includeIfNull: false)
       this.passwordConfirmation,
+      @JsonKey(name: 'current_password', includeIfNull: false)
+      this.currentPassword,
       @JsonKey(
           name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
       this.agreedToTerms,
@@ -946,6 +964,9 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   @override
   @JsonKey(name: 'password_confirmation', includeIfNull: false)
   final String? passwordConfirmation;
+  @override
+  @JsonKey(name: 'current_password', includeIfNull: false)
+  final String? currentPassword;
   @override
   @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
   final bool? agreedToTerms;
@@ -1112,7 +1133,7 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
 
   @override
   String toString() {
-    return 'UserRegistrationData(firstName: $firstName, lastName: $lastName, googleId: $googleId, appleId: $appleId, passwordConfirmation: $passwordConfirmation, agreedToTerms: $agreedToTerms, isAbove18: $isAbove18, email: $email, token: $token, password: $password, gender: $gender, id: $id, userId: $userId, street: $street, index: $index, city: $city, country: $country, phone: $phone, role: $role, image: $image, imageBusiness: $imageBusiness, description: $description, lang: $lang, businessId: $businessId, visibility: $visibility, sms: $sms, push: $push, sendEmail: $sendEmail, status: $status, fcmTokens: $fcmTokens, emailVerifiedAt: $emailVerifiedAt, address: $address, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount, isFavorited: $isFavorited, favoritesCount: $favoritesCount, floor: $floor, frontDoor: $frontDoor, intercomCode: $intercomCode, apartment: $apartment, isPrimary: $isPrimary, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, walletBalance: $walletBalance, walletId: $walletId, updatedAt: $updatedAt, interests: $interests, detailedInterests: $detailedInterests)';
+    return 'UserRegistrationData(firstName: $firstName, lastName: $lastName, googleId: $googleId, appleId: $appleId, passwordConfirmation: $passwordConfirmation, currentPassword: $currentPassword, agreedToTerms: $agreedToTerms, isAbove18: $isAbove18, email: $email, token: $token, password: $password, gender: $gender, id: $id, userId: $userId, street: $street, index: $index, city: $city, country: $country, phone: $phone, role: $role, image: $image, imageBusiness: $imageBusiness, description: $description, lang: $lang, businessId: $businessId, visibility: $visibility, sms: $sms, push: $push, sendEmail: $sendEmail, status: $status, fcmTokens: $fcmTokens, emailVerifiedAt: $emailVerifiedAt, address: $address, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount, isFavorited: $isFavorited, favoritesCount: $favoritesCount, floor: $floor, frontDoor: $frontDoor, intercomCode: $intercomCode, apartment: $apartment, isPrimary: $isPrimary, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, walletBalance: $walletBalance, walletId: $walletId, updatedAt: $updatedAt, interests: $interests, detailedInterests: $detailedInterests)';
   }
 
   @override
@@ -1129,6 +1150,8 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
             (identical(other.appleId, appleId) || other.appleId == appleId) &&
             (identical(other.passwordConfirmation, passwordConfirmation) ||
                 other.passwordConfirmation == passwordConfirmation) &&
+            (identical(other.currentPassword, currentPassword) ||
+                other.currentPassword == currentPassword) &&
             (identical(other.agreedToTerms, agreedToTerms) ||
                 other.agreedToTerms == agreedToTerms) &&
             (identical(other.isAbove18, isAbove18) ||
@@ -1214,6 +1237,7 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
         googleId,
         appleId,
         passwordConfirmation,
+        currentPassword,
         agreedToTerms,
         isAbove18,
         email,
@@ -1288,6 +1312,8 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       @JsonKey(name: 'apple_id', includeIfNull: false) final String? appleId,
       @JsonKey(name: 'password_confirmation', includeIfNull: false)
       final String? passwordConfirmation,
+      @JsonKey(name: 'current_password', includeIfNull: false)
+      final String? currentPassword,
       @JsonKey(
           name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
       final bool? agreedToTerms,
@@ -1381,6 +1407,9 @@ abstract class _UserRegistrationData implements UserRegistrationData {
   @override
   @JsonKey(name: 'password_confirmation', includeIfNull: false)
   String? get passwordConfirmation;
+  @override
+  @JsonKey(name: 'current_password', includeIfNull: false)
+  String? get currentPassword;
   @override
   @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
   bool? get agreedToTerms;

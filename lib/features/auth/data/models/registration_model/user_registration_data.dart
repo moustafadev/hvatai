@@ -23,6 +23,8 @@ class UserRegistrationData with _$UserRegistrationData {
     @JsonKey(name: 'apple_id', includeIfNull: false) String? appleId,
     @JsonKey(name: 'password_confirmation', includeIfNull: false)
     String? passwordConfirmation,
+    @JsonKey(name: 'current_password', includeIfNull: false)
+    String? currentPassword,
     @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
     bool? agreedToTerms,
     @JsonKey(
