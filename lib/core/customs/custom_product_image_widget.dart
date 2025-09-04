@@ -249,7 +249,7 @@ class CustomProductImageWidget extends StatelessWidget {
                     color: AppColors.graniteGray,
                   ),
                   CustomText(
-                    text: ' ${initialImages?.length}/8',
+                    text: ' ${initialImages?.length ?? 0}/8',
                     fontSize: 10.sp,
                     fontWeight: FontWeight.w400,
                     color: AppColors.graniteGray,

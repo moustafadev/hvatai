@@ -37,7 +37,7 @@ class InterestsDetailWidget extends StatelessWidget {
 
                 return CategoryOptionsSection(
                   category: categoryData.name ?? '',
-                  options: children, // هنا نمرر List<CategoryChild>
+                  options: children,
                   selectedDetails: state.selectedDetailIds,
                   onItemTap: (int detailId) {
                     cubit.toggleDetail(detailId, categoryData.id ?? 0);

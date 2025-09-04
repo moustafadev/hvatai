@@ -2,11 +2,15 @@ import 'dart:io';
 
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/features/all_app/presentation/event_bus/event_bus.dart';
+import 'package:hvatai/features/all_app/presentation/event_bus/events.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
@@ -31,6 +35,25 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
 
   void changeCategory(int index) {
     emit(state.copyWith(selectedCategoryIndex: index));
+  }
+
+  bool isDisabled() {
+    return (state.product.productName == null ||
+        state.product.productName!.isEmpty ||
+        state.product.productDescription == null ||
+        state.product.productDescription!.isEmpty ||
+        state.product.variants.isEmpty ||
+        state.product.variants.first.price == null ||
+        state.product.variants.first.price == 0.0 ||
+        state.product.categoryId == null ||
+        state.product.categoryId == 0 ||
+        (state.product.deliveryAvailable == true &&
+            (state.product.deliveryTime == null ||
+                state.product.deliveryTime!.isEmpty ||
+                state.product.deliveryPrice == null ||
+                state.product.deliveryPrice == 0.0 ||
+                state.product.deliveryType == null ||
+                state.product.deliveryType!.isEmpty)));
   }
 
   void setCategory(int id, String? name) {
@@ -237,25 +260,135 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     deliveryTimeController.clear();
   }
 
+  Future<File> compressImage(File file, {int quality = 70}) async {
+    final targetPath = file.absolute.path.replaceAll('.jpg', '_compressed.jpg');
+
+    final result = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path,
+      targetPath,
+      quality: quality,
+      minWidth: 1080,
+      minHeight: 1080,
+    );
+    return file;
+  }
+
+  Future<MultipartFile?> _prepareImageFile(String? imagePath) async {
+    if (imagePath == null || imagePath.isEmpty) return null;
+
+    try {
+      File file = File(imagePath);
+      if (!await file.exists()) return null;
+
+      // Get original file size
+      final originalSize = await file.length();
+
+      // If file is already small enough, use it as is
+      if (originalSize <= 2 * 1024 * 1024) {
+        return MultipartFile.fromFile(file.path,
+            filename: file.path.split('/').last);
+      }
+
+      // Compress the image with decreasing quality
+      int quality = 85;
+      File compressedFile = file;
+
+      while (quality >= 30) {
+        final targetPath =
+            file.absolute.path.replaceAll('.jpg', '_compressed_$quality.jpg');
+
+        final result = await FlutterImageCompress.compressAndGetFile(
+          file.absolute.path,
+          targetPath,
+          quality: quality,
+          minWidth: 1080,
+          minHeight: 1080,
+        );
+
+        if (result != null) {
+          compressedFile = File(result.path);
+          final compressedSize = await compressedFile.length();
+
+          // If compressed size is acceptable, use this file
+          if (compressedSize <= 2 * 1024 * 1024) {
+            break;
+          }
+
+          // Delete intermediate compressed file if it's still too large
+          if (quality > 30) {
+            await compressedFile.delete();
+          }
+        }
+
+        quality -= 15;
+      }
+
+      // Final check - if still too large, use the most compressed version anyway
+      final finalSize = await compressedFile.length();
+      if (finalSize > 2 * 1024 * 1024) {
+        debugPrint(
+            'Warning: Image still large after compression: ${finalSize / 1024 / 1024}MB');
+        // Continue anyway rather than throwing exception
+      }
+
+      return MultipartFile.fromFile(compressedFile.path,
+          filename: compressedFile.path.split('/').last);
+    } catch (e) {
+      debugPrint('Error preparing image file: $e');
+      // Instead of throwing exception, return null to skip this image
+      return null;
+    }
+  }
+
+  Future<FormData> _prepareProductFormData(ProductModel product) async {
+    final dataMap = Map<String, dynamic>.from(product.toJson());
+    dataMap['delivery_available'] = product.deliveryAvailable ? 1 : 0;
+    dataMap['status'] = product.status != null ? 1 : 0;
+    dataMap['self_pickup'] = product.selfPickup ? 1 : 0;
+
+    final variantsJson = product.variants.map((v) => v.toJson()).toList();
+    dataMap['variants'] = variantsJson;
+
+    final formData = FormData.fromMap(dataMap);
+
+    if (product.productPictures != null &&
+        product.productPictures!.isNotEmpty) {
+      for (int i = 0; i < product.productPictures!.length; i++) {
+        final file = await _prepareImageFile(product.productPictures![i]);
+        if (file != null) {
+          formData.files.add(MapEntry("product_pictures[$i]", file));
+        }
+      }
+    }
+
+    return formData;
+  }
+
   Future<void> addProduct(BuildContext context) async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
+    final formData = await _prepareProductFormData(state.product);
+
     final result = await addNewProductUsecase.call(
-      AddNewProductParams(productModel: state.product),
+      AddNewProductParams(formData: formData),
     );
+
     result.fold((failure) {
       emit(state.copyWith(isLoading: false, errorMessage: failure));
       showFloatingMessageError('somethingWentWrong'.tr());
     }, (newProduct) {
+      final completeProduct = state.product.copyWith(
+        id: newProduct.id,
+      );
+
+      EventBus().publish(ProductAddedEvent(completeProduct));
+
       emit(state.copyWith(
-        isLoading: false,
-        products: [state.product, ...state.products],
-      ));
-      getMyProducts();
+          isLoading: false, products: [state.product, ...state.products]));
       showFloatingMessageSuccess('productAdded'.tr());
       context.pop();
-
       deliveryTimeController.clear();
+      resetProduct();
     });
   }
 }

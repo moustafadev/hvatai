@@ -11,6 +11,8 @@ import 'package:hvatai/features/all_app/domain/usecases/add_product_to_cart_usec
 import 'package:hvatai/features/all_app/domain/usecases/delete_cart_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/get_all_products_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/get_cart_usecase.dart';
+import 'package:hvatai/features/all_app/presentation/event_bus/event_bus.dart';
+import 'package:hvatai/features/all_app/presentation/event_bus/events.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 
 part 'search_cubit.freezed.dart';
@@ -19,150 +21,55 @@ part 'search_state.dart';
 class SearchCubit extends Cubit<SearchState> {
   SearchCubit(
     this.getAllProductsUsecase,
-    this.addFavProductUsecase,
-    this.getCartUsecase,
-    this.addProductToCartUsecase,
-    this.deleteCartUsecase,
   ) : super(SearchState(
           categories: [],
           selectedIndex: 0,
           product: ProductModel(variants: [VariantModel()]),
           cartResponse: CartModel(),
-        ));
-  GetAllProductsUsecase getAllProductsUsecase;
-  GetCartUsecase getCartUsecase;
-  AddProductToCartUsecase addProductToCartUsecase;
-  AddFavProductUsecase addFavProductUsecase;
-  DeleteCartUsecase deleteCartUsecase;
-  Timer? _refreshTimer;
-
-  void createPageController() {
-    final controller = PageController(initialPage: state.currentImageIndex);
-    emit(state.copyWith(pageController: controller));
-  }
-
-  void resetImageIndex() {
-    emit(state.copyWith(currentImageIndex: 0, pageController: null));
-  }
-
-  void changeImageIndex(int index) {
-    emit(state.copyWith(currentImageIndex: index));
-  }
-
-  void initProductModel(ProductModel product) {
-    emit(state.copyWith(product: product));
-  }
-
-  void initCartResponseModel(List<CartModel> cartResponse) {
-    double totalPrice = 0.0;
-    for (final cart in cartResponse) {
-      totalPrice += cart.total ?? 0.0;
-    }
-
-    emit(state.copyWith(
-      carts: cartResponse,
-      totalCartPrice: totalPrice,
-    ));
-  }
-
-  void toggleFav() {
-    emit(state.copyWith(isFavourites: !state.isFavourites));
-  }
-
-  void toggleCart() {
-    emit(state.copyWith(isCart: !state.isCart));
-  }
-
-  void updateTotalPrice(double newPrice) {
-    emit(state.copyWith(totalCartPrice: newPrice));
-  }
-
-  Future<void> deleteProductFromCart(
-      BuildContext context, ProductModel product) async {
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
-    final cartId = product.variants[0].id ?? 0;
-    final result = await deleteCartUsecase.call(
-      DeleteCartParams(cartId: cartId),
-    );
-
-    result.fold(
-      (failure) {
-        emit(state.copyWith(
-          errorMessage: failure,
-          isLoading: false,
-        ));
-        showFloatingMessageError('failedToDeleteAddress'.tr());
-      },
-      (success) {
-        final updatedCart =
-            state.carts.where((cart) => cart.id != cartId).toList();
-
-        emit(state.copyWith(
-          carts: updatedCart,
-          errorMessage: '',
-          isLoading: false,
-        ));
-
-        showFloatingMessageSuccess('addressDeletedSuccessfully'.tr());
-      },
-    );
-  }
-
-  Future<void> addProductToCart(
-      BuildContext context, ProductModel product) async {
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
-
-    final variantId = product.variants[0].id ?? 0;
-
-    final result = await addProductToCartUsecase.call(
-      AddProductToCartParams(
-        itemId: variantId,
-        quantity: 1,
-        itemType: product.variants[0],
-      ),
-    );
-
-    result.fold((failure) {
-      emit(state.copyWith(isLoading: false, errorMessage: failure));
-      showFloatingMessageError('insufficientStock'.tr());
-    }, (newCart) {
-      emit(state.copyWith(
-        isLoading: false,
-        cartResponse: newCart,
-      ));
-
-      showFloatingMessageSuccess('productAddedToCart'.tr());
+        )) {
+    EventBus().subscribe<ProductAddedEvent>((event) {
+      _handleProductAdded(event);
+    });
+    EventBus().subscribe<FavoriteUpdatedEvent>((event) {
+      _handleFavoriteUpdated(event);
     });
   }
 
-  Future<void> addFavProduct(BuildContext context) async {
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
-
-    final params = AddFavProductParams(productId: state.product.id!);
-    final result = await addFavProductUsecase.call(params);
-
-    result.fold(
-      (failure) {
-        emit(state.copyWith(isLoading: false, errorMessage: failure));
-        showFloatingMessageError('somethingWentWrong'.tr());
-      },
-      (response) {
-        final updatedProduct = state.product.copyWith(
-          isFavorited: response.isFavorited,
-          favoritesCount: response.favoritesCount,
+  void _handleFavoriteUpdated(FavoriteUpdatedEvent event) {
+    final updatedProducts = state.products.map((product) {
+      if (product.id == event.productId) {
+        return product.copyWith(
+          isFavorited: event.isFavorite,
+          favoritesCount: event.favoritesCount,
         );
+      }
+      return product;
+    }).toList();
 
-        final updatedProducts = state.products
-            .map((p) => p.id == state.product.id ? updatedProduct : p)
-            .toList();
+    emit(state.copyWith(products: updatedProducts));
+  }
 
-        emit(state.copyWith(
-          isLoading: false,
-          product: updatedProduct,
-          products: updatedProducts,
-        ));
-      },
-    );
+  void _handleProductAdded(ProductAddedEvent event) {
+    if (!state.products.any((product) => product.id == event.product.id)) {
+      final updatedProducts = [event.product, ...state.products];
+      emit(state.copyWith(products: updatedProducts));
+    }
+  }
+
+  @override
+  Future<void> close() {
+    EventBus().unsubscribe<FavoriteUpdatedEvent>(_handleFavoriteUpdated);
+
+    EventBus().unsubscribe<ProductAddedEvent>(_handleProductAdded);
+    return super.close();
+  }
+
+  GetAllProductsUsecase getAllProductsUsecase;
+
+  void initProductModel(ProductModel product) {
+    emit(state.copyWith(
+      product: product,
+    ));
   }
 
   void removeItem(String item) {
@@ -216,11 +123,5 @@ class SearchCubit extends Cubit<SearchState> {
   String? get selectedCategory {
     final category = state.categories[state.selectedIndex];
     return category == 'All' ? null : category;
-  }
-
-  @override
-  Future<void> close() {
-    _refreshTimer?.cancel();
-    return super.close();
   }
 }

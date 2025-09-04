@@ -175,22 +175,7 @@ class AddNewProductsScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: CustomGradientButton(
                         text: 'save'.tr(),
-                        isDisabled: (state.product.productName == null ||
-                            state.product.productName!.isEmpty ||
-                            state.product.productDescription == null ||
-                            state.product.productDescription!.isEmpty ||
-                            state.product.variants.isEmpty ||
-                            state.product.variants.first.price == null ||
-                            state.product.variants.first.price == 0.0 ||
-                            state.product.categoryId == null ||
-                            state.product.categoryId == 0 ||
-                            (state.product.deliveryAvailable == true &&
-                                (state.product.deliveryTime == null ||
-                                    state.product.deliveryTime!.isEmpty ||
-                                    state.product.deliveryPrice == null ||
-                                    state.product.deliveryPrice == 0.0 ||
-                                    state.product.deliveryType == null ||
-                                    state.product.deliveryType!.isEmpty))),
+                        isDisabled: cubit.isDisabled(),
                         isLoading: state.isLoading,
                         onPressed: () {
                           cubit.addProduct(context);

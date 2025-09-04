@@ -53,34 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     });
 
-    _channel.bind('CommentAdded', (raw) {
-      try {
-        debugPrint('📥 CommentAdded event received: $raw');
-
-        final root = _asMap(raw);
-        final commentJson = root['data'] is Map
-            ? Map<String, dynamic>.from(root['data'])
-            : root;
-
-        debugPrint('📝 Parsed comment JSON: $commentJson');
-
-        final comment = StreamCommentModel.fromJson(commentJson);
-
-        debugPrint(
-          '✅ StreamCommentModel parsed → id=${comment.id}, '
-          'streamId=${comment.streamId}, user=${comment.user?.name}, '
-          'message=${comment.message}',
-        );
-
-        if (mounted) {
-          final tabs = context.read<CategoryTabsCubit>();
-          // tabs.onStreamCommentAdded(comment);
-        }
-      } catch (e, st) {
-        debugPrint('❌ CommentAdded parse error: $e');
-        debugPrintStack(stackTrace: st);
-      }
-    });
+   
   }
 
   @override
@@ -99,15 +72,19 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: AppColors.lightGreyBackground,
       body: BlocProvider(
         create: (_) => locator<CategoryTabsCubit>()
-          ..fetchCategories()
-          ..fetchLiveStreams(),
+          ..fetchLiveStreams()
+          ..getCategories()
+          ..getFavCategories(),
         child: SafeArea(
           bottom: false,
           child: BlocBuilder<CategoryTabsCubit, CategoryTabsState>(
             builder: (context, state) {
               if (state.isLoading) {
-                return Center(
-                  child: CircularProgressIndicator(),
+                return Scaffold(
+                  body: const Center(
+                      child: CircularProgressIndicator(
+                    color: AppColors.grey,
+                  )),
                 );
               }
               return Column(
@@ -126,35 +103,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 15.0),
-                            child: CategoryTabsWidget(
-                              onCategorySelected: (category) {
-                                if (category != null) {
-                                  context
-                                      .read<CategoryTabsCubit>()
-                                      .selectCategory(category);
-                                }
-                              },
-                              detailedInterestOptions: const [
-                                'Category 1',
-                                'Category 2',
-                                'Category 3',
-                                'Category 4',
-                                'Category 5',
-                                'Category 6',
-                                'Category 7',
-                                'Category 8',
-                                'Category 9',
-                                'Category 10',
-                              ],
-                            ),
-                          ),
+                              padding: const EdgeInsets.only(left: 15.0),
+                              child: CategoryTabsWidget()),
                           10.ph,
                           const Padding(
                             padding: EdgeInsets.symmetric(horizontal: 15.0),
                             child: TitleCategoriesForYou(),
                           ),
-                          12.ph,
                           const Padding(
                             padding: EdgeInsets.only(left: 16.0),
                             child: MyCategory(),

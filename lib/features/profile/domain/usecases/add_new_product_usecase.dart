@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
@@ -16,13 +17,7 @@ class AddNewProductUsecase
 }
 
 class AddNewProductParams {
-  final ProductModel productModel;
+  final FormData formData;
 
-  AddNewProductParams({
-    required this.productModel,
-  });
-
-  Map<String, dynamic> toJson() {
-    return productModel.toJson();
-  }
+  AddNewProductParams({required this.formData});
 }

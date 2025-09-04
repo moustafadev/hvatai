@@ -1,58 +1,73 @@
 part of '../home.dart';
 
 class CategoryTabsWidget extends StatelessWidget {
-  final Function(dynamic) onCategorySelected;
-
-  const CategoryTabsWidget(
-      {required this.onCategorySelected,
-      super.key,
-      required this.detailedInterestOptions});
-
-  final List<String> detailedInterestOptions;
+  const CategoryTabsWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<CategoryTabsCubit>();
-
     return BlocBuilder<CategoryTabsCubit, CategoryTabsState>(
       builder: (context, state) {
+        final cubit = context.read<CategoryTabsCubit>();
+        final interests = state.filteredCategories;
+
+        if (interests == null || interests.data == null) {
+          return Scaffold(
+            body: const Center(
+                child: CircularProgressIndicator(
+              color: AppColors.grey,
+            )),
+          );
+        }
+
+        if (interests.data!.isEmpty) {
+          return Scaffold(
+              body: Center(child: CustomText(text: 'noCategories'.tr())));
+        }
+
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: detailedInterestOptions.map((item) {
-              final index = detailedInterestOptions.indexOf(item);
-              final isSelected = state.selectedIndex == index;
+            children: List.generate(interests.data!.length, (index) {
+              final category = interests.data![index];
+              final isSelected = state.selectedIndicesDetails.contains(index);
 
-              return Padding(
-                padding: EdgeInsets.only(right: 10.w),
-                child: GestureDetector(
-                  onTap: () {
-                    cubit.selectCategory(index);
-                    onCategorySelected(item);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.gray,
-                      borderRadius: BorderRadius.circular(10.r),
-                      border: isSelected
-                          ? Border.all(color: AppColors.primaryColor, width: 1)
-                          : Border.all(color: Colors.transparent),
-                    ),
-                    child: Center(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12.0, vertical: 6),
-                        child: CustomText(
-                          text: item,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                        ),
+              return GestureDetector(
+                onTap: () => cubit.toggleDetail(index, category.id ?? 0),
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 6.w),
+                  decoration: BoxDecoration(
+                    color: isSelected ? AppColors.primaryColor : null,
+                    borderRadius: BorderRadius.circular(8),
+                    border: isSelected
+                        ? Border.all(width: 0.1, color: Colors.transparent)
+                        : Border.all(color: AppColors.gray, width: 2),
+                  ),
+                  child: Padding(
+                    padding:
+                        isSelected ? EdgeInsets.all(1.5.r) : EdgeInsets.zero,
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                      decoration: BoxDecoration(
+                        color: AppColors.gray,
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: CustomText(
+                        text: category.name ?? 'Unnamed',
+                        fontSize: 12.sp,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
                 ),
               );
-            }).toList(),
+            }),
           ),
         );
       },

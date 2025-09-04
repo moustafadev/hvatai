@@ -17,10 +17,15 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$CategoryTabsState {
 // UI tabs
-  List<String> get categories => throw _privateConstructorUsedError;
+  CategoryModel? get categories => throw _privateConstructorUsedError;
+  List<int> get selectedDetailIds => throw _privateConstructorUsedError;
+  CategoryModel? get filteredCategories => throw _privateConstructorUsedError;
   int get selectedIndex => throw _privateConstructorUsedError;
   List<String> get selectedInterests => throw _privateConstructorUsedError;
-  Set<int> get selectedIndices =>
+  Set<int> get selectedIndices => throw _privateConstructorUsedError;
+  List<int> get selectedCategoryIds => throw _privateConstructorUsedError;
+  Set<int> get selectedIndicesDetails => throw _privateConstructorUsedError;
+  DateTime? get lastRequestTime =>
       throw _privateConstructorUsedError; // Live streams
   List<StreamDataModel> get liveStreams => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
@@ -47,10 +52,15 @@ abstract class $CategoryTabsStateCopyWith<$Res> {
       _$CategoryTabsStateCopyWithImpl<$Res, CategoryTabsState>;
   @useResult
   $Res call(
-      {List<String> categories,
+      {CategoryModel? categories,
+      List<int> selectedDetailIds,
+      CategoryModel? filteredCategories,
       int selectedIndex,
       List<String> selectedInterests,
       Set<int> selectedIndices,
+      List<int> selectedCategoryIds,
+      Set<int> selectedIndicesDetails,
+      DateTime? lastRequestTime,
       List<StreamDataModel> liveStreams,
       bool isLoading,
       String? error,
@@ -61,6 +71,8 @@ abstract class $CategoryTabsStateCopyWith<$Res> {
       String? joinError,
       JoinStreamData? joinData});
 
+  $CategoryModelCopyWith<$Res>? get categories;
+  $CategoryModelCopyWith<$Res>? get filteredCategories;
   $JoinStreamDataCopyWith<$Res>? get joinData;
 }
 
@@ -79,10 +91,15 @@ class _$CategoryTabsStateCopyWithImpl<$Res, $Val extends CategoryTabsState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? categories = null,
+    Object? categories = freezed,
+    Object? selectedDetailIds = null,
+    Object? filteredCategories = freezed,
     Object? selectedIndex = null,
     Object? selectedInterests = null,
     Object? selectedIndices = null,
+    Object? selectedCategoryIds = null,
+    Object? selectedIndicesDetails = null,
+    Object? lastRequestTime = freezed,
     Object? liveStreams = null,
     Object? isLoading = null,
     Object? error = freezed,
@@ -94,10 +111,18 @@ class _$CategoryTabsStateCopyWithImpl<$Res, $Val extends CategoryTabsState>
     Object? joinData = freezed,
   }) {
     return _then(_value.copyWith(
-      categories: null == categories
+      categories: freezed == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as CategoryModel?,
+      selectedDetailIds: null == selectedDetailIds
+          ? _value.selectedDetailIds
+          : selectedDetailIds // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      filteredCategories: freezed == filteredCategories
+          ? _value.filteredCategories
+          : filteredCategories // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
       selectedIndex: null == selectedIndex
           ? _value.selectedIndex
           : selectedIndex // ignore: cast_nullable_to_non_nullable
@@ -110,6 +135,18 @@ class _$CategoryTabsStateCopyWithImpl<$Res, $Val extends CategoryTabsState>
           ? _value.selectedIndices
           : selectedIndices // ignore: cast_nullable_to_non_nullable
               as Set<int>,
+      selectedCategoryIds: null == selectedCategoryIds
+          ? _value.selectedCategoryIds
+          : selectedCategoryIds // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      selectedIndicesDetails: null == selectedIndicesDetails
+          ? _value.selectedIndicesDetails
+          : selectedIndicesDetails // ignore: cast_nullable_to_non_nullable
+              as Set<int>,
+      lastRequestTime: freezed == lastRequestTime
+          ? _value.lastRequestTime
+          : lastRequestTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       liveStreams: null == liveStreams
           ? _value.liveStreams
           : liveStreams // ignore: cast_nullable_to_non_nullable
@@ -153,6 +190,34 @@ class _$CategoryTabsStateCopyWithImpl<$Res, $Val extends CategoryTabsState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res>? get categories {
+    if (_value.categories == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.categories!, (value) {
+      return _then(_value.copyWith(categories: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CategoryTabsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res>? get filteredCategories {
+    if (_value.filteredCategories == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.filteredCategories!, (value) {
+      return _then(_value.copyWith(filteredCategories: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CategoryTabsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $JoinStreamDataCopyWith<$Res>? get joinData {
     if (_value.joinData == null) {
       return null;
@@ -173,10 +238,15 @@ abstract class _$$CategoryTabsStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<String> categories,
+      {CategoryModel? categories,
+      List<int> selectedDetailIds,
+      CategoryModel? filteredCategories,
       int selectedIndex,
       List<String> selectedInterests,
       Set<int> selectedIndices,
+      List<int> selectedCategoryIds,
+      Set<int> selectedIndicesDetails,
+      DateTime? lastRequestTime,
       List<StreamDataModel> liveStreams,
       bool isLoading,
       String? error,
@@ -187,6 +257,10 @@ abstract class _$$CategoryTabsStateImplCopyWith<$Res>
       String? joinError,
       JoinStreamData? joinData});
 
+  @override
+  $CategoryModelCopyWith<$Res>? get categories;
+  @override
+  $CategoryModelCopyWith<$Res>? get filteredCategories;
   @override
   $JoinStreamDataCopyWith<$Res>? get joinData;
 }
@@ -204,10 +278,15 @@ class __$$CategoryTabsStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? categories = null,
+    Object? categories = freezed,
+    Object? selectedDetailIds = null,
+    Object? filteredCategories = freezed,
     Object? selectedIndex = null,
     Object? selectedInterests = null,
     Object? selectedIndices = null,
+    Object? selectedCategoryIds = null,
+    Object? selectedIndicesDetails = null,
+    Object? lastRequestTime = freezed,
     Object? liveStreams = null,
     Object? isLoading = null,
     Object? error = freezed,
@@ -219,10 +298,18 @@ class __$$CategoryTabsStateImplCopyWithImpl<$Res>
     Object? joinData = freezed,
   }) {
     return _then(_$CategoryTabsStateImpl(
-      categories: null == categories
-          ? _value._categories
+      categories: freezed == categories
+          ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<String>,
+              as CategoryModel?,
+      selectedDetailIds: null == selectedDetailIds
+          ? _value._selectedDetailIds
+          : selectedDetailIds // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      filteredCategories: freezed == filteredCategories
+          ? _value.filteredCategories
+          : filteredCategories // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
       selectedIndex: null == selectedIndex
           ? _value.selectedIndex
           : selectedIndex // ignore: cast_nullable_to_non_nullable
@@ -235,6 +322,18 @@ class __$$CategoryTabsStateImplCopyWithImpl<$Res>
           ? _value._selectedIndices
           : selectedIndices // ignore: cast_nullable_to_non_nullable
               as Set<int>,
+      selectedCategoryIds: null == selectedCategoryIds
+          ? _value._selectedCategoryIds
+          : selectedCategoryIds // ignore: cast_nullable_to_non_nullable
+              as List<int>,
+      selectedIndicesDetails: null == selectedIndicesDetails
+          ? _value._selectedIndicesDetails
+          : selectedIndicesDetails // ignore: cast_nullable_to_non_nullable
+              as Set<int>,
+      lastRequestTime: freezed == lastRequestTime
+          ? _value.lastRequestTime
+          : lastRequestTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       liveStreams: null == liveStreams
           ? _value._liveStreams
           : liveStreams // ignore: cast_nullable_to_non_nullable
@@ -279,10 +378,15 @@ class __$$CategoryTabsStateImplCopyWithImpl<$Res>
 
 class _$CategoryTabsStateImpl implements _CategoryTabsState {
   const _$CategoryTabsStateImpl(
-      {required final List<String> categories,
+      {this.categories,
+      final List<int> selectedDetailIds = const [],
+      this.filteredCategories,
       required this.selectedIndex,
       final List<String> selectedInterests = const [],
       final Set<int> selectedIndices = const {},
+      final List<int> selectedCategoryIds = const [],
+      final Set<int> selectedIndicesDetails = const {},
+      this.lastRequestTime,
       final List<StreamDataModel> liveStreams = const <StreamDataModel>[],
       this.isLoading = false,
       this.error,
@@ -292,21 +396,28 @@ class _$CategoryTabsStateImpl implements _CategoryTabsState {
       this.isJoining = false,
       this.joinError,
       this.joinData})
-      : _categories = categories,
+      : _selectedDetailIds = selectedDetailIds,
         _selectedInterests = selectedInterests,
         _selectedIndices = selectedIndices,
+        _selectedCategoryIds = selectedCategoryIds,
+        _selectedIndicesDetails = selectedIndicesDetails,
         _liveStreams = liveStreams;
 
 // UI tabs
-  final List<String> _categories;
-// UI tabs
   @override
-  List<String> get categories {
-    if (_categories is EqualUnmodifiableListView) return _categories;
+  final CategoryModel? categories;
+  final List<int> _selectedDetailIds;
+  @override
+  @JsonKey()
+  List<int> get selectedDetailIds {
+    if (_selectedDetailIds is EqualUnmodifiableListView)
+      return _selectedDetailIds;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_categories);
+    return EqualUnmodifiableListView(_selectedDetailIds);
   }
 
+  @override
+  final CategoryModel? filteredCategories;
   @override
   final int selectedIndex;
   final List<String> _selectedInterests;
@@ -328,6 +439,28 @@ class _$CategoryTabsStateImpl implements _CategoryTabsState {
     return EqualUnmodifiableSetView(_selectedIndices);
   }
 
+  final List<int> _selectedCategoryIds;
+  @override
+  @JsonKey()
+  List<int> get selectedCategoryIds {
+    if (_selectedCategoryIds is EqualUnmodifiableListView)
+      return _selectedCategoryIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedCategoryIds);
+  }
+
+  final Set<int> _selectedIndicesDetails;
+  @override
+  @JsonKey()
+  Set<int> get selectedIndicesDetails {
+    if (_selectedIndicesDetails is EqualUnmodifiableSetView)
+      return _selectedIndicesDetails;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableSetView(_selectedIndicesDetails);
+  }
+
+  @override
+  final DateTime? lastRequestTime;
 // Live streams
   final List<StreamDataModel> _liveStreams;
 // Live streams
@@ -365,7 +498,7 @@ class _$CategoryTabsStateImpl implements _CategoryTabsState {
 
   @override
   String toString() {
-    return 'CategoryTabsState(categories: $categories, selectedIndex: $selectedIndex, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, liveStreams: $liveStreams, isLoading: $isLoading, error: $error, page: $page, lastPage: $lastPage, hasMore: $hasMore, isJoining: $isJoining, joinError: $joinError, joinData: $joinData)';
+    return 'CategoryTabsState(categories: $categories, selectedDetailIds: $selectedDetailIds, filteredCategories: $filteredCategories, selectedIndex: $selectedIndex, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, selectedCategoryIds: $selectedCategoryIds, selectedIndicesDetails: $selectedIndicesDetails, lastRequestTime: $lastRequestTime, liveStreams: $liveStreams, isLoading: $isLoading, error: $error, page: $page, lastPage: $lastPage, hasMore: $hasMore, isJoining: $isJoining, joinError: $joinError, joinData: $joinData)';
   }
 
   @override
@@ -373,14 +506,24 @@ class _$CategoryTabsStateImpl implements _CategoryTabsState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CategoryTabsStateImpl &&
+            (identical(other.categories, categories) ||
+                other.categories == categories) &&
             const DeepCollectionEquality()
-                .equals(other._categories, _categories) &&
+                .equals(other._selectedDetailIds, _selectedDetailIds) &&
+            (identical(other.filteredCategories, filteredCategories) ||
+                other.filteredCategories == filteredCategories) &&
             (identical(other.selectedIndex, selectedIndex) ||
                 other.selectedIndex == selectedIndex) &&
             const DeepCollectionEquality()
                 .equals(other._selectedInterests, _selectedInterests) &&
             const DeepCollectionEquality()
                 .equals(other._selectedIndices, _selectedIndices) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedCategoryIds, _selectedCategoryIds) &&
+            const DeepCollectionEquality().equals(
+                other._selectedIndicesDetails, _selectedIndicesDetails) &&
+            (identical(other.lastRequestTime, lastRequestTime) ||
+                other.lastRequestTime == lastRequestTime) &&
             const DeepCollectionEquality()
                 .equals(other._liveStreams, _liveStreams) &&
             (identical(other.isLoading, isLoading) ||
@@ -401,10 +544,15 @@ class _$CategoryTabsStateImpl implements _CategoryTabsState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(_categories),
+      categories,
+      const DeepCollectionEquality().hash(_selectedDetailIds),
+      filteredCategories,
       selectedIndex,
       const DeepCollectionEquality().hash(_selectedInterests),
       const DeepCollectionEquality().hash(_selectedIndices),
+      const DeepCollectionEquality().hash(_selectedCategoryIds),
+      const DeepCollectionEquality().hash(_selectedIndicesDetails),
+      lastRequestTime,
       const DeepCollectionEquality().hash(_liveStreams),
       isLoading,
       error,
@@ -427,10 +575,15 @@ class _$CategoryTabsStateImpl implements _CategoryTabsState {
 
 abstract class _CategoryTabsState implements CategoryTabsState {
   const factory _CategoryTabsState(
-      {required final List<String> categories,
+      {final CategoryModel? categories,
+      final List<int> selectedDetailIds,
+      final CategoryModel? filteredCategories,
       required final int selectedIndex,
       final List<String> selectedInterests,
       final Set<int> selectedIndices,
+      final List<int> selectedCategoryIds,
+      final Set<int> selectedIndicesDetails,
+      final DateTime? lastRequestTime,
       final List<StreamDataModel> liveStreams,
       final bool isLoading,
       final String? error,
@@ -443,13 +596,23 @@ abstract class _CategoryTabsState implements CategoryTabsState {
 
 // UI tabs
   @override
-  List<String> get categories;
+  CategoryModel? get categories;
+  @override
+  List<int> get selectedDetailIds;
+  @override
+  CategoryModel? get filteredCategories;
   @override
   int get selectedIndex;
   @override
   List<String> get selectedInterests;
   @override
-  Set<int> get selectedIndices; // Live streams
+  Set<int> get selectedIndices;
+  @override
+  List<int> get selectedCategoryIds;
+  @override
+  Set<int> get selectedIndicesDetails;
+  @override
+  DateTime? get lastRequestTime; // Live streams
   @override
   List<StreamDataModel> get liveStreams;
   @override

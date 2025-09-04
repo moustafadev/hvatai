@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/theme/assets.dart';
@@ -259,12 +263,79 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     );
   }
 
+  Future<FormData> _prepareProfileFormData(UserRegistrationData params) async {
+    final dataMap = Map<String, dynamic>.from(params.toJson());
+    dataMap['terms_agreement'] = params.agreedToTerms ?? false ? 1 : 0;
+    dataMap['age_confirmation'] = params.isAbove18 ?? false ? 1 : 0;
+    dataMap['phone'] = "043535345";
+
+    MultipartFile? imageFile;
+    if (params.image != null && File(params.image!).existsSync()) {
+      imageFile = await _prepareImageFile(params.image);
+    }
+
+    if (imageFile != null) {
+      dataMap['image'] = imageFile;
+    } else {
+      dataMap.remove('image');
+    }
+
+    return FormData.fromMap(dataMap);
+  }
+
+  Future<File> compressImage(File file, {int quality = 70}) async {
+    final targetPath = file.absolute.path.replaceAll('.jpg', '_compressed.jpg');
+
+    final result = await FlutterImageCompress.compressAndGetFile(
+      file.absolute.path,
+      targetPath,
+      quality: quality,
+      minWidth: 1080,
+      minHeight: 1080,
+    );
+
+    // Return the compressed file instead of the original
+    return result != null ? File(result.path) : file;
+  }
+
+  Future<MultipartFile?> _prepareImageFile(String? imagePath) async {
+    if (imagePath == null || imagePath.isEmpty) return null;
+
+    try {
+      File file = File(imagePath);
+      if (!await file.exists()) return null;
+
+      int quality = 85;
+      while (await file.length() > 1 * 1024 * 1024 && quality > 30) {
+        file = await compressImage(file, quality: quality);
+        quality -= 15;
+      }
+
+      if (await file.length() > 2 * 1024 * 1024) {
+        file = await compressImage(file, quality: 50);
+        if (await file.length() > 2 * 1024 * 1024) {
+          // Instead of throwing an exception, return null or handle gracefully
+          return null;
+        }
+      }
+
+      return MultipartFile.fromFile(file.path,
+          filename: file.path.split('/').last);
+    } catch (e) {
+      // Log the error and return null instead of crashing
+      debugPrint('Error preparing image file: $e');
+      return null;
+    }
+  }
+
   Future<void> submit(BuildContext context) async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
-    final result =
-        await updateProfileDataUseCase.call(state.toUpdateProfileParams());
+    final formData = await _prepareProfileFormData(state.user);
 
+    final result = await updateProfileDataUseCase.call(
+      UpdateProfileParams(formData: formData),
+    );
     result.fold(
       (failure) {
         emit(state.copyWith(isLoading: false, errorMessage: failure));

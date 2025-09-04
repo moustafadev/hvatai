@@ -11,7 +11,6 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/all_app/presentation/basket.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/home/data/model/live_stream_model.dart';
-import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/search/data/model/auction_product_search.dart';
 import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
 import 'package:hvatai/features/search/presentation/cubit/auction_search_cubit/auction_search_cubit.dart';

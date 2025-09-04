@@ -6,7 +6,6 @@ class ActivityState with _$ActivityState {
     @Default(0) int selectedTabIndex,
     @Default(0) int selectedCategoryIndex,
     @Default(false) bool isLoading,
-    @Default(0) int currentImageIndex,
     @Default('') String errorMessage,
     required ProductModel product,
     @Default([]) List<ProductModel> products,

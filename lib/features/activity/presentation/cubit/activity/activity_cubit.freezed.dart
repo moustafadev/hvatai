@@ -19,7 +19,6 @@ mixin _$ActivityState {
   int get selectedTabIndex => throw _privateConstructorUsedError;
   int get selectedCategoryIndex => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
-  int get currentImageIndex => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   ProductModel get product => throw _privateConstructorUsedError;
   List<ProductModel> get products => throw _privateConstructorUsedError;
@@ -41,7 +40,6 @@ abstract class $ActivityStateCopyWith<$Res> {
       {int selectedTabIndex,
       int selectedCategoryIndex,
       bool isLoading,
-      int currentImageIndex,
       String errorMessage,
       ProductModel product,
       List<ProductModel> products});
@@ -67,7 +65,6 @@ class _$ActivityStateCopyWithImpl<$Res, $Val extends ActivityState>
     Object? selectedTabIndex = null,
     Object? selectedCategoryIndex = null,
     Object? isLoading = null,
-    Object? currentImageIndex = null,
     Object? errorMessage = null,
     Object? product = null,
     Object? products = null,
@@ -85,10 +82,6 @@ class _$ActivityStateCopyWithImpl<$Res, $Val extends ActivityState>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      currentImageIndex: null == currentImageIndex
-          ? _value.currentImageIndex
-          : currentImageIndex // ignore: cast_nullable_to_non_nullable
-              as int,
       errorMessage: null == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -127,7 +120,6 @@ abstract class _$$ActivityStateImplCopyWith<$Res>
       {int selectedTabIndex,
       int selectedCategoryIndex,
       bool isLoading,
-      int currentImageIndex,
       String errorMessage,
       ProductModel product,
       List<ProductModel> products});
@@ -152,7 +144,6 @@ class __$$ActivityStateImplCopyWithImpl<$Res>
     Object? selectedTabIndex = null,
     Object? selectedCategoryIndex = null,
     Object? isLoading = null,
-    Object? currentImageIndex = null,
     Object? errorMessage = null,
     Object? product = null,
     Object? products = null,
@@ -170,10 +161,6 @@ class __$$ActivityStateImplCopyWithImpl<$Res>
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      currentImageIndex: null == currentImageIndex
-          ? _value.currentImageIndex
-          : currentImageIndex // ignore: cast_nullable_to_non_nullable
-              as int,
       errorMessage: null == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -197,7 +184,6 @@ class _$ActivityStateImpl implements _ActivityState {
       {this.selectedTabIndex = 0,
       this.selectedCategoryIndex = 0,
       this.isLoading = false,
-      this.currentImageIndex = 0,
       this.errorMessage = '',
       required this.product,
       final List<ProductModel> products = const []})
@@ -214,9 +200,6 @@ class _$ActivityStateImpl implements _ActivityState {
   final bool isLoading;
   @override
   @JsonKey()
-  final int currentImageIndex;
-  @override
-  @JsonKey()
   final String errorMessage;
   @override
   final ProductModel product;
@@ -231,7 +214,7 @@ class _$ActivityStateImpl implements _ActivityState {
 
   @override
   String toString() {
-    return 'ActivityState(selectedTabIndex: $selectedTabIndex, selectedCategoryIndex: $selectedCategoryIndex, isLoading: $isLoading, currentImageIndex: $currentImageIndex, errorMessage: $errorMessage, product: $product, products: $products)';
+    return 'ActivityState(selectedTabIndex: $selectedTabIndex, selectedCategoryIndex: $selectedCategoryIndex, isLoading: $isLoading, errorMessage: $errorMessage, product: $product, products: $products)';
   }
 
   @override
@@ -245,8 +228,6 @@ class _$ActivityStateImpl implements _ActivityState {
                 other.selectedCategoryIndex == selectedCategoryIndex) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            (identical(other.currentImageIndex, currentImageIndex) ||
-                other.currentImageIndex == currentImageIndex) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.product, product) || other.product == product) &&
@@ -259,7 +240,6 @@ class _$ActivityStateImpl implements _ActivityState {
       selectedTabIndex,
       selectedCategoryIndex,
       isLoading,
-      currentImageIndex,
       errorMessage,
       product,
       const DeepCollectionEquality().hash(_products));
@@ -278,7 +258,6 @@ abstract class _ActivityState implements ActivityState {
       {final int selectedTabIndex,
       final int selectedCategoryIndex,
       final bool isLoading,
-      final int currentImageIndex,
       final String errorMessage,
       required final ProductModel product,
       final List<ProductModel> products}) = _$ActivityStateImpl;
@@ -289,8 +268,6 @@ abstract class _ActivityState implements ActivityState {
   int get selectedCategoryIndex;
   @override
   bool get isLoading;
-  @override
-  int get currentImageIndex;
   @override
   String get errorMessage;
   @override

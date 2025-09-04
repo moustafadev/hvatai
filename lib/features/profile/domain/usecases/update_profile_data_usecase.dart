@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
@@ -17,13 +18,7 @@ class UpdateProfileDataUsecase
 }
 
 class UpdateProfileParams {
-  final UserRegistrationData userRegistrationData;
+  final FormData formData;
 
-  UpdateProfileParams({
-    required this.userRegistrationData,
-  });
-
-  Map<String, dynamic> toJson() {
-    return userRegistrationData.toJson();
-  }
+  UpdateProfileParams({required this.formData});
 }

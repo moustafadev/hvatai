@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
-// ^ This is the Freezed model we created earlier: JoinStreamResponse/JoinStreamData
 
 part 'category_tabs_state.freezed.dart';
 
@@ -9,10 +9,15 @@ part 'category_tabs_state.freezed.dart';
 class CategoryTabsState with _$CategoryTabsState {
   const factory CategoryTabsState({
     // UI tabs
-    required List<String> categories,
+    CategoryModel? categories,
+    @Default([]) List<int> selectedDetailIds,
+    CategoryModel? filteredCategories,
     required int selectedIndex,
     @Default([]) List<String> selectedInterests,
     @Default({}) Set<int> selectedIndices,
+    @Default([]) List<int> selectedCategoryIds,
+    @Default({}) Set<int> selectedIndicesDetails,
+    DateTime? lastRequestTime,
 
     // Live streams
     @Default(<StreamDataModel>[]) List<StreamDataModel> liveStreams,
@@ -30,17 +35,16 @@ class CategoryTabsState with _$CategoryTabsState {
     JoinStreamData? joinData,
   }) = _CategoryTabsState;
 
-  factory CategoryTabsState.initial() => const CategoryTabsState(
-        categories: ['All'],
-        selectedIndex: 0,
-        liveStreams: [],
-        isLoading: false,
-        error: null,
-        page: 1,
-        lastPage: 1,
-        hasMore: true,
-        isJoining: false,
-        joinError: null,
-        joinData: null,
-      );
+  factory CategoryTabsState.initial() => CategoryTabsState(
+      selectedIndex: 0,
+      liveStreams: [],
+      isLoading: false,
+      error: null,
+      page: 1,
+      lastPage: 1,
+      hasMore: true,
+      isJoining: false,
+      joinError: null,
+      joinData: null,
+      lastRequestTime: null);
 }

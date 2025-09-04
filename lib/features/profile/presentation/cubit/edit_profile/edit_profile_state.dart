@@ -20,11 +20,3 @@ class EditProfileState with _$EditProfileState {
     @Default([]) List<Map<String, dynamic>> changeInfoProfile,
   }) = _EditProfileState;
 }
-
-extension UpdateProfileStateMapper on EditProfileState {
-  UpdateProfileParams toUpdateProfileParams() {
-    return UpdateProfileParams(
-      userRegistrationData: user,
-    );
-  }
-}

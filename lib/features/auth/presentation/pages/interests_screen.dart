@@ -24,10 +24,12 @@ class InterestsScreen extends StatelessWidget {
               final interests = state.categories;
               final cubit = context.read<InterestsCubit>();
               if (state.categories?.data == null) {
-                return Center(
-                    child: CircularProgressIndicator(
-                  color: AppColors.primaryColor,
-                ));
+                return Scaffold(
+                  body: Center(
+                      child: CircularProgressIndicator(
+                    color: AppColors.graniteGray,
+                  )),
+                );
               }
 
               return CustomScrollView(
@@ -65,6 +67,8 @@ class InterestsScreen extends StatelessWidget {
                             final category = interests.data![index];
                             final isSelected =
                                 state.selectedIndices.contains(index);
+
+                            final String imageUrl = category.icon ?? '';
 
                             return GestureDetector(
                               onTap: () =>
@@ -110,26 +114,21 @@ class InterestsScreen extends StatelessWidget {
                                           ),
                                         ),
                                         Expanded(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.r),
-                                              image: category.icon != null
-                                                  ? DecorationImage(
-                                                      image:
-                                                          CachedNetworkImageProvider(
-                                                              category.icon!),
-                                                      fit: BoxFit.cover,
-                                                    )
-                                                  : null,
-                                            ),
-                                            child: category.icon == null
-                                                ? Icon(
-                                                    Icons.image_not_supported,
-                                                    size: 30,
-                                                    color: Colors.grey)
-                                                : null,
-                                          ),
+                                          child: imageUrl.isEmpty ||
+                                                  imageUrl == null
+                                              ? Icon(Icons.image_not_supported,
+                                                  size: 30, color: Colors.grey)
+                                              : ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          8.r),
+                                                  child: CustomImage(
+                                                    width: 109.w,
+                                                    height: 109.h,
+                                                    imageSource: imageUrl,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
                                         ),
                                       ],
                                     ),

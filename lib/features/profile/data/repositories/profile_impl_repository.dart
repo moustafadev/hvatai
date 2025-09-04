@@ -59,7 +59,16 @@ class ProfileImplRepository implements ProfileRepository {
   Future<Either<String, UserRegistrationData>> updateProfileData(
       UpdateProfileParams params) async {
     return executeAndHandleError<UserRegistrationData>(() async {
-      final res = await _apiServiceProfile.updateProfileData(params);
+      final res = await _apiServiceProfile.updateProfileData(params.formData);
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, ProductModel>> addNewProduct(
+      AddNewProductParams params) {
+    return executeAndHandleError<ProductModel>(() async {
+      final res = await _apiServiceProfile.addNewProduct(params.formData);
       return res;
     });
   }
@@ -126,15 +135,6 @@ class ProfileImplRepository implements ProfileRepository {
   }
 
   @override
-  Future<Either<String, ProductModel>> addNewProduct(
-      AddNewProductParams params) {
-    return executeAndHandleError<ProductModel>(() async {
-      final res = await _apiServiceProfile.addNewProduct(params);
-      return res;
-    });
-  }
-
-  @override
   Future<Either<String, List<ProductModel>>> getMyProducts() {
     return executeAndHandleError<List<ProductModel>>(() async {
       final res = await _apiServiceProfile.getMyProducts();
@@ -150,8 +150,6 @@ class ProfileImplRepository implements ProfileRepository {
       return res;
     });
   }
-
- 
 
   @override
   Future<Either<String, List<MainCategoryModel>>> getProductCategory() {

@@ -10,7 +10,7 @@ class TitleCategoriesForYou extends StatelessWidget {
     return Row(
       children: [
         CustomText(
-            text: 'Categories for you',
+            text: 'categoriesForYou'.tr(),
             fontWeight: FontWeight.bold,
             fontSize: 20.sp),
         const Spacer(),
