@@ -84,7 +84,6 @@ class _ChatInputFieldState extends State<ChatInputField> {
         : Assets.assetsIconsDisabledSend;
 
     return Container(
-      color: Colors.white,
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Column(
         children: [
@@ -128,8 +127,8 @@ class _ChatInputFieldState extends State<ChatInputField> {
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: Colors.white),
+              borderRadius: BorderRadius.circular(32),
             ),
             child: Row(
               children: [
@@ -145,7 +144,7 @@ class _ChatInputFieldState extends State<ChatInputField> {
                       disabledBorder: InputBorder.none,
                       border: InputBorder.none,
                       hintStyle: TextStyle(color: Color(0xffAFB3B6)),
-                      hintText: 'Введите сообщение...',
+                      hintText: 'Сообщение',
                     ),
                     // onChanged not required since we attached a listener in initState
                   ),

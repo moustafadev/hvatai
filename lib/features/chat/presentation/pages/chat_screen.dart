@@ -8,14 +8,26 @@ class ChatScreen extends StatelessWidget {
     inChat = true;
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: const CustomAppBar(
-      ),
       body: SafeArea(
         bottom: false,
         child: Column(
           children: [
+            16.ph,
+            Align(
+              alignment: Alignment.topLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 16),
+                child: GestureDetector(
+                  onTap: () {
+                    context.pop();
+                  },
+                  child: const Icon(Icons.arrow_back_ios),
+                ),
+              ),
+            ),
+            16.ph,
             const ChatTitle(),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Expanded(
               child: BlocBuilder<ChatsCubit, ChatsState>(
                 builder: (context, state) {
@@ -55,48 +67,45 @@ class ChatScreen extends StatelessWidget {
                         // ),
                         // const SizedBox(height: 16),
                         Expanded(
-                          child: Container(
-                            color: Colors.white,
-                            child: Column(
-                              children: [
-                                // // 🔹 Show support chat first if it has a last message
-                                // if (state.supportChat?.lastMessage != null)
-                                //   SupportChatTile(chat: state.supportChat!),
-
-                                // // 🔹 Divider between support chat and normal chats
-                                // if (state.supportChat?.lastMessage != null &&
-                                //     state.chats.isNotEmpty)
-                                //   const CustomDivider(),
-
-                                // 🔹 Normal chat list
-                                Expanded(
-                                  child: ListView.builder(
-                                    itemCount: state.chats.length,
-                                    itemBuilder: (context, index) {
-                                      final chat = state.chats[index];
-                                      final user = chat.otherUser;
-
-                                      return InkWell(
-                                        onTap: () async {
-                                          final cubit = ChatsCubit.get(context);
-                                          cubit.markMessageAsRead(chat.id ?? 0);
-                                          cubit.getMessages(chat.id ?? 0);
-
-                                          context.push(
-                                            '${AppRoutes.chatRoot}/${AppRoutes.chatDetails}',
-                                            extra: {
-                                              'chatId': chat.id,
-                                              'user': user,
-                                            },
-                                          );
-                                        },
-                                        child: ChatTile(chat: chat),
-                                      );
-                                    },
-                                  ),
+                          child: Column(
+                            children: [
+                              // // 🔹 Show support chat first if it has a last message
+                              // if (state.supportChat?.lastMessage != null)
+                              //   SupportChatTile(chat: state.supportChat!),
+                          
+                              // // 🔹 Divider between support chat and normal chats
+                              // if (state.supportChat?.lastMessage != null &&
+                              //     state.chats.isNotEmpty)
+                              //   const CustomDivider(),
+                          
+                              // 🔹 Normal chat list
+                              Expanded(
+                                child: ListView.builder(
+                                  itemCount: state.chats.length,
+                                  itemBuilder: (context, index) {
+                                    final chat = state.chats[index];
+                                    final user = chat.otherUser;
+                          
+                                    return InkWell(
+                                      onTap: () async {
+                                        final cubit = ChatsCubit.get(context);
+                                        cubit.markMessageAsRead(chat.id ?? 0);
+                                        cubit.getMessages(chat.id ?? 0);
+                          
+                                        context.push(
+                                          '${AppRoutes.chatRoot}/${AppRoutes.chatDetails}',
+                                          extra: {
+                                            'chatId': chat.id,
+                                            'user': user,
+                                          },
+                                        );
+                                      },
+                                      child: ChatTile(chat: chat),
+                                    );
+                                  },
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

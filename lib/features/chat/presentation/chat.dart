@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/datasources/local/app_local.dart';
+import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/shared/utils/date_utils_format.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/routes/app_routes.dart';

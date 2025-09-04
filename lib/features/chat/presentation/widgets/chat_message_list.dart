@@ -12,7 +12,6 @@ class ChatMessagesList extends StatelessWidget {
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      color: Colors.white,
       child: ListView.builder(
         itemCount: reversedMessages.length,
         reverse: true,

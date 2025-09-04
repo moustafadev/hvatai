@@ -73,7 +73,7 @@ class ChatMessageContent extends StatelessWidget {
         maxWidth: MediaQuery.of(context).size.width * 0.75,
       ),
       decoration: BoxDecoration(
-        color: isUser ? AppColors.gold : AppColors.gray2,
+        color: !isUser ? AppColors.gold : AppColors.gray2,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(18),
           topRight: Radius.circular(8),

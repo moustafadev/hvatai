@@ -21,7 +21,7 @@ class ChatDetailsScreen extends StatelessWidget {
         child: Column(
           children: [
             ChatDetailsHeader(user: user),
-            const SizedBox(height: 16),
+            SizedBox(height: 16.h),
             Expanded(
               child: BlocBuilder<ChatsCubit, ChatsState>(
                 builder: (context, state) {

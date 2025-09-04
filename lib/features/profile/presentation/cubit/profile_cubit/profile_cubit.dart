@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
+import 'package:hvatai/features/chat/presentation/cubit/chats_cubit.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/sign_out_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -122,6 +123,11 @@ class ProfileCubit extends Cubit<ProfileState> {
       {
         "icon": Assets.assetsIconsMessage,
         "title": "chat".tr(),
+        "screen": (BuildContext context) {
+          ChatsCubit.get(context).getChats();
+          // ChatsCubit.get(context).getSupportChat();
+          context.push('${AppRoutes.chatRoot}/${AppRoutes.chat}');
+        },
       },
       {
         "icon": Assets.assetsImagesAnalyticsIcon,

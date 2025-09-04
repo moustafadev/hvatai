@@ -61,17 +61,20 @@ class ChatTile extends StatelessWidget {
                         ? Container(
                             padding: const EdgeInsets.all(8),
                             decoration: const BoxDecoration(
-                              color: AppColors.primary,
+                              color: AppColors.purple2,
                               shape: BoxShape.circle,
                             ),
-                            child: CustomText(text: '${chat.unreadCount}'),
+                            child: CustomText(
+                              text: '${chat.unreadCount}',
+                              color: Colors.white,
+                            ),
                           )
                         : Icon(
                             lastMessage?.readAt != null
                                 ? Icons.done_all
                                 : Icons.done,
                             size: 20,
-                            color: Colors.black,
+                            color: AppColors.primary,
                           )
                   ],
                 ),
