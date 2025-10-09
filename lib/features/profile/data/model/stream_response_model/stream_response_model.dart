@@ -10,14 +10,15 @@ class StreamResponseModel with _$StreamResponseModel {
     bool? success,
     String? message,
     StreamDataModel? data,
+    // Added to handle the top-level livekit object
+    LivekitInfoModel? livekit,
   }) = _StreamResponseModel;
 
   factory StreamResponseModel.fromJson(Map<String, dynamic> json) =>
       _$StreamResponseModelFromJson(json);
 }
 
-
-/// ========= Single stream (updated) =========
+/// ========= Single stream (updated for Mux and LiveKit) =========
 @freezed
 class StreamDataModel with _$StreamDataModel {
   const factory StreamDataModel({
@@ -25,16 +26,30 @@ class StreamDataModel with _$StreamDataModel {
     @JsonKey(name: 'user_id') int? userId,
     String? title,
     String? description,
+
+    // Still present
     @JsonKey(name: 'channel_name') String? channelName,
-    @JsonKey(name: 'agora_app_id') String? agoraAppId,
-    @JsonKey(name: 'agora_token') String? agoraToken,
+
+    // --- Mux fields ---
+    @JsonKey(name: 'mux_live_stream_id') String? muxLiveStreamId,
+    @JsonKey(name: 'mux_stream_key') String? muxStreamKey,
+    @JsonKey(name: 'mux_playback_id') String? muxPlaybackId,
+
+    // --- New LiveKit fields ---
+    @JsonKey(name: 'livekit_room_name') String? livekitRoomName,
+    @JsonKey(name: 'livekit_server_url') String? livekitServerUrl,
+    @JsonKey(name: 'livekit_config') LivekitConfigModel? livekitConfig,
+    @JsonKey(name: 'livekit_room_created_at') DateTime? livekitRoomCreatedAt,
+
     String? status,
 
     @JsonKey(name: 'scheduled_at') DateTime? scheduledAt,
     @JsonKey(name: 'started_at') DateTime? startedAt,
-    @JsonKey(name: 'ended_at') DateTime? endedAt, // NEW
+    @JsonKey(name: 'ended_at') DateTime? endedAt,
 
     @JsonKey(name: 'is_recording_enabled') bool? isRecordingEnabled,
+
+    // Optional recording fields
     @JsonKey(name: 'recording_resource_id') String? recordingResourceId,
     @JsonKey(name: 'recording_sid') String? recordingSid,
     @JsonKey(
@@ -42,11 +57,12 @@ class StreamDataModel with _$StreamDataModel {
       fromJson: _stringListOrNull,
       toJson: _nullOrStringList,
     )
-    List<String>? recordingFiles, // NEW (nullable list)
+    List<String>? recordingFiles,
 
-    @JsonKey(name: 'thumbnail_url') String? thumbnailUrl, // NEW
-    @JsonKey(name: 'viewer_count') int? viewerCount, // NEW
-    @JsonKey(name: 'max_viewers') int? maxViewers, // NEW
+    // Optional/derived UI fields
+    @JsonKey(name: 'thumbnail_url') String? thumbnailUrl,
+    @JsonKey(name: 'viewer_count') int? viewerCount,
+    @JsonKey(name: 'max_viewers') int? maxViewers,
 
     @JsonKey(name: 'is_public') bool? isPublic,
     @JsonKey(name: 'created_at') DateTime? createdAt,
@@ -64,9 +80,8 @@ class StreamDataModel with _$StreamDataModel {
     )
     double? minimumBidIncrement,
 
-    @JsonKey(name: 'stream_settings') Map<String, dynamic>? streamSettings, // NEW
+    @JsonKey(name: 'stream_settings') Map<String, dynamic>? streamSettings,
 
-    @JsonKey(name: 'agora_uid') int? agoraUid,
     @JsonKey(name: 'is_mine') bool? isMine,
 
     StreamUserModel? user,
@@ -76,6 +91,32 @@ class StreamDataModel with _$StreamDataModel {
   factory StreamDataModel.fromJson(Map<String, dynamic> json) =>
       _$StreamDataModelFromJson(json);
 }
+
+/// ========= LiveKit Config (New Model) =========
+@freezed
+class LivekitConfigModel with _$LivekitConfigModel {
+    const factory LivekitConfigModel({
+        @JsonKey(name: 'max_participants') int? maxParticipants,
+        @JsonKey(name: 'empty_timeout') int? emptyTimeout,
+        @JsonKey(name: 'video_quality') String? videoQuality,
+    }) = _LivekitConfigModel;
+
+    factory LivekitConfigModel.fromJson(Map<String, dynamic> json) =>
+        _$LivekitConfigModelFromJson(json);
+}
+
+/// ========= LiveKit Info (New Model) =========
+@freezed
+class LivekitInfoModel with _$LivekitInfoModel {
+    const factory LivekitInfoModel({
+        @JsonKey(name: 'room_name') String? roomName,
+        @JsonKey(name: 'server_url') String? serverUrl,
+    }) = _LivekitInfoModel;
+
+    factory LivekitInfoModel.fromJson(Map<String, dynamic> json) =>
+        _$LivekitInfoModelFromJson(json);
+}
+
 
 /// ========= User =========
 @freezed
@@ -114,7 +155,7 @@ class StreamProductModel with _$StreamProductModel {
       _$StreamProductModelFromJson(json);
 }
 
-/// ========= List response wrapper (NEW) =========
+/// ========= List response wrapper =========
 @freezed
 class StreamListResponseModel with _$StreamListResponseModel {
   const factory StreamListResponseModel({

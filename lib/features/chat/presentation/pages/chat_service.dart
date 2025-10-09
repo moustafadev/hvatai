@@ -14,9 +14,9 @@ class PusherManager {
       options: PusherOptions(
         key: 'uokyfuuczemhtftlo3uk',
         host: 'khvatai.ru',
-        wsPort: 6001, // Used when encrypted is false
-        wssPort: 6001, // <-- ADD THIS LINE. Used when encrypted is true
-        encrypted: false,
+        wsPort: 8443, // Used when encrypted is false
+        wssPort: 8443, // <-- ADD THIS LINE. Used when encrypted is true
+        encrypted: true,
         cluster: '',
         enableLogging: true,
         autoConnect: true,

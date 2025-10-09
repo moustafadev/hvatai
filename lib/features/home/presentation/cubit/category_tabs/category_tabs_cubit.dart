@@ -260,10 +260,10 @@ class CategoryTabsCubit extends Cubit<CategoryTabsState> {
         if (join != null) {
           // Merge join response into the original stream
           final updatedStream = stream.copyWith(
-            agoraAppId: join.agoraAppId ?? join.appId,
+            // agoraAppId: join.agoraAppId ?? join.appId,
             channelName: join.channelName,
-            agoraToken: join.agoraToken,
-            agoraUid: join.uid ?? join.agoraUid,
+            // agoraToken: join.agoraToken,
+            // agoraUid: join.uid ?? join.agoraUid,
           );
 
           context.push(

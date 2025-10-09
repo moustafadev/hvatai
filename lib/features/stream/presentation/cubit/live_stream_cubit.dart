@@ -11,25 +11,23 @@ import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.d
 import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:hvatai/features/stream/domain/usecases/start_stream_usecase.dart';
 
-// import your app types/widgets/colors as needed
-// import 'package:super_app/...';
-import '../stream.dart'; // where UserRole & Comment are declared
+import '../stream.dart'; // where UserRole is declared
 
 part 'live_stream_state.dart';
 part 'live_stream_cubit.freezed.dart';
 
 class LiveStreamCubit extends Cubit<LiveStreamState> {
   LiveStreamCubit(
-      this._getComments,
-      this._sendComment,
-      this._leaveUsecase,
-      this._getBids, // ⬅️ add
-      this._addBidUsecase,
-      this._endUsecase)
-      : super(const LiveStreamState(
+    this._getComments,
+    this._sendComment,
+    this._leaveUsecase,
+    this._getBids,
+    this._addBidUsecase,
+    this._endUsecase,
+    this._startStreamUsecase,
+  ) : super(const LiveStreamState(
           role: UserRole.viewer,
           localReady: false,
           isInitializing: false,
@@ -46,26 +44,24 @@ class LiveStreamCubit extends Cubit<LiveStreamState> {
           sendCommentError: '',
         ));
 
-  late final RtcEngine _engine;
-  RtcEngine get engine => _engine;
   final GetStreamCommentsUsecase _getComments;
   final SendStreamCommentUsecase _sendComment;
   final LeaveStreamUsecase _leaveUsecase;
   final EndStreamUsecase _endUsecase;
   final GetStreamBidsUsecase _getBids;
   final AddStreamBidUsecase _addBidUsecase;
-  Timer? _timer;
+  final StartStreamUsecase _startStreamUsecase; // 3. Add the field
 
+  Timer? _timer;
   TextEditingController controller = TextEditingController();
 
-  Future<void> initialize({
-    required String appId,
-    required String channelName,
-    required String token,
-    required int uid,
+  /// Generic stream initializer (used by the screen for RTMP/HLS flow).
+  Future<void> initializeLiveKit({
     required UserRole role,
     required int viewerCount,
-    int initialSeconds = 0,
+    required int initialSeconds,
+    required String channelName, // kept for analytics/logs
+    required int streamId,
   }) async {
     emit(state.copyWith(
       role: role,
@@ -75,147 +71,17 @@ class LiveStreamCubit extends Cubit<LiveStreamState> {
       errorMessage: '',
     ));
 
-    try {
-      // ===== Permissions
-      List<Permission> permissions = [];
-      if (role == UserRole.broadcaster) {
-        permissions = [Permission.camera, Permission.microphone];
-      } else {
-        permissions = [Permission.microphone]; // optional
-      }
-      final res = await permissions.request();
+    _startTimer(); // drive the on-screen timer
 
-      if (role == UserRole.broadcaster) {
-        if (res[Permission.camera] != PermissionStatus.granted ||
-            res[Permission.microphone] != PermissionStatus.granted) {
-          emit(state.copyWith(
-            isInitializing: false,
-            errorMessage:
-                'Camera/Microphone permissions not granted for broadcaster',
-          ));
-          return;
-        }
-      }
-
-      // ===== Agora init
-      _engine = createAgoraRtcEngine();
-      await _engine.initialize(RtcEngineContext(appId: appId));
-
-      await _engine
-          .setChannelProfile(ChannelProfileType.channelProfileLiveBroadcasting);
-
-      await _engine.setClientRole(
-        role: role == UserRole.broadcaster
-            ? ClientRoleType.clientRoleBroadcaster
-            : ClientRoleType.clientRoleAudience,
-      );
-
-      if (role == UserRole.broadcaster) {
-        await _engine.setVideoEncoderConfiguration(
-          const VideoEncoderConfiguration(
-            dimensions: VideoDimensions(width: 960, height: 540),
-            frameRate: 15,
-            bitrate: 0,
-          ),
-        );
-      }
-
-      await _engine.enableVideo();
-      await _engine.enableAudio();
-
-      if (role == UserRole.broadcaster) {
-        await _engine.enableLocalVideo(true);
-        await _engine.enableLocalAudio(true);
-        await _engine.muteLocalVideoStream(false);
-        await _engine.muteLocalAudioStream(false);
-        await _engine.startPreview();
-      } else {
-        await _engine.enableLocalVideo(false);
-        await _engine.enableLocalAudio(false);
-        await _engine.muteLocalVideoStream(true);
-        await _engine.muteLocalAudioStream(true);
-      }
-
-      // ===== Handlers
-      _engine.registerEventHandler(RtcEngineEventHandler(
-        onJoinChannelSuccess: (conn, elapsed) {
-          if (kDebugMode) {
-            debugPrint(
-                '✅ Joined: ${conn.channelId}, localUid=${conn.localUid}, role=$role');
-          }
-          emit(state.copyWith(localReady: true, joined: true));
-          _startTimer(); // start timer after successful join
-        },
-        onUserJoined: (conn, remoteUid, elapsed) {
-          if (kDebugMode) {
-            debugPrint('👤 Remote user joined: $remoteUid');
-          }
-          emit(state.copyWith(remoteUid: remoteUid));
-        },
-        onUserOffline: (conn, remoteUid, reason) {
-          if (kDebugMode) {
-            debugPrint('👤 Remote user left: $remoteUid, reason: $reason');
-          }
-          if (state.remoteUid == remoteUid) {
-            emit(state.copyWith(remoteUid: null));
-          }
-        },
-        onRemoteVideoStateChanged: (conn, remoteUid, st, reason, elapsed) {
-          if (kDebugMode) {
-            debugPrint(
-                '📹 Remote video state changed: uid=$remoteUid, state=$st, reason=$reason');
-          }
-        },
-        onRemoteAudioStateChanged: (conn, remoteUid, st, reason, elapsed) {
-          if (kDebugMode) {
-            debugPrint(
-                '🔊 Remote audio state changed: uid=$remoteUid, state=$st, reason=$reason');
-          }
-        },
-        onTokenPrivilegeWillExpire: (conn, token) {
-          if (kDebugMode) {
-            debugPrint('⏳ Token will expire — renew via renewToken()');
-          }
-          // TODO: fetch & _engine.renewToken(newToken)
-        },
-        onRequestToken: (conn) {
-          if (kDebugMode) {
-            debugPrint('🔄 SDK requested token — fetch & renewToken()');
-          }
-        },
-        onError: (code, msg) {
-          if (kDebugMode) {
-            debugPrint('❌ Agora error [$code]: $msg');
-          }
-          emit(state.copyWith(errorMessage: 'Agora error [$code]: $msg'));
-        },
-      ));
-
-      // ===== Join
-      await _engine.joinChannel(
-        token: token,
-        channelId: channelName,
-        uid: uid,
-        options: ChannelMediaOptions(
-          publishCameraTrack: role == UserRole.broadcaster,
-          publishMicrophoneTrack: role == UserRole.broadcaster,
-          autoSubscribeAudio: true,
-          autoSubscribeVideo: true,
-          clientRoleType: role == UserRole.broadcaster
-              ? ClientRoleType.clientRoleBroadcaster
-              : ClientRoleType.clientRoleAudience,
-        ),
-      );
-
-      emit(state.copyWith(isInitializing: false));
-    } catch (e) {
-      emit(state.copyWith(
-        isInitializing: false,
-        errorMessage: e.toString(),
-      ));
-    }
+    emit(state.copyWith(
+      isInitializing: false,
+      // legacy flags kept for UI compatibility
+      localReady: role == UserRole.broadcaster,
+      joined: true,
+    ));
   }
 
+  // ================== COMMENTS ==================
   Future<void> loadInitialComments({required int streamId}) async {
     emit(state.copyWith(
       isLoadingComments: true,
@@ -291,7 +157,30 @@ class LiveStreamCubit extends Cubit<LiveStreamState> {
     emit(state.copyWith(commentText: text));
   }
 
-  /// Optimistic send with RAW model
+  Future<String?> startStreamAndGetToken({required int streamId}) async {
+    emit(state.copyWith(isInitializing: true, errorMessage: ''));
+
+    final result = await _startStreamUsecase(streamId);
+
+    return result.fold(
+      (error) {
+        // Handle failure
+        emit(state.copyWith(
+          isInitializing: false,
+          errorMessage: 'Failed to start stream: $error',
+        ));
+        return null;
+      },
+      (startStreamModel) {
+        // Handle success
+        emit(state.copyWith(isInitializing: false));
+        // IMPORTANT: Replace 'token' with the actual property name in your StartStreamModel
+        // For example: startStreamModel.livekitToken or startStreamModel.data.token
+        return startStreamModel.livekit.token;
+      },
+    );
+  }
+
   Future<void> sendCommentToServer({
     required int streamId,
     String type = 'comment',
@@ -312,67 +201,23 @@ class LiveStreamCubit extends Cubit<LiveStreamState> {
 
     res.fold(
       (err) {
-        // rollback temp on error
-
         emit(state.copyWith(
           isSendingComment: false,
           sendCommentError: err,
         ));
       },
       (created) {
-        emit(state.copyWith(
-          isSendingComment: false,
-        ));
+        emit(state.copyWith(isSendingComment: false));
       },
     );
   }
 
-// live_stream_cubit.dart
   void addIncomingComment(StreamCommentModel model) {
     final next = List<StreamCommentModel>.from(state.comments)..add(model);
     emit(state.copyWith(comments: next));
   }
 
-  // ===== Timer & cleanup unchanged =====
-  void _startTimer() {
-    _timer?.cancel();
-    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      emit(state.copyWith(streamSeconds: state.streamSeconds + 1));
-    });
-  }
-
-  /// Viewer/broadcaster leave (does NOT end the stream for others)
-  Future<bool> leaveStream({required int streamId}) async {
-    final result = await _leaveUsecase(LeaveStreamParams(streamId: streamId));
-
-    return await result.fold(
-      (err) async {
-        return false;
-      },
-      (ok) async {
-        // gracefully leave RTC
-        return true;
-      },
-    );
-  }
-
-  /// Broadcaster ends the stream for everyone
-  Future<bool> endStream({required int streamId}) async {
-    final result = await _endUsecase(EndStreamParams(streamId: streamId));
-
-    return await result.fold(
-      (err) async {
-        return false;
-      },
-      (ok) async {
-        // end on backend then leave RTC
-        return true;
-      },
-    );
-  }
-
-  // ===== BIDS =====
-
+  // ================== BIDS ==================
   Future<void> loadInitialBids({required int streamId}) async {
     emit(state.copyWith(
       isLoadingBids: true,
@@ -394,7 +239,7 @@ class LiveStreamCubit extends Cubit<LiveStreamState> {
         bidsError: err,
       )),
       (pageData) {
-        final items = pageData.data.data; // BidStreamResponse.data.data
+        final items = pageData.data.data;
         final currentPage = pageData.data.currentPage;
         final lastPage = pageData.data.lastPage ?? 1;
         final hasMore =
@@ -447,7 +292,6 @@ class LiveStreamCubit extends Cubit<LiveStreamState> {
     );
   }
 
-  /// Place bid and append returned BidStreamItem.
   Future<void> placeBid({
     required int streamId,
     required int productId,
@@ -480,29 +324,42 @@ class LiveStreamCubit extends Cubit<LiveStreamState> {
     );
   }
 
-  /// Socket/WS hook: add an incoming bid pushed from server
   void addIncomingBid(BidStreamItem item) {
     final updated = List<BidStreamItem>.from(state.bids)..insert(0, item);
     emit(state.copyWith(bids: updated));
   }
 
-  /// Socket/WS hook: add an incoming bid pushed from server
   void updateViewerCount(int viewerCount) {
     emit(state.copyWith(viewerCount: viewerCount));
+  }
+
+  // ================== Timer & cleanup ==================
+  void _startTimer() {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      emit(state.copyWith(streamSeconds: state.streamSeconds + 1));
+    });
+  }
+
+  Future<bool> leaveStream({required int streamId}) async {
+    final result = await _leaveUsecase(LeaveStreamParams(streamId: streamId));
+    return await result.fold(
+      (err) async => false,
+      (ok) async => true,
+    );
+  }
+
+  Future<bool> endStream({required int streamId}) async {
+    final result = await _endUsecase(EndStreamParams(streamId: streamId));
+    return await result.fold(
+      (err) async => false,
+      (ok) async => true,
+    );
   }
 
   @override
   Future<void> close() async {
     _timer?.cancel();
-    try {
-      await _engine.leaveChannel();
-    } catch (_) {}
-    try {
-      await _engine.stopPreview();
-    } catch (_) {}
-    try {
-      await _engine.release();
-    } catch (_) {}
     return super.close();
   }
 }

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:hvatai/features/stream/data/models/start_stream_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/bid_stream_response.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
@@ -9,6 +10,10 @@ import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_useca
 abstract class StreamRepository {
   Future<Either<String, StreamCommentResponse>> getComments({
     required GetStreamCommentsParams params,
+  });
+
+  Future<Either<String, StartStreamModel>> startStream({
+    required int streamId,
   });
 
   Future<Either<String, StreamCommentModel>> sendComment({

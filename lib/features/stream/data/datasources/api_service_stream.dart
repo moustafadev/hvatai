@@ -1,5 +1,7 @@
 import 'package:hvatai/core/datasources/remote/api_base.dart';
+import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
+import 'package:hvatai/features/stream/data/models/start_stream_model.dart';
 
 import 'package:hvatai/features/stream/data/models/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/bid_stream_response.dart';
@@ -9,6 +11,17 @@ import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_useca
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 
 class ApiServiceStream extends ApiBase {
+  Future<StartStreamModel> startStream(int streamId) async {
+    return executeAndHandleErrorServer<StartStreamModel>(() async {
+      final response = await post(ServerConfig.startStream(streamId),);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return StartStreamModel.fromJson(response.json);
+      } else {
+        throw Exception('Failed to create stream: ${response.statusCode}');
+      }
+    });
+  }
+
   /// GET: streams/{id}/comments?page=&per_page=
   Future<StreamCommentResponse> getComments(
       {required GetStreamCommentsParams params}) async {

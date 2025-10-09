@@ -78,8 +78,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(
       () => ProductDetailsCubit(locator(), locator(), locator()));
   locator.registerFactory(() => AddStreamCubit(locator(), locator()));
-  locator.registerFactory(() => LiveStreamCubit(
-      locator(), locator(), locator(), locator(), locator(), locator()));
+  locator.registerFactory(() => LiveStreamCubit(locator(), locator(), locator(),
+      locator(), locator(), locator(), locator()));
   locator.registerFactory(() => ChatsCubit(
         locator(),
         locator(),
@@ -94,7 +94,8 @@ Future<void> setupLocator() async {
         locator(),
       ));
 
-  locator.registerFactory(() => CategoryTabsCubit(locator(), locator(), locator(), locator(),locator()));
+  locator.registerFactory(() =>
+      CategoryTabsCubit(locator(), locator(), locator(), locator(), locator()));
 
   locator.registerFactory(
       () => PaymentMethodCubit(locator(), locator(), locator()));

@@ -47,6 +47,7 @@ import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.d
 import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/start_stream_usecase.dart';
 import 'package:hvatai/locator.dart';
 
 void locatorUseCase() {
@@ -101,4 +102,5 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => EndStreamUsecase(locator()));
   locator.registerLazySingleton(() => GetStreamBidsUsecase(locator()));
   locator.registerLazySingleton(() => AddStreamBidUsecase(locator()));
+  locator.registerLazySingleton(() => StartStreamUsecase(locator()));
 }

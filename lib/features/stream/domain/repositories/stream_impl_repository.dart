@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart';
+import 'package:hvatai/features/stream/data/models/start_stream_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/bid_stream_response.dart';
 import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
@@ -13,6 +14,16 @@ class StreamImplRepository implements StreamRepository {
   final ApiServiceStream _apiServiceStream;
 
   StreamImplRepository(this._apiServiceStream);
+
+  @override
+  Future<Either<String, StartStreamModel>> startStream({
+    required int streamId,
+  }) {
+    return executeAndHandleError<StartStreamModel>(() async {
+      final res = await _apiServiceStream.startStream(streamId);
+      return res;
+    });
+  }
 
   @override
   Future<Either<String, StreamCommentResponse>> getComments({

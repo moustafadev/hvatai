@@ -9,6 +9,11 @@ allprojects {
         google()
         mavenCentral()
     }
+    configurations.configureEach {
+    resolutionStrategy.eachDependency { d ->
+      if (d.requested.group == "org.jetbrains.kotlin") d.useVersion "2.0.21"
+    }
+  }
 }
 
 

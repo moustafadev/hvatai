@@ -44,6 +44,7 @@ abstract class ServerConfig {
   static String messages = 'messages';
 
   static String streamComments(int id) => "streams/$id/comments";
+  static String startStream(int id) => "streams/$id/start";
   static String leaveStream(int id) => "streams/$id/leave";
   static String joinStream(int id) => 'streams/$id/join';
 

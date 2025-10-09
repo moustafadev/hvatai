@@ -14,6 +14,9 @@ _$StreamResponseModelImpl _$$StreamResponseModelImplFromJson(
       data: json['data'] == null
           ? null
           : StreamDataModel.fromJson(json['data'] as Map<String, dynamic>),
+      livekit: json['livekit'] == null
+          ? null
+          : LivekitInfoModel.fromJson(json['livekit'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$StreamResponseModelImplToJson(
@@ -22,6 +25,7 @@ Map<String, dynamic> _$$StreamResponseModelImplToJson(
       'success': instance.success,
       'message': instance.message,
       'data': instance.data,
+      'livekit': instance.livekit,
     };
 
 _$StreamDataModelImpl _$$StreamDataModelImplFromJson(
@@ -32,8 +36,18 @@ _$StreamDataModelImpl _$$StreamDataModelImplFromJson(
       title: json['title'] as String?,
       description: json['description'] as String?,
       channelName: json['channel_name'] as String?,
-      agoraAppId: json['agora_app_id'] as String?,
-      agoraToken: json['agora_token'] as String?,
+      muxLiveStreamId: json['mux_live_stream_id'] as String?,
+      muxStreamKey: json['mux_stream_key'] as String?,
+      muxPlaybackId: json['mux_playback_id'] as String?,
+      livekitRoomName: json['livekit_room_name'] as String?,
+      livekitServerUrl: json['livekit_server_url'] as String?,
+      livekitConfig: json['livekit_config'] == null
+          ? null
+          : LivekitConfigModel.fromJson(
+              json['livekit_config'] as Map<String, dynamic>),
+      livekitRoomCreatedAt: json['livekit_room_created_at'] == null
+          ? null
+          : DateTime.parse(json['livekit_room_created_at'] as String),
       status: json['status'] as String?,
       scheduledAt: json['scheduled_at'] == null
           ? null
@@ -65,7 +79,6 @@ _$StreamDataModelImpl _$$StreamDataModelImplFromJson(
       enableBidding: json['enable_bidding'] as bool?,
       minimumBidIncrement: _stringToDouble(json['minimum_bid_increment']),
       streamSettings: json['stream_settings'] as Map<String, dynamic>?,
-      agoraUid: (json['agora_uid'] as num?)?.toInt(),
       isMine: json['is_mine'] as bool?,
       user: json['user'] == null
           ? null
@@ -83,8 +96,14 @@ Map<String, dynamic> _$$StreamDataModelImplToJson(
       'title': instance.title,
       'description': instance.description,
       'channel_name': instance.channelName,
-      'agora_app_id': instance.agoraAppId,
-      'agora_token': instance.agoraToken,
+      'mux_live_stream_id': instance.muxLiveStreamId,
+      'mux_stream_key': instance.muxStreamKey,
+      'mux_playback_id': instance.muxPlaybackId,
+      'livekit_room_name': instance.livekitRoomName,
+      'livekit_server_url': instance.livekitServerUrl,
+      'livekit_config': instance.livekitConfig,
+      'livekit_room_created_at':
+          instance.livekitRoomCreatedAt?.toIso8601String(),
       'status': instance.status,
       'scheduled_at': instance.scheduledAt?.toIso8601String(),
       'started_at': instance.startedAt?.toIso8601String(),
@@ -106,10 +125,39 @@ Map<String, dynamic> _$$StreamDataModelImplToJson(
       'enable_bidding': instance.enableBidding,
       'minimum_bid_increment': _doubleToString(instance.minimumBidIncrement),
       'stream_settings': instance.streamSettings,
-      'agora_uid': instance.agoraUid,
       'is_mine': instance.isMine,
       'user': instance.user,
       'stream_products': instance.streamProducts,
+    };
+
+_$LivekitConfigModelImpl _$$LivekitConfigModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$LivekitConfigModelImpl(
+      maxParticipants: (json['max_participants'] as num?)?.toInt(),
+      emptyTimeout: (json['empty_timeout'] as num?)?.toInt(),
+      videoQuality: json['video_quality'] as String?,
+    );
+
+Map<String, dynamic> _$$LivekitConfigModelImplToJson(
+        _$LivekitConfigModelImpl instance) =>
+    <String, dynamic>{
+      'max_participants': instance.maxParticipants,
+      'empty_timeout': instance.emptyTimeout,
+      'video_quality': instance.videoQuality,
+    };
+
+_$LivekitInfoModelImpl _$$LivekitInfoModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$LivekitInfoModelImpl(
+      roomName: json['room_name'] as String?,
+      serverUrl: json['server_url'] as String?,
+    );
+
+Map<String, dynamic> _$$LivekitInfoModelImplToJson(
+        _$LivekitInfoModelImpl instance) =>
+    <String, dynamic>{
+      'room_name': instance.roomName,
+      'server_url': instance.serverUrl,
     };
 
 _$StreamUserModelImpl _$$StreamUserModelImplFromJson(

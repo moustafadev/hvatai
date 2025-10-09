@@ -22,7 +22,9 @@ StreamResponseModel _$StreamResponseModelFromJson(Map<String, dynamic> json) {
 mixin _$StreamResponseModel {
   bool? get success => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
-  StreamDataModel? get data => throw _privateConstructorUsedError;
+  StreamDataModel? get data =>
+      throw _privateConstructorUsedError; // Added to handle the top-level livekit object
+  LivekitInfoModel? get livekit => throw _privateConstructorUsedError;
 
   /// Serializes this StreamResponseModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -40,9 +42,14 @@ abstract class $StreamResponseModelCopyWith<$Res> {
           StreamResponseModel value, $Res Function(StreamResponseModel) then) =
       _$StreamResponseModelCopyWithImpl<$Res, StreamResponseModel>;
   @useResult
-  $Res call({bool? success, String? message, StreamDataModel? data});
+  $Res call(
+      {bool? success,
+      String? message,
+      StreamDataModel? data,
+      LivekitInfoModel? livekit});
 
   $StreamDataModelCopyWith<$Res>? get data;
+  $LivekitInfoModelCopyWith<$Res>? get livekit;
 }
 
 /// @nodoc
@@ -63,6 +70,7 @@ class _$StreamResponseModelCopyWithImpl<$Res, $Val extends StreamResponseModel>
     Object? success = freezed,
     Object? message = freezed,
     Object? data = freezed,
+    Object? livekit = freezed,
   }) {
     return _then(_value.copyWith(
       success: freezed == success
@@ -77,6 +85,10 @@ class _$StreamResponseModelCopyWithImpl<$Res, $Val extends StreamResponseModel>
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as StreamDataModel?,
+      livekit: freezed == livekit
+          ? _value.livekit
+          : livekit // ignore: cast_nullable_to_non_nullable
+              as LivekitInfoModel?,
     ) as $Val);
   }
 
@@ -93,6 +105,20 @@ class _$StreamResponseModelCopyWithImpl<$Res, $Val extends StreamResponseModel>
       return _then(_value.copyWith(data: value) as $Val);
     });
   }
+
+  /// Create a copy of StreamResponseModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LivekitInfoModelCopyWith<$Res>? get livekit {
+    if (_value.livekit == null) {
+      return null;
+    }
+
+    return $LivekitInfoModelCopyWith<$Res>(_value.livekit!, (value) {
+      return _then(_value.copyWith(livekit: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -103,10 +129,16 @@ abstract class _$$StreamResponseModelImplCopyWith<$Res>
       __$$StreamResponseModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool? success, String? message, StreamDataModel? data});
+  $Res call(
+      {bool? success,
+      String? message,
+      StreamDataModel? data,
+      LivekitInfoModel? livekit});
 
   @override
   $StreamDataModelCopyWith<$Res>? get data;
+  @override
+  $LivekitInfoModelCopyWith<$Res>? get livekit;
 }
 
 /// @nodoc
@@ -125,6 +157,7 @@ class __$$StreamResponseModelImplCopyWithImpl<$Res>
     Object? success = freezed,
     Object? message = freezed,
     Object? data = freezed,
+    Object? livekit = freezed,
   }) {
     return _then(_$StreamResponseModelImpl(
       success: freezed == success
@@ -139,6 +172,10 @@ class __$$StreamResponseModelImplCopyWithImpl<$Res>
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
               as StreamDataModel?,
+      livekit: freezed == livekit
+          ? _value.livekit
+          : livekit // ignore: cast_nullable_to_non_nullable
+              as LivekitInfoModel?,
     ));
   }
 }
@@ -146,7 +183,8 @@ class __$$StreamResponseModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$StreamResponseModelImpl implements _StreamResponseModel {
-  const _$StreamResponseModelImpl({this.success, this.message, this.data});
+  const _$StreamResponseModelImpl(
+      {this.success, this.message, this.data, this.livekit});
 
   factory _$StreamResponseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$StreamResponseModelImplFromJson(json);
@@ -157,10 +195,13 @@ class _$StreamResponseModelImpl implements _StreamResponseModel {
   final String? message;
   @override
   final StreamDataModel? data;
+// Added to handle the top-level livekit object
+  @override
+  final LivekitInfoModel? livekit;
 
   @override
   String toString() {
-    return 'StreamResponseModel(success: $success, message: $message, data: $data)';
+    return 'StreamResponseModel(success: $success, message: $message, data: $data, livekit: $livekit)';
   }
 
   @override
@@ -170,12 +211,13 @@ class _$StreamResponseModelImpl implements _StreamResponseModel {
             other is _$StreamResponseModelImpl &&
             (identical(other.success, success) || other.success == success) &&
             (identical(other.message, message) || other.message == message) &&
-            (identical(other.data, data) || other.data == data));
+            (identical(other.data, data) || other.data == data) &&
+            (identical(other.livekit, livekit) || other.livekit == livekit));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, success, message, data);
+  int get hashCode => Object.hash(runtimeType, success, message, data, livekit);
 
   /// Create a copy of StreamResponseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -198,7 +240,8 @@ abstract class _StreamResponseModel implements StreamResponseModel {
   const factory _StreamResponseModel(
       {final bool? success,
       final String? message,
-      final StreamDataModel? data}) = _$StreamResponseModelImpl;
+      final StreamDataModel? data,
+      final LivekitInfoModel? livekit}) = _$StreamResponseModelImpl;
 
   factory _StreamResponseModel.fromJson(Map<String, dynamic> json) =
       _$StreamResponseModelImpl.fromJson;
@@ -208,7 +251,9 @@ abstract class _StreamResponseModel implements StreamResponseModel {
   @override
   String? get message;
   @override
-  StreamDataModel? get data;
+  StreamDataModel? get data; // Added to handle the top-level livekit object
+  @override
+  LivekitInfoModel? get livekit;
 
   /// Create a copy of StreamResponseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -229,22 +274,36 @@ mixin _$StreamDataModel {
   @JsonKey(name: 'user_id')
   int? get userId => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
+  String? get description =>
+      throw _privateConstructorUsedError; // Still present
   @JsonKey(name: 'channel_name')
-  String? get channelName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'agora_app_id')
-  String? get agoraAppId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'agora_token')
-  String? get agoraToken => throw _privateConstructorUsedError;
+  String? get channelName =>
+      throw _privateConstructorUsedError; // --- Mux fields ---
+  @JsonKey(name: 'mux_live_stream_id')
+  String? get muxLiveStreamId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'mux_stream_key')
+  String? get muxStreamKey => throw _privateConstructorUsedError;
+  @JsonKey(name: 'mux_playback_id')
+  String? get muxPlaybackId =>
+      throw _privateConstructorUsedError; // --- New LiveKit fields ---
+  @JsonKey(name: 'livekit_room_name')
+  String? get livekitRoomName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'livekit_server_url')
+  String? get livekitServerUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'livekit_config')
+  LivekitConfigModel? get livekitConfig => throw _privateConstructorUsedError;
+  @JsonKey(name: 'livekit_room_created_at')
+  DateTime? get livekitRoomCreatedAt => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'scheduled_at')
   DateTime? get scheduledAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'started_at')
   DateTime? get startedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'ended_at')
-  DateTime? get endedAt => throw _privateConstructorUsedError; // NEW
+  DateTime? get endedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_recording_enabled')
-  bool? get isRecordingEnabled => throw _privateConstructorUsedError;
+  bool? get isRecordingEnabled =>
+      throw _privateConstructorUsedError; // Optional recording fields
   @JsonKey(name: 'recording_resource_id')
   String? get recordingResourceId => throw _privateConstructorUsedError;
   @JsonKey(name: 'recording_sid')
@@ -254,13 +313,13 @@ mixin _$StreamDataModel {
       fromJson: _stringListOrNull,
       toJson: _nullOrStringList)
   List<String>? get recordingFiles =>
-      throw _privateConstructorUsedError; // NEW (nullable list)
+      throw _privateConstructorUsedError; // Optional/derived UI fields
   @JsonKey(name: 'thumbnail_url')
-  String? get thumbnailUrl => throw _privateConstructorUsedError; // NEW
+  String? get thumbnailUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'viewer_count')
-  int? get viewerCount => throw _privateConstructorUsedError; // NEW
+  int? get viewerCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'max_viewers')
-  int? get maxViewers => throw _privateConstructorUsedError; // NEW
+  int? get maxViewers => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_public')
   bool? get isPublic => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
@@ -284,9 +343,7 @@ mixin _$StreamDataModel {
   double? get minimumBidIncrement => throw _privateConstructorUsedError;
   @JsonKey(name: 'stream_settings')
   Map<String, dynamic>? get streamSettings =>
-      throw _privateConstructorUsedError; // NEW
-  @JsonKey(name: 'agora_uid')
-  int? get agoraUid => throw _privateConstructorUsedError;
+      throw _privateConstructorUsedError;
   @JsonKey(name: 'is_mine')
   bool? get isMine => throw _privateConstructorUsedError;
   StreamUserModel? get user => throw _privateConstructorUsedError;
@@ -316,8 +373,13 @@ abstract class $StreamDataModelCopyWith<$Res> {
       String? title,
       String? description,
       @JsonKey(name: 'channel_name') String? channelName,
-      @JsonKey(name: 'agora_app_id') String? agoraAppId,
-      @JsonKey(name: 'agora_token') String? agoraToken,
+      @JsonKey(name: 'mux_live_stream_id') String? muxLiveStreamId,
+      @JsonKey(name: 'mux_stream_key') String? muxStreamKey,
+      @JsonKey(name: 'mux_playback_id') String? muxPlaybackId,
+      @JsonKey(name: 'livekit_room_name') String? livekitRoomName,
+      @JsonKey(name: 'livekit_server_url') String? livekitServerUrl,
+      @JsonKey(name: 'livekit_config') LivekitConfigModel? livekitConfig,
+      @JsonKey(name: 'livekit_room_created_at') DateTime? livekitRoomCreatedAt,
       String? status,
       @JsonKey(name: 'scheduled_at') DateTime? scheduledAt,
       @JsonKey(name: 'started_at') DateTime? startedAt,
@@ -347,12 +409,12 @@ abstract class $StreamDataModelCopyWith<$Res> {
           toJson: _doubleToString)
       double? minimumBidIncrement,
       @JsonKey(name: 'stream_settings') Map<String, dynamic>? streamSettings,
-      @JsonKey(name: 'agora_uid') int? agoraUid,
       @JsonKey(name: 'is_mine') bool? isMine,
       StreamUserModel? user,
       @JsonKey(name: 'stream_products')
       List<StreamProductModel>? streamProducts});
 
+  $LivekitConfigModelCopyWith<$Res>? get livekitConfig;
   $StreamUserModelCopyWith<$Res>? get user;
 }
 
@@ -376,8 +438,13 @@ class _$StreamDataModelCopyWithImpl<$Res, $Val extends StreamDataModel>
     Object? title = freezed,
     Object? description = freezed,
     Object? channelName = freezed,
-    Object? agoraAppId = freezed,
-    Object? agoraToken = freezed,
+    Object? muxLiveStreamId = freezed,
+    Object? muxStreamKey = freezed,
+    Object? muxPlaybackId = freezed,
+    Object? livekitRoomName = freezed,
+    Object? livekitServerUrl = freezed,
+    Object? livekitConfig = freezed,
+    Object? livekitRoomCreatedAt = freezed,
     Object? status = freezed,
     Object? scheduledAt = freezed,
     Object? startedAt = freezed,
@@ -399,7 +466,6 @@ class _$StreamDataModelCopyWithImpl<$Res, $Val extends StreamDataModel>
     Object? enableBidding = freezed,
     Object? minimumBidIncrement = freezed,
     Object? streamSettings = freezed,
-    Object? agoraUid = freezed,
     Object? isMine = freezed,
     Object? user = freezed,
     Object? streamProducts = freezed,
@@ -425,14 +491,34 @@ class _$StreamDataModelCopyWithImpl<$Res, $Val extends StreamDataModel>
           ? _value.channelName
           : channelName // ignore: cast_nullable_to_non_nullable
               as String?,
-      agoraAppId: freezed == agoraAppId
-          ? _value.agoraAppId
-          : agoraAppId // ignore: cast_nullable_to_non_nullable
+      muxLiveStreamId: freezed == muxLiveStreamId
+          ? _value.muxLiveStreamId
+          : muxLiveStreamId // ignore: cast_nullable_to_non_nullable
               as String?,
-      agoraToken: freezed == agoraToken
-          ? _value.agoraToken
-          : agoraToken // ignore: cast_nullable_to_non_nullable
+      muxStreamKey: freezed == muxStreamKey
+          ? _value.muxStreamKey
+          : muxStreamKey // ignore: cast_nullable_to_non_nullable
               as String?,
+      muxPlaybackId: freezed == muxPlaybackId
+          ? _value.muxPlaybackId
+          : muxPlaybackId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      livekitRoomName: freezed == livekitRoomName
+          ? _value.livekitRoomName
+          : livekitRoomName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      livekitServerUrl: freezed == livekitServerUrl
+          ? _value.livekitServerUrl
+          : livekitServerUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      livekitConfig: freezed == livekitConfig
+          ? _value.livekitConfig
+          : livekitConfig // ignore: cast_nullable_to_non_nullable
+              as LivekitConfigModel?,
+      livekitRoomCreatedAt: freezed == livekitRoomCreatedAt
+          ? _value.livekitRoomCreatedAt
+          : livekitRoomCreatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -517,10 +603,6 @@ class _$StreamDataModelCopyWithImpl<$Res, $Val extends StreamDataModel>
           ? _value.streamSettings
           : streamSettings // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>?,
-      agoraUid: freezed == agoraUid
-          ? _value.agoraUid
-          : agoraUid // ignore: cast_nullable_to_non_nullable
-              as int?,
       isMine: freezed == isMine
           ? _value.isMine
           : isMine // ignore: cast_nullable_to_non_nullable
@@ -534,6 +616,20 @@ class _$StreamDataModelCopyWithImpl<$Res, $Val extends StreamDataModel>
           : streamProducts // ignore: cast_nullable_to_non_nullable
               as List<StreamProductModel>?,
     ) as $Val);
+  }
+
+  /// Create a copy of StreamDataModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LivekitConfigModelCopyWith<$Res>? get livekitConfig {
+    if (_value.livekitConfig == null) {
+      return null;
+    }
+
+    return $LivekitConfigModelCopyWith<$Res>(_value.livekitConfig!, (value) {
+      return _then(_value.copyWith(livekitConfig: value) as $Val);
+    });
   }
 
   /// Create a copy of StreamDataModel
@@ -565,8 +661,13 @@ abstract class _$$StreamDataModelImplCopyWith<$Res>
       String? title,
       String? description,
       @JsonKey(name: 'channel_name') String? channelName,
-      @JsonKey(name: 'agora_app_id') String? agoraAppId,
-      @JsonKey(name: 'agora_token') String? agoraToken,
+      @JsonKey(name: 'mux_live_stream_id') String? muxLiveStreamId,
+      @JsonKey(name: 'mux_stream_key') String? muxStreamKey,
+      @JsonKey(name: 'mux_playback_id') String? muxPlaybackId,
+      @JsonKey(name: 'livekit_room_name') String? livekitRoomName,
+      @JsonKey(name: 'livekit_server_url') String? livekitServerUrl,
+      @JsonKey(name: 'livekit_config') LivekitConfigModel? livekitConfig,
+      @JsonKey(name: 'livekit_room_created_at') DateTime? livekitRoomCreatedAt,
       String? status,
       @JsonKey(name: 'scheduled_at') DateTime? scheduledAt,
       @JsonKey(name: 'started_at') DateTime? startedAt,
@@ -596,12 +697,13 @@ abstract class _$$StreamDataModelImplCopyWith<$Res>
           toJson: _doubleToString)
       double? minimumBidIncrement,
       @JsonKey(name: 'stream_settings') Map<String, dynamic>? streamSettings,
-      @JsonKey(name: 'agora_uid') int? agoraUid,
       @JsonKey(name: 'is_mine') bool? isMine,
       StreamUserModel? user,
       @JsonKey(name: 'stream_products')
       List<StreamProductModel>? streamProducts});
 
+  @override
+  $LivekitConfigModelCopyWith<$Res>? get livekitConfig;
   @override
   $StreamUserModelCopyWith<$Res>? get user;
 }
@@ -624,8 +726,13 @@ class __$$StreamDataModelImplCopyWithImpl<$Res>
     Object? title = freezed,
     Object? description = freezed,
     Object? channelName = freezed,
-    Object? agoraAppId = freezed,
-    Object? agoraToken = freezed,
+    Object? muxLiveStreamId = freezed,
+    Object? muxStreamKey = freezed,
+    Object? muxPlaybackId = freezed,
+    Object? livekitRoomName = freezed,
+    Object? livekitServerUrl = freezed,
+    Object? livekitConfig = freezed,
+    Object? livekitRoomCreatedAt = freezed,
     Object? status = freezed,
     Object? scheduledAt = freezed,
     Object? startedAt = freezed,
@@ -647,7 +754,6 @@ class __$$StreamDataModelImplCopyWithImpl<$Res>
     Object? enableBidding = freezed,
     Object? minimumBidIncrement = freezed,
     Object? streamSettings = freezed,
-    Object? agoraUid = freezed,
     Object? isMine = freezed,
     Object? user = freezed,
     Object? streamProducts = freezed,
@@ -673,14 +779,34 @@ class __$$StreamDataModelImplCopyWithImpl<$Res>
           ? _value.channelName
           : channelName // ignore: cast_nullable_to_non_nullable
               as String?,
-      agoraAppId: freezed == agoraAppId
-          ? _value.agoraAppId
-          : agoraAppId // ignore: cast_nullable_to_non_nullable
+      muxLiveStreamId: freezed == muxLiveStreamId
+          ? _value.muxLiveStreamId
+          : muxLiveStreamId // ignore: cast_nullable_to_non_nullable
               as String?,
-      agoraToken: freezed == agoraToken
-          ? _value.agoraToken
-          : agoraToken // ignore: cast_nullable_to_non_nullable
+      muxStreamKey: freezed == muxStreamKey
+          ? _value.muxStreamKey
+          : muxStreamKey // ignore: cast_nullable_to_non_nullable
               as String?,
+      muxPlaybackId: freezed == muxPlaybackId
+          ? _value.muxPlaybackId
+          : muxPlaybackId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      livekitRoomName: freezed == livekitRoomName
+          ? _value.livekitRoomName
+          : livekitRoomName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      livekitServerUrl: freezed == livekitServerUrl
+          ? _value.livekitServerUrl
+          : livekitServerUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      livekitConfig: freezed == livekitConfig
+          ? _value.livekitConfig
+          : livekitConfig // ignore: cast_nullable_to_non_nullable
+              as LivekitConfigModel?,
+      livekitRoomCreatedAt: freezed == livekitRoomCreatedAt
+          ? _value.livekitRoomCreatedAt
+          : livekitRoomCreatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
@@ -765,10 +891,6 @@ class __$$StreamDataModelImplCopyWithImpl<$Res>
           ? _value._streamSettings
           : streamSettings // ignore: cast_nullable_to_non_nullable
               as Map<String, dynamic>?,
-      agoraUid: freezed == agoraUid
-          ? _value.agoraUid
-          : agoraUid // ignore: cast_nullable_to_non_nullable
-              as int?,
       isMine: freezed == isMine
           ? _value.isMine
           : isMine // ignore: cast_nullable_to_non_nullable
@@ -794,8 +916,13 @@ class _$StreamDataModelImpl implements _StreamDataModel {
       this.title,
       this.description,
       @JsonKey(name: 'channel_name') this.channelName,
-      @JsonKey(name: 'agora_app_id') this.agoraAppId,
-      @JsonKey(name: 'agora_token') this.agoraToken,
+      @JsonKey(name: 'mux_live_stream_id') this.muxLiveStreamId,
+      @JsonKey(name: 'mux_stream_key') this.muxStreamKey,
+      @JsonKey(name: 'mux_playback_id') this.muxPlaybackId,
+      @JsonKey(name: 'livekit_room_name') this.livekitRoomName,
+      @JsonKey(name: 'livekit_server_url') this.livekitServerUrl,
+      @JsonKey(name: 'livekit_config') this.livekitConfig,
+      @JsonKey(name: 'livekit_room_created_at') this.livekitRoomCreatedAt,
       this.status,
       @JsonKey(name: 'scheduled_at') this.scheduledAt,
       @JsonKey(name: 'started_at') this.startedAt,
@@ -826,7 +953,6 @@ class _$StreamDataModelImpl implements _StreamDataModel {
       this.minimumBidIncrement,
       @JsonKey(name: 'stream_settings')
       final Map<String, dynamic>? streamSettings,
-      @JsonKey(name: 'agora_uid') this.agoraUid,
       @JsonKey(name: 'is_mine') this.isMine,
       this.user,
       @JsonKey(name: 'stream_products')
@@ -848,15 +974,33 @@ class _$StreamDataModelImpl implements _StreamDataModel {
   final String? title;
   @override
   final String? description;
+// Still present
   @override
   @JsonKey(name: 'channel_name')
   final String? channelName;
+// --- Mux fields ---
   @override
-  @JsonKey(name: 'agora_app_id')
-  final String? agoraAppId;
+  @JsonKey(name: 'mux_live_stream_id')
+  final String? muxLiveStreamId;
   @override
-  @JsonKey(name: 'agora_token')
-  final String? agoraToken;
+  @JsonKey(name: 'mux_stream_key')
+  final String? muxStreamKey;
+  @override
+  @JsonKey(name: 'mux_playback_id')
+  final String? muxPlaybackId;
+// --- New LiveKit fields ---
+  @override
+  @JsonKey(name: 'livekit_room_name')
+  final String? livekitRoomName;
+  @override
+  @JsonKey(name: 'livekit_server_url')
+  final String? livekitServerUrl;
+  @override
+  @JsonKey(name: 'livekit_config')
+  final LivekitConfigModel? livekitConfig;
+  @override
+  @JsonKey(name: 'livekit_room_created_at')
+  final DateTime? livekitRoomCreatedAt;
   @override
   final String? status;
   @override
@@ -868,10 +1012,10 @@ class _$StreamDataModelImpl implements _StreamDataModel {
   @override
   @JsonKey(name: 'ended_at')
   final DateTime? endedAt;
-// NEW
   @override
   @JsonKey(name: 'is_recording_enabled')
   final bool? isRecordingEnabled;
+// Optional recording fields
   @override
   @JsonKey(name: 'recording_resource_id')
   final String? recordingResourceId;
@@ -892,19 +1036,16 @@ class _$StreamDataModelImpl implements _StreamDataModel {
     return EqualUnmodifiableListView(value);
   }
 
-// NEW (nullable list)
+// Optional/derived UI fields
   @override
   @JsonKey(name: 'thumbnail_url')
   final String? thumbnailUrl;
-// NEW
   @override
   @JsonKey(name: 'viewer_count')
   final int? viewerCount;
-// NEW
   @override
   @JsonKey(name: 'max_viewers')
   final int? maxViewers;
-// NEW
   @override
   @JsonKey(name: 'is_public')
   final bool? isPublic;
@@ -946,10 +1087,6 @@ class _$StreamDataModelImpl implements _StreamDataModel {
     return EqualUnmodifiableMapView(value);
   }
 
-// NEW
-  @override
-  @JsonKey(name: 'agora_uid')
-  final int? agoraUid;
   @override
   @JsonKey(name: 'is_mine')
   final bool? isMine;
@@ -968,7 +1105,7 @@ class _$StreamDataModelImpl implements _StreamDataModel {
 
   @override
   String toString() {
-    return 'StreamDataModel(id: $id, userId: $userId, title: $title, description: $description, channelName: $channelName, agoraAppId: $agoraAppId, agoraToken: $agoraToken, status: $status, scheduledAt: $scheduledAt, startedAt: $startedAt, endedAt: $endedAt, isRecordingEnabled: $isRecordingEnabled, recordingResourceId: $recordingResourceId, recordingSid: $recordingSid, recordingFiles: $recordingFiles, thumbnailUrl: $thumbnailUrl, viewerCount: $viewerCount, maxViewers: $maxViewers, isPublic: $isPublic, createdAt: $createdAt, updatedAt: $updatedAt, autoDeleteAfterEnd: $autoDeleteAfterEnd, autoDeleteHours: $autoDeleteHours, saveRecording: $saveRecording, enableComments: $enableComments, enableBidding: $enableBidding, minimumBidIncrement: $minimumBidIncrement, streamSettings: $streamSettings, agoraUid: $agoraUid, isMine: $isMine, user: $user, streamProducts: $streamProducts)';
+    return 'StreamDataModel(id: $id, userId: $userId, title: $title, description: $description, channelName: $channelName, muxLiveStreamId: $muxLiveStreamId, muxStreamKey: $muxStreamKey, muxPlaybackId: $muxPlaybackId, livekitRoomName: $livekitRoomName, livekitServerUrl: $livekitServerUrl, livekitConfig: $livekitConfig, livekitRoomCreatedAt: $livekitRoomCreatedAt, status: $status, scheduledAt: $scheduledAt, startedAt: $startedAt, endedAt: $endedAt, isRecordingEnabled: $isRecordingEnabled, recordingResourceId: $recordingResourceId, recordingSid: $recordingSid, recordingFiles: $recordingFiles, thumbnailUrl: $thumbnailUrl, viewerCount: $viewerCount, maxViewers: $maxViewers, isPublic: $isPublic, createdAt: $createdAt, updatedAt: $updatedAt, autoDeleteAfterEnd: $autoDeleteAfterEnd, autoDeleteHours: $autoDeleteHours, saveRecording: $saveRecording, enableComments: $enableComments, enableBidding: $enableBidding, minimumBidIncrement: $minimumBidIncrement, streamSettings: $streamSettings, isMine: $isMine, user: $user, streamProducts: $streamProducts)';
   }
 
   @override
@@ -983,10 +1120,20 @@ class _$StreamDataModelImpl implements _StreamDataModel {
                 other.description == description) &&
             (identical(other.channelName, channelName) ||
                 other.channelName == channelName) &&
-            (identical(other.agoraAppId, agoraAppId) ||
-                other.agoraAppId == agoraAppId) &&
-            (identical(other.agoraToken, agoraToken) ||
-                other.agoraToken == agoraToken) &&
+            (identical(other.muxLiveStreamId, muxLiveStreamId) ||
+                other.muxLiveStreamId == muxLiveStreamId) &&
+            (identical(other.muxStreamKey, muxStreamKey) ||
+                other.muxStreamKey == muxStreamKey) &&
+            (identical(other.muxPlaybackId, muxPlaybackId) ||
+                other.muxPlaybackId == muxPlaybackId) &&
+            (identical(other.livekitRoomName, livekitRoomName) ||
+                other.livekitRoomName == livekitRoomName) &&
+            (identical(other.livekitServerUrl, livekitServerUrl) ||
+                other.livekitServerUrl == livekitServerUrl) &&
+            (identical(other.livekitConfig, livekitConfig) ||
+                other.livekitConfig == livekitConfig) &&
+            (identical(other.livekitRoomCreatedAt, livekitRoomCreatedAt) ||
+                other.livekitRoomCreatedAt == livekitRoomCreatedAt) &&
             (identical(other.status, status) || other.status == status) &&
             (identical(other.scheduledAt, scheduledAt) ||
                 other.scheduledAt == scheduledAt) &&
@@ -1027,8 +1174,6 @@ class _$StreamDataModelImpl implements _StreamDataModel {
                 other.minimumBidIncrement == minimumBidIncrement) &&
             const DeepCollectionEquality()
                 .equals(other._streamSettings, _streamSettings) &&
-            (identical(other.agoraUid, agoraUid) ||
-                other.agoraUid == agoraUid) &&
             (identical(other.isMine, isMine) || other.isMine == isMine) &&
             (identical(other.user, user) || other.user == user) &&
             const DeepCollectionEquality()
@@ -1044,8 +1189,13 @@ class _$StreamDataModelImpl implements _StreamDataModel {
         title,
         description,
         channelName,
-        agoraAppId,
-        agoraToken,
+        muxLiveStreamId,
+        muxStreamKey,
+        muxPlaybackId,
+        livekitRoomName,
+        livekitServerUrl,
+        livekitConfig,
+        livekitRoomCreatedAt,
         status,
         scheduledAt,
         startedAt,
@@ -1067,7 +1217,6 @@ class _$StreamDataModelImpl implements _StreamDataModel {
         enableBidding,
         minimumBidIncrement,
         const DeepCollectionEquality().hash(_streamSettings),
-        agoraUid,
         isMine,
         user,
         const DeepCollectionEquality().hash(_streamProducts)
@@ -1097,8 +1246,14 @@ abstract class _StreamDataModel implements StreamDataModel {
       final String? title,
       final String? description,
       @JsonKey(name: 'channel_name') final String? channelName,
-      @JsonKey(name: 'agora_app_id') final String? agoraAppId,
-      @JsonKey(name: 'agora_token') final String? agoraToken,
+      @JsonKey(name: 'mux_live_stream_id') final String? muxLiveStreamId,
+      @JsonKey(name: 'mux_stream_key') final String? muxStreamKey,
+      @JsonKey(name: 'mux_playback_id') final String? muxPlaybackId,
+      @JsonKey(name: 'livekit_room_name') final String? livekitRoomName,
+      @JsonKey(name: 'livekit_server_url') final String? livekitServerUrl,
+      @JsonKey(name: 'livekit_config') final LivekitConfigModel? livekitConfig,
+      @JsonKey(name: 'livekit_room_created_at')
+      final DateTime? livekitRoomCreatedAt,
       final String? status,
       @JsonKey(name: 'scheduled_at') final DateTime? scheduledAt,
       @JsonKey(name: 'started_at') final DateTime? startedAt,
@@ -1129,7 +1284,6 @@ abstract class _StreamDataModel implements StreamDataModel {
       final double? minimumBidIncrement,
       @JsonKey(name: 'stream_settings')
       final Map<String, dynamic>? streamSettings,
-      @JsonKey(name: 'agora_uid') final int? agoraUid,
       @JsonKey(name: 'is_mine') final bool? isMine,
       final StreamUserModel? user,
       @JsonKey(name: 'stream_products')
@@ -1147,16 +1301,31 @@ abstract class _StreamDataModel implements StreamDataModel {
   @override
   String? get title;
   @override
-  String? get description;
+  String? get description; // Still present
   @override
   @JsonKey(name: 'channel_name')
-  String? get channelName;
+  String? get channelName; // --- Mux fields ---
   @override
-  @JsonKey(name: 'agora_app_id')
-  String? get agoraAppId;
+  @JsonKey(name: 'mux_live_stream_id')
+  String? get muxLiveStreamId;
   @override
-  @JsonKey(name: 'agora_token')
-  String? get agoraToken;
+  @JsonKey(name: 'mux_stream_key')
+  String? get muxStreamKey;
+  @override
+  @JsonKey(name: 'mux_playback_id')
+  String? get muxPlaybackId; // --- New LiveKit fields ---
+  @override
+  @JsonKey(name: 'livekit_room_name')
+  String? get livekitRoomName;
+  @override
+  @JsonKey(name: 'livekit_server_url')
+  String? get livekitServerUrl;
+  @override
+  @JsonKey(name: 'livekit_config')
+  LivekitConfigModel? get livekitConfig;
+  @override
+  @JsonKey(name: 'livekit_room_created_at')
+  DateTime? get livekitRoomCreatedAt;
   @override
   String? get status;
   @override
@@ -1167,10 +1336,10 @@ abstract class _StreamDataModel implements StreamDataModel {
   DateTime? get startedAt;
   @override
   @JsonKey(name: 'ended_at')
-  DateTime? get endedAt; // NEW
+  DateTime? get endedAt;
   @override
   @JsonKey(name: 'is_recording_enabled')
-  bool? get isRecordingEnabled;
+  bool? get isRecordingEnabled; // Optional recording fields
   @override
   @JsonKey(name: 'recording_resource_id')
   String? get recordingResourceId;
@@ -1182,16 +1351,16 @@ abstract class _StreamDataModel implements StreamDataModel {
       name: 'recording_files',
       fromJson: _stringListOrNull,
       toJson: _nullOrStringList)
-  List<String>? get recordingFiles; // NEW (nullable list)
+  List<String>? get recordingFiles; // Optional/derived UI fields
   @override
   @JsonKey(name: 'thumbnail_url')
-  String? get thumbnailUrl; // NEW
+  String? get thumbnailUrl;
   @override
   @JsonKey(name: 'viewer_count')
-  int? get viewerCount; // NEW
+  int? get viewerCount;
   @override
   @JsonKey(name: 'max_viewers')
-  int? get maxViewers; // NEW
+  int? get maxViewers;
   @override
   @JsonKey(name: 'is_public')
   bool? get isPublic;
@@ -1224,10 +1393,7 @@ abstract class _StreamDataModel implements StreamDataModel {
   double? get minimumBidIncrement;
   @override
   @JsonKey(name: 'stream_settings')
-  Map<String, dynamic>? get streamSettings; // NEW
-  @override
-  @JsonKey(name: 'agora_uid')
-  int? get agoraUid;
+  Map<String, dynamic>? get streamSettings;
   @override
   @JsonKey(name: 'is_mine')
   bool? get isMine;
@@ -1242,6 +1408,397 @@ abstract class _StreamDataModel implements StreamDataModel {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StreamDataModelImplCopyWith<_$StreamDataModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+LivekitConfigModel _$LivekitConfigModelFromJson(Map<String, dynamic> json) {
+  return _LivekitConfigModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$LivekitConfigModel {
+  @JsonKey(name: 'max_participants')
+  int? get maxParticipants => throw _privateConstructorUsedError;
+  @JsonKey(name: 'empty_timeout')
+  int? get emptyTimeout => throw _privateConstructorUsedError;
+  @JsonKey(name: 'video_quality')
+  String? get videoQuality => throw _privateConstructorUsedError;
+
+  /// Serializes this LivekitConfigModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of LivekitConfigModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LivekitConfigModelCopyWith<LivekitConfigModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LivekitConfigModelCopyWith<$Res> {
+  factory $LivekitConfigModelCopyWith(
+          LivekitConfigModel value, $Res Function(LivekitConfigModel) then) =
+      _$LivekitConfigModelCopyWithImpl<$Res, LivekitConfigModel>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'max_participants') int? maxParticipants,
+      @JsonKey(name: 'empty_timeout') int? emptyTimeout,
+      @JsonKey(name: 'video_quality') String? videoQuality});
+}
+
+/// @nodoc
+class _$LivekitConfigModelCopyWithImpl<$Res, $Val extends LivekitConfigModel>
+    implements $LivekitConfigModelCopyWith<$Res> {
+  _$LivekitConfigModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LivekitConfigModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? maxParticipants = freezed,
+    Object? emptyTimeout = freezed,
+    Object? videoQuality = freezed,
+  }) {
+    return _then(_value.copyWith(
+      maxParticipants: freezed == maxParticipants
+          ? _value.maxParticipants
+          : maxParticipants // ignore: cast_nullable_to_non_nullable
+              as int?,
+      emptyTimeout: freezed == emptyTimeout
+          ? _value.emptyTimeout
+          : emptyTimeout // ignore: cast_nullable_to_non_nullable
+              as int?,
+      videoQuality: freezed == videoQuality
+          ? _value.videoQuality
+          : videoQuality // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$LivekitConfigModelImplCopyWith<$Res>
+    implements $LivekitConfigModelCopyWith<$Res> {
+  factory _$$LivekitConfigModelImplCopyWith(_$LivekitConfigModelImpl value,
+          $Res Function(_$LivekitConfigModelImpl) then) =
+      __$$LivekitConfigModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'max_participants') int? maxParticipants,
+      @JsonKey(name: 'empty_timeout') int? emptyTimeout,
+      @JsonKey(name: 'video_quality') String? videoQuality});
+}
+
+/// @nodoc
+class __$$LivekitConfigModelImplCopyWithImpl<$Res>
+    extends _$LivekitConfigModelCopyWithImpl<$Res, _$LivekitConfigModelImpl>
+    implements _$$LivekitConfigModelImplCopyWith<$Res> {
+  __$$LivekitConfigModelImplCopyWithImpl(_$LivekitConfigModelImpl _value,
+      $Res Function(_$LivekitConfigModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LivekitConfigModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? maxParticipants = freezed,
+    Object? emptyTimeout = freezed,
+    Object? videoQuality = freezed,
+  }) {
+    return _then(_$LivekitConfigModelImpl(
+      maxParticipants: freezed == maxParticipants
+          ? _value.maxParticipants
+          : maxParticipants // ignore: cast_nullable_to_non_nullable
+              as int?,
+      emptyTimeout: freezed == emptyTimeout
+          ? _value.emptyTimeout
+          : emptyTimeout // ignore: cast_nullable_to_non_nullable
+              as int?,
+      videoQuality: freezed == videoQuality
+          ? _value.videoQuality
+          : videoQuality // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LivekitConfigModelImpl implements _LivekitConfigModel {
+  const _$LivekitConfigModelImpl(
+      {@JsonKey(name: 'max_participants') this.maxParticipants,
+      @JsonKey(name: 'empty_timeout') this.emptyTimeout,
+      @JsonKey(name: 'video_quality') this.videoQuality});
+
+  factory _$LivekitConfigModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LivekitConfigModelImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'max_participants')
+  final int? maxParticipants;
+  @override
+  @JsonKey(name: 'empty_timeout')
+  final int? emptyTimeout;
+  @override
+  @JsonKey(name: 'video_quality')
+  final String? videoQuality;
+
+  @override
+  String toString() {
+    return 'LivekitConfigModel(maxParticipants: $maxParticipants, emptyTimeout: $emptyTimeout, videoQuality: $videoQuality)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LivekitConfigModelImpl &&
+            (identical(other.maxParticipants, maxParticipants) ||
+                other.maxParticipants == maxParticipants) &&
+            (identical(other.emptyTimeout, emptyTimeout) ||
+                other.emptyTimeout == emptyTimeout) &&
+            (identical(other.videoQuality, videoQuality) ||
+                other.videoQuality == videoQuality));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, maxParticipants, emptyTimeout, videoQuality);
+
+  /// Create a copy of LivekitConfigModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LivekitConfigModelImplCopyWith<_$LivekitConfigModelImpl> get copyWith =>
+      __$$LivekitConfigModelImplCopyWithImpl<_$LivekitConfigModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LivekitConfigModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _LivekitConfigModel implements LivekitConfigModel {
+  const factory _LivekitConfigModel(
+          {@JsonKey(name: 'max_participants') final int? maxParticipants,
+          @JsonKey(name: 'empty_timeout') final int? emptyTimeout,
+          @JsonKey(name: 'video_quality') final String? videoQuality}) =
+      _$LivekitConfigModelImpl;
+
+  factory _LivekitConfigModel.fromJson(Map<String, dynamic> json) =
+      _$LivekitConfigModelImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'max_participants')
+  int? get maxParticipants;
+  @override
+  @JsonKey(name: 'empty_timeout')
+  int? get emptyTimeout;
+  @override
+  @JsonKey(name: 'video_quality')
+  String? get videoQuality;
+
+  /// Create a copy of LivekitConfigModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LivekitConfigModelImplCopyWith<_$LivekitConfigModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+LivekitInfoModel _$LivekitInfoModelFromJson(Map<String, dynamic> json) {
+  return _LivekitInfoModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$LivekitInfoModel {
+  @JsonKey(name: 'room_name')
+  String? get roomName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'server_url')
+  String? get serverUrl => throw _privateConstructorUsedError;
+
+  /// Serializes this LivekitInfoModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of LivekitInfoModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LivekitInfoModelCopyWith<LivekitInfoModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LivekitInfoModelCopyWith<$Res> {
+  factory $LivekitInfoModelCopyWith(
+          LivekitInfoModel value, $Res Function(LivekitInfoModel) then) =
+      _$LivekitInfoModelCopyWithImpl<$Res, LivekitInfoModel>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'room_name') String? roomName,
+      @JsonKey(name: 'server_url') String? serverUrl});
+}
+
+/// @nodoc
+class _$LivekitInfoModelCopyWithImpl<$Res, $Val extends LivekitInfoModel>
+    implements $LivekitInfoModelCopyWith<$Res> {
+  _$LivekitInfoModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LivekitInfoModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? roomName = freezed,
+    Object? serverUrl = freezed,
+  }) {
+    return _then(_value.copyWith(
+      roomName: freezed == roomName
+          ? _value.roomName
+          : roomName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      serverUrl: freezed == serverUrl
+          ? _value.serverUrl
+          : serverUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$LivekitInfoModelImplCopyWith<$Res>
+    implements $LivekitInfoModelCopyWith<$Res> {
+  factory _$$LivekitInfoModelImplCopyWith(_$LivekitInfoModelImpl value,
+          $Res Function(_$LivekitInfoModelImpl) then) =
+      __$$LivekitInfoModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'room_name') String? roomName,
+      @JsonKey(name: 'server_url') String? serverUrl});
+}
+
+/// @nodoc
+class __$$LivekitInfoModelImplCopyWithImpl<$Res>
+    extends _$LivekitInfoModelCopyWithImpl<$Res, _$LivekitInfoModelImpl>
+    implements _$$LivekitInfoModelImplCopyWith<$Res> {
+  __$$LivekitInfoModelImplCopyWithImpl(_$LivekitInfoModelImpl _value,
+      $Res Function(_$LivekitInfoModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LivekitInfoModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? roomName = freezed,
+    Object? serverUrl = freezed,
+  }) {
+    return _then(_$LivekitInfoModelImpl(
+      roomName: freezed == roomName
+          ? _value.roomName
+          : roomName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      serverUrl: freezed == serverUrl
+          ? _value.serverUrl
+          : serverUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LivekitInfoModelImpl implements _LivekitInfoModel {
+  const _$LivekitInfoModelImpl(
+      {@JsonKey(name: 'room_name') this.roomName,
+      @JsonKey(name: 'server_url') this.serverUrl});
+
+  factory _$LivekitInfoModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LivekitInfoModelImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'room_name')
+  final String? roomName;
+  @override
+  @JsonKey(name: 'server_url')
+  final String? serverUrl;
+
+  @override
+  String toString() {
+    return 'LivekitInfoModel(roomName: $roomName, serverUrl: $serverUrl)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LivekitInfoModelImpl &&
+            (identical(other.roomName, roomName) ||
+                other.roomName == roomName) &&
+            (identical(other.serverUrl, serverUrl) ||
+                other.serverUrl == serverUrl));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, roomName, serverUrl);
+
+  /// Create a copy of LivekitInfoModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LivekitInfoModelImplCopyWith<_$LivekitInfoModelImpl> get copyWith =>
+      __$$LivekitInfoModelImplCopyWithImpl<_$LivekitInfoModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LivekitInfoModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _LivekitInfoModel implements LivekitInfoModel {
+  const factory _LivekitInfoModel(
+          {@JsonKey(name: 'room_name') final String? roomName,
+          @JsonKey(name: 'server_url') final String? serverUrl}) =
+      _$LivekitInfoModelImpl;
+
+  factory _LivekitInfoModel.fromJson(Map<String, dynamic> json) =
+      _$LivekitInfoModelImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'room_name')
+  String? get roomName;
+  @override
+  @JsonKey(name: 'server_url')
+  String? get serverUrl;
+
+  /// Create a copy of LivekitInfoModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LivekitInfoModelImplCopyWith<_$LivekitInfoModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
