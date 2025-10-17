@@ -190,42 +190,53 @@ class _LiveStreamScreenState extends State<LiveStreamScreen>
       return;
     }
 
-    _room = Room();
-    _roomListener = _room!.createListener();
+    // High quality encoding for better clarity
     const portraitEncoding = VideoEncoding(
-      maxBitrate: 1800000,
+      maxBitrate: 2500000, // Increased bitrate for better quality
       maxFramerate: 30,
     );
-    // Portrait 720p (9:16)
-const portraitParams = VideoParameters(
-  dimensions: VideoDimensions( 720, 1280), // 9:16
-  encoding: VideoEncoding(
-    maxBitrate: 1800000,
-    maxFramerate: 30,
-  ),
-);
+
+    _room = Room(
+      roomOptions: RoomOptions(
+        adaptiveStream: true,
+        dynacast: true,
+        defaultCameraCaptureOptions: CameraCaptureOptions(
+          cameraPosition: CameraPosition.front,
+          params: const VideoParameters(
+            // 9:16 بورتريه
+            dimensions: VideoDimensions(720, 1280),
+            encoding: VideoEncoding(maxBitrate: 1800000, maxFramerate: 30),
+          ),
+        ),
+        defaultVideoPublishOptions: VideoPublishOptions(
+          videoCodec: 'h264',
+          simulcast:
+              false, // start with false to avoid unexpected layer aspect ratios
+          videoEncoding: portraitEncoding,
+        ),
+      ),
+    );
+    _roomListener = _room!.createListener();
 
     try {
-      await _room!.connect(
-        serverUrl,
-        token,
-        roomOptions: const RoomOptions(
-          adaptiveStream: true,
-          dynacast: true,
-          defaultCameraCaptureOptions: CameraCaptureOptions(
-            cameraPosition: CameraPosition.front,
-            params: portraitParams
-          ),
-          defaultVideoPublishOptions: VideoPublishOptions(
-            videoCodec: 'h264',
-            simulcast:
-                false, // start with false to avoid unexpected layer aspect ratios
-            videoEncoding: portraitEncoding,
+      await _room!.connect(serverUrl, token);
+
+// اقفل ثم افتح مع الـparams البورتريه
+      await _room!.localParticipant?.setCameraEnabled(false);
+      await _room!.localParticipant?.setCameraEnabled(
+        true,
+        cameraCaptureOptions: CameraCaptureOptions(
+          cameraPosition: CameraPosition.front,
+          params: VideoParameters(
+            dimensions: VideoDimensionsPresets.h120_43,
+            encoding: VideoEncoding(
+              maxBitrate: 70 * 1000,
+              maxFramerate: 15,
+            ),
           ),
         ),
       );
 
-      await _room!.localParticipant?.setCameraEnabled(true);
       await _room!.localParticipant?.setMicrophoneEnabled(true);
 
       if (mounted) setState(() => _isLiveKitReady = true);
@@ -264,16 +275,18 @@ const portraitParams = VideoParameters(
 
       // Open HLS and start playing.
       await _mkPlayer!.open(
-        media.Media(url.toString()),
+        media.Media(
+          url.toString(),
+          httpHeaders: {
+            'User-Agent': 'Fin5App/MediaKit',
+            'Accept': 'application/x-mpegURL,application/vnd.apple.mpegurl,*/*',
+          },
+        ),
         play: true,
       );
 
       // Improve live experience: low-latency/live hints.
-      // (These can be tuned per your needs / CDN)
       await _mkPlayer!.setPlaylistMode(media.PlaylistMode.none);
-      // Seek to live edge if available.
-      // (media_kit automatically tries to keep up; but you could periodically call:
-      // await _mkPlayer!.seek(Duration(days: 3650)); // "jump to live" trick if needed)
 
       if (mounted) setState(() => _mkReady = true);
     } catch (e, st) {
@@ -342,12 +355,10 @@ const portraitParams = VideoParameters(
           if (state.isInitializing || state.isLoadingComments) {
             return const FullScreenLoader();
           }
-
           final firstProduct = (widget.stream.streamProducts != null &&
                   widget.stream.streamProducts!.isNotEmpty)
               ? widget.stream.streamProducts!.first
               : null;
-
           return WillPopScope(
             onWillPop: () async {
               final action = await _showExitDialog();
@@ -367,7 +378,13 @@ const portraitParams = VideoParameters(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        CompanyInfo(streamUserModel: widget.stream.user),
+                        InkWell(
+                            onTap: () async {
+                              final action = await _showExitDialog();
+                              await _performExit(action);
+                            },
+                            child: CompanyInfo(
+                                streamUserModel: widget.stream.user)),
                         ViewerCountWidget(count: state.viewerCount),
                       ],
                     ),
@@ -417,13 +434,18 @@ const portraitParams = VideoParameters(
 // Add a field:
 
 // In the viewer branch:
-      return SizedBox.expand(
+      return Container(
+        width: double.infinity,
+        height: double.infinity,
+        color: Colors.black,
         child: Video(
           controller: _mkVideoController!,
-          aspectRatio: 9 / 16, // optional if your streams are always portrait
+          fit: BoxFit.cover, // Fill entire screen
           alignment: Alignment.center,
           controls: null,
-          filterQuality: FilterQuality.high, // slightly smoother upscale
+          filterQuality: FilterQuality.high, // High quality for better clarity
+          fill:
+              Colors.black, // Black background if video doesn't fill completely
         ),
       );
     }
@@ -442,12 +464,13 @@ const portraitParams = VideoParameters(
       return _waitingBox('Camera is off');
     }
 
-    return VideoTrackRenderer(
-      videoPub.track as VideoTrack,
-      fit: rtc.RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-    
-      mirrorMode:
-          VideoViewMirrorMode.off, // keep it unmirrored to match viewer
+    return SizedBox.expand(
+      child: VideoTrackRenderer(
+        videoPub.track as VideoTrack,
+        fit: rtc.RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+        mirrorMode:
+            VideoViewMirrorMode.off, // keep it unmirrored to match viewer
+      ),
     );
   }
 
@@ -465,14 +488,6 @@ const portraitParams = VideoParameters(
           ],
         ),
       ),
-    );
-  }
-
-  Widget _errorBox(String msg) {
-    return Center(
-      child: Text(msg,
-          style: const TextStyle(color: Colors.redAccent),
-          textAlign: TextAlign.center),
     );
   }
 

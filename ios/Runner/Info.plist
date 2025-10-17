@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -20,14 +22,45 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.447608090352-2aho7s9rgrgird65qk123nd22750lbt6</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>GIDClientID</key>
+	<string>447608090352-2aho7s9rgrgird65qk123nd22750lbt6.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>
+	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to take a product photo.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to auto-fill the address</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to select a product image.</string>
+	<key>NSUserAuthenticationUsageDescription</key>
+	<string>Sign in with Apple is used to log in securely.</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need access to your microphone to broadcast your stream.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We need your location to auto-fill the address</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>We need your location to auto-fill the address</string>
+	<key>NSCameraUsageDescription</key>
+	<string>We need access to your camera to take a product photo.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -41,33 +74,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>CADisableMinimumFrameDurationOnPhone</key>
-	<true/>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library to select a product image.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera to take a product photo.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need your location to auto-fill the address</string>
-	<key>GIDClientID</key>
-    <string>447608090352-2aho7s9rgrgird65qk123nd22750lbt6.apps.googleusercontent.com</string>
-
-	<key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <!-- Reverse client ID from GoogleService-Info.plist -->
-                <string>com.googleusercontent.apps.447608090352-2aho7s9rgrgird65qk123nd22750lbt6</string>
-            </array>
-        </dict>
-    </array>
-	<key>NSUserAuthenticationUsageDescription</key>
-	<string>Sign in with Apple is used to log in securely.</string>
-
 </dict>
 </plist>

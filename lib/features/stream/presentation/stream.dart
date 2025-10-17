@@ -1,11 +1,12 @@
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hvatai/core/customs/customs.dart';
-import 'dart:async';
-
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart' as rtc;
+import 'package:http/http.dart' as http;
+import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
@@ -20,16 +21,12 @@ import 'package:media_kit/media_kit.dart' as media;
 import 'package:media_kit_video/media_kit_video.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pusher_client_socket/pusher_client_socket.dart';
-import 'package:rtmp_broadcaster/camera.dart'; // gives CameraController, CameraPreview, availableCameras()
-import 'package:video_player/video_player.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_webrtc/flutter_webrtc.dart' as rtc;
 
 part 'screens/live_stream_screen.dart';
+part 'widgets/comments_compact_list.dart';
 part 'widgets/company_details_widget.dart';
 part 'widgets/company_info.dart';
-part 'widgets/viewer_count_widget.dart';
+part 'widgets/live_bottom_panel.dart';
 part 'widgets/right_icon.dart';
 part 'widgets/right_side_icons.dart';
-part 'widgets/comments_compact_list.dart';
-part 'widgets/live_bottom_panel.dart';
+part 'widgets/viewer_count_widget.dart';

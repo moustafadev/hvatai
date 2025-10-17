@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hvatai/features/all_app/presentation/basket.dart';
 import 'package:hvatai/features/all_app/presentation/cubit/product_detials/product_details_cubit.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
@@ -20,8 +22,6 @@ import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/features/stream/presentation/stream.dart';
 import 'package:hvatai/routes/app_routes.dart';
-import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hvatai/routes/shell_route.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -39,7 +39,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.splash, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return const SplashScreen();
+        return const CameraApp();
       },
     ),
     GoRoute(
