@@ -284,8 +284,7 @@ class _LiveStreamScreenState extends State<LiveStreamScreen>
     if (!rtmpUrl.startsWith('rtmp://')) {
       // If it's just a stream key, construct the full Mux URL
       debugPrint('⚠️ Stream key format detected, constructing full RTMP URL');
-      rtmpUrl =
-          "rtmp://global-live.mux.com:5222/app/8c8a4cbb-d6cf-d868-fbbd-51ec0b43d454";
+      rtmpUrl = 'rtmp://global-live.mux.com:5222/app/$rtmpUrl';
     }
 
     debugPrint('🎥 Starting RTMP stream to: $rtmpUrl');
@@ -340,6 +339,37 @@ class _LiveStreamScreenState extends State<LiveStreamScreen>
       }
     } on CameraException catch (e) {
       debugPrint('❌ Resume streaming error: ${e.code} - ${e.description}');
+    }
+  }
+
+  Future<void> _switchCameraPosition() async {
+    if (_cameraController == null || _cameras.length < 2) return;
+
+    try {
+      _switchCamera = !_switchCamera;
+      String cameraId = _switchCamera ? "0" : "1";
+      await _cameraController!.switchCamera(cameraId);
+      if (mounted) setState(() {});
+      debugPrint('✅ Switched to ${_switchCamera ? 'back' : 'front'} camera');
+    } catch (e) {
+      debugPrint('❌ Camera switch error: $e');
+    }
+  }
+
+  Future<void> _toggleAudio() async {
+    if (_cameraController == null) return;
+
+    try {
+      _enableAudio = !_enableAudio;
+      if (_enableAudio) {
+        await _cameraController!.onEnableAudio();
+      } else {
+        await _cameraController!.onDisableAudio();
+      }
+      if (mounted) setState(() {});
+      debugPrint('✅ Audio ${_enableAudio ? 'enabled' : 'disabled'}');
+    } catch (e) {
+      debugPrint('❌ Audio toggle error: $e');
     }
   }
 
