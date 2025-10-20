@@ -11,7 +11,7 @@ allprojects {
     }
     configurations.configureEach {
     resolutionStrategy.eachDependency { d ->
-      if (d.requested.group == "org.jetbrains.kotlin") d.useVersion "2.0.21"
+      if (d.requested.group == "org.jetbrains.kotlin") d.useVersion "2.2.0"
     }
   }
 }

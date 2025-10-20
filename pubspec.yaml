@@ -71,7 +71,7 @@ dependencies:
   media_kit: ^1.2.1
   media_kit_libs_video: ^1.0.7
   flutter_webrtc: ^0.12.12+hotfix.1
-  # wakelock_plus: ^1.4.0
+  wakelock_plus: ^1.4.0
   # flutter_live:
   #   path: packages/flutter_live/
   rtmp_streaming: ^0.0.5

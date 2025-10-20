@@ -39,7 +39,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.splash, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return const CameraApp();
+        return const SplashScreen();
       },
     ),
     GoRoute(

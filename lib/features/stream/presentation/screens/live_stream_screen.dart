@@ -32,10 +32,12 @@ class _LiveStreamScreenState extends State<LiveStreamScreen>
   VideoController? _mkVideoController;
   bool _mkReady = false;
 
-  // ---------- Broadcaster (LiveKit publish) ----------
-  Room? _room;
-  EventsListener<RoomEvent>? _roomListener;
-  bool _isLiveKitReady = false;
+  // ---------- Broadcaster (RTMP streaming) ----------
+  CameraController? _cameraController;
+  bool _isCameraReady = false;
+  bool _enableAudio = true;
+  bool _switchCamera = false; // false = front camera, true = back camera
+  List<CameraDescription> _cameras = [];
 
   // ---------- Mux Playback URL for Viewers ----------
   String get _muxPlaybackUrl {
@@ -71,24 +73,27 @@ class _LiveStreamScreenState extends State<LiveStreamScreen>
 
     // 3) Role-specific logic
     if (widget.userRole == UserRole.broadcaster) {
-      _initLiveKitBroadcaster();
+      _initRTMPBroadcaster();
     } else {
       _logMuxViewerDebug();
-      _initMediaKitViewer(); // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< media_kit viewer
+      _initMediaKitViewer(); // media_kit viewer
     }
   }
 
   // ---------------- Lifecycle / app visibility ----------------
   @override
   Future<void> didChangeAppLifecycleState(AppLifecycleState state) async {
-    if (widget.userRole != UserRole.broadcaster || _room == null) return;
+    if (widget.userRole != UserRole.broadcaster || _cameraController == null)
+      return;
 
     if (state == AppLifecycleState.paused) {
-      await _room?.localParticipant?.setCameraEnabled(false);
-      await _room?.localParticipant?.setMicrophoneEnabled(false);
+      if (_cameraController?.value.isStreamingVideoRtmp == true) {
+        await _pauseVideoStreaming();
+      }
     } else if (state == AppLifecycleState.resumed) {
-      await _room?.localParticipant?.setCameraEnabled(true);
-      await _room?.localParticipant?.setMicrophoneEnabled(true);
+      if (_cameraController?.value.isStreamingPaused == true) {
+        await _resumeVideoStreaming();
+      }
     }
   }
 
@@ -99,8 +104,8 @@ class _LiveStreamScreenState extends State<LiveStreamScreen>
 
     // Role-specific cleanup
     if (widget.userRole == UserRole.broadcaster) {
-      _roomListener?.dispose();
-      _room?.disconnect();
+      _cameraController?.dispose();
+      WakelockPlus.disable();
     }
 
     WidgetsBinding.instance.removeObserver(this);
@@ -167,8 +172,8 @@ class _LiveStreamScreenState extends State<LiveStreamScreen>
     }
   }
 
-  // ---------------- Broadcaster (LiveKit publish) ----------------
-  Future<void> _initLiveKitBroadcaster() async {
+  // ---------------- Broadcaster (RTMP streaming) ----------------
+  Future<void> _initRTMPBroadcaster() async {
     final statuses = await [Permission.camera, Permission.microphone].request();
     if (statuses[Permission.camera] != PermissionStatus.granted ||
         statuses[Permission.microphone] != PermissionStatus.granted) {
@@ -176,74 +181,165 @@ class _LiveStreamScreenState extends State<LiveStreamScreen>
       return;
     }
 
-    final serverUrl = widget.stream.livekitServerUrl;
-    final roomName = widget.stream.livekitRoomName;
-    if (serverUrl == null || roomName == null) {
-      debugPrint('❌ LiveKit server URL or room name is missing.');
-      return;
+    try {
+      // Get available cameras
+      _cameras = await availableCameras();
+      if (_cameras.isEmpty) {
+        debugPrint('❌ No cameras available');
+        return;
+      }
+
+      // Initialize camera with front camera (index 1 if available, otherwise 0)
+      final cameraDescription = _cameras.length > 1 ? _cameras[1] : _cameras[0];
+      await _initializeCamera(cameraDescription);
+      await _cubit.startStreamAndGetToken(streamId: widget.stream.id ?? 0);
+
+      // Wait for camera to be ready
+      await Future.delayed(const Duration(milliseconds: 1500));
+
+      // Start streaming automatically
+      if (_isCameraReady && _cameraController != null) {
+        await _startVideoStreaming();
+      }
+    } catch (e, st) {
+      debugPrint('❌ Camera initialization error: $e');
+      debugPrintStack(stackTrace: st);
+    }
+  }
+
+  Future<void> _initializeCamera(CameraDescription cameraDescription) async {
+    if (_cameraController != null) {
+      await _stopVideoStreaming();
+      await _cameraController?.dispose();
     }
 
-    final token =
-        await _cubit.startStreamAndGetToken(streamId: widget.stream.id ?? 0);
-    if (token == null || token.isEmpty) {
-      debugPrint('❌ Failed to get a valid LiveKit token.');
-      return;
-    }
-
-    // High quality encoding for better clarity
-    const portraitEncoding = VideoEncoding(
-      maxBitrate: 2500000, // Increased bitrate for better quality
-      maxFramerate: 30,
+    _cameraController = CameraController(
+      cameraDescription,
+      ResolutionPreset.medium, // Using same as working splash screen
+      enableAudio: _enableAudio,
+      androidUseOpenGL: true,
     );
 
-    _room = Room(
-      roomOptions: RoomOptions(
-        adaptiveStream: true,
-        dynacast: true,
-        defaultCameraCaptureOptions: CameraCaptureOptions(
-          cameraPosition: CameraPosition.front,
-          params: const VideoParameters(
-            // 9:16 بورتريه
-            dimensions: VideoDimensions(720, 1280),
-            encoding: VideoEncoding(maxBitrate: 1800000, maxFramerate: 30),
-          ),
-        ),
-        defaultVideoPublishOptions: VideoPublishOptions(
-          videoCodec: 'h264',
-          simulcast:
-              false, // start with false to avoid unexpected layer aspect ratios
-          videoEncoding: portraitEncoding,
-        ),
-      ),
-    );
-    _roomListener = _room!.createListener();
+    // Add listener for camera events - exactly like splash screen
+    _cameraController!.addListener(() async {
+      if (mounted) setState(() {});
+
+      if (_cameraController != null) {
+        if (_cameraController!.value.hasError) {
+          debugPrint(
+              '❌ Camera error: ${_cameraController!.value.errorDescription}');
+          await _stopVideoStreaming();
+        } else {
+          try {
+            final Map<dynamic, dynamic> event =
+                _cameraController!.value.event as Map<dynamic, dynamic>;
+            debugPrint('Event $event');
+            final String eventType = event['eventType'] as String;
+            if (eventType == 'rtmp_retry') {
+              debugPrint('BadName received, endpoint in use.');
+              await _stopVideoStreaming();
+            }
+          } catch (e) {
+            debugPrint('Event error: $e');
+          }
+        }
+      }
+    });
 
     try {
-      await _room!.connect(serverUrl, token);
+      await _cameraController!.initialize();
+    } on CameraException catch (e) {
+      debugPrint('❌ Camera exception: ${e.code} - ${e.description}');
+      return;
+    }
 
-// اقفل ثم افتح مع الـparams البورتريه
-      await _room!.localParticipant?.setCameraEnabled(false);
-      await _room!.localParticipant?.setCameraEnabled(
-        true,
-        cameraCaptureOptions: CameraCaptureOptions(
-          cameraPosition: CameraPosition.front,
-          params: VideoParameters(
-            dimensions: VideoDimensionsPresets.h120_43,
-            encoding: VideoEncoding(
-              maxBitrate: 70 * 1000,
-              maxFramerate: 15,
-            ),
-          ),
-        ),
-      );
+    if (mounted) {
+      final number = int.tryParse(cameraDescription.name!);
+      _switchCamera = number?.isEven ?? false;
+      setState(() => _isCameraReady = true);
+    }
+    debugPrint('✅ Camera initialized successfully');
+  }
 
-      await _room!.localParticipant?.setMicrophoneEnabled(true);
+  Future<void> _startVideoStreaming() async {
+    if (_cameraController == null || !_isCameraReady) {
+      debugPrint('⚠️ Camera not ready');
+      return;
+    }
 
-      if (mounted) setState(() => _isLiveKitReady = true);
-      debugPrint('✅ LiveKit connected and publishing.');
-    } catch (e, st) {
-      debugPrint('❌ LiveKit connection error: $e');
-      debugPrintStack(stackTrace: st);
+    if (_cameraController!.value.isStreamingVideoRtmp == true) {
+      debugPrint('⚠️ Already streaming');
+      return;
+    }
+
+    // Get RTMP URL from stream data
+    var rtmpUrl = widget.stream.muxStreamKey;
+    if (rtmpUrl == null || rtmpUrl.isEmpty) {
+      debugPrint('❌ RTMP URL is missing');
+      return;
+    }
+
+    // Ensure URL is in proper RTMP format
+    // Expected format: rtmp://server:port/app/stream-key
+    if (!rtmpUrl.startsWith('rtmp://')) {
+      // If it's just a stream key, construct the full Mux URL
+      debugPrint('⚠️ Stream key format detected, constructing full RTMP URL');
+      rtmpUrl =
+          "rtmp://global-live.mux.com:5222/app/8c8a4cbb-d6cf-d868-fbbd-51ec0b43d454";
+    }
+
+    debugPrint('🎥 Starting RTMP stream to: $rtmpUrl');
+
+    try {
+      await _cameraController!.startVideoStreaming(rtmpUrl);
+      WakelockPlus.enable();
+      debugPrint('✅ Successfully started streaming');
+    } on CameraException catch (e) {
+      debugPrint('❌ Streaming error: ${e.code} - ${e.description}');
+    } catch (e) {
+      debugPrint('❌ Unexpected streaming error: $e');
+    }
+  }
+
+  Future<void> _stopVideoStreaming() async {
+    if (_cameraController == null || !_isCameraReady) {
+      return;
+    }
+
+    if (_cameraController!.value.isStreamingVideoRtmp != true) {
+      return;
+    }
+
+    try {
+      await _cameraController!.stopVideoStreaming();
+      WakelockPlus.disable();
+      debugPrint('✅ Stopped streaming');
+    } on CameraException catch (e) {
+      debugPrint('❌ Stop streaming error: ${e.code} - ${e.description}');
+    }
+  }
+
+  Future<void> _pauseVideoStreaming() async {
+    try {
+      if (_cameraController?.value.isStreamingVideoRtmp == true &&
+          Platform.isIOS) {
+        await _cameraController!.pauseVideoStreaming();
+        debugPrint('✅ Paused streaming');
+      }
+    } on CameraException catch (e) {
+      debugPrint('❌ Pause streaming error: ${e.code} - ${e.description}');
+    }
+  }
+
+  Future<void> _resumeVideoStreaming() async {
+    try {
+      if (_cameraController?.value.isStreamingPaused == true &&
+          Platform.isIOS) {
+        await _cameraController!.resumeVideoStreaming();
+        debugPrint('✅ Resumed streaming');
+      }
+    } on CameraException catch (e) {
+      debugPrint('❌ Resume streaming error: ${e.code} - ${e.description}');
     }
   }
 
@@ -389,6 +485,7 @@ class _LiveStreamScreenState extends State<LiveStreamScreen>
                       ],
                     ),
                   ),
+                  // Broadcaster controls
                   Positioned(
                     right: 16,
                     top: MediaQuery.of(context).size.height * 0.55,
@@ -431,9 +528,7 @@ class _LiveStreamScreenState extends State<LiveStreamScreen>
       if (!_mkReady || _mkPlayer == null || _mkVideoController == null) {
         return _waitingBox('Connecting to stream...');
       }
-// Add a field:
 
-// In the viewer branch:
       return Container(
         width: double.infinity,
         height: double.infinity,
@@ -450,26 +545,28 @@ class _LiveStreamScreenState extends State<LiveStreamScreen>
       );
     }
 
-    // --- BROADCASTER (LiveKit) ---
-    if (!_isLiveKitReady || _room?.localParticipant == null) {
+    // --- BROADCASTER (RTMP) ---
+    if (!_isCameraReady || _cameraController == null) {
       return _waitingBox('Starting camera...');
     }
 
-    final localParticipant = _room!.localParticipant!;
-    final videoPub = localParticipant.trackPublications.values
-        .where((pub) => pub.kind == TrackType.VIDEO)
-        .firstOrNull;
-
-    if (videoPub == null || videoPub.track == null || videoPub.muted) {
-      return _waitingBox('Camera is off');
+    if (_cameraController!.value.hasError) {
+      return _waitingBox('Camera error');
     }
 
-    return SizedBox.expand(
-      child: VideoTrackRenderer(
-        videoPub.track as VideoTrack,
-        fit: rtc.RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-        mirrorMode:
-            VideoViewMirrorMode.off, // keep it unmirrored to match viewer
+    // Full screen camera preview without black bars
+    return ClipRect(
+      child: OverflowBox(
+        alignment: Alignment.center,
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.width *
+                _cameraController!.value.aspectRatio,
+            child: CameraPreview(_cameraController!),
+          ),
+        ),
       ),
     );
   }
@@ -533,7 +630,8 @@ class _LiveStreamScreenState extends State<LiveStreamScreen>
     final isBroadcaster = widget.userRole == UserRole.broadcaster;
 
     if (isBroadcaster) {
-      await _room?.disconnect();
+      await _stopVideoStreaming();
+      await _cameraController?.dispose();
     }
 
     bool ok = false;
