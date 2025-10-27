@@ -23,6 +23,10 @@ import 'package:hvatai/features/auth/presentation/cubit/otp_cubit/otp_cubit.dart
 import 'package:hvatai/features/auth/presentation/cubit/registration/registration_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/social_login.dart/social_login_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/verification/verification_cubit.dart';
+import 'package:hvatai/features/change_password/data/datasources/api_service_change_password.dart';
+import 'package:hvatai/features/change_password/data/repositories/change_password_impl_repository.dart';
+import 'package:hvatai/features/change_password/domain/repositories/change_password_repository.dart';
+import 'package:hvatai/features/change_password/presentation/cubit/change_password_cubit.dart';
 import 'package:hvatai/features/chat/data/datasources/api_service_chat.dart';
 import 'package:hvatai/features/chat/data/repositories/chat_impl_repository.dart';
 import 'package:hvatai/features/chat/domain/repositories/chat_repository.dart';
@@ -73,6 +77,9 @@ Future<void> setupLocator() async {
         locator(),
       ));
   locator.registerFactory(() => NotificationCubit());
+  locator.registerFactory(() => ChangePasswordCubit(
+        locator(),
+      ));
   locator.registerFactory(() => AwardsClubCubit());
   locator.registerFactory(() => AuctionSearchCubit());
   locator.registerFactory(
@@ -137,8 +144,13 @@ Future<void> setupLocator() async {
       () => StreamImplRepository(locator()));
   locator.registerLazySingleton<ProfileRepository>(
       () => ProfileImplRepository(locator(), locator()));
+  locator.registerLazySingleton<ChangePasswordRepository>(
+      () => ChangePasswordImplRepository(
+            locator(),
+          ));
   // //DATASOURSE
   locator.registerLazySingleton(() => ApiServiceAuth());
+  locator.registerLazySingleton(() => ApiServiceChangePassword());
   locator.registerLazySingleton(() => ApiServiceApp());
   locator.registerLazySingleton(() => ApiServiceHome());
   locator.registerLazySingleton(() => ApiServiceProfile());

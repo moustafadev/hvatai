@@ -51,7 +51,6 @@ part 'screens/init_new_address_screen.dart';
 part 'screens/add_delivery_address_screen.dart';
 part 'screens/payment_methods_screen.dart';
 part 'screens/add_new_payment_method_screen.dart';
-part 'screens/change_password_user_screen.dart';
 part 'screens/change_email_user_screen.dart';
 part 'screens/edit_delivery_address_screen.dart';
 part 'widgets/change_email_field.dart';

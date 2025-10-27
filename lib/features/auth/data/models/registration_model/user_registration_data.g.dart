@@ -14,6 +14,7 @@ _$UserRegistrationDataImpl _$$UserRegistrationDataImplFromJson(
       googleId: json['google_id'] as String?,
       appleId: json['apple_id'] as String?,
       passwordConfirmation: json['password_confirmation'] as String?,
+      currentPassword: json['current_password'] as String?,
       agreedToTerms: intToBool(json['terms_agreement']),
       isAbove18: intToBool(json['age_confirmation']),
       email: json['email'] as String?,
@@ -77,6 +78,7 @@ Map<String, dynamic> _$$UserRegistrationDataImplToJson(
       if (instance.appleId case final value?) 'apple_id': value,
       if (instance.passwordConfirmation case final value?)
         'password_confirmation': value,
+      if (instance.currentPassword case final value?) 'current_password': value,
       if (instance.agreedToTerms case final value?) 'terms_agreement': value,
       if (instance.isAbove18 case final value?) 'age_confirmation': value,
       if (instance.email case final value?) 'email': value,

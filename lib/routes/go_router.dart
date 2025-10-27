@@ -7,6 +7,7 @@ import 'package:hvatai/features/all_app/presentation/cubit/product_detials/produ
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
+import 'package:hvatai/features/change_password/presentation/change_password.dart';
 import 'package:hvatai/features/chat/data/models/chat/chat_model.dart';
 import 'package:hvatai/features/chat/presentation/chat.dart';
 import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_cubit.dart';
@@ -196,7 +197,15 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.changePassword, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return const ChangePasswordUserScreen();
+        return ChangePasswordUserScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.deliveryAddress,
+      builder: (context, state) {
+        final userData = state.extra as UserRegistrationData;
+
+        return DeliveryAddressScreen(data: userData);
       },
     ),
     GoRoute(
@@ -282,14 +291,6 @@ final GoRouter router = GoRouter(
       path: AppRoutes.verificationCode, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const VerificationCodeScreen();
-      },
-    ),
-    GoRoute(
-      path: AppRoutes.deliveryAddress,
-      builder: (context, state) {
-        final userData = state.extra as UserRegistrationData;
-
-        return DeliveryAddressScreen(data: userData);
       },
     ),
     GoRoute(

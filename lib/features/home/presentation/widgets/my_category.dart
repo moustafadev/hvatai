@@ -102,7 +102,7 @@ class MyCategory extends StatelessWidget {
                                   child: imageUrl.isEmpty
                                       ? const Icon(
                                           Icons.image_not_supported,
-                                          size: 30, // قيمة ثابتة
+                                          size: 30,
                                           color: Colors.grey,
                                         )
                                       : ClipRRect(
