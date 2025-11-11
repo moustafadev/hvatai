@@ -12,6 +12,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.onNotificationTap,
     this.onGiftTap,
     this.padding,
+    this.height = 20,
   });
 
   final bool showBack;
@@ -19,6 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool showNotification;
   final bool showGift;
   final int notificationCount;
+  final double height;
 
   final VoidCallback? onBack;
   final VoidCallback? onNotificationTap;
@@ -89,6 +91,5 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize =>
-      const Size.fromHeight(kToolbarHeight + 20); // يزيد شوية بسبب الـ padding
+  Size get preferredSize => Size.fromHeight(kToolbarHeight + height);
 }

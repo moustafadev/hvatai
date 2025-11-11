@@ -3,29 +3,44 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 
 class BlocsObserver implements BlocObserver {
+  static const int _maxLines = 1000;
+
+  String _truncateToMaxLines(String message) {
+    final length = message.length;
+    if (length <= _maxLines) {
+      return message;
+    }
+    return message.substring(0, _maxLines);
+  }
+
   @override
   void onChange(BlocBase bloc, Change change) {
-    log('Change: ${bloc.runtimeType} Change => $change');
+    final message = 'Change: ${bloc.runtimeType} Change => $change';
+    log(_truncateToMaxLines(message));
   }
 
   @override
   void onClose(BlocBase bloc) {
-    log('Closed: ${bloc.runtimeType}');
+    final message = 'Closed: ${bloc.runtimeType}';
+    log(_truncateToMaxLines(message));
   }
 
   @override
   void onCreate(BlocBase bloc) {
-    log('Created: $bloc');
+    final message = 'Created: $bloc';
+    log(_truncateToMaxLines(message));
   }
 
   @override
   void onError(BlocBase bloc, Object error, StackTrace stackTrace) {
-    log('Error: ${bloc.runtimeType} $error // $stackTrace');
+    final message = 'Error: ${bloc.runtimeType} $error // $stackTrace';
+    log(_truncateToMaxLines(message));
   }
 
   @override
   void onEvent(Bloc bloc, Object? event) {
-    log('${bloc.runtimeType} => $event');
+    final message = '${bloc.runtimeType} => $event';
+    log(_truncateToMaxLines(message));
   }
 
   @override

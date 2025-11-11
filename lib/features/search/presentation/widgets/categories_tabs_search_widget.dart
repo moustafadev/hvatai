@@ -10,12 +10,11 @@ class CategoriesTabsSearchWidget extends StatelessWidget {
   ];
 
   final Map<String, String> categoryImages = {
-    "Electronics": "https://via.placeholder.com/100x95.png?text=Electronics",
-    "Clothing": "https://via.placeholder.com/100x95.png?text=Clothing",
-    "Home & Kitchen":
-        "https://via.placeholder.com/100x95.png?text=Home+%26+Kitchen",
-    "Books": "https://via.placeholder.com/100x95.png?text=Books",
-    "Sports": "https://via.placeholder.com/100x95.png?text=Sports",
+    "Electronics": "",
+    "Clothing": "",
+    "Home & Kitchen": "",
+    "Books": "",
+    "Sports": "",
   };
 
   CategoriesTabsSearchWidget({super.key});
@@ -63,31 +62,6 @@ class CategoriesTabsSearchWidget extends StatelessWidget {
           ),
           const SizedBox(height: 8),
 
-          // ButtonsTabBar(
-          //   unselectedBackgroundColor: Colors.white,
-          //   borderWidth: 0,
-          //   borderColor: Colors.transparent,
-          //   unselectedBorderColor: Colors.transparent,
-          //   contentPadding:
-          //       const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-          //   labelStyle: const TextStyle(
-          //       color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
-          //   unselectedLabelStyle: const TextStyle(
-          //       color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
-          //   decoration: BoxDecoration(
-          //     borderRadius: BorderRadius.circular(12),
-          //     gradient: AppColors.primaryGradient,
-          //   ),
-          //   tabs: [
-          //     Tab(text: "recommended".tr()),
-          //     Tab(text: "popular".tr()),
-          //     Tab(text: "a_z".tr()),
-          //   ],
-          //   onTap: (_) {},
-          // ),
-
-          const SizedBox(height: 8),
-
           // List with dummy categories
           Expanded(
             child: ListView.builder(
@@ -116,12 +90,12 @@ class CategoriesTabsSearchWidget extends StatelessWidget {
                               topLeft: Radius.circular(10),
                               bottomLeft: Radius.circular(10),
                             ),
-                            child: imageUrl != null
-                                ? CachedNetworkImage(
+                            child: imageUrl != null && imageUrl.isNotEmpty
+                                ? CustomImage(
+                                    imageSource: imageUrl,
                                     width: 100,
                                     height: 95,
                                     fit: BoxFit.cover,
-                                    imageUrl: imageUrl,
                                   )
                                 : Image.asset(
                                     Assets.assetsImagesWatch,

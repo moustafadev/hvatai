@@ -53,4 +53,11 @@ abstract class ServerConfig {
   static String bidStream(int id) => "streams/$id/bids";
   static String addBidStream(int streamId, int productId) =>
       "streams/$streamId/products/$productId/bid";
+  static String addProductToStream(int streamId) =>
+      "streams/$streamId/products";
+  static String getStreamProducts(int streamId) => "streams/$streamId/products";
+  static String getBidSession(int streamId, int streamProductId) =>
+      "streams/$streamId/products/$streamProductId/bid-session";
+  static String toggleBidding(int streamId, int streamProductId) =>
+      "streams/$streamId/products/$streamProductId/toggle-bidding";
 }

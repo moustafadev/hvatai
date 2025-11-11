@@ -1,14 +1,21 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
+import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart';
-import 'package:hvatai/features/stream/data/models/start_stream_model.dart';
-import 'package:hvatai/features/stream/data/models/stream_comment_model.dart';
-import 'package:hvatai/features/stream/data/models/bid_stream_response.dart';
+import 'package:hvatai/features/stream/data/models/bid_session/bid_session_response.dart';
+import 'package:hvatai/features/stream/data/models/bid_stream/bid_stream_response.dart';
+import 'package:hvatai/features/stream/data/models/start_stream/start_stream_model.dart';
+import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
+import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
 import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
+import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_bid_session_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_stream_products_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/toggle_bidding_usecase.dart';
 
 class StreamImplRepository implements StreamRepository {
   final ApiServiceStream _apiServiceStream;
@@ -77,6 +84,54 @@ class StreamImplRepository implements StreamRepository {
     return executeAndHandleError<bool>(() async {
       final ok = await _apiServiceStream.endStream(streamId: streamId);
       return ok;
+    });
+  }
+
+  @override
+  Future<Either<String, StreamProductModel>> addProductToStream({
+    required AddProductToStreamParams params,
+  }) {
+    return executeAndHandleError<StreamProductModel>(() async {
+      final res = await _apiServiceStream.addProductToStream(params: params);
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, StreamProductsResponseModel>> getStreamProducts({
+    required GetStreamProductsParams params,
+  }) {
+    return executeAndHandleError<StreamProductsResponseModel>(() async {
+      final res = await _apiServiceStream.getStreamProducts(params: params);
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, BidSessionResponse>> getBidSession({
+    required GetBidSessionParams params,
+  }) {
+    return executeAndHandleError<BidSessionResponse>(() async {
+      final res = await _apiServiceStream.getBidSession(
+        streamId: params.streamId,
+        streamProductId: params.streamProductId,
+      );
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, BidStreamItem>> toggleBidding({
+    required ToggleBiddingParams params,
+  }) {
+    return executeAndHandleError<BidStreamItem>(() async {
+      final res = await _apiServiceStream.toggleBidding(
+        streamId: params.streamId,
+        streamProductId: params.streamProductId,
+        bidAmount: params.bidAmount,
+        notes: params.notes,
+      );
+      return res;
     });
   }
 }

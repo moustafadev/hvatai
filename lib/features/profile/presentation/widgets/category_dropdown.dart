@@ -9,6 +9,7 @@ class CategoryDropdown extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<MyGoodsCubit>();
         final categories = state.category;
+        print("categories: $categories");
 
         return CustomDropdown(
           hintText: 'selectCategory'.tr(),

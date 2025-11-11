@@ -6,7 +6,6 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final extra = GoRouterState.of(context).extra as UserRegistrationData?;
-
     return Scaffold(
       backgroundColor: AppColors.lightGreyBackground,
       body: BlocProvider(

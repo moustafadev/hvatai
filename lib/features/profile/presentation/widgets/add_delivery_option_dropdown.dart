@@ -11,22 +11,29 @@ class AddDeliveryOptionDropdown extends StatelessWidget {
         final product = state.product;
         final itemsKeys = ['courier', 'post', 'pickup'];
 
+        // Find matching key from stored value
         String? currentValue;
         if (product.deliveryMethods != null &&
             product.deliveryMethods!.isNotEmpty) {
-          currentValue = product.deliveryMethods!.first;
-          print('Current Delivery Method: $currentValue'); // Debug print
+          final storedValue = product.deliveryMethods!.first;
+          // Try to find matching key by checking if stored value matches any translation
+          for (final key in itemsKeys) {
+            if (key.tr() == storedValue) {
+              currentValue = key;
+              break;
+            }
+          }
+          // If no match found, assume it's already a key
+          currentValue ??= itemsKeys.contains(storedValue) ? storedValue : null;
         }
 
         return CustomDropdown(
           hintText: 'deliveryOption'.tr(),
-          value: product.deliveryMethods?.isNotEmpty == true
-              ? product.deliveryMethods!.first
-              : null,
+          value: currentValue,
           onChanged: (value) {
             if (value != null) {
+              // Store the key (will be translated when sending to API)
               cubit.setOptionDelivery(value);
-              print('Selected Value: $value'); // Debug print
             }
           },
           items: itemsKeys

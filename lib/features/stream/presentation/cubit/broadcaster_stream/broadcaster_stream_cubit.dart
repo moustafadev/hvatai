@@ -1,0 +1,695 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/features/chat/presentation/pages/chat_service.dart';
+import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
+import 'package:hvatai/features/stream/data/models/bid_stream/bid_stream_response.dart';
+import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
+import 'package:hvatai/features/stream/data/models/viewer_joined/viewer_joined_event.dart';
+import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/end_stream_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/start_stream_usecase.dart';
+import 'package:livekit_client/livekit_client.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:pusher_client_socket/pusher_client_socket.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
+
+part 'broadcaster_stream_cubit.freezed.dart';
+part 'broadcaster_stream_state.dart';
+
+class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
+  BroadcasterStreamCubit(
+    this._getComments,
+    this._sendComment,
+    this._leaveUsecase,
+    this._getBids,
+    this._addBidUsecase,
+    this._endUsecase,
+    this._startStreamUsecase, {
+    required StreamDataModel stream,
+  }) : super(BroadcasterStreamState(stream: stream)) {
+    _initialize();
+  }
+
+  final GetStreamCommentsUsecase _getComments;
+  final SendStreamCommentUsecase _sendComment;
+  final LeaveStreamUsecase _leaveUsecase;
+  final EndStreamUsecase _endUsecase;
+  final GetStreamBidsUsecase _getBids;
+  final AddStreamBidUsecase _addBidUsecase;
+  final StartStreamUsecase _startStreamUsecase;
+
+  Timer? _timer;
+  TextEditingController controller = TextEditingController();
+  final _pusherManager = PusherManager();
+  PusherClient? _pusher;
+  Channel? _streamChannel;
+
+  // ================== Initialization ==================
+  Future<void> _initialize() async {
+    emit(state.copyWith(isInitializing: true));
+
+    // Initialize timer
+    _startTimer();
+
+    // Initialize viewer count
+    emit(state.copyWith(
+      viewerCount: state.stream.viewerCount ?? 0,
+      isInitializing: false,
+    ));
+
+    // Load initial comments
+    await loadInitialComments(streamId: state.stream.id ?? 0);
+
+    // Initialize Pusher
+    await _initPusher();
+
+    // Initialize LiveKit
+    await _initLiveKit();
+  }
+
+  // ================== Pusher ==================
+  Future<void> _initPusher() async {
+    final streamId = state.stream.id;
+    if (streamId == null) {
+      debugPrint('⚠️ Stream id is null — skip socket subscription');
+      return;
+    }
+
+    try {
+      _pusher = _pusherManager.initializePusher();
+      final channelName = 'stream.$streamId';
+      debugPrint('🔗 Subscribing to $channelName');
+
+      _streamChannel = _pusher!.subscribe(channelName);
+
+      _streamChannel!.bind('pusher:subscription_succeeded', (_) {
+        debugPrint('✅ Subscribed: $channelName');
+        emit(state.copyWith(isPusherConnected: true));
+      });
+
+      _streamChannel!.bind('pusher:subscription_error', (e) {
+        debugPrint('❌ Subscription error on $channelName: $e');
+        emit(state.copyWith(isPusherConnected: false));
+      });
+
+      _streamChannel!.bind(
+        'comment.added',
+        (raw) => _handleComment(raw, source: channelName),
+      );
+
+      // _streamChannel!.bind(
+      //   'product.added',
+      //   (raw) => ,
+      // );
+
+      _streamChannel!.bind(
+        'CommentAdded',
+        (raw) => _handleComment(raw, source: channelName),
+      );
+
+      _streamChannel!.bind(
+        'viewer.joined',
+        (raw) => updateViewerCount(
+          ViewerJoinedEvent.fromJson(raw).viewerCount,
+        ),
+      );
+
+      _streamChannel!.bind(
+        'viewer.left',
+        (raw) => updateViewerCount(
+          ViewerJoinedEvent.fromJson(raw).viewerCount,
+        ),
+      );
+
+      _streamChannel!.bind(
+        'bid.placed',
+        (raw) => _handleBid(raw, source: channelName),
+      );
+
+      _streamChannel!.bind(
+        'BidPlaced',
+        (raw) => _handleBid(raw, source: channelName),
+      );
+    } catch (e) {
+      debugPrint('❌ Error initializing Pusher: $e');
+      emit(state.copyWith(
+        isPusherConnected: false,
+        errorMessage: 'Failed to connect to real-time updates',
+      ));
+    }
+  }
+
+  void _handleComment(dynamic raw, {required String source}) {
+    try {
+      final model = StreamCommentModel.fromJson(raw['comment']);
+      addIncomingComment(model);
+    } catch (e, st) {
+      debugPrint('❌ [$source] comment parse error: $e');
+      debugPrintStack(stackTrace: st);
+    }
+  }
+
+  void _handleBid(dynamic raw, {required String source}) {
+    try {
+      // TODO: forward to product/bid state if needed.
+    } catch (e, st) {
+      debugPrint('❌ [$source] bid parse error: $e');
+      debugPrintStack(stackTrace: st);
+    }
+  }
+
+  // ================== LiveKit ==================
+  Future<void> _initLiveKit() async {
+    // Check permissions
+    final statuses = await [Permission.camera, Permission.microphone].request();
+    if (statuses[Permission.camera] != PermissionStatus.granted ||
+        statuses[Permission.microphone] != PermissionStatus.granted) {
+      debugPrint(
+        '❌ Camera/Microphone permissions not granted - cannot start stream',
+      );
+      emit(state.copyWith(
+        isConnected: false,
+        errorMessage: 'Camera/Microphone permissions not granted',
+      ));
+      return;
+    }
+    debugPrint('✅ Permissions granted');
+
+    // Get LiveKit credentials
+    final credentials = await startStreamAndGetCredentials(
+      streamId: state.stream.id ?? 0,
+    );
+
+    if (credentials == null || credentials['token'] == null) {
+      debugPrint('❌ Failed to get LiveKit credentials');
+      emit(state.copyWith(
+        isConnected: false,
+        errorMessage: 'Failed to get stream credentials',
+      ));
+      return;
+    }
+
+    final token = credentials['token']!;
+    final serverUrl = credentials['livekitUrl'] ?? 'wss://livekit.khvatai.ru';
+    final roomName = credentials['room'] ?? '';
+
+    debugPrint('🔗 Connecting to LiveKit room: $roomName at $serverUrl');
+
+    // Retry connection with exponential backoff
+    const maxRetries = 3;
+    const initialDelay = Duration(seconds: 2);
+
+    for (int attempt = 0; attempt < maxRetries; attempt++) {
+      try {
+        // Clean up previous room if exists
+        if (state.room != null && attempt > 0) {
+          try {
+            await state.room!.disconnect();
+            await state.room!.dispose();
+          } catch (_) {
+            // Ignore cleanup errors
+          }
+        }
+
+        // Create room and connect
+        final room = Room();
+        room.addListener(_onRoomUpdate);
+
+        // Connect to the room with timeout
+        await room.connect(serverUrl, token).timeout(
+          const Duration(seconds: 30),
+          onTimeout: () {
+            throw Exception(
+              'Connection timeout after 30 seconds',
+            );
+          },
+        );
+
+        debugPrint('✅ Connected to LiveKit room (attempt ${attempt + 1})');
+
+        emit(state.copyWith(
+          isConnected: true,
+          room: room,
+          localParticipant: room.localParticipant,
+        ));
+
+        // Start publishing
+        await _startPublishing();
+
+        // Success - exit retry loop
+        return;
+      } catch (e, st) {
+        final isLastAttempt = attempt == maxRetries - 1;
+        final delay = Duration(
+          milliseconds: initialDelay.inMilliseconds * (1 << attempt),
+        );
+
+        debugPrint(
+          '❌ Failed to connect to LiveKit (attempt ${attempt + 1}/$maxRetries): $e',
+        );
+
+        if (isLastAttempt) {
+          debugPrint('❌ All connection attempts failed');
+          debugPrintStack(stackTrace: st);
+          emit(state.copyWith(
+            isConnected: false,
+            errorMessage: 'Failed to connect to stream server',
+          ));
+          // Clean up on final failure
+          if (state.room != null) {
+            try {
+              await state.room!.disconnect();
+              await state.room!.dispose();
+            } catch (_) {
+              // Ignore cleanup errors
+            }
+            emit(state.copyWith(room: null));
+          }
+          return;
+        }
+
+        // Wait before retrying (exponential backoff)
+        debugPrint('⏳ Retrying in ${delay.inSeconds} seconds...');
+        await Future.delayed(delay);
+      }
+    }
+  }
+
+  void _onRoomUpdate() {
+    emit(state.copyWith(
+      localParticipant: state.room?.localParticipant,
+    ));
+  }
+
+  Future<void> _startPublishing() async {
+    if (state.room == null || state.localParticipant == null) {
+      debugPrint('⚠️ Room or local participant not ready');
+      return;
+    }
+
+    // Verify permissions again
+    final cameraStatus = await Permission.camera.status;
+    final micStatus = await Permission.microphone.status;
+    if (cameraStatus != PermissionStatus.granted ||
+        micStatus != PermissionStatus.granted) {
+      debugPrint('❌ Camera/Microphone permissions not granted');
+      emit(state.copyWith(
+        isPublishing: false,
+        errorMessage: 'Camera/Microphone permissions not granted',
+      ));
+      return;
+    }
+
+    try {
+      // Create and publish camera track
+      final videoTrack =
+          await LocalVideoTrack.createCameraTrack(const CameraCaptureOptions());
+      await state.localParticipant!.publishVideoTrack(videoTrack);
+
+      // Create and publish microphone track
+      final audioTrack =
+          await LocalAudioTrack.create(const AudioCaptureOptions());
+      await state.localParticipant!.publishAudioTrack(audioTrack);
+
+      WakelockPlus.enable();
+
+      emit(state.copyWith(
+        isPublishing: true,
+        videoTrack: videoTrack,
+        audioTrack: audioTrack,
+      ));
+
+      debugPrint('✅ Started publishing stream');
+    } catch (e, st) {
+      debugPrint('❌ Failed to start publishing: $e');
+      debugPrintStack(stackTrace: st);
+      emit(state.copyWith(
+        isPublishing: false,
+        errorMessage: 'Failed to start publishing: $e',
+      ));
+    }
+  }
+
+  Future<void> pauseStreaming() async {
+    if (!state.isPublishing || state.localParticipant == null) return;
+
+    try {
+      await state.localParticipant!.setCameraEnabled(false);
+      await state.localParticipant!.setMicrophoneEnabled(false);
+      debugPrint('✅ Paused streaming');
+    } catch (e) {
+      debugPrint('❌ Pause streaming error: $e');
+    }
+  }
+
+  Future<void> resumeStreaming() async {
+    if (!state.isPublishing || state.localParticipant == null) return;
+
+    try {
+      await state.localParticipant!.setCameraEnabled(true);
+      await state.localParticipant!.setMicrophoneEnabled(true);
+      debugPrint('✅ Resumed streaming');
+    } catch (e) {
+      debugPrint('❌ Resume streaming error: $e');
+    }
+  }
+
+  // ================== Stream Control ==================
+  Future<Map<String, String?>?> startStreamAndGetCredentials({
+    required int streamId,
+  }) async {
+    emit(state.copyWith(isInitializing: true, errorMessage: ''));
+
+    final result = await _startStreamUsecase(streamId);
+
+    return result.fold(
+      (error) {
+        emit(state.copyWith(
+          isInitializing: false,
+          errorMessage: 'Failed to start stream: $error',
+        ));
+        return null;
+      },
+      (startStreamModel) {
+        emit(state.copyWith(isInitializing: false));
+        return {
+          'token': startStreamModel.token,
+          'room': startStreamModel.room ?? startStreamModel.data.channelName,
+          'livekitUrl': startStreamModel.livekitUrl,
+        };
+      },
+    );
+  }
+
+  Future<bool> leaveStream({required int streamId}) async {
+    final result = await _leaveUsecase(LeaveStreamParams(streamId: streamId));
+    return await result.fold(
+      (err) async => false,
+      (ok) async => true,
+    );
+  }
+
+  Future<bool> endStream({required int streamId}) async {
+    final result = await _endUsecase(EndStreamParams(streamId: streamId));
+    return await result.fold(
+      (err) async => false,
+      (ok) async => true,
+    );
+  }
+
+  // ================== Comments ==================
+  Future<void> loadInitialComments({required int streamId}) async {
+    emit(state.copyWith(
+      isLoadingComments: true,
+      commentsError: '',
+      commentsPage: 1,
+      commentsHasMore: true,
+      comments: const [],
+    ));
+
+    final res = await _getComments(GetStreamCommentsParams(
+      streamId: streamId,
+      page: 1,
+      perPage: state.commentsPerPage,
+    ));
+
+    res.fold(
+      (err) => emit(state.copyWith(
+        isLoadingComments: false,
+        commentsError: err,
+      )),
+      (pageData) {
+        final items = pageData.data?.data ?? <StreamCommentModel>[];
+        final hasMore = (pageData.data?.nextPageUrl != null) &&
+            (pageData.data!.currentPage! < (pageData.data!.lastPage ?? 1));
+
+        emit(state.copyWith(
+          isLoadingComments: false,
+          comments: items,
+          commentsPage: 1,
+          commentsHasMore: hasMore,
+        ));
+      },
+    );
+  }
+
+  Future<void> loadMoreComments({required int streamId}) async {
+    if (state.isLoadingComments || !state.commentsHasMore) return;
+
+    emit(state.copyWith(isLoadingComments: true, commentsError: ''));
+
+    final nextPage = state.commentsPage + 1;
+
+    final res = await _getComments(GetStreamCommentsParams(
+      streamId: streamId,
+      page: nextPage,
+      perPage: state.commentsPerPage,
+    ));
+
+    res.fold(
+      (err) => emit(state.copyWith(
+        isLoadingComments: false,
+        commentsError: err,
+      )),
+      (pageData) {
+        final items = pageData.data?.data ?? <StreamCommentModel>[];
+        final current = List<StreamCommentModel>.from(state.comments)
+          ..addAll(items);
+
+        final hasMore = (pageData.data?.nextPageUrl != null) &&
+            (pageData.data!.currentPage! < (pageData.data!.lastPage ?? 1));
+
+        emit(state.copyWith(
+          isLoadingComments: false,
+          comments: current,
+          commentsPage: nextPage,
+          commentsHasMore: hasMore,
+        ));
+      },
+    );
+  }
+
+  void updateCommentText(String text) {
+    emit(state.copyWith(commentText: text));
+  }
+
+  Future<void> sendCommentToServer({
+    required int streamId,
+    String type = 'comment',
+  }) async {
+    final text = state.commentText.trim();
+    controller.clear();
+
+    emit(state.copyWith(
+      isSendingComment: true,
+      sendCommentError: '',
+      commentText: '',
+    ));
+
+    final res = await _sendComment(SendStreamCommentParams(
+      streamId: streamId,
+      message: text,
+    ));
+
+    res.fold(
+      (err) {
+        emit(state.copyWith(
+          isSendingComment: false,
+          sendCommentError: err,
+        ));
+      },
+      (created) {
+        emit(state.copyWith(isSendingComment: false));
+      },
+    );
+  }
+
+  void addIncomingComment(StreamCommentModel model) {
+    final next = List<StreamCommentModel>.from(state.comments)..add(model);
+    emit(state.copyWith(comments: next));
+  }
+
+  // ================== Bids ==================
+  Future<void> loadInitialBids({required int streamId}) async {
+    emit(state.copyWith(
+      isLoadingBids: true,
+      bidsError: '',
+      bidsPage: 1,
+      bidsHasMore: true,
+      bids: const [],
+    ));
+
+    final res = await _getBids(GetStreamBidsParams(
+      streamId: streamId,
+      page: 1,
+      perPage: state.bidsPerPage,
+    ));
+
+    res.fold(
+      (err) => emit(state.copyWith(
+        isLoadingBids: false,
+        bidsError: err,
+      )),
+      (pageData) {
+        final items = pageData.data.data;
+        final currentPage = pageData.data.currentPage;
+        final lastPage = pageData.data.lastPage ?? 1;
+        final hasMore =
+            (pageData.data.nextPageUrl != null) && (currentPage < lastPage);
+
+        emit(state.copyWith(
+          isLoadingBids: false,
+          bids: items,
+          bidsPage: 1,
+          bidsHasMore: hasMore,
+        ));
+      },
+    );
+  }
+
+  Future<void> loadMoreBids({required int streamId}) async {
+    if (state.isLoadingBids || !state.bidsHasMore) return;
+
+    emit(state.copyWith(isLoadingBids: true, bidsError: ''));
+
+    final nextPage = state.bidsPage + 1;
+
+    final res = await _getBids(GetStreamBidsParams(
+      streamId: streamId,
+      page: nextPage,
+      perPage: state.bidsPerPage,
+    ));
+
+    res.fold(
+      (err) => emit(state.copyWith(
+        isLoadingBids: false,
+        bidsError: err,
+      )),
+      (pageData) {
+        final items = pageData.data.data;
+        final merged = List<BidStreamItem>.from(state.bids)..addAll(items);
+
+        final currentPage = pageData.data.currentPage;
+        final lastPage = pageData.data.lastPage ?? 1;
+        final hasMore =
+            (pageData.data.nextPageUrl != null) && (currentPage < lastPage);
+
+        emit(state.copyWith(
+          isLoadingBids: false,
+          bids: merged,
+          bidsPage: nextPage,
+          bidsHasMore: hasMore,
+        ));
+      },
+    );
+  }
+
+  Future<void> placeBid({
+    required int streamId,
+    required int productId,
+    required String bidAmount,
+  }) async {
+    emit(state.copyWith(
+      isPlacingBid: true,
+      addBidError: '',
+    ));
+
+    final res = await _addBidUsecase(AddStreamBidParams(
+      streamId: streamId,
+      productId: productId,
+      bidAmount: bidAmount,
+    ));
+
+    res.fold(
+      (err) => emit(state.copyWith(
+        isPlacingBid: false,
+        addBidError: err,
+      )),
+      (createdBid) {
+        final updated = List<BidStreamItem>.from(state.bids)
+          ..insert(0, createdBid);
+        emit(state.copyWith(
+          isPlacingBid: false,
+          bids: updated,
+        ));
+      },
+    );
+  }
+
+  void addIncomingBid(BidStreamItem item) {
+    final updated = List<BidStreamItem>.from(state.bids)..insert(0, item);
+    emit(state.copyWith(bids: updated));
+  }
+
+  // ================== Viewer Count ==================
+  void updateViewerCount(int viewerCount) {
+    emit(state.copyWith(viewerCount: viewerCount));
+  }
+
+  // ================== Timer ==================
+  void _startTimer() {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      emit(state.copyWith(streamSeconds: state.streamSeconds + 1));
+    });
+  }
+
+  // ================== Cleanup ==================
+  Future<void> cleanup() async {
+    _timer?.cancel();
+    controller.dispose();
+
+    // Cleanup LiveKit
+    try {
+      final localParticipant = state.room?.localParticipant;
+      localParticipant?.unpublishAllTracks();
+
+      state.videoTrack?.stop();
+      state.audioTrack?.stop();
+
+      if (localParticipant != null) {
+        try {
+          localParticipant.setCameraEnabled(false);
+          localParticipant.setMicrophoneEnabled(false);
+        } catch (e) {
+          debugPrint('Error disabling camera/mic: $e');
+        }
+      }
+
+      try {
+        await state.room?.disconnect();
+      } catch (e) {
+        debugPrint('Error disconnecting room: $e');
+      }
+
+      try {
+        await state.room?.dispose();
+      } catch (e) {
+        debugPrint('Error disposing room: $e');
+      }
+
+      WakelockPlus.disable();
+    } catch (e) {
+      debugPrint('Error cleaning up LiveKit: $e');
+    }
+
+    // Cleanup Pusher
+    _pusher?.disconnect();
+    _pusherManager.dispose();
+    _streamChannel?.unsubscribe();
+  }
+
+  @override
+  Future<void> close() async {
+    await cleanup();
+    return super.close();
+  }
+}

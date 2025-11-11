@@ -56,4 +56,7 @@ class AppRoutes {
   static const String chatDetails = 'chat_details';
   static const String chatSupportDetails = 'chat_support_details';
   static const String mainNotification = '/main_notification';
+
+  static const String liveStreamViewer = '/live_stream_viewer';
+  static const String liveStreamBroadcaster = '/live_stream_broadcaster';
 }

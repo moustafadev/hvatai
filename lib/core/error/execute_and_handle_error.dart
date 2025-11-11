@@ -1,8 +1,8 @@
+import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:hvatai/core/error/exception.dart';
 import 'package:hvatai/core/shared/utils/network_info.dart';
 import 'package:hvatai/locator.dart';
-import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 
 Future<Either<String, T>> executeAndHandleError<T>(
   Future<T> Function() function,
@@ -30,10 +30,42 @@ Future<T> executeAndHandleErrorServer<T>(Future<T> Function() function) async {
     if (error.response?.statusCode == 401) {
       // homeKey.currentState?.pushNamed('/login');
     }
+    String errorMessage = 'Network error occurred';
+    switch (error.type) {
+      case DioExceptionType.connectionTimeout:
+        errorMessage =
+            'Connection timeout. Please check your internet connection.';
+        break;
+      case DioExceptionType.sendTimeout:
+        errorMessage = 'Request timeout. Please try again.';
+        break;
+      case DioExceptionType.receiveTimeout:
+        errorMessage = 'Response timeout. Please try again.';
+        break;
+      case DioExceptionType.badResponse:
+        errorMessage = 'Server error: ${error.response?.statusCode}';
+        break;
+      case DioExceptionType.cancel:
+        errorMessage = 'Request was cancelled';
+        break;
+      case DioExceptionType.connectionError:
+        errorMessage =
+            'Connection error. Please check your internet connection.';
+        break;
+      case DioExceptionType.badCertificate:
+        errorMessage = 'Certificate error. Please check your connection.';
+        break;
+      case DioExceptionType.unknown:
+        errorMessage = 'Unknown network error occurred';
+        break;
+    }
     print(error.response?.data);
     throw DioException(
-      message: error.response?.data?["errors"].toString(),
       requestOptions: error.requestOptions,
+      response: error.response,
+      type: error.type,
+      error: error.error,
+      message: errorMessage,
     );
   } on NoInternetException {
     throw NoInternetException();

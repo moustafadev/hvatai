@@ -7,6 +7,7 @@ class BuildProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('imageimageimage: $image');
     double size = 80.r;
 
     if (image == null || image!.isEmpty) {

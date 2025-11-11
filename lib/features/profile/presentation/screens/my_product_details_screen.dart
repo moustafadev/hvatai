@@ -16,7 +16,7 @@ class MyProductDetailsScreen extends StatelessWidget {
           ? '${deliveryType[0].toUpperCase()}${deliveryType.substring(1)}'
           : 'notAvailable'.tr();
 
-      final images = product.images ?? [];
+      final images = product.images;
 
       return Scaffold(
         backgroundColor: AppColors.lightGreyBackground,
@@ -189,8 +189,9 @@ class MyProductDetailsScreen extends StatelessWidget {
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w700),
                         CustomText(
-                            text:
-                                product.selfPickup ? 'free'.tr() : 'paid'.tr(),
+                            text: product.selfPickup == true
+                                ? 'free'.tr()
+                                : 'paid'.tr(),
                             color: AppColors.blackDark,
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w700),

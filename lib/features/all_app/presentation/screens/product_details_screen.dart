@@ -25,7 +25,7 @@ class ProductDetailsScreen extends StatelessWidget {
               ? '${deliveryType[0].toUpperCase()}${deliveryType.substring(1)}'
               : 'notAvailable'.tr();
 
-          final images = product.images ?? [];
+          final images = product.images;
 
           final ownerProducts = products
               .where(
@@ -287,7 +287,7 @@ class ProductDetailsScreen extends StatelessWidget {
                                 fontSize: 14.sp,
                                 fontWeight: FontWeight.w700),
                             CustomText(
-                                text: product.selfPickup
+                                text: product.selfPickup == true
                                     ? 'free'.tr()
                                     : 'paid'.tr(),
                                 color: AppColors.blackDark,

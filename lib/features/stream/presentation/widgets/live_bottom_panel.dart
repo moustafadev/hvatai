@@ -1,8 +1,10 @@
 part of '../stream.dart';
+
 class LiveBottomPanel extends StatelessWidget {
   final List<StreamCommentModel> comments;
   final ValueChanged<String> onCommentChanged;
   final VoidCallback onSend;
+  final TextEditingController? controller;
 
   final String productTitle;
   final String productCategory;
@@ -21,6 +23,7 @@ class LiveBottomPanel extends StatelessWidget {
     required this.productCategory,
     required this.startPrice,
     required this.timerText,
+    this.controller,
     this.onEditPressed,
     this.onBidPressed,
   });
@@ -29,7 +32,6 @@ class LiveBottomPanel extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisAlignment: MainAxisAlignment.end,
       children: [
         SizedBox(
           width: MediaQuery.of(context).size.width * 0.7,
@@ -47,21 +49,28 @@ class LiveBottomPanel extends StatelessWidget {
         ),
         SizedBox(height: 12.h),
         Row(
+          //
           children: [
             Expanded(
-              child: CustomTextField(
-                hintText: 'Сообщение...',
-                fillColor: Colors.transparent,
-                controller: context.read<LiveStreamCubit>().controller,
-                borderRadius: BorderRadius.circular(24),
-                borderSide: const BorderSide(color: Colors.white),
-                hintColor: Colors.black.withOpacity(0.2),
-                onChanged: onCommentChanged,
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.send, color: Colors.white, size: 20),
-                  onPressed: onSend,
-                  splashRadius: 20,
-                ),
+              child: Builder(
+                builder: (context) {
+                  final textController = controller ?? _getController(context);
+                  return CustomTextField(
+                    hintText: 'Сообщение...',
+                    fillColor: Colors.transparent,
+                    controller: textController,
+                    borderRadius: BorderRadius.circular(24),
+                    borderSide: const BorderSide(color: Colors.white),
+                    hintColor: Colors.black.withOpacity(0.2),
+                    onChanged: onCommentChanged,
+                    suffixIcon: IconButton(
+                      icon:
+                          const Icon(Icons.send, color: Colors.white, size: 20),
+                      onPressed: onSend,
+                      splashRadius: 20,
+                    ),
+                  );
+                },
               ),
             ),
             SizedBox(width: 64.w),
@@ -74,7 +83,6 @@ class LiveBottomPanel extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Title + "Стартовая цена"
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -115,8 +123,8 @@ class LiveBottomPanel extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: AppColors.primary,
                         borderRadius: BorderRadius.circular(12),
@@ -128,12 +136,6 @@ class LiveBottomPanel extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    CustomText(
-                      text: timerText,
-                      color: AppColors.primaryColor,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                    ),
                   ],
                 ),
               ],
@@ -142,7 +144,6 @@ class LiveBottomPanel extends StatelessWidget {
         ),
         SizedBox(height: 12.h),
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Expanded(
               child: CustomButton(
@@ -153,14 +154,13 @@ class LiveBottomPanel extends StatelessWidget {
                 radius: 24,
                 height: 40,
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 fontWeight: FontWeight.w700,
                 fontSize: 14,
               ),
             ),
-            SizedBox(width: 16.w),
+            SizedBox(width: 8.w),
             Expanded(
-              flex: 2,
               child: Container(
                 height: 40,
                 padding: const EdgeInsets.all(4),
@@ -172,13 +172,13 @@ class LiveBottomPanel extends StatelessWidget {
                   borderRadius: BorderRadius.circular(24),
                 ),
                 child: CustomButton(
-                  title: 'Ставка: ${startPrice}₽',
+                  title: 'Ставка: $startPrice₽',
                   onPressed: onBidPressed,
                   color: AppColors.primaryColor,
                   textColor: Colors.white,
                   radius: 24,
                   height: 32,
-                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
                   fontWeight: FontWeight.w700,
                   fontSize: 14,
                 ),
@@ -188,5 +188,14 @@ class LiveBottomPanel extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  TextEditingController _getController(BuildContext context) {
+    // Try to get controller from BroadcasterStreamCubit or ViewerStreamCubit
+    try {
+      return context.read<BroadcasterStreamCubit>().controller;
+    } catch (_) {
+      return context.read<ViewerStreamCubit>().controller;
+    }
   }
 }

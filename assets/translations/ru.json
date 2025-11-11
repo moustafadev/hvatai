@@ -38,7 +38,6 @@
   "firstName": "Имя",
   "lastName": "Фамилия",
   "email": "Эл. почта",
-
   "post": "почта",
   "pickup": "самовывоз",
   "password": "Пароль",
@@ -267,7 +266,6 @@
   "deliverySettings": "Настройки доставки",
   "profileType": "Тип профиля",
   "courier": "курьер",
-
   "currentProfileType": " Текущий тип профиля",
   "accountSettings": "Настройки аккаунта",
   "analytics": "Аналитика",
@@ -278,8 +276,6 @@
   "all": "Все",
   "interestsAdded": "Интересы добавлены",
   "alreadyInFavorites": "Уже в избранном",
-  
-
   "delete": "Delete",
   "home": "Главная",
   "favorites": "Избранное",
@@ -298,9 +294,9 @@
   "photoAccess": "Чтобы загрузить фото, пожалуйста, разрешите доступ к фотографиям в настройках приложения.",
   "bookInLive": "Выставить на стрим",
   "productAdded": "Товар добавлен!",
-  "find":"Найти...",
-  "courierFromPlatform":"Курьером от платформы",
-  "selfDelivery":"Самостоятельно (Я доставлю)",
+  "find": "Найти...",
+  "courierFromPlatform": "Курьером от платформы",
+  "selfDelivery": "Самостоятельно (Я доставлю)",
   "buyNow": "Купить сейчас",
   "deliveryWays": "Способы доставки",
   "noProducts": "Товары не найдены",
@@ -374,7 +370,7 @@
   "rates": "Рейтинги",
   "messages": "Сообщения",
   "chat": "Чат",
-    "featured": "Рекомендуемые",
+  "featured": "Рекомендуемые",
   "awaitingReceipt": "Ожидает получения",
   "onTheWay": "В пути",
   "awaitingShipment": "Ожидает отправки",
@@ -504,7 +500,6 @@
   "doYouWantToEndLiveVideo": "Вы хотите завершить прямую трансляцию?",
   "yes": "Да",
   "no": "Нет",
-
   "addCard": "Добавить карту",
   "cardNumber": "Номер карты",
   "cardName": "Название карты",
@@ -550,7 +545,6 @@
   "maximum30WordsAllowed": "Максимум 30 слов",
   "eg100": "например, 100",
   "eg999": "например, 999",
- 
   "minimum bid increment": "Минимальный шаг ставки",
   "auto delete hours": "Часы до удаления",
   "recording enabled": "Запись включена",
@@ -561,5 +555,6 @@
   "save recording": "Сохранить запись",
   "select products": "Выберите продукты",
   "select product": "Выберите продукт",
-  "create": "Создать"
+  "create": "Создать",
+  "bid duration": "Длительность ставки"
 }

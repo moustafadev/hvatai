@@ -1,7 +1,7 @@
 // domain/usecases/get_stream_comments_usecase.dart
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
-import 'package:hvatai/features/stream/data/models/stream_comment_model.dart';
+import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
 
 class GetStreamCommentsUsecase

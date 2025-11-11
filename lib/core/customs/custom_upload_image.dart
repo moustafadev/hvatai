@@ -139,15 +139,15 @@ class CustomUploadImageWidget extends StatelessWidget {
   }
 }
 
-Future<void> _showPermissionDialog(BuildContext context) async {
-  await showDialogCupertino(
-    context,
-    'photoAccess'.tr(),
-    'cancel'.tr(),
-    'openSettings'.tr(),
-    () => openAppSettings(),
-  );
-}
+// Future<void> _showPermissionDialog(BuildContext context) async {
+//   await showDialogCupertino(
+//     context,
+//     'photoAccess'.tr(),
+//     'cancel'.tr(),
+//     'openSettings'.tr(),
+//     () => openAppSettings(),
+//   );
+// }
 
 /// --- PhotoOptionsDialog ---
 

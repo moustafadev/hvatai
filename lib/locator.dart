@@ -1,8 +1,8 @@
+import 'package:get_it/get_it.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/core/datasources/local/cache_helper.dart';
 import 'package:hvatai/core/shared/utils/network_info.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
 import 'package:hvatai/features/activity/presentation/cubit/featured_activity/featured_activity_cubit.dart';
 import 'package:hvatai/features/activity/presentation/cubit/rates_activity/rates_activity_cubit.dart';
@@ -31,7 +31,11 @@ import 'package:hvatai/features/chat/data/datasources/api_service_chat.dart';
 import 'package:hvatai/features/chat/data/repositories/chat_impl_repository.dart';
 import 'package:hvatai/features/chat/domain/repositories/chat_repository.dart';
 import 'package:hvatai/features/chat/presentation/cubit/chats_cubit.dart';
+import 'package:hvatai/features/home/data/datasources/api_service_home.dart';
+import 'package:hvatai/features/home/data/repositories/home_impl_repository.dart';
+import 'package:hvatai/features/home/domain/repositories/home_repository.dart';
 import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_cubit.dart';
+import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_tabs_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
 import 'package:hvatai/features/profile/data/datasources/api_service_profile.dart';
 import 'package:hvatai/features/profile/data/repositories/profile_impl_repository.dart';
@@ -40,19 +44,15 @@ import 'package:hvatai/features/profile/presentation/cubit/add_stream/add_stream
 import 'package:hvatai/features/profile/presentation/cubit/analytics_cubit/analytics_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
-import 'package:hvatai/features/home/data/datasources/api_service_home.dart';
-import 'package:hvatai/features/home/data/repositories/home_impl_repository.dart';
-import 'package:hvatai/features/home/domain/repositories/home_repository.dart';
-import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_tabs_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
 import 'package:hvatai/features/search/presentation/cubit/auction_search_cubit/auction_search_cubit.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart';
 import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
 import 'package:hvatai/features/stream/domain/repositories/stream_impl_repository.dart';
-import 'package:hvatai/features/stream/presentation/cubit/live_stream_cubit.dart';
+import 'package:hvatai/features/stream/presentation/cubit/live_listings_shop/live_listings_shop_cubit.dart';
 import 'package:hvatai/locator_use_case.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -85,8 +85,6 @@ Future<void> setupLocator() async {
   locator.registerFactory(
       () => ProductDetailsCubit(locator(), locator(), locator()));
   locator.registerFactory(() => AddStreamCubit(locator(), locator()));
-  locator.registerFactory(() => LiveStreamCubit(locator(), locator(), locator(),
-      locator(), locator(), locator(), locator()));
   locator.registerFactory(() => ChatsCubit(
         locator(),
         locator(),
@@ -101,8 +99,14 @@ Future<void> setupLocator() async {
         locator(),
       ));
 
-  locator.registerFactory(() =>
-      CategoryTabsCubit(locator(), locator(), locator(), locator(), locator()));
+  locator.registerFactory(() => CategoryTabsCubit(
+        locator(),
+        locator(),
+        locator(),
+        locator(),
+        locator(),
+        locator(),
+      ));
 
   locator.registerFactory(
       () => PaymentMethodCubit(locator(), locator(), locator()));
@@ -126,6 +130,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => OtpCubit(locator()));
   locator.registerFactory(() => RatesActivityCubit());
   locator.registerFactory(() => FeaturedActivityCubit());
+  locator.registerFactory(() => LiveListingsShopCubit(
+      locator(), locator(), locator(), locator(), locator()));
 
   // //CORE
   // //UseCase

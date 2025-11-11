@@ -26,14 +26,15 @@ class CustomImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool _isNetworkImage = imageSource.isNetworkImage;
-    bool _isAssetImage = imageSource.isAssetImage;
+    print('imageSource: $imageSource');
+    bool isNetworkImage = imageSource.isNetworkImage;
+    bool isAssetImage = imageSource.isAssetImage;
 
     if (imageSource.isEmpty) {
       return _buildPlaceholder();
     }
 
-    if (_isNetworkImage) {
+    if (isNetworkImage) {
       return CachedNetworkImage(
         imageUrl: imageSource,
         width: width,
@@ -41,7 +42,7 @@ class CustomImage extends StatelessWidget {
         fit: fit,
         errorWidget: (context, url, error) => _buildPlaceholder(),
       );
-    } else if (_isAssetImage) {
+    } else if (isAssetImage) {
       return Image.asset(
         imageSource,
         width: width,
@@ -50,8 +51,14 @@ class CustomImage extends StatelessWidget {
         errorBuilder: (context, error, stackTrace) => _buildPlaceholder(),
       );
     } else {
+      // If path starts with /, it's likely a server path, normalize it
+      String normalizedPath = imageSource;
+      if (imageSource.startsWith('/')) {
+        normalizedPath = imageSource.substring(1);
+      }
+
       // For local files, first check if the file exists
-      final file = File(imageSource);
+      final file = File(normalizedPath);
       if (file.existsSync()) {
         return Image.file(
           file,
@@ -63,7 +70,7 @@ class CustomImage extends StatelessWidget {
       } else {
         // If file doesn't exist, try to construct a network URL
         try {
-          final networkUrl = Uri.parse('https://khvatai.ru/$imageSource');
+          final networkUrl = Uri.parse('https://khvatai.ru/$normalizedPath');
           return CachedNetworkImage(
             imageUrl: networkUrl.toString(),
             width: width,
@@ -79,17 +86,11 @@ class CustomImage extends StatelessWidget {
   }
 
   Widget _buildPlaceholder() {
-    return Container(
+    return Image.asset(
+      Assets.assetsImagesPlaceholder,
       width: width,
       height: height,
-      color: AppColors.gray,
-      child: Center(
-        child: Icon(
-          Icons.image,
-          size: width! / 2,
-          color: AppColors.grey,
-        ),
-      ),
+      fit: fit,
     );
   }
 }

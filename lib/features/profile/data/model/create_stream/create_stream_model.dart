@@ -8,7 +8,7 @@ class CreateStreamModel with _$CreateStreamModel {
   const factory CreateStreamModel({
     required String title,
     required String description,
-    @JsonKey(name: 'scheduled_at', includeIfNull: false)  DateTime? scheduledAt,
+    @JsonKey(name: 'scheduled_at', includeIfNull: false) DateTime? scheduledAt,
     @JsonKey(name: 'is_recording_enabled') required bool isRecordingEnabled,
     @JsonKey(name: 'is_public') required bool isPublic,
     @JsonKey(name: 'enable_comments') required bool enableComments,
@@ -18,6 +18,7 @@ class CreateStreamModel with _$CreateStreamModel {
     @JsonKey(name: 'auto_delete_hours') required int autoDeleteHours,
     @JsonKey(name: 'save_recording') required bool saveRecording,
     @JsonKey(name: 'product_ids') required List<int> productIds,
+    @JsonKey(name: 'bid_duration_seconds') required int bidDurationSeconds,
   }) = _CreateStreamModel;
 
   factory CreateStreamModel.fromJson(Map<String, dynamic> json) =>

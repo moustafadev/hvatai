@@ -52,8 +52,6 @@ class _HomeScreenState extends State<HomeScreen> {
         chatsCubit.markAllMessagesAsReadLocally();
       }
     });
-
-   
   }
 
   @override
@@ -73,6 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: BlocProvider(
         create: (_) => locator<CategoryTabsCubit>()
           ..fetchLiveStreams()
+          ..subscribeToLiveStreams()
           ..getCategories()
           ..getFavCategories(),
         child: SafeArea(
@@ -80,55 +79,58 @@ class _HomeScreenState extends State<HomeScreen> {
           child: BlocBuilder<CategoryTabsCubit, CategoryTabsState>(
             builder: (context, state) {
               if (state.isLoading) {
-                return Scaffold(
-                  body: const Center(
-                      child: CircularProgressIndicator(
-                    color: AppColors.grey,
-                  )),
-                );
+                return const Center(
+                    child: CircularProgressIndicator(
+                  color: AppColors.grey,
+                ));
               }
-              return Column(
-                children: [
-                  10.ph,
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: TopBarWidget(
-                      onGiftTap: () => context.push(AppRoutes.awardsGift),
-                    ),
-                  ),
-                  16.ph,
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Padding(
-                              padding: const EdgeInsets.only(left: 15.0),
-                              child: CategoryTabsWidget()),
-                          10.ph,
-                          const Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 15.0),
-                            child: TitleCategoriesForYou(),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(left: 16.0),
-                            child: MyCategory(),
-                          ),
-                          12.ph,
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: LiveVideosWidget(
-                              liveStreams: state.liveStreams,
-                              currentUserId: '',
-                            ),
-                          ),
-                          100.ph
-                        ],
+              return RefreshIndicator(
+                onRefresh: () async {
+                  context
+                      .read<CategoryTabsCubit>()
+                      .fetchLiveStreams(isRefresh: true);
+                  context.read<CategoryTabsCubit>().getCategories();
+                  context.read<CategoryTabsCubit>().getFavCategories();
+                },
+                child: ListView(
+                  children: [
+                    10.ph,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                      child: TopBarWidget(
+                        onGiftTap: () => context.push(AppRoutes.awardsGift),
                       ),
                     ),
-                  ),
-                ],
+                    16.ph,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15.0),
+                          child: CategoryTabsWidget(),
+                        ),
+                        10.ph,
+                        const Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 15.0),
+                          child: TitleCategoriesForYou(),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.only(left: 16.0),
+                          child: MyCategory(),
+                        ),
+                        12.ph,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: LiveVideosWidget(
+                            liveStreams: state.liveStreams,
+                            currentUserId: '',
+                          ),
+                        ),
+                        100.ph
+                      ],
+                    ),
+                  ],
+                ),
               );
             },
           ),
@@ -137,4 +139,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-

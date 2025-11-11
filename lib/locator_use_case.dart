@@ -26,6 +26,7 @@ import 'package:hvatai/features/home/domain/usecases/get_notification_usecase.da
 import 'package:hvatai/features/home/domain/usecases/get_streams_usecases.dart';
 import 'package:hvatai/features/home/domain/usecases/join_stream_usecase.dart';
 import 'package:hvatai/features/home/domain/usecases/mark_read_usecase.dart';
+import 'package:hvatai/features/home/domain/usecases/watch_live_streams_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
@@ -42,13 +43,17 @@ import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase
 import 'package:hvatai/features/profile/domain/usecases/sign_out_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_type_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/end_stream_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_bid_session_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_stream_products_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/start_stream_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/toggle_bidding_usecase.dart';
 import 'package:hvatai/locator.dart';
 
 void locatorUseCase() {
@@ -89,6 +94,7 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => DeleteCartUsecase(locator()));
   locator.registerLazySingleton(() => GetLiveStreamsUsecase(locator()));
   locator.registerLazySingleton(() => GetStreamsUsecase(locator()));
+  locator.registerLazySingleton(() => WatchLiveStreamsUsecase(locator()));
   locator.registerLazySingleton(() => JoinStreamUsecase(locator()));
   locator.registerLazySingleton(() => GetSupportChatUseCase(locator()));
   locator.registerLazySingleton(() => GetSupportMessagesUseCase(locator()));
@@ -104,5 +110,9 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => GetStreamBidsUsecase(locator()));
   locator.registerLazySingleton(() => AddStreamBidUsecase(locator()));
   locator.registerLazySingleton(() => StartStreamUsecase(locator()));
+  locator.registerLazySingleton(() => AddProductToStreamUsecase(locator()));
+  locator.registerLazySingleton(() => GetStreamProductsUsecase(locator()));
+  locator.registerLazySingleton(() => GetBidSessionUsecase(locator()));
+  locator.registerLazySingleton(() => ToggleBiddingUsecase(locator()));
   locator.registerLazySingleton(() => ChangePasswordUsecase(locator()));
 }

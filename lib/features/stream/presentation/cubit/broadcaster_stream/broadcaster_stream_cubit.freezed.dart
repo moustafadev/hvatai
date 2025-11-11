@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'live_stream_cubit.dart';
+part of 'broadcaster_stream_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,18 +15,24 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$LiveStreamState {
-  UserRole get role => throw _privateConstructorUsedError; // Agora / presence
-  bool get localReady => throw _privateConstructorUsedError;
-  int? get remoteUid => throw _privateConstructorUsedError;
-  bool get isInitializing => throw _privateConstructorUsedError;
-  bool get joined => throw _privateConstructorUsedError;
-  int get viewerCount => throw _privateConstructorUsedError; // Timer
+mixin _$BroadcasterStreamState {
+// LiveKit
+  bool get isConnected => throw _privateConstructorUsedError;
+  bool get isPublishing => throw _privateConstructorUsedError;
+  LocalVideoTrack? get videoTrack => throw _privateConstructorUsedError;
+  LocalAudioTrack? get audioTrack =>
+      throw _privateConstructorUsedError; // Room & Participants
+  Room? get room => throw _privateConstructorUsedError;
+  LocalParticipant? get localParticipant =>
+      throw _privateConstructorUsedError; // Pusher
+  bool get isPusherConnected =>
+      throw _privateConstructorUsedError; // Stream data
+  StreamDataModel get stream => throw _privateConstructorUsedError;
+  int get viewerCount => throw _privateConstructorUsedError;
   int get streamSeconds =>
       throw _privateConstructorUsedError; // Comments (RAW API MODELS)
   List<StreamCommentModel> get comments => throw _privateConstructorUsedError;
-  String get commentText =>
-      throw _privateConstructorUsedError; // Comments loading/paging
+  String get commentText => throw _privateConstructorUsedError;
   bool get isLoadingComments => throw _privateConstructorUsedError;
   bool get isSendingComment => throw _privateConstructorUsedError;
   int get commentsPage => throw _privateConstructorUsedError;
@@ -41,30 +47,34 @@ mixin _$LiveStreamState {
   bool get bidsHasMore => throw _privateConstructorUsedError; // Errors
   String get errorMessage => throw _privateConstructorUsedError;
   String get commentsError => throw _privateConstructorUsedError;
-  String get sendCommentError =>
-      throw _privateConstructorUsedError; // Bid errors
+  String get sendCommentError => throw _privateConstructorUsedError;
   String get bidsError => throw _privateConstructorUsedError;
-  String get addBidError => throw _privateConstructorUsedError;
+  String get addBidError =>
+      throw _privateConstructorUsedError; // Initialization
+  bool get isInitializing => throw _privateConstructorUsedError;
 
-  /// Create a copy of LiveStreamState
+  /// Create a copy of BroadcasterStreamState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $LiveStreamStateCopyWith<LiveStreamState> get copyWith =>
+  $BroadcasterStreamStateCopyWith<BroadcasterStreamState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $LiveStreamStateCopyWith<$Res> {
-  factory $LiveStreamStateCopyWith(
-          LiveStreamState value, $Res Function(LiveStreamState) then) =
-      _$LiveStreamStateCopyWithImpl<$Res, LiveStreamState>;
+abstract class $BroadcasterStreamStateCopyWith<$Res> {
+  factory $BroadcasterStreamStateCopyWith(BroadcasterStreamState value,
+          $Res Function(BroadcasterStreamState) then) =
+      _$BroadcasterStreamStateCopyWithImpl<$Res, BroadcasterStreamState>;
   @useResult
   $Res call(
-      {UserRole role,
-      bool localReady,
-      int? remoteUid,
-      bool isInitializing,
-      bool joined,
+      {bool isConnected,
+      bool isPublishing,
+      LocalVideoTrack? videoTrack,
+      LocalAudioTrack? audioTrack,
+      Room? room,
+      LocalParticipant? localParticipant,
+      bool isPusherConnected,
+      StreamDataModel stream,
       int viewerCount,
       int streamSeconds,
       List<StreamCommentModel> comments,
@@ -84,29 +94,36 @@ abstract class $LiveStreamStateCopyWith<$Res> {
       String commentsError,
       String sendCommentError,
       String bidsError,
-      String addBidError});
+      String addBidError,
+      bool isInitializing});
+
+  $StreamDataModelCopyWith<$Res> get stream;
 }
 
 /// @nodoc
-class _$LiveStreamStateCopyWithImpl<$Res, $Val extends LiveStreamState>
-    implements $LiveStreamStateCopyWith<$Res> {
-  _$LiveStreamStateCopyWithImpl(this._value, this._then);
+class _$BroadcasterStreamStateCopyWithImpl<$Res,
+        $Val extends BroadcasterStreamState>
+    implements $BroadcasterStreamStateCopyWith<$Res> {
+  _$BroadcasterStreamStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of LiveStreamState
+  /// Create a copy of BroadcasterStreamState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? role = null,
-    Object? localReady = null,
-    Object? remoteUid = freezed,
-    Object? isInitializing = null,
-    Object? joined = null,
+    Object? isConnected = null,
+    Object? isPublishing = null,
+    Object? videoTrack = freezed,
+    Object? audioTrack = freezed,
+    Object? room = freezed,
+    Object? localParticipant = freezed,
+    Object? isPusherConnected = null,
+    Object? stream = null,
     Object? viewerCount = null,
     Object? streamSeconds = null,
     Object? comments = null,
@@ -127,28 +144,41 @@ class _$LiveStreamStateCopyWithImpl<$Res, $Val extends LiveStreamState>
     Object? sendCommentError = null,
     Object? bidsError = null,
     Object? addBidError = null,
+    Object? isInitializing = null,
   }) {
     return _then(_value.copyWith(
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as UserRole,
-      localReady: null == localReady
-          ? _value.localReady
-          : localReady // ignore: cast_nullable_to_non_nullable
+      isConnected: null == isConnected
+          ? _value.isConnected
+          : isConnected // ignore: cast_nullable_to_non_nullable
               as bool,
-      remoteUid: freezed == remoteUid
-          ? _value.remoteUid
-          : remoteUid // ignore: cast_nullable_to_non_nullable
-              as int?,
-      isInitializing: null == isInitializing
-          ? _value.isInitializing
-          : isInitializing // ignore: cast_nullable_to_non_nullable
+      isPublishing: null == isPublishing
+          ? _value.isPublishing
+          : isPublishing // ignore: cast_nullable_to_non_nullable
               as bool,
-      joined: null == joined
-          ? _value.joined
-          : joined // ignore: cast_nullable_to_non_nullable
+      videoTrack: freezed == videoTrack
+          ? _value.videoTrack
+          : videoTrack // ignore: cast_nullable_to_non_nullable
+              as LocalVideoTrack?,
+      audioTrack: freezed == audioTrack
+          ? _value.audioTrack
+          : audioTrack // ignore: cast_nullable_to_non_nullable
+              as LocalAudioTrack?,
+      room: freezed == room
+          ? _value.room
+          : room // ignore: cast_nullable_to_non_nullable
+              as Room?,
+      localParticipant: freezed == localParticipant
+          ? _value.localParticipant
+          : localParticipant // ignore: cast_nullable_to_non_nullable
+              as LocalParticipant?,
+      isPusherConnected: null == isPusherConnected
+          ? _value.isPusherConnected
+          : isPusherConnected // ignore: cast_nullable_to_non_nullable
               as bool,
+      stream: null == stream
+          ? _value.stream
+          : stream // ignore: cast_nullable_to_non_nullable
+              as StreamDataModel,
       viewerCount: null == viewerCount
           ? _value.viewerCount
           : viewerCount // ignore: cast_nullable_to_non_nullable
@@ -229,24 +259,42 @@ class _$LiveStreamStateCopyWithImpl<$Res, $Val extends LiveStreamState>
           ? _value.addBidError
           : addBidError // ignore: cast_nullable_to_non_nullable
               as String,
+      isInitializing: null == isInitializing
+          ? _value.isInitializing
+          : isInitializing // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
+  }
+
+  /// Create a copy of BroadcasterStreamState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StreamDataModelCopyWith<$Res> get stream {
+    return $StreamDataModelCopyWith<$Res>(_value.stream, (value) {
+      return _then(_value.copyWith(stream: value) as $Val);
+    });
   }
 }
 
 /// @nodoc
-abstract class _$$LiveStreamStateImplCopyWith<$Res>
-    implements $LiveStreamStateCopyWith<$Res> {
-  factory _$$LiveStreamStateImplCopyWith(_$LiveStreamStateImpl value,
-          $Res Function(_$LiveStreamStateImpl) then) =
-      __$$LiveStreamStateImplCopyWithImpl<$Res>;
+abstract class _$$BroadcasterStreamStateImplCopyWith<$Res>
+    implements $BroadcasterStreamStateCopyWith<$Res> {
+  factory _$$BroadcasterStreamStateImplCopyWith(
+          _$BroadcasterStreamStateImpl value,
+          $Res Function(_$BroadcasterStreamStateImpl) then) =
+      __$$BroadcasterStreamStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {UserRole role,
-      bool localReady,
-      int? remoteUid,
-      bool isInitializing,
-      bool joined,
+      {bool isConnected,
+      bool isPublishing,
+      LocalVideoTrack? videoTrack,
+      LocalAudioTrack? audioTrack,
+      Room? room,
+      LocalParticipant? localParticipant,
+      bool isPusherConnected,
+      StreamDataModel stream,
       int viewerCount,
       int streamSeconds,
       List<StreamCommentModel> comments,
@@ -266,27 +314,36 @@ abstract class _$$LiveStreamStateImplCopyWith<$Res>
       String commentsError,
       String sendCommentError,
       String bidsError,
-      String addBidError});
+      String addBidError,
+      bool isInitializing});
+
+  @override
+  $StreamDataModelCopyWith<$Res> get stream;
 }
 
 /// @nodoc
-class __$$LiveStreamStateImplCopyWithImpl<$Res>
-    extends _$LiveStreamStateCopyWithImpl<$Res, _$LiveStreamStateImpl>
-    implements _$$LiveStreamStateImplCopyWith<$Res> {
-  __$$LiveStreamStateImplCopyWithImpl(
-      _$LiveStreamStateImpl _value, $Res Function(_$LiveStreamStateImpl) _then)
+class __$$BroadcasterStreamStateImplCopyWithImpl<$Res>
+    extends _$BroadcasterStreamStateCopyWithImpl<$Res,
+        _$BroadcasterStreamStateImpl>
+    implements _$$BroadcasterStreamStateImplCopyWith<$Res> {
+  __$$BroadcasterStreamStateImplCopyWithImpl(
+      _$BroadcasterStreamStateImpl _value,
+      $Res Function(_$BroadcasterStreamStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of LiveStreamState
+  /// Create a copy of BroadcasterStreamState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? role = null,
-    Object? localReady = null,
-    Object? remoteUid = freezed,
-    Object? isInitializing = null,
-    Object? joined = null,
+    Object? isConnected = null,
+    Object? isPublishing = null,
+    Object? videoTrack = freezed,
+    Object? audioTrack = freezed,
+    Object? room = freezed,
+    Object? localParticipant = freezed,
+    Object? isPusherConnected = null,
+    Object? stream = null,
     Object? viewerCount = null,
     Object? streamSeconds = null,
     Object? comments = null,
@@ -307,28 +364,41 @@ class __$$LiveStreamStateImplCopyWithImpl<$Res>
     Object? sendCommentError = null,
     Object? bidsError = null,
     Object? addBidError = null,
+    Object? isInitializing = null,
   }) {
-    return _then(_$LiveStreamStateImpl(
-      role: null == role
-          ? _value.role
-          : role // ignore: cast_nullable_to_non_nullable
-              as UserRole,
-      localReady: null == localReady
-          ? _value.localReady
-          : localReady // ignore: cast_nullable_to_non_nullable
+    return _then(_$BroadcasterStreamStateImpl(
+      isConnected: null == isConnected
+          ? _value.isConnected
+          : isConnected // ignore: cast_nullable_to_non_nullable
               as bool,
-      remoteUid: freezed == remoteUid
-          ? _value.remoteUid
-          : remoteUid // ignore: cast_nullable_to_non_nullable
-              as int?,
-      isInitializing: null == isInitializing
-          ? _value.isInitializing
-          : isInitializing // ignore: cast_nullable_to_non_nullable
+      isPublishing: null == isPublishing
+          ? _value.isPublishing
+          : isPublishing // ignore: cast_nullable_to_non_nullable
               as bool,
-      joined: null == joined
-          ? _value.joined
-          : joined // ignore: cast_nullable_to_non_nullable
+      videoTrack: freezed == videoTrack
+          ? _value.videoTrack
+          : videoTrack // ignore: cast_nullable_to_non_nullable
+              as LocalVideoTrack?,
+      audioTrack: freezed == audioTrack
+          ? _value.audioTrack
+          : audioTrack // ignore: cast_nullable_to_non_nullable
+              as LocalAudioTrack?,
+      room: freezed == room
+          ? _value.room
+          : room // ignore: cast_nullable_to_non_nullable
+              as Room?,
+      localParticipant: freezed == localParticipant
+          ? _value.localParticipant
+          : localParticipant // ignore: cast_nullable_to_non_nullable
+              as LocalParticipant?,
+      isPusherConnected: null == isPusherConnected
+          ? _value.isPusherConnected
+          : isPusherConnected // ignore: cast_nullable_to_non_nullable
               as bool,
+      stream: null == stream
+          ? _value.stream
+          : stream // ignore: cast_nullable_to_non_nullable
+              as StreamDataModel,
       viewerCount: null == viewerCount
           ? _value.viewerCount
           : viewerCount // ignore: cast_nullable_to_non_nullable
@@ -409,21 +479,28 @@ class __$$LiveStreamStateImplCopyWithImpl<$Res>
           ? _value.addBidError
           : addBidError // ignore: cast_nullable_to_non_nullable
               as String,
+      isInitializing: null == isInitializing
+          ? _value.isInitializing
+          : isInitializing // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
 
 /// @nodoc
 
-class _$LiveStreamStateImpl
+class _$BroadcasterStreamStateImpl
     with DiagnosticableTreeMixin
-    implements _LiveStreamState {
-  const _$LiveStreamStateImpl(
-      {required this.role,
-      this.localReady = false,
-      this.remoteUid,
-      this.isInitializing = false,
-      this.joined = false,
+    implements _BroadcasterStreamState {
+  const _$BroadcasterStreamStateImpl(
+      {this.isConnected = false,
+      this.isPublishing = false,
+      this.videoTrack,
+      this.audioTrack,
+      this.room,
+      this.localParticipant,
+      this.isPusherConnected = false,
+      required this.stream,
       this.viewerCount = 0,
       this.streamSeconds = 0,
       final List<StreamCommentModel> comments = const <StreamCommentModel>[],
@@ -443,28 +520,37 @@ class _$LiveStreamStateImpl
       this.commentsError = '',
       this.sendCommentError = '',
       this.bidsError = '',
-      this.addBidError = ''})
+      this.addBidError = '',
+      this.isInitializing = false})
       : _comments = comments,
         _bids = bids;
 
-  @override
-  final UserRole role;
-// Agora / presence
+// LiveKit
   @override
   @JsonKey()
-  final bool localReady;
-  @override
-  final int? remoteUid;
+  final bool isConnected;
   @override
   @JsonKey()
-  final bool isInitializing;
+  final bool isPublishing;
+  @override
+  final LocalVideoTrack? videoTrack;
+  @override
+  final LocalAudioTrack? audioTrack;
+// Room & Participants
+  @override
+  final Room? room;
+  @override
+  final LocalParticipant? localParticipant;
+// Pusher
   @override
   @JsonKey()
-  final bool joined;
+  final bool isPusherConnected;
+// Stream data
+  @override
+  final StreamDataModel stream;
   @override
   @JsonKey()
   final int viewerCount;
-// Timer
   @override
   @JsonKey()
   final int streamSeconds;
@@ -482,7 +568,6 @@ class _$LiveStreamStateImpl
   @override
   @JsonKey()
   final String commentText;
-// Comments loading/paging
   @override
   @JsonKey()
   final bool isLoadingComments;
@@ -534,29 +619,35 @@ class _$LiveStreamStateImpl
   @override
   @JsonKey()
   final String sendCommentError;
-// Bid errors
   @override
   @JsonKey()
   final String bidsError;
   @override
   @JsonKey()
   final String addBidError;
+// Initialization
+  @override
+  @JsonKey()
+  final bool isInitializing;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LiveStreamState(role: $role, localReady: $localReady, remoteUid: $remoteUid, isInitializing: $isInitializing, joined: $joined, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError)';
+    return 'BroadcasterStreamState(isConnected: $isConnected, isPublishing: $isPublishing, videoTrack: $videoTrack, audioTrack: $audioTrack, room: $room, localParticipant: $localParticipant, isPusherConnected: $isPusherConnected, stream: $stream, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, isInitializing: $isInitializing)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'LiveStreamState'))
-      ..add(DiagnosticsProperty('role', role))
-      ..add(DiagnosticsProperty('localReady', localReady))
-      ..add(DiagnosticsProperty('remoteUid', remoteUid))
-      ..add(DiagnosticsProperty('isInitializing', isInitializing))
-      ..add(DiagnosticsProperty('joined', joined))
+      ..add(DiagnosticsProperty('type', 'BroadcasterStreamState'))
+      ..add(DiagnosticsProperty('isConnected', isConnected))
+      ..add(DiagnosticsProperty('isPublishing', isPublishing))
+      ..add(DiagnosticsProperty('videoTrack', videoTrack))
+      ..add(DiagnosticsProperty('audioTrack', audioTrack))
+      ..add(DiagnosticsProperty('room', room))
+      ..add(DiagnosticsProperty('localParticipant', localParticipant))
+      ..add(DiagnosticsProperty('isPusherConnected', isPusherConnected))
+      ..add(DiagnosticsProperty('stream', stream))
       ..add(DiagnosticsProperty('viewerCount', viewerCount))
       ..add(DiagnosticsProperty('streamSeconds', streamSeconds))
       ..add(DiagnosticsProperty('comments', comments))
@@ -576,22 +667,29 @@ class _$LiveStreamStateImpl
       ..add(DiagnosticsProperty('commentsError', commentsError))
       ..add(DiagnosticsProperty('sendCommentError', sendCommentError))
       ..add(DiagnosticsProperty('bidsError', bidsError))
-      ..add(DiagnosticsProperty('addBidError', addBidError));
+      ..add(DiagnosticsProperty('addBidError', addBidError))
+      ..add(DiagnosticsProperty('isInitializing', isInitializing));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$LiveStreamStateImpl &&
-            (identical(other.role, role) || other.role == role) &&
-            (identical(other.localReady, localReady) ||
-                other.localReady == localReady) &&
-            (identical(other.remoteUid, remoteUid) ||
-                other.remoteUid == remoteUid) &&
-            (identical(other.isInitializing, isInitializing) ||
-                other.isInitializing == isInitializing) &&
-            (identical(other.joined, joined) || other.joined == joined) &&
+            other is _$BroadcasterStreamStateImpl &&
+            (identical(other.isConnected, isConnected) ||
+                other.isConnected == isConnected) &&
+            (identical(other.isPublishing, isPublishing) ||
+                other.isPublishing == isPublishing) &&
+            (identical(other.videoTrack, videoTrack) ||
+                other.videoTrack == videoTrack) &&
+            (identical(other.audioTrack, audioTrack) ||
+                other.audioTrack == audioTrack) &&
+            (identical(other.room, room) || other.room == room) &&
+            (identical(other.localParticipant, localParticipant) ||
+                other.localParticipant == localParticipant) &&
+            (identical(other.isPusherConnected, isPusherConnected) ||
+                other.isPusherConnected == isPusherConnected) &&
+            (identical(other.stream, stream) || other.stream == stream) &&
             (identical(other.viewerCount, viewerCount) ||
                 other.viewerCount == viewerCount) &&
             (identical(other.streamSeconds, streamSeconds) ||
@@ -629,17 +727,22 @@ class _$LiveStreamStateImpl
             (identical(other.bidsError, bidsError) ||
                 other.bidsError == bidsError) &&
             (identical(other.addBidError, addBidError) ||
-                other.addBidError == addBidError));
+                other.addBidError == addBidError) &&
+            (identical(other.isInitializing, isInitializing) ||
+                other.isInitializing == isInitializing));
   }
 
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        role,
-        localReady,
-        remoteUid,
-        isInitializing,
-        joined,
+        isConnected,
+        isPublishing,
+        videoTrack,
+        audioTrack,
+        room,
+        localParticipant,
+        isPusherConnected,
+        stream,
         viewerCount,
         streamSeconds,
         const DeepCollectionEquality().hash(_comments),
@@ -659,26 +762,30 @@ class _$LiveStreamStateImpl
         commentsError,
         sendCommentError,
         bidsError,
-        addBidError
+        addBidError,
+        isInitializing
       ]);
 
-  /// Create a copy of LiveStreamState
+  /// Create a copy of BroadcasterStreamState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$LiveStreamStateImplCopyWith<_$LiveStreamStateImpl> get copyWith =>
-      __$$LiveStreamStateImplCopyWithImpl<_$LiveStreamStateImpl>(
-          this, _$identity);
+  _$$BroadcasterStreamStateImplCopyWith<_$BroadcasterStreamStateImpl>
+      get copyWith => __$$BroadcasterStreamStateImplCopyWithImpl<
+          _$BroadcasterStreamStateImpl>(this, _$identity);
 }
 
-abstract class _LiveStreamState implements LiveStreamState {
-  const factory _LiveStreamState(
-      {required final UserRole role,
-      final bool localReady,
-      final int? remoteUid,
-      final bool isInitializing,
-      final bool joined,
+abstract class _BroadcasterStreamState implements BroadcasterStreamState {
+  const factory _BroadcasterStreamState(
+      {final bool isConnected,
+      final bool isPublishing,
+      final LocalVideoTrack? videoTrack,
+      final LocalAudioTrack? audioTrack,
+      final Room? room,
+      final LocalParticipant? localParticipant,
+      final bool isPusherConnected,
+      required final StreamDataModel stream,
       final int viewerCount,
       final int streamSeconds,
       final List<StreamCommentModel> comments,
@@ -698,26 +805,34 @@ abstract class _LiveStreamState implements LiveStreamState {
       final String commentsError,
       final String sendCommentError,
       final String bidsError,
-      final String addBidError}) = _$LiveStreamStateImpl;
+      final String addBidError,
+      final bool isInitializing}) = _$BroadcasterStreamStateImpl;
 
+// LiveKit
   @override
-  UserRole get role; // Agora / presence
+  bool get isConnected;
   @override
-  bool get localReady;
+  bool get isPublishing;
   @override
-  int? get remoteUid;
+  LocalVideoTrack? get videoTrack;
   @override
-  bool get isInitializing;
+  LocalAudioTrack? get audioTrack; // Room & Participants
   @override
-  bool get joined;
+  Room? get room;
   @override
-  int get viewerCount; // Timer
+  LocalParticipant? get localParticipant; // Pusher
+  @override
+  bool get isPusherConnected; // Stream data
+  @override
+  StreamDataModel get stream;
+  @override
+  int get viewerCount;
   @override
   int get streamSeconds; // Comments (RAW API MODELS)
   @override
   List<StreamCommentModel> get comments;
   @override
-  String get commentText; // Comments loading/paging
+  String get commentText;
   @override
   bool get isLoadingComments;
   @override
@@ -745,16 +860,18 @@ abstract class _LiveStreamState implements LiveStreamState {
   @override
   String get commentsError;
   @override
-  String get sendCommentError; // Bid errors
+  String get sendCommentError;
   @override
   String get bidsError;
   @override
-  String get addBidError;
+  String get addBidError; // Initialization
+  @override
+  bool get isInitializing;
 
-  /// Create a copy of LiveStreamState
+  /// Create a copy of BroadcasterStreamState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$LiveStreamStateImplCopyWith<_$LiveStreamStateImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$BroadcasterStreamStateImplCopyWith<_$BroadcasterStreamStateImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

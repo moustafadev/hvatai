@@ -23,7 +23,7 @@ class CustomTextField extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final Color? textColor;
   final Color? hintColor;
-
+  final TextInputAction? textInputAction;
   const CustomTextField({
     super.key,
     required this.hintText,
@@ -48,6 +48,7 @@ class CustomTextField extends StatelessWidget {
     this.onTap,
     this.textColor,
     this.hintColor,
+    this.textInputAction,
   });
 
   @override
@@ -68,6 +69,7 @@ class CustomTextField extends StatelessWidget {
         autovalidateMode: autovalidateMode,
         keyboardType: keyboardType,
         onChanged: onChanged,
+        textInputAction: textInputAction,
         inputFormatters: inputFormatters,
         style: TextStyle(color: textColor ?? Colors.black),
         decoration: InputDecoration(

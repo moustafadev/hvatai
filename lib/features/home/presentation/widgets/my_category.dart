@@ -108,19 +108,11 @@ class MyCategory extends StatelessWidget {
                                       : ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(8),
-                                          child: Image.network(
-                                            imageUrl,
+                                          child: CustomImage(
+                                            imageSource: imageUrl,
                                             width: double.infinity,
                                             height: double.infinity,
                                             fit: BoxFit.cover,
-                                            errorBuilder:
-                                                (context, error, stackTrace) {
-                                              return const Icon(
-                                                Icons.image_not_supported,
-                                                size: 30,
-                                                color: Colors.grey,
-                                              );
-                                            },
                                           ),
                                         ),
                                 ),

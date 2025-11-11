@@ -1,26 +1,29 @@
-// live_stream_state.dart
-part of 'live_stream_cubit.dart';
+// viewer_stream_state.dart
+part of 'viewer_stream_cubit.dart';
 
 @freezed
-class LiveStreamState with _$LiveStreamState {
-  const factory LiveStreamState({
-    required UserRole role,
+class ViewerStreamState with _$ViewerStreamState {
+  const factory ViewerStreamState({
+    // LiveKit
+    @Default(false) bool isConnected,
+    VideoTrack? remoteVideoTrack,
 
-    // Agora / presence
-    @Default(false) bool localReady,
-    int? remoteUid,
-    @Default(false) bool isInitializing,
-    @Default(false) bool joined,
+    // Room & Participants
+    Room? room,
+    RemoteParticipant? remoteParticipant,
+
+    // Pusher
+    @Default(false) bool isPusherConnected,
+
+    // Stream data
+    required StreamDataModel stream,
+    JoinStreamData? joinData,
     @Default(0) int viewerCount,
-
-    // Timer
     @Default(0) int streamSeconds,
 
     // Comments (RAW API MODELS)
     @Default(<StreamCommentModel>[]) List<StreamCommentModel> comments,
     @Default('') String commentText,
-
-    // Comments loading/paging
     @Default(false) bool isLoadingComments,
     @Default(false) bool isSendingComment,
     @Default(1) int commentsPage,
@@ -39,9 +42,13 @@ class LiveStreamState with _$LiveStreamState {
     @Default('') String errorMessage,
     @Default('') String commentsError,
     @Default('') String sendCommentError,
-
-    // Bid errors
     @Default('') String bidsError,
     @Default('') String addBidError,
-  }) = _LiveStreamState;
+
+    // Initialization
+    @Default(false) bool isInitializing,
+
+    // Stream status
+    @Default(false) bool isStreamEnded,
+  }) = _ViewerStreamState;
 }

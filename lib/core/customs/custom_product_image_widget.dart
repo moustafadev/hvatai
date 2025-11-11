@@ -106,7 +106,7 @@ class PlaceHolder extends StatelessWidget {
                   height: 36.h,
                   width: 36.w,
                 ),
-                8.ph,
+                5.ph,
                 CustomText(
                   text: 'uploadPhoto'.tr(),
                   fontSize: 14.sp,

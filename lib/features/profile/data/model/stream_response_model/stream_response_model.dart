@@ -1,3 +1,4 @@
+// ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 
@@ -40,13 +41,10 @@ class StreamDataModel with _$StreamDataModel {
     @JsonKey(name: 'livekit_server_url') String? livekitServerUrl,
     @JsonKey(name: 'livekit_config') LivekitConfigModel? livekitConfig,
     @JsonKey(name: 'livekit_room_created_at') DateTime? livekitRoomCreatedAt,
-
     String? status,
-
     @JsonKey(name: 'scheduled_at') DateTime? scheduledAt,
     @JsonKey(name: 'started_at') DateTime? startedAt,
     @JsonKey(name: 'ended_at') DateTime? endedAt,
-
     @JsonKey(name: 'is_recording_enabled') bool? isRecordingEnabled,
 
     // Optional recording fields
@@ -63,11 +61,9 @@ class StreamDataModel with _$StreamDataModel {
     @JsonKey(name: 'thumbnail_url') String? thumbnailUrl,
     @JsonKey(name: 'viewer_count') int? viewerCount,
     @JsonKey(name: 'max_viewers') int? maxViewers,
-
     @JsonKey(name: 'is_public') bool? isPublic,
     @JsonKey(name: 'created_at') DateTime? createdAt,
     @JsonKey(name: 'updated_at') DateTime? updatedAt,
-
     @JsonKey(name: 'auto_delete_after_end') bool? autoDeleteAfterEnd,
     @JsonKey(name: 'auto_delete_hours') int? autoDeleteHours,
     @JsonKey(name: 'save_recording') bool? saveRecording,
@@ -79,11 +75,8 @@ class StreamDataModel with _$StreamDataModel {
       toJson: _doubleToString,
     )
     double? minimumBidIncrement,
-
     @JsonKey(name: 'stream_settings') Map<String, dynamic>? streamSettings,
-
     @JsonKey(name: 'is_mine') bool? isMine,
-
     StreamUserModel? user,
     @JsonKey(name: 'stream_products') List<StreamProductModel>? streamProducts,
   }) = _StreamDataModel;
@@ -95,28 +88,27 @@ class StreamDataModel with _$StreamDataModel {
 /// ========= LiveKit Config (New Model) =========
 @freezed
 class LivekitConfigModel with _$LivekitConfigModel {
-    const factory LivekitConfigModel({
-        @JsonKey(name: 'max_participants') int? maxParticipants,
-        @JsonKey(name: 'empty_timeout') int? emptyTimeout,
-        @JsonKey(name: 'video_quality') String? videoQuality,
-    }) = _LivekitConfigModel;
+  const factory LivekitConfigModel({
+    @JsonKey(name: 'max_participants') int? maxParticipants,
+    @JsonKey(name: 'empty_timeout') int? emptyTimeout,
+    @JsonKey(name: 'video_quality') String? videoQuality,
+  }) = _LivekitConfigModel;
 
-    factory LivekitConfigModel.fromJson(Map<String, dynamic> json) =>
-        _$LivekitConfigModelFromJson(json);
+  factory LivekitConfigModel.fromJson(Map<String, dynamic> json) =>
+      _$LivekitConfigModelFromJson(json);
 }
 
 /// ========= LiveKit Info (New Model) =========
 @freezed
 class LivekitInfoModel with _$LivekitInfoModel {
-    const factory LivekitInfoModel({
-        @JsonKey(name: 'room_name') String? roomName,
-        @JsonKey(name: 'server_url') String? serverUrl,
-    }) = _LivekitInfoModel;
+  const factory LivekitInfoModel({
+    @JsonKey(name: 'room_name') String? roomName,
+    @JsonKey(name: 'server_url') String? serverUrl,
+  }) = _LivekitInfoModel;
 
-    factory LivekitInfoModel.fromJson(Map<String, dynamic> json) =>
-        _$LivekitInfoModelFromJson(json);
+  factory LivekitInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$LivekitInfoModelFromJson(json);
 }
-
 
 /// ========= User =========
 @freezed

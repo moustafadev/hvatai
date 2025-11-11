@@ -2,19 +2,17 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:hvatai/blocs_observer.dart';
-import 'package:hvatai/core/datasources/local/cache_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hvatai/blocs_observer.dart';
+import 'package:hvatai/core/datasources/local/cache_helper.dart';
 import 'package:hvatai/firebase_options.dart';
-import 'package:media_kit/media_kit.dart';                      // Provides [Player], [Media], [Playlist] etc.
 
 import '../locator.dart';
 
 class InitApp {
   static Future<void> initialize() async {
     WidgetsFlutterBinding.ensureInitialized();
-  MediaKit.ensureInitialized();
 
     await Future.value([
       await setupLocator(),

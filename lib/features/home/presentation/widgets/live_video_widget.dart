@@ -115,24 +115,34 @@ class LiveVideosWidget extends StatelessWidget {
       },
       liveCardBuilder: (context, stream) => GestureDetector(
         onTap: () {
-          // final appLocal = locator<AppLocal>();
-          // final userId = appLocal.getUserId();
-
           context.read<CategoryTabsCubit>().joinStream(
               stream: stream,
               isPublisher: false, // viewer
               context: context);
         },
-        child: CustomLiveVideoCard(
-          // price: stream.streamProducts?.first.startingPrice ?? "",
-          price: "test",
-          title: stream.title ?? "",
-          adminName: '${stream.user?.name}',
-          adminImage: '',
-          viewsCount: stream.viewerCount ?? 0,
-          // description: stream.streamProducts?.first.product?.description ?? "",
-          description: "",
-          liveImage: '',
+        child: BlocBuilder<CategoryTabsCubit, CategoryTabsState>(
+          builder: (context, state) {
+            print('state.isJoining: ${state.isJoining}');
+            return Stack(
+              children: [
+                if (state.isJoining)
+                  const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                CustomLiveVideoCard(
+                  // price: stream.streamProducts?.first.startingPrice ?? "",
+                  price: "test",
+                  title: stream.title ?? "",
+                  adminName: '${stream.user?.name}',
+                  adminImage: '',
+                  viewsCount: stream.viewerCount ?? 0,
+                  // description: stream.streamProducts?.first.product?.description ?? "",
+                  description: "",
+                  liveImage: '',
+                ),
+              ],
+            );
+          },
         ),
       ),
     );

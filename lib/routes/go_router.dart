@@ -10,6 +10,7 @@ import 'package:hvatai/features/auth/presentation/cubit/delivery_address/deliver
 import 'package:hvatai/features/change_password/presentation/change_password.dart';
 import 'package:hvatai/features/chat/data/models/chat/chat_model.dart';
 import 'package:hvatai/features/chat/presentation/chat.dart';
+import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
@@ -40,7 +41,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.splash, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return const SplashScreen();
+        return const SplashScreen(); //const TestStream();
       },
     ),
     GoRoute(
@@ -62,16 +63,28 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: AppRoutes.liveStream,
+      path: AppRoutes.liveStreamViewer,
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, dynamic>?; // change to dynamic
 
         final streamDataModel = extra?['streamDataModel'] as StreamDataModel;
-        final userRole = extra?['userRole'] as UserRole;
+        final joinData = (extra?['joinData'] as JoinStreamData?);
 
-        return LiveStreamScreen(
+        return ViewerStreamScreen(
           stream: streamDataModel,
-          userRole: userRole,
+          joinData: joinData,
+        );
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.liveStreamBroadcaster,
+      builder: (BuildContext context, GoRouterState state) {
+        final extra = state.extra as Map<String, dynamic>?; // change to dynamic
+
+        final streamDataModel = extra?['streamDataModel'] as StreamDataModel;
+
+        return BroadcasterStreamScreen(
+          stream: streamDataModel,
         );
       },
     ),
@@ -211,10 +224,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.addProduct, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        final cubit = state.extra as MyGoodsCubit..getProductCategory();
-
-        return BlocProvider.value(
-            value: cubit, child: const AddNewProductsScreen());
+        return const AddNewProductsScreen();
       },
     ),
     GoRoute(

@@ -1,3 +1,4 @@
+// ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'product_model.freezed.dart';
@@ -6,14 +7,14 @@ part 'product_model.g.dart';
 @freezed
 class ProductModel with _$ProductModel {
   const factory ProductModel({
-    @JsonKey(fromJson: _imagesFromJson) List<String>? images,
+    int? id,
+    @JsonKey(name: 'product_code') String? productCode,
     @JsonKey(name: 'product_name') String? productName,
     @JsonKey(name: 'product_description') String? productDescription,
-    @JsonKey(name: 'category_id') int? categoryId,
+    String? type,
     @JsonKey(name: 'sale_type') @Default('auction') String saleType,
     @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
-    @Default(false)
-    bool deliveryAvailable,
+    bool? deliveryAvailable,
     @JsonKey(name: 'delivery_type') String? deliveryType,
     @JsonKey(name: 'delivery_time') String? deliveryTime,
     @JsonKey(name: 'delivery_price', fromJson: _parseDouble)
@@ -24,7 +25,7 @@ class ProductModel with _$ProductModel {
     double? deliveryRadius,
     @JsonKey(name: 'self_pickup', fromJson: _boolFromInt)
     @Default(false)
-    bool selfPickup,
+    bool? selfPickup,
     @JsonKey(name: 'delivery_length_cm', fromJson: _parseDouble)
     double? deliveryLengthCm,
     @JsonKey(name: 'delivery_width_cm', fromJson: _parseDouble)
@@ -33,19 +34,16 @@ class ProductModel with _$ProductModel {
     double? deliveryHeightCm,
     @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
     double? deliveryWeightKg,
-    int? id,
-    List<String>? children,
-    @JsonKey(name: 'parent_id') int? parentId,
-    String? name,
-    String? type,
-    String? icon,
-    String? description,
-    @JsonKey(name: 'user_id') int? userId,
-    @JsonKey(name: 'created_at') DateTime? createdAt,
-    @JsonKey(name: 'updated_at') DateTime? updatedAt,
     @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
-    @JsonKey(fromJson: _boolFromInt) bool? status,
-    @JsonKey(name: 'product_pictures') dynamic productPictures,
+    @JsonKey(fromJson: _intFromJson) int? status,
+    @JsonKey(name: 'go_home') String? goHome,
+    @JsonKey(name: 'self_destruction') String? selfDestruction,
+    @JsonKey(name: 'user_id') int? userId,
+    @JsonKey(name: 'category_id') int? categoryId,
+    @JsonKey(name: 'average_rating', fromJson: _parseDouble)
+    double? averageRating,
+    @JsonKey(name: 'ratings_count') @Default(0) int ratingsCount,
+    @JsonKey(fromJson: _imagesFromJson) @Default([]) List<String> images,
     @Default([]) List<VariantModel> variants,
     MainCategoryModel? category,
     UserModel? user,
@@ -110,15 +108,28 @@ class OwnerModel with _$OwnerModel {
       _$OwnerModelFromJson(json);
 }
 
-List<String>? _imagesFromJson(dynamic json) {
+List<String> _imagesFromJson(dynamic json) {
   if (json == null) return [];
   if (json is List) {
+    if (json.isEmpty) return [];
     return json
-        .map((e) => e is Map<String, dynamic> ? e['url'] as String? : null)
+        .map((e) {
+          if (e is String) return e;
+          if (e is Map<String, dynamic>) return e['url'] as String?;
+          return null;
+        })
         .whereType<String>()
         .toList();
   }
   return [];
+}
+
+int? _intFromJson(dynamic value) {
+  if (value == null) return null;
+  if (value is int) return value;
+  if (value is String) return int.tryParse(value);
+  if (value is bool) return value ? 1 : 0;
+  return null;
 }
 
 bool _boolFromInt(dynamic value) {
@@ -142,9 +153,10 @@ double? _parseDouble(dynamic value) {
 @freezed
 class VariantModel with _$VariantModel {
   const factory VariantModel({
+    int? id,
+    String? sku,
     @JsonKey(fromJson: _parseDouble) double? price,
     @Default(1) int stock,
-    int? id,
     Map<String, dynamic>? attributes,
     @JsonKey(fromJson: _parseDouble) double? discount,
     @JsonKey(name: 'discount_type') String? discountType,

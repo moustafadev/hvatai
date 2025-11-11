@@ -8,7 +8,6 @@ import 'package:hvatai/features/profile/data/model/create_stream/create_stream_m
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/create_stream_uscecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
-import 'package:hvatai/features/stream/presentation/stream.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
 part 'add_stream_cubit.freezed.dart';
@@ -29,6 +28,7 @@ class AddStreamCubit extends Cubit<AddStreamState> {
               enableComments: false,
               enableBidding: false,
               minimumBidIncrement: 1,
+              bidDurationSeconds: 30,
               autoDeleteAfterEnd: false,
               autoDeleteHours: 24,
               saveRecording: false,
@@ -122,6 +122,13 @@ class AddStreamCubit extends Cubit<AddStreamState> {
     ));
   }
 
+  void updateBidDurationSeconds(int seconds) {
+    emit(state.copyWith(
+      createStreamModel:
+          state.createStreamModel.copyWith(bidDurationSeconds: seconds),
+    ));
+  }
+
   void updateAutoDeleteHours(int hours) {
     emit(state.copyWith(
       createStreamModel: state.createStreamModel.copyWith(
@@ -170,10 +177,9 @@ class AddStreamCubit extends Cubit<AddStreamState> {
       (streamResponse) {
         showFloatingMessageSuccess('Stream created successfully');
         context.push(
-          AppRoutes.liveStream,
+          AppRoutes.liveStreamBroadcaster,
           extra: {
             'streamDataModel': streamResponse.data,
-            'userRole': UserRole.broadcaster
           },
         );
         emit(state.copyWith(isLoading: false));

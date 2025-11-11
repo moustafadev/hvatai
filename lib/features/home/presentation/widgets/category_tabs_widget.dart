@@ -13,17 +13,14 @@ class CategoryTabsWidget extends StatelessWidget {
         final interests = state.filteredCategories;
 
         if (interests == null || interests.data == null) {
-          return Scaffold(
-            body: const Center(
-                child: CircularProgressIndicator(
-              color: AppColors.grey,
-            )),
-          );
+          return Center(
+              child: CircularProgressIndicator(
+            color: AppColors.grey,
+          ));
         }
 
         if (interests.data!.isEmpty) {
-          return Scaffold(
-              body: Center(child: CustomText(text: 'noCategories'.tr())));
+          return Center(child: CustomText(text: 'noCategories'.tr()));
         }
 
         return SingleChildScrollView(

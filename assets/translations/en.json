@@ -249,15 +249,15 @@
   "startingBid": "Starting bid* (₽)",
   "price": "Price (₽)",
   "bookInLive": "Book in Live",
-"paid": "Paid",
+  "paid": "Paid",
   "free": "Free",
   "seller": "Seller",
   "participate": "Participate in the auction",
   "otherProducts": "Other products from this seller",
   "notAvailable": "Not available",
-    "selfDelivery":"Self (I will deliver)",
-    "productAddedToFavorites":"Product added to favorites successfully",
-  "courierFromPlatform":"Courier from Grab!'s platform",
+  "selfDelivery": "Self (I will deliver)",
+  "productAddedToFavorites": "Product added to favorites successfully",
+  "courierFromPlatform": "Courier from Grab!'s platform",
   "deliveryPrice": "Delivery price (₽)",
   "deliveryTime": "Delivery time",
   "insufficientStock": "Insufficient stock to increase quantity",
@@ -558,5 +558,6 @@
   "auto_delete_after_end": "Auto Delete After End",
   "save recording": "Save Recording",
   "select products": "Select Products",
-  "select product": "Select Product"
+  "select product": "Select Product",
+  "bid duration": "Bid Duration"
 }

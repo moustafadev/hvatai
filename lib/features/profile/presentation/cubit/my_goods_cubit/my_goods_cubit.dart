@@ -47,7 +47,7 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
         state.product.variants.first.price == 0.0 ||
         state.product.categoryId == null ||
         state.product.categoryId == 0 ||
-        (state.product.deliveryAvailable == true &&
+        (state.product.deliveryAvailable == 1 &&
             (state.product.deliveryTime == null ||
                 state.product.deliveryTime!.isEmpty ||
                 state.product.deliveryPrice == null ||
@@ -127,7 +127,9 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
 
     switch (field) {
       case 'deliveryMethods':
-        product = state.product.copyWith(deliveryMethods: value);
+        product = state.product.copyWith(
+          deliveryMethods: value is List<String> ? value : null,
+        );
         break;
       case 'deliveryTime':
         product = state.product.copyWith(deliveryTime: value);
@@ -189,13 +191,11 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
   }
 
   void updateProductImages(List<String> imagePaths) {
-    emit(state.copyWith(
-        product: state.product.copyWith(productPictures: imagePaths)));
+    emit(state.copyWith(product: state.product.copyWith(images: imagePaths)));
   }
 
   void setProductMainImage(String imagePath) {
-    emit(state.copyWith(
-        product: state.product.copyWith(productPictures: imagePath)));
+    emit(state.copyWith(product: state.product.copyWith(images: [imagePath])));
   }
 
   void toggleSelfDestruction() {
@@ -207,14 +207,15 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
   void togglePickupFree() {
     final updated = state.product.selfPickup;
     emit(state.copyWith(
-      product: state.product.copyWith(selfPickup: !updated),
+      product:
+          state.product.copyWith(selfPickup: updated == true ? false : true),
     ));
   }
 
   void toggleDeliveryAvailable() {
-    final updated = state.product.deliveryAvailable;
+    final updated = !(state.product.deliveryAvailable ?? false);
     emit(state.copyWith(
-      product: state.product.copyWith(deliveryAvailable: !updated),
+      product: state.product.copyWith(deliveryAvailable: updated),
     ));
   }
 
@@ -270,7 +271,8 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
       minWidth: 1080,
       minHeight: 1080,
     );
-    return file;
+    // Return the compressed file, or original if compression failed
+    return result != null ? File(result.path) : file;
   }
 
   Future<MultipartFile?> _prepareImageFile(String? imagePath) async {
@@ -342,21 +344,34 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
 
   Future<FormData> _prepareProductFormData(ProductModel product) async {
     final dataMap = Map<String, dynamic>.from(product.toJson());
-    dataMap['delivery_available'] = product.deliveryAvailable ? 1 : 0;
+    dataMap['delivery_available'] =
+        product.deliveryAvailable == 1 ? true : false;
     dataMap['status'] = product.status != null ? 1 : 0;
-    dataMap['self_pickup'] = product.selfPickup ? 1 : 0;
+    dataMap['self_pickup'] = product.selfPickup == true ? 1 : 0;
+
+    // Translate delivery_methods keys to localized strings
+    if (product.deliveryMethods != null &&
+        product.deliveryMethods!.isNotEmpty) {
+      dataMap['delivery_methods'] = product.deliveryMethods!.map((key) {
+        // Try to translate if it's a known key, otherwise use as-is
+        final knownKeys = ['courier', 'post', 'pickup'];
+        if (knownKeys.contains(key)) {
+          return key.tr();
+        }
+        return key;
+      }).toList();
+    }
 
     final variantsJson = product.variants.map((v) => v.toJson()).toList();
     dataMap['variants'] = variantsJson;
 
     final formData = FormData.fromMap(dataMap);
 
-    if (product.productPictures != null &&
-        product.productPictures!.isNotEmpty) {
-      for (int i = 0; i < product.productPictures!.length; i++) {
-        final file = await _prepareImageFile(product.productPictures![i]);
+    if (product.images.isNotEmpty) {
+      for (int i = 0; i < product.images.length; i++) {
+        final file = await _prepareImageFile(product.images[i]);
         if (file != null) {
-          formData.files.add(MapEntry("product_pictures[$i]", file));
+          formData.files.add(MapEntry("images[$i]", file));
         }
       }
     }

@@ -20,18 +20,18 @@ ProductModel _$ProductModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ProductModel {
-  @JsonKey(fromJson: _imagesFromJson)
-  List<String>? get images => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'product_code')
+  String? get productCode => throw _privateConstructorUsedError;
   @JsonKey(name: 'product_name')
   String? get productName => throw _privateConstructorUsedError;
   @JsonKey(name: 'product_description')
   String? get productDescription => throw _privateConstructorUsedError;
-  @JsonKey(name: 'category_id')
-  int? get categoryId => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
   @JsonKey(name: 'sale_type')
   String get saleType => throw _privateConstructorUsedError;
   @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
-  bool get deliveryAvailable => throw _privateConstructorUsedError;
+  bool? get deliveryAvailable => throw _privateConstructorUsedError;
   @JsonKey(name: 'delivery_type')
   String? get deliveryType => throw _privateConstructorUsedError;
   @JsonKey(name: 'delivery_time')
@@ -43,7 +43,7 @@ mixin _$ProductModel {
   @JsonKey(name: 'delivery_radius', fromJson: _parseDouble)
   double? get deliveryRadius => throw _privateConstructorUsedError;
   @JsonKey(name: 'self_pickup', fromJson: _boolFromInt)
-  bool get selfPickup => throw _privateConstructorUsedError;
+  bool? get selfPickup => throw _privateConstructorUsedError;
   @JsonKey(name: 'delivery_length_cm', fromJson: _parseDouble)
   double? get deliveryLengthCm => throw _privateConstructorUsedError;
   @JsonKey(name: 'delivery_width_cm', fromJson: _parseDouble)
@@ -52,26 +52,24 @@ mixin _$ProductModel {
   double? get deliveryHeightCm => throw _privateConstructorUsedError;
   @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
   double? get deliveryWeightKg => throw _privateConstructorUsedError;
-  int? get id => throw _privateConstructorUsedError;
-  List<String>? get children => throw _privateConstructorUsedError;
-  @JsonKey(name: 'parent_id')
-  int? get parentId => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-  String? get type => throw _privateConstructorUsedError;
-  String? get icon => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_id')
-  int? get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'created_at')
-  DateTime? get createdAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'updated_at')
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'delivery_methods')
   List<String>? get deliveryMethods => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: _boolFromInt)
-  bool? get status => throw _privateConstructorUsedError;
-  @JsonKey(name: 'product_pictures')
-  dynamic get productPictures => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _intFromJson)
+  int? get status => throw _privateConstructorUsedError;
+  @JsonKey(name: 'go_home')
+  String? get goHome => throw _privateConstructorUsedError;
+  @JsonKey(name: 'self_destruction')
+  String? get selfDestruction => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_id')
+  int? get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'category_id')
+  int? get categoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'average_rating', fromJson: _parseDouble)
+  double? get averageRating => throw _privateConstructorUsedError;
+  @JsonKey(name: 'ratings_count')
+  int get ratingsCount => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _imagesFromJson)
+  List<String> get images => throw _privateConstructorUsedError;
   List<VariantModel> get variants => throw _privateConstructorUsedError;
   MainCategoryModel? get category => throw _privateConstructorUsedError;
   UserModel? get user => throw _privateConstructorUsedError;
@@ -99,13 +97,14 @@ abstract class $ProductModelCopyWith<$Res> {
       _$ProductModelCopyWithImpl<$Res, ProductModel>;
   @useResult
   $Res call(
-      {@JsonKey(fromJson: _imagesFromJson) List<String>? images,
+      {int? id,
+      @JsonKey(name: 'product_code') String? productCode,
       @JsonKey(name: 'product_name') String? productName,
       @JsonKey(name: 'product_description') String? productDescription,
-      @JsonKey(name: 'category_id') int? categoryId,
+      String? type,
       @JsonKey(name: 'sale_type') String saleType,
       @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
-      bool deliveryAvailable,
+      bool? deliveryAvailable,
       @JsonKey(name: 'delivery_type') String? deliveryType,
       @JsonKey(name: 'delivery_time') String? deliveryTime,
       @JsonKey(name: 'delivery_price', fromJson: _parseDouble)
@@ -114,7 +113,7 @@ abstract class $ProductModelCopyWith<$Res> {
       double? deliveryDiscount,
       @JsonKey(name: 'delivery_radius', fromJson: _parseDouble)
       double? deliveryRadius,
-      @JsonKey(name: 'self_pickup', fromJson: _boolFromInt) bool selfPickup,
+      @JsonKey(name: 'self_pickup', fromJson: _boolFromInt) bool? selfPickup,
       @JsonKey(name: 'delivery_length_cm', fromJson: _parseDouble)
       double? deliveryLengthCm,
       @JsonKey(name: 'delivery_width_cm', fromJson: _parseDouble)
@@ -123,19 +122,16 @@ abstract class $ProductModelCopyWith<$Res> {
       double? deliveryHeightCm,
       @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
       double? deliveryWeightKg,
-      int? id,
-      List<String>? children,
-      @JsonKey(name: 'parent_id') int? parentId,
-      String? name,
-      String? type,
-      String? icon,
-      String? description,
-      @JsonKey(name: 'user_id') int? userId,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt,
       @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
-      @JsonKey(fromJson: _boolFromInt) bool? status,
-      @JsonKey(name: 'product_pictures') dynamic productPictures,
+      @JsonKey(fromJson: _intFromJson) int? status,
+      @JsonKey(name: 'go_home') String? goHome,
+      @JsonKey(name: 'self_destruction') String? selfDestruction,
+      @JsonKey(name: 'user_id') int? userId,
+      @JsonKey(name: 'category_id') int? categoryId,
+      @JsonKey(name: 'average_rating', fromJson: _parseDouble)
+      double? averageRating,
+      @JsonKey(name: 'ratings_count') int ratingsCount,
+      @JsonKey(fromJson: _imagesFromJson) List<String> images,
       List<VariantModel> variants,
       MainCategoryModel? category,
       UserModel? user,
@@ -164,35 +160,32 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? images = freezed,
+    Object? id = freezed,
+    Object? productCode = freezed,
     Object? productName = freezed,
     Object? productDescription = freezed,
-    Object? categoryId = freezed,
+    Object? type = freezed,
     Object? saleType = null,
-    Object? deliveryAvailable = null,
+    Object? deliveryAvailable = freezed,
     Object? deliveryType = freezed,
     Object? deliveryTime = freezed,
     Object? deliveryPrice = freezed,
     Object? deliveryDiscount = freezed,
     Object? deliveryRadius = freezed,
-    Object? selfPickup = null,
+    Object? selfPickup = freezed,
     Object? deliveryLengthCm = freezed,
     Object? deliveryWidthCm = freezed,
     Object? deliveryHeightCm = freezed,
     Object? deliveryWeightKg = freezed,
-    Object? id = freezed,
-    Object? children = freezed,
-    Object? parentId = freezed,
-    Object? name = freezed,
-    Object? type = freezed,
-    Object? icon = freezed,
-    Object? description = freezed,
-    Object? userId = freezed,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
     Object? deliveryMethods = freezed,
     Object? status = freezed,
-    Object? productPictures = freezed,
+    Object? goHome = freezed,
+    Object? selfDestruction = freezed,
+    Object? userId = freezed,
+    Object? categoryId = freezed,
+    Object? averageRating = freezed,
+    Object? ratingsCount = null,
+    Object? images = null,
     Object? variants = null,
     Object? category = freezed,
     Object? user = freezed,
@@ -202,10 +195,14 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
     Object? ratings = null,
   }) {
     return _then(_value.copyWith(
-      images: freezed == images
-          ? _value.images
-          : images // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      productCode: freezed == productCode
+          ? _value.productCode
+          : productCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       productName: freezed == productName
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
@@ -214,18 +211,18 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.productDescription
           : productDescription // ignore: cast_nullable_to_non_nullable
               as String?,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as int?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
       saleType: null == saleType
           ? _value.saleType
           : saleType // ignore: cast_nullable_to_non_nullable
               as String,
-      deliveryAvailable: null == deliveryAvailable
+      deliveryAvailable: freezed == deliveryAvailable
           ? _value.deliveryAvailable
           : deliveryAvailable // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       deliveryType: freezed == deliveryType
           ? _value.deliveryType
           : deliveryType // ignore: cast_nullable_to_non_nullable
@@ -246,10 +243,10 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.deliveryRadius
           : deliveryRadius // ignore: cast_nullable_to_non_nullable
               as double?,
-      selfPickup: null == selfPickup
+      selfPickup: freezed == selfPickup
           ? _value.selfPickup
           : selfPickup // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       deliveryLengthCm: freezed == deliveryLengthCm
           ? _value.deliveryLengthCm
           : deliveryLengthCm // ignore: cast_nullable_to_non_nullable
@@ -266,46 +263,6 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.deliveryWeightKg
           : deliveryWeightKg // ignore: cast_nullable_to_non_nullable
               as double?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      children: freezed == children
-          ? _value.children
-          : children // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String?,
-      icon: freezed == icon
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       deliveryMethods: freezed == deliveryMethods
           ? _value.deliveryMethods
           : deliveryMethods // ignore: cast_nullable_to_non_nullable
@@ -313,11 +270,35 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      productPictures: freezed == productPictures
-          ? _value.productPictures
-          : productPictures // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as int?,
+      goHome: freezed == goHome
+          ? _value.goHome
+          : goHome // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selfDestruction: freezed == selfDestruction
+          ? _value.selfDestruction
+          : selfDestruction // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      categoryId: freezed == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      averageRating: freezed == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      ratingsCount: null == ratingsCount
+          ? _value.ratingsCount
+          : ratingsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      images: null == images
+          ? _value.images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       variants: null == variants
           ? _value.variants
           : variants // ignore: cast_nullable_to_non_nullable
@@ -401,13 +382,14 @@ abstract class _$$ProductModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(fromJson: _imagesFromJson) List<String>? images,
+      {int? id,
+      @JsonKey(name: 'product_code') String? productCode,
       @JsonKey(name: 'product_name') String? productName,
       @JsonKey(name: 'product_description') String? productDescription,
-      @JsonKey(name: 'category_id') int? categoryId,
+      String? type,
       @JsonKey(name: 'sale_type') String saleType,
       @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
-      bool deliveryAvailable,
+      bool? deliveryAvailable,
       @JsonKey(name: 'delivery_type') String? deliveryType,
       @JsonKey(name: 'delivery_time') String? deliveryTime,
       @JsonKey(name: 'delivery_price', fromJson: _parseDouble)
@@ -416,7 +398,7 @@ abstract class _$$ProductModelImplCopyWith<$Res>
       double? deliveryDiscount,
       @JsonKey(name: 'delivery_radius', fromJson: _parseDouble)
       double? deliveryRadius,
-      @JsonKey(name: 'self_pickup', fromJson: _boolFromInt) bool selfPickup,
+      @JsonKey(name: 'self_pickup', fromJson: _boolFromInt) bool? selfPickup,
       @JsonKey(name: 'delivery_length_cm', fromJson: _parseDouble)
       double? deliveryLengthCm,
       @JsonKey(name: 'delivery_width_cm', fromJson: _parseDouble)
@@ -425,19 +407,16 @@ abstract class _$$ProductModelImplCopyWith<$Res>
       double? deliveryHeightCm,
       @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
       double? deliveryWeightKg,
-      int? id,
-      List<String>? children,
-      @JsonKey(name: 'parent_id') int? parentId,
-      String? name,
-      String? type,
-      String? icon,
-      String? description,
-      @JsonKey(name: 'user_id') int? userId,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt,
       @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
-      @JsonKey(fromJson: _boolFromInt) bool? status,
-      @JsonKey(name: 'product_pictures') dynamic productPictures,
+      @JsonKey(fromJson: _intFromJson) int? status,
+      @JsonKey(name: 'go_home') String? goHome,
+      @JsonKey(name: 'self_destruction') String? selfDestruction,
+      @JsonKey(name: 'user_id') int? userId,
+      @JsonKey(name: 'category_id') int? categoryId,
+      @JsonKey(name: 'average_rating', fromJson: _parseDouble)
+      double? averageRating,
+      @JsonKey(name: 'ratings_count') int ratingsCount,
+      @JsonKey(fromJson: _imagesFromJson) List<String> images,
       List<VariantModel> variants,
       MainCategoryModel? category,
       UserModel? user,
@@ -467,35 +446,32 @@ class __$$ProductModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? images = freezed,
+    Object? id = freezed,
+    Object? productCode = freezed,
     Object? productName = freezed,
     Object? productDescription = freezed,
-    Object? categoryId = freezed,
+    Object? type = freezed,
     Object? saleType = null,
-    Object? deliveryAvailable = null,
+    Object? deliveryAvailable = freezed,
     Object? deliveryType = freezed,
     Object? deliveryTime = freezed,
     Object? deliveryPrice = freezed,
     Object? deliveryDiscount = freezed,
     Object? deliveryRadius = freezed,
-    Object? selfPickup = null,
+    Object? selfPickup = freezed,
     Object? deliveryLengthCm = freezed,
     Object? deliveryWidthCm = freezed,
     Object? deliveryHeightCm = freezed,
     Object? deliveryWeightKg = freezed,
-    Object? id = freezed,
-    Object? children = freezed,
-    Object? parentId = freezed,
-    Object? name = freezed,
-    Object? type = freezed,
-    Object? icon = freezed,
-    Object? description = freezed,
-    Object? userId = freezed,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
     Object? deliveryMethods = freezed,
     Object? status = freezed,
-    Object? productPictures = freezed,
+    Object? goHome = freezed,
+    Object? selfDestruction = freezed,
+    Object? userId = freezed,
+    Object? categoryId = freezed,
+    Object? averageRating = freezed,
+    Object? ratingsCount = null,
+    Object? images = null,
     Object? variants = null,
     Object? category = freezed,
     Object? user = freezed,
@@ -505,10 +481,14 @@ class __$$ProductModelImplCopyWithImpl<$Res>
     Object? ratings = null,
   }) {
     return _then(_$ProductModelImpl(
-      images: freezed == images
-          ? _value._images
-          : images // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      productCode: freezed == productCode
+          ? _value.productCode
+          : productCode // ignore: cast_nullable_to_non_nullable
+              as String?,
       productName: freezed == productName
           ? _value.productName
           : productName // ignore: cast_nullable_to_non_nullable
@@ -517,18 +497,18 @@ class __$$ProductModelImplCopyWithImpl<$Res>
           ? _value.productDescription
           : productDescription // ignore: cast_nullable_to_non_nullable
               as String?,
-      categoryId: freezed == categoryId
-          ? _value.categoryId
-          : categoryId // ignore: cast_nullable_to_non_nullable
-              as int?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
       saleType: null == saleType
           ? _value.saleType
           : saleType // ignore: cast_nullable_to_non_nullable
               as String,
-      deliveryAvailable: null == deliveryAvailable
+      deliveryAvailable: freezed == deliveryAvailable
           ? _value.deliveryAvailable
           : deliveryAvailable // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       deliveryType: freezed == deliveryType
           ? _value.deliveryType
           : deliveryType // ignore: cast_nullable_to_non_nullable
@@ -549,10 +529,10 @@ class __$$ProductModelImplCopyWithImpl<$Res>
           ? _value.deliveryRadius
           : deliveryRadius // ignore: cast_nullable_to_non_nullable
               as double?,
-      selfPickup: null == selfPickup
+      selfPickup: freezed == selfPickup
           ? _value.selfPickup
           : selfPickup // ignore: cast_nullable_to_non_nullable
-              as bool,
+              as bool?,
       deliveryLengthCm: freezed == deliveryLengthCm
           ? _value.deliveryLengthCm
           : deliveryLengthCm // ignore: cast_nullable_to_non_nullable
@@ -569,46 +549,6 @@ class __$$ProductModelImplCopyWithImpl<$Res>
           ? _value.deliveryWeightKg
           : deliveryWeightKg // ignore: cast_nullable_to_non_nullable
               as double?,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      children: freezed == children
-          ? _value._children
-          : children // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      parentId: freezed == parentId
-          ? _value.parentId
-          : parentId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      name: freezed == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
-              as String?,
-      icon: freezed == icon
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: freezed == description
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
-      userId: freezed == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       deliveryMethods: freezed == deliveryMethods
           ? _value._deliveryMethods
           : deliveryMethods // ignore: cast_nullable_to_non_nullable
@@ -616,11 +556,35 @@ class __$$ProductModelImplCopyWithImpl<$Res>
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      productPictures: freezed == productPictures
-          ? _value.productPictures
-          : productPictures // ignore: cast_nullable_to_non_nullable
-              as dynamic,
+              as int?,
+      goHome: freezed == goHome
+          ? _value.goHome
+          : goHome // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selfDestruction: freezed == selfDestruction
+          ? _value.selfDestruction
+          : selfDestruction // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      categoryId: freezed == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      averageRating: freezed == averageRating
+          ? _value.averageRating
+          : averageRating // ignore: cast_nullable_to_non_nullable
+              as double?,
+      ratingsCount: null == ratingsCount
+          ? _value.ratingsCount
+          : ratingsCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      images: null == images
+          ? _value._images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<String>,
       variants: null == variants
           ? _value._variants
           : variants // ignore: cast_nullable_to_non_nullable
@@ -657,13 +621,14 @@ class __$$ProductModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ProductModelImpl implements _ProductModel {
   const _$ProductModelImpl(
-      {@JsonKey(fromJson: _imagesFromJson) final List<String>? images,
+      {this.id,
+      @JsonKey(name: 'product_code') this.productCode,
       @JsonKey(name: 'product_name') this.productName,
       @JsonKey(name: 'product_description') this.productDescription,
-      @JsonKey(name: 'category_id') this.categoryId,
+      this.type,
       @JsonKey(name: 'sale_type') this.saleType = 'auction',
       @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
-      this.deliveryAvailable = false,
+      this.deliveryAvailable,
       @JsonKey(name: 'delivery_type') this.deliveryType,
       @JsonKey(name: 'delivery_time') this.deliveryTime,
       @JsonKey(name: 'delivery_price', fromJson: _parseDouble)
@@ -682,19 +647,16 @@ class _$ProductModelImpl implements _ProductModel {
       this.deliveryHeightCm,
       @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
       this.deliveryWeightKg,
-      this.id,
-      final List<String>? children,
-      @JsonKey(name: 'parent_id') this.parentId,
-      this.name,
-      this.type,
-      this.icon,
-      this.description,
-      @JsonKey(name: 'user_id') this.userId,
-      @JsonKey(name: 'created_at') this.createdAt,
-      @JsonKey(name: 'updated_at') this.updatedAt,
       @JsonKey(name: 'delivery_methods') final List<String>? deliveryMethods,
-      @JsonKey(fromJson: _boolFromInt) this.status,
-      @JsonKey(name: 'product_pictures') this.productPictures,
+      @JsonKey(fromJson: _intFromJson) this.status,
+      @JsonKey(name: 'go_home') this.goHome,
+      @JsonKey(name: 'self_destruction') this.selfDestruction,
+      @JsonKey(name: 'user_id') this.userId,
+      @JsonKey(name: 'category_id') this.categoryId,
+      @JsonKey(name: 'average_rating', fromJson: _parseDouble)
+      this.averageRating,
+      @JsonKey(name: 'ratings_count') this.ratingsCount = 0,
+      @JsonKey(fromJson: _imagesFromJson) final List<String> images = const [],
       final List<VariantModel> variants = const [],
       this.category,
       this.user,
@@ -702,26 +664,19 @@ class _$ProductModelImpl implements _ProductModel {
       @JsonKey(name: 'is_favorited') this.isFavorited = false,
       @JsonKey(name: 'favorites_count') this.favoritesCount = 0,
       final List<dynamic> ratings = const []})
-      : _images = images,
-        _children = children,
-        _deliveryMethods = deliveryMethods,
+      : _deliveryMethods = deliveryMethods,
+        _images = images,
         _variants = variants,
         _ratings = ratings;
 
   factory _$ProductModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProductModelImplFromJson(json);
 
-  final List<String>? _images;
   @override
-  @JsonKey(fromJson: _imagesFromJson)
-  List<String>? get images {
-    final value = _images;
-    if (value == null) return null;
-    if (_images is EqualUnmodifiableListView) return _images;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
+  final int? id;
+  @override
+  @JsonKey(name: 'product_code')
+  final String? productCode;
   @override
   @JsonKey(name: 'product_name')
   final String? productName;
@@ -729,14 +684,13 @@ class _$ProductModelImpl implements _ProductModel {
   @JsonKey(name: 'product_description')
   final String? productDescription;
   @override
-  @JsonKey(name: 'category_id')
-  final int? categoryId;
+  final String? type;
   @override
   @JsonKey(name: 'sale_type')
   final String saleType;
   @override
   @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
-  final bool deliveryAvailable;
+  final bool? deliveryAvailable;
   @override
   @JsonKey(name: 'delivery_type')
   final String? deliveryType;
@@ -754,7 +708,7 @@ class _$ProductModelImpl implements _ProductModel {
   final double? deliveryRadius;
   @override
   @JsonKey(name: 'self_pickup', fromJson: _boolFromInt)
-  final bool selfPickup;
+  final bool? selfPickup;
   @override
   @JsonKey(name: 'delivery_length_cm', fromJson: _parseDouble)
   final double? deliveryLengthCm;
@@ -767,38 +721,6 @@ class _$ProductModelImpl implements _ProductModel {
   @override
   @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
   final double? deliveryWeightKg;
-  @override
-  final int? id;
-  final List<String>? _children;
-  @override
-  List<String>? get children {
-    final value = _children;
-    if (value == null) return null;
-    if (_children is EqualUnmodifiableListView) return _children;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  @JsonKey(name: 'parent_id')
-  final int? parentId;
-  @override
-  final String? name;
-  @override
-  final String? type;
-  @override
-  final String? icon;
-  @override
-  final String? description;
-  @override
-  @JsonKey(name: 'user_id')
-  final int? userId;
-  @override
-  @JsonKey(name: 'created_at')
-  final DateTime? createdAt;
-  @override
-  @JsonKey(name: 'updated_at')
-  final DateTime? updatedAt;
   final List<String>? _deliveryMethods;
   @override
   @JsonKey(name: 'delivery_methods')
@@ -811,11 +733,35 @@ class _$ProductModelImpl implements _ProductModel {
   }
 
   @override
-  @JsonKey(fromJson: _boolFromInt)
-  final bool? status;
+  @JsonKey(fromJson: _intFromJson)
+  final int? status;
   @override
-  @JsonKey(name: 'product_pictures')
-  final dynamic productPictures;
+  @JsonKey(name: 'go_home')
+  final String? goHome;
+  @override
+  @JsonKey(name: 'self_destruction')
+  final String? selfDestruction;
+  @override
+  @JsonKey(name: 'user_id')
+  final int? userId;
+  @override
+  @JsonKey(name: 'category_id')
+  final int? categoryId;
+  @override
+  @JsonKey(name: 'average_rating', fromJson: _parseDouble)
+  final double? averageRating;
+  @override
+  @JsonKey(name: 'ratings_count')
+  final int ratingsCount;
+  final List<String> _images;
+  @override
+  @JsonKey(fromJson: _imagesFromJson)
+  List<String> get images {
+    if (_images is EqualUnmodifiableListView) return _images;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_images);
+  }
+
   final List<VariantModel> _variants;
   @override
   @JsonKey()
@@ -848,7 +794,7 @@ class _$ProductModelImpl implements _ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(images: $images, productName: $productName, productDescription: $productDescription, categoryId: $categoryId, saleType: $saleType, deliveryAvailable: $deliveryAvailable, deliveryType: $deliveryType, deliveryTime: $deliveryTime, deliveryPrice: $deliveryPrice, deliveryDiscount: $deliveryDiscount, deliveryRadius: $deliveryRadius, selfPickup: $selfPickup, deliveryLengthCm: $deliveryLengthCm, deliveryWidthCm: $deliveryWidthCm, deliveryHeightCm: $deliveryHeightCm, deliveryWeightKg: $deliveryWeightKg, id: $id, children: $children, parentId: $parentId, name: $name, type: $type, icon: $icon, description: $description, userId: $userId, createdAt: $createdAt, updatedAt: $updatedAt, deliveryMethods: $deliveryMethods, status: $status, productPictures: $productPictures, variants: $variants, category: $category, user: $user, owner: $owner, isFavorited: $isFavorited, favoritesCount: $favoritesCount, ratings: $ratings)';
+    return 'ProductModel(id: $id, productCode: $productCode, productName: $productName, productDescription: $productDescription, type: $type, saleType: $saleType, deliveryAvailable: $deliveryAvailable, deliveryType: $deliveryType, deliveryTime: $deliveryTime, deliveryPrice: $deliveryPrice, deliveryDiscount: $deliveryDiscount, deliveryRadius: $deliveryRadius, selfPickup: $selfPickup, deliveryLengthCm: $deliveryLengthCm, deliveryWidthCm: $deliveryWidthCm, deliveryHeightCm: $deliveryHeightCm, deliveryWeightKg: $deliveryWeightKg, deliveryMethods: $deliveryMethods, status: $status, goHome: $goHome, selfDestruction: $selfDestruction, userId: $userId, categoryId: $categoryId, averageRating: $averageRating, ratingsCount: $ratingsCount, images: $images, variants: $variants, category: $category, user: $user, owner: $owner, isFavorited: $isFavorited, favoritesCount: $favoritesCount, ratings: $ratings)';
   }
 
   @override
@@ -856,13 +802,14 @@ class _$ProductModelImpl implements _ProductModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProductModelImpl &&
-            const DeepCollectionEquality().equals(other._images, _images) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.productCode, productCode) ||
+                other.productCode == productCode) &&
             (identical(other.productName, productName) ||
                 other.productName == productName) &&
             (identical(other.productDescription, productDescription) ||
                 other.productDescription == productDescription) &&
-            (identical(other.categoryId, categoryId) ||
-                other.categoryId == categoryId) &&
+            (identical(other.type, type) || other.type == type) &&
             (identical(other.saleType, saleType) ||
                 other.saleType == saleType) &&
             (identical(other.deliveryAvailable, deliveryAvailable) ||
@@ -887,25 +834,20 @@ class _$ProductModelImpl implements _ProductModel {
                 other.deliveryHeightCm == deliveryHeightCm) &&
             (identical(other.deliveryWeightKg, deliveryWeightKg) ||
                 other.deliveryWeightKg == deliveryWeightKg) &&
-            (identical(other.id, id) || other.id == id) &&
-            const DeepCollectionEquality().equals(other._children, _children) &&
-            (identical(other.parentId, parentId) ||
-                other.parentId == parentId) &&
-            (identical(other.name, name) || other.name == name) &&
-            (identical(other.type, type) || other.type == type) &&
-            (identical(other.icon, icon) || other.icon == icon) &&
-            (identical(other.description, description) ||
-                other.description == description) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
             const DeepCollectionEquality()
                 .equals(other._deliveryMethods, _deliveryMethods) &&
             (identical(other.status, status) || other.status == status) &&
-            const DeepCollectionEquality()
-                .equals(other.productPictures, productPictures) &&
+            (identical(other.goHome, goHome) || other.goHome == goHome) &&
+            (identical(other.selfDestruction, selfDestruction) ||
+                other.selfDestruction == selfDestruction) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
+            (identical(other.averageRating, averageRating) ||
+                other.averageRating == averageRating) &&
+            (identical(other.ratingsCount, ratingsCount) ||
+                other.ratingsCount == ratingsCount) &&
+            const DeepCollectionEquality().equals(other._images, _images) &&
             const DeepCollectionEquality().equals(other._variants, _variants) &&
             (identical(other.category, category) ||
                 other.category == category) &&
@@ -922,10 +864,11 @@ class _$ProductModelImpl implements _ProductModel {
   @override
   int get hashCode => Object.hashAll([
         runtimeType,
-        const DeepCollectionEquality().hash(_images),
+        id,
+        productCode,
         productName,
         productDescription,
-        categoryId,
+        type,
         saleType,
         deliveryAvailable,
         deliveryType,
@@ -938,19 +881,15 @@ class _$ProductModelImpl implements _ProductModel {
         deliveryWidthCm,
         deliveryHeightCm,
         deliveryWeightKg,
-        id,
-        const DeepCollectionEquality().hash(_children),
-        parentId,
-        name,
-        type,
-        icon,
-        description,
-        userId,
-        createdAt,
-        updatedAt,
         const DeepCollectionEquality().hash(_deliveryMethods),
         status,
-        const DeepCollectionEquality().hash(productPictures),
+        goHome,
+        selfDestruction,
+        userId,
+        categoryId,
+        averageRating,
+        ratingsCount,
+        const DeepCollectionEquality().hash(_images),
         const DeepCollectionEquality().hash(_variants),
         category,
         user,
@@ -978,13 +917,14 @@ class _$ProductModelImpl implements _ProductModel {
 
 abstract class _ProductModel implements ProductModel {
   const factory _ProductModel(
-      {@JsonKey(fromJson: _imagesFromJson) final List<String>? images,
+      {final int? id,
+      @JsonKey(name: 'product_code') final String? productCode,
       @JsonKey(name: 'product_name') final String? productName,
       @JsonKey(name: 'product_description') final String? productDescription,
-      @JsonKey(name: 'category_id') final int? categoryId,
+      final String? type,
       @JsonKey(name: 'sale_type') final String saleType,
       @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
-      final bool deliveryAvailable,
+      final bool? deliveryAvailable,
       @JsonKey(name: 'delivery_type') final String? deliveryType,
       @JsonKey(name: 'delivery_time') final String? deliveryTime,
       @JsonKey(name: 'delivery_price', fromJson: _parseDouble)
@@ -994,7 +934,7 @@ abstract class _ProductModel implements ProductModel {
       @JsonKey(name: 'delivery_radius', fromJson: _parseDouble)
       final double? deliveryRadius,
       @JsonKey(name: 'self_pickup', fromJson: _boolFromInt)
-      final bool selfPickup,
+      final bool? selfPickup,
       @JsonKey(name: 'delivery_length_cm', fromJson: _parseDouble)
       final double? deliveryLengthCm,
       @JsonKey(name: 'delivery_width_cm', fromJson: _parseDouble)
@@ -1003,19 +943,16 @@ abstract class _ProductModel implements ProductModel {
       final double? deliveryHeightCm,
       @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
       final double? deliveryWeightKg,
-      final int? id,
-      final List<String>? children,
-      @JsonKey(name: 'parent_id') final int? parentId,
-      final String? name,
-      final String? type,
-      final String? icon,
-      final String? description,
-      @JsonKey(name: 'user_id') final int? userId,
-      @JsonKey(name: 'created_at') final DateTime? createdAt,
-      @JsonKey(name: 'updated_at') final DateTime? updatedAt,
       @JsonKey(name: 'delivery_methods') final List<String>? deliveryMethods,
-      @JsonKey(fromJson: _boolFromInt) final bool? status,
-      @JsonKey(name: 'product_pictures') final dynamic productPictures,
+      @JsonKey(fromJson: _intFromJson) final int? status,
+      @JsonKey(name: 'go_home') final String? goHome,
+      @JsonKey(name: 'self_destruction') final String? selfDestruction,
+      @JsonKey(name: 'user_id') final int? userId,
+      @JsonKey(name: 'category_id') final int? categoryId,
+      @JsonKey(name: 'average_rating', fromJson: _parseDouble)
+      final double? averageRating,
+      @JsonKey(name: 'ratings_count') final int ratingsCount,
+      @JsonKey(fromJson: _imagesFromJson) final List<String> images,
       final List<VariantModel> variants,
       final MainCategoryModel? category,
       final UserModel? user,
@@ -1028,8 +965,10 @@ abstract class _ProductModel implements ProductModel {
       _$ProductModelImpl.fromJson;
 
   @override
-  @JsonKey(fromJson: _imagesFromJson)
-  List<String>? get images;
+  int? get id;
+  @override
+  @JsonKey(name: 'product_code')
+  String? get productCode;
   @override
   @JsonKey(name: 'product_name')
   String? get productName;
@@ -1037,14 +976,13 @@ abstract class _ProductModel implements ProductModel {
   @JsonKey(name: 'product_description')
   String? get productDescription;
   @override
-  @JsonKey(name: 'category_id')
-  int? get categoryId;
+  String? get type;
   @override
   @JsonKey(name: 'sale_type')
   String get saleType;
   @override
   @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
-  bool get deliveryAvailable;
+  bool? get deliveryAvailable;
   @override
   @JsonKey(name: 'delivery_type')
   String? get deliveryType;
@@ -1062,7 +1000,7 @@ abstract class _ProductModel implements ProductModel {
   double? get deliveryRadius;
   @override
   @JsonKey(name: 'self_pickup', fromJson: _boolFromInt)
-  bool get selfPickup;
+  bool? get selfPickup;
   @override
   @JsonKey(name: 'delivery_length_cm', fromJson: _parseDouble)
   double? get deliveryLengthCm;
@@ -1076,38 +1014,32 @@ abstract class _ProductModel implements ProductModel {
   @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
   double? get deliveryWeightKg;
   @override
-  int? get id;
+  @JsonKey(name: 'delivery_methods')
+  List<String>? get deliveryMethods;
   @override
-  List<String>? get children;
+  @JsonKey(fromJson: _intFromJson)
+  int? get status;
   @override
-  @JsonKey(name: 'parent_id')
-  int? get parentId;
+  @JsonKey(name: 'go_home')
+  String? get goHome;
   @override
-  String? get name;
-  @override
-  String? get type;
-  @override
-  String? get icon;
-  @override
-  String? get description;
+  @JsonKey(name: 'self_destruction')
+  String? get selfDestruction;
   @override
   @JsonKey(name: 'user_id')
   int? get userId;
   @override
-  @JsonKey(name: 'created_at')
-  DateTime? get createdAt;
+  @JsonKey(name: 'category_id')
+  int? get categoryId;
   @override
-  @JsonKey(name: 'updated_at')
-  DateTime? get updatedAt;
+  @JsonKey(name: 'average_rating', fromJson: _parseDouble)
+  double? get averageRating;
   @override
-  @JsonKey(name: 'delivery_methods')
-  List<String>? get deliveryMethods;
+  @JsonKey(name: 'ratings_count')
+  int get ratingsCount;
   @override
-  @JsonKey(fromJson: _boolFromInt)
-  bool? get status;
-  @override
-  @JsonKey(name: 'product_pictures')
-  dynamic get productPictures;
+  @JsonKey(fromJson: _imagesFromJson)
+  List<String> get images;
   @override
   List<VariantModel> get variants;
   @override
@@ -2143,10 +2075,11 @@ VariantModel _$VariantModelFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$VariantModel {
+  int? get id => throw _privateConstructorUsedError;
+  String? get sku => throw _privateConstructorUsedError;
   @JsonKey(fromJson: _parseDouble)
   double? get price => throw _privateConstructorUsedError;
   int get stock => throw _privateConstructorUsedError;
-  int? get id => throw _privateConstructorUsedError;
   Map<String, dynamic>? get attributes => throw _privateConstructorUsedError;
   @JsonKey(fromJson: _parseDouble)
   double? get discount => throw _privateConstructorUsedError;
@@ -2170,9 +2103,10 @@ abstract class $VariantModelCopyWith<$Res> {
       _$VariantModelCopyWithImpl<$Res, VariantModel>;
   @useResult
   $Res call(
-      {@JsonKey(fromJson: _parseDouble) double? price,
+      {int? id,
+      String? sku,
+      @JsonKey(fromJson: _parseDouble) double? price,
       int stock,
-      int? id,
       Map<String, dynamic>? attributes,
       @JsonKey(fromJson: _parseDouble) double? discount,
       @JsonKey(name: 'discount_type') String? discountType});
@@ -2193,14 +2127,23 @@ class _$VariantModelCopyWithImpl<$Res, $Val extends VariantModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
+    Object? sku = freezed,
     Object? price = freezed,
     Object? stock = null,
-    Object? id = freezed,
     Object? attributes = freezed,
     Object? discount = freezed,
     Object? discountType = freezed,
   }) {
     return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      sku: freezed == sku
+          ? _value.sku
+          : sku // ignore: cast_nullable_to_non_nullable
+              as String?,
       price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
@@ -2209,10 +2152,6 @@ class _$VariantModelCopyWithImpl<$Res, $Val extends VariantModel>
           ? _value.stock
           : stock // ignore: cast_nullable_to_non_nullable
               as int,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
       attributes: freezed == attributes
           ? _value.attributes
           : attributes // ignore: cast_nullable_to_non_nullable
@@ -2238,9 +2177,10 @@ abstract class _$$VariantModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(fromJson: _parseDouble) double? price,
+      {int? id,
+      String? sku,
+      @JsonKey(fromJson: _parseDouble) double? price,
       int stock,
-      int? id,
       Map<String, dynamic>? attributes,
       @JsonKey(fromJson: _parseDouble) double? discount,
       @JsonKey(name: 'discount_type') String? discountType});
@@ -2259,14 +2199,23 @@ class __$$VariantModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
+    Object? sku = freezed,
     Object? price = freezed,
     Object? stock = null,
-    Object? id = freezed,
     Object? attributes = freezed,
     Object? discount = freezed,
     Object? discountType = freezed,
   }) {
     return _then(_$VariantModelImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      sku: freezed == sku
+          ? _value.sku
+          : sku // ignore: cast_nullable_to_non_nullable
+              as String?,
       price: freezed == price
           ? _value.price
           : price // ignore: cast_nullable_to_non_nullable
@@ -2275,10 +2224,6 @@ class __$$VariantModelImplCopyWithImpl<$Res>
           ? _value.stock
           : stock // ignore: cast_nullable_to_non_nullable
               as int,
-      id: freezed == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
       attributes: freezed == attributes
           ? _value._attributes
           : attributes // ignore: cast_nullable_to_non_nullable
@@ -2299,9 +2244,10 @@ class __$$VariantModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$VariantModelImpl implements _VariantModel {
   const _$VariantModelImpl(
-      {@JsonKey(fromJson: _parseDouble) this.price,
+      {this.id,
+      this.sku,
+      @JsonKey(fromJson: _parseDouble) this.price,
       this.stock = 1,
-      this.id,
       final Map<String, dynamic>? attributes,
       @JsonKey(fromJson: _parseDouble) this.discount,
       @JsonKey(name: 'discount_type') this.discountType})
@@ -2311,13 +2257,15 @@ class _$VariantModelImpl implements _VariantModel {
       _$$VariantModelImplFromJson(json);
 
   @override
+  final int? id;
+  @override
+  final String? sku;
+  @override
   @JsonKey(fromJson: _parseDouble)
   final double? price;
   @override
   @JsonKey()
   final int stock;
-  @override
-  final int? id;
   final Map<String, dynamic>? _attributes;
   @override
   Map<String, dynamic>? get attributes {
@@ -2337,7 +2285,7 @@ class _$VariantModelImpl implements _VariantModel {
 
   @override
   String toString() {
-    return 'VariantModel(price: $price, stock: $stock, id: $id, attributes: $attributes, discount: $discount, discountType: $discountType)';
+    return 'VariantModel(id: $id, sku: $sku, price: $price, stock: $stock, attributes: $attributes, discount: $discount, discountType: $discountType)';
   }
 
   @override
@@ -2345,9 +2293,10 @@ class _$VariantModelImpl implements _VariantModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$VariantModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.sku, sku) || other.sku == sku) &&
             (identical(other.price, price) || other.price == price) &&
             (identical(other.stock, stock) || other.stock == stock) &&
-            (identical(other.id, id) || other.id == id) &&
             const DeepCollectionEquality()
                 .equals(other._attributes, _attributes) &&
             (identical(other.discount, discount) ||
@@ -2358,7 +2307,7 @@ class _$VariantModelImpl implements _VariantModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, price, stock, id,
+  int get hashCode => Object.hash(runtimeType, id, sku, price, stock,
       const DeepCollectionEquality().hash(_attributes), discount, discountType);
 
   /// Create a copy of VariantModel
@@ -2379,9 +2328,10 @@ class _$VariantModelImpl implements _VariantModel {
 
 abstract class _VariantModel implements VariantModel {
   const factory _VariantModel(
-          {@JsonKey(fromJson: _parseDouble) final double? price,
+          {final int? id,
+          final String? sku,
+          @JsonKey(fromJson: _parseDouble) final double? price,
           final int stock,
-          final int? id,
           final Map<String, dynamic>? attributes,
           @JsonKey(fromJson: _parseDouble) final double? discount,
           @JsonKey(name: 'discount_type') final String? discountType}) =
@@ -2391,12 +2341,14 @@ abstract class _VariantModel implements VariantModel {
       _$VariantModelImpl.fromJson;
 
   @override
+  int? get id;
+  @override
+  String? get sku;
+  @override
   @JsonKey(fromJson: _parseDouble)
   double? get price;
   @override
   int get stock;
-  @override
-  int? get id;
   @override
   Map<String, dynamic>? get attributes;
   @override
