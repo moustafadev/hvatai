@@ -58,6 +58,18 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
     return '${m.toString().padLeft(2, '0')}:${r.toString().padLeft(2, '0')}';
   }
 
+  String _resolveCategoryName(int? categoryId) {
+    if (categoryId == null) return '';
+    final categories = widget.stream.categories;
+    if (categories == null) return '';
+    for (final category in categories) {
+      if (category.id == categoryId) {
+        return category.name ?? '';
+      }
+    }
+    return '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
@@ -68,10 +80,32 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
             return const FullScreenLoader();
           }
 
-          final firstProduct = (widget.stream.streamProducts != null &&
-                  widget.stream.streamProducts!.isNotEmpty)
-              ? widget.stream.streamProducts!.first
-              : null;
+          final StreamProductModel? activeProduct = state.activeStreamProduct ??
+              ((state.stream.streamProducts != null &&
+                      state.stream.streamProducts!.isNotEmpty)
+                  ? state.stream.streamProducts!.first
+                  : null);
+          final hasProduct = activeProduct != null;
+          var productTitle = '';
+          var productCategory = '';
+          var startPrice = 0.0;
+          var timerText = '--:--';
+
+          if (activeProduct != null) {
+            final streamProduct = activeProduct;
+            final embeddedProduct = streamProduct.product;
+            productTitle = embeddedProduct?.name ?? '';
+            final categoryId = embeddedProduct?.categoryId;
+            productCategory = _resolveCategoryName(categoryId);
+            startPrice =
+                double.tryParse(streamProduct.startingPrice ?? '') ?? 0.0;
+            if (state.currentBidRemainingSeconds != null) {
+              final remaining = state.currentBidRemainingSeconds!;
+              timerText = _formatTime(remaining >= 0 ? remaining : 0);
+            }
+          } else if (state.streamSeconds > 0) {
+            timerText = _formatTime(state.streamSeconds);
+          }
 
           return WillPopScope(
             onWillPop: () async {
@@ -124,16 +158,14 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
                       onSend: () => context
                           .read<BroadcasterStreamCubit>()
                           .sendCommentToServer(streamId: widget.stream.id ?? 0),
-                      timerText: _formatTime(state.streamSeconds),
-                      productTitle:
-                          firstProduct?.product?.productName ?? "No product",
-                      productCategory:
-                          firstProduct?.product?.category?.name ?? "",
-                      startPrice:
-                          double.tryParse(firstProduct?.startingPrice ?? "") ??
-                              0,
-                      onEditPressed: () {},
-                      onBidPressed: () {},
+                      timerText: timerText,
+                      productTitle: productTitle,
+                      productCategory: productCategory,
+                      startPrice: startPrice,
+                      showProductDetails: hasProduct,
+                      showBidActions: false,
+                      onEditPressed: null,
+                      onBidPressed: null,
                     ),
                   ),
                 ],

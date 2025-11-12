@@ -1,7 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
-
+import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
 part 'stream_response_model.freezed.dart';
 part 'stream_response_model.g.dart';
 
@@ -13,6 +12,8 @@ class StreamResponseModel with _$StreamResponseModel {
     StreamDataModel? data,
     // Added to handle the top-level livekit object
     LivekitInfoModel? livekit,
+    @JsonKey(name: 'thumbnail_url') String? thumbnailUrl,
+    @JsonKey(name: 'gif_url') String? gifUrl,
   }) = _StreamResponseModel;
 
   factory StreamResponseModel.fromJson(Map<String, dynamic> json) =>
@@ -75,10 +76,13 @@ class StreamDataModel with _$StreamDataModel {
       toJson: _doubleToString,
     )
     double? minimumBidIncrement,
+    @JsonKey(name: 'bid_duration_seconds') int? bidDurationSeconds,
     @JsonKey(name: 'stream_settings') Map<String, dynamic>? streamSettings,
     @JsonKey(name: 'is_mine') bool? isMine,
     StreamUserModel? user,
     @JsonKey(name: 'stream_products') List<StreamProductModel>? streamProducts,
+    @JsonKey(name: 'categories') List<StreamCategoryModel>? categories,
+    @JsonKey(name: 'record_url') String? recordUrl,
   }) = _StreamDataModel;
 
   factory StreamDataModel.fromJson(Map<String, dynamic> json) =>
@@ -136,15 +140,85 @@ class StreamProductModel with _$StreamProductModel {
     @JsonKey(name: 'product_id') int? productId,
     @JsonKey(name: 'starting_price') String? startingPrice,
     @JsonKey(name: 'current_bid') String? currentBid,
+    @JsonKey(name: 'bid_duration_seconds') int? bidDurationSeconds,
+    @JsonKey(name: 'bidding_enabled') bool? biddingEnabled,
     @JsonKey(name: 'is_active') bool? isActive,
     @JsonKey(name: 'display_order') int? displayOrder,
+    @JsonKey(name: 'remaining_seconds') int? remainingSeconds,
+    @JsonKey(name: 'bid_session') ToggleBiddingSessionModel? bidSession,
     @JsonKey(name: 'created_at') DateTime? createdAt,
     @JsonKey(name: 'updated_at') DateTime? updatedAt,
-    ProductModel? product,
+    @JsonKey(name: 'product') StreamEmbeddedProductModel? product,
   }) = _StreamProductModel;
 
   factory StreamProductModel.fromJson(Map<String, dynamic> json) =>
       _$StreamProductModelFromJson(json);
+}
+
+@freezed
+class StreamEmbeddedProductModel with _$StreamEmbeddedProductModel {
+  const factory StreamEmbeddedProductModel({
+    int? id,
+    String? name,
+    String? type,
+    String? description,
+    @JsonKey(name: 'user_id') int? userId,
+    @JsonKey(name: 'category_id') int? categoryId,
+    String? code,
+    String? unit,
+    @JsonKey(name: 'delivery_available') int? deliveryAvailable,
+    @JsonKey(name: 'self_pickup') int? selfPickup,
+    @JsonKey(name: 'delivery_type') String? deliveryType,
+    @JsonKey(name: 'delivery_time') String? deliveryTime,
+    @JsonKey(name: 'delivery_price') String? deliveryPrice,
+    @JsonKey(name: 'delivery_discount') String? deliveryDiscount,
+    @JsonKey(name: 'delivery_radius') String? deliveryRadius,
+    String? location,
+    @JsonKey(name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
+    double? latitude,
+    @JsonKey(
+        name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
+    double? longitude,
+    int? status,
+    int? featured,
+    Map<String, dynamic>? meta,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
+    @JsonKey(name: 'updated_at') DateTime? updatedAt,
+    @JsonKey(name: 'delivery_length_cm') String? deliveryLengthCm,
+    @JsonKey(name: 'delivery_width_cm') String? deliveryWidthCm,
+    @JsonKey(name: 'delivery_height_cm') String? deliveryHeightCm,
+    @JsonKey(name: 'delivery_weight_kg') String? deliveryWeightKg,
+    @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
+    @JsonKey(name: 'sale_type') String? saleType,
+  }) = _StreamEmbeddedProductModel;
+
+  factory StreamEmbeddedProductModel.fromJson(Map<String, dynamic> json) =>
+      _$StreamEmbeddedProductModelFromJson(json);
+}
+
+@freezed
+class StreamCategoryModel with _$StreamCategoryModel {
+  const factory StreamCategoryModel({
+    int? id,
+    String? name,
+    @JsonKey(name: 'pivot') StreamCategoryPivotModel? pivot,
+  }) = _StreamCategoryModel;
+
+  factory StreamCategoryModel.fromJson(Map<String, dynamic> json) =>
+      _$StreamCategoryModelFromJson(json);
+}
+
+@freezed
+class StreamCategoryPivotModel with _$StreamCategoryPivotModel {
+  const factory StreamCategoryPivotModel({
+    @JsonKey(name: 'stream_id') int? streamId,
+    @JsonKey(name: 'category_id') int? categoryId,
+    @JsonKey(name: 'created_at') DateTime? createdAt,
+    @JsonKey(name: 'updated_at') DateTime? updatedAt,
+  }) = _StreamCategoryPivotModel;
+
+  factory StreamCategoryPivotModel.fromJson(Map<String, dynamic> json) =>
+      _$StreamCategoryPivotModelFromJson(json);
 }
 
 /// ========= List response wrapper =========

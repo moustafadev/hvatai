@@ -41,18 +41,18 @@ class BidStreamData with _$BidStreamData {
 @freezed
 class BidStreamItem with _$BidStreamItem {
   const factory BidStreamItem({
-    required int id,
-    @JsonKey(name: "stream_id") required int streamId,
-    @JsonKey(name: "stream_product_id") required int streamProductId,
-    @JsonKey(name: "user_id") required int userId,
-    @JsonKey(name: "bid_amount") required String bidAmount,
-    required String status,
+    int? id,
+    @JsonKey(name: "stream_id") int? streamId,
+    @JsonKey(name: "stream_product_id") int? streamProductId,
+    @JsonKey(name: "user_id") int? userId,
+    @JsonKey(name: "bid_amount") String? bidAmount,
+    String? status,
     String? notes,
-    @JsonKey(name: "bid_at") required String bidAt,
-    @JsonKey(name: "created_at") required String createdAt,
-    @JsonKey(name: "updated_at") required String updatedAt,
-    required StreamUserModel user,
-    @JsonKey(name: "stream_product") required StreamProductModel streamProduct,
+    @JsonKey(name: "bid_at") String? bidAt,
+    @JsonKey(name: "created_at") String? createdAt,
+    @JsonKey(name: "updated_at") String? updatedAt,
+    StreamUserModel? user,
+    @JsonKey(name: "stream_product") StreamProductModel? streamProduct,
   }) = _BidStreamItem;
 
   factory BidStreamItem.fromJson(Map<String, dynamic> json) =>
@@ -62,12 +62,12 @@ class BidStreamItem with _$BidStreamItem {
 @freezed
 class BidProduct with _$BidProduct {
   const factory BidProduct({
-    required int id,
-    required String name,
-    required String type,
+    int? id,
+    String? name,
+    String? type,
     String? description,
-    @JsonKey(name: "user_id") required int userId,
-    @JsonKey(name: "category_id") required int categoryId,
+    @JsonKey(name: "user_id") int? userId,
+    @JsonKey(name: "category_id") int? categoryId,
     String? code,
     String? unit,
     @JsonKey(name: "delivery_available") int? deliveryAvailable,
@@ -83,8 +83,8 @@ class BidProduct with _$BidProduct {
     int? status,
     int? featured,
     String? meta,
-    @JsonKey(name: "created_at") required String createdAt,
-    @JsonKey(name: "updated_at") required String updatedAt,
+    @JsonKey(name: "created_at") String? createdAt,
+    @JsonKey(name: "updated_at") String? updatedAt,
     @JsonKey(name: "delivery_length_cm") String? deliveryLengthCm,
     @JsonKey(name: "delivery_width_cm") String? deliveryWidthCm,
     @JsonKey(name: "delivery_height_cm") String? deliveryHeightCm,

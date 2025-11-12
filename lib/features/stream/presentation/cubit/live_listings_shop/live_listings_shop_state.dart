@@ -8,6 +8,11 @@ class LiveListingsShopState extends Equatable {
     this.isAddingProduct = false,
     this.isStartingAuction = false,
     this.selectedTabIndex = 0,
+    this.myProducts = const [],
+    this.isMyProductsLoading = false,
+    this.myProductsError,
+    this.categoryIds = const [],
+    this.streamId,
     List<String>? tabs,
   }) : tabs = tabs ?? const ['Auction', 'Buy Now'];
 
@@ -18,6 +23,11 @@ class LiveListingsShopState extends Equatable {
   final bool isStartingAuction;
   final int selectedTabIndex;
   final List<String> tabs;
+  final List<ProductModel> myProducts;
+  final bool isMyProductsLoading;
+  final String? myProductsError;
+  final List<int> categoryIds;
+  final int? streamId;
 
   List<StreamProductItemModel> get filteredProducts {
     if (products == null || products!.isEmpty) return [];
@@ -43,6 +53,11 @@ class LiveListingsShopState extends Equatable {
     bool? isAddingProduct,
     bool? isStartingAuction,
     int? selectedTabIndex,
+    List<ProductModel>? myProducts,
+    bool? isMyProductsLoading,
+    String? myProductsError,
+    List<int>? categoryIds,
+    int? streamId,
     List<String>? tabs,
   }) {
     return LiveListingsShopState(
@@ -52,6 +67,11 @@ class LiveListingsShopState extends Equatable {
       isAddingProduct: isAddingProduct ?? this.isAddingProduct,
       isStartingAuction: isStartingAuction ?? this.isStartingAuction,
       selectedTabIndex: selectedTabIndex ?? this.selectedTabIndex,
+      myProducts: myProducts ?? this.myProducts,
+      isMyProductsLoading: isMyProductsLoading ?? this.isMyProductsLoading,
+      myProductsError: myProductsError ?? this.myProductsError,
+      categoryIds: categoryIds ?? this.categoryIds,
+      streamId: streamId ?? this.streamId,
       tabs: tabs ?? this.tabs,
     );
   }
@@ -64,6 +84,11 @@ class LiveListingsShopState extends Equatable {
         isAddingProduct,
         isStartingAuction,
         selectedTabIndex,
-        tabs
+        tabs,
+        myProducts,
+        isMyProductsLoading,
+        myProductsError,
+        categoryIds,
+        streamId,
       ];
 }

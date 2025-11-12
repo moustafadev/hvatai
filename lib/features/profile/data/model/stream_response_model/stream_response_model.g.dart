@@ -17,6 +17,8 @@ _$StreamResponseModelImpl _$$StreamResponseModelImplFromJson(
       livekit: json['livekit'] == null
           ? null
           : LivekitInfoModel.fromJson(json['livekit'] as Map<String, dynamic>),
+      thumbnailUrl: json['thumbnail_url'] as String?,
+      gifUrl: json['gif_url'] as String?,
     );
 
 Map<String, dynamic> _$$StreamResponseModelImplToJson(
@@ -26,6 +28,8 @@ Map<String, dynamic> _$$StreamResponseModelImplToJson(
       'message': instance.message,
       'data': instance.data,
       'livekit': instance.livekit,
+      'thumbnail_url': instance.thumbnailUrl,
+      'gif_url': instance.gifUrl,
     };
 
 _$StreamDataModelImpl _$$StreamDataModelImplFromJson(
@@ -78,6 +82,7 @@ _$StreamDataModelImpl _$$StreamDataModelImplFromJson(
       enableComments: json['enable_comments'] as bool?,
       enableBidding: json['enable_bidding'] as bool?,
       minimumBidIncrement: _stringToDouble(json['minimum_bid_increment']),
+      bidDurationSeconds: (json['bid_duration_seconds'] as num?)?.toInt(),
       streamSettings: json['stream_settings'] as Map<String, dynamic>?,
       isMine: json['is_mine'] as bool?,
       user: json['user'] == null
@@ -86,6 +91,10 @@ _$StreamDataModelImpl _$$StreamDataModelImplFromJson(
       streamProducts: (json['stream_products'] as List<dynamic>?)
           ?.map((e) => StreamProductModel.fromJson(e as Map<String, dynamic>))
           .toList(),
+      categories: (json['categories'] as List<dynamic>?)
+          ?.map((e) => StreamCategoryModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      recordUrl: json['record_url'] as String?,
     );
 
 Map<String, dynamic> _$$StreamDataModelImplToJson(
@@ -124,10 +133,13 @@ Map<String, dynamic> _$$StreamDataModelImplToJson(
       'enable_comments': instance.enableComments,
       'enable_bidding': instance.enableBidding,
       'minimum_bid_increment': _doubleToString(instance.minimumBidIncrement),
+      'bid_duration_seconds': instance.bidDurationSeconds,
       'stream_settings': instance.streamSettings,
       'is_mine': instance.isMine,
       'user': instance.user,
       'stream_products': instance.streamProducts,
+      'categories': instance.categories,
+      'record_url': instance.recordUrl,
     };
 
 _$LivekitConfigModelImpl _$$LivekitConfigModelImplFromJson(
@@ -192,8 +204,15 @@ _$StreamProductModelImpl _$$StreamProductModelImplFromJson(
       productId: (json['product_id'] as num?)?.toInt(),
       startingPrice: json['starting_price'] as String?,
       currentBid: json['current_bid'] as String?,
+      bidDurationSeconds: (json['bid_duration_seconds'] as num?)?.toInt(),
+      biddingEnabled: json['bidding_enabled'] as bool?,
       isActive: json['is_active'] as bool?,
       displayOrder: (json['display_order'] as num?)?.toInt(),
+      remainingSeconds: (json['remaining_seconds'] as num?)?.toInt(),
+      bidSession: json['bid_session'] == null
+          ? null
+          : ToggleBiddingSessionModel.fromJson(
+              json['bid_session'] as Map<String, dynamic>),
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -202,7 +221,8 @@ _$StreamProductModelImpl _$$StreamProductModelImplFromJson(
           : DateTime.parse(json['updated_at'] as String),
       product: json['product'] == null
           ? null
-          : ProductModel.fromJson(json['product'] as Map<String, dynamic>),
+          : StreamEmbeddedProductModel.fromJson(
+              json['product'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$StreamProductModelImplToJson(
@@ -213,11 +233,130 @@ Map<String, dynamic> _$$StreamProductModelImplToJson(
       'product_id': instance.productId,
       'starting_price': instance.startingPrice,
       'current_bid': instance.currentBid,
+      'bid_duration_seconds': instance.bidDurationSeconds,
+      'bidding_enabled': instance.biddingEnabled,
       'is_active': instance.isActive,
       'display_order': instance.displayOrder,
+      'remaining_seconds': instance.remainingSeconds,
+      'bid_session': instance.bidSession,
       'created_at': instance.createdAt?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),
       'product': instance.product,
+    };
+
+_$StreamEmbeddedProductModelImpl _$$StreamEmbeddedProductModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$StreamEmbeddedProductModelImpl(
+      id: (json['id'] as num?)?.toInt(),
+      name: json['name'] as String?,
+      type: json['type'] as String?,
+      description: json['description'] as String?,
+      userId: (json['user_id'] as num?)?.toInt(),
+      categoryId: (json['category_id'] as num?)?.toInt(),
+      code: json['code'] as String?,
+      unit: json['unit'] as String?,
+      deliveryAvailable: (json['delivery_available'] as num?)?.toInt(),
+      selfPickup: (json['self_pickup'] as num?)?.toInt(),
+      deliveryType: json['delivery_type'] as String?,
+      deliveryTime: json['delivery_time'] as String?,
+      deliveryPrice: json['delivery_price'] as String?,
+      deliveryDiscount: json['delivery_discount'] as String?,
+      deliveryRadius: json['delivery_radius'] as String?,
+      location: json['location'] as String?,
+      latitude: _stringToDouble(json['latitude']),
+      longitude: _stringToDouble(json['longitude']),
+      status: (json['status'] as num?)?.toInt(),
+      featured: (json['featured'] as num?)?.toInt(),
+      meta: json['meta'] as Map<String, dynamic>?,
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+      deliveryLengthCm: json['delivery_length_cm'] as String?,
+      deliveryWidthCm: json['delivery_width_cm'] as String?,
+      deliveryHeightCm: json['delivery_height_cm'] as String?,
+      deliveryWeightKg: json['delivery_weight_kg'] as String?,
+      deliveryMethods: (json['delivery_methods'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      saleType: json['sale_type'] as String?,
+    );
+
+Map<String, dynamic> _$$StreamEmbeddedProductModelImplToJson(
+        _$StreamEmbeddedProductModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'type': instance.type,
+      'description': instance.description,
+      'user_id': instance.userId,
+      'category_id': instance.categoryId,
+      'code': instance.code,
+      'unit': instance.unit,
+      'delivery_available': instance.deliveryAvailable,
+      'self_pickup': instance.selfPickup,
+      'delivery_type': instance.deliveryType,
+      'delivery_time': instance.deliveryTime,
+      'delivery_price': instance.deliveryPrice,
+      'delivery_discount': instance.deliveryDiscount,
+      'delivery_radius': instance.deliveryRadius,
+      'location': instance.location,
+      'latitude': _doubleToString(instance.latitude),
+      'longitude': _doubleToString(instance.longitude),
+      'status': instance.status,
+      'featured': instance.featured,
+      'meta': instance.meta,
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
+      'delivery_length_cm': instance.deliveryLengthCm,
+      'delivery_width_cm': instance.deliveryWidthCm,
+      'delivery_height_cm': instance.deliveryHeightCm,
+      'delivery_weight_kg': instance.deliveryWeightKg,
+      'delivery_methods': instance.deliveryMethods,
+      'sale_type': instance.saleType,
+    };
+
+_$StreamCategoryModelImpl _$$StreamCategoryModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$StreamCategoryModelImpl(
+      id: (json['id'] as num?)?.toInt(),
+      name: json['name'] as String?,
+      pivot: json['pivot'] == null
+          ? null
+          : StreamCategoryPivotModel.fromJson(
+              json['pivot'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$StreamCategoryModelImplToJson(
+        _$StreamCategoryModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'name': instance.name,
+      'pivot': instance.pivot,
+    };
+
+_$StreamCategoryPivotModelImpl _$$StreamCategoryPivotModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$StreamCategoryPivotModelImpl(
+      streamId: (json['stream_id'] as num?)?.toInt(),
+      categoryId: (json['category_id'] as num?)?.toInt(),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
+      updatedAt: json['updated_at'] == null
+          ? null
+          : DateTime.parse(json['updated_at'] as String),
+    );
+
+Map<String, dynamic> _$$StreamCategoryPivotModelImplToJson(
+        _$StreamCategoryPivotModelImpl instance) =>
+    <String, dynamic>{
+      'stream_id': instance.streamId,
+      'category_id': instance.categoryId,
+      'created_at': instance.createdAt?.toIso8601String(),
+      'updated_at': instance.updatedAt?.toIso8601String(),
     };
 
 _$StreamListResponseModelImpl _$$StreamListResponseModelImplFromJson(

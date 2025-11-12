@@ -4,29 +4,32 @@ class MyCustomProductCard<T extends Cubit> extends StatelessWidget {
   final ProductModel product;
   final int selectedCategoryIndex;
   final T cubit;
+  final VoidCallback? onTap;
 
   const MyCustomProductCard({
     super.key,
     required this.product,
     required this.selectedCategoryIndex,
     required this.cubit,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     final variant = product.variants.firstOrNull ?? VariantModel();
-    final String imageUrl = product.images?.firstOrNull ?? '';
+    final String imageUrl = product.images.firstOrNull ?? '';
 
     return GestureDetector(
-      onTap: () {
-        context.push(
-          AppRoutes.myProductDetails,
-          extra: {
-            'model': product,
-            'cubit': cubit,
+      onTap: onTap ??
+          () {
+            context.push(
+              AppRoutes.myProductDetails,
+              extra: {
+                'model': product,
+                'cubit': cubit,
+              },
+            );
           },
-        );
-      },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: 6.h),
         decoration: BoxDecoration(

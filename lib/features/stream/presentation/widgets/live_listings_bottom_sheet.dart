@@ -2,10 +2,14 @@ part of '../stream.dart';
 
 class LiveListingsBottomSheet extends StatefulWidget {
   final int streamId;
+  final List<int> categoryIds;
+  final int? currentStreamProductId;
 
   const LiveListingsBottomSheet({
     super.key,
     required this.streamId,
+    required this.categoryIds,
+    this.currentStreamProductId,
   });
 
   @override
@@ -122,10 +126,24 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
     if (product == null) {
       return const SizedBox.shrink();
     }
-    print("product: ${product.toJson()}");
 
     final variant = product.variants.firstOrNull ?? VariantModel();
     final String imageUrl = product.images.firstOrNull ?? '';
+    final double variantPrice = variant.price ?? 0.0;
+    final double startingBid = streamProduct.startingBid ?? 0.0;
+    final double currentHighestBid = streamProduct.currentHighestBid ?? 0.0;
+    final double effectiveBidAmount = startingBid > 0
+        ? startingBid
+        : (currentHighestBid > 0 ? currentHighestBid : variantPrice);
+    final String priceLabel = effectiveBidAmount == 0
+        ? '—'
+        : (effectiveBidAmount % 1 == 0
+            ? '${effectiveBidAmount.toInt()} ₽'
+            : '${effectiveBidAmount.toStringAsFixed(2)} ₽');
+
+    final isCurrentAuction = widget.currentStreamProductId != null &&
+        streamProduct.streamProductId != null &&
+        widget.currentStreamProductId == streamProduct.streamProductId;
 
     return GestureDetector(
       onTap: () {
@@ -178,7 +196,7 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
             10.pw,
             Expanded(
               child: SizedBox(
-                height: 140.h,
+                height: 180.h,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,32 +207,42 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                       fontWeight: FontWeight.w700,
                     ),
                     CustomText(
-                      text: variant.price != null
-                          ? (variant.price! % 1 == 0
-                              ? "${variant.price!.toInt()} ₽"
-                              : "${variant.price} ₽")
-                          : "",
+                      text: priceLabel,
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
                     ),
-                    BlocBuilder<LiveListingsShopCubit, LiveListingsShopState>(
-                      builder: (context, cubitState) {
-                        return CustomButton(
-                          title: 'Start Auction',
-                          padding: const EdgeInsets.symmetric(horizontal: 8),
-                          onPressed: cubitState.isStartingAuction
-                              ? null
-                              : () {
-                                  context
-                                      .read<LiveListingsShopCubit>()
-                                      .startAuction(
-                                        streamId: widget.streamId,
-                                        product: streamProduct,
-                                      );
-                                },
-                        );
-                      },
-                    ),
+                    if (!isCurrentAuction &&
+                        streamProduct.product?.saleType == 'auction')
+                      BlocBuilder<LiveListingsShopCubit,
+                          LiveListingsShopState>(
+                        builder: (context, cubitState) {
+                          final streamProductId =
+                              streamProduct.streamProductId;
+                          final bidAmount = effectiveBidAmount;
+                          return CustomButton(
+                            title: 'Start Auction',
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 8),
+                            onPressed: cubitState.isStartingAuction ||
+                                    streamProductId == null
+                                ? null
+                                : () async {
+                                    final toggledProduct = await context
+                                        .read<LiveListingsShopCubit>()
+                                        .toggleBidding(
+                                          streamId: widget.streamId,
+                                          streamProductId: streamProductId,
+                                          bidAmount: bidAmount,
+                                        );
+                                    if (toggledProduct != null && mounted) {
+                                      Navigator.pop(
+                                          context, toggledProduct);
+                                    }
+                                  },
+                          );
+                        },
+                      ),
+
                     5.ph,
                   ],
                 ),
@@ -230,7 +258,10 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => locator<LiveListingsShopCubit>()
-        ..getStreamProducts(streamId: widget.streamId),
+        ..initialize(
+          streamId: widget.streamId,
+          categoryIds: widget.categoryIds,
+        ),
       child: BlocListener<LiveListingsShopCubit, LiveListingsShopState>(
         listenWhen: (previous, current) =>
             previous.isAddingProduct && !current.isAddingProduct,
@@ -404,41 +435,46 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                         ),
                       // Yellow FAB button
                       GestureDetector(
-                        onTap: () {
-                          showModalBottomSheet(
-                            isScrollControlled: true,
-                            context: context,
-                            backgroundColor: Colors.transparent,
-                            builder: (ctx) => Container(
-                              height: MediaQuery.of(context).size.height * 0.9,
-                              decoration: BoxDecoration(
-                                color: AppColors.lightGreyBackground,
-                                borderRadius: BorderRadius.vertical(
-                                  top: Radius.circular(20.r),
+                        onTap: () async {
+                          final cubit =
+                              context.read<LiveListingsShopCubit>();
+
+                          if (cubit.state.categoryIds.isEmpty) {
+                            showFloatingMessageError(
+                                'Please select categories first');
+                            return;
+                          }
+
+                          await cubit.getMyProducts();
+                          if (!mounted) return;
+
+                          if (cubit.state.myProducts.isEmpty) {
+                            await showModalBottomSheet(
+                              isScrollControlled: true,
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (ctx) => _CreateProductSheet(
+                                allowedCategoryIds: cubit.state.categoryIds,
+                              ),
+                            );
+                          } else {
+                            final selectedProduct =
+                                await showModalBottomSheet<
+                                    StreamProductModel>(
+                              isScrollControlled: true,
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (ctx) => BlocProvider.value(
+                                value: cubit,
+                                child: _MyProductsSelectionSheet(
+                                  streamId: widget.streamId,
                                 ),
                               ),
-                              child: Column(
-                                children: [
-                                  // Drag handle
-                                  Center(
-                                    child: Container(
-                                      width: 40.w,
-                                      height: 4.h,
-                                      margin: EdgeInsets.only(
-                                          top: 12.h, bottom: 8.h),
-                                      decoration: BoxDecoration(
-                                        color: AppColors.grey,
-                                        borderRadius:
-                                            BorderRadius.circular(10.r),
-                                      ),
-                                    ),
-                                  ),
-
-                                  Expanded(child: const NewProductWidgetBody()),
-                                ],
-                              ),
-                            ),
-                          );
+                            );
+                            if (selectedProduct != null && mounted) {
+                              Navigator.pop(context, selectedProduct);
+                            }
+                          }
                         },
                         child: Container(
                           width: 56.w,
@@ -468,6 +504,246 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _MyProductsSelectionSheet extends StatelessWidget {
+  const _MyProductsSelectionSheet({
+    required this.streamId,
+  });
+
+  final int streamId;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height * 0.9,
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20.r),
+        ),
+      ),
+      child: BlocBuilder<LiveListingsShopCubit, LiveListingsShopState>(
+        builder: (context, state) {
+          return Column(
+            children: [
+              Center(
+                child: Container(
+                  width: 40.w,
+                  height: 4.h,
+                  margin: EdgeInsets.only(top: 12.h, bottom: 8.h),
+                  decoration: BoxDecoration(
+                    color: AppColors.grey,
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Spacer(),
+                    CustomText(
+                      text: 'Select Product',
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w800,
+                      color: AppColors.blackDark,
+                    ),
+                    const Spacer(),
+                    GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Icon(
+                        Icons.close,
+                        size: 24.sp,
+                        color: AppColors.blackDark,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 16.h),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Builder(
+                    builder: (context) {
+                      if (state.isMyProductsLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.grey,
+                          ),
+                        );
+                      }
+
+                      if (state.myProductsError != null) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomText(
+                              text: state.myProductsError!,
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.blackDark,
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 16.h),
+                            CustomButton(
+                              title: 'Retry',
+                              onPressed: () => context
+                                  .read<LiveListingsShopCubit>()
+                                  .getMyProducts(),
+                            ),
+                          ],
+                        );
+                      }
+
+                      if (state.myProducts.isEmpty) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomText(
+                              text: 'No products found.',
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.blackDark,
+                            ),
+                            SizedBox(height: 12.h),
+                            CustomText(
+                              text: 'Create products first to add them to the stream.',
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.blackDark.withOpacity(0.6),
+                              textAlign: TextAlign.center,
+                            ),
+                          ],
+                        );
+                      }
+
+                      return Stack(
+                        children: [
+                          ListView.builder(
+                            itemCount: state.myProducts.length,
+                            itemBuilder: (context, index) {
+                              final product = state.myProducts[index];
+                              return Padding(
+                                padding: EdgeInsets.only(bottom: 12.h),
+                                     child: MyCustomProductCard<
+                                         LiveListingsShopCubit>(
+                                  product: product,
+                                  selectedCategoryIndex: index,
+                                  cubit: context.read<LiveListingsShopCubit>(),
+                                  onTap: state.isAddingProduct
+                                      ? null
+                                      : () async {
+                                          final created = await context
+                                              .read<LiveListingsShopCubit>()
+                                              .addProductToStream(
+                                                streamId: streamId,
+                                                product: product,
+                                              );
+                                          if (created && context.mounted) {
+                                            Navigator.pop(context);
+                                          }
+                                        },
+                                ),
+                              );
+                            },
+                          ),
+                          if (state.isAddingProduct)
+                            Positioned.fill(
+                              child: Container(
+                                color: Colors.black.withOpacity(0.2),
+                                child: const Center(
+                                  child: CircularProgressIndicator(
+                                    color: AppColors.primaryColor,
+                                  ),
+                                ),
+                              ),
+                            ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _CreateProductSheet extends StatelessWidget {
+  const _CreateProductSheet({
+    required this.allowedCategoryIds,
+  });
+
+  final List<int> allowedCategoryIds;
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    return Container(
+      height: size.height * 0.9,
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20.r),
+        ),
+      ),
+      child: Column(
+        children: [
+          Center(
+            child: Container(
+              width: 40.w,
+              height: 4.h,
+              margin: EdgeInsets.only(top: 12.h, bottom: 8.h),
+              decoration: BoxDecoration(
+                color: AppColors.grey,
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Spacer(),
+                CustomText(
+                  text: 'createProduct'.tr(),
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.blackDark,
+                ),
+                const Spacer(),
+                GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: Icon(
+                    Icons.close,
+                    size: 24.sp,
+                    color: AppColors.blackDark,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 16.h),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: NewProductWidgetBody(
+                allowedCategoryIds: allowedCategoryIds,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

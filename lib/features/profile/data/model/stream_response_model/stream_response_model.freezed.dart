@@ -25,6 +25,10 @@ mixin _$StreamResponseModel {
   StreamDataModel? get data =>
       throw _privateConstructorUsedError; // Added to handle the top-level livekit object
   LivekitInfoModel? get livekit => throw _privateConstructorUsedError;
+  @JsonKey(name: 'thumbnail_url')
+  String? get thumbnailUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'gif_url')
+  String? get gifUrl => throw _privateConstructorUsedError;
 
   /// Serializes this StreamResponseModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -46,7 +50,9 @@ abstract class $StreamResponseModelCopyWith<$Res> {
       {bool? success,
       String? message,
       StreamDataModel? data,
-      LivekitInfoModel? livekit});
+      LivekitInfoModel? livekit,
+      @JsonKey(name: 'thumbnail_url') String? thumbnailUrl,
+      @JsonKey(name: 'gif_url') String? gifUrl});
 
   $StreamDataModelCopyWith<$Res>? get data;
   $LivekitInfoModelCopyWith<$Res>? get livekit;
@@ -71,6 +77,8 @@ class _$StreamResponseModelCopyWithImpl<$Res, $Val extends StreamResponseModel>
     Object? message = freezed,
     Object? data = freezed,
     Object? livekit = freezed,
+    Object? thumbnailUrl = freezed,
+    Object? gifUrl = freezed,
   }) {
     return _then(_value.copyWith(
       success: freezed == success
@@ -89,6 +97,14 @@ class _$StreamResponseModelCopyWithImpl<$Res, $Val extends StreamResponseModel>
           ? _value.livekit
           : livekit // ignore: cast_nullable_to_non_nullable
               as LivekitInfoModel?,
+      thumbnailUrl: freezed == thumbnailUrl
+          ? _value.thumbnailUrl
+          : thumbnailUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gifUrl: freezed == gifUrl
+          ? _value.gifUrl
+          : gifUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -133,7 +149,9 @@ abstract class _$$StreamResponseModelImplCopyWith<$Res>
       {bool? success,
       String? message,
       StreamDataModel? data,
-      LivekitInfoModel? livekit});
+      LivekitInfoModel? livekit,
+      @JsonKey(name: 'thumbnail_url') String? thumbnailUrl,
+      @JsonKey(name: 'gif_url') String? gifUrl});
 
   @override
   $StreamDataModelCopyWith<$Res>? get data;
@@ -158,6 +176,8 @@ class __$$StreamResponseModelImplCopyWithImpl<$Res>
     Object? message = freezed,
     Object? data = freezed,
     Object? livekit = freezed,
+    Object? thumbnailUrl = freezed,
+    Object? gifUrl = freezed,
   }) {
     return _then(_$StreamResponseModelImpl(
       success: freezed == success
@@ -176,6 +196,14 @@ class __$$StreamResponseModelImplCopyWithImpl<$Res>
           ? _value.livekit
           : livekit // ignore: cast_nullable_to_non_nullable
               as LivekitInfoModel?,
+      thumbnailUrl: freezed == thumbnailUrl
+          ? _value.thumbnailUrl
+          : thumbnailUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      gifUrl: freezed == gifUrl
+          ? _value.gifUrl
+          : gifUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -184,7 +212,12 @@ class __$$StreamResponseModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$StreamResponseModelImpl implements _StreamResponseModel {
   const _$StreamResponseModelImpl(
-      {this.success, this.message, this.data, this.livekit});
+      {this.success,
+      this.message,
+      this.data,
+      this.livekit,
+      @JsonKey(name: 'thumbnail_url') this.thumbnailUrl,
+      @JsonKey(name: 'gif_url') this.gifUrl});
 
   factory _$StreamResponseModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$StreamResponseModelImplFromJson(json);
@@ -198,10 +231,16 @@ class _$StreamResponseModelImpl implements _StreamResponseModel {
 // Added to handle the top-level livekit object
   @override
   final LivekitInfoModel? livekit;
+  @override
+  @JsonKey(name: 'thumbnail_url')
+  final String? thumbnailUrl;
+  @override
+  @JsonKey(name: 'gif_url')
+  final String? gifUrl;
 
   @override
   String toString() {
-    return 'StreamResponseModel(success: $success, message: $message, data: $data, livekit: $livekit)';
+    return 'StreamResponseModel(success: $success, message: $message, data: $data, livekit: $livekit, thumbnailUrl: $thumbnailUrl, gifUrl: $gifUrl)';
   }
 
   @override
@@ -212,12 +251,16 @@ class _$StreamResponseModelImpl implements _StreamResponseModel {
             (identical(other.success, success) || other.success == success) &&
             (identical(other.message, message) || other.message == message) &&
             (identical(other.data, data) || other.data == data) &&
-            (identical(other.livekit, livekit) || other.livekit == livekit));
+            (identical(other.livekit, livekit) || other.livekit == livekit) &&
+            (identical(other.thumbnailUrl, thumbnailUrl) ||
+                other.thumbnailUrl == thumbnailUrl) &&
+            (identical(other.gifUrl, gifUrl) || other.gifUrl == gifUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, success, message, data, livekit);
+  int get hashCode => Object.hash(
+      runtimeType, success, message, data, livekit, thumbnailUrl, gifUrl);
 
   /// Create a copy of StreamResponseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -238,10 +281,13 @@ class _$StreamResponseModelImpl implements _StreamResponseModel {
 
 abstract class _StreamResponseModel implements StreamResponseModel {
   const factory _StreamResponseModel(
-      {final bool? success,
-      final String? message,
-      final StreamDataModel? data,
-      final LivekitInfoModel? livekit}) = _$StreamResponseModelImpl;
+          {final bool? success,
+          final String? message,
+          final StreamDataModel? data,
+          final LivekitInfoModel? livekit,
+          @JsonKey(name: 'thumbnail_url') final String? thumbnailUrl,
+          @JsonKey(name: 'gif_url') final String? gifUrl}) =
+      _$StreamResponseModelImpl;
 
   factory _StreamResponseModel.fromJson(Map<String, dynamic> json) =
       _$StreamResponseModelImpl.fromJson;
@@ -254,6 +300,12 @@ abstract class _StreamResponseModel implements StreamResponseModel {
   StreamDataModel? get data; // Added to handle the top-level livekit object
   @override
   LivekitInfoModel? get livekit;
+  @override
+  @JsonKey(name: 'thumbnail_url')
+  String? get thumbnailUrl;
+  @override
+  @JsonKey(name: 'gif_url')
+  String? get gifUrl;
 
   /// Create a copy of StreamResponseModel
   /// with the given fields replaced by the non-null parameter values.
@@ -341,6 +393,8 @@ mixin _$StreamDataModel {
       fromJson: _stringToDouble,
       toJson: _doubleToString)
   double? get minimumBidIncrement => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bid_duration_seconds')
+  int? get bidDurationSeconds => throw _privateConstructorUsedError;
   @JsonKey(name: 'stream_settings')
   Map<String, dynamic>? get streamSettings =>
       throw _privateConstructorUsedError;
@@ -350,6 +404,11 @@ mixin _$StreamDataModel {
   @JsonKey(name: 'stream_products')
   List<StreamProductModel>? get streamProducts =>
       throw _privateConstructorUsedError;
+  @JsonKey(name: 'categories')
+  List<StreamCategoryModel>? get categories =>
+      throw _privateConstructorUsedError;
+  @JsonKey(name: 'record_url')
+  String? get recordUrl => throw _privateConstructorUsedError;
 
   /// Serializes this StreamDataModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -408,11 +467,14 @@ abstract class $StreamDataModelCopyWith<$Res> {
           fromJson: _stringToDouble,
           toJson: _doubleToString)
       double? minimumBidIncrement,
+      @JsonKey(name: 'bid_duration_seconds') int? bidDurationSeconds,
       @JsonKey(name: 'stream_settings') Map<String, dynamic>? streamSettings,
       @JsonKey(name: 'is_mine') bool? isMine,
       StreamUserModel? user,
       @JsonKey(name: 'stream_products')
-      List<StreamProductModel>? streamProducts});
+      List<StreamProductModel>? streamProducts,
+      @JsonKey(name: 'categories') List<StreamCategoryModel>? categories,
+      @JsonKey(name: 'record_url') String? recordUrl});
 
   $LivekitConfigModelCopyWith<$Res>? get livekitConfig;
   $StreamUserModelCopyWith<$Res>? get user;
@@ -465,10 +527,13 @@ class _$StreamDataModelCopyWithImpl<$Res, $Val extends StreamDataModel>
     Object? enableComments = freezed,
     Object? enableBidding = freezed,
     Object? minimumBidIncrement = freezed,
+    Object? bidDurationSeconds = freezed,
     Object? streamSettings = freezed,
     Object? isMine = freezed,
     Object? user = freezed,
     Object? streamProducts = freezed,
+    Object? categories = freezed,
+    Object? recordUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -599,6 +664,10 @@ class _$StreamDataModelCopyWithImpl<$Res, $Val extends StreamDataModel>
           ? _value.minimumBidIncrement
           : minimumBidIncrement // ignore: cast_nullable_to_non_nullable
               as double?,
+      bidDurationSeconds: freezed == bidDurationSeconds
+          ? _value.bidDurationSeconds
+          : bidDurationSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
       streamSettings: freezed == streamSettings
           ? _value.streamSettings
           : streamSettings // ignore: cast_nullable_to_non_nullable
@@ -615,6 +684,14 @@ class _$StreamDataModelCopyWithImpl<$Res, $Val extends StreamDataModel>
           ? _value.streamProducts
           : streamProducts // ignore: cast_nullable_to_non_nullable
               as List<StreamProductModel>?,
+      categories: freezed == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<StreamCategoryModel>?,
+      recordUrl: freezed == recordUrl
+          ? _value.recordUrl
+          : recordUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -696,11 +773,14 @@ abstract class _$$StreamDataModelImplCopyWith<$Res>
           fromJson: _stringToDouble,
           toJson: _doubleToString)
       double? minimumBidIncrement,
+      @JsonKey(name: 'bid_duration_seconds') int? bidDurationSeconds,
       @JsonKey(name: 'stream_settings') Map<String, dynamic>? streamSettings,
       @JsonKey(name: 'is_mine') bool? isMine,
       StreamUserModel? user,
       @JsonKey(name: 'stream_products')
-      List<StreamProductModel>? streamProducts});
+      List<StreamProductModel>? streamProducts,
+      @JsonKey(name: 'categories') List<StreamCategoryModel>? categories,
+      @JsonKey(name: 'record_url') String? recordUrl});
 
   @override
   $LivekitConfigModelCopyWith<$Res>? get livekitConfig;
@@ -753,10 +833,13 @@ class __$$StreamDataModelImplCopyWithImpl<$Res>
     Object? enableComments = freezed,
     Object? enableBidding = freezed,
     Object? minimumBidIncrement = freezed,
+    Object? bidDurationSeconds = freezed,
     Object? streamSettings = freezed,
     Object? isMine = freezed,
     Object? user = freezed,
     Object? streamProducts = freezed,
+    Object? categories = freezed,
+    Object? recordUrl = freezed,
   }) {
     return _then(_$StreamDataModelImpl(
       id: freezed == id
@@ -887,6 +970,10 @@ class __$$StreamDataModelImplCopyWithImpl<$Res>
           ? _value.minimumBidIncrement
           : minimumBidIncrement // ignore: cast_nullable_to_non_nullable
               as double?,
+      bidDurationSeconds: freezed == bidDurationSeconds
+          ? _value.bidDurationSeconds
+          : bidDurationSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
       streamSettings: freezed == streamSettings
           ? _value._streamSettings
           : streamSettings // ignore: cast_nullable_to_non_nullable
@@ -903,6 +990,14 @@ class __$$StreamDataModelImplCopyWithImpl<$Res>
           ? _value._streamProducts
           : streamProducts // ignore: cast_nullable_to_non_nullable
               as List<StreamProductModel>?,
+      categories: freezed == categories
+          ? _value._categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as List<StreamCategoryModel>?,
+      recordUrl: freezed == recordUrl
+          ? _value.recordUrl
+          : recordUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -951,15 +1046,19 @@ class _$StreamDataModelImpl implements _StreamDataModel {
           fromJson: _stringToDouble,
           toJson: _doubleToString)
       this.minimumBidIncrement,
+      @JsonKey(name: 'bid_duration_seconds') this.bidDurationSeconds,
       @JsonKey(name: 'stream_settings')
       final Map<String, dynamic>? streamSettings,
       @JsonKey(name: 'is_mine') this.isMine,
       this.user,
       @JsonKey(name: 'stream_products')
-      final List<StreamProductModel>? streamProducts})
+      final List<StreamProductModel>? streamProducts,
+      @JsonKey(name: 'categories') final List<StreamCategoryModel>? categories,
+      @JsonKey(name: 'record_url') this.recordUrl})
       : _recordingFiles = recordingFiles,
         _streamSettings = streamSettings,
-        _streamProducts = streamProducts;
+        _streamProducts = streamProducts,
+        _categories = categories;
 
   factory _$StreamDataModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$StreamDataModelImplFromJson(json);
@@ -1076,6 +1175,9 @@ class _$StreamDataModelImpl implements _StreamDataModel {
       fromJson: _stringToDouble,
       toJson: _doubleToString)
   final double? minimumBidIncrement;
+  @override
+  @JsonKey(name: 'bid_duration_seconds')
+  final int? bidDurationSeconds;
   final Map<String, dynamic>? _streamSettings;
   @override
   @JsonKey(name: 'stream_settings')
@@ -1103,9 +1205,24 @@ class _$StreamDataModelImpl implements _StreamDataModel {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<StreamCategoryModel>? _categories;
+  @override
+  @JsonKey(name: 'categories')
+  List<StreamCategoryModel>? get categories {
+    final value = _categories;
+    if (value == null) return null;
+    if (_categories is EqualUnmodifiableListView) return _categories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  @JsonKey(name: 'record_url')
+  final String? recordUrl;
+
   @override
   String toString() {
-    return 'StreamDataModel(id: $id, userId: $userId, title: $title, description: $description, channelName: $channelName, muxLiveStreamId: $muxLiveStreamId, muxStreamKey: $muxStreamKey, muxPlaybackId: $muxPlaybackId, livekitRoomName: $livekitRoomName, livekitServerUrl: $livekitServerUrl, livekitConfig: $livekitConfig, livekitRoomCreatedAt: $livekitRoomCreatedAt, status: $status, scheduledAt: $scheduledAt, startedAt: $startedAt, endedAt: $endedAt, isRecordingEnabled: $isRecordingEnabled, recordingResourceId: $recordingResourceId, recordingSid: $recordingSid, recordingFiles: $recordingFiles, thumbnailUrl: $thumbnailUrl, viewerCount: $viewerCount, maxViewers: $maxViewers, isPublic: $isPublic, createdAt: $createdAt, updatedAt: $updatedAt, autoDeleteAfterEnd: $autoDeleteAfterEnd, autoDeleteHours: $autoDeleteHours, saveRecording: $saveRecording, enableComments: $enableComments, enableBidding: $enableBidding, minimumBidIncrement: $minimumBidIncrement, streamSettings: $streamSettings, isMine: $isMine, user: $user, streamProducts: $streamProducts)';
+    return 'StreamDataModel(id: $id, userId: $userId, title: $title, description: $description, channelName: $channelName, muxLiveStreamId: $muxLiveStreamId, muxStreamKey: $muxStreamKey, muxPlaybackId: $muxPlaybackId, livekitRoomName: $livekitRoomName, livekitServerUrl: $livekitServerUrl, livekitConfig: $livekitConfig, livekitRoomCreatedAt: $livekitRoomCreatedAt, status: $status, scheduledAt: $scheduledAt, startedAt: $startedAt, endedAt: $endedAt, isRecordingEnabled: $isRecordingEnabled, recordingResourceId: $recordingResourceId, recordingSid: $recordingSid, recordingFiles: $recordingFiles, thumbnailUrl: $thumbnailUrl, viewerCount: $viewerCount, maxViewers: $maxViewers, isPublic: $isPublic, createdAt: $createdAt, updatedAt: $updatedAt, autoDeleteAfterEnd: $autoDeleteAfterEnd, autoDeleteHours: $autoDeleteHours, saveRecording: $saveRecording, enableComments: $enableComments, enableBidding: $enableBidding, minimumBidIncrement: $minimumBidIncrement, bidDurationSeconds: $bidDurationSeconds, streamSettings: $streamSettings, isMine: $isMine, user: $user, streamProducts: $streamProducts, categories: $categories, recordUrl: $recordUrl)';
   }
 
   @override
@@ -1172,12 +1289,18 @@ class _$StreamDataModelImpl implements _StreamDataModel {
                 other.enableBidding == enableBidding) &&
             (identical(other.minimumBidIncrement, minimumBidIncrement) ||
                 other.minimumBidIncrement == minimumBidIncrement) &&
+            (identical(other.bidDurationSeconds, bidDurationSeconds) ||
+                other.bidDurationSeconds == bidDurationSeconds) &&
             const DeepCollectionEquality()
                 .equals(other._streamSettings, _streamSettings) &&
             (identical(other.isMine, isMine) || other.isMine == isMine) &&
             (identical(other.user, user) || other.user == user) &&
             const DeepCollectionEquality()
-                .equals(other._streamProducts, _streamProducts));
+                .equals(other._streamProducts, _streamProducts) &&
+            const DeepCollectionEquality()
+                .equals(other._categories, _categories) &&
+            (identical(other.recordUrl, recordUrl) ||
+                other.recordUrl == recordUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1216,10 +1339,13 @@ class _$StreamDataModelImpl implements _StreamDataModel {
         enableComments,
         enableBidding,
         minimumBidIncrement,
+        bidDurationSeconds,
         const DeepCollectionEquality().hash(_streamSettings),
         isMine,
         user,
-        const DeepCollectionEquality().hash(_streamProducts)
+        const DeepCollectionEquality().hash(_streamProducts),
+        const DeepCollectionEquality().hash(_categories),
+        recordUrl
       ]);
 
   /// Create a copy of StreamDataModel
@@ -1282,12 +1408,16 @@ abstract class _StreamDataModel implements StreamDataModel {
           fromJson: _stringToDouble,
           toJson: _doubleToString)
       final double? minimumBidIncrement,
+      @JsonKey(name: 'bid_duration_seconds') final int? bidDurationSeconds,
       @JsonKey(name: 'stream_settings')
       final Map<String, dynamic>? streamSettings,
       @JsonKey(name: 'is_mine') final bool? isMine,
       final StreamUserModel? user,
       @JsonKey(name: 'stream_products')
-      final List<StreamProductModel>? streamProducts}) = _$StreamDataModelImpl;
+      final List<StreamProductModel>? streamProducts,
+      @JsonKey(name: 'categories') final List<StreamCategoryModel>? categories,
+      @JsonKey(name: 'record_url')
+      final String? recordUrl}) = _$StreamDataModelImpl;
 
   factory _StreamDataModel.fromJson(Map<String, dynamic> json) =
       _$StreamDataModelImpl.fromJson;
@@ -1392,6 +1522,9 @@ abstract class _StreamDataModel implements StreamDataModel {
       toJson: _doubleToString)
   double? get minimumBidIncrement;
   @override
+  @JsonKey(name: 'bid_duration_seconds')
+  int? get bidDurationSeconds;
+  @override
   @JsonKey(name: 'stream_settings')
   Map<String, dynamic>? get streamSettings;
   @override
@@ -1402,6 +1535,12 @@ abstract class _StreamDataModel implements StreamDataModel {
   @override
   @JsonKey(name: 'stream_products')
   List<StreamProductModel>? get streamProducts;
+  @override
+  @JsonKey(name: 'categories')
+  List<StreamCategoryModel>? get categories;
+  @override
+  @JsonKey(name: 'record_url')
+  String? get recordUrl;
 
   /// Create a copy of StreamDataModel
   /// with the given fields replaced by the non-null parameter values.
@@ -2109,15 +2248,25 @@ mixin _$StreamProductModel {
   String? get startingPrice => throw _privateConstructorUsedError;
   @JsonKey(name: 'current_bid')
   String? get currentBid => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bid_duration_seconds')
+  int? get bidDurationSeconds => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bidding_enabled')
+  bool? get biddingEnabled => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_active')
   bool? get isActive => throw _privateConstructorUsedError;
   @JsonKey(name: 'display_order')
   int? get displayOrder => throw _privateConstructorUsedError;
+  @JsonKey(name: 'remaining_seconds')
+  int? get remainingSeconds => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bid_session')
+  ToggleBiddingSessionModel? get bidSession =>
+      throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
   DateTime? get updatedAt => throw _privateConstructorUsedError;
-  ProductModel? get product => throw _privateConstructorUsedError;
+  @JsonKey(name: 'product')
+  StreamEmbeddedProductModel? get product => throw _privateConstructorUsedError;
 
   /// Serializes this StreamProductModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -2141,13 +2290,18 @@ abstract class $StreamProductModelCopyWith<$Res> {
       @JsonKey(name: 'product_id') int? productId,
       @JsonKey(name: 'starting_price') String? startingPrice,
       @JsonKey(name: 'current_bid') String? currentBid,
+      @JsonKey(name: 'bid_duration_seconds') int? bidDurationSeconds,
+      @JsonKey(name: 'bidding_enabled') bool? biddingEnabled,
       @JsonKey(name: 'is_active') bool? isActive,
       @JsonKey(name: 'display_order') int? displayOrder,
+      @JsonKey(name: 'remaining_seconds') int? remainingSeconds,
+      @JsonKey(name: 'bid_session') ToggleBiddingSessionModel? bidSession,
       @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'updated_at') DateTime? updatedAt,
-      ProductModel? product});
+      @JsonKey(name: 'product') StreamEmbeddedProductModel? product});
 
-  $ProductModelCopyWith<$Res>? get product;
+  $ToggleBiddingSessionModelCopyWith<$Res>? get bidSession;
+  $StreamEmbeddedProductModelCopyWith<$Res>? get product;
 }
 
 /// @nodoc
@@ -2170,8 +2324,12 @@ class _$StreamProductModelCopyWithImpl<$Res, $Val extends StreamProductModel>
     Object? productId = freezed,
     Object? startingPrice = freezed,
     Object? currentBid = freezed,
+    Object? bidDurationSeconds = freezed,
+    Object? biddingEnabled = freezed,
     Object? isActive = freezed,
     Object? displayOrder = freezed,
+    Object? remainingSeconds = freezed,
+    Object? bidSession = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? product = freezed,
@@ -2197,6 +2355,14 @@ class _$StreamProductModelCopyWithImpl<$Res, $Val extends StreamProductModel>
           ? _value.currentBid
           : currentBid // ignore: cast_nullable_to_non_nullable
               as String?,
+      bidDurationSeconds: freezed == bidDurationSeconds
+          ? _value.bidDurationSeconds
+          : bidDurationSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      biddingEnabled: freezed == biddingEnabled
+          ? _value.biddingEnabled
+          : biddingEnabled // ignore: cast_nullable_to_non_nullable
+              as bool?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -2205,6 +2371,14 @@ class _$StreamProductModelCopyWithImpl<$Res, $Val extends StreamProductModel>
           ? _value.displayOrder
           : displayOrder // ignore: cast_nullable_to_non_nullable
               as int?,
+      remainingSeconds: freezed == remainingSeconds
+          ? _value.remainingSeconds
+          : remainingSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      bidSession: freezed == bidSession
+          ? _value.bidSession
+          : bidSession // ignore: cast_nullable_to_non_nullable
+              as ToggleBiddingSessionModel?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -2216,7 +2390,7 @@ class _$StreamProductModelCopyWithImpl<$Res, $Val extends StreamProductModel>
       product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as ProductModel?,
+              as StreamEmbeddedProductModel?,
     ) as $Val);
   }
 
@@ -2224,12 +2398,27 @@ class _$StreamProductModelCopyWithImpl<$Res, $Val extends StreamProductModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ProductModelCopyWith<$Res>? get product {
+  $ToggleBiddingSessionModelCopyWith<$Res>? get bidSession {
+    if (_value.bidSession == null) {
+      return null;
+    }
+
+    return $ToggleBiddingSessionModelCopyWith<$Res>(_value.bidSession!,
+        (value) {
+      return _then(_value.copyWith(bidSession: value) as $Val);
+    });
+  }
+
+  /// Create a copy of StreamProductModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StreamEmbeddedProductModelCopyWith<$Res>? get product {
     if (_value.product == null) {
       return null;
     }
 
-    return $ProductModelCopyWith<$Res>(_value.product!, (value) {
+    return $StreamEmbeddedProductModelCopyWith<$Res>(_value.product!, (value) {
       return _then(_value.copyWith(product: value) as $Val);
     });
   }
@@ -2249,14 +2438,20 @@ abstract class _$$StreamProductModelImplCopyWith<$Res>
       @JsonKey(name: 'product_id') int? productId,
       @JsonKey(name: 'starting_price') String? startingPrice,
       @JsonKey(name: 'current_bid') String? currentBid,
+      @JsonKey(name: 'bid_duration_seconds') int? bidDurationSeconds,
+      @JsonKey(name: 'bidding_enabled') bool? biddingEnabled,
       @JsonKey(name: 'is_active') bool? isActive,
       @JsonKey(name: 'display_order') int? displayOrder,
+      @JsonKey(name: 'remaining_seconds') int? remainingSeconds,
+      @JsonKey(name: 'bid_session') ToggleBiddingSessionModel? bidSession,
       @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'updated_at') DateTime? updatedAt,
-      ProductModel? product});
+      @JsonKey(name: 'product') StreamEmbeddedProductModel? product});
 
   @override
-  $ProductModelCopyWith<$Res>? get product;
+  $ToggleBiddingSessionModelCopyWith<$Res>? get bidSession;
+  @override
+  $StreamEmbeddedProductModelCopyWith<$Res>? get product;
 }
 
 /// @nodoc
@@ -2277,8 +2472,12 @@ class __$$StreamProductModelImplCopyWithImpl<$Res>
     Object? productId = freezed,
     Object? startingPrice = freezed,
     Object? currentBid = freezed,
+    Object? bidDurationSeconds = freezed,
+    Object? biddingEnabled = freezed,
     Object? isActive = freezed,
     Object? displayOrder = freezed,
+    Object? remainingSeconds = freezed,
+    Object? bidSession = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
     Object? product = freezed,
@@ -2304,6 +2503,14 @@ class __$$StreamProductModelImplCopyWithImpl<$Res>
           ? _value.currentBid
           : currentBid // ignore: cast_nullable_to_non_nullable
               as String?,
+      bidDurationSeconds: freezed == bidDurationSeconds
+          ? _value.bidDurationSeconds
+          : bidDurationSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      biddingEnabled: freezed == biddingEnabled
+          ? _value.biddingEnabled
+          : biddingEnabled // ignore: cast_nullable_to_non_nullable
+              as bool?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -2312,6 +2519,14 @@ class __$$StreamProductModelImplCopyWithImpl<$Res>
           ? _value.displayOrder
           : displayOrder // ignore: cast_nullable_to_non_nullable
               as int?,
+      remainingSeconds: freezed == remainingSeconds
+          ? _value.remainingSeconds
+          : remainingSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      bidSession: freezed == bidSession
+          ? _value.bidSession
+          : bidSession // ignore: cast_nullable_to_non_nullable
+              as ToggleBiddingSessionModel?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -2323,7 +2538,7 @@ class __$$StreamProductModelImplCopyWithImpl<$Res>
       product: freezed == product
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
-              as ProductModel?,
+              as StreamEmbeddedProductModel?,
     ));
   }
 }
@@ -2337,11 +2552,15 @@ class _$StreamProductModelImpl implements _StreamProductModel {
       @JsonKey(name: 'product_id') this.productId,
       @JsonKey(name: 'starting_price') this.startingPrice,
       @JsonKey(name: 'current_bid') this.currentBid,
+      @JsonKey(name: 'bid_duration_seconds') this.bidDurationSeconds,
+      @JsonKey(name: 'bidding_enabled') this.biddingEnabled,
       @JsonKey(name: 'is_active') this.isActive,
       @JsonKey(name: 'display_order') this.displayOrder,
+      @JsonKey(name: 'remaining_seconds') this.remainingSeconds,
+      @JsonKey(name: 'bid_session') this.bidSession,
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'updated_at') this.updatedAt,
-      this.product});
+      @JsonKey(name: 'product') this.product});
 
   factory _$StreamProductModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$StreamProductModelImplFromJson(json);
@@ -2361,11 +2580,23 @@ class _$StreamProductModelImpl implements _StreamProductModel {
   @JsonKey(name: 'current_bid')
   final String? currentBid;
   @override
+  @JsonKey(name: 'bid_duration_seconds')
+  final int? bidDurationSeconds;
+  @override
+  @JsonKey(name: 'bidding_enabled')
+  final bool? biddingEnabled;
+  @override
   @JsonKey(name: 'is_active')
   final bool? isActive;
   @override
   @JsonKey(name: 'display_order')
   final int? displayOrder;
+  @override
+  @JsonKey(name: 'remaining_seconds')
+  final int? remainingSeconds;
+  @override
+  @JsonKey(name: 'bid_session')
+  final ToggleBiddingSessionModel? bidSession;
   @override
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
@@ -2373,11 +2604,12 @@ class _$StreamProductModelImpl implements _StreamProductModel {
   @JsonKey(name: 'updated_at')
   final DateTime? updatedAt;
   @override
-  final ProductModel? product;
+  @JsonKey(name: 'product')
+  final StreamEmbeddedProductModel? product;
 
   @override
   String toString() {
-    return 'StreamProductModel(id: $id, streamId: $streamId, productId: $productId, startingPrice: $startingPrice, currentBid: $currentBid, isActive: $isActive, displayOrder: $displayOrder, createdAt: $createdAt, updatedAt: $updatedAt, product: $product)';
+    return 'StreamProductModel(id: $id, streamId: $streamId, productId: $productId, startingPrice: $startingPrice, currentBid: $currentBid, bidDurationSeconds: $bidDurationSeconds, biddingEnabled: $biddingEnabled, isActive: $isActive, displayOrder: $displayOrder, remainingSeconds: $remainingSeconds, bidSession: $bidSession, createdAt: $createdAt, updatedAt: $updatedAt, product: $product)';
   }
 
   @override
@@ -2394,10 +2626,18 @@ class _$StreamProductModelImpl implements _StreamProductModel {
                 other.startingPrice == startingPrice) &&
             (identical(other.currentBid, currentBid) ||
                 other.currentBid == currentBid) &&
+            (identical(other.bidDurationSeconds, bidDurationSeconds) ||
+                other.bidDurationSeconds == bidDurationSeconds) &&
+            (identical(other.biddingEnabled, biddingEnabled) ||
+                other.biddingEnabled == biddingEnabled) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
             (identical(other.displayOrder, displayOrder) ||
                 other.displayOrder == displayOrder) &&
+            (identical(other.remainingSeconds, remainingSeconds) ||
+                other.remainingSeconds == remainingSeconds) &&
+            (identical(other.bidSession, bidSession) ||
+                other.bidSession == bidSession) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -2414,8 +2654,12 @@ class _$StreamProductModelImpl implements _StreamProductModel {
       productId,
       startingPrice,
       currentBid,
+      bidDurationSeconds,
+      biddingEnabled,
       isActive,
       displayOrder,
+      remainingSeconds,
+      bidSession,
       createdAt,
       updatedAt,
       product);
@@ -2444,11 +2688,16 @@ abstract class _StreamProductModel implements StreamProductModel {
       @JsonKey(name: 'product_id') final int? productId,
       @JsonKey(name: 'starting_price') final String? startingPrice,
       @JsonKey(name: 'current_bid') final String? currentBid,
+      @JsonKey(name: 'bid_duration_seconds') final int? bidDurationSeconds,
+      @JsonKey(name: 'bidding_enabled') final bool? biddingEnabled,
       @JsonKey(name: 'is_active') final bool? isActive,
       @JsonKey(name: 'display_order') final int? displayOrder,
+      @JsonKey(name: 'remaining_seconds') final int? remainingSeconds,
+      @JsonKey(name: 'bid_session') final ToggleBiddingSessionModel? bidSession,
       @JsonKey(name: 'created_at') final DateTime? createdAt,
       @JsonKey(name: 'updated_at') final DateTime? updatedAt,
-      final ProductModel? product}) = _$StreamProductModelImpl;
+      @JsonKey(name: 'product')
+      final StreamEmbeddedProductModel? product}) = _$StreamProductModelImpl;
 
   factory _StreamProductModel.fromJson(Map<String, dynamic> json) =
       _$StreamProductModelImpl.fromJson;
@@ -2468,11 +2717,23 @@ abstract class _StreamProductModel implements StreamProductModel {
   @JsonKey(name: 'current_bid')
   String? get currentBid;
   @override
+  @JsonKey(name: 'bid_duration_seconds')
+  int? get bidDurationSeconds;
+  @override
+  @JsonKey(name: 'bidding_enabled')
+  bool? get biddingEnabled;
+  @override
   @JsonKey(name: 'is_active')
   bool? get isActive;
   @override
   @JsonKey(name: 'display_order')
   int? get displayOrder;
+  @override
+  @JsonKey(name: 'remaining_seconds')
+  int? get remainingSeconds;
+  @override
+  @JsonKey(name: 'bid_session')
+  ToggleBiddingSessionModel? get bidSession;
   @override
   @JsonKey(name: 'created_at')
   DateTime? get createdAt;
@@ -2480,7 +2741,8 @@ abstract class _StreamProductModel implements StreamProductModel {
   @JsonKey(name: 'updated_at')
   DateTime? get updatedAt;
   @override
-  ProductModel? get product;
+  @JsonKey(name: 'product')
+  StreamEmbeddedProductModel? get product;
 
   /// Create a copy of StreamProductModel
   /// with the given fields replaced by the non-null parameter values.
@@ -2488,6 +2750,1327 @@ abstract class _StreamProductModel implements StreamProductModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$StreamProductModelImplCopyWith<_$StreamProductModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+StreamEmbeddedProductModel _$StreamEmbeddedProductModelFromJson(
+    Map<String, dynamic> json) {
+  return _StreamEmbeddedProductModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$StreamEmbeddedProductModel {
+  int? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_id')
+  int? get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'category_id')
+  int? get categoryId => throw _privateConstructorUsedError;
+  String? get code => throw _privateConstructorUsedError;
+  String? get unit => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_available')
+  int? get deliveryAvailable => throw _privateConstructorUsedError;
+  @JsonKey(name: 'self_pickup')
+  int? get selfPickup => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_type')
+  String? get deliveryType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_time')
+  String? get deliveryTime => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_price')
+  String? get deliveryPrice => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_discount')
+  String? get deliveryDiscount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_radius')
+  String? get deliveryRadius => throw _privateConstructorUsedError;
+  String? get location => throw _privateConstructorUsedError;
+  @JsonKey(name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
+  double? get latitude => throw _privateConstructorUsedError;
+  @JsonKey(
+      name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
+  double? get longitude => throw _privateConstructorUsedError;
+  int? get status => throw _privateConstructorUsedError;
+  int? get featured => throw _privateConstructorUsedError;
+  Map<String, dynamic>? get meta => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_length_cm')
+  String? get deliveryLengthCm => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_width_cm')
+  String? get deliveryWidthCm => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_height_cm')
+  String? get deliveryHeightCm => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_weight_kg')
+  String? get deliveryWeightKg => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_methods')
+  List<String>? get deliveryMethods => throw _privateConstructorUsedError;
+  @JsonKey(name: 'sale_type')
+  String? get saleType => throw _privateConstructorUsedError;
+
+  /// Serializes this StreamEmbeddedProductModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of StreamEmbeddedProductModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $StreamEmbeddedProductModelCopyWith<StreamEmbeddedProductModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StreamEmbeddedProductModelCopyWith<$Res> {
+  factory $StreamEmbeddedProductModelCopyWith(StreamEmbeddedProductModel value,
+          $Res Function(StreamEmbeddedProductModel) then) =
+      _$StreamEmbeddedProductModelCopyWithImpl<$Res,
+          StreamEmbeddedProductModel>;
+  @useResult
+  $Res call(
+      {int? id,
+      String? name,
+      String? type,
+      String? description,
+      @JsonKey(name: 'user_id') int? userId,
+      @JsonKey(name: 'category_id') int? categoryId,
+      String? code,
+      String? unit,
+      @JsonKey(name: 'delivery_available') int? deliveryAvailable,
+      @JsonKey(name: 'self_pickup') int? selfPickup,
+      @JsonKey(name: 'delivery_type') String? deliveryType,
+      @JsonKey(name: 'delivery_time') String? deliveryTime,
+      @JsonKey(name: 'delivery_price') String? deliveryPrice,
+      @JsonKey(name: 'delivery_discount') String? deliveryDiscount,
+      @JsonKey(name: 'delivery_radius') String? deliveryRadius,
+      String? location,
+      @JsonKey(
+          name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
+      double? latitude,
+      @JsonKey(
+          name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
+      double? longitude,
+      int? status,
+      int? featured,
+      Map<String, dynamic>? meta,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt,
+      @JsonKey(name: 'delivery_length_cm') String? deliveryLengthCm,
+      @JsonKey(name: 'delivery_width_cm') String? deliveryWidthCm,
+      @JsonKey(name: 'delivery_height_cm') String? deliveryHeightCm,
+      @JsonKey(name: 'delivery_weight_kg') String? deliveryWeightKg,
+      @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
+      @JsonKey(name: 'sale_type') String? saleType});
+}
+
+/// @nodoc
+class _$StreamEmbeddedProductModelCopyWithImpl<$Res,
+        $Val extends StreamEmbeddedProductModel>
+    implements $StreamEmbeddedProductModelCopyWith<$Res> {
+  _$StreamEmbeddedProductModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of StreamEmbeddedProductModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? type = freezed,
+    Object? description = freezed,
+    Object? userId = freezed,
+    Object? categoryId = freezed,
+    Object? code = freezed,
+    Object? unit = freezed,
+    Object? deliveryAvailable = freezed,
+    Object? selfPickup = freezed,
+    Object? deliveryType = freezed,
+    Object? deliveryTime = freezed,
+    Object? deliveryPrice = freezed,
+    Object? deliveryDiscount = freezed,
+    Object? deliveryRadius = freezed,
+    Object? location = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+    Object? status = freezed,
+    Object? featured = freezed,
+    Object? meta = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deliveryLengthCm = freezed,
+    Object? deliveryWidthCm = freezed,
+    Object? deliveryHeightCm = freezed,
+    Object? deliveryWeightKg = freezed,
+    Object? deliveryMethods = freezed,
+    Object? saleType = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      categoryId: freezed == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      code: freezed == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unit: freezed == unit
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryAvailable: freezed == deliveryAvailable
+          ? _value.deliveryAvailable
+          : deliveryAvailable // ignore: cast_nullable_to_non_nullable
+              as int?,
+      selfPickup: freezed == selfPickup
+          ? _value.selfPickup
+          : selfPickup // ignore: cast_nullable_to_non_nullable
+              as int?,
+      deliveryType: freezed == deliveryType
+          ? _value.deliveryType
+          : deliveryType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryTime: freezed == deliveryTime
+          ? _value.deliveryTime
+          : deliveryTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryPrice: freezed == deliveryPrice
+          ? _value.deliveryPrice
+          : deliveryPrice // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryDiscount: freezed == deliveryDiscount
+          ? _value.deliveryDiscount
+          : deliveryDiscount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryRadius: freezed == deliveryRadius
+          ? _value.deliveryRadius
+          : deliveryRadius // ignore: cast_nullable_to_non_nullable
+              as String?,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String?,
+      latitude: freezed == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      longitude: freezed == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      featured: freezed == featured
+          ? _value.featured
+          : featured // ignore: cast_nullable_to_non_nullable
+              as int?,
+      meta: freezed == meta
+          ? _value.meta
+          : meta // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      deliveryLengthCm: freezed == deliveryLengthCm
+          ? _value.deliveryLengthCm
+          : deliveryLengthCm // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryWidthCm: freezed == deliveryWidthCm
+          ? _value.deliveryWidthCm
+          : deliveryWidthCm // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryHeightCm: freezed == deliveryHeightCm
+          ? _value.deliveryHeightCm
+          : deliveryHeightCm // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryWeightKg: freezed == deliveryWeightKg
+          ? _value.deliveryWeightKg
+          : deliveryWeightKg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryMethods: freezed == deliveryMethods
+          ? _value.deliveryMethods
+          : deliveryMethods // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      saleType: freezed == saleType
+          ? _value.saleType
+          : saleType // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$StreamEmbeddedProductModelImplCopyWith<$Res>
+    implements $StreamEmbeddedProductModelCopyWith<$Res> {
+  factory _$$StreamEmbeddedProductModelImplCopyWith(
+          _$StreamEmbeddedProductModelImpl value,
+          $Res Function(_$StreamEmbeddedProductModelImpl) then) =
+      __$$StreamEmbeddedProductModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int? id,
+      String? name,
+      String? type,
+      String? description,
+      @JsonKey(name: 'user_id') int? userId,
+      @JsonKey(name: 'category_id') int? categoryId,
+      String? code,
+      String? unit,
+      @JsonKey(name: 'delivery_available') int? deliveryAvailable,
+      @JsonKey(name: 'self_pickup') int? selfPickup,
+      @JsonKey(name: 'delivery_type') String? deliveryType,
+      @JsonKey(name: 'delivery_time') String? deliveryTime,
+      @JsonKey(name: 'delivery_price') String? deliveryPrice,
+      @JsonKey(name: 'delivery_discount') String? deliveryDiscount,
+      @JsonKey(name: 'delivery_radius') String? deliveryRadius,
+      String? location,
+      @JsonKey(
+          name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
+      double? latitude,
+      @JsonKey(
+          name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
+      double? longitude,
+      int? status,
+      int? featured,
+      Map<String, dynamic>? meta,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt,
+      @JsonKey(name: 'delivery_length_cm') String? deliveryLengthCm,
+      @JsonKey(name: 'delivery_width_cm') String? deliveryWidthCm,
+      @JsonKey(name: 'delivery_height_cm') String? deliveryHeightCm,
+      @JsonKey(name: 'delivery_weight_kg') String? deliveryWeightKg,
+      @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
+      @JsonKey(name: 'sale_type') String? saleType});
+}
+
+/// @nodoc
+class __$$StreamEmbeddedProductModelImplCopyWithImpl<$Res>
+    extends _$StreamEmbeddedProductModelCopyWithImpl<$Res,
+        _$StreamEmbeddedProductModelImpl>
+    implements _$$StreamEmbeddedProductModelImplCopyWith<$Res> {
+  __$$StreamEmbeddedProductModelImplCopyWithImpl(
+      _$StreamEmbeddedProductModelImpl _value,
+      $Res Function(_$StreamEmbeddedProductModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of StreamEmbeddedProductModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? type = freezed,
+    Object? description = freezed,
+    Object? userId = freezed,
+    Object? categoryId = freezed,
+    Object? code = freezed,
+    Object? unit = freezed,
+    Object? deliveryAvailable = freezed,
+    Object? selfPickup = freezed,
+    Object? deliveryType = freezed,
+    Object? deliveryTime = freezed,
+    Object? deliveryPrice = freezed,
+    Object? deliveryDiscount = freezed,
+    Object? deliveryRadius = freezed,
+    Object? location = freezed,
+    Object? latitude = freezed,
+    Object? longitude = freezed,
+    Object? status = freezed,
+    Object? featured = freezed,
+    Object? meta = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? deliveryLengthCm = freezed,
+    Object? deliveryWidthCm = freezed,
+    Object? deliveryHeightCm = freezed,
+    Object? deliveryWeightKg = freezed,
+    Object? deliveryMethods = freezed,
+    Object? saleType = freezed,
+  }) {
+    return _then(_$StreamEmbeddedProductModelImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      type: freezed == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      categoryId: freezed == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      code: freezed == code
+          ? _value.code
+          : code // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unit: freezed == unit
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryAvailable: freezed == deliveryAvailable
+          ? _value.deliveryAvailable
+          : deliveryAvailable // ignore: cast_nullable_to_non_nullable
+              as int?,
+      selfPickup: freezed == selfPickup
+          ? _value.selfPickup
+          : selfPickup // ignore: cast_nullable_to_non_nullable
+              as int?,
+      deliveryType: freezed == deliveryType
+          ? _value.deliveryType
+          : deliveryType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryTime: freezed == deliveryTime
+          ? _value.deliveryTime
+          : deliveryTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryPrice: freezed == deliveryPrice
+          ? _value.deliveryPrice
+          : deliveryPrice // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryDiscount: freezed == deliveryDiscount
+          ? _value.deliveryDiscount
+          : deliveryDiscount // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryRadius: freezed == deliveryRadius
+          ? _value.deliveryRadius
+          : deliveryRadius // ignore: cast_nullable_to_non_nullable
+              as String?,
+      location: freezed == location
+          ? _value.location
+          : location // ignore: cast_nullable_to_non_nullable
+              as String?,
+      latitude: freezed == latitude
+          ? _value.latitude
+          : latitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      longitude: freezed == longitude
+          ? _value.longitude
+          : longitude // ignore: cast_nullable_to_non_nullable
+              as double?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as int?,
+      featured: freezed == featured
+          ? _value.featured
+          : featured // ignore: cast_nullable_to_non_nullable
+              as int?,
+      meta: freezed == meta
+          ? _value._meta
+          : meta // ignore: cast_nullable_to_non_nullable
+              as Map<String, dynamic>?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      deliveryLengthCm: freezed == deliveryLengthCm
+          ? _value.deliveryLengthCm
+          : deliveryLengthCm // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryWidthCm: freezed == deliveryWidthCm
+          ? _value.deliveryWidthCm
+          : deliveryWidthCm // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryHeightCm: freezed == deliveryHeightCm
+          ? _value.deliveryHeightCm
+          : deliveryHeightCm // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryWeightKg: freezed == deliveryWeightKg
+          ? _value.deliveryWeightKg
+          : deliveryWeightKg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryMethods: freezed == deliveryMethods
+          ? _value._deliveryMethods
+          : deliveryMethods // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      saleType: freezed == saleType
+          ? _value.saleType
+          : saleType // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$StreamEmbeddedProductModelImpl implements _StreamEmbeddedProductModel {
+  const _$StreamEmbeddedProductModelImpl(
+      {this.id,
+      this.name,
+      this.type,
+      this.description,
+      @JsonKey(name: 'user_id') this.userId,
+      @JsonKey(name: 'category_id') this.categoryId,
+      this.code,
+      this.unit,
+      @JsonKey(name: 'delivery_available') this.deliveryAvailable,
+      @JsonKey(name: 'self_pickup') this.selfPickup,
+      @JsonKey(name: 'delivery_type') this.deliveryType,
+      @JsonKey(name: 'delivery_time') this.deliveryTime,
+      @JsonKey(name: 'delivery_price') this.deliveryPrice,
+      @JsonKey(name: 'delivery_discount') this.deliveryDiscount,
+      @JsonKey(name: 'delivery_radius') this.deliveryRadius,
+      this.location,
+      @JsonKey(
+          name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
+      this.latitude,
+      @JsonKey(
+          name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
+      this.longitude,
+      this.status,
+      this.featured,
+      final Map<String, dynamic>? meta,
+      @JsonKey(name: 'created_at') this.createdAt,
+      @JsonKey(name: 'updated_at') this.updatedAt,
+      @JsonKey(name: 'delivery_length_cm') this.deliveryLengthCm,
+      @JsonKey(name: 'delivery_width_cm') this.deliveryWidthCm,
+      @JsonKey(name: 'delivery_height_cm') this.deliveryHeightCm,
+      @JsonKey(name: 'delivery_weight_kg') this.deliveryWeightKg,
+      @JsonKey(name: 'delivery_methods') final List<String>? deliveryMethods,
+      @JsonKey(name: 'sale_type') this.saleType})
+      : _meta = meta,
+        _deliveryMethods = deliveryMethods;
+
+  factory _$StreamEmbeddedProductModelImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$StreamEmbeddedProductModelImplFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? name;
+  @override
+  final String? type;
+  @override
+  final String? description;
+  @override
+  @JsonKey(name: 'user_id')
+  final int? userId;
+  @override
+  @JsonKey(name: 'category_id')
+  final int? categoryId;
+  @override
+  final String? code;
+  @override
+  final String? unit;
+  @override
+  @JsonKey(name: 'delivery_available')
+  final int? deliveryAvailable;
+  @override
+  @JsonKey(name: 'self_pickup')
+  final int? selfPickup;
+  @override
+  @JsonKey(name: 'delivery_type')
+  final String? deliveryType;
+  @override
+  @JsonKey(name: 'delivery_time')
+  final String? deliveryTime;
+  @override
+  @JsonKey(name: 'delivery_price')
+  final String? deliveryPrice;
+  @override
+  @JsonKey(name: 'delivery_discount')
+  final String? deliveryDiscount;
+  @override
+  @JsonKey(name: 'delivery_radius')
+  final String? deliveryRadius;
+  @override
+  final String? location;
+  @override
+  @JsonKey(name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
+  final double? latitude;
+  @override
+  @JsonKey(
+      name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
+  final double? longitude;
+  @override
+  final int? status;
+  @override
+  final int? featured;
+  final Map<String, dynamic>? _meta;
+  @override
+  Map<String, dynamic>? get meta {
+    final value = _meta;
+    if (value == null) return null;
+    if (_meta is EqualUnmodifiableMapView) return _meta;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
+  @override
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @override
+  @JsonKey(name: 'updated_at')
+  final DateTime? updatedAt;
+  @override
+  @JsonKey(name: 'delivery_length_cm')
+  final String? deliveryLengthCm;
+  @override
+  @JsonKey(name: 'delivery_width_cm')
+  final String? deliveryWidthCm;
+  @override
+  @JsonKey(name: 'delivery_height_cm')
+  final String? deliveryHeightCm;
+  @override
+  @JsonKey(name: 'delivery_weight_kg')
+  final String? deliveryWeightKg;
+  final List<String>? _deliveryMethods;
+  @override
+  @JsonKey(name: 'delivery_methods')
+  List<String>? get deliveryMethods {
+    final value = _deliveryMethods;
+    if (value == null) return null;
+    if (_deliveryMethods is EqualUnmodifiableListView) return _deliveryMethods;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  @JsonKey(name: 'sale_type')
+  final String? saleType;
+
+  @override
+  String toString() {
+    return 'StreamEmbeddedProductModel(id: $id, name: $name, type: $type, description: $description, userId: $userId, categoryId: $categoryId, code: $code, unit: $unit, deliveryAvailable: $deliveryAvailable, selfPickup: $selfPickup, deliveryType: $deliveryType, deliveryTime: $deliveryTime, deliveryPrice: $deliveryPrice, deliveryDiscount: $deliveryDiscount, deliveryRadius: $deliveryRadius, location: $location, latitude: $latitude, longitude: $longitude, status: $status, featured: $featured, meta: $meta, createdAt: $createdAt, updatedAt: $updatedAt, deliveryLengthCm: $deliveryLengthCm, deliveryWidthCm: $deliveryWidthCm, deliveryHeightCm: $deliveryHeightCm, deliveryWeightKg: $deliveryWeightKg, deliveryMethods: $deliveryMethods, saleType: $saleType)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$StreamEmbeddedProductModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
+            (identical(other.code, code) || other.code == code) &&
+            (identical(other.unit, unit) || other.unit == unit) &&
+            (identical(other.deliveryAvailable, deliveryAvailable) ||
+                other.deliveryAvailable == deliveryAvailable) &&
+            (identical(other.selfPickup, selfPickup) ||
+                other.selfPickup == selfPickup) &&
+            (identical(other.deliveryType, deliveryType) ||
+                other.deliveryType == deliveryType) &&
+            (identical(other.deliveryTime, deliveryTime) ||
+                other.deliveryTime == deliveryTime) &&
+            (identical(other.deliveryPrice, deliveryPrice) ||
+                other.deliveryPrice == deliveryPrice) &&
+            (identical(other.deliveryDiscount, deliveryDiscount) ||
+                other.deliveryDiscount == deliveryDiscount) &&
+            (identical(other.deliveryRadius, deliveryRadius) ||
+                other.deliveryRadius == deliveryRadius) &&
+            (identical(other.location, location) ||
+                other.location == location) &&
+            (identical(other.latitude, latitude) ||
+                other.latitude == latitude) &&
+            (identical(other.longitude, longitude) ||
+                other.longitude == longitude) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.featured, featured) ||
+                other.featured == featured) &&
+            const DeepCollectionEquality().equals(other._meta, _meta) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt) &&
+            (identical(other.deliveryLengthCm, deliveryLengthCm) ||
+                other.deliveryLengthCm == deliveryLengthCm) &&
+            (identical(other.deliveryWidthCm, deliveryWidthCm) ||
+                other.deliveryWidthCm == deliveryWidthCm) &&
+            (identical(other.deliveryHeightCm, deliveryHeightCm) ||
+                other.deliveryHeightCm == deliveryHeightCm) &&
+            (identical(other.deliveryWeightKg, deliveryWeightKg) ||
+                other.deliveryWeightKg == deliveryWeightKg) &&
+            const DeepCollectionEquality()
+                .equals(other._deliveryMethods, _deliveryMethods) &&
+            (identical(other.saleType, saleType) ||
+                other.saleType == saleType));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        name,
+        type,
+        description,
+        userId,
+        categoryId,
+        code,
+        unit,
+        deliveryAvailable,
+        selfPickup,
+        deliveryType,
+        deliveryTime,
+        deliveryPrice,
+        deliveryDiscount,
+        deliveryRadius,
+        location,
+        latitude,
+        longitude,
+        status,
+        featured,
+        const DeepCollectionEquality().hash(_meta),
+        createdAt,
+        updatedAt,
+        deliveryLengthCm,
+        deliveryWidthCm,
+        deliveryHeightCm,
+        deliveryWeightKg,
+        const DeepCollectionEquality().hash(_deliveryMethods),
+        saleType
+      ]);
+
+  /// Create a copy of StreamEmbeddedProductModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$StreamEmbeddedProductModelImplCopyWith<_$StreamEmbeddedProductModelImpl>
+      get copyWith => __$$StreamEmbeddedProductModelImplCopyWithImpl<
+          _$StreamEmbeddedProductModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$StreamEmbeddedProductModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _StreamEmbeddedProductModel
+    implements StreamEmbeddedProductModel {
+  const factory _StreamEmbeddedProductModel(
+      {final int? id,
+      final String? name,
+      final String? type,
+      final String? description,
+      @JsonKey(name: 'user_id') final int? userId,
+      @JsonKey(name: 'category_id') final int? categoryId,
+      final String? code,
+      final String? unit,
+      @JsonKey(name: 'delivery_available') final int? deliveryAvailable,
+      @JsonKey(name: 'self_pickup') final int? selfPickup,
+      @JsonKey(name: 'delivery_type') final String? deliveryType,
+      @JsonKey(name: 'delivery_time') final String? deliveryTime,
+      @JsonKey(name: 'delivery_price') final String? deliveryPrice,
+      @JsonKey(name: 'delivery_discount') final String? deliveryDiscount,
+      @JsonKey(name: 'delivery_radius') final String? deliveryRadius,
+      final String? location,
+      @JsonKey(
+          name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
+      final double? latitude,
+      @JsonKey(
+          name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
+      final double? longitude,
+      final int? status,
+      final int? featured,
+      final Map<String, dynamic>? meta,
+      @JsonKey(name: 'created_at') final DateTime? createdAt,
+      @JsonKey(name: 'updated_at') final DateTime? updatedAt,
+      @JsonKey(name: 'delivery_length_cm') final String? deliveryLengthCm,
+      @JsonKey(name: 'delivery_width_cm') final String? deliveryWidthCm,
+      @JsonKey(name: 'delivery_height_cm') final String? deliveryHeightCm,
+      @JsonKey(name: 'delivery_weight_kg') final String? deliveryWeightKg,
+      @JsonKey(name: 'delivery_methods') final List<String>? deliveryMethods,
+      @JsonKey(name: 'sale_type')
+      final String? saleType}) = _$StreamEmbeddedProductModelImpl;
+
+  factory _StreamEmbeddedProductModel.fromJson(Map<String, dynamic> json) =
+      _$StreamEmbeddedProductModelImpl.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get name;
+  @override
+  String? get type;
+  @override
+  String? get description;
+  @override
+  @JsonKey(name: 'user_id')
+  int? get userId;
+  @override
+  @JsonKey(name: 'category_id')
+  int? get categoryId;
+  @override
+  String? get code;
+  @override
+  String? get unit;
+  @override
+  @JsonKey(name: 'delivery_available')
+  int? get deliveryAvailable;
+  @override
+  @JsonKey(name: 'self_pickup')
+  int? get selfPickup;
+  @override
+  @JsonKey(name: 'delivery_type')
+  String? get deliveryType;
+  @override
+  @JsonKey(name: 'delivery_time')
+  String? get deliveryTime;
+  @override
+  @JsonKey(name: 'delivery_price')
+  String? get deliveryPrice;
+  @override
+  @JsonKey(name: 'delivery_discount')
+  String? get deliveryDiscount;
+  @override
+  @JsonKey(name: 'delivery_radius')
+  String? get deliveryRadius;
+  @override
+  String? get location;
+  @override
+  @JsonKey(name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
+  double? get latitude;
+  @override
+  @JsonKey(
+      name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
+  double? get longitude;
+  @override
+  int? get status;
+  @override
+  int? get featured;
+  @override
+  Map<String, dynamic>? get meta;
+  @override
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt;
+  @override
+  @JsonKey(name: 'updated_at')
+  DateTime? get updatedAt;
+  @override
+  @JsonKey(name: 'delivery_length_cm')
+  String? get deliveryLengthCm;
+  @override
+  @JsonKey(name: 'delivery_width_cm')
+  String? get deliveryWidthCm;
+  @override
+  @JsonKey(name: 'delivery_height_cm')
+  String? get deliveryHeightCm;
+  @override
+  @JsonKey(name: 'delivery_weight_kg')
+  String? get deliveryWeightKg;
+  @override
+  @JsonKey(name: 'delivery_methods')
+  List<String>? get deliveryMethods;
+  @override
+  @JsonKey(name: 'sale_type')
+  String? get saleType;
+
+  /// Create a copy of StreamEmbeddedProductModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$StreamEmbeddedProductModelImplCopyWith<_$StreamEmbeddedProductModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+StreamCategoryModel _$StreamCategoryModelFromJson(Map<String, dynamic> json) {
+  return _StreamCategoryModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$StreamCategoryModel {
+  int? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'pivot')
+  StreamCategoryPivotModel? get pivot => throw _privateConstructorUsedError;
+
+  /// Serializes this StreamCategoryModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of StreamCategoryModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $StreamCategoryModelCopyWith<StreamCategoryModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StreamCategoryModelCopyWith<$Res> {
+  factory $StreamCategoryModelCopyWith(
+          StreamCategoryModel value, $Res Function(StreamCategoryModel) then) =
+      _$StreamCategoryModelCopyWithImpl<$Res, StreamCategoryModel>;
+  @useResult
+  $Res call(
+      {int? id,
+      String? name,
+      @JsonKey(name: 'pivot') StreamCategoryPivotModel? pivot});
+
+  $StreamCategoryPivotModelCopyWith<$Res>? get pivot;
+}
+
+/// @nodoc
+class _$StreamCategoryModelCopyWithImpl<$Res, $Val extends StreamCategoryModel>
+    implements $StreamCategoryModelCopyWith<$Res> {
+  _$StreamCategoryModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of StreamCategoryModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? pivot = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pivot: freezed == pivot
+          ? _value.pivot
+          : pivot // ignore: cast_nullable_to_non_nullable
+              as StreamCategoryPivotModel?,
+    ) as $Val);
+  }
+
+  /// Create a copy of StreamCategoryModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StreamCategoryPivotModelCopyWith<$Res>? get pivot {
+    if (_value.pivot == null) {
+      return null;
+    }
+
+    return $StreamCategoryPivotModelCopyWith<$Res>(_value.pivot!, (value) {
+      return _then(_value.copyWith(pivot: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$StreamCategoryModelImplCopyWith<$Res>
+    implements $StreamCategoryModelCopyWith<$Res> {
+  factory _$$StreamCategoryModelImplCopyWith(_$StreamCategoryModelImpl value,
+          $Res Function(_$StreamCategoryModelImpl) then) =
+      __$$StreamCategoryModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int? id,
+      String? name,
+      @JsonKey(name: 'pivot') StreamCategoryPivotModel? pivot});
+
+  @override
+  $StreamCategoryPivotModelCopyWith<$Res>? get pivot;
+}
+
+/// @nodoc
+class __$$StreamCategoryModelImplCopyWithImpl<$Res>
+    extends _$StreamCategoryModelCopyWithImpl<$Res, _$StreamCategoryModelImpl>
+    implements _$$StreamCategoryModelImplCopyWith<$Res> {
+  __$$StreamCategoryModelImplCopyWithImpl(_$StreamCategoryModelImpl _value,
+      $Res Function(_$StreamCategoryModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of StreamCategoryModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? pivot = freezed,
+  }) {
+    return _then(_$StreamCategoryModelImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pivot: freezed == pivot
+          ? _value.pivot
+          : pivot // ignore: cast_nullable_to_non_nullable
+              as StreamCategoryPivotModel?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$StreamCategoryModelImpl implements _StreamCategoryModel {
+  const _$StreamCategoryModelImpl(
+      {this.id, this.name, @JsonKey(name: 'pivot') this.pivot});
+
+  factory _$StreamCategoryModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StreamCategoryModelImplFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? name;
+  @override
+  @JsonKey(name: 'pivot')
+  final StreamCategoryPivotModel? pivot;
+
+  @override
+  String toString() {
+    return 'StreamCategoryModel(id: $id, name: $name, pivot: $pivot)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$StreamCategoryModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.pivot, pivot) || other.pivot == pivot));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, name, pivot);
+
+  /// Create a copy of StreamCategoryModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$StreamCategoryModelImplCopyWith<_$StreamCategoryModelImpl> get copyWith =>
+      __$$StreamCategoryModelImplCopyWithImpl<_$StreamCategoryModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$StreamCategoryModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _StreamCategoryModel implements StreamCategoryModel {
+  const factory _StreamCategoryModel(
+          {final int? id,
+          final String? name,
+          @JsonKey(name: 'pivot') final StreamCategoryPivotModel? pivot}) =
+      _$StreamCategoryModelImpl;
+
+  factory _StreamCategoryModel.fromJson(Map<String, dynamic> json) =
+      _$StreamCategoryModelImpl.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get name;
+  @override
+  @JsonKey(name: 'pivot')
+  StreamCategoryPivotModel? get pivot;
+
+  /// Create a copy of StreamCategoryModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$StreamCategoryModelImplCopyWith<_$StreamCategoryModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+StreamCategoryPivotModel _$StreamCategoryPivotModelFromJson(
+    Map<String, dynamic> json) {
+  return _StreamCategoryPivotModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$StreamCategoryPivotModel {
+  @JsonKey(name: 'stream_id')
+  int? get streamId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'category_id')
+  int? get categoryId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'updated_at')
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
+
+  /// Serializes this StreamCategoryPivotModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of StreamCategoryPivotModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $StreamCategoryPivotModelCopyWith<StreamCategoryPivotModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $StreamCategoryPivotModelCopyWith<$Res> {
+  factory $StreamCategoryPivotModelCopyWith(StreamCategoryPivotModel value,
+          $Res Function(StreamCategoryPivotModel) then) =
+      _$StreamCategoryPivotModelCopyWithImpl<$Res, StreamCategoryPivotModel>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'stream_id') int? streamId,
+      @JsonKey(name: 'category_id') int? categoryId,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt});
+}
+
+/// @nodoc
+class _$StreamCategoryPivotModelCopyWithImpl<$Res,
+        $Val extends StreamCategoryPivotModel>
+    implements $StreamCategoryPivotModelCopyWith<$Res> {
+  _$StreamCategoryPivotModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of StreamCategoryPivotModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? streamId = freezed,
+    Object? categoryId = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(_value.copyWith(
+      streamId: freezed == streamId
+          ? _value.streamId
+          : streamId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      categoryId: freezed == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$StreamCategoryPivotModelImplCopyWith<$Res>
+    implements $StreamCategoryPivotModelCopyWith<$Res> {
+  factory _$$StreamCategoryPivotModelImplCopyWith(
+          _$StreamCategoryPivotModelImpl value,
+          $Res Function(_$StreamCategoryPivotModelImpl) then) =
+      __$$StreamCategoryPivotModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'stream_id') int? streamId,
+      @JsonKey(name: 'category_id') int? categoryId,
+      @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'updated_at') DateTime? updatedAt});
+}
+
+/// @nodoc
+class __$$StreamCategoryPivotModelImplCopyWithImpl<$Res>
+    extends _$StreamCategoryPivotModelCopyWithImpl<$Res,
+        _$StreamCategoryPivotModelImpl>
+    implements _$$StreamCategoryPivotModelImplCopyWith<$Res> {
+  __$$StreamCategoryPivotModelImplCopyWithImpl(
+      _$StreamCategoryPivotModelImpl _value,
+      $Res Function(_$StreamCategoryPivotModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of StreamCategoryPivotModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? streamId = freezed,
+    Object? categoryId = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(_$StreamCategoryPivotModelImpl(
+      streamId: freezed == streamId
+          ? _value.streamId
+          : streamId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      categoryId: freezed == categoryId
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$StreamCategoryPivotModelImpl implements _StreamCategoryPivotModel {
+  const _$StreamCategoryPivotModelImpl(
+      {@JsonKey(name: 'stream_id') this.streamId,
+      @JsonKey(name: 'category_id') this.categoryId,
+      @JsonKey(name: 'created_at') this.createdAt,
+      @JsonKey(name: 'updated_at') this.updatedAt});
+
+  factory _$StreamCategoryPivotModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StreamCategoryPivotModelImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'stream_id')
+  final int? streamId;
+  @override
+  @JsonKey(name: 'category_id')
+  final int? categoryId;
+  @override
+  @JsonKey(name: 'created_at')
+  final DateTime? createdAt;
+  @override
+  @JsonKey(name: 'updated_at')
+  final DateTime? updatedAt;
+
+  @override
+  String toString() {
+    return 'StreamCategoryPivotModel(streamId: $streamId, categoryId: $categoryId, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$StreamCategoryPivotModelImpl &&
+            (identical(other.streamId, streamId) ||
+                other.streamId == streamId) &&
+            (identical(other.categoryId, categoryId) ||
+                other.categoryId == categoryId) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, streamId, categoryId, createdAt, updatedAt);
+
+  /// Create a copy of StreamCategoryPivotModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$StreamCategoryPivotModelImplCopyWith<_$StreamCategoryPivotModelImpl>
+      get copyWith => __$$StreamCategoryPivotModelImplCopyWithImpl<
+          _$StreamCategoryPivotModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$StreamCategoryPivotModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _StreamCategoryPivotModel implements StreamCategoryPivotModel {
+  const factory _StreamCategoryPivotModel(
+          {@JsonKey(name: 'stream_id') final int? streamId,
+          @JsonKey(name: 'category_id') final int? categoryId,
+          @JsonKey(name: 'created_at') final DateTime? createdAt,
+          @JsonKey(name: 'updated_at') final DateTime? updatedAt}) =
+      _$StreamCategoryPivotModelImpl;
+
+  factory _StreamCategoryPivotModel.fromJson(Map<String, dynamic> json) =
+      _$StreamCategoryPivotModelImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'stream_id')
+  int? get streamId;
+  @override
+  @JsonKey(name: 'category_id')
+  int? get categoryId;
+  @override
+  @JsonKey(name: 'created_at')
+  DateTime? get createdAt;
+  @override
+  @JsonKey(name: 'updated_at')
+  DateTime? get updatedAt;
+
+  /// Create a copy of StreamCategoryPivotModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$StreamCategoryPivotModelImplCopyWith<_$StreamCategoryPivotModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 StreamListResponseModel _$StreamListResponseModelFromJson(

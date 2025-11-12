@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
+import 'package:hvatai/features/auth/domain/usecases/get_category_usecase.dart';
 import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/create_stream_uscecase.dart';
@@ -15,9 +17,11 @@ part 'add_stream_state.dart';
 
 class AddStreamCubit extends Cubit<AddStreamState> {
   final GetMyProductsUsecase _getMyProductsUsecase;
+  final GetCategoryUsecase _getCategoryUsecase;
   final CreateStreamUsecase _createStreamUsecase;
 
-  AddStreamCubit(this._getMyProductsUsecase, this._createStreamUsecase)
+  AddStreamCubit(this._getMyProductsUsecase, this._getCategoryUsecase,
+      this._createStreamUsecase)
       : super(
           AddStreamState(
             createStreamModel: CreateStreamModel(
@@ -33,6 +37,7 @@ class AddStreamCubit extends Cubit<AddStreamState> {
               autoDeleteHours: 24,
               saveRecording: false,
               productIds: [],
+              categoryIds: const [],
             ),
           ),
         );
@@ -49,6 +54,20 @@ class AddStreamCubit extends Cubit<AddStreamState> {
           emit(state.copyWith(isProductsLoading: false, error: failure)),
       (products) =>
           emit(state.copyWith(isProductsLoading: false, products: products)),
+    );
+  }
+
+  Future<void> loadCategories() async {
+    emit(state.copyWith(isCategoriesLoading: true, error: null));
+    final result = await _getCategoryUsecase(unit);
+
+    result.fold(
+      (failure) =>
+          emit(state.copyWith(isCategoriesLoading: false, error: failure)),
+      (categories) => emit(state.copyWith(
+        isCategoriesLoading: false,
+        categories: categories,
+      )),
     );
   }
 
@@ -146,8 +165,27 @@ class AddStreamCubit extends Cubit<AddStreamState> {
   }
 
   void updateProductIds(List<int> ids) {
+    final filteredIds = _filterProductIdsByCategories(
+      ids,
+      state.createStreamModel.categoryIds,
+    );
     emit(state.copyWith(
-      createStreamModel: state.createStreamModel.copyWith(productIds: ids),
+      createStreamModel:
+          state.createStreamModel.copyWith(productIds: filteredIds),
+    ));
+  }
+
+  void updateCategoryIds(List<int> ids) {
+    final filteredProductIds = _filterProductIdsByCategories(
+      state.createStreamModel.productIds,
+      ids,
+    );
+
+    emit(state.copyWith(
+      createStreamModel: state.createStreamModel.copyWith(
+        categoryIds: ids,
+        productIds: filteredProductIds,
+      ),
     ));
   }
 
@@ -162,6 +200,45 @@ class AddStreamCubit extends Cubit<AddStreamState> {
   void removeProductId(int id) {
     final ids = List<int>.from(state.createStreamModel.productIds)..remove(id);
     updateProductIds(ids);
+  }
+
+  void addCategoryId(int id) {
+    final ids = List<int>.from(state.createStreamModel.categoryIds);
+    if (!ids.contains(id)) {
+      ids.add(id);
+      updateCategoryIds(ids);
+    }
+  }
+
+  void removeCategoryId(int id) {
+    final ids = List<int>.from(state.createStreamModel.categoryIds)..remove(id);
+    updateCategoryIds(ids);
+  }
+
+  List<int> _filterProductIdsByCategories(
+    List<int> productIds,
+    List<int> categoryIds,
+  ) {
+    if (categoryIds.isEmpty) return [];
+
+    final filtered = <int>[];
+    for (final productId in productIds) {
+      final product = _findProductById(productId);
+      final productCategoryId = product?.categoryId;
+      if (productCategoryId != null && categoryIds.contains(productCategoryId)) {
+        filtered.add(productId);
+      }
+    }
+    return filtered;
+  }
+
+  ProductModel? _findProductById(int productId) {
+    for (final product in state.products) {
+      if (product.id == productId) {
+        return product;
+      }
+    }
+    return null;
   }
 
   Future<void> createStream(BuildContext context) async {

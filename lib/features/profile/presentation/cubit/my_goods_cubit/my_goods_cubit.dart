@@ -47,7 +47,7 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
         state.product.variants.first.price == 0.0 ||
         state.product.categoryId == null ||
         state.product.categoryId == 0 ||
-        (state.product.deliveryAvailable == 1 &&
+        (state.product.deliveryAvailable == true &&
             (state.product.deliveryTime == null ||
                 state.product.deliveryTime!.isEmpty ||
                 state.product.deliveryPrice == null ||
@@ -344,23 +344,15 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
 
   Future<FormData> _prepareProductFormData(ProductModel product) async {
     final dataMap = Map<String, dynamic>.from(product.toJson());
-    dataMap['delivery_available'] =
-        product.deliveryAvailable == 1 ? true : false;
+    dataMap['delivery_available'] = product.deliveryAvailable ?? false;
     dataMap['status'] = product.status != null ? 1 : 0;
-    dataMap['self_pickup'] = product.selfPickup == true ? 1 : 0;
+    dataMap['self_pickup'] = product.selfPickup ?? false;
 
-    // Translate delivery_methods keys to localized strings
-    if (product.deliveryMethods != null &&
-        product.deliveryMethods!.isNotEmpty) {
-      dataMap['delivery_methods'] = product.deliveryMethods!.map((key) {
-        // Try to translate if it's a known key, otherwise use as-is
-        final knownKeys = ['courier', 'post', 'pickup'];
-        if (knownKeys.contains(key)) {
-          return key.tr();
-        }
-        return key;
-      }).toList();
-    }
+    final deliveryMethods = product.deliveryMethods
+            ?.where((method) => method.trim().isNotEmpty)
+            .toList() ??
+        [];
+    dataMap['delivery_methods'] = deliveryMethods;
 
     final variantsJson = product.variants.map((v) => v.toJson()).toList();
     dataMap['variants'] = variantsJson;

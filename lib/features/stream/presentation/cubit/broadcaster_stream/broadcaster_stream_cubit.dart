@@ -59,10 +59,20 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
     // Initialize timer
     _startTimer();
 
-    // Initialize viewer count
+    // Initialize viewer count and current product
+    final streamProducts = state.stream.streamProducts;
+    final firstProduct = (streamProducts != null && streamProducts.isNotEmpty)
+        ? streamProducts.first
+        : null;
+    final bidTiming = _resolveBidTiming(firstProduct);
     emit(state.copyWith(
       viewerCount: state.stream.viewerCount ?? 0,
       isInitializing: false,
+      activeStreamProduct: firstProduct ?? state.activeStreamProduct,
+      currentStreamProductId:
+          state.currentStreamProductId ?? firstProduct?.id,
+      currentBidEndTime: bidTiming.endTime,
+      currentBidRemainingSeconds: bidTiming.remainingSeconds,
     ));
 
     // Load initial comments
@@ -73,6 +83,31 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
 
     // Initialize LiveKit
     await _initLiveKit();
+  }
+
+  ({DateTime? endTime, int? remainingSeconds}) _resolveBidTiming(
+    StreamProductModel? product,
+  ) {
+    if (product == null) {
+      return (endTime: null, remainingSeconds: null);
+    }
+    DateTime? endTime = product.bidSession?.sessionEndTime;
+    int? remainingSeconds;
+
+    if (endTime != null) {
+      remainingSeconds = endTime.difference(DateTime.now()).inSeconds;
+    } else if (product.remainingSeconds != null) {
+      remainingSeconds = product.remainingSeconds;
+      if (remainingSeconds != null && remainingSeconds > 0) {
+        endTime = DateTime.now().add(Duration(seconds: remainingSeconds));
+      }
+    }
+
+    if (remainingSeconds != null && remainingSeconds < 0) {
+      remainingSeconds = 0;
+    }
+
+    return (endTime: endTime, remainingSeconds: remainingSeconds);
   }
 
   // ================== Pusher ==================
@@ -545,11 +580,26 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         final hasMore =
             (pageData.data.nextPageUrl != null) && (currentPage < lastPage);
 
+        int? selectedStreamProductId = state.currentStreamProductId;
+        BidStreamItem? selectedBid = state.currentProductStreamBid;
+
+        if (items.isNotEmpty) {
+          selectedStreamProductId ??= items.first.streamProductId;
+          if (selectedStreamProductId != null) {
+            selectedBid = items.firstWhere(
+              (bid) => bid.streamProductId == selectedStreamProductId,
+              orElse: () => items.first,
+            );
+          }
+        }
+
         emit(state.copyWith(
           isLoadingBids: false,
           bids: items,
           bidsPage: 1,
           bidsHasMore: hasMore,
+          currentStreamProductId: selectedStreamProductId,
+          currentProductStreamBid: selectedBid,
         ));
       },
     );
@@ -582,11 +632,21 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         final hasMore =
             (pageData.data.nextPageUrl != null) && (currentPage < lastPage);
 
+        BidStreamItem? selectedBid = state.currentProductStreamBid;
+        if (state.currentStreamProductId != null && merged.isNotEmpty) {
+          final matched = merged.firstWhere(
+            (bid) => bid.streamProductId == state.currentStreamProductId,
+            orElse: () => selectedBid ?? merged.first,
+          );
+          selectedBid = matched;
+        }
+
         emit(state.copyWith(
           isLoadingBids: false,
           bids: merged,
           bidsPage: nextPage,
           bidsHasMore: hasMore,
+          currentProductStreamBid: selectedBid,
         ));
       },
     );
@@ -616,9 +676,18 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
       (createdBid) {
         final updated = List<BidStreamItem>.from(state.bids)
           ..insert(0, createdBid);
+
+        final bool matchesSelection =
+            state.currentStreamProductId == null ||
+                state.currentStreamProductId == createdBid.streamProductId;
+
         emit(state.copyWith(
           isPlacingBid: false,
           bids: updated,
+          currentProductStreamBid:
+              matchesSelection ? createdBid : state.currentProductStreamBid,
+          currentStreamProductId:
+              state.currentStreamProductId ?? createdBid.streamProductId,
         ));
       },
     );
@@ -626,7 +695,76 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
 
   void addIncomingBid(BidStreamItem item) {
     final updated = List<BidStreamItem>.from(state.bids)..insert(0, item);
-    emit(state.copyWith(bids: updated));
+    emit(state.copyWith(
+      bids: updated,
+      currentProductStreamBid: state.currentStreamProductId == null ||
+              state.currentStreamProductId == item.streamProductId
+          ? item
+          : state.currentProductStreamBid,
+      currentStreamProductId:
+          state.currentStreamProductId ?? item.streamProductId,
+    ));
+  }
+
+  void setCurrentStreamProduct(int streamProductId) {
+    BidStreamItem? selectedBid;
+    for (final bid in state.bids) {
+      if (bid.streamProductId == streamProductId) {
+        selectedBid = bid;
+        break;
+      }
+    }
+    StreamProductModel? selectedProduct;
+    final streamProducts = state.stream.streamProducts;
+    if (streamProducts != null) {
+      for (final product in streamProducts) {
+        if (product.id == streamProductId) {
+          selectedProduct = product;
+          break;
+        }
+      }
+    }
+    final bidTiming = _resolveBidTiming(selectedProduct);
+    emit(state.copyWith(
+      currentStreamProductId: streamProductId,
+      currentProductStreamBid: selectedBid,
+      activeStreamProduct: selectedProduct ?? state.activeStreamProduct,
+      currentBidEndTime: bidTiming.endTime,
+      currentBidRemainingSeconds: bidTiming.remainingSeconds,
+    ));
+  }
+
+  void setActiveStreamProduct(StreamProductModel product) {
+    final streamProducts = List<StreamProductModel>.from(
+      state.stream.streamProducts ?? const [],
+    );
+    final productId = product.id ?? product.productId;
+    if (productId != null) {
+      final index = streamProducts.indexWhere((p) => p.id == productId);
+      if (index >= 0) {
+        streamProducts[index] = product;
+      } else {
+        streamProducts.insert(0, product);
+      }
+    }
+    BidStreamItem? selectedBid;
+    if (productId != null) {
+      for (final bid in state.bids) {
+        if (bid.streamProductId == productId) {
+          selectedBid = bid;
+          break;
+        }
+      }
+    }
+    final bidTiming = _resolveBidTiming(product);
+    emit(state.copyWith(
+      stream: state.stream.copyWith(streamProducts: streamProducts),
+      activeStreamProduct: product,
+      currentStreamProductId: productId ?? state.currentStreamProductId,
+      currentProductStreamBid: selectedBid,
+      currentBidEndTime: bidTiming.endTime,
+      currentBidRemainingSeconds: bidTiming.remainingSeconds,
+    ));
   }
 
   // ================== Viewer Count ==================
@@ -638,7 +776,31 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
   void _startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      emit(state.copyWith(streamSeconds: state.streamSeconds + 1));
+      final currentState = state;
+      final nextStreamSeconds = currentState.streamSeconds + 1;
+
+      DateTime? endTime = currentState.currentBidEndTime;
+      int? remaining = currentState.currentBidRemainingSeconds;
+
+      if (endTime != null) {
+        remaining = endTime.difference(DateTime.now()).inSeconds;
+        if (remaining < 0) {
+          remaining = 0;
+          endTime = null;
+        }
+      } else if (remaining != null) {
+        if (remaining > 0) {
+          remaining = remaining - 1;
+        } else {
+          remaining = 0;
+        }
+      }
+
+      emit(currentState.copyWith(
+        streamSeconds: nextStreamSeconds,
+        currentBidRemainingSeconds: remaining,
+        currentBidEndTime: endTime,
+      ));
     });
   }
 

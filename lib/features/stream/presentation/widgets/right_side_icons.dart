@@ -15,17 +15,34 @@ class RightSideIcons extends StatelessWidget {
         RightIcon(icon: Assets.assetsIconsWallet, label: 'Кошелёк'),
         const SizedBox(height: 24),
         RightIcon(
-          onTap: () {
+          onTap: () async {
             // Get streamId from BroadcasterStreamCubit
-            final streamId = context.read<BroadcasterStreamCubit>().state.stream.id;
+            final broadcasterCubit = context.read<BroadcasterStreamCubit>();
+            final streamId = broadcasterCubit.state.stream.id;
             if (streamId == null) return;
-            
-            showModalBottomSheet(
+            final categories = broadcasterCubit.state.stream.categories
+                    ?.map((c) => c.id)
+                    .whereType<int>()
+                    .toList() ??
+                [];
+
+            final selectedProduct =
+                await showModalBottomSheet<StreamProductModel>(
               context: context,
               isScrollControlled: true,
               backgroundColor: Colors.transparent,
-              builder: (ctx) => LiveListingsBottomSheet(streamId: streamId),
+              builder: (ctx) => LiveListingsBottomSheet(
+                streamId: streamId,
+                categoryIds: categories,
+                currentStreamProductId:
+                    broadcasterCubit.state.currentStreamProductId,
+              ),
             );
+
+            if (selectedProduct != null) {
+              broadcasterCubit
+                  .setActiveStreamProduct(selectedProduct);
+            }
           },
           icon: Assets.assetsIconsShop,
           label: 'Магазин',

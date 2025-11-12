@@ -60,19 +60,23 @@ Map<String, dynamic> _$$BidStreamDataImplToJson(_$BidStreamDataImpl instance) =>
 
 _$BidStreamItemImpl _$$BidStreamItemImplFromJson(Map<String, dynamic> json) =>
     _$BidStreamItemImpl(
-      id: (json['id'] as num).toInt(),
-      streamId: (json['stream_id'] as num).toInt(),
-      streamProductId: (json['stream_product_id'] as num).toInt(),
-      userId: (json['user_id'] as num).toInt(),
-      bidAmount: json['bid_amount'] as String,
-      status: json['status'] as String,
+      id: (json['id'] as num?)?.toInt(),
+      streamId: (json['stream_id'] as num?)?.toInt(),
+      streamProductId: (json['stream_product_id'] as num?)?.toInt(),
+      userId: (json['user_id'] as num?)?.toInt(),
+      bidAmount: json['bid_amount'] as String?,
+      status: json['status'] as String?,
       notes: json['notes'] as String?,
-      bidAt: json['bid_at'] as String,
-      createdAt: json['created_at'] as String,
-      updatedAt: json['updated_at'] as String,
-      user: StreamUserModel.fromJson(json['user'] as Map<String, dynamic>),
-      streamProduct: StreamProductModel.fromJson(
-          json['stream_product'] as Map<String, dynamic>),
+      bidAt: json['bid_at'] as String?,
+      createdAt: json['created_at'] as String?,
+      updatedAt: json['updated_at'] as String?,
+      user: json['user'] == null
+          ? null
+          : StreamUserModel.fromJson(json['user'] as Map<String, dynamic>),
+      streamProduct: json['stream_product'] == null
+          ? null
+          : StreamProductModel.fromJson(
+              json['stream_product'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$BidStreamItemImplToJson(_$BidStreamItemImpl instance) =>
@@ -93,12 +97,12 @@ Map<String, dynamic> _$$BidStreamItemImplToJson(_$BidStreamItemImpl instance) =>
 
 _$BidProductImpl _$$BidProductImplFromJson(Map<String, dynamic> json) =>
     _$BidProductImpl(
-      id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      type: json['type'] as String,
+      id: (json['id'] as num?)?.toInt(),
+      name: json['name'] as String?,
+      type: json['type'] as String?,
       description: json['description'] as String?,
-      userId: (json['user_id'] as num).toInt(),
-      categoryId: (json['category_id'] as num).toInt(),
+      userId: (json['user_id'] as num?)?.toInt(),
+      categoryId: (json['category_id'] as num?)?.toInt(),
       code: json['code'] as String?,
       unit: json['unit'] as String?,
       deliveryAvailable: (json['delivery_available'] as num?)?.toInt(),
@@ -114,8 +118,8 @@ _$BidProductImpl _$$BidProductImplFromJson(Map<String, dynamic> json) =>
       status: (json['status'] as num?)?.toInt(),
       featured: (json['featured'] as num?)?.toInt(),
       meta: json['meta'] as String?,
-      createdAt: json['created_at'] as String,
-      updatedAt: json['updated_at'] as String,
+      createdAt: json['created_at'] as String?,
+      updatedAt: json['updated_at'] as String?,
       deliveryLengthCm: json['delivery_length_cm'] as String?,
       deliveryWidthCm: json['delivery_width_cm'] as String?,
       deliveryHeightCm: json['delivery_height_cm'] as String?,

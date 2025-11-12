@@ -17,6 +17,8 @@ import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_us
 class ApiServiceProfile extends ApiBase {
   Future<ProductModel> addNewProduct(FormData formData) async {
     return executeAndHandleErrorServer<ProductModel>(() async {
+      // print the form data
+      
       final response = await post(
         ServerConfig.products,
         body: formData,

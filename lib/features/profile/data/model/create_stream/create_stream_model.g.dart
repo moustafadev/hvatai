@@ -25,6 +25,10 @@ _$CreateStreamModelImpl _$$CreateStreamModelImplFromJson(
       productIds: (json['product_ids'] as List<dynamic>)
           .map((e) => (e as num).toInt())
           .toList(),
+      categoryIds: (json['category_ids'] as List<dynamic>?)
+              ?.map((e) => (e as num).toInt())
+              .toList() ??
+          const [],
       bidDurationSeconds: (json['bid_duration_seconds'] as num).toInt(),
     );
 
@@ -44,5 +48,6 @@ Map<String, dynamic> _$$CreateStreamModelImplToJson(
       'auto_delete_hours': instance.autoDeleteHours,
       'save_recording': instance.saveRecording,
       'product_ids': instance.productIds,
+      'category_ids': instance.categoryIds,
       'bid_duration_seconds': instance.bidDurationSeconds,
     };

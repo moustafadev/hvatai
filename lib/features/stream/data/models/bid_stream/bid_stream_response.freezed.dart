@@ -653,26 +653,26 @@ BidStreamItem _$BidStreamItemFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$BidStreamItem {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: "stream_id")
-  int get streamId => throw _privateConstructorUsedError;
+  int? get streamId => throw _privateConstructorUsedError;
   @JsonKey(name: "stream_product_id")
-  int get streamProductId => throw _privateConstructorUsedError;
+  int? get streamProductId => throw _privateConstructorUsedError;
   @JsonKey(name: "user_id")
-  int get userId => throw _privateConstructorUsedError;
+  int? get userId => throw _privateConstructorUsedError;
   @JsonKey(name: "bid_amount")
-  String get bidAmount => throw _privateConstructorUsedError;
-  String get status => throw _privateConstructorUsedError;
+  String? get bidAmount => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
   String? get notes => throw _privateConstructorUsedError;
   @JsonKey(name: "bid_at")
-  String get bidAt => throw _privateConstructorUsedError;
+  String? get bidAt => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
-  String get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: "updated_at")
-  String get updatedAt => throw _privateConstructorUsedError;
-  StreamUserModel get user => throw _privateConstructorUsedError;
+  String? get updatedAt => throw _privateConstructorUsedError;
+  StreamUserModel? get user => throw _privateConstructorUsedError;
   @JsonKey(name: "stream_product")
-  StreamProductModel get streamProduct => throw _privateConstructorUsedError;
+  StreamProductModel? get streamProduct => throw _privateConstructorUsedError;
 
   /// Serializes this BidStreamItem to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -691,21 +691,21 @@ abstract class $BidStreamItemCopyWith<$Res> {
       _$BidStreamItemCopyWithImpl<$Res, BidStreamItem>;
   @useResult
   $Res call(
-      {int id,
-      @JsonKey(name: "stream_id") int streamId,
-      @JsonKey(name: "stream_product_id") int streamProductId,
-      @JsonKey(name: "user_id") int userId,
-      @JsonKey(name: "bid_amount") String bidAmount,
-      String status,
+      {int? id,
+      @JsonKey(name: "stream_id") int? streamId,
+      @JsonKey(name: "stream_product_id") int? streamProductId,
+      @JsonKey(name: "user_id") int? userId,
+      @JsonKey(name: "bid_amount") String? bidAmount,
+      String? status,
       String? notes,
-      @JsonKey(name: "bid_at") String bidAt,
-      @JsonKey(name: "created_at") String createdAt,
-      @JsonKey(name: "updated_at") String updatedAt,
-      StreamUserModel user,
-      @JsonKey(name: "stream_product") StreamProductModel streamProduct});
+      @JsonKey(name: "bid_at") String? bidAt,
+      @JsonKey(name: "created_at") String? createdAt,
+      @JsonKey(name: "updated_at") String? updatedAt,
+      StreamUserModel? user,
+      @JsonKey(name: "stream_product") StreamProductModel? streamProduct});
 
-  $StreamUserModelCopyWith<$Res> get user;
-  $StreamProductModelCopyWith<$Res> get streamProduct;
+  $StreamUserModelCopyWith<$Res>? get user;
+  $StreamProductModelCopyWith<$Res>? get streamProduct;
 }
 
 /// @nodoc
@@ -723,68 +723,68 @@ class _$BidStreamItemCopyWithImpl<$Res, $Val extends BidStreamItem>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? streamId = null,
-    Object? streamProductId = null,
-    Object? userId = null,
-    Object? bidAmount = null,
-    Object? status = null,
+    Object? id = freezed,
+    Object? streamId = freezed,
+    Object? streamProductId = freezed,
+    Object? userId = freezed,
+    Object? bidAmount = freezed,
+    Object? status = freezed,
     Object? notes = freezed,
-    Object? bidAt = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? user = null,
-    Object? streamProduct = null,
+    Object? bidAt = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? user = freezed,
+    Object? streamProduct = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      streamId: null == streamId
+              as int?,
+      streamId: freezed == streamId
           ? _value.streamId
           : streamId // ignore: cast_nullable_to_non_nullable
-              as int,
-      streamProductId: null == streamProductId
+              as int?,
+      streamProductId: freezed == streamProductId
           ? _value.streamProductId
           : streamProductId // ignore: cast_nullable_to_non_nullable
-              as int,
-      userId: null == userId
+              as int?,
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
-      bidAmount: null == bidAmount
+              as int?,
+      bidAmount: freezed == bidAmount
           ? _value.bidAmount
           : bidAmount // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
+              as String?,
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       notes: freezed == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
-      bidAt: null == bidAt
+      bidAt: freezed == bidAt
           ? _value.bidAt
           : bidAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      user: null == user
+              as String?,
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as StreamUserModel,
-      streamProduct: null == streamProduct
+              as StreamUserModel?,
+      streamProduct: freezed == streamProduct
           ? _value.streamProduct
           : streamProduct // ignore: cast_nullable_to_non_nullable
-              as StreamProductModel,
+              as StreamProductModel?,
     ) as $Val);
   }
 
@@ -792,8 +792,12 @@ class _$BidStreamItemCopyWithImpl<$Res, $Val extends BidStreamItem>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StreamUserModelCopyWith<$Res> get user {
-    return $StreamUserModelCopyWith<$Res>(_value.user, (value) {
+  $StreamUserModelCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $StreamUserModelCopyWith<$Res>(_value.user!, (value) {
       return _then(_value.copyWith(user: value) as $Val);
     });
   }
@@ -802,8 +806,12 @@ class _$BidStreamItemCopyWithImpl<$Res, $Val extends BidStreamItem>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $StreamProductModelCopyWith<$Res> get streamProduct {
-    return $StreamProductModelCopyWith<$Res>(_value.streamProduct, (value) {
+  $StreamProductModelCopyWith<$Res>? get streamProduct {
+    if (_value.streamProduct == null) {
+      return null;
+    }
+
+    return $StreamProductModelCopyWith<$Res>(_value.streamProduct!, (value) {
       return _then(_value.copyWith(streamProduct: value) as $Val);
     });
   }
@@ -818,23 +826,23 @@ abstract class _$$BidStreamItemImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
-      @JsonKey(name: "stream_id") int streamId,
-      @JsonKey(name: "stream_product_id") int streamProductId,
-      @JsonKey(name: "user_id") int userId,
-      @JsonKey(name: "bid_amount") String bidAmount,
-      String status,
+      {int? id,
+      @JsonKey(name: "stream_id") int? streamId,
+      @JsonKey(name: "stream_product_id") int? streamProductId,
+      @JsonKey(name: "user_id") int? userId,
+      @JsonKey(name: "bid_amount") String? bidAmount,
+      String? status,
       String? notes,
-      @JsonKey(name: "bid_at") String bidAt,
-      @JsonKey(name: "created_at") String createdAt,
-      @JsonKey(name: "updated_at") String updatedAt,
-      StreamUserModel user,
-      @JsonKey(name: "stream_product") StreamProductModel streamProduct});
+      @JsonKey(name: "bid_at") String? bidAt,
+      @JsonKey(name: "created_at") String? createdAt,
+      @JsonKey(name: "updated_at") String? updatedAt,
+      StreamUserModel? user,
+      @JsonKey(name: "stream_product") StreamProductModel? streamProduct});
 
   @override
-  $StreamUserModelCopyWith<$Res> get user;
+  $StreamUserModelCopyWith<$Res>? get user;
   @override
-  $StreamProductModelCopyWith<$Res> get streamProduct;
+  $StreamProductModelCopyWith<$Res>? get streamProduct;
 }
 
 /// @nodoc
@@ -850,68 +858,68 @@ class __$$BidStreamItemImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? streamId = null,
-    Object? streamProductId = null,
-    Object? userId = null,
-    Object? bidAmount = null,
-    Object? status = null,
+    Object? id = freezed,
+    Object? streamId = freezed,
+    Object? streamProductId = freezed,
+    Object? userId = freezed,
+    Object? bidAmount = freezed,
+    Object? status = freezed,
     Object? notes = freezed,
-    Object? bidAt = null,
-    Object? createdAt = null,
-    Object? updatedAt = null,
-    Object? user = null,
-    Object? streamProduct = null,
+    Object? bidAt = freezed,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+    Object? user = freezed,
+    Object? streamProduct = freezed,
   }) {
     return _then(_$BidStreamItemImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      streamId: null == streamId
+              as int?,
+      streamId: freezed == streamId
           ? _value.streamId
           : streamId // ignore: cast_nullable_to_non_nullable
-              as int,
-      streamProductId: null == streamProductId
+              as int?,
+      streamProductId: freezed == streamProductId
           ? _value.streamProductId
           : streamProductId // ignore: cast_nullable_to_non_nullable
-              as int,
-      userId: null == userId
+              as int?,
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
-      bidAmount: null == bidAmount
+              as int?,
+      bidAmount: freezed == bidAmount
           ? _value.bidAmount
           : bidAmount // ignore: cast_nullable_to_non_nullable
-              as String,
-      status: null == status
+              as String?,
+      status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       notes: freezed == notes
           ? _value.notes
           : notes // ignore: cast_nullable_to_non_nullable
               as String?,
-      bidAt: null == bidAt
+      bidAt: freezed == bidAt
           ? _value.bidAt
           : bidAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: null == createdAt
+              as String?,
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      user: null == user
+              as String?,
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as StreamUserModel,
-      streamProduct: null == streamProduct
+              as StreamUserModel?,
+      streamProduct: freezed == streamProduct
           ? _value.streamProduct
           : streamProduct // ignore: cast_nullable_to_non_nullable
-              as StreamProductModel,
+              as StreamProductModel?,
     ));
   }
 }
@@ -920,54 +928,54 @@ class __$$BidStreamItemImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BidStreamItemImpl implements _BidStreamItem {
   const _$BidStreamItemImpl(
-      {required this.id,
-      @JsonKey(name: "stream_id") required this.streamId,
-      @JsonKey(name: "stream_product_id") required this.streamProductId,
-      @JsonKey(name: "user_id") required this.userId,
-      @JsonKey(name: "bid_amount") required this.bidAmount,
-      required this.status,
+      {this.id,
+      @JsonKey(name: "stream_id") this.streamId,
+      @JsonKey(name: "stream_product_id") this.streamProductId,
+      @JsonKey(name: "user_id") this.userId,
+      @JsonKey(name: "bid_amount") this.bidAmount,
+      this.status,
       this.notes,
-      @JsonKey(name: "bid_at") required this.bidAt,
-      @JsonKey(name: "created_at") required this.createdAt,
-      @JsonKey(name: "updated_at") required this.updatedAt,
-      required this.user,
-      @JsonKey(name: "stream_product") required this.streamProduct});
+      @JsonKey(name: "bid_at") this.bidAt,
+      @JsonKey(name: "created_at") this.createdAt,
+      @JsonKey(name: "updated_at") this.updatedAt,
+      this.user,
+      @JsonKey(name: "stream_product") this.streamProduct});
 
   factory _$BidStreamItemImpl.fromJson(Map<String, dynamic> json) =>
       _$$BidStreamItemImplFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
   @JsonKey(name: "stream_id")
-  final int streamId;
+  final int? streamId;
   @override
   @JsonKey(name: "stream_product_id")
-  final int streamProductId;
+  final int? streamProductId;
   @override
   @JsonKey(name: "user_id")
-  final int userId;
+  final int? userId;
   @override
   @JsonKey(name: "bid_amount")
-  final String bidAmount;
+  final String? bidAmount;
   @override
-  final String status;
+  final String? status;
   @override
   final String? notes;
   @override
   @JsonKey(name: "bid_at")
-  final String bidAt;
+  final String? bidAt;
   @override
   @JsonKey(name: "created_at")
-  final String createdAt;
+  final String? createdAt;
   @override
   @JsonKey(name: "updated_at")
-  final String updatedAt;
+  final String? updatedAt;
   @override
-  final StreamUserModel user;
+  final StreamUserModel? user;
   @override
   @JsonKey(name: "stream_product")
-  final StreamProductModel streamProduct;
+  final StreamProductModel? streamProduct;
 
   @override
   String toString() {
@@ -1034,55 +1042,55 @@ class _$BidStreamItemImpl implements _BidStreamItem {
 
 abstract class _BidStreamItem implements BidStreamItem {
   const factory _BidStreamItem(
-      {required final int id,
-      @JsonKey(name: "stream_id") required final int streamId,
-      @JsonKey(name: "stream_product_id") required final int streamProductId,
-      @JsonKey(name: "user_id") required final int userId,
-      @JsonKey(name: "bid_amount") required final String bidAmount,
-      required final String status,
+      {final int? id,
+      @JsonKey(name: "stream_id") final int? streamId,
+      @JsonKey(name: "stream_product_id") final int? streamProductId,
+      @JsonKey(name: "user_id") final int? userId,
+      @JsonKey(name: "bid_amount") final String? bidAmount,
+      final String? status,
       final String? notes,
-      @JsonKey(name: "bid_at") required final String bidAt,
-      @JsonKey(name: "created_at") required final String createdAt,
-      @JsonKey(name: "updated_at") required final String updatedAt,
-      required final StreamUserModel user,
+      @JsonKey(name: "bid_at") final String? bidAt,
+      @JsonKey(name: "created_at") final String? createdAt,
+      @JsonKey(name: "updated_at") final String? updatedAt,
+      final StreamUserModel? user,
       @JsonKey(name: "stream_product")
-      required final StreamProductModel streamProduct}) = _$BidStreamItemImpl;
+      final StreamProductModel? streamProduct}) = _$BidStreamItemImpl;
 
   factory _BidStreamItem.fromJson(Map<String, dynamic> json) =
       _$BidStreamItemImpl.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
   @JsonKey(name: "stream_id")
-  int get streamId;
+  int? get streamId;
   @override
   @JsonKey(name: "stream_product_id")
-  int get streamProductId;
+  int? get streamProductId;
   @override
   @JsonKey(name: "user_id")
-  int get userId;
+  int? get userId;
   @override
   @JsonKey(name: "bid_amount")
-  String get bidAmount;
+  String? get bidAmount;
   @override
-  String get status;
+  String? get status;
   @override
   String? get notes;
   @override
   @JsonKey(name: "bid_at")
-  String get bidAt;
+  String? get bidAt;
   @override
   @JsonKey(name: "created_at")
-  String get createdAt;
+  String? get createdAt;
   @override
   @JsonKey(name: "updated_at")
-  String get updatedAt;
+  String? get updatedAt;
   @override
-  StreamUserModel get user;
+  StreamUserModel? get user;
   @override
   @JsonKey(name: "stream_product")
-  StreamProductModel get streamProduct;
+  StreamProductModel? get streamProduct;
 
   /// Create a copy of BidStreamItem
   /// with the given fields replaced by the non-null parameter values.
@@ -1098,14 +1106,14 @@ BidProduct _$BidProductFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$BidProduct {
-  int get id => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get type => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get type => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   @JsonKey(name: "user_id")
-  int get userId => throw _privateConstructorUsedError;
+  int? get userId => throw _privateConstructorUsedError;
   @JsonKey(name: "category_id")
-  int get categoryId => throw _privateConstructorUsedError;
+  int? get categoryId => throw _privateConstructorUsedError;
   String? get code => throw _privateConstructorUsedError;
   String? get unit => throw _privateConstructorUsedError;
   @JsonKey(name: "delivery_available")
@@ -1129,9 +1137,9 @@ mixin _$BidProduct {
   int? get featured => throw _privateConstructorUsedError;
   String? get meta => throw _privateConstructorUsedError;
   @JsonKey(name: "created_at")
-  String get createdAt => throw _privateConstructorUsedError;
+  String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: "updated_at")
-  String get updatedAt => throw _privateConstructorUsedError;
+  String? get updatedAt => throw _privateConstructorUsedError;
   @JsonKey(name: "delivery_length_cm")
   String? get deliveryLengthCm => throw _privateConstructorUsedError;
   @JsonKey(name: "delivery_width_cm")
@@ -1162,12 +1170,12 @@ abstract class $BidProductCopyWith<$Res> {
       _$BidProductCopyWithImpl<$Res, BidProduct>;
   @useResult
   $Res call(
-      {int id,
-      String name,
-      String type,
+      {int? id,
+      String? name,
+      String? type,
       String? description,
-      @JsonKey(name: "user_id") int userId,
-      @JsonKey(name: "category_id") int categoryId,
+      @JsonKey(name: "user_id") int? userId,
+      @JsonKey(name: "category_id") int? categoryId,
       String? code,
       String? unit,
       @JsonKey(name: "delivery_available") int? deliveryAvailable,
@@ -1183,8 +1191,8 @@ abstract class $BidProductCopyWith<$Res> {
       int? status,
       int? featured,
       String? meta,
-      @JsonKey(name: "created_at") String createdAt,
-      @JsonKey(name: "updated_at") String updatedAt,
+      @JsonKey(name: "created_at") String? createdAt,
+      @JsonKey(name: "updated_at") String? updatedAt,
       @JsonKey(name: "delivery_length_cm") String? deliveryLengthCm,
       @JsonKey(name: "delivery_width_cm") String? deliveryWidthCm,
       @JsonKey(name: "delivery_height_cm") String? deliveryHeightCm,
@@ -1208,12 +1216,12 @@ class _$BidProductCopyWithImpl<$Res, $Val extends BidProduct>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? type = null,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? type = freezed,
     Object? description = freezed,
-    Object? userId = null,
-    Object? categoryId = null,
+    Object? userId = freezed,
+    Object? categoryId = freezed,
     Object? code = freezed,
     Object? unit = freezed,
     Object? deliveryAvailable = freezed,
@@ -1229,8 +1237,8 @@ class _$BidProductCopyWithImpl<$Res, $Val extends BidProduct>
     Object? status = freezed,
     Object? featured = freezed,
     Object? meta = freezed,
-    Object? createdAt = null,
-    Object? updatedAt = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? deliveryLengthCm = freezed,
     Object? deliveryWidthCm = freezed,
     Object? deliveryHeightCm = freezed,
@@ -1239,30 +1247,30 @@ class _$BidProductCopyWithImpl<$Res, $Val extends BidProduct>
     Object? saleType = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: null == name
+              as int?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
+              as String?,
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: null == userId
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
-      categoryId: null == categoryId
+              as int?,
+      categoryId: freezed == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -1323,14 +1331,14 @@ class _$BidProductCopyWithImpl<$Res, $Val extends BidProduct>
           ? _value.meta
           : meta // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       deliveryLengthCm: freezed == deliveryLengthCm
           ? _value.deliveryLengthCm
           : deliveryLengthCm // ignore: cast_nullable_to_non_nullable
@@ -1368,12 +1376,12 @@ abstract class _$$BidProductImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
-      String name,
-      String type,
+      {int? id,
+      String? name,
+      String? type,
       String? description,
-      @JsonKey(name: "user_id") int userId,
-      @JsonKey(name: "category_id") int categoryId,
+      @JsonKey(name: "user_id") int? userId,
+      @JsonKey(name: "category_id") int? categoryId,
       String? code,
       String? unit,
       @JsonKey(name: "delivery_available") int? deliveryAvailable,
@@ -1389,8 +1397,8 @@ abstract class _$$BidProductImplCopyWith<$Res>
       int? status,
       int? featured,
       String? meta,
-      @JsonKey(name: "created_at") String createdAt,
-      @JsonKey(name: "updated_at") String updatedAt,
+      @JsonKey(name: "created_at") String? createdAt,
+      @JsonKey(name: "updated_at") String? updatedAt,
       @JsonKey(name: "delivery_length_cm") String? deliveryLengthCm,
       @JsonKey(name: "delivery_width_cm") String? deliveryWidthCm,
       @JsonKey(name: "delivery_height_cm") String? deliveryHeightCm,
@@ -1412,12 +1420,12 @@ class __$$BidProductImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
-    Object? name = null,
-    Object? type = null,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? type = freezed,
     Object? description = freezed,
-    Object? userId = null,
-    Object? categoryId = null,
+    Object? userId = freezed,
+    Object? categoryId = freezed,
     Object? code = freezed,
     Object? unit = freezed,
     Object? deliveryAvailable = freezed,
@@ -1433,8 +1441,8 @@ class __$$BidProductImplCopyWithImpl<$Res>
     Object? status = freezed,
     Object? featured = freezed,
     Object? meta = freezed,
-    Object? createdAt = null,
-    Object? updatedAt = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
     Object? deliveryLengthCm = freezed,
     Object? deliveryWidthCm = freezed,
     Object? deliveryHeightCm = freezed,
@@ -1443,30 +1451,30 @@ class __$$BidProductImplCopyWithImpl<$Res>
     Object? saleType = freezed,
   }) {
     return _then(_$BidProductImpl(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
-      name: null == name
+              as int?,
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      type: null == type
+              as String?,
+      type: freezed == type
           ? _value.type
           : type // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       description: freezed == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String?,
-      userId: null == userId
+      userId: freezed == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
-      categoryId: null == categoryId
+              as int?,
+      categoryId: freezed == categoryId
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       code: freezed == code
           ? _value.code
           : code // ignore: cast_nullable_to_non_nullable
@@ -1527,14 +1535,14 @@ class __$$BidProductImplCopyWithImpl<$Res>
           ? _value.meta
           : meta // ignore: cast_nullable_to_non_nullable
               as String?,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as String,
-      updatedAt: null == updatedAt
+              as String?,
+      updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       deliveryLengthCm: freezed == deliveryLengthCm
           ? _value.deliveryLengthCm
           : deliveryLengthCm // ignore: cast_nullable_to_non_nullable
@@ -1567,12 +1575,12 @@ class __$$BidProductImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$BidProductImpl implements _BidProduct {
   const _$BidProductImpl(
-      {required this.id,
-      required this.name,
-      required this.type,
+      {this.id,
+      this.name,
+      this.type,
       this.description,
-      @JsonKey(name: "user_id") required this.userId,
-      @JsonKey(name: "category_id") required this.categoryId,
+      @JsonKey(name: "user_id") this.userId,
+      @JsonKey(name: "category_id") this.categoryId,
       this.code,
       this.unit,
       @JsonKey(name: "delivery_available") this.deliveryAvailable,
@@ -1588,8 +1596,8 @@ class _$BidProductImpl implements _BidProduct {
       this.status,
       this.featured,
       this.meta,
-      @JsonKey(name: "created_at") required this.createdAt,
-      @JsonKey(name: "updated_at") required this.updatedAt,
+      @JsonKey(name: "created_at") this.createdAt,
+      @JsonKey(name: "updated_at") this.updatedAt,
       @JsonKey(name: "delivery_length_cm") this.deliveryLengthCm,
       @JsonKey(name: "delivery_width_cm") this.deliveryWidthCm,
       @JsonKey(name: "delivery_height_cm") this.deliveryHeightCm,
@@ -1601,19 +1609,19 @@ class _$BidProductImpl implements _BidProduct {
       _$$BidProductImplFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
-  final String name;
+  final String? name;
   @override
-  final String type;
+  final String? type;
   @override
   final String? description;
   @override
   @JsonKey(name: "user_id")
-  final int userId;
+  final int? userId;
   @override
   @JsonKey(name: "category_id")
-  final int categoryId;
+  final int? categoryId;
   @override
   final String? code;
   @override
@@ -1653,10 +1661,10 @@ class _$BidProductImpl implements _BidProduct {
   final String? meta;
   @override
   @JsonKey(name: "created_at")
-  final String createdAt;
+  final String? createdAt;
   @override
   @JsonKey(name: "updated_at")
-  final String updatedAt;
+  final String? updatedAt;
   @override
   @JsonKey(name: "delivery_length_cm")
   final String? deliveryLengthCm;
@@ -1791,12 +1799,12 @@ class _$BidProductImpl implements _BidProduct {
 
 abstract class _BidProduct implements BidProduct {
   const factory _BidProduct(
-      {required final int id,
-      required final String name,
-      required final String type,
+      {final int? id,
+      final String? name,
+      final String? type,
       final String? description,
-      @JsonKey(name: "user_id") required final int userId,
-      @JsonKey(name: "category_id") required final int categoryId,
+      @JsonKey(name: "user_id") final int? userId,
+      @JsonKey(name: "category_id") final int? categoryId,
       final String? code,
       final String? unit,
       @JsonKey(name: "delivery_available") final int? deliveryAvailable,
@@ -1812,8 +1820,8 @@ abstract class _BidProduct implements BidProduct {
       final int? status,
       final int? featured,
       final String? meta,
-      @JsonKey(name: "created_at") required final String createdAt,
-      @JsonKey(name: "updated_at") required final String updatedAt,
+      @JsonKey(name: "created_at") final String? createdAt,
+      @JsonKey(name: "updated_at") final String? updatedAt,
       @JsonKey(name: "delivery_length_cm") final String? deliveryLengthCm,
       @JsonKey(name: "delivery_width_cm") final String? deliveryWidthCm,
       @JsonKey(name: "delivery_height_cm") final String? deliveryHeightCm,
@@ -1825,19 +1833,19 @@ abstract class _BidProduct implements BidProduct {
       _$BidProductImpl.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
-  String get name;
+  String? get name;
   @override
-  String get type;
+  String? get type;
   @override
   String? get description;
   @override
   @JsonKey(name: "user_id")
-  int get userId;
+  int? get userId;
   @override
   @JsonKey(name: "category_id")
-  int get categoryId;
+  int? get categoryId;
   @override
   String? get code;
   @override
@@ -1877,10 +1885,10 @@ abstract class _BidProduct implements BidProduct {
   String? get meta;
   @override
   @JsonKey(name: "created_at")
-  String get createdAt;
+  String? get createdAt;
   @override
   @JsonKey(name: "updated_at")
-  String get updatedAt;
+  String? get updatedAt;
   @override
   @JsonKey(name: "delivery_length_cm")
   String? get deliveryLengthCm;

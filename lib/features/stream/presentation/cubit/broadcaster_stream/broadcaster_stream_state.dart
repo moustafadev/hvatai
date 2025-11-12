@@ -46,6 +46,12 @@ class BroadcasterStreamState with _$BroadcasterStreamState {
     @Default('') String bidsError,
     @Default('') String addBidError,
 
+    StreamProductModel? activeStreamProduct,
+    DateTime? currentBidEndTime,
+    int? currentBidRemainingSeconds,
+    int? currentStreamProductId,
+    BidStreamItem? currentProductStreamBid,
+
     // Initialization
     @Default(false) bool isInitializing,
   }) = _BroadcasterStreamState;

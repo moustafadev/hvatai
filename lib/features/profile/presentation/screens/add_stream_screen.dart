@@ -14,12 +14,22 @@ class AddStreamScreen extends StatelessWidget {
         showNotification: false,
       ),
       body: BlocProvider(
-        create: (_) => locator<AddStreamCubit>()..loadProducts(),
+        create: (_) =>
+            locator<AddStreamCubit>()..loadProducts()..loadCategories(),
         child: BlocBuilder<AddStreamCubit, AddStreamState>(
           builder: (context, state) {
             final cubit = context.read<AddStreamCubit>();
             final model = state.createStreamModel;
-            if (state.isProductsLoading) {
+            final selectedCategoryIds = model.categoryIds;
+            final availableProducts = selectedCategoryIds.isEmpty
+                ? <ProductModel>[]
+                : state.products
+                    .where((product) =>
+                        product.id != null &&
+                        product.categoryId != null &&
+                        selectedCategoryIds.contains(product.categoryId!))
+                    .toList();
+            if (state.isProductsLoading || state.isCategoriesLoading) {
               return const Center(
                   child: CircularProgressIndicator(
                 color: AppColors.grey,
@@ -178,34 +188,92 @@ class AddStreamScreen extends StatelessWidget {
                       Wrap(
                         spacing: 8,
                         runSpacing: 8,
-                        children: model.productIds.map((id) {
-                          final product = state.products.firstWhere(
-                            (p) => p.id == id,
-                            orElse: () => ProductModel(id: id),
+                        children: () {
+                          final chips = <Widget>[];
+                          for (final id in model.productIds) {
+                            final product = state.products.firstWhere(
+                              (p) => p.id == id,
+                              orElse: () => ProductModel(id: id),
+                            );
+
+                            final productCategoryId = product.categoryId;
+                            if (productCategoryId == null ||
+                                !selectedCategoryIds
+                                    .contains(productCategoryId)) {
+                              continue;
+                            }
+
+                            chips.add(
+                              InputChip(
+                                label: CustomText(
+                                    text:
+                                        product.productName ?? 'Product $id'),
+                                onDeleted: () => cubit.removeProductId(id),
+                              ),
+                            );
+                          }
+                          return chips;
+                        }(),
+                      ),
+                      12.ph,
+                      CustomDropdown(
+                        hintText: selectedCategoryIds.isEmpty
+                            ? 'select categories first'.tr()
+                            : 'select product'.tr(),
+                        value: null,
+                        items: availableProducts
+                            .where((p) => !model.productIds.contains(p.id))
+                            .map(
+                              (p) => DropdownMenuItem<String>(
+                                value: p.id!.toString(),
+                                child:
+                                    Text(p.productName ?? 'Product ${p.id}'),
+                              ),
+                            )
+                            .toList(),
+                        onChanged: (val) {
+                          if (selectedCategoryIds.isEmpty) return;
+                          final selectedId = int.tryParse(val ?? '');
+                          if (selectedId != null) {
+                            cubit.addProductId(selectedId);
+                          }
+                        },
+                      ),
+                      24.ph,
+
+                      CustomText(
+                        text: 'select categories'.tr(),
+                        fontSize: 20,
+                        fontWeight: FontWeight.w800,
+                      ),
+                      12.ph,
+                      Wrap(
+                        spacing: 8,
+                        runSpacing: 8,
+                        children: model.categoryIds.map((id) {
+                          final category = _findCategory(
+                            id,
+                            state.categories,
                           );
                           return InputChip(
                             label: CustomText(
-                                text: product.productName ?? 'Product $id'),
-                            onDeleted: () => cubit.removeProductId(id),
+                                text: category?.name ?? 'Category $id'),
+                            onDeleted: () => cubit.removeCategoryId(id),
                           );
                         }).toList(),
                       ),
                       12.ph,
                       CustomDropdown(
-                        hintText: 'select product'.tr(),
+                        hintText: 'select category'.tr(),
                         value: null,
-                        items: state.products
-                            .where((p) => !model.productIds.contains(p.id))
-                            .map((p) => DropdownMenuItem<String>(
-                                  value: p.id.toString(),
-                                  child:
-                                      Text(p.productName ?? 'Product ${p.id}'),
-                                ))
-                            .toList(),
+                        items: _buildAvailableCategories(
+                          state.categories,
+                          model.categoryIds,
+                        ),
                         onChanged: (val) {
                           final selectedId = int.tryParse(val ?? '');
                           if (selectedId != null) {
-                            cubit.addProductId(selectedId);
+                            cubit.addCategoryId(selectedId);
                           }
                         },
                       ),
@@ -237,4 +305,61 @@ class AddStreamScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+CategoryChild? _findChildById(CategoryData category, int id) {
+  if (category.children == null) return null;
+  for (final child in category.children!) {
+    if (child.id == id) {
+      return child;
+    }
+  }
+  return null;
+}
+
+CategoryData? _findCategory(int id, CategoryModel? categoryModel) {
+  if (categoryModel?.data == null) return null;
+  for (final category in categoryModel!.data!) {
+    if (category.id == id) {
+      return category;
+    }
+    final child = _findChildById(category, id);
+    if (child != null) {
+      return CategoryData(id: child.id, name: child.name);
+    }
+  }
+  return null;
+}
+
+List<DropdownMenuItem<String>> _buildAvailableCategories(
+  CategoryModel? categoryModel,
+  List<int> selectedIds,
+) {
+  final items = <DropdownMenuItem<String>>[];
+  if (categoryModel?.data == null) return items;
+
+  for (final category in categoryModel!.data!) {
+    if (category.id != null && !selectedIds.contains(category.id)) {
+      items.add(
+        DropdownMenuItem<String>(
+          value: category.id.toString(),
+          child: Text(category.name ?? 'Category ${category.id}'),
+        ),
+      );
+    }
+
+    if (category.children != null) {
+      for (final child in category.children!) {
+        if (child.id != null && !selectedIds.contains(child.id)) {
+          items.add(
+            DropdownMenuItem<String>(
+              value: child.id.toString(),
+              child: Text(child.name ?? 'Category ${child.id}'),
+            ),
+          );
+        }
+      }
+    }
+  }
+  return items;
 }

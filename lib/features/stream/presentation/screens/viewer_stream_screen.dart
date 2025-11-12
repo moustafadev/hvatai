@@ -45,6 +45,18 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
     return '${m.toString().padLeft(2, '0')}:${r.toString().padLeft(2, '0')}';
   }
 
+  String _resolveCategoryName(int? categoryId) {
+    if (categoryId == null) return '';
+    final categories = widget.stream.categories;
+    if (categories == null) return '';
+    for (final category in categories) {
+      if (category.id == categoryId) {
+        return category.name ?? '';
+      }
+    }
+    return '';
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
@@ -66,10 +78,24 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
               return const FullScreenLoader();
             }
 
-            final firstProduct = (widget.stream.streamProducts != null &&
-                    widget.stream.streamProducts!.isNotEmpty)
-                ? widget.stream.streamProducts!.first
-                : null;
+          final firstProduct = (widget.stream.streamProducts != null &&
+                  widget.stream.streamProducts!.isNotEmpty)
+              ? widget.stream.streamProducts!.first
+              : null;
+          final hasProduct = firstProduct != null;
+          var productTitle = '';
+          var productCategory = '';
+          var startPrice = 0.0;
+
+          if (hasProduct) {
+            final streamProduct = firstProduct;
+            final embeddedProduct = streamProduct.product;
+            productTitle = embeddedProduct?.name ?? '';
+            final categoryId = embeddedProduct?.categoryId;
+            productCategory = _resolveCategoryName(categoryId);
+            startPrice =
+                double.tryParse(streamProduct.startingPrice ?? '') ?? 0.0;
+          }
 
             return Scaffold(
               backgroundColor: Colors.black,
@@ -110,13 +136,10 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                           .read<ViewerStreamCubit>()
                           .sendCommentToServer(streamId: widget.stream.id ?? 0),
                       timerText: _formatTime(state.streamSeconds),
-                      productTitle:
-                          firstProduct?.product?.productName ?? "No product",
-                      productCategory:
-                          firstProduct?.product?.category?.name ?? "",
-                      startPrice:
-                          double.tryParse(firstProduct?.startingPrice ?? "") ??
-                              0,
+                      productTitle: productTitle,
+                      productCategory: productCategory,
+                      startPrice: startPrice,
+                      showProductDetails: hasProduct,
                       onEditPressed: () {},
                       onBidPressed: () {},
                     ),

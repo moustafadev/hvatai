@@ -7,6 +7,7 @@ import 'package:hvatai/features/stream/data/models/bid_stream/bid_stream_respons
 import 'package:hvatai/features/stream/data/models/start_stream/start_stream_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
+import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.dart';
@@ -203,13 +204,11 @@ class ApiServiceStream extends ApiBase {
     });
   }
 
-  /// GET: streams/{streamId}/products/{streamProductId}/bid-session
   Future<BidSessionResponse> getBidSession({
     required int streamId,
-    required int streamProductId,
   }) async {
     return executeAndHandleErrorServer<BidSessionResponse>(() async {
-      final path = ServerConfig.getBidSession(streamId, streamProductId);
+      final path = ServerConfig.getBidSession(streamId);
 
       final res = await get(path);
 
@@ -227,32 +226,29 @@ class ApiServiceStream extends ApiBase {
 
   /// POST: streams/{streamId}/products/{streamProductId}/toggle-bidding
   /// body: { stream_product_id: 1, bid_amount: 150.00, notes: "..." }
-  Future<BidStreamItem> toggleBidding({
+  Future<ToggleBiddingResponseModel> toggleBidding({
     required int streamId,
     required int streamProductId,
     required double bidAmount,
     String? notes,
   }) async {
-    return executeAndHandleErrorServer<BidStreamItem>(() async {
+    return executeAndHandleErrorServer<ToggleBiddingResponseModel>(() async {
       final path = ServerConfig.toggleBidding(streamId, streamProductId);
 
       final body = <String, dynamic>{
         'stream_product_id': streamProductId,
         'bid_amount': bidAmount,
+        'bidding_enabled': true,
       };
       if (notes != null && notes.isNotEmpty) {
         body['notes'] = notes;
       }
 
-      final res = await post(path, body: body);
+      final res = await put(path, body: body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
         final root = Map<String, dynamic>.from(res.json);
-        final data = Map<String, dynamic>.from(root['data'] ?? root);
-        if (data.containsKey('bid')) {
-          return BidStreamItem.fromJson(data['bid']);
-        }
-        return BidStreamItem.fromJson(data);
+        return ToggleBiddingResponseModel.fromJson(root);
       }
 
       throw Exception(

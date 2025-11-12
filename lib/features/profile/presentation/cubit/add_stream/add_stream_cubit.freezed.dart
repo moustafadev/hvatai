@@ -20,6 +20,8 @@ mixin _$AddStreamState {
   List<ProductModel> get products => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get isProductsLoading => throw _privateConstructorUsedError;
+  CategoryModel? get categories => throw _privateConstructorUsedError;
+  bool get isCategoriesLoading => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
   /// Create a copy of AddStreamState
@@ -40,9 +42,12 @@ abstract class $AddStreamStateCopyWith<$Res> {
       List<ProductModel> products,
       bool isLoading,
       bool isProductsLoading,
+      CategoryModel? categories,
+      bool isCategoriesLoading,
       String? error});
 
   $CreateStreamModelCopyWith<$Res> get createStreamModel;
+  $CategoryModelCopyWith<$Res>? get categories;
 }
 
 /// @nodoc
@@ -64,6 +69,8 @@ class _$AddStreamStateCopyWithImpl<$Res, $Val extends AddStreamState>
     Object? products = null,
     Object? isLoading = null,
     Object? isProductsLoading = null,
+    Object? categories = freezed,
+    Object? isCategoriesLoading = null,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
@@ -83,6 +90,14 @@ class _$AddStreamStateCopyWithImpl<$Res, $Val extends AddStreamState>
           ? _value.isProductsLoading
           : isProductsLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      categories: freezed == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
+      isCategoriesLoading: null == isCategoriesLoading
+          ? _value.isCategoriesLoading
+          : isCategoriesLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -97,6 +112,20 @@ class _$AddStreamStateCopyWithImpl<$Res, $Val extends AddStreamState>
   $CreateStreamModelCopyWith<$Res> get createStreamModel {
     return $CreateStreamModelCopyWith<$Res>(_value.createStreamModel, (value) {
       return _then(_value.copyWith(createStreamModel: value) as $Val);
+    });
+  }
+
+  /// Create a copy of AddStreamState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res>? get categories {
+    if (_value.categories == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.categories!, (value) {
+      return _then(_value.copyWith(categories: value) as $Val);
     });
   }
 }
@@ -114,10 +143,14 @@ abstract class _$$AddStreamStateImplCopyWith<$Res>
       List<ProductModel> products,
       bool isLoading,
       bool isProductsLoading,
+      CategoryModel? categories,
+      bool isCategoriesLoading,
       String? error});
 
   @override
   $CreateStreamModelCopyWith<$Res> get createStreamModel;
+  @override
+  $CategoryModelCopyWith<$Res>? get categories;
 }
 
 /// @nodoc
@@ -137,6 +170,8 @@ class __$$AddStreamStateImplCopyWithImpl<$Res>
     Object? products = null,
     Object? isLoading = null,
     Object? isProductsLoading = null,
+    Object? categories = freezed,
+    Object? isCategoriesLoading = null,
     Object? error = freezed,
   }) {
     return _then(_$AddStreamStateImpl(
@@ -156,6 +191,14 @@ class __$$AddStreamStateImplCopyWithImpl<$Res>
           ? _value.isProductsLoading
           : isProductsLoading // ignore: cast_nullable_to_non_nullable
               as bool,
+      categories: freezed == categories
+          ? _value.categories
+          : categories // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
+      isCategoriesLoading: null == isCategoriesLoading
+          ? _value.isCategoriesLoading
+          : isCategoriesLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -172,6 +215,8 @@ class _$AddStreamStateImpl implements _AddStreamState {
       final List<ProductModel> products = const [],
       this.isLoading = false,
       this.isProductsLoading = false,
+      this.categories,
+      this.isCategoriesLoading = false,
       this.error})
       : _products = products;
 
@@ -193,11 +238,16 @@ class _$AddStreamStateImpl implements _AddStreamState {
   @JsonKey()
   final bool isProductsLoading;
   @override
+  final CategoryModel? categories;
+  @override
+  @JsonKey()
+  final bool isCategoriesLoading;
+  @override
   final String? error;
 
   @override
   String toString() {
-    return 'AddStreamState(createStreamModel: $createStreamModel, products: $products, isLoading: $isLoading, isProductsLoading: $isProductsLoading, error: $error)';
+    return 'AddStreamState(createStreamModel: $createStreamModel, products: $products, isLoading: $isLoading, isProductsLoading: $isProductsLoading, categories: $categories, isCategoriesLoading: $isCategoriesLoading, error: $error)';
   }
 
   @override
@@ -212,6 +262,10 @@ class _$AddStreamStateImpl implements _AddStreamState {
                 other.isLoading == isLoading) &&
             (identical(other.isProductsLoading, isProductsLoading) ||
                 other.isProductsLoading == isProductsLoading) &&
+            (identical(other.categories, categories) ||
+                other.categories == categories) &&
+            (identical(other.isCategoriesLoading, isCategoriesLoading) ||
+                other.isCategoriesLoading == isCategoriesLoading) &&
             (identical(other.error, error) || other.error == error));
   }
 
@@ -222,6 +276,8 @@ class _$AddStreamStateImpl implements _AddStreamState {
       const DeepCollectionEquality().hash(_products),
       isLoading,
       isProductsLoading,
+      categories,
+      isCategoriesLoading,
       error);
 
   /// Create a copy of AddStreamState
@@ -240,6 +296,8 @@ abstract class _AddStreamState implements AddStreamState {
       final List<ProductModel> products,
       final bool isLoading,
       final bool isProductsLoading,
+      final CategoryModel? categories,
+      final bool isCategoriesLoading,
       final String? error}) = _$AddStreamStateImpl;
 
   @override
@@ -250,6 +308,10 @@ abstract class _AddStreamState implements AddStreamState {
   bool get isLoading;
   @override
   bool get isProductsLoading;
+  @override
+  CategoryModel? get categories;
+  @override
+  bool get isCategoriesLoading;
   @override
   String? get error;
 

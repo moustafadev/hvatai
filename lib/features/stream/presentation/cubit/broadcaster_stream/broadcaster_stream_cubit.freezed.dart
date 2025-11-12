@@ -49,7 +49,13 @@ mixin _$BroadcasterStreamState {
   String get commentsError => throw _privateConstructorUsedError;
   String get sendCommentError => throw _privateConstructorUsedError;
   String get bidsError => throw _privateConstructorUsedError;
-  String get addBidError =>
+  String get addBidError => throw _privateConstructorUsedError;
+  StreamProductModel? get activeStreamProduct =>
+      throw _privateConstructorUsedError;
+  DateTime? get currentBidEndTime => throw _privateConstructorUsedError;
+  int? get currentBidRemainingSeconds => throw _privateConstructorUsedError;
+  int? get currentStreamProductId => throw _privateConstructorUsedError;
+  BidStreamItem? get currentProductStreamBid =>
       throw _privateConstructorUsedError; // Initialization
   bool get isInitializing => throw _privateConstructorUsedError;
 
@@ -95,9 +101,16 @@ abstract class $BroadcasterStreamStateCopyWith<$Res> {
       String sendCommentError,
       String bidsError,
       String addBidError,
+      StreamProductModel? activeStreamProduct,
+      DateTime? currentBidEndTime,
+      int? currentBidRemainingSeconds,
+      int? currentStreamProductId,
+      BidStreamItem? currentProductStreamBid,
       bool isInitializing});
 
   $StreamDataModelCopyWith<$Res> get stream;
+  $StreamProductModelCopyWith<$Res>? get activeStreamProduct;
+  $BidStreamItemCopyWith<$Res>? get currentProductStreamBid;
 }
 
 /// @nodoc
@@ -144,6 +157,11 @@ class _$BroadcasterStreamStateCopyWithImpl<$Res,
     Object? sendCommentError = null,
     Object? bidsError = null,
     Object? addBidError = null,
+    Object? activeStreamProduct = freezed,
+    Object? currentBidEndTime = freezed,
+    Object? currentBidRemainingSeconds = freezed,
+    Object? currentStreamProductId = freezed,
+    Object? currentProductStreamBid = freezed,
     Object? isInitializing = null,
   }) {
     return _then(_value.copyWith(
@@ -259,6 +277,26 @@ class _$BroadcasterStreamStateCopyWithImpl<$Res,
           ? _value.addBidError
           : addBidError // ignore: cast_nullable_to_non_nullable
               as String,
+      activeStreamProduct: freezed == activeStreamProduct
+          ? _value.activeStreamProduct
+          : activeStreamProduct // ignore: cast_nullable_to_non_nullable
+              as StreamProductModel?,
+      currentBidEndTime: freezed == currentBidEndTime
+          ? _value.currentBidEndTime
+          : currentBidEndTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      currentBidRemainingSeconds: freezed == currentBidRemainingSeconds
+          ? _value.currentBidRemainingSeconds
+          : currentBidRemainingSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      currentStreamProductId: freezed == currentStreamProductId
+          ? _value.currentStreamProductId
+          : currentStreamProductId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      currentProductStreamBid: freezed == currentProductStreamBid
+          ? _value.currentProductStreamBid
+          : currentProductStreamBid // ignore: cast_nullable_to_non_nullable
+              as BidStreamItem?,
       isInitializing: null == isInitializing
           ? _value.isInitializing
           : isInitializing // ignore: cast_nullable_to_non_nullable
@@ -273,6 +311,36 @@ class _$BroadcasterStreamStateCopyWithImpl<$Res,
   $StreamDataModelCopyWith<$Res> get stream {
     return $StreamDataModelCopyWith<$Res>(_value.stream, (value) {
       return _then(_value.copyWith(stream: value) as $Val);
+    });
+  }
+
+  /// Create a copy of BroadcasterStreamState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StreamProductModelCopyWith<$Res>? get activeStreamProduct {
+    if (_value.activeStreamProduct == null) {
+      return null;
+    }
+
+    return $StreamProductModelCopyWith<$Res>(_value.activeStreamProduct!,
+        (value) {
+      return _then(_value.copyWith(activeStreamProduct: value) as $Val);
+    });
+  }
+
+  /// Create a copy of BroadcasterStreamState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BidStreamItemCopyWith<$Res>? get currentProductStreamBid {
+    if (_value.currentProductStreamBid == null) {
+      return null;
+    }
+
+    return $BidStreamItemCopyWith<$Res>(_value.currentProductStreamBid!,
+        (value) {
+      return _then(_value.copyWith(currentProductStreamBid: value) as $Val);
     });
   }
 }
@@ -315,10 +383,19 @@ abstract class _$$BroadcasterStreamStateImplCopyWith<$Res>
       String sendCommentError,
       String bidsError,
       String addBidError,
+      StreamProductModel? activeStreamProduct,
+      DateTime? currentBidEndTime,
+      int? currentBidRemainingSeconds,
+      int? currentStreamProductId,
+      BidStreamItem? currentProductStreamBid,
       bool isInitializing});
 
   @override
   $StreamDataModelCopyWith<$Res> get stream;
+  @override
+  $StreamProductModelCopyWith<$Res>? get activeStreamProduct;
+  @override
+  $BidStreamItemCopyWith<$Res>? get currentProductStreamBid;
 }
 
 /// @nodoc
@@ -364,6 +441,11 @@ class __$$BroadcasterStreamStateImplCopyWithImpl<$Res>
     Object? sendCommentError = null,
     Object? bidsError = null,
     Object? addBidError = null,
+    Object? activeStreamProduct = freezed,
+    Object? currentBidEndTime = freezed,
+    Object? currentBidRemainingSeconds = freezed,
+    Object? currentStreamProductId = freezed,
+    Object? currentProductStreamBid = freezed,
     Object? isInitializing = null,
   }) {
     return _then(_$BroadcasterStreamStateImpl(
@@ -479,6 +561,26 @@ class __$$BroadcasterStreamStateImplCopyWithImpl<$Res>
           ? _value.addBidError
           : addBidError // ignore: cast_nullable_to_non_nullable
               as String,
+      activeStreamProduct: freezed == activeStreamProduct
+          ? _value.activeStreamProduct
+          : activeStreamProduct // ignore: cast_nullable_to_non_nullable
+              as StreamProductModel?,
+      currentBidEndTime: freezed == currentBidEndTime
+          ? _value.currentBidEndTime
+          : currentBidEndTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      currentBidRemainingSeconds: freezed == currentBidRemainingSeconds
+          ? _value.currentBidRemainingSeconds
+          : currentBidRemainingSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      currentStreamProductId: freezed == currentStreamProductId
+          ? _value.currentStreamProductId
+          : currentStreamProductId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      currentProductStreamBid: freezed == currentProductStreamBid
+          ? _value.currentProductStreamBid
+          : currentProductStreamBid // ignore: cast_nullable_to_non_nullable
+              as BidStreamItem?,
       isInitializing: null == isInitializing
           ? _value.isInitializing
           : isInitializing // ignore: cast_nullable_to_non_nullable
@@ -521,6 +623,11 @@ class _$BroadcasterStreamStateImpl
       this.sendCommentError = '',
       this.bidsError = '',
       this.addBidError = '',
+      this.activeStreamProduct,
+      this.currentBidEndTime,
+      this.currentBidRemainingSeconds,
+      this.currentStreamProductId,
+      this.currentProductStreamBid,
       this.isInitializing = false})
       : _comments = comments,
         _bids = bids;
@@ -625,6 +732,16 @@ class _$BroadcasterStreamStateImpl
   @override
   @JsonKey()
   final String addBidError;
+  @override
+  final StreamProductModel? activeStreamProduct;
+  @override
+  final DateTime? currentBidEndTime;
+  @override
+  final int? currentBidRemainingSeconds;
+  @override
+  final int? currentStreamProductId;
+  @override
+  final BidStreamItem? currentProductStreamBid;
 // Initialization
   @override
   @JsonKey()
@@ -632,7 +749,7 @@ class _$BroadcasterStreamStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BroadcasterStreamState(isConnected: $isConnected, isPublishing: $isPublishing, videoTrack: $videoTrack, audioTrack: $audioTrack, room: $room, localParticipant: $localParticipant, isPusherConnected: $isPusherConnected, stream: $stream, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, isInitializing: $isInitializing)';
+    return 'BroadcasterStreamState(isConnected: $isConnected, isPublishing: $isPublishing, videoTrack: $videoTrack, audioTrack: $audioTrack, room: $room, localParticipant: $localParticipant, isPusherConnected: $isPusherConnected, stream: $stream, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentStreamProductId: $currentStreamProductId, currentProductStreamBid: $currentProductStreamBid, isInitializing: $isInitializing)';
   }
 
   @override
@@ -668,6 +785,14 @@ class _$BroadcasterStreamStateImpl
       ..add(DiagnosticsProperty('sendCommentError', sendCommentError))
       ..add(DiagnosticsProperty('bidsError', bidsError))
       ..add(DiagnosticsProperty('addBidError', addBidError))
+      ..add(DiagnosticsProperty('activeStreamProduct', activeStreamProduct))
+      ..add(DiagnosticsProperty('currentBidEndTime', currentBidEndTime))
+      ..add(DiagnosticsProperty(
+          'currentBidRemainingSeconds', currentBidRemainingSeconds))
+      ..add(
+          DiagnosticsProperty('currentStreamProductId', currentStreamProductId))
+      ..add(DiagnosticsProperty(
+          'currentProductStreamBid', currentProductStreamBid))
       ..add(DiagnosticsProperty('isInitializing', isInitializing));
   }
 
@@ -728,6 +853,19 @@ class _$BroadcasterStreamStateImpl
                 other.bidsError == bidsError) &&
             (identical(other.addBidError, addBidError) ||
                 other.addBidError == addBidError) &&
+            (identical(other.activeStreamProduct, activeStreamProduct) ||
+                other.activeStreamProduct == activeStreamProduct) &&
+            (identical(other.currentBidEndTime, currentBidEndTime) ||
+                other.currentBidEndTime == currentBidEndTime) &&
+            (identical(other.currentBidRemainingSeconds,
+                    currentBidRemainingSeconds) ||
+                other.currentBidRemainingSeconds ==
+                    currentBidRemainingSeconds) &&
+            (identical(other.currentStreamProductId, currentStreamProductId) ||
+                other.currentStreamProductId == currentStreamProductId) &&
+            (identical(
+                    other.currentProductStreamBid, currentProductStreamBid) ||
+                other.currentProductStreamBid == currentProductStreamBid) &&
             (identical(other.isInitializing, isInitializing) ||
                 other.isInitializing == isInitializing));
   }
@@ -763,6 +901,11 @@ class _$BroadcasterStreamStateImpl
         sendCommentError,
         bidsError,
         addBidError,
+        activeStreamProduct,
+        currentBidEndTime,
+        currentBidRemainingSeconds,
+        currentStreamProductId,
+        currentProductStreamBid,
         isInitializing
       ]);
 
@@ -806,6 +949,11 @@ abstract class _BroadcasterStreamState implements BroadcasterStreamState {
       final String sendCommentError,
       final String bidsError,
       final String addBidError,
+      final StreamProductModel? activeStreamProduct,
+      final DateTime? currentBidEndTime,
+      final int? currentBidRemainingSeconds,
+      final int? currentStreamProductId,
+      final BidStreamItem? currentProductStreamBid,
       final bool isInitializing}) = _$BroadcasterStreamStateImpl;
 
 // LiveKit
@@ -864,7 +1012,17 @@ abstract class _BroadcasterStreamState implements BroadcasterStreamState {
   @override
   String get bidsError;
   @override
-  String get addBidError; // Initialization
+  String get addBidError;
+  @override
+  StreamProductModel? get activeStreamProduct;
+  @override
+  DateTime? get currentBidEndTime;
+  @override
+  int? get currentBidRemainingSeconds;
+  @override
+  int? get currentStreamProductId;
+  @override
+  BidStreamItem? get currentProductStreamBid; // Initialization
   @override
   bool get isInitializing;
 

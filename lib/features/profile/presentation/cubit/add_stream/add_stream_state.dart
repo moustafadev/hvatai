@@ -7,6 +7,8 @@ class AddStreamState with _$AddStreamState {
     @Default([]) List<ProductModel> products,
     @Default(false) bool isLoading,
     @Default(false) bool isProductsLoading,
+    CategoryModel? categories,
+    @Default(false) bool isCategoriesLoading,
     String? error,
   }) = _AddStreamState;
 }

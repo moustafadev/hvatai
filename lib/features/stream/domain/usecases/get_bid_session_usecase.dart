@@ -16,15 +16,12 @@ class GetBidSessionUsecase
 
 class GetBidSessionParams {
   final int streamId;
-  final int streamProductId;
 
   GetBidSessionParams({
     required this.streamId,
-    required this.streamProductId,
   });
 
   Map<String, dynamic> toJson() => {
         'stream_id': streamId,
-        'stream_product_id': streamProductId,
       };
 }

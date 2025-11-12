@@ -42,6 +42,8 @@ mixin _$CreateStreamModel {
   bool get saveRecording => throw _privateConstructorUsedError;
   @JsonKey(name: 'product_ids')
   List<int> get productIds => throw _privateConstructorUsedError;
+  @JsonKey(name: 'category_ids')
+  List<int> get categoryIds => throw _privateConstructorUsedError;
   @JsonKey(name: 'bid_duration_seconds')
   int get bidDurationSeconds => throw _privateConstructorUsedError;
 
@@ -75,6 +77,7 @@ abstract class $CreateStreamModelCopyWith<$Res> {
       @JsonKey(name: 'auto_delete_hours') int autoDeleteHours,
       @JsonKey(name: 'save_recording') bool saveRecording,
       @JsonKey(name: 'product_ids') List<int> productIds,
+      @JsonKey(name: 'category_ids') List<int> categoryIds,
       @JsonKey(name: 'bid_duration_seconds') int bidDurationSeconds});
 }
 
@@ -105,6 +108,7 @@ class _$CreateStreamModelCopyWithImpl<$Res, $Val extends CreateStreamModel>
     Object? autoDeleteHours = null,
     Object? saveRecording = null,
     Object? productIds = null,
+    Object? categoryIds = null,
     Object? bidDurationSeconds = null,
   }) {
     return _then(_value.copyWith(
@@ -156,6 +160,10 @@ class _$CreateStreamModelCopyWithImpl<$Res, $Val extends CreateStreamModel>
           ? _value.productIds
           : productIds // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      categoryIds: null == categoryIds
+          ? _value.categoryIds
+          : categoryIds // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       bidDurationSeconds: null == bidDurationSeconds
           ? _value.bidDurationSeconds
           : bidDurationSeconds // ignore: cast_nullable_to_non_nullable
@@ -186,6 +194,7 @@ abstract class _$$CreateStreamModelImplCopyWith<$Res>
       @JsonKey(name: 'auto_delete_hours') int autoDeleteHours,
       @JsonKey(name: 'save_recording') bool saveRecording,
       @JsonKey(name: 'product_ids') List<int> productIds,
+      @JsonKey(name: 'category_ids') List<int> categoryIds,
       @JsonKey(name: 'bid_duration_seconds') int bidDurationSeconds});
 }
 
@@ -214,6 +223,7 @@ class __$$CreateStreamModelImplCopyWithImpl<$Res>
     Object? autoDeleteHours = null,
     Object? saveRecording = null,
     Object? productIds = null,
+    Object? categoryIds = null,
     Object? bidDurationSeconds = null,
   }) {
     return _then(_$CreateStreamModelImpl(
@@ -265,6 +275,10 @@ class __$$CreateStreamModelImplCopyWithImpl<$Res>
           ? _value._productIds
           : productIds // ignore: cast_nullable_to_non_nullable
               as List<int>,
+      categoryIds: null == categoryIds
+          ? _value._categoryIds
+          : categoryIds // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       bidDurationSeconds: null == bidDurationSeconds
           ? _value.bidDurationSeconds
           : bidDurationSeconds // ignore: cast_nullable_to_non_nullable
@@ -289,8 +303,10 @@ class _$CreateStreamModelImpl implements _CreateStreamModel {
       @JsonKey(name: 'auto_delete_hours') required this.autoDeleteHours,
       @JsonKey(name: 'save_recording') required this.saveRecording,
       @JsonKey(name: 'product_ids') required final List<int> productIds,
+      @JsonKey(name: 'category_ids') final List<int> categoryIds = const [],
       @JsonKey(name: 'bid_duration_seconds') required this.bidDurationSeconds})
-      : _productIds = productIds;
+      : _productIds = productIds,
+        _categoryIds = categoryIds;
 
   factory _$CreateStreamModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$CreateStreamModelImplFromJson(json);
@@ -335,13 +351,22 @@ class _$CreateStreamModelImpl implements _CreateStreamModel {
     return EqualUnmodifiableListView(_productIds);
   }
 
+  final List<int> _categoryIds;
+  @override
+  @JsonKey(name: 'category_ids')
+  List<int> get categoryIds {
+    if (_categoryIds is EqualUnmodifiableListView) return _categoryIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categoryIds);
+  }
+
   @override
   @JsonKey(name: 'bid_duration_seconds')
   final int bidDurationSeconds;
 
   @override
   String toString() {
-    return 'CreateStreamModel(title: $title, description: $description, scheduledAt: $scheduledAt, isRecordingEnabled: $isRecordingEnabled, isPublic: $isPublic, enableComments: $enableComments, enableBidding: $enableBidding, minimumBidIncrement: $minimumBidIncrement, autoDeleteAfterEnd: $autoDeleteAfterEnd, autoDeleteHours: $autoDeleteHours, saveRecording: $saveRecording, productIds: $productIds, bidDurationSeconds: $bidDurationSeconds)';
+    return 'CreateStreamModel(title: $title, description: $description, scheduledAt: $scheduledAt, isRecordingEnabled: $isRecordingEnabled, isPublic: $isPublic, enableComments: $enableComments, enableBidding: $enableBidding, minimumBidIncrement: $minimumBidIncrement, autoDeleteAfterEnd: $autoDeleteAfterEnd, autoDeleteHours: $autoDeleteHours, saveRecording: $saveRecording, productIds: $productIds, categoryIds: $categoryIds, bidDurationSeconds: $bidDurationSeconds)';
   }
 
   @override
@@ -372,6 +397,8 @@ class _$CreateStreamModelImpl implements _CreateStreamModel {
                 other.saveRecording == saveRecording) &&
             const DeepCollectionEquality()
                 .equals(other._productIds, _productIds) &&
+            const DeepCollectionEquality()
+                .equals(other._categoryIds, _categoryIds) &&
             (identical(other.bidDurationSeconds, bidDurationSeconds) ||
                 other.bidDurationSeconds == bidDurationSeconds));
   }
@@ -392,6 +419,7 @@ class _$CreateStreamModelImpl implements _CreateStreamModel {
       autoDeleteHours,
       saveRecording,
       const DeepCollectionEquality().hash(_productIds),
+      const DeepCollectionEquality().hash(_categoryIds),
       bidDurationSeconds);
 
   /// Create a copy of CreateStreamModel
@@ -429,6 +457,7 @@ abstract class _CreateStreamModel implements CreateStreamModel {
       @JsonKey(name: 'auto_delete_hours') required final int autoDeleteHours,
       @JsonKey(name: 'save_recording') required final bool saveRecording,
       @JsonKey(name: 'product_ids') required final List<int> productIds,
+      @JsonKey(name: 'category_ids') final List<int> categoryIds,
       @JsonKey(name: 'bid_duration_seconds')
       required final int bidDurationSeconds}) = _$CreateStreamModelImpl;
 
@@ -469,6 +498,9 @@ abstract class _CreateStreamModel implements CreateStreamModel {
   @override
   @JsonKey(name: 'product_ids')
   List<int> get productIds;
+  @override
+  @JsonKey(name: 'category_ids')
+  List<int> get categoryIds;
   @override
   @JsonKey(name: 'bid_duration_seconds')
   int get bidDurationSeconds;

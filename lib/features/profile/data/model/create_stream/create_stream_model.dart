@@ -18,6 +18,7 @@ class CreateStreamModel with _$CreateStreamModel {
     @JsonKey(name: 'auto_delete_hours') required int autoDeleteHours,
     @JsonKey(name: 'save_recording') required bool saveRecording,
     @JsonKey(name: 'product_ids') required List<int> productIds,
+    @JsonKey(name: 'category_ids') @Default([]) List<int> categoryIds,
     @JsonKey(name: 'bid_duration_seconds') required int bidDurationSeconds,
   }) = _CreateStreamModel;
 

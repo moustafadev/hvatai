@@ -10,6 +10,8 @@ class LiveBottomPanel extends StatelessWidget {
   final String productCategory;
   final double startPrice;
   final String timerText;
+  final bool showProductDetails;
+  final bool showBidActions;
 
   final VoidCallback? onEditPressed;
   final VoidCallback? onBidPressed;
@@ -23,6 +25,8 @@ class LiveBottomPanel extends StatelessWidget {
     required this.productCategory,
     required this.startPrice,
     required this.timerText,
+    this.showProductDetails = true,
+    this.showBidActions = true,
     this.controller,
     this.onEditPressed,
     this.onBidPressed,
@@ -76,115 +80,135 @@ class LiveBottomPanel extends StatelessWidget {
             SizedBox(width: 64.w),
           ],
         ),
-        SizedBox(height: 12.h),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomText(
-                      text: productTitle,
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontWeight: FontWeight.w800,
-                    ),
-                    const CustomText(
-                      text: 'Стартовая цена',
-                      color: AppColors.primaryPink,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 12,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 4.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CustomText(
-                      text: productCategory,
-                      color: AppColors.whiteGrey,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    CustomText(
-                      text: '$startPrice ₽',
-                      color: AppColors.primaryPink,
-                      fontSize: 12,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ],
-                ),
-                SizedBox(height: 8.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 8, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        borderRadius: BorderRadius.circular(12),
+        Visibility(
+          visible: showProductDetails,
+          maintainSize: true,
+          maintainState: true,
+          maintainAnimation: true,
+          maintainSemantics: false,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 12.h),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: CustomText(
+                              text: productTitle,
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                          CustomText(
+                            text: timerText,
+                            color: AppColors.whiteGrey,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ],
                       ),
-                      child: const CustomText(
-                        text: 'Бесплатная доставка',
-                        color: AppColors.green,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w600,
+                      SizedBox(height: 4.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomText(
+                            text: productCategory,
+                            color: AppColors.whiteGrey,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                          CustomText(
+                            text: '$startPrice ₽',
+                            color: AppColors.primaryPink,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ],
                       ),
-                    ),
+                      SizedBox(height: 8.h),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: const CustomText(
+                              text: 'Бесплатная доставка',
+                              color: AppColors.green,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              if (showBidActions &&
+                  (onEditPressed != null || onBidPressed != null)) ...[
+                SizedBox(height: 12.h),
+                Row(
+                  children: [
+                    if (onEditPressed != null)
+                      Expanded(
+                        child: CustomButton(
+                          title: 'Изменить',
+                          onPressed: onEditPressed,
+                          color: Colors.black.withOpacity(0.6),
+                          textColor: Colors.white,
+                          radius: 24,
+                          height: 40,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
+                          fontWeight: FontWeight.w700,
+                          fontSize: 14,
+                        ),
+                      ),
+                    if (onEditPressed != null && onBidPressed != null)
+                      SizedBox(width: 8.w),
+                    if (onBidPressed != null)
+                      Expanded(
+                        child: Container(
+                          height: 40,
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: AppColors.primaryColor,
+                              width: 1.5,
+                            ),
+                            borderRadius: BorderRadius.circular(24),
+                          ),
+                          child: CustomButton(
+                            title: 'Ставка: $startPrice₽',
+                            onPressed: onBidPressed,
+                            color: AppColors.primaryColor,
+                            textColor: Colors.white,
+                            radius: 24,
+                            height: 32,
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
                   ],
                 ),
               ],
-            ),
-          ],
-        ),
-        SizedBox(height: 12.h),
-        Row(
-          children: [
-            Expanded(
-              child: CustomButton(
-                title: 'Изменить',
-                onPressed: onEditPressed,
-                color: Colors.black.withOpacity(0.6),
-                textColor: Colors.white,
-                radius: 24,
-                height: 40,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                fontWeight: FontWeight.w700,
-                fontSize: 14,
-              ),
-            ),
-            SizedBox(width: 8.w),
-            Expanded(
-              child: Container(
-                height: 40,
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: AppColors.primaryColor,
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: CustomButton(
-                  title: 'Ставка: $startPrice₽',
-                  onPressed: onBidPressed,
-                  color: AppColors.primaryColor,
-                  textColor: Colors.white,
-                  radius: 24,
-                  height: 32,
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14,
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

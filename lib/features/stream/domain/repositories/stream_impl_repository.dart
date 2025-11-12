@@ -4,6 +4,7 @@ import 'package:hvatai/features/profile/data/model/stream_response_model/stream_
 import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart';
 import 'package:hvatai/features/stream/data/models/bid_session/bid_session_response.dart';
 import 'package:hvatai/features/stream/data/models/bid_stream/bid_stream_response.dart';
+import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
 import 'package:hvatai/features/stream/data/models/start_stream/start_stream_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
@@ -114,17 +115,16 @@ class StreamImplRepository implements StreamRepository {
     return executeAndHandleError<BidSessionResponse>(() async {
       final res = await _apiServiceStream.getBidSession(
         streamId: params.streamId,
-        streamProductId: params.streamProductId,
       );
       return res;
     });
   }
 
   @override
-  Future<Either<String, BidStreamItem>> toggleBidding({
+  Future<Either<String, ToggleBiddingResponseModel>> toggleBidding({
     required ToggleBiddingParams params,
   }) {
-    return executeAndHandleError<BidStreamItem>(() async {
+    return executeAndHandleError<ToggleBiddingResponseModel>(() async {
       final res = await _apiServiceStream.toggleBidding(
         streamId: params.streamId,
         streamProductId: params.streamProductId,

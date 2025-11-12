@@ -14,12 +14,17 @@ class AddNewProductsScreen extends StatelessWidget {
           showNotification: false,
           height: 50,
         ),
-        body: NewProductWidgetBody());
+        body: const NewProductWidgetBody());
   }
 }
 
 class NewProductWidgetBody extends StatelessWidget {
-  const NewProductWidgetBody({super.key});
+  const NewProductWidgetBody({
+    super.key,
+    this.allowedCategoryIds,
+  });
+
+  final List<int>? allowedCategoryIds;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +69,9 @@ class NewProductWidgetBody extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                   ),
                   12.ph,
-                  CategoryDropdown(),
+                  CategoryDropdown(
+                    allowedCategoryIds: allowedCategoryIds,
+                  ),
                   12.ph,
                   CustomTextField(
                     key: ValueKey('title_field'),
@@ -126,10 +133,10 @@ class NewProductWidgetBody extends StatelessWidget {
                     title: 'delivery'.tr(),
                     size: 20.sp,
                     fontWeight: FontWeight.w800,
-                    value: state.product.deliveryAvailable == 1,
+                    value: state.product.deliveryAvailable ?? false,
                     onChanged: (val) => cubit.toggleDeliveryAvailable(),
                   ),
-                  state.product.deliveryAvailable == 1
+                  state.product.deliveryAvailable ?? false
                       ? Column(
                           children: [
                             12.ph,
@@ -248,7 +255,7 @@ class NewProductWidgetBody extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: CustomGradientButton(
                       text: 'save'.tr(),
-                      isDisabled: cubit.isDisabled(),
+                      // isDisabled: cubit.isDisabled(),
                       isLoading: state.isLoading,
                       onPressed: () {
                         cubit.addProduct(context);
