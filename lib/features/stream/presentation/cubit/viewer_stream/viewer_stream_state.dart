@@ -45,6 +45,12 @@ class ViewerStreamState with _$ViewerStreamState {
     @Default('') String bidsError,
     @Default('') String addBidError,
 
+    StreamProductModel? activeStreamProduct,
+    int? currentStreamProductId,
+    DateTime? currentBidEndTime,
+    int? currentBidRemainingSeconds,
+    int? currentBidTotalBids,
+
     // Initialization
     @Default(false) bool isInitializing,
 

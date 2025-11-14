@@ -29,6 +29,7 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
       locator(),
       locator(),
       locator(),
+      locator(),
       stream: widget.stream,
       joinData: widget.joinData,
     );
@@ -78,24 +79,40 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
               return const FullScreenLoader();
             }
 
-          final firstProduct = (widget.stream.streamProducts != null &&
-                  widget.stream.streamProducts!.isNotEmpty)
-              ? widget.stream.streamProducts!.first
-              : null;
-          final hasProduct = firstProduct != null;
-          var productTitle = '';
-          var productCategory = '';
-          var startPrice = 0.0;
+            final activeProduct = state.activeStreamProduct ??
+                ((state.stream.streamProducts != null &&
+                        state.stream.streamProducts!.isNotEmpty)
+                    ? state.stream.streamProducts!.first
+                    : null);
+            final hasProduct = activeProduct != null;
+            var productTitle = '';
+            var productCategory = '';
+            var startPrice = 0.0;
+            var timerText = _formatTime(state.streamSeconds);
+            var totalBids = state.currentBidTotalBids ?? 0;
 
-          if (hasProduct) {
-            final streamProduct = firstProduct;
-            final embeddedProduct = streamProduct.product;
-            productTitle = embeddedProduct?.name ?? '';
-            final categoryId = embeddedProduct?.categoryId;
-            productCategory = _resolveCategoryName(categoryId);
-            startPrice =
-                double.tryParse(streamProduct.startingPrice ?? '') ?? 0.0;
-          }
+            if (activeProduct != null) {
+              final streamProduct = activeProduct;
+              final embeddedProduct = streamProduct.product;
+              productTitle = embeddedProduct?.name ?? '';
+              final categoryId = embeddedProduct?.categoryId;
+              productCategory = _resolveCategoryName(categoryId);
+              startPrice =
+                  double.tryParse(streamProduct.startingPrice ?? '') ?? 0.0;
+              if (state.currentBidRemainingSeconds != null) {
+                final remaining = state.currentBidRemainingSeconds!;
+                timerText = _formatTime(remaining >= 0 ? remaining : 0);
+              }
+              totalBids = state.currentBidTotalBids ?? 0;
+            }
+
+            final isInitialBid = hasProduct && totalBids == 0;
+            final formattedPrice = startPrice == 0
+                ? '—'
+                : (startPrice % 1 == 0
+                    ? '${startPrice.toInt()}'
+                    : startPrice.toStringAsFixed(2));
+            final singleBidLabel = 'Ставка: $formattedPrice ₽ >>';
 
             return Scaffold(
               backgroundColor: Colors.black,
@@ -135,13 +152,17 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                       onSend: () => context
                           .read<ViewerStreamCubit>()
                           .sendCommentToServer(streamId: widget.stream.id ?? 0),
-                      timerText: _formatTime(state.streamSeconds),
+                      timerText: timerText,
                       productTitle: productTitle,
                       productCategory: productCategory,
                       startPrice: startPrice,
                       showProductDetails: hasProduct,
-                      onEditPressed: () {},
-                      onBidPressed: () {},
+                      showBidActions: hasProduct,
+                      showSingleBidButton: isInitialBid,
+                      singleBidButtonLabel: singleBidLabel,
+                      onSingleBidPressed: hasProduct ? () {} : null,
+                      onEditPressed: null,
+                      onBidPressed: hasProduct ? () {} : null,
                     ),
                   ),
                 ],

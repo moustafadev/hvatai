@@ -59,20 +59,10 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
     // Initialize timer
     _startTimer();
 
-    // Initialize viewer count and current product
-    final streamProducts = state.stream.streamProducts;
-    final firstProduct = (streamProducts != null && streamProducts.isNotEmpty)
-        ? streamProducts.first
-        : null;
-    final bidTiming = _resolveBidTiming(firstProduct);
+    
     emit(state.copyWith(
       viewerCount: state.stream.viewerCount ?? 0,
       isInitializing: false,
-      activeStreamProduct: firstProduct ?? state.activeStreamProduct,
-      currentStreamProductId:
-          state.currentStreamProductId ?? firstProduct?.id,
-      currentBidEndTime: bidTiming.endTime,
-      currentBidRemainingSeconds: bidTiming.remainingSeconds,
     ));
 
     // Load initial comments
@@ -706,33 +696,33 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
     ));
   }
 
-  void setCurrentStreamProduct(int streamProductId) {
-    BidStreamItem? selectedBid;
-    for (final bid in state.bids) {
-      if (bid.streamProductId == streamProductId) {
-        selectedBid = bid;
-        break;
-      }
-    }
-    StreamProductModel? selectedProduct;
-    final streamProducts = state.stream.streamProducts;
-    if (streamProducts != null) {
-      for (final product in streamProducts) {
-        if (product.id == streamProductId) {
-          selectedProduct = product;
-          break;
-        }
-      }
-    }
-    final bidTiming = _resolveBidTiming(selectedProduct);
-    emit(state.copyWith(
-      currentStreamProductId: streamProductId,
-      currentProductStreamBid: selectedBid,
-      activeStreamProduct: selectedProduct ?? state.activeStreamProduct,
-      currentBidEndTime: bidTiming.endTime,
-      currentBidRemainingSeconds: bidTiming.remainingSeconds,
-    ));
-  }
+  // void setCurrentStreamProduct(int streamProductId) {
+  //   BidStreamItem? selectedBid;
+  //   for (final bid in state.bids) {
+  //     if (bid.streamProductId == streamProductId) {
+  //       selectedBid = bid;
+  //       break;
+  //     }
+  //   }
+  //   StreamProductModel? selectedProduct;
+  //   final streamProducts = state.stream.streamProducts;
+  //   if (streamProducts != null) {
+  //     for (final product in streamProducts) {
+  //       if (product.id == streamProductId) {
+  //         selectedProduct = product;
+  //         break;
+  //       }
+  //     }
+  //   }
+  //   final bidTiming = _resolveBidTiming(selectedProduct);
+  //   emit(state.copyWith(
+  //     currentStreamProductId: streamProductId,
+  //     currentProductStreamBid: selectedBid,
+  //     activeStreamProduct: selectedProduct ?? state.activeStreamProduct,
+  //     currentBidEndTime: bidTiming.endTime,
+  //     currentBidRemainingSeconds: bidTiming.remainingSeconds,
+  //   ));
+  // }
 
   void setActiveStreamProduct(StreamProductModel product) {
     final streamProducts = List<StreamProductModel>.from(

@@ -7,12 +7,15 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/features/chat/presentation/pages/chat_service.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
+import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/stream/data/models/bid_stream/bid_stream_response.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_updated/stream_updated_event.dart';
+import 'package:hvatai/features/stream/data/models/bid_session/bid_session_response.dart';
 import 'package:hvatai/features/stream/data/models/viewer_joined/viewer_joined_event.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_bid_session_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
@@ -28,7 +31,8 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     this._sendComment,
     this._leaveUsecase,
     this._getBids,
-    this._addBidUsecase, {
+    this._addBidUsecase,
+    this._getBidSessionUsecase, {
     required StreamDataModel stream,
     JoinStreamData? joinData,
   }) : super(ViewerStreamState(
@@ -43,6 +47,7 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
   final LeaveStreamUsecase _leaveUsecase;
   final GetStreamBidsUsecase _getBids;
   final AddStreamBidUsecase _addBidUsecase;
+  final GetBidSessionUsecase _getBidSessionUsecase;
 
   Timer? _timer;
   TextEditingController controller = TextEditingController();
@@ -62,6 +67,8 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
       viewerCount: state.stream.viewerCount ?? 0,
       isInitializing: false,
     ));
+
+    await _loadActiveBidSession();
 
     // Load initial comments
     await loadInitialComments(streamId: state.stream.id ?? 0);
@@ -164,6 +171,7 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
   void _handleBid(dynamic raw, {required String source}) {
     try {
       // TODO: forward to product/bid state if needed.
+      _loadActiveBidSession();
     } catch (e, st) {
       debugPrint('❌ [$source] bid parse error: $e');
       debugPrintStack(stackTrace: st);
@@ -175,7 +183,12 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     if (event.updateType == 'ended') {
       debugPrint('🔴 Stream ended - closing viewer');
       emit(state.copyWith(isStreamEnded: true));
+      return;
     }
+    final updatedStream = event.stream;
+    final viewerCount = updatedStream.viewerCount ?? state.viewerCount;
+    emit(state.copyWith(stream: updatedStream, viewerCount: viewerCount));
+    _loadActiveBidSession();
   }
 
   // ================== LiveKit ==================
@@ -577,6 +590,122 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     emit(state.copyWith(bids: updated));
   }
 
+  Future<void> _loadActiveBidSession() async {
+    final streamId = state.stream.id;
+    if (streamId == null) return;
+
+    final result =
+        await _getBidSessionUsecase(GetBidSessionParams(streamId: streamId));
+
+    result.fold(
+      (err) => debugPrint('❌ Failed to load bid session: $err'),
+      (response) {
+        final data = response.data;
+        if (data == null) return;
+
+        final product = _mapBidSessionDataToStreamProduct(data);
+        final timing = _resolveBidTiming(
+          product: product,
+          session: data,
+        );
+
+        emit(state.copyWith(
+          activeStreamProduct: product ?? state.activeStreamProduct,
+          currentStreamProductId:
+              product?.id ?? data.streamProductId ?? state.currentStreamProductId,
+          currentBidEndTime: timing.endTime,
+          currentBidRemainingSeconds: timing.remainingSeconds,
+          currentBidTotalBids: data.bidSession?.totalBids ?? state.currentBidTotalBids,
+        ));
+      },
+    );
+  }
+
+  StreamProductModel? _mapBidSessionDataToStreamProduct(
+    BidSessionData data,
+  ) {
+    final streamId = state.stream.id;
+    final product = data.product;
+
+    if (streamId == null && data.streamProductId == null) {
+      return null;
+    }
+
+    return StreamProductModel(
+      id: data.streamProductId,
+      streamId: streamId,
+      productId: product?.id,
+      startingPrice: data.startingBid?.toString(),
+      currentBid: data.bidSession?.currentHighestBid?.toString(),
+      bidDurationSeconds: data.bidSession?.sessionDurationSeconds,
+      biddingEnabled: data.biddingEnabled,
+      isActive: data.isActive,
+      displayOrder: null,
+      remainingSeconds: data.remainingSeconds,
+      createdAt: null,
+      updatedAt: null,
+      product: _mapProductToEmbedded(product),
+    );
+  }
+
+  StreamEmbeddedProductModel? _mapProductToEmbedded(ProductModel? product) {
+    if (product == null) return null;
+    return StreamEmbeddedProductModel(
+      id: product.id,
+      name: product.productName ?? product.productCode,
+      type: product.type,
+      description: product.productDescription,
+      userId: product.userId,
+      categoryId: product.categoryId,
+      code: product.productCode,
+      unit: null,
+      deliveryAvailable: product.deliveryAvailable == null
+          ? null
+          : (product.deliveryAvailable! ? 1 : 0),
+      selfPickup:
+          product.selfPickup == null ? null : (product.selfPickup! ? 1 : 0),
+      deliveryType: product.deliveryType,
+      deliveryTime: product.deliveryTime,
+      deliveryPrice: product.deliveryPrice?.toString(),
+      deliveryDiscount: product.deliveryDiscount?.toString(),
+      deliveryRadius: product.deliveryRadius?.toString(),
+      location: null,
+      latitude: null,
+      longitude: null,
+      status: product.status,
+      featured: null,
+      meta: null,
+      createdAt: null,
+      updatedAt: null,
+      deliveryLengthCm: product.deliveryLengthCm?.toString(),
+      deliveryWidthCm: product.deliveryWidthCm?.toString(),
+      deliveryHeightCm: product.deliveryHeightCm?.toString(),
+      deliveryWeightKg: product.deliveryWeightKg?.toString(),
+      deliveryMethods: product.deliveryMethods,
+      saleType: product.saleType,
+    );
+  }
+
+  ({DateTime? endTime, int? remainingSeconds}) _resolveBidTiming({
+    StreamProductModel? product,
+    BidSessionData? session,
+  }) {
+    DateTime? endTime = session?.bidSession?.endsAt;
+    int? remainingSeconds = session?.remainingSeconds ?? product?.remainingSeconds;
+
+    if (endTime != null) {
+      remainingSeconds = endTime.difference(DateTime.now()).inSeconds;
+    } else if (remainingSeconds != null && remainingSeconds > 0) {
+      endTime = DateTime.now().add(Duration(seconds: remainingSeconds));
+    }
+
+    if (remainingSeconds != null && remainingSeconds < 0) {
+      remainingSeconds = 0;
+    }
+
+    return (endTime: endTime, remainingSeconds: remainingSeconds);
+  }
+
   // ================== Viewer Count ==================
   void updateViewerCount(int viewerCount) {
     emit(state.copyWith(viewerCount: viewerCount));
@@ -586,7 +715,31 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
   void _startTimer() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-      emit(state.copyWith(streamSeconds: state.streamSeconds + 1));
+      final currentState = state;
+      final nextStreamSeconds = currentState.streamSeconds + 1;
+
+      DateTime? endTime = currentState.currentBidEndTime;
+      int? remaining = currentState.currentBidRemainingSeconds;
+
+      if (endTime != null) {
+        remaining = endTime.difference(DateTime.now()).inSeconds;
+        if (remaining < 0) {
+          remaining = 0;
+          endTime = null;
+        }
+      } else if (remaining != null) {
+        if (remaining > 0) {
+          remaining = remaining - 1;
+        } else {
+          remaining = 0;
+        }
+      }
+
+      emit(currentState.copyWith(
+        streamSeconds: nextStreamSeconds,
+        currentBidRemainingSeconds: remaining,
+        currentBidEndTime: endTime,
+      ));
     });
   }
 

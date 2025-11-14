@@ -80,12 +80,13 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
             return const FullScreenLoader();
           }
 
-          final StreamProductModel? activeProduct = state.activeStreamProduct ??
-              ((state.stream.streamProducts != null &&
-                      state.stream.streamProducts!.isNotEmpty)
-                  ? state.stream.streamProducts!.first
-                  : null);
+          final StreamProductModel? activeProduct = state.activeStreamProduct;
           final hasProduct = activeProduct != null;
+          print("==========================================");
+          print("ACTIVE PRODUCT: $activeProduct");
+          print("==========================================");
+          print("Has Product: $hasProduct");
+          print("==========================================");
           var productTitle = '';
           var productCategory = '';
           var startPrice = 0.0;

@@ -48,7 +48,13 @@ mixin _$ViewerStreamState {
   String get commentsError => throw _privateConstructorUsedError;
   String get sendCommentError => throw _privateConstructorUsedError;
   String get bidsError => throw _privateConstructorUsedError;
-  String get addBidError =>
+  String get addBidError => throw _privateConstructorUsedError;
+  StreamProductModel? get activeStreamProduct =>
+      throw _privateConstructorUsedError;
+  int? get currentStreamProductId => throw _privateConstructorUsedError;
+  DateTime? get currentBidEndTime => throw _privateConstructorUsedError;
+  int? get currentBidRemainingSeconds => throw _privateConstructorUsedError;
+  int? get currentBidTotalBids =>
       throw _privateConstructorUsedError; // Initialization
   bool get isInitializing =>
       throw _privateConstructorUsedError; // Stream status
@@ -95,11 +101,17 @@ abstract class $ViewerStreamStateCopyWith<$Res> {
       String sendCommentError,
       String bidsError,
       String addBidError,
+      StreamProductModel? activeStreamProduct,
+      int? currentStreamProductId,
+      DateTime? currentBidEndTime,
+      int? currentBidRemainingSeconds,
+      int? currentBidTotalBids,
       bool isInitializing,
       bool isStreamEnded});
 
   $StreamDataModelCopyWith<$Res> get stream;
   $JoinStreamDataCopyWith<$Res>? get joinData;
+  $StreamProductModelCopyWith<$Res>? get activeStreamProduct;
 }
 
 /// @nodoc
@@ -144,6 +156,11 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
     Object? sendCommentError = null,
     Object? bidsError = null,
     Object? addBidError = null,
+    Object? activeStreamProduct = freezed,
+    Object? currentStreamProductId = freezed,
+    Object? currentBidEndTime = freezed,
+    Object? currentBidRemainingSeconds = freezed,
+    Object? currentBidTotalBids = freezed,
     Object? isInitializing = null,
     Object? isStreamEnded = null,
   }) {
@@ -256,6 +273,26 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
           ? _value.addBidError
           : addBidError // ignore: cast_nullable_to_non_nullable
               as String,
+      activeStreamProduct: freezed == activeStreamProduct
+          ? _value.activeStreamProduct
+          : activeStreamProduct // ignore: cast_nullable_to_non_nullable
+              as StreamProductModel?,
+      currentStreamProductId: freezed == currentStreamProductId
+          ? _value.currentStreamProductId
+          : currentStreamProductId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      currentBidEndTime: freezed == currentBidEndTime
+          ? _value.currentBidEndTime
+          : currentBidEndTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      currentBidRemainingSeconds: freezed == currentBidRemainingSeconds
+          ? _value.currentBidRemainingSeconds
+          : currentBidRemainingSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      currentBidTotalBids: freezed == currentBidTotalBids
+          ? _value.currentBidTotalBids
+          : currentBidTotalBids // ignore: cast_nullable_to_non_nullable
+              as int?,
       isInitializing: null == isInitializing
           ? _value.isInitializing
           : isInitializing // ignore: cast_nullable_to_non_nullable
@@ -288,6 +325,21 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
 
     return $JoinStreamDataCopyWith<$Res>(_value.joinData!, (value) {
       return _then(_value.copyWith(joinData: value) as $Val);
+    });
+  }
+
+  /// Create a copy of ViewerStreamState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StreamProductModelCopyWith<$Res>? get activeStreamProduct {
+    if (_value.activeStreamProduct == null) {
+      return null;
+    }
+
+    return $StreamProductModelCopyWith<$Res>(_value.activeStreamProduct!,
+        (value) {
+      return _then(_value.copyWith(activeStreamProduct: value) as $Val);
     });
   }
 }
@@ -328,6 +380,11 @@ abstract class _$$ViewerStreamStateImplCopyWith<$Res>
       String sendCommentError,
       String bidsError,
       String addBidError,
+      StreamProductModel? activeStreamProduct,
+      int? currentStreamProductId,
+      DateTime? currentBidEndTime,
+      int? currentBidRemainingSeconds,
+      int? currentBidTotalBids,
       bool isInitializing,
       bool isStreamEnded});
 
@@ -335,6 +392,8 @@ abstract class _$$ViewerStreamStateImplCopyWith<$Res>
   $StreamDataModelCopyWith<$Res> get stream;
   @override
   $JoinStreamDataCopyWith<$Res>? get joinData;
+  @override
+  $StreamProductModelCopyWith<$Res>? get activeStreamProduct;
 }
 
 /// @nodoc
@@ -377,6 +436,11 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
     Object? sendCommentError = null,
     Object? bidsError = null,
     Object? addBidError = null,
+    Object? activeStreamProduct = freezed,
+    Object? currentStreamProductId = freezed,
+    Object? currentBidEndTime = freezed,
+    Object? currentBidRemainingSeconds = freezed,
+    Object? currentBidTotalBids = freezed,
     Object? isInitializing = null,
     Object? isStreamEnded = null,
   }) {
@@ -489,6 +553,26 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
           ? _value.addBidError
           : addBidError // ignore: cast_nullable_to_non_nullable
               as String,
+      activeStreamProduct: freezed == activeStreamProduct
+          ? _value.activeStreamProduct
+          : activeStreamProduct // ignore: cast_nullable_to_non_nullable
+              as StreamProductModel?,
+      currentStreamProductId: freezed == currentStreamProductId
+          ? _value.currentStreamProductId
+          : currentStreamProductId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      currentBidEndTime: freezed == currentBidEndTime
+          ? _value.currentBidEndTime
+          : currentBidEndTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      currentBidRemainingSeconds: freezed == currentBidRemainingSeconds
+          ? _value.currentBidRemainingSeconds
+          : currentBidRemainingSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      currentBidTotalBids: freezed == currentBidTotalBids
+          ? _value.currentBidTotalBids
+          : currentBidTotalBids // ignore: cast_nullable_to_non_nullable
+              as int?,
       isInitializing: null == isInitializing
           ? _value.isInitializing
           : isInitializing // ignore: cast_nullable_to_non_nullable
@@ -534,6 +618,11 @@ class _$ViewerStreamStateImpl
       this.sendCommentError = '',
       this.bidsError = '',
       this.addBidError = '',
+      this.activeStreamProduct,
+      this.currentStreamProductId,
+      this.currentBidEndTime,
+      this.currentBidRemainingSeconds,
+      this.currentBidTotalBids,
       this.isInitializing = false,
       this.isStreamEnded = false})
       : _comments = comments,
@@ -636,6 +725,16 @@ class _$ViewerStreamStateImpl
   @override
   @JsonKey()
   final String addBidError;
+  @override
+  final StreamProductModel? activeStreamProduct;
+  @override
+  final int? currentStreamProductId;
+  @override
+  final DateTime? currentBidEndTime;
+  @override
+  final int? currentBidRemainingSeconds;
+  @override
+  final int? currentBidTotalBids;
 // Initialization
   @override
   @JsonKey()
@@ -647,7 +746,7 @@ class _$ViewerStreamStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ViewerStreamState(isConnected: $isConnected, remoteVideoTrack: $remoteVideoTrack, room: $room, remoteParticipant: $remoteParticipant, isPusherConnected: $isPusherConnected, stream: $stream, joinData: $joinData, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, isInitializing: $isInitializing, isStreamEnded: $isStreamEnded)';
+    return 'ViewerStreamState(isConnected: $isConnected, remoteVideoTrack: $remoteVideoTrack, room: $room, remoteParticipant: $remoteParticipant, isPusherConnected: $isPusherConnected, stream: $stream, joinData: $joinData, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentStreamProductId: $currentStreamProductId, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentBidTotalBids: $currentBidTotalBids, isInitializing: $isInitializing, isStreamEnded: $isStreamEnded)';
   }
 
   @override
@@ -682,6 +781,13 @@ class _$ViewerStreamStateImpl
       ..add(DiagnosticsProperty('sendCommentError', sendCommentError))
       ..add(DiagnosticsProperty('bidsError', bidsError))
       ..add(DiagnosticsProperty('addBidError', addBidError))
+      ..add(DiagnosticsProperty('activeStreamProduct', activeStreamProduct))
+      ..add(
+          DiagnosticsProperty('currentStreamProductId', currentStreamProductId))
+      ..add(DiagnosticsProperty('currentBidEndTime', currentBidEndTime))
+      ..add(DiagnosticsProperty(
+          'currentBidRemainingSeconds', currentBidRemainingSeconds))
+      ..add(DiagnosticsProperty('currentBidTotalBids', currentBidTotalBids))
       ..add(DiagnosticsProperty('isInitializing', isInitializing))
       ..add(DiagnosticsProperty('isStreamEnded', isStreamEnded));
   }
@@ -741,6 +847,18 @@ class _$ViewerStreamStateImpl
                 other.bidsError == bidsError) &&
             (identical(other.addBidError, addBidError) ||
                 other.addBidError == addBidError) &&
+            (identical(other.activeStreamProduct, activeStreamProduct) ||
+                other.activeStreamProduct == activeStreamProduct) &&
+            (identical(other.currentStreamProductId, currentStreamProductId) ||
+                other.currentStreamProductId == currentStreamProductId) &&
+            (identical(other.currentBidEndTime, currentBidEndTime) ||
+                other.currentBidEndTime == currentBidEndTime) &&
+            (identical(other.currentBidRemainingSeconds,
+                    currentBidRemainingSeconds) ||
+                other.currentBidRemainingSeconds ==
+                    currentBidRemainingSeconds) &&
+            (identical(other.currentBidTotalBids, currentBidTotalBids) ||
+                other.currentBidTotalBids == currentBidTotalBids) &&
             (identical(other.isInitializing, isInitializing) ||
                 other.isInitializing == isInitializing) &&
             (identical(other.isStreamEnded, isStreamEnded) ||
@@ -777,6 +895,11 @@ class _$ViewerStreamStateImpl
         sendCommentError,
         bidsError,
         addBidError,
+        activeStreamProduct,
+        currentStreamProductId,
+        currentBidEndTime,
+        currentBidRemainingSeconds,
+        currentBidTotalBids,
         isInitializing,
         isStreamEnded
       ]);
@@ -820,6 +943,11 @@ abstract class _ViewerStreamState implements ViewerStreamState {
       final String sendCommentError,
       final String bidsError,
       final String addBidError,
+      final StreamProductModel? activeStreamProduct,
+      final int? currentStreamProductId,
+      final DateTime? currentBidEndTime,
+      final int? currentBidRemainingSeconds,
+      final int? currentBidTotalBids,
       final bool isInitializing,
       final bool isStreamEnded}) = _$ViewerStreamStateImpl;
 
@@ -877,7 +1005,17 @@ abstract class _ViewerStreamState implements ViewerStreamState {
   @override
   String get bidsError;
   @override
-  String get addBidError; // Initialization
+  String get addBidError;
+  @override
+  StreamProductModel? get activeStreamProduct;
+  @override
+  int? get currentStreamProductId;
+  @override
+  DateTime? get currentBidEndTime;
+  @override
+  int? get currentBidRemainingSeconds;
+  @override
+  int? get currentBidTotalBids; // Initialization
   @override
   bool get isInitializing; // Stream status
   @override

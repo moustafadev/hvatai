@@ -12,6 +12,9 @@ class LiveBottomPanel extends StatelessWidget {
   final String timerText;
   final bool showProductDetails;
   final bool showBidActions;
+  final bool showSingleBidButton;
+  final String singleBidButtonLabel;
+  final VoidCallback? onSingleBidPressed;
 
   final VoidCallback? onEditPressed;
   final VoidCallback? onBidPressed;
@@ -27,6 +30,9 @@ class LiveBottomPanel extends StatelessWidget {
     required this.timerText,
     this.showProductDetails = true,
     this.showBidActions = true,
+    this.showSingleBidButton = false,
+    this.singleBidButtonLabel = '',
+    this.onSingleBidPressed,
     this.controller,
     this.onEditPressed,
     this.onBidPressed,
@@ -157,56 +163,92 @@ class LiveBottomPanel extends StatelessWidget {
                   ),
                 ],
               ),
-              if (showBidActions &&
-                  (onEditPressed != null || onBidPressed != null)) ...[
-                SizedBox(height: 12.h),
-                Row(
+              Visibility(
+                visible: showBidActions &&
+                    (showSingleBidButton ||
+                        onEditPressed != null ||
+                        onBidPressed != null),
+                maintainSize: true,
+                maintainState: true,
+                maintainAnimation: true,
+                child: Column(
                   children: [
-                    if (onEditPressed != null)
-                      Expanded(
+                    SizedBox(height: 12.h),
+                    if (showSingleBidButton)
+                      Container(
+                        height: 48.h,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              AppColors.primaryColor.withOpacity(0.9),
+                              AppColors.primaryColor,
+                            ],
+                          ),
+                          borderRadius: BorderRadius.circular(32),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.4),
+                            width: 1.5,
+                          ),
+                        ),
                         child: CustomButton(
-                          title: 'Изменить',
-                          onPressed: onEditPressed,
-                          color: Colors.black.withOpacity(0.6),
+                          title: singleBidButtonLabel,
+                          onPressed: onSingleBidPressed,
+                          color: Colors.transparent,
                           textColor: Colors.white,
-                          radius: 24,
-                          height: 40,
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 12),
+                          radius: 32,
+                          height: 48.h,
                           fontWeight: FontWeight.w700,
-                          fontSize: 14,
+                          fontSize: 16.sp,
                         ),
-                      ),
-                    if (onEditPressed != null && onBidPressed != null)
-                      SizedBox(width: 8.w),
-                    if (onBidPressed != null)
-                      Expanded(
-                        child: Container(
-                          height: 40,
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: AppColors.primaryColor,
-                              width: 1.5,
+                      )
+                    else
+                      Row(
+                        children: [
+                            Expanded(
+                              child: CustomButton(
+                                title: 'Изменить',
+                                onPressed: onEditPressed,
+                                color: Colors.black.withOpacity(0.6),
+                                textColor: Colors.white,
+                                radius: 24,
+                                height: 40,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16, vertical: 12),
+                                fontWeight: FontWeight.w700,
+                                fontSize: 14,
+                              ),
                             ),
-                            borderRadius: BorderRadius.circular(24),
-                          ),
-                          child: CustomButton(
-                            title: 'Ставка: $startPrice₽',
-                            onPressed: onBidPressed,
-                            color: AppColors.primaryColor,
-                            textColor: Colors.white,
-                            radius: 24,
-                            height: 32,
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14,
-                          ),
-                        ),
+                            SizedBox(width: 8.w),
+                            Expanded(
+                              child: Container(
+                                height: 40,
+                                padding: const EdgeInsets.all(4),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: AppColors.primaryColor,
+                                    width: 1.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(24),
+                                ),
+                                child: CustomButton(
+                                  title: 'Ставка: $startPrice₽',
+                                  onPressed: onBidPressed,
+                                  color: AppColors.primaryColor,
+                                  textColor: Colors.white,
+                                  radius: 24,
+                                  height: 32,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ),
+                        ],
                       ),
                   ],
                 ),
-              ],
+              ),
             ],
           ),
         ),
