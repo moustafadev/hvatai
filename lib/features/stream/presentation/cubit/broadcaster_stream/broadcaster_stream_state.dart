@@ -51,6 +51,8 @@ class BroadcasterStreamState with _$BroadcasterStreamState {
     int? currentBidRemainingSeconds,
     int? currentStreamProductId,
     BidStreamItem? currentProductStreamBid,
+    BidWinnerEvent? currentWinner,
+    @Default(false) bool isSelectingWinner,
 
     // Initialization
     @Default(false) bool isInitializing,

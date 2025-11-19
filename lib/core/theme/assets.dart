@@ -346,6 +346,10 @@ class Assets {
   /// assets/icons/more.png
   static const String assetsIconsMore = "assets/icons/more.png";
 
+  static const String assetsIconsAltArrowRight = "assets/icons/Alt_Arrow_Right.svg";
+  static const String assetsIconsAltArrowRightSmall = "assets/icons/Alt_Arrow_Right_small.svg";
+  static const String assetsIconsCrown = "assets/icons/crown.svg";
+
   /// Assets for assetsIconsNotification
   /// assets/icons/notification.png
   static const String assetsIconsNotification = "assets/icons/notification.png";

@@ -15,6 +15,8 @@ class LiveBottomPanel extends StatelessWidget {
   final bool showSingleBidButton;
   final String singleBidButtonLabel;
   final VoidCallback? onSingleBidPressed;
+  final bool isBidLoading;
+  final Widget? postAuctionAction;
 
   final VoidCallback? onEditPressed;
   final VoidCallback? onBidPressed;
@@ -33,6 +35,8 @@ class LiveBottomPanel extends StatelessWidget {
     this.showSingleBidButton = false,
     this.singleBidButtonLabel = '',
     this.onSingleBidPressed,
+    this.isBidLoading = false,
+    this.postAuctionAction,
     this.controller,
     this.onEditPressed,
     this.onBidPressed,
@@ -113,12 +117,12 @@ class LiveBottomPanel extends StatelessWidget {
                               fontWeight: FontWeight.w800,
                             ),
                           ),
-                          CustomText(
-                            text: timerText,
-                            color: AppColors.whiteGrey,
-                            fontSize: 12,
-                            fontWeight: FontWeight.w600,
-                          ),
+                         CustomText(
+                                text: 'Стартовая цена',
+                                color: AppColors.primaryPink,
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                              ),
                         ],
                       ),
                       SizedBox(height: 4.h),
@@ -157,6 +161,12 @@ class LiveBottomPanel extends StatelessWidget {
                               fontWeight: FontWeight.w600,
                             ),
                           ),
+                          CustomText(
+                            text: timerText,
+                            color: Color(0xFF7BE4EE),
+                            fontSize: 12,
+                            fontWeight: FontWeight.w700,
+                          ),
                         ],
                       ),
                     ],
@@ -164,42 +174,26 @@ class LiveBottomPanel extends StatelessWidget {
                 ],
               ),
               Visibility(
-                visible: showBidActions &&
-                    (showSingleBidButton ||
-                        onEditPressed != null ||
-                        onBidPressed != null),
+                visible: showBidActions,
                 maintainSize: true,
                 maintainState: true,
                 maintainAnimation: true,
                 child: Column(
                   children: [
                     SizedBox(height: 12.h),
-                    if (showSingleBidButton)
-                      Container(
-                        height: 48.h,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              AppColors.primaryColor.withOpacity(0.9),
-                              AppColors.primaryColor,
-                            ],
-                          ),
-                          borderRadius: BorderRadius.circular(32),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.4),
-                            width: 1.5,
-                          ),
-                        ),
-                        child: CustomButton(
-                          title: singleBidButtonLabel,
-                          onPressed: onSingleBidPressed,
-                          color: Colors.transparent,
-                          textColor: Colors.white,
-                          radius: 32,
-                          height: 48.h,
-                          fontWeight: FontWeight.w700,
-                          fontSize: 16.sp,
-                        ),
+                    if (postAuctionAction != null)
+                      postAuctionAction!
+                    else if (showSingleBidButton)
+                      SlideToBidButton(
+                        priceText: singleBidButtonLabel.replaceAll('Ставка: ', ''),
+                        onSlideComplete: () {
+                          if (onSingleBidPressed != null) {
+                            onSingleBidPressed!();
+                          }
+                        },
+                        arrowIconLarge: Assets.assetsIconsAltArrowRight,
+                        arrowIconSmall: Assets.assetsIconsAltArrowRightSmall,
+                        isLoading: isBidLoading,
                       )
                     else
                       Row(
@@ -220,6 +214,7 @@ class LiveBottomPanel extends StatelessWidget {
                             ),
                             SizedBox(width: 8.w),
                             Expanded(
+                              flex: 2,
                               child: Container(
                                 height: 40,
                                 padding: const EdgeInsets.all(4),
@@ -230,17 +225,24 @@ class LiveBottomPanel extends StatelessWidget {
                                   ),
                                   borderRadius: BorderRadius.circular(24),
                                 ),
-                                child: CustomButton(
-                                  title: 'Ставка: $startPrice₽',
-                                  onPressed: onBidPressed,
-                                  color: AppColors.primaryColor,
-                                  textColor: Colors.white,
-                                  radius: 24,
-                                  height: 32,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16),
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 14,
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    CustomButton(
+                                      title: 'Ставка: $startPrice₽',
+                                      onPressed: isBidLoading ? null : onBidPressed,
+                                      color: AppColors.primaryColor,
+                                      textColor: Colors.white,
+                                      isLoading: isBidLoading,
+                                      radius: 24,
+                                      height: 32,
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16),
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 14,
+                                    ),
+                                  
+                                  ],
                                 ),
                               ),
                             ),

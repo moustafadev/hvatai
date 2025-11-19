@@ -16,12 +16,12 @@ class AddStreamBidUsecase
 
 class AddStreamBidParams {
   final int streamId;
-  final int productId;
+  final int streamProductId;
   final String bidAmount; // keep as String to match API body
 
   AddStreamBidParams({
     required this.streamId,
-    required this.productId,
+    required this.streamProductId,
     required this.bidAmount,
   });
 }

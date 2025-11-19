@@ -35,7 +35,9 @@ _$BidSessionDataImpl _$$BidSessionDataImplFromJson(Map<String, dynamic> json) =>
       product: json['product'] == null
           ? null
           : ProductModel.fromJson(json['product'] as Map<String, dynamic>),
-      startingBid: _parseDouble(json['starting_bid']),
+      startingBid: _parseStringToDouble(json['starting_bid']),
+      minimumBidIncrement: _parseStringToDouble(json['minimum_bid_increment']),
+      nextMinimumBid: _parseIntToDouble(json['next_minimum_bid']),
       canBid: json['can_bid'] as bool?,
       biddingEnabled: json['bidding_enabled'] as bool?,
       isActive: json['is_active'] as bool?,
@@ -57,6 +59,8 @@ Map<String, dynamic> _$$BidSessionDataImplToJson(
       'stream_product_id': instance.streamProductId,
       'product': instance.product,
       'starting_bid': instance.startingBid,
+      'minimum_bid_increment': instance.minimumBidIncrement,
+      'next_minimum_bid': instance.nextMinimumBid,
       'can_bid': instance.canBid,
       'bidding_enabled': instance.biddingEnabled,
       'is_active': instance.isActive,

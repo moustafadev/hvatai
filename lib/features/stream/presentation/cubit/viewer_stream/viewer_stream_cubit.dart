@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/features/chat/presentation/pages/chat_service.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
@@ -13,6 +15,7 @@ import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment
 import 'package:hvatai/features/stream/data/models/stream_updated/stream_updated_event.dart';
 import 'package:hvatai/features/stream/data/models/bid_session/bid_session_response.dart';
 import 'package:hvatai/features/stream/data/models/viewer_joined/viewer_joined_event.dart';
+import 'package:hvatai/features/stream/data/models/bid_winner/bid_winner_event.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_bid_session_usecase.dart';
@@ -32,12 +35,14 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     this._leaveUsecase,
     this._getBids,
     this._addBidUsecase,
-    this._getBidSessionUsecase, {
+    this._getBidSessionUsecase,
+    AppLocal appLocal, {
     required StreamDataModel stream,
     JoinStreamData? joinData,
   }) : super(ViewerStreamState(
           stream: stream,
           joinData: joinData,
+          currentUserId: appLocal.getUserId(),
         )) {
     _initialize();
   }
@@ -141,13 +146,17 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
       );
       _streamChannel!.bind(
         'bid.winner.determined',
-        (raw) {},
+        (raw) => _handleWinner(raw, source: channelName),
       );
 
       _streamChannel!.bind(
         'stream.updated',
         (raw) => _handleStreamUpdated(StreamUpdatedEvent.fromJson(raw),
             source: channelName),
+      );
+      _streamChannel!.bind(
+        'stream.product.bidding.toggled',
+        (raw) => _handleProductToggle(raw, source: channelName),
       );
     } catch (e) {
       debugPrint('❌ Error initializing Pusher: $e');
@@ -174,6 +183,53 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
       _loadActiveBidSession();
     } catch (e, st) {
       debugPrint('❌ [$source] bid parse error: $e');
+      debugPrintStack(stackTrace: st);
+    }
+  }
+
+  void _handleWinner(dynamic raw, {required String source}) {
+    try {
+      final dataMap = _normalizeSocketPayload(raw);
+      final event = BidWinnerEvent.fromJson(dataMap);
+      emit(state.copyWith(
+        currentWinner: event,
+        isSelectingWinner: false,
+        currentBidRemainingSeconds: 0,
+        currentBidEndTime: null,
+      ));
+    } catch (e, st) {
+      debugPrint('❌ [$source] winner parse error: $e');
+      debugPrintStack(stackTrace: st);
+    }
+  }
+
+  void _handleProductToggle(dynamic raw, {required String source}) {
+    try {
+      final dataMap = _normalizeSocketPayload(raw);
+      final streamProduct = dataMap['stream_product'];
+      if (streamProduct is! Map<String, dynamic>) return;
+
+      final toggledStreamId = streamProduct['stream_id'];
+      final currentStreamId = state.stream.id;
+      if (toggledStreamId != null && currentStreamId != null) {
+        if (toggledStreamId != currentStreamId) return;
+      }
+
+      final toggledProduct = StreamProductModel.fromJson(
+        Map<String, dynamic>.from(streamProduct),
+      );
+
+      emit(state.copyWith(
+        activeStreamProduct: toggledProduct,
+        currentStreamProductId:
+            toggledProduct.id ?? toggledProduct.productId ?? state.currentStreamProductId,
+        isSelectingWinner: false,
+        currentWinner: null,
+      ));
+
+      _loadActiveBidSession();
+    } catch (e, st) {
+      debugPrint('❌ [$source] product toggle parse error: $e');
       debugPrintStack(stackTrace: st);
     }
   }
@@ -555,7 +611,7 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
 
   Future<void> placeBid({
     required int streamId,
-    required int productId,
+    required int streamProductId,
     required String bidAmount,
   }) async {
     emit(state.copyWith(
@@ -565,7 +621,7 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
 
     final res = await _addBidUsecase(AddStreamBidParams(
       streamId: streamId,
-      productId: productId,
+      streamProductId: streamProductId,
       bidAmount: bidAmount,
     ));
 
@@ -581,6 +637,7 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
           isPlacingBid: false,
           bids: updated,
         ));
+        _loadActiveBidSession();
       },
     );
   }
@@ -603,11 +660,28 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
         final data = response.data;
         if (data == null) return;
 
+        final hasSession = data.hasSession ?? false;
+        if (!hasSession) {
+          emit(state.copyWith(
+            activeStreamProduct: null,
+            currentStreamProductId: null,
+            currentBidEndTime: null,
+            currentBidRemainingSeconds: null,
+            currentBidTotalBids: 0,
+            currentWinner: null,
+            isSelectingWinner: false,
+          ));
+          return;
+        }
+
         final product = _mapBidSessionDataToStreamProduct(data);
         final timing = _resolveBidTiming(
           product: product,
           session: data,
         );
+
+        final isSessionActive =
+            data.bidSession?.status == 'active' && (data.remainingSeconds ?? 0) > 0;
 
         emit(state.copyWith(
           activeStreamProduct: product ?? state.activeStreamProduct,
@@ -616,6 +690,8 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
           currentBidEndTime: timing.endTime,
           currentBidRemainingSeconds: timing.remainingSeconds,
           currentBidTotalBids: data.bidSession?.totalBids ?? state.currentBidTotalBids,
+          currentWinner: isSessionActive ? null : state.currentWinner,
+          isSelectingWinner: isSessionActive ? false : state.isSelectingWinner,
         ));
       },
     );
@@ -631,12 +707,18 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
       return null;
     }
 
+    final currentHighestBid = data.bidSession?.currentHighestBid ?? data.startingBid;
+    final minimumBidIncrement = data.minimumBidIncrement ?? 0;
+    final bidPrice = currentHighestBid == null
+        ? null
+        : currentHighestBid + minimumBidIncrement;
+
     return StreamProductModel(
       id: data.streamProductId,
       streamId: streamId,
       productId: product?.id,
       startingPrice: data.startingBid?.toString(),
-      currentBid: data.bidSession?.currentHighestBid?.toString(),
+      currentBid: bidPrice?.toString(),
       bidDurationSeconds: data.bidSession?.sessionDurationSeconds,
       biddingEnabled: data.biddingEnabled,
       isActive: data.isActive,
@@ -739,8 +821,48 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
         streamSeconds: nextStreamSeconds,
         currentBidRemainingSeconds: remaining,
         currentBidEndTime: endTime,
+        isSelectingWinner: _resolveSelectingWinner(
+          currentState: currentState,
+          nextRemaining: remaining,
+        ),
       ));
     });
+  }
+
+  bool _resolveSelectingWinner({
+    required ViewerStreamState currentState,
+    int? nextRemaining,
+  }) {
+    final previousRemaining = currentState.currentBidRemainingSeconds;
+    var selecting = currentState.isSelectingWinner;
+
+    if (nextRemaining == null || nextRemaining > 0) {
+      selecting = false;
+    } else if ((previousRemaining ?? 0) > 0 && nextRemaining == 0) {
+      selecting = currentState.currentWinner == null;
+    }
+
+    return selecting;
+  }
+
+  Map<String, dynamic> _normalizeSocketPayload(dynamic raw) {
+    Map<String, dynamic> map;
+    if (raw is String) {
+      map = Map<String, dynamic>.from(jsonDecode(raw));
+    } else if (raw is Map) {
+      map = Map<String, dynamic>.from(raw);
+    } else {
+      throw FormatException('Unsupported payload type: ${raw.runtimeType}');
+    }
+
+    final data = map['data'];
+    if (data is String) {
+      return Map<String, dynamic>.from(jsonDecode(data));
+    }
+    if (data is Map) {
+      return Map<String, dynamic>.from(data);
+    }
+    return map;
   }
 
   // ================== Cleanup ==================

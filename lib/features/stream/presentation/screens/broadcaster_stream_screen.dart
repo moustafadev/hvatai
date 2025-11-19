@@ -82,11 +82,6 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
 
           final StreamProductModel? activeProduct = state.activeStreamProduct;
           final hasProduct = activeProduct != null;
-          print("==========================================");
-          print("ACTIVE PRODUCT: $activeProduct");
-          print("==========================================");
-          print("Has Product: $hasProduct");
-          print("==========================================");
           var productTitle = '';
           var productCategory = '';
           var startPrice = 0.0;
@@ -102,7 +97,9 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
                 double.tryParse(streamProduct.startingPrice ?? '') ?? 0.0;
             if (state.currentBidRemainingSeconds != null) {
               final remaining = state.currentBidRemainingSeconds!;
-              timerText = _formatTime(remaining >= 0 ? remaining : 0);
+              timerText = remaining <= 0
+                  ? 'Продано'
+                  : _formatTime(remaining >= 0 ? remaining : 0);
             }
           } else if (state.streamSeconds > 0) {
             timerText = _formatTime(state.streamSeconds);

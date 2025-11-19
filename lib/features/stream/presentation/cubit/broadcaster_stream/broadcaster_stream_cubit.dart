@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/features/chat/presentation/pages/chat_service.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/stream/data/models/bid_stream/bid_stream_response.dart';
+import 'package:hvatai/features/stream/data/models/bid_placed/bid_placed_event.dart';
+import 'package:hvatai/features/stream/data/models/bid_winner/bid_winner_event.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/viewer_joined/viewer_joined_event.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
@@ -16,6 +19,7 @@ import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_useca
 import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/start_stream_usecase.dart';
+import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
 import 'package:livekit_client/livekit_client.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pusher_client_socket/pusher_client_socket.dart';
@@ -100,6 +104,37 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
     return (endTime: endTime, remainingSeconds: remainingSeconds);
   }
 
+  StreamProductModel _mergeBidSessionIntoProduct(
+    StreamProductModel product,
+    BidPlacedSessionModel? session,
+    BidStreamItem latestBid,
+  ) {
+    final sessionData = session;
+    final hasSessionUpdate = sessionData != null;
+
+    final updatedSession = hasSessionUpdate
+        ? product.bidSession?.copyWith(
+              id: sessionData.id ?? product.bidSession?.id,
+              sessionEndTime:
+                  sessionData.sessionEndsAt ?? product.bidSession?.sessionEndTime,
+              status: sessionData.status ?? product.bidSession?.status,
+            ) ??
+            ToggleBiddingSessionModel(
+              id: sessionData.id,
+              sessionEndTime: sessionData.sessionEndsAt,
+              status: sessionData.status,
+            )
+        : product.bidSession;
+
+    return product.copyWith(
+      remainingSeconds:
+          sessionData?.remainingSeconds ?? product.remainingSeconds,
+      bidSession: updatedSession,
+      currentBid: latestBid.bidAmount ?? product.currentBid,
+      startingPrice: product.startingPrice ?? latestBid.bidAmount,
+    );
+  }
+
   // ================== Pusher ==================
   Future<void> _initPusher() async {
     final streamId = state.stream.id;
@@ -163,6 +198,10 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         'BidPlaced',
         (raw) => _handleBid(raw, source: channelName),
       );
+      _streamChannel!.bind(
+        'bid.winner.determined',
+        (raw) => _handleWinner(raw, source: channelName),
+      );
     } catch (e) {
       debugPrint('❌ Error initializing Pusher: $e');
       emit(state.copyWith(
@@ -184,11 +223,142 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
 
   void _handleBid(dynamic raw, {required String source}) {
     try {
-      // TODO: forward to product/bid state if needed.
+      final dataMap = _normalizeSocketPayload(raw);
+      final event = BidPlacedEvent.fromJson(dataMap);
+      final shouldResetWinner =
+          state.currentWinner != null && event.bidSession?.status == 'active';
+      final nextWinner = shouldResetWinner ? null : state.currentWinner;
+      final nextSelecting = shouldResetWinner ? false : state.isSelectingWinner;
+
+      // Check if this is the first bid (timer not started yet)
+      final isFirstBid = state.currentBidEndTime == null && 
+                         state.currentBidRemainingSeconds == null;
+
+      // Update bids list
+      final updatedBids = List<BidStreamItem>.from(state.bids)..insert(0, event.bid);
+      final updatedStreamProductId = state.currentStreamProductId ?? event.bid.streamProductId;
+      final updatedCurrentBid = (state.currentStreamProductId == null ||
+              state.currentStreamProductId == event.bid.streamProductId)
+          ? event.bid
+          : state.currentProductStreamBid;
+
+      if (event.streamProduct != null) {
+        final product = _mergeBidSessionIntoProduct(
+          event.streamProduct!,
+          event.bidSession,
+          event.bid,
+        );
+
+        // If this is the first bid, ensure timer is started from the bid session
+        DateTime? timerEndTime;
+        int? timerRemainingSeconds;
+        
+        if (isFirstBid && event.bidSession != null) {
+          final session = event.bidSession!;
+          timerEndTime = session.sessionEndsAt;
+          timerRemainingSeconds = session.remainingSeconds;
+
+          // Calculate end time if we have remaining seconds but no end time
+          if (timerEndTime == null && timerRemainingSeconds != null && timerRemainingSeconds > 0) {
+            timerEndTime = DateTime.now().add(Duration(seconds: timerRemainingSeconds));
+          }
+
+          // Calculate remaining seconds if we have end time but no remaining seconds
+          if (timerRemainingSeconds == null && timerEndTime != null) {
+            timerRemainingSeconds = timerEndTime.difference(DateTime.now()).inSeconds;
+            if (timerRemainingSeconds < 0) {
+              timerRemainingSeconds = 0;
+            }
+          }
+
+          if (timerEndTime != null || timerRemainingSeconds != null) {
+            debugPrint('⏰ Starting bid session timer (first bid placed) - Remaining: ${timerRemainingSeconds}s');
+          }
+        }
+
+        // Resolve timing from product
+        final bidTiming = _resolveBidTiming(product);
+        
+        // Use timer values from first bid if available, otherwise use resolved timing
+        emit(state.copyWith(
+          bids: updatedBids,
+          stream: state.stream.copyWith(
+            streamProducts: _updateStreamProducts(product),
+          ),
+          activeStreamProduct: product,
+          currentStreamProductId: product.id ?? product.productId ?? updatedStreamProductId,
+          currentProductStreamBid: updatedCurrentBid,
+          currentBidEndTime: timerEndTime ?? bidTiming.endTime,
+          currentBidRemainingSeconds: timerRemainingSeconds ?? bidTiming.remainingSeconds,
+          currentWinner: nextWinner,
+          isSelectingWinner: nextSelecting,
+        ));
+      } else {
+        // If no stream product, just update bids
+        emit(state.copyWith(
+          bids: updatedBids,
+          currentStreamProductId: updatedStreamProductId,
+          currentProductStreamBid: updatedCurrentBid,
+          currentWinner: nextWinner,
+          isSelectingWinner: nextSelecting,
+        ));
+      }
     } catch (e, st) {
       debugPrint('❌ [$source] bid parse error: $e');
       debugPrintStack(stackTrace: st);
     }
+  }
+
+  void _handleWinner(dynamic raw, {required String source}) {
+    try {
+      final dataMap = _normalizeSocketPayload(raw);
+      final event = BidWinnerEvent.fromJson(dataMap);
+      emit(state.copyWith(
+        currentWinner: event,
+        isSelectingWinner: false,
+        currentBidRemainingSeconds: 0,
+        currentBidEndTime: null,
+      ));
+    } catch (e, st) {
+      debugPrint('❌ [$source] winner parse error: $e');
+      debugPrintStack(stackTrace: st);
+    }
+  }
+
+  List<StreamProductModel> _updateStreamProducts(StreamProductModel product) {
+    final streamProducts = List<StreamProductModel>.from(
+      state.stream.streamProducts ?? const [],
+    );
+    final productId = product.id ?? product.productId;
+    if (productId != null) {
+      final index = streamProducts.indexWhere((p) => p.id == productId);
+      if (index >= 0) {
+        streamProducts[index] = product;
+      } else {
+        streamProducts.insert(0, product);
+      }
+    }
+    return streamProducts;
+  }
+
+  Map<String, dynamic> _normalizeSocketPayload(dynamic raw) {
+    Map<String, dynamic> map;
+    if (raw is String) {
+      map = Map<String, dynamic>.from(jsonDecode(raw));
+    } else if (raw is Map) {
+      map = Map<String, dynamic>.from(raw);
+    } else {
+      throw FormatException('Unsupported payload type: ${raw.runtimeType}');
+    }
+
+    final data = map['data'];
+    if (data is String) {
+      return Map<String, dynamic>.from(jsonDecode(data));
+    }
+    if (data is Map) {
+      return Map<String, dynamic>.from(data);
+    }
+    return map;
   }
 
   // ================== LiveKit ==================
@@ -644,7 +814,7 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
 
   Future<void> placeBid({
     required int streamId,
-    required int productId,
+    required int streamProductId,
     required String bidAmount,
   }) async {
     emit(state.copyWith(
@@ -654,7 +824,7 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
 
     final res = await _addBidUsecase(AddStreamBidParams(
       streamId: streamId,
-      productId: productId,
+      streamProductId: streamProductId,
       bidAmount: bidAmount,
     ));
 
@@ -738,15 +908,22 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
       }
     }
     BidStreamItem? selectedBid;
+    bool hasBidsForProduct = false;
     if (productId != null) {
       for (final bid in state.bids) {
         if (bid.streamProductId == productId) {
           selectedBid = bid;
+          hasBidsForProduct = true;
           break;
         }
       }
     }
-    final bidTiming = _resolveBidTiming(product);
+    
+    // Only start the timer if there are actual bids placed by users for this product
+    // Timer will be started when first bid is placed via socket event (_handleBid)
+    // When auction is started, there are no bids yet, so timer should not start
+    final bidTiming = hasBidsForProduct ? _resolveBidTiming(product) : (endTime: null, remainingSeconds: null);
+    
     emit(state.copyWith(
       stream: state.stream.copyWith(streamProducts: streamProducts),
       activeStreamProduct: product,
@@ -754,6 +931,8 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
       currentProductStreamBid: selectedBid,
       currentBidEndTime: bidTiming.endTime,
       currentBidRemainingSeconds: bidTiming.remainingSeconds,
+      currentWinner: null,
+      isSelectingWinner: false,
     ));
   }
 
@@ -790,8 +969,28 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         streamSeconds: nextStreamSeconds,
         currentBidRemainingSeconds: remaining,
         currentBidEndTime: endTime,
+        isSelectingWinner: _resolveSelectingWinner(
+          currentState: currentState,
+          nextRemaining: remaining,
+        ),
       ));
     });
+  }
+
+  bool _resolveSelectingWinner({
+    required BroadcasterStreamState currentState,
+    int? nextRemaining,
+  }) {
+    final previousRemaining = currentState.currentBidRemainingSeconds;
+    var selecting = currentState.isSelectingWinner;
+
+    if (nextRemaining == null || nextRemaining > 0) {
+      selecting = false;
+    } else if ((previousRemaining ?? 0) > 0 && nextRemaining == 0) {
+      selecting = currentState.currentWinner == null;
+    }
+
+    return selecting;
   }
 
   // ================== Cleanup ==================

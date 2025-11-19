@@ -56,6 +56,9 @@ mixin _$BroadcasterStreamState {
   int? get currentBidRemainingSeconds => throw _privateConstructorUsedError;
   int? get currentStreamProductId => throw _privateConstructorUsedError;
   BidStreamItem? get currentProductStreamBid =>
+      throw _privateConstructorUsedError;
+  BidWinnerEvent? get currentWinner => throw _privateConstructorUsedError;
+  bool get isSelectingWinner =>
       throw _privateConstructorUsedError; // Initialization
   bool get isInitializing => throw _privateConstructorUsedError;
 
@@ -106,11 +109,14 @@ abstract class $BroadcasterStreamStateCopyWith<$Res> {
       int? currentBidRemainingSeconds,
       int? currentStreamProductId,
       BidStreamItem? currentProductStreamBid,
+      BidWinnerEvent? currentWinner,
+      bool isSelectingWinner,
       bool isInitializing});
 
   $StreamDataModelCopyWith<$Res> get stream;
   $StreamProductModelCopyWith<$Res>? get activeStreamProduct;
   $BidStreamItemCopyWith<$Res>? get currentProductStreamBid;
+  $BidWinnerEventCopyWith<$Res>? get currentWinner;
 }
 
 /// @nodoc
@@ -162,6 +168,8 @@ class _$BroadcasterStreamStateCopyWithImpl<$Res,
     Object? currentBidRemainingSeconds = freezed,
     Object? currentStreamProductId = freezed,
     Object? currentProductStreamBid = freezed,
+    Object? currentWinner = freezed,
+    Object? isSelectingWinner = null,
     Object? isInitializing = null,
   }) {
     return _then(_value.copyWith(
@@ -297,6 +305,14 @@ class _$BroadcasterStreamStateCopyWithImpl<$Res,
           ? _value.currentProductStreamBid
           : currentProductStreamBid // ignore: cast_nullable_to_non_nullable
               as BidStreamItem?,
+      currentWinner: freezed == currentWinner
+          ? _value.currentWinner
+          : currentWinner // ignore: cast_nullable_to_non_nullable
+              as BidWinnerEvent?,
+      isSelectingWinner: null == isSelectingWinner
+          ? _value.isSelectingWinner
+          : isSelectingWinner // ignore: cast_nullable_to_non_nullable
+              as bool,
       isInitializing: null == isInitializing
           ? _value.isInitializing
           : isInitializing // ignore: cast_nullable_to_non_nullable
@@ -341,6 +357,20 @@ class _$BroadcasterStreamStateCopyWithImpl<$Res,
     return $BidStreamItemCopyWith<$Res>(_value.currentProductStreamBid!,
         (value) {
       return _then(_value.copyWith(currentProductStreamBid: value) as $Val);
+    });
+  }
+
+  /// Create a copy of BroadcasterStreamState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BidWinnerEventCopyWith<$Res>? get currentWinner {
+    if (_value.currentWinner == null) {
+      return null;
+    }
+
+    return $BidWinnerEventCopyWith<$Res>(_value.currentWinner!, (value) {
+      return _then(_value.copyWith(currentWinner: value) as $Val);
     });
   }
 }
@@ -388,6 +418,8 @@ abstract class _$$BroadcasterStreamStateImplCopyWith<$Res>
       int? currentBidRemainingSeconds,
       int? currentStreamProductId,
       BidStreamItem? currentProductStreamBid,
+      BidWinnerEvent? currentWinner,
+      bool isSelectingWinner,
       bool isInitializing});
 
   @override
@@ -396,6 +428,8 @@ abstract class _$$BroadcasterStreamStateImplCopyWith<$Res>
   $StreamProductModelCopyWith<$Res>? get activeStreamProduct;
   @override
   $BidStreamItemCopyWith<$Res>? get currentProductStreamBid;
+  @override
+  $BidWinnerEventCopyWith<$Res>? get currentWinner;
 }
 
 /// @nodoc
@@ -446,6 +480,8 @@ class __$$BroadcasterStreamStateImplCopyWithImpl<$Res>
     Object? currentBidRemainingSeconds = freezed,
     Object? currentStreamProductId = freezed,
     Object? currentProductStreamBid = freezed,
+    Object? currentWinner = freezed,
+    Object? isSelectingWinner = null,
     Object? isInitializing = null,
   }) {
     return _then(_$BroadcasterStreamStateImpl(
@@ -581,6 +617,14 @@ class __$$BroadcasterStreamStateImplCopyWithImpl<$Res>
           ? _value.currentProductStreamBid
           : currentProductStreamBid // ignore: cast_nullable_to_non_nullable
               as BidStreamItem?,
+      currentWinner: freezed == currentWinner
+          ? _value.currentWinner
+          : currentWinner // ignore: cast_nullable_to_non_nullable
+              as BidWinnerEvent?,
+      isSelectingWinner: null == isSelectingWinner
+          ? _value.isSelectingWinner
+          : isSelectingWinner // ignore: cast_nullable_to_non_nullable
+              as bool,
       isInitializing: null == isInitializing
           ? _value.isInitializing
           : isInitializing // ignore: cast_nullable_to_non_nullable
@@ -628,6 +672,8 @@ class _$BroadcasterStreamStateImpl
       this.currentBidRemainingSeconds,
       this.currentStreamProductId,
       this.currentProductStreamBid,
+      this.currentWinner,
+      this.isSelectingWinner = false,
       this.isInitializing = false})
       : _comments = comments,
         _bids = bids;
@@ -742,6 +788,11 @@ class _$BroadcasterStreamStateImpl
   final int? currentStreamProductId;
   @override
   final BidStreamItem? currentProductStreamBid;
+  @override
+  final BidWinnerEvent? currentWinner;
+  @override
+  @JsonKey()
+  final bool isSelectingWinner;
 // Initialization
   @override
   @JsonKey()
@@ -749,7 +800,7 @@ class _$BroadcasterStreamStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BroadcasterStreamState(isConnected: $isConnected, isPublishing: $isPublishing, videoTrack: $videoTrack, audioTrack: $audioTrack, room: $room, localParticipant: $localParticipant, isPusherConnected: $isPusherConnected, stream: $stream, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentStreamProductId: $currentStreamProductId, currentProductStreamBid: $currentProductStreamBid, isInitializing: $isInitializing)';
+    return 'BroadcasterStreamState(isConnected: $isConnected, isPublishing: $isPublishing, videoTrack: $videoTrack, audioTrack: $audioTrack, room: $room, localParticipant: $localParticipant, isPusherConnected: $isPusherConnected, stream: $stream, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentStreamProductId: $currentStreamProductId, currentProductStreamBid: $currentProductStreamBid, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, isInitializing: $isInitializing)';
   }
 
   @override
@@ -793,6 +844,8 @@ class _$BroadcasterStreamStateImpl
           DiagnosticsProperty('currentStreamProductId', currentStreamProductId))
       ..add(DiagnosticsProperty(
           'currentProductStreamBid', currentProductStreamBid))
+      ..add(DiagnosticsProperty('currentWinner', currentWinner))
+      ..add(DiagnosticsProperty('isSelectingWinner', isSelectingWinner))
       ..add(DiagnosticsProperty('isInitializing', isInitializing));
   }
 
@@ -866,6 +919,10 @@ class _$BroadcasterStreamStateImpl
             (identical(
                     other.currentProductStreamBid, currentProductStreamBid) ||
                 other.currentProductStreamBid == currentProductStreamBid) &&
+            (identical(other.currentWinner, currentWinner) ||
+                other.currentWinner == currentWinner) &&
+            (identical(other.isSelectingWinner, isSelectingWinner) ||
+                other.isSelectingWinner == isSelectingWinner) &&
             (identical(other.isInitializing, isInitializing) ||
                 other.isInitializing == isInitializing));
   }
@@ -906,6 +963,8 @@ class _$BroadcasterStreamStateImpl
         currentBidRemainingSeconds,
         currentStreamProductId,
         currentProductStreamBid,
+        currentWinner,
+        isSelectingWinner,
         isInitializing
       ]);
 
@@ -954,6 +1013,8 @@ abstract class _BroadcasterStreamState implements BroadcasterStreamState {
       final int? currentBidRemainingSeconds,
       final int? currentStreamProductId,
       final BidStreamItem? currentProductStreamBid,
+      final BidWinnerEvent? currentWinner,
+      final bool isSelectingWinner,
       final bool isInitializing}) = _$BroadcasterStreamStateImpl;
 
 // LiveKit
@@ -1022,7 +1083,11 @@ abstract class _BroadcasterStreamState implements BroadcasterStreamState {
   @override
   int? get currentStreamProductId;
   @override
-  BidStreamItem? get currentProductStreamBid; // Initialization
+  BidStreamItem? get currentProductStreamBid;
+  @override
+  BidWinnerEvent? get currentWinner;
+  @override
+  bool get isSelectingWinner; // Initialization
   @override
   bool get isInitializing;
 

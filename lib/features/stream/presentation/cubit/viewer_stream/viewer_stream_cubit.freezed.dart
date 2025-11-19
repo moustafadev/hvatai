@@ -54,8 +54,10 @@ mixin _$ViewerStreamState {
   int? get currentStreamProductId => throw _privateConstructorUsedError;
   DateTime? get currentBidEndTime => throw _privateConstructorUsedError;
   int? get currentBidRemainingSeconds => throw _privateConstructorUsedError;
-  int? get currentBidTotalBids =>
-      throw _privateConstructorUsedError; // Initialization
+  int? get currentBidTotalBids => throw _privateConstructorUsedError;
+  BidWinnerEvent? get currentWinner => throw _privateConstructorUsedError;
+  bool get isSelectingWinner => throw _privateConstructorUsedError;
+  int get currentUserId => throw _privateConstructorUsedError; // Initialization
   bool get isInitializing =>
       throw _privateConstructorUsedError; // Stream status
   bool get isStreamEnded => throw _privateConstructorUsedError;
@@ -106,12 +108,16 @@ abstract class $ViewerStreamStateCopyWith<$Res> {
       DateTime? currentBidEndTime,
       int? currentBidRemainingSeconds,
       int? currentBidTotalBids,
+      BidWinnerEvent? currentWinner,
+      bool isSelectingWinner,
+      int currentUserId,
       bool isInitializing,
       bool isStreamEnded});
 
   $StreamDataModelCopyWith<$Res> get stream;
   $JoinStreamDataCopyWith<$Res>? get joinData;
   $StreamProductModelCopyWith<$Res>? get activeStreamProduct;
+  $BidWinnerEventCopyWith<$Res>? get currentWinner;
 }
 
 /// @nodoc
@@ -161,6 +167,9 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
     Object? currentBidEndTime = freezed,
     Object? currentBidRemainingSeconds = freezed,
     Object? currentBidTotalBids = freezed,
+    Object? currentWinner = freezed,
+    Object? isSelectingWinner = null,
+    Object? currentUserId = null,
     Object? isInitializing = null,
     Object? isStreamEnded = null,
   }) {
@@ -293,6 +302,18 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
           ? _value.currentBidTotalBids
           : currentBidTotalBids // ignore: cast_nullable_to_non_nullable
               as int?,
+      currentWinner: freezed == currentWinner
+          ? _value.currentWinner
+          : currentWinner // ignore: cast_nullable_to_non_nullable
+              as BidWinnerEvent?,
+      isSelectingWinner: null == isSelectingWinner
+          ? _value.isSelectingWinner
+          : isSelectingWinner // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currentUserId: null == currentUserId
+          ? _value.currentUserId
+          : currentUserId // ignore: cast_nullable_to_non_nullable
+              as int,
       isInitializing: null == isInitializing
           ? _value.isInitializing
           : isInitializing // ignore: cast_nullable_to_non_nullable
@@ -342,6 +363,20 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
       return _then(_value.copyWith(activeStreamProduct: value) as $Val);
     });
   }
+
+  /// Create a copy of ViewerStreamState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BidWinnerEventCopyWith<$Res>? get currentWinner {
+    if (_value.currentWinner == null) {
+      return null;
+    }
+
+    return $BidWinnerEventCopyWith<$Res>(_value.currentWinner!, (value) {
+      return _then(_value.copyWith(currentWinner: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -385,6 +420,9 @@ abstract class _$$ViewerStreamStateImplCopyWith<$Res>
       DateTime? currentBidEndTime,
       int? currentBidRemainingSeconds,
       int? currentBidTotalBids,
+      BidWinnerEvent? currentWinner,
+      bool isSelectingWinner,
+      int currentUserId,
       bool isInitializing,
       bool isStreamEnded});
 
@@ -394,6 +432,8 @@ abstract class _$$ViewerStreamStateImplCopyWith<$Res>
   $JoinStreamDataCopyWith<$Res>? get joinData;
   @override
   $StreamProductModelCopyWith<$Res>? get activeStreamProduct;
+  @override
+  $BidWinnerEventCopyWith<$Res>? get currentWinner;
 }
 
 /// @nodoc
@@ -441,6 +481,9 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
     Object? currentBidEndTime = freezed,
     Object? currentBidRemainingSeconds = freezed,
     Object? currentBidTotalBids = freezed,
+    Object? currentWinner = freezed,
+    Object? isSelectingWinner = null,
+    Object? currentUserId = null,
     Object? isInitializing = null,
     Object? isStreamEnded = null,
   }) {
@@ -573,6 +616,18 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
           ? _value.currentBidTotalBids
           : currentBidTotalBids // ignore: cast_nullable_to_non_nullable
               as int?,
+      currentWinner: freezed == currentWinner
+          ? _value.currentWinner
+          : currentWinner // ignore: cast_nullable_to_non_nullable
+              as BidWinnerEvent?,
+      isSelectingWinner: null == isSelectingWinner
+          ? _value.isSelectingWinner
+          : isSelectingWinner // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currentUserId: null == currentUserId
+          ? _value.currentUserId
+          : currentUserId // ignore: cast_nullable_to_non_nullable
+              as int,
       isInitializing: null == isInitializing
           ? _value.isInitializing
           : isInitializing // ignore: cast_nullable_to_non_nullable
@@ -623,6 +678,9 @@ class _$ViewerStreamStateImpl
       this.currentBidEndTime,
       this.currentBidRemainingSeconds,
       this.currentBidTotalBids,
+      this.currentWinner,
+      this.isSelectingWinner = false,
+      this.currentUserId = 0,
       this.isInitializing = false,
       this.isStreamEnded = false})
       : _comments = comments,
@@ -735,6 +793,14 @@ class _$ViewerStreamStateImpl
   final int? currentBidRemainingSeconds;
   @override
   final int? currentBidTotalBids;
+  @override
+  final BidWinnerEvent? currentWinner;
+  @override
+  @JsonKey()
+  final bool isSelectingWinner;
+  @override
+  @JsonKey()
+  final int currentUserId;
 // Initialization
   @override
   @JsonKey()
@@ -746,7 +812,7 @@ class _$ViewerStreamStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ViewerStreamState(isConnected: $isConnected, remoteVideoTrack: $remoteVideoTrack, room: $room, remoteParticipant: $remoteParticipant, isPusherConnected: $isPusherConnected, stream: $stream, joinData: $joinData, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentStreamProductId: $currentStreamProductId, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentBidTotalBids: $currentBidTotalBids, isInitializing: $isInitializing, isStreamEnded: $isStreamEnded)';
+    return 'ViewerStreamState(isConnected: $isConnected, remoteVideoTrack: $remoteVideoTrack, room: $room, remoteParticipant: $remoteParticipant, isPusherConnected: $isPusherConnected, stream: $stream, joinData: $joinData, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentStreamProductId: $currentStreamProductId, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentBidTotalBids: $currentBidTotalBids, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, currentUserId: $currentUserId, isInitializing: $isInitializing, isStreamEnded: $isStreamEnded)';
   }
 
   @override
@@ -788,6 +854,9 @@ class _$ViewerStreamStateImpl
       ..add(DiagnosticsProperty(
           'currentBidRemainingSeconds', currentBidRemainingSeconds))
       ..add(DiagnosticsProperty('currentBidTotalBids', currentBidTotalBids))
+      ..add(DiagnosticsProperty('currentWinner', currentWinner))
+      ..add(DiagnosticsProperty('isSelectingWinner', isSelectingWinner))
+      ..add(DiagnosticsProperty('currentUserId', currentUserId))
       ..add(DiagnosticsProperty('isInitializing', isInitializing))
       ..add(DiagnosticsProperty('isStreamEnded', isStreamEnded));
   }
@@ -859,6 +928,12 @@ class _$ViewerStreamStateImpl
                     currentBidRemainingSeconds) &&
             (identical(other.currentBidTotalBids, currentBidTotalBids) ||
                 other.currentBidTotalBids == currentBidTotalBids) &&
+            (identical(other.currentWinner, currentWinner) ||
+                other.currentWinner == currentWinner) &&
+            (identical(other.isSelectingWinner, isSelectingWinner) ||
+                other.isSelectingWinner == isSelectingWinner) &&
+            (identical(other.currentUserId, currentUserId) ||
+                other.currentUserId == currentUserId) &&
             (identical(other.isInitializing, isInitializing) ||
                 other.isInitializing == isInitializing) &&
             (identical(other.isStreamEnded, isStreamEnded) ||
@@ -900,6 +975,9 @@ class _$ViewerStreamStateImpl
         currentBidEndTime,
         currentBidRemainingSeconds,
         currentBidTotalBids,
+        currentWinner,
+        isSelectingWinner,
+        currentUserId,
         isInitializing,
         isStreamEnded
       ]);
@@ -948,6 +1026,9 @@ abstract class _ViewerStreamState implements ViewerStreamState {
       final DateTime? currentBidEndTime,
       final int? currentBidRemainingSeconds,
       final int? currentBidTotalBids,
+      final BidWinnerEvent? currentWinner,
+      final bool isSelectingWinner,
+      final int currentUserId,
       final bool isInitializing,
       final bool isStreamEnded}) = _$ViewerStreamStateImpl;
 
@@ -1015,7 +1096,13 @@ abstract class _ViewerStreamState implements ViewerStreamState {
   @override
   int? get currentBidRemainingSeconds;
   @override
-  int? get currentBidTotalBids; // Initialization
+  int? get currentBidTotalBids;
+  @override
+  BidWinnerEvent? get currentWinner;
+  @override
+  bool get isSelectingWinner;
+  @override
+  int get currentUserId; // Initialization
   @override
   bool get isInitializing; // Stream status
   @override

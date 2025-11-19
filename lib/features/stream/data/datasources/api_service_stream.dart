@@ -109,12 +109,12 @@ class ApiServiceStream extends ApiBase {
   }) async {
     return executeAndHandleErrorServer<BidStreamItem>(() async {
       final path = ServerConfig.addBidStream(
-          addStreamBidParams.streamId, addStreamBidParams.productId);
+          addStreamBidParams.streamId, addStreamBidParams.streamProductId);
 
       final res = await post(
         path,
         body: {
-          'stream_product_id': addStreamBidParams.productId,
+          'stream_product_id': addStreamBidParams.streamProductId,
           'bid_amount': addStreamBidParams.bidAmount,
         },
       );

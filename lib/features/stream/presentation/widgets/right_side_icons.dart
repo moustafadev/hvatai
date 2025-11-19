@@ -3,7 +3,10 @@ part of '../stream.dart';
 class RightSideIcons extends StatelessWidget {
   const RightSideIcons({
     super.key,
+    this.onShopTap,
   });
+
+  final Future<void> Function()? onShopTap;
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +19,11 @@ class RightSideIcons extends StatelessWidget {
         const SizedBox(height: 24),
         RightIcon(
           onTap: () async {
+            if (onShopTap != null) {
+              await onShopTap!();
+              return;
+            }
+
             // Get streamId from BroadcasterStreamCubit
             final broadcasterCubit = context.read<BroadcasterStreamCubit>();
             final streamId = broadcasterCubit.state.stream.id;

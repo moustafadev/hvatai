@@ -4,12 +4,18 @@ class LiveListingsBottomSheet extends StatefulWidget {
   final int streamId;
   final List<int> categoryIds;
   final int? currentStreamProductId;
+  final bool isViewerMode;
+  final bool showManagementActions;
+  final ValueChanged<ProductModel>? onBuyNowPressed;
 
   const LiveListingsBottomSheet({
     super.key,
     required this.streamId,
     required this.categoryIds,
     this.currentStreamProductId,
+    this.isViewerMode = false,
+    this.showManagementActions = true,
+    this.onBuyNowPressed,
   });
 
   @override
@@ -122,13 +128,13 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
   }
 
   Widget _buildProductCard(StreamProductItemModel streamProduct) {
-    final product = streamProduct.product;
-    if (product == null) {
+    final productModel = streamProduct.product;
+    if (productModel == null) {
       return const SizedBox.shrink();
     }
 
-    final variant = product.variants.firstOrNull ?? VariantModel();
-    final String imageUrl = product.images.firstOrNull ?? '';
+    final variant = productModel.variants.firstOrNull ?? VariantModel();
+    final String imageUrl = productModel.images.firstOrNull ?? '';
     final double variantPrice = variant.price ?? 0.0;
     final double startingBid = streamProduct.startingBid ?? 0.0;
     final double currentHighestBid = streamProduct.currentHighestBid ?? 0.0;
@@ -140,6 +146,9 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
         : (effectiveBidAmount % 1 == 0
             ? '${effectiveBidAmount.toInt()} ₽'
             : '${effectiveBidAmount.toStringAsFixed(2)} ₽');
+    final saleType = productModel.saleType;
+    final isAuction = saleType == 'auction';
+    final isBuyNow = saleType == 'buy_now';
 
     final isCurrentAuction = widget.currentStreamProductId != null &&
         streamProduct.streamProductId != null &&
@@ -202,7 +211,7 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomText(
-                      text: product.productName ?? '',
+                      text: productModel.productName ?? '',
                       fontSize: 16.sp,
                       fontWeight: FontWeight.w700,
                     ),
@@ -211,8 +220,9 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w700,
                     ),
-                    if (!isCurrentAuction &&
-                        streamProduct.product?.saleType == 'auction')
+                    if (!widget.isViewerMode &&
+                        !isCurrentAuction &&
+                        isAuction)
                       BlocBuilder<LiveListingsShopCubit,
                           LiveListingsShopState>(
                         builder: (context, cubitState) {
@@ -241,6 +251,19 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                                   },
                           );
                         },
+                      ),
+                    if (widget.isViewerMode && isBuyNow)
+                      CustomButton(
+                        title: 'Купить сейчас',
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        onPressed: widget.onBuyNowPressed == null
+                            ? null
+                            : () {
+                                Navigator.pop(context);
+                                widget.onBuyNowPressed!(
+                                  productModel,
+                                );
+                              },
                       ),
 
                     5.ph,
@@ -415,93 +438,94 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
               ),
             ),
             // Speech bubble and FAB button
-            BlocBuilder<LiveListingsShopCubit, LiveListingsShopState>(
-              builder: (context, state) {
-                final showNoInventory =
-                    !state.isLoading && state.filteredProducts.isEmpty;
+            if (widget.showManagementActions)
+              BlocBuilder<LiveListingsShopCubit, LiveListingsShopState>(
+                builder: (context, state) {
+                  final showNoInventory =
+                      !state.isLoading && state.filteredProducts.isEmpty;
 
-                return Positioned(
-                  bottom: 20.h,
-                  right: 16.w,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // Speech bubble - only show when no products
-                      if (showNoInventory)
-                        Padding(
-                          padding: EdgeInsets.only(bottom: 12.h, right: 4.w),
-                          child: _buildSpeechBubble(),
-                        ),
-                      // Yellow FAB button
-                      GestureDetector(
-                        onTap: () async {
-                          final cubit =
-                              context.read<LiveListingsShopCubit>();
+                  return Positioned(
+                    bottom: 20.h,
+                    right: 16.w,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        // Speech bubble - only show when no products
+                        if (showNoInventory)
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 12.h, right: 4.w),
+                            child: _buildSpeechBubble(),
+                          ),
+                        // Yellow FAB button
+                        GestureDetector(
+                          onTap: () async {
+                            final cubit =
+                                context.read<LiveListingsShopCubit>();
 
-                          if (cubit.state.categoryIds.isEmpty) {
-                            showFloatingMessageError(
-                                'Please select categories first');
-                            return;
-                          }
-
-                          await cubit.getMyProducts();
-                          if (!mounted) return;
-
-                          if (cubit.state.myProducts.isEmpty) {
-                            await showModalBottomSheet(
-                              isScrollControlled: true,
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              builder: (ctx) => _CreateProductSheet(
-                                allowedCategoryIds: cubit.state.categoryIds,
-                              ),
-                            );
-                          } else {
-                            final selectedProduct =
-                                await showModalBottomSheet<
-                                    StreamProductModel>(
-                              isScrollControlled: true,
-                              context: context,
-                              backgroundColor: Colors.transparent,
-                              builder: (ctx) => BlocProvider.value(
-                                value: cubit,
-                                child: _MyProductsSelectionSheet(
-                                  streamId: widget.streamId,
-                                ),
-                              ),
-                            );
-                            if (selectedProduct != null && mounted) {
-                              Navigator.pop(context, selectedProduct);
+                            if (cubit.state.categoryIds.isEmpty) {
+                              showFloatingMessageError(
+                                  'Please select categories first');
+                              return;
                             }
-                          }
-                        },
-                        child: Container(
-                          width: 56.w,
-                          height: 56.h,
-                          decoration: BoxDecoration(
-                            color: AppColors.goldenColor,
-                            shape: BoxShape.circle,
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.goldenColor.withOpacity(0.3),
-                                blurRadius: 8,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: Icon(
-                            Icons.add,
-                            color: AppColors.blackDark,
-                            size: 28.sp,
+
+                            await cubit.getMyProducts();
+                            if (!mounted) return;
+
+                            if (cubit.state.myProducts.isEmpty) {
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                builder: (ctx) => _CreateProductSheet(
+                                  allowedCategoryIds: cubit.state.categoryIds,
+                                ),
+                              );
+                            } else {
+                              final selectedProduct =
+                                  await showModalBottomSheet<
+                                      StreamProductModel>(
+                                isScrollControlled: true,
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                builder: (ctx) => BlocProvider.value(
+                                  value: cubit,
+                                  child: _MyProductsSelectionSheet(
+                                    streamId: widget.streamId,
+                                  ),
+                                ),
+                              );
+                              if (selectedProduct != null && mounted) {
+                                Navigator.pop(context, selectedProduct);
+                              }
+                            }
+                          },
+                          child: Container(
+                            width: 56.w,
+                            height: 56.h,
+                            decoration: BoxDecoration(
+                              color: AppColors.goldenColor,
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: AppColors.goldenColor.withOpacity(0.3),
+                                  blurRadius: 8,
+                                  offset: const Offset(0, 4),
+                                ),
+                              ],
+                            ),
+                            child: Icon(
+                              Icons.add,
+                              color: AppColors.blackDark,
+                              size: 28.sp,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+                      ],
+                    ),
+                  );
+                },
+              ),
           ],
         ),
       ),

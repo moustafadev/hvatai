@@ -30,6 +30,7 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
       locator(),
       locator(),
       locator(),
+      locator(),
       stream: widget.stream,
       joinData: widget.joinData,
     );
@@ -58,6 +59,24 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
     return '';
   }
 
+  void _placeBid({
+    required BuildContext context,
+    required StreamProductModel product,
+    required double amount,
+  }) {
+    final streamId = product.streamId ?? widget.stream.id;
+    final streamProductId = product.id;
+    if (streamId == null || streamProductId == null) {
+      showFloatingMessageError('Невозможно определить товар для ставки');
+      return;
+    }
+    context.read<ViewerStreamCubit>().placeBid(
+          streamId: streamId,
+          streamProductId: streamProductId,
+          bidAmount: amount.toStringAsFixed(2),
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
@@ -79,46 +98,84 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
               return const FullScreenLoader();
             }
 
-            final activeProduct = state.activeStreamProduct ??
-                ((state.stream.streamProducts != null &&
-                        state.stream.streamProducts!.isNotEmpty)
-                    ? state.stream.streamProducts!.first
-                    : null);
-            final hasProduct = activeProduct != null;
+            final activeProduct = state.activeStreamProduct;
+            final hasProduct =
+                activeProduct != null && (activeProduct.isActive ?? true);
+            StreamProductModel? currentProduct = hasProduct ? activeProduct : null;
             var productTitle = '';
             var productCategory = '';
-            var startPrice = 0.0;
+            var displayPrice = 0.0;
             var timerText = _formatTime(state.streamSeconds);
             var totalBids = state.currentBidTotalBids ?? 0;
+            final winnerData = state.currentWinner;
+            final isSelectingWinner = state.isSelectingWinner;
+            final hasWinner = winnerData != null;
+            final viewerIsWinner =
+                winnerData?.winner?.id == state.currentUserId;
 
-            if (activeProduct != null) {
-              final streamProduct = activeProduct;
-              final embeddedProduct = streamProduct.product;
+            if (currentProduct != null) {
+              final embeddedProduct = currentProduct.product;
               productTitle = embeddedProduct?.name ?? '';
               final categoryId = embeddedProduct?.categoryId;
               productCategory = _resolveCategoryName(categoryId);
-              startPrice =
-                  double.tryParse(streamProduct.startingPrice ?? '') ?? 0.0;
+              
+              displayPrice =
+                  double.tryParse(currentProduct.currentBid ?? '') ??
+                  double.tryParse(currentProduct.startingPrice ?? '') ??
+                  0.0;
+              
               if (state.currentBidRemainingSeconds != null) {
                 final remaining = state.currentBidRemainingSeconds!;
-                timerText = _formatTime(remaining >= 0 ? remaining : 0);
+                timerText = remaining <= 0
+                    ? 'Продано'
+                    : _formatTime(remaining >= 0 ? remaining : 0);
               }
               totalBids = state.currentBidTotalBids ?? 0;
             }
 
             final isInitialBid = hasProduct && totalBids == 0;
-            final formattedPrice = startPrice == 0
+            if (isInitialBid) {
+              timerText = '--:--';
+            } else if (!hasProduct && state.streamSeconds > 0) {
+              timerText = _formatTime(state.streamSeconds);
+            }
+            final formattedPrice = displayPrice == 0
                 ? '—'
-                : (startPrice % 1 == 0
-                    ? '${startPrice.toInt()}'
-                    : startPrice.toStringAsFixed(2));
-            final singleBidLabel = 'Ставка: $formattedPrice ₽ >>';
+                : (displayPrice % 1 == 0
+                    ? '${displayPrice.toInt()}'
+                    : displayPrice.toStringAsFixed(2));
+            final singleBidLabel = 'Ставка: $formattedPrice ₽';
+            final canBid = hasProduct &&
+                !state.isPlacingBid &&
+                currentProduct?.id != null &&
+                displayPrice > 0;
+            final canInteractWithBids =
+                canBid && !isSelectingWinner && !hasWinner;
+
+            Widget? postAuctionAction;
+            if (hasWinner) {
+              postAuctionAction = _buildPostAuctionButton(
+                label: viewerIsWinner ? 'Забрать' : 'Ждём следующий лот',
+                backgroundColor: viewerIsWinner
+                    ? AppColors.primaryColor
+                    : Color(0x99000000),
+                textColor: viewerIsWinner ? Colors.black : Colors.white,
+                onPressed: viewerIsWinner ? () {} : null,
+              );
+            }
 
             return Scaffold(
               backgroundColor: Colors.black,
               body: Stack(
                 children: [
                   Positioned.fill(child: _buildVideoView(state)),
+                  if (isSelectingWinner || hasWinner)
+                    WinnerBannerOverlay(
+                      isSelecting: isSelectingWinner,
+                      winner: winnerData,
+                      isViewerWinner: viewerIsWinner,
+                      topPadding: MediaQuery.of(context).padding.top,
+                    ),
                   Positioned(
                     top: MediaQuery.of(context).padding.top + 20,
                     left: 16,
@@ -140,6 +197,13 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                     ),
                   ),
                   Positioned(
+                    right: 16,
+                    top: MediaQuery.of(context).size.height * 0.55,
+                    child: RightSideIcons(
+                      onShopTap: () => _openViewerShop(context),
+                    ),
+                  ),
+                  Positioned(
                     left: 16,
                     right: 16,
                     bottom: 16,
@@ -155,14 +219,57 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                       timerText: timerText,
                       productTitle: productTitle,
                       productCategory: productCategory,
-                      startPrice: startPrice,
+                      startPrice: displayPrice,
                       showProductDetails: hasProduct,
-                      showBidActions: hasProduct,
-                      showSingleBidButton: isInitialBid,
+                      showBidActions: hasProduct && !isSelectingWinner,
+                      showSingleBidButton:
+                          isInitialBid && !isSelectingWinner && !hasWinner,
                       singleBidButtonLabel: singleBidLabel,
-                      onSingleBidPressed: hasProduct ? () {} : null,
-                      onEditPressed: null,
-                      onBidPressed: hasProduct ? () {} : null,
+                      isBidLoading: state.isPlacingBid,
+                      postAuctionAction: postAuctionAction,
+                      onSingleBidPressed:
+                          canInteractWithBids && currentProduct != null
+                          ? () => _placeBid(
+                                context: context,
+                                product: currentProduct,
+                                amount: displayPrice,
+                              )
+                          : null,
+                      onEditPressed: (!isInitialBid &&
+                              hasProduct &&
+                              currentProduct != null &&
+                              canInteractWithBids)
+                          ? () async {
+                              final customPrice =
+                                  await showModalBottomSheet<double>(
+                                context: context,
+                                isScrollControlled: true,
+                                backgroundColor: Colors.transparent,
+                                builder: (ctx) => CustomBidPriceBottomSheet(
+                                  minimumPrice: displayPrice,
+                                ),
+                              );
+                              
+                              if (!context.mounted || customPrice == null) {
+                                return;
+                              }
+
+                              _placeBid(
+                                context: context,
+                                product: currentProduct,
+                                amount: customPrice,
+                              );
+                            }
+                          : null,
+                      onBidPressed: (!isInitialBid &&
+                              canInteractWithBids &&
+                              currentProduct != null)
+                          ? () => _placeBid(
+                                context: context,
+                                product: currentProduct,
+                                amount: displayPrice,
+                              )
+                          : null,
                     ),
                   ),
                 ],
@@ -170,6 +277,26 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
             );
           },
         ),
+      ),
+    );
+  }
+
+  Widget _buildPostAuctionButton({
+    required String label,
+    required Color backgroundColor,
+    required Color textColor,
+    VoidCallback? onPressed,
+  }) {
+    return SizedBox(
+      width: double.infinity,
+      child: CustomButton(
+        title: label,
+        onPressed: onPressed,
+        color: backgroundColor,
+        radius: 10,
+        height: 48,
+        fontWeight: FontWeight.w700,
+        fontSize: 16,
       ),
     );
   }
@@ -183,6 +310,44 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
       renderMode: VideoRenderMode.auto,
       state.remoteVideoTrack!,
       fit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+    );
+  }
+
+  Future<void> _openViewerShop(BuildContext context) async {
+    final streamId = widget.stream.id;
+    if (streamId == null) return;
+    final categories = widget.stream.categories
+            ?.map((c) => c.id)
+            .whereType<int>()
+            .toList() ??
+        [];
+
+    await showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (ctx) => LiveListingsBottomSheet(
+        streamId: streamId,
+        categoryIds: categories,
+        currentStreamProductId: _cubit.state.currentStreamProductId,
+        isViewerMode: true,
+        showManagementActions: false,
+        onBuyNowPressed: (product) {
+          _openProductDetails(product);
+        },
+      ),
+    );
+  }
+
+  void _openProductDetails(ProductModel product) {
+    final cubit = locator<ProductDetailsCubit>();
+    context.push(
+      AppRoutes.productDetails,
+      extra: {
+        'model': product,
+        'products': [product],
+        'cubit': cubit,
+      },
     );
   }
 

@@ -151,7 +151,7 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
 
     final params = AddStreamBidParams(
       streamId: streamId,
-      productId: streamProductId,
+      streamProductId: streamProductId,
       bidAmount: (product.startingBid ?? 0.0).toStringAsFixed(2),
     );
 

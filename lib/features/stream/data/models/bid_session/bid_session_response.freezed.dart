@@ -230,8 +230,12 @@ mixin _$BidSessionData {
   @JsonKey(name: 'stream_product_id')
   int? get streamProductId => throw _privateConstructorUsedError;
   ProductModel? get product => throw _privateConstructorUsedError;
-  @JsonKey(name: 'starting_bid', fromJson: _parseDouble)
+  @JsonKey(name: 'starting_bid', fromJson: _parseStringToDouble)
   double? get startingBid => throw _privateConstructorUsedError;
+  @JsonKey(name: 'minimum_bid_increment', fromJson: _parseStringToDouble)
+  double? get minimumBidIncrement => throw _privateConstructorUsedError;
+  @JsonKey(name: 'next_minimum_bid', fromJson: _parseIntToDouble)
+  double? get nextMinimumBid => throw _privateConstructorUsedError;
   @JsonKey(name: 'can_bid')
   bool? get canBid => throw _privateConstructorUsedError;
   @JsonKey(name: 'bidding_enabled')
@@ -269,8 +273,12 @@ abstract class $BidSessionDataCopyWith<$Res> {
       BidSessionStreamModel? stream,
       @JsonKey(name: 'stream_product_id') int? streamProductId,
       ProductModel? product,
-      @JsonKey(name: 'starting_bid', fromJson: _parseDouble)
+      @JsonKey(name: 'starting_bid', fromJson: _parseStringToDouble)
       double? startingBid,
+      @JsonKey(name: 'minimum_bid_increment', fromJson: _parseStringToDouble)
+      double? minimumBidIncrement,
+      @JsonKey(name: 'next_minimum_bid', fromJson: _parseIntToDouble)
+      double? nextMinimumBid,
       @JsonKey(name: 'can_bid') bool? canBid,
       @JsonKey(name: 'bidding_enabled') bool? biddingEnabled,
       @JsonKey(name: 'is_active') bool? isActive,
@@ -305,6 +313,8 @@ class _$BidSessionDataCopyWithImpl<$Res, $Val extends BidSessionData>
     Object? streamProductId = freezed,
     Object? product = freezed,
     Object? startingBid = freezed,
+    Object? minimumBidIncrement = freezed,
+    Object? nextMinimumBid = freezed,
     Object? canBid = freezed,
     Object? biddingEnabled = freezed,
     Object? isActive = freezed,
@@ -334,6 +344,14 @@ class _$BidSessionDataCopyWithImpl<$Res, $Val extends BidSessionData>
       startingBid: freezed == startingBid
           ? _value.startingBid
           : startingBid // ignore: cast_nullable_to_non_nullable
+              as double?,
+      minimumBidIncrement: freezed == minimumBidIncrement
+          ? _value.minimumBidIncrement
+          : minimumBidIncrement // ignore: cast_nullable_to_non_nullable
+              as double?,
+      nextMinimumBid: freezed == nextMinimumBid
+          ? _value.nextMinimumBid
+          : nextMinimumBid // ignore: cast_nullable_to_non_nullable
               as double?,
       canBid: freezed == canBid
           ? _value.canBid
@@ -426,8 +444,12 @@ abstract class _$$BidSessionDataImplCopyWith<$Res>
       BidSessionStreamModel? stream,
       @JsonKey(name: 'stream_product_id') int? streamProductId,
       ProductModel? product,
-      @JsonKey(name: 'starting_bid', fromJson: _parseDouble)
+      @JsonKey(name: 'starting_bid', fromJson: _parseStringToDouble)
       double? startingBid,
+      @JsonKey(name: 'minimum_bid_increment', fromJson: _parseStringToDouble)
+      double? minimumBidIncrement,
+      @JsonKey(name: 'next_minimum_bid', fromJson: _parseIntToDouble)
+      double? nextMinimumBid,
       @JsonKey(name: 'can_bid') bool? canBid,
       @JsonKey(name: 'bidding_enabled') bool? biddingEnabled,
       @JsonKey(name: 'is_active') bool? isActive,
@@ -463,6 +485,8 @@ class __$$BidSessionDataImplCopyWithImpl<$Res>
     Object? streamProductId = freezed,
     Object? product = freezed,
     Object? startingBid = freezed,
+    Object? minimumBidIncrement = freezed,
+    Object? nextMinimumBid = freezed,
     Object? canBid = freezed,
     Object? biddingEnabled = freezed,
     Object? isActive = freezed,
@@ -492,6 +516,14 @@ class __$$BidSessionDataImplCopyWithImpl<$Res>
       startingBid: freezed == startingBid
           ? _value.startingBid
           : startingBid // ignore: cast_nullable_to_non_nullable
+              as double?,
+      minimumBidIncrement: freezed == minimumBidIncrement
+          ? _value.minimumBidIncrement
+          : minimumBidIncrement // ignore: cast_nullable_to_non_nullable
+              as double?,
+      nextMinimumBid: freezed == nextMinimumBid
+          ? _value.nextMinimumBid
+          : nextMinimumBid // ignore: cast_nullable_to_non_nullable
               as double?,
       canBid: freezed == canBid
           ? _value.canBid
@@ -537,7 +569,12 @@ class _$BidSessionDataImpl implements _BidSessionData {
       this.stream,
       @JsonKey(name: 'stream_product_id') this.streamProductId,
       this.product,
-      @JsonKey(name: 'starting_bid', fromJson: _parseDouble) this.startingBid,
+      @JsonKey(name: 'starting_bid', fromJson: _parseStringToDouble)
+      this.startingBid,
+      @JsonKey(name: 'minimum_bid_increment', fromJson: _parseStringToDouble)
+      this.minimumBidIncrement,
+      @JsonKey(name: 'next_minimum_bid', fromJson: _parseIntToDouble)
+      this.nextMinimumBid,
       @JsonKey(name: 'can_bid') this.canBid,
       @JsonKey(name: 'bidding_enabled') this.biddingEnabled,
       @JsonKey(name: 'is_active') this.isActive,
@@ -561,8 +598,14 @@ class _$BidSessionDataImpl implements _BidSessionData {
   @override
   final ProductModel? product;
   @override
-  @JsonKey(name: 'starting_bid', fromJson: _parseDouble)
+  @JsonKey(name: 'starting_bid', fromJson: _parseStringToDouble)
   final double? startingBid;
+  @override
+  @JsonKey(name: 'minimum_bid_increment', fromJson: _parseStringToDouble)
+  final double? minimumBidIncrement;
+  @override
+  @JsonKey(name: 'next_minimum_bid', fromJson: _parseIntToDouble)
+  final double? nextMinimumBid;
   @override
   @JsonKey(name: 'can_bid')
   final bool? canBid;
@@ -589,7 +632,7 @@ class _$BidSessionDataImpl implements _BidSessionData {
 
   @override
   String toString() {
-    return 'BidSessionData(hasSession: $hasSession, stream: $stream, streamProductId: $streamProductId, product: $product, startingBid: $startingBid, canBid: $canBid, biddingEnabled: $biddingEnabled, isActive: $isActive, bidSession: $bidSession, remainingSeconds: $remainingSeconds, isActiveSession: $isActiveSession, hasEnded: $hasEnded, message: $message)';
+    return 'BidSessionData(hasSession: $hasSession, stream: $stream, streamProductId: $streamProductId, product: $product, startingBid: $startingBid, minimumBidIncrement: $minimumBidIncrement, nextMinimumBid: $nextMinimumBid, canBid: $canBid, biddingEnabled: $biddingEnabled, isActive: $isActive, bidSession: $bidSession, remainingSeconds: $remainingSeconds, isActiveSession: $isActiveSession, hasEnded: $hasEnded, message: $message)';
   }
 
   @override
@@ -605,6 +648,10 @@ class _$BidSessionDataImpl implements _BidSessionData {
             (identical(other.product, product) || other.product == product) &&
             (identical(other.startingBid, startingBid) ||
                 other.startingBid == startingBid) &&
+            (identical(other.minimumBidIncrement, minimumBidIncrement) ||
+                other.minimumBidIncrement == minimumBidIncrement) &&
+            (identical(other.nextMinimumBid, nextMinimumBid) ||
+                other.nextMinimumBid == nextMinimumBid) &&
             (identical(other.canBid, canBid) || other.canBid == canBid) &&
             (identical(other.biddingEnabled, biddingEnabled) ||
                 other.biddingEnabled == biddingEnabled) &&
@@ -630,6 +677,8 @@ class _$BidSessionDataImpl implements _BidSessionData {
       streamProductId,
       product,
       startingBid,
+      minimumBidIncrement,
+      nextMinimumBid,
       canBid,
       biddingEnabled,
       isActive,
@@ -662,8 +711,12 @@ abstract class _BidSessionData implements BidSessionData {
       final BidSessionStreamModel? stream,
       @JsonKey(name: 'stream_product_id') final int? streamProductId,
       final ProductModel? product,
-      @JsonKey(name: 'starting_bid', fromJson: _parseDouble)
+      @JsonKey(name: 'starting_bid', fromJson: _parseStringToDouble)
       final double? startingBid,
+      @JsonKey(name: 'minimum_bid_increment', fromJson: _parseStringToDouble)
+      final double? minimumBidIncrement,
+      @JsonKey(name: 'next_minimum_bid', fromJson: _parseIntToDouble)
+      final double? nextMinimumBid,
       @JsonKey(name: 'can_bid') final bool? canBid,
       @JsonKey(name: 'bidding_enabled') final bool? biddingEnabled,
       @JsonKey(name: 'is_active') final bool? isActive,
@@ -687,8 +740,14 @@ abstract class _BidSessionData implements BidSessionData {
   @override
   ProductModel? get product;
   @override
-  @JsonKey(name: 'starting_bid', fromJson: _parseDouble)
+  @JsonKey(name: 'starting_bid', fromJson: _parseStringToDouble)
   double? get startingBid;
+  @override
+  @JsonKey(name: 'minimum_bid_increment', fromJson: _parseStringToDouble)
+  double? get minimumBidIncrement;
+  @override
+  @JsonKey(name: 'next_minimum_bid', fromJson: _parseIntToDouble)
+  double? get nextMinimumBid;
   @override
   @JsonKey(name: 'can_bid')
   bool? get canBid;

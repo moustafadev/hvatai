@@ -25,8 +25,12 @@ class BidSessionData with _$BidSessionData {
     BidSessionStreamModel? stream,
     @JsonKey(name: 'stream_product_id') int? streamProductId,
     ProductModel? product,
-    @JsonKey(name: 'starting_bid', fromJson: _parseDouble)
+    @JsonKey(name: 'starting_bid', fromJson: _parseStringToDouble)
     double? startingBid,
+    @JsonKey(name: 'minimum_bid_increment', fromJson: _parseStringToDouble)
+    double? minimumBidIncrement,
+    @JsonKey(name: 'next_minimum_bid', fromJson: _parseIntToDouble)
+    double? nextMinimumBid,
     @JsonKey(name: 'can_bid') bool? canBid,
     @JsonKey(name: 'bidding_enabled') bool? biddingEnabled,
     @JsonKey(name: 'is_active') bool? isActive,
@@ -86,6 +90,26 @@ class BidSessionDetailsModel with _$BidSessionDetailsModel {
 }
 
 double? _parseDouble(dynamic value) {
+  if (value == null) return null;
+  if (value is double) return value;
+  if (value is int) return value.toDouble();
+  if (value is String) {
+    return double.tryParse(value);
+  }
+  return null;
+}
+
+double? _parseStringToDouble(dynamic value) {
+  if (value == null) return null;
+  if (value is double) return value;
+  if (value is int) return value.toDouble();
+  if (value is String) {
+    return double.tryParse(value);
+  }
+  return null;
+}
+
+double? _parseIntToDouble(dynamic value) {
   if (value == null) return null;
   if (value is double) return value;
   if (value is int) return value.toDouble();

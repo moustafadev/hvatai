@@ -50,6 +50,9 @@ class ViewerStreamState with _$ViewerStreamState {
     DateTime? currentBidEndTime,
     int? currentBidRemainingSeconds,
     int? currentBidTotalBids,
+    BidWinnerEvent? currentWinner,
+    @Default(false) bool isSelectingWinner,
+    @Default(0) int currentUserId,
 
     // Initialization
     @Default(false) bool isInitializing,

@@ -1,25 +1,31 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
+import 'package:hvatai/features/all_app/presentation/cubit/product_detials/product_details_cubit.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
+import 'package:hvatai/features/stream/data/models/bid_winner/bid_winner_event.dart';
 import 'package:hvatai/features/stream/presentation/cubit/broadcaster_stream/broadcaster_stream_cubit.dart';
 import 'package:hvatai/features/stream/presentation/cubit/live_listings_shop/live_listings_shop_cubit.dart';
 import 'package:hvatai/features/stream/presentation/cubit/viewer_stream/viewer_stream_cubit.dart';
 import 'package:hvatai/locator.dart';
+import 'package:hvatai/routes/app_routes.dart';
 import 'package:livekit_client/livekit_client.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
@@ -34,3 +40,6 @@ part 'widgets/live_listings_bottom_sheet.dart';
 part 'widgets/right_icon.dart';
 part 'widgets/right_side_icons.dart';
 part 'widgets/viewer_count_widget.dart';
+part 'widgets/slide_to_bid_button.dart';
+part 'widgets/custom_bid_price_bottom_sheet.dart';
+part 'widgets/winner_banner.dart';
