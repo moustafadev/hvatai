@@ -1,12 +1,14 @@
 part of 'live_listings_shop_cubit.dart';
 
 class LiveListingsShopState extends Equatable {
+  static const _unset = Object();
   const LiveListingsShopState({
     this.products,
     this.errorMessage,
     this.isLoading = false,
     this.isAddingProduct = false,
     this.isStartingAuction = false,
+    this.startingAuctionProductId,
     this.selectedTabIndex = 0,
     this.myProducts = const [],
     this.isMyProductsLoading = false,
@@ -21,6 +23,7 @@ class LiveListingsShopState extends Equatable {
   final bool isLoading;
   final bool isAddingProduct;
   final bool isStartingAuction;
+  final int? startingAuctionProductId;
   final int selectedTabIndex;
   final List<String> tabs;
   final List<ProductModel> myProducts;
@@ -52,6 +55,7 @@ class LiveListingsShopState extends Equatable {
     bool? isLoading,
     bool? isAddingProduct,
     bool? isStartingAuction,
+    Object? startingAuctionProductId = _unset,
     int? selectedTabIndex,
     List<ProductModel>? myProducts,
     bool? isMyProductsLoading,
@@ -66,6 +70,9 @@ class LiveListingsShopState extends Equatable {
       isLoading: isLoading ?? this.isLoading,
       isAddingProduct: isAddingProduct ?? this.isAddingProduct,
       isStartingAuction: isStartingAuction ?? this.isStartingAuction,
+      startingAuctionProductId: startingAuctionProductId == _unset
+          ? this.startingAuctionProductId
+          : startingAuctionProductId as int?,
       selectedTabIndex: selectedTabIndex ?? this.selectedTabIndex,
       myProducts: myProducts ?? this.myProducts,
       isMyProductsLoading: isMyProductsLoading ?? this.isMyProductsLoading,
@@ -83,6 +90,7 @@ class LiveListingsShopState extends Equatable {
         isLoading,
         isAddingProduct,
         isStartingAuction,
+        startingAuctionProductId,
         selectedTabIndex,
         tabs,
         myProducts,

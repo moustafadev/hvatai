@@ -154,13 +154,14 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
 
             Widget? postAuctionAction;
             if (hasWinner) {
-              postAuctionAction = _buildPostAuctionButton(
+              postAuctionAction = PostAuctionButton(
                 label: viewerIsWinner ? 'Забрать' : 'Ждём следующий лот',
-                backgroundColor: viewerIsWinner
-                    ? AppColors.primaryColor
-                    : Color(0x99000000),
+                backgroundColor:
+                    viewerIsWinner ? AppColors.primaryColor : const Color(0x99000000),
                 textColor: viewerIsWinner ? Colors.black : Colors.white,
-                onPressed: viewerIsWinner ? () {} : null,
+                onPressed: viewerIsWinner
+                    ? () => _showWinnerCheckoutSheet(context)
+                    : null,
               );
             }
 
@@ -168,7 +169,7 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
               backgroundColor: Colors.black,
               body: Stack(
                 children: [
-                  Positioned.fill(child: _buildVideoView(state)),
+                  Positioned.fill(child: ViewerVideoView(state: state)),
                   if (isSelectingWinner || hasWinner)
                     WinnerBannerOverlay(
                       isSelecting: isSelectingWinner,
@@ -281,38 +282,6 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
     );
   }
 
-  Widget _buildPostAuctionButton({
-    required String label,
-    required Color backgroundColor,
-    required Color textColor,
-    VoidCallback? onPressed,
-  }) {
-    return SizedBox(
-      width: double.infinity,
-      child: CustomButton(
-        title: label,
-        onPressed: onPressed,
-        color: backgroundColor,
-        radius: 10,
-        height: 48,
-        fontWeight: FontWeight.w700,
-        fontSize: 16,
-      ),
-    );
-  }
-
-  Widget _buildVideoView(ViewerStreamState state) {
-    if (!state.isConnected || state.remoteVideoTrack == null) {
-      return _waitingBox('Connecting to stream...');
-    }
-
-    return VideoTrackRenderer(
-      renderMode: VideoRenderMode.auto,
-      state.remoteVideoTrack!,
-      fit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
-    );
-  }
-
   Future<void> _openViewerShop(BuildContext context) async {
     final streamId = widget.stream.id;
     if (streamId == null) return;
@@ -351,22 +320,12 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
     );
   }
 
-  Widget _waitingBox(String text) {
-    return Container(
-      color: Colors.black,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const CircularProgressIndicator(color: Colors.white),
-            const SizedBox(height: 16),
-            Text(
-              text,
-              style: const TextStyle(color: Colors.white54, fontSize: 18),
-            ),
-          ],
-        ),
-      ),
+  Future<void> _showWinnerCheckoutSheet(BuildContext context) async {
+    await showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (_) => const WinnerCheckoutSheet(),
     );
   }
 

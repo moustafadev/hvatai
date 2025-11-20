@@ -147,7 +147,11 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
       return;
     }
 
-    emit(state.copyWith(isStartingAuction: true, errorMessage: null));
+    emit(state.copyWith(
+      isStartingAuction: true,
+      startingAuctionProductId: streamProductId,
+      errorMessage: null,
+    ));
 
     final params = AddStreamBidParams(
       streamId: streamId,
@@ -160,10 +164,18 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
     result.fold(
       (failure) {
         showFloatingMessageError(failure);
-        emit(state.copyWith(isStartingAuction: false, errorMessage: failure));
+        emit(state.copyWith(
+          isStartingAuction: false,
+          startingAuctionProductId: null,
+          errorMessage: failure,
+        ));
       },
       (bidItem) {
-        emit(state.copyWith(isStartingAuction: false, errorMessage: null));
+        emit(state.copyWith(
+          isStartingAuction: false,
+          startingAuctionProductId: null,
+          errorMessage: null,
+        ));
       },
     );
   }
@@ -174,7 +186,11 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
     required double bidAmount,
     String? notes,
   }) async {
-    emit(state.copyWith(isStartingAuction: true, errorMessage: null));
+    emit(state.copyWith(
+      isStartingAuction: true,
+      startingAuctionProductId: streamProductId,
+      errorMessage: null,
+    ));
 
     final params = ToggleBiddingParams(
       streamId: streamId,
@@ -189,7 +205,11 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
     result.fold(
       (failure) {
         showFloatingMessageError(failure);
-        emit(state.copyWith(isStartingAuction: false, errorMessage: failure));
+        emit(state.copyWith(
+          isStartingAuction: false,
+          startingAuctionProductId: null,
+          errorMessage: failure,
+        ));
       },
       (response) {
         showFloatingMessageSuccess(
@@ -200,7 +220,11 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
           streamProductId,
           bidAmount,
         );
-        emit(state.copyWith(isStartingAuction: false, errorMessage: null));
+        emit(state.copyWith(
+          isStartingAuction: false,
+          startingAuctionProductId: null,
+          errorMessage: null,
+        ));
       },
     );
 
