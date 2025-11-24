@@ -10,6 +10,7 @@ class CompanyInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
+      
       children: [
         // Company Icon
         Container(

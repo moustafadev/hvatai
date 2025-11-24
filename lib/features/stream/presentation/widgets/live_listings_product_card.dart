@@ -64,7 +64,7 @@ class LiveListingsProductCard extends StatelessWidget {
             10.pw,
             Expanded(
               child: SizedBox(
-                height: 180.h,
+                height: 150.h,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,7 +125,7 @@ class _ProductImage extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.r),
           child: CustomImage(
             width: 140.w,
-            height: 140.h,
+            height: 150.h,
             imageSource: imageUrl,
             fit: BoxFit.cover,
           ),

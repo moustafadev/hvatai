@@ -33,7 +33,7 @@ class CategoryTabsWidget extends StatelessWidget {
               return GestureDetector(
                 onTap: () => cubit.toggleDetail(index, category.id ?? 0),
                 child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 6.w),
+                  margin:  EdgeInsets.only(left: index == 0 ? 16 : 12),
                   decoration: BoxDecoration(
                     color: isSelected ? AppColors.primaryColor : null,
                     borderRadius: BorderRadius.circular(8),

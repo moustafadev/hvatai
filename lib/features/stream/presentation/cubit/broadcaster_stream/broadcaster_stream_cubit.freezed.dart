@@ -60,7 +60,8 @@ mixin _$BroadcasterStreamState {
   BidWinnerEvent? get currentWinner => throw _privateConstructorUsedError;
   bool get isSelectingWinner =>
       throw _privateConstructorUsedError; // Initialization
-  bool get isInitializing => throw _privateConstructorUsedError;
+  bool get isInitializing => throw _privateConstructorUsedError; // Microphone
+  bool get isMicrophoneMuted => throw _privateConstructorUsedError;
 
   /// Create a copy of BroadcasterStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -111,7 +112,8 @@ abstract class $BroadcasterStreamStateCopyWith<$Res> {
       BidStreamItem? currentProductStreamBid,
       BidWinnerEvent? currentWinner,
       bool isSelectingWinner,
-      bool isInitializing});
+      bool isInitializing,
+      bool isMicrophoneMuted});
 
   $StreamDataModelCopyWith<$Res> get stream;
   $StreamProductModelCopyWith<$Res>? get activeStreamProduct;
@@ -171,6 +173,7 @@ class _$BroadcasterStreamStateCopyWithImpl<$Res,
     Object? currentWinner = freezed,
     Object? isSelectingWinner = null,
     Object? isInitializing = null,
+    Object? isMicrophoneMuted = null,
   }) {
     return _then(_value.copyWith(
       isConnected: null == isConnected
@@ -317,6 +320,10 @@ class _$BroadcasterStreamStateCopyWithImpl<$Res,
           ? _value.isInitializing
           : isInitializing // ignore: cast_nullable_to_non_nullable
               as bool,
+      isMicrophoneMuted: null == isMicrophoneMuted
+          ? _value.isMicrophoneMuted
+          : isMicrophoneMuted // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -420,7 +427,8 @@ abstract class _$$BroadcasterStreamStateImplCopyWith<$Res>
       BidStreamItem? currentProductStreamBid,
       BidWinnerEvent? currentWinner,
       bool isSelectingWinner,
-      bool isInitializing});
+      bool isInitializing,
+      bool isMicrophoneMuted});
 
   @override
   $StreamDataModelCopyWith<$Res> get stream;
@@ -483,6 +491,7 @@ class __$$BroadcasterStreamStateImplCopyWithImpl<$Res>
     Object? currentWinner = freezed,
     Object? isSelectingWinner = null,
     Object? isInitializing = null,
+    Object? isMicrophoneMuted = null,
   }) {
     return _then(_$BroadcasterStreamStateImpl(
       isConnected: null == isConnected
@@ -629,6 +638,10 @@ class __$$BroadcasterStreamStateImplCopyWithImpl<$Res>
           ? _value.isInitializing
           : isInitializing // ignore: cast_nullable_to_non_nullable
               as bool,
+      isMicrophoneMuted: null == isMicrophoneMuted
+          ? _value.isMicrophoneMuted
+          : isMicrophoneMuted // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -674,7 +687,8 @@ class _$BroadcasterStreamStateImpl
       this.currentProductStreamBid,
       this.currentWinner,
       this.isSelectingWinner = false,
-      this.isInitializing = false})
+      this.isInitializing = false,
+      this.isMicrophoneMuted = false})
       : _comments = comments,
         _bids = bids;
 
@@ -797,10 +811,14 @@ class _$BroadcasterStreamStateImpl
   @override
   @JsonKey()
   final bool isInitializing;
+// Microphone
+  @override
+  @JsonKey()
+  final bool isMicrophoneMuted;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BroadcasterStreamState(isConnected: $isConnected, isPublishing: $isPublishing, videoTrack: $videoTrack, audioTrack: $audioTrack, room: $room, localParticipant: $localParticipant, isPusherConnected: $isPusherConnected, stream: $stream, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentStreamProductId: $currentStreamProductId, currentProductStreamBid: $currentProductStreamBid, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, isInitializing: $isInitializing)';
+    return 'BroadcasterStreamState(isConnected: $isConnected, isPublishing: $isPublishing, videoTrack: $videoTrack, audioTrack: $audioTrack, room: $room, localParticipant: $localParticipant, isPusherConnected: $isPusherConnected, stream: $stream, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentStreamProductId: $currentStreamProductId, currentProductStreamBid: $currentProductStreamBid, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, isInitializing: $isInitializing, isMicrophoneMuted: $isMicrophoneMuted)';
   }
 
   @override
@@ -846,7 +864,8 @@ class _$BroadcasterStreamStateImpl
           'currentProductStreamBid', currentProductStreamBid))
       ..add(DiagnosticsProperty('currentWinner', currentWinner))
       ..add(DiagnosticsProperty('isSelectingWinner', isSelectingWinner))
-      ..add(DiagnosticsProperty('isInitializing', isInitializing));
+      ..add(DiagnosticsProperty('isInitializing', isInitializing))
+      ..add(DiagnosticsProperty('isMicrophoneMuted', isMicrophoneMuted));
   }
 
   @override
@@ -924,7 +943,9 @@ class _$BroadcasterStreamStateImpl
             (identical(other.isSelectingWinner, isSelectingWinner) ||
                 other.isSelectingWinner == isSelectingWinner) &&
             (identical(other.isInitializing, isInitializing) ||
-                other.isInitializing == isInitializing));
+                other.isInitializing == isInitializing) &&
+            (identical(other.isMicrophoneMuted, isMicrophoneMuted) ||
+                other.isMicrophoneMuted == isMicrophoneMuted));
   }
 
   @override
@@ -965,7 +986,8 @@ class _$BroadcasterStreamStateImpl
         currentProductStreamBid,
         currentWinner,
         isSelectingWinner,
-        isInitializing
+        isInitializing,
+        isMicrophoneMuted
       ]);
 
   /// Create a copy of BroadcasterStreamState
@@ -1015,7 +1037,8 @@ abstract class _BroadcasterStreamState implements BroadcasterStreamState {
       final BidStreamItem? currentProductStreamBid,
       final BidWinnerEvent? currentWinner,
       final bool isSelectingWinner,
-      final bool isInitializing}) = _$BroadcasterStreamStateImpl;
+      final bool isInitializing,
+      final bool isMicrophoneMuted}) = _$BroadcasterStreamStateImpl;
 
 // LiveKit
   @override
@@ -1089,7 +1112,9 @@ abstract class _BroadcasterStreamState implements BroadcasterStreamState {
   @override
   bool get isSelectingWinner; // Initialization
   @override
-  bool get isInitializing;
+  bool get isInitializing; // Microphone
+  @override
+  bool get isMicrophoneMuted;
 
   /// Create a copy of BroadcasterStreamState
   /// with the given fields replaced by the non-null parameter values.

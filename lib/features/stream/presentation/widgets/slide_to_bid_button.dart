@@ -59,6 +59,29 @@ class _SlideToBidButtonState extends State<SlideToBidButton>
     });
   }
 
+  void _animateToComplete(double maxDrag) {
+    _controller.reset();
+    final animation = Tween<double>(begin: _dragX, end: maxDrag).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: Curves.easeOut,
+      ),
+    );
+    
+    void listener() {
+      setState(() {
+        _dragX = animation.value;
+      });
+    }
+    
+    animation.addListener(listener);
+    
+    _controller.forward().whenComplete(() {
+      animation.removeListener(listener);
+      widget.onSlideComplete();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     final fillColor = widget.fillColor ?? const Color(0xFF79E7F2);
@@ -112,10 +135,7 @@ class _SlideToBidButtonState extends State<SlideToBidButton>
                   }
                   if (_dragX >= maxDrag * 0.92) {
                     _completed = true;
-                    setState(() {
-                      _dragX = maxDrag;
-                    });
-                    widget.onSlideComplete();
+                    _animateToComplete(maxDrag);
                   } else {
                     _animateBack();
                   }

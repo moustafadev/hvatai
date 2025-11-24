@@ -11,6 +11,7 @@ import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_mo
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/stream/data/models/bid_stream/bid_stream_response.dart';
+import 'package:hvatai/features/stream/data/models/bid_placed/bid_placed_event.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_updated/stream_updated_event.dart';
 import 'package:hvatai/features/stream/data/models/bid_session/bid_session_response.dart';
@@ -42,6 +43,7 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
   }) : super(ViewerStreamState(
           stream: stream,
           joinData: joinData,
+          viewerCount: joinData?.stream.viewerCount ?? 0,
           currentUserId: appLocal.getUserId(),
         )) {
     _initialize();
@@ -179,7 +181,39 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
 
   void _handleBid(dynamic raw, {required String source}) {
     try {
-      // TODO: forward to product/bid state if needed.
+      final dataMap = _normalizeSocketPayload(raw);
+      final event = BidPlacedEvent.fromJson(dataMap);
+      
+      // Update timer from the new bid session when a bid is placed
+      if (event.bidSession != null) {
+        final session = event.bidSession!;
+        DateTime? timerEndTime = session.sessionEndsAt;
+        int? timerRemainingSeconds = session.remainingSeconds;
+
+        // Calculate end time if we have remaining seconds but no end time
+        if (timerEndTime == null && timerRemainingSeconds != null && timerRemainingSeconds > 0) {
+          timerEndTime = DateTime.now().add(Duration(seconds: timerRemainingSeconds));
+        }
+
+        // Calculate remaining seconds if we have end time but no remaining seconds
+        if (timerRemainingSeconds == null && timerEndTime != null) {
+          timerRemainingSeconds = timerEndTime.difference(DateTime.now()).inSeconds;
+          if (timerRemainingSeconds < 0) {
+            timerRemainingSeconds = 0;
+          }
+        }
+
+        if (timerEndTime != null || timerRemainingSeconds != null) {
+          debugPrint('⏰ Updating bid session timer (new bid placed) - Remaining: ${timerRemainingSeconds}s, EndTime: $timerEndTime');
+          
+          emit(state.copyWith(
+            currentBidEndTime: timerEndTime,
+            currentBidRemainingSeconds: timerRemainingSeconds,
+          ));
+        }
+      }
+      
+      // Also reload the active bid session to get updated product and bid count
       _loadActiveBidSession();
     } catch (e, st) {
       debugPrint('❌ [$source] bid parse error: $e');
@@ -358,9 +392,10 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
       remoteParticipant: remoteParticipant,
     ));
 
-    // Update remote video track
+    // Update remote video and audio tracks
     if (remoteParticipant != null) {
       _updateRemoteVideoTrack(remoteParticipant);
+      _updateRemoteAudioTrack(remoteParticipant);
     }
   }
 
@@ -394,6 +429,43 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
       );
     } else {
       debugPrint('✅ Remote video track found');
+    }
+  }
+
+  void _updateRemoteAudioTrack(RemoteParticipant remoteParticipant) {
+    RemoteAudioTrack? audioTrack;
+
+    // Find the first audio track publication that has a subscribed track
+    for (final publication in remoteParticipant.audioTrackPublications) {
+      if (publication.subscribed && publication.track != null) {
+        audioTrack = publication.track as RemoteAudioTrack;
+        break;
+      }
+    }
+
+    final currentState = state;
+    emit(currentState.copyWith(remoteAudioTrack: audioTrack));
+
+    // Apply current mute state to the audio track
+    if (audioTrack != null) {
+      _applyAudioMuteState(audioTrack, currentState.isAudioMuted);
+      debugPrint('✅ Remote audio track found');
+    } else if (remoteParticipant.audioTrackPublications.isNotEmpty) {
+      debugPrint(
+        '⚠️ Audio track publication exists but not subscribed yet',
+      );
+    }
+  }
+
+  void _applyAudioMuteState(RemoteAudioTrack audioTrack, bool isMuted) {
+    try {
+      // Control remote audio by enabling/disabling the mediaStreamTrack
+      // This effectively mutes/unmutes the audio playback
+      audioTrack.mediaStreamTrack.enabled = !isMuted;
+      debugPrint('🔇 Remote audio track ${isMuted ? 'muted' : 'unmuted'}');
+    } catch (e) {
+      debugPrint('⚠️ Could not control audio track: $e');
+      // State is still tracked for UI feedback
     }
   }
 
@@ -791,6 +863,22 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
   // ================== Viewer Count ==================
   void updateViewerCount(int viewerCount) {
     emit(state.copyWith(viewerCount: viewerCount));
+  }
+
+  // ================== Audio ==================
+  Future<void> toggleAudio() async {
+    final newMutedState = !state.isAudioMuted;
+    emit(state.copyWith(isAudioMuted: newMutedState));
+    
+    // Apply mute state to remote audio track
+    final audioTrack = state.remoteAudioTrack;
+    if (audioTrack != null) {
+      _applyAudioMuteState(audioTrack, newMutedState);
+      debugPrint('🔇 Audio ${newMutedState ? 'muted' : 'unmuted'}');
+    } else {
+      debugPrint('⚠️ No remote audio track available yet');
+      // State is still updated for UI feedback
+    }
   }
 
   // ================== Timer ==================

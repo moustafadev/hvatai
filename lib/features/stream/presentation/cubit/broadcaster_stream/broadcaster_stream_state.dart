@@ -56,5 +56,8 @@ class BroadcasterStreamState with _$BroadcasterStreamState {
 
     // Initialization
     @Default(false) bool isInitializing,
+    
+    // Microphone
+    @Default(false) bool isMicrophoneMuted,
   }) = _BroadcasterStreamState;
 }

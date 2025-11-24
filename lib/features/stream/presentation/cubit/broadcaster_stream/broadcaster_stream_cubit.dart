@@ -230,10 +230,6 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
       final nextWinner = shouldResetWinner ? null : state.currentWinner;
       final nextSelecting = shouldResetWinner ? false : state.isSelectingWinner;
 
-      // Check if this is the first bid (timer not started yet)
-      final isFirstBid = state.currentBidEndTime == null && 
-                         state.currentBidRemainingSeconds == null;
-
       // Update bids list
       final updatedBids = List<BidStreamItem>.from(state.bids)..insert(0, event.bid);
       final updatedStreamProductId = state.currentStreamProductId ?? event.bid.streamProductId;
@@ -249,11 +245,11 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
           event.bid,
         );
 
-        // If this is the first bid, ensure timer is started from the bid session
+        // Always update timer from the new bid session when a bid is placed
         DateTime? timerEndTime;
         int? timerRemainingSeconds;
         
-        if (isFirstBid && event.bidSession != null) {
+        if (event.bidSession != null) {
           final session = event.bidSession!;
           timerEndTime = session.sessionEndsAt;
           timerRemainingSeconds = session.remainingSeconds;
@@ -272,14 +268,14 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
           }
 
           if (timerEndTime != null || timerRemainingSeconds != null) {
-            debugPrint('⏰ Starting bid session timer (first bid placed) - Remaining: ${timerRemainingSeconds}s');
+            debugPrint('⏰ Updating bid session timer (new bid placed) - Remaining: ${timerRemainingSeconds}s, EndTime: $timerEndTime');
           }
         }
 
-        // Resolve timing from product
+        // Resolve timing from product as fallback
         final bidTiming = _resolveBidTiming(product);
         
-        // Use timer values from first bid if available, otherwise use resolved timing
+        // Use timer values from bid session if available, otherwise use resolved timing
         emit(state.copyWith(
           bids: updatedBids,
           stream: state.stream.copyWith(
@@ -554,6 +550,23 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
       debugPrint('✅ Resumed streaming');
     } catch (e) {
       debugPrint('❌ Resume streaming error: $e');
+    }
+  }
+
+  // ================== Microphone ==================
+  Future<void> toggleMicrophone() async {
+    if (state.localParticipant == null) return;
+    
+    final newMutedState = !state.isMicrophoneMuted;
+    emit(state.copyWith(isMicrophoneMuted: newMutedState));
+    
+    try {
+      await state.localParticipant!.setMicrophoneEnabled(!newMutedState);
+      debugPrint('✅ Microphone ${newMutedState ? 'muted' : 'unmuted'}');
+    } catch (e) {
+      debugPrint('❌ Toggle microphone error: $e');
+      // Revert state on error
+      emit(state.copyWith(isMicrophoneMuted: !newMutedState));
     }
   }
 

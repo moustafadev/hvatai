@@ -105,19 +105,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 15.0),
-                          child: CategoryTabsWidget(),
-                        ),
+                        CategoryTabsWidget(),
                         10.ph,
                         const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 15.0),
+                          padding: EdgeInsets.symmetric(horizontal: 16.0),
                           child: TitleCategoriesForYou(),
                         ),
-                        const Padding(
-                          padding: EdgeInsets.only(left: 16.0),
-                          child: MyCategory(),
-                        ),
+                        MyCategory(),
                         12.ph,
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),

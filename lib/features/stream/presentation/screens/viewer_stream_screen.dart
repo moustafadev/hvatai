@@ -183,6 +183,7 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                     right: 16,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         InkWell(
                           onTap: () async {
@@ -193,13 +194,17 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                             streamUserModel: widget.stream.user,
                           ),
                         ),
-                        ViewerCountWidget(count: state.viewerCount),
+                        ViewerCountWidget(
+                          count: state.viewerCount,
+                          isViewerMode: true,
+                        ),
                       ],
                     ),
                   ),
                   Positioned(
                     right: 16,
-                    top: MediaQuery.of(context).size.height * 0.55,
+                    bottom: hasProduct ? null : 16,
+                    top: hasProduct ? MediaQuery.of(context).size.height * 0.55 : null,
                     child: RightSideIcons(
                       onShopTap: () => _openViewerShop(context),
                     ),

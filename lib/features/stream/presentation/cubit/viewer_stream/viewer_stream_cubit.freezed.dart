@@ -18,7 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ViewerStreamState {
 // LiveKit
   bool get isConnected => throw _privateConstructorUsedError;
-  VideoTrack? get remoteVideoTrack =>
+  VideoTrack? get remoteVideoTrack => throw _privateConstructorUsedError;
+  RemoteAudioTrack? get remoteAudioTrack =>
       throw _privateConstructorUsedError; // Room & Participants
   Room? get room => throw _privateConstructorUsedError;
   RemoteParticipant? get remoteParticipant =>
@@ -60,7 +61,8 @@ mixin _$ViewerStreamState {
   int get currentUserId => throw _privateConstructorUsedError; // Initialization
   bool get isInitializing =>
       throw _privateConstructorUsedError; // Stream status
-  bool get isStreamEnded => throw _privateConstructorUsedError;
+  bool get isStreamEnded => throw _privateConstructorUsedError; // Audio
+  bool get isAudioMuted => throw _privateConstructorUsedError;
 
   /// Create a copy of ViewerStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -78,6 +80,7 @@ abstract class $ViewerStreamStateCopyWith<$Res> {
   $Res call(
       {bool isConnected,
       VideoTrack? remoteVideoTrack,
+      RemoteAudioTrack? remoteAudioTrack,
       Room? room,
       RemoteParticipant? remoteParticipant,
       bool isPusherConnected,
@@ -112,7 +115,8 @@ abstract class $ViewerStreamStateCopyWith<$Res> {
       bool isSelectingWinner,
       int currentUserId,
       bool isInitializing,
-      bool isStreamEnded});
+      bool isStreamEnded,
+      bool isAudioMuted});
 
   $StreamDataModelCopyWith<$Res> get stream;
   $JoinStreamDataCopyWith<$Res>? get joinData;
@@ -137,6 +141,7 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
   $Res call({
     Object? isConnected = null,
     Object? remoteVideoTrack = freezed,
+    Object? remoteAudioTrack = freezed,
     Object? room = freezed,
     Object? remoteParticipant = freezed,
     Object? isPusherConnected = null,
@@ -172,6 +177,7 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
     Object? currentUserId = null,
     Object? isInitializing = null,
     Object? isStreamEnded = null,
+    Object? isAudioMuted = null,
   }) {
     return _then(_value.copyWith(
       isConnected: null == isConnected
@@ -182,6 +188,10 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
           ? _value.remoteVideoTrack
           : remoteVideoTrack // ignore: cast_nullable_to_non_nullable
               as VideoTrack?,
+      remoteAudioTrack: freezed == remoteAudioTrack
+          ? _value.remoteAudioTrack
+          : remoteAudioTrack // ignore: cast_nullable_to_non_nullable
+              as RemoteAudioTrack?,
       room: freezed == room
           ? _value.room
           : room // ignore: cast_nullable_to_non_nullable
@@ -322,6 +332,10 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
           ? _value.isStreamEnded
           : isStreamEnded // ignore: cast_nullable_to_non_nullable
               as bool,
+      isAudioMuted: null == isAudioMuted
+          ? _value.isAudioMuted
+          : isAudioMuted // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -390,6 +404,7 @@ abstract class _$$ViewerStreamStateImplCopyWith<$Res>
   $Res call(
       {bool isConnected,
       VideoTrack? remoteVideoTrack,
+      RemoteAudioTrack? remoteAudioTrack,
       Room? room,
       RemoteParticipant? remoteParticipant,
       bool isPusherConnected,
@@ -424,7 +439,8 @@ abstract class _$$ViewerStreamStateImplCopyWith<$Res>
       bool isSelectingWinner,
       int currentUserId,
       bool isInitializing,
-      bool isStreamEnded});
+      bool isStreamEnded,
+      bool isAudioMuted});
 
   @override
   $StreamDataModelCopyWith<$Res> get stream;
@@ -451,6 +467,7 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
   $Res call({
     Object? isConnected = null,
     Object? remoteVideoTrack = freezed,
+    Object? remoteAudioTrack = freezed,
     Object? room = freezed,
     Object? remoteParticipant = freezed,
     Object? isPusherConnected = null,
@@ -486,6 +503,7 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
     Object? currentUserId = null,
     Object? isInitializing = null,
     Object? isStreamEnded = null,
+    Object? isAudioMuted = null,
   }) {
     return _then(_$ViewerStreamStateImpl(
       isConnected: null == isConnected
@@ -496,6 +514,10 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
           ? _value.remoteVideoTrack
           : remoteVideoTrack // ignore: cast_nullable_to_non_nullable
               as VideoTrack?,
+      remoteAudioTrack: freezed == remoteAudioTrack
+          ? _value.remoteAudioTrack
+          : remoteAudioTrack // ignore: cast_nullable_to_non_nullable
+              as RemoteAudioTrack?,
       room: freezed == room
           ? _value.room
           : room // ignore: cast_nullable_to_non_nullable
@@ -636,6 +658,10 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
           ? _value.isStreamEnded
           : isStreamEnded // ignore: cast_nullable_to_non_nullable
               as bool,
+      isAudioMuted: null == isAudioMuted
+          ? _value.isAudioMuted
+          : isAudioMuted // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -648,6 +674,7 @@ class _$ViewerStreamStateImpl
   const _$ViewerStreamStateImpl(
       {this.isConnected = false,
       this.remoteVideoTrack,
+      this.remoteAudioTrack,
       this.room,
       this.remoteParticipant,
       this.isPusherConnected = false,
@@ -682,7 +709,8 @@ class _$ViewerStreamStateImpl
       this.isSelectingWinner = false,
       this.currentUserId = 0,
       this.isInitializing = false,
-      this.isStreamEnded = false})
+      this.isStreamEnded = false,
+      this.isAudioMuted = false})
       : _comments = comments,
         _bids = bids;
 
@@ -692,6 +720,8 @@ class _$ViewerStreamStateImpl
   final bool isConnected;
   @override
   final VideoTrack? remoteVideoTrack;
+  @override
+  final RemoteAudioTrack? remoteAudioTrack;
 // Room & Participants
   @override
   final Room? room;
@@ -809,10 +839,14 @@ class _$ViewerStreamStateImpl
   @override
   @JsonKey()
   final bool isStreamEnded;
+// Audio
+  @override
+  @JsonKey()
+  final bool isAudioMuted;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ViewerStreamState(isConnected: $isConnected, remoteVideoTrack: $remoteVideoTrack, room: $room, remoteParticipant: $remoteParticipant, isPusherConnected: $isPusherConnected, stream: $stream, joinData: $joinData, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentStreamProductId: $currentStreamProductId, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentBidTotalBids: $currentBidTotalBids, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, currentUserId: $currentUserId, isInitializing: $isInitializing, isStreamEnded: $isStreamEnded)';
+    return 'ViewerStreamState(isConnected: $isConnected, remoteVideoTrack: $remoteVideoTrack, remoteAudioTrack: $remoteAudioTrack, room: $room, remoteParticipant: $remoteParticipant, isPusherConnected: $isPusherConnected, stream: $stream, joinData: $joinData, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentStreamProductId: $currentStreamProductId, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentBidTotalBids: $currentBidTotalBids, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, currentUserId: $currentUserId, isInitializing: $isInitializing, isStreamEnded: $isStreamEnded, isAudioMuted: $isAudioMuted)';
   }
 
   @override
@@ -822,6 +856,7 @@ class _$ViewerStreamStateImpl
       ..add(DiagnosticsProperty('type', 'ViewerStreamState'))
       ..add(DiagnosticsProperty('isConnected', isConnected))
       ..add(DiagnosticsProperty('remoteVideoTrack', remoteVideoTrack))
+      ..add(DiagnosticsProperty('remoteAudioTrack', remoteAudioTrack))
       ..add(DiagnosticsProperty('room', room))
       ..add(DiagnosticsProperty('remoteParticipant', remoteParticipant))
       ..add(DiagnosticsProperty('isPusherConnected', isPusherConnected))
@@ -858,7 +893,8 @@ class _$ViewerStreamStateImpl
       ..add(DiagnosticsProperty('isSelectingWinner', isSelectingWinner))
       ..add(DiagnosticsProperty('currentUserId', currentUserId))
       ..add(DiagnosticsProperty('isInitializing', isInitializing))
-      ..add(DiagnosticsProperty('isStreamEnded', isStreamEnded));
+      ..add(DiagnosticsProperty('isStreamEnded', isStreamEnded))
+      ..add(DiagnosticsProperty('isAudioMuted', isAudioMuted));
   }
 
   @override
@@ -870,6 +906,8 @@ class _$ViewerStreamStateImpl
                 other.isConnected == isConnected) &&
             (identical(other.remoteVideoTrack, remoteVideoTrack) ||
                 other.remoteVideoTrack == remoteVideoTrack) &&
+            (identical(other.remoteAudioTrack, remoteAudioTrack) ||
+                other.remoteAudioTrack == remoteAudioTrack) &&
             (identical(other.room, room) || other.room == room) &&
             (identical(other.remoteParticipant, remoteParticipant) ||
                 other.remoteParticipant == remoteParticipant) &&
@@ -937,7 +975,9 @@ class _$ViewerStreamStateImpl
             (identical(other.isInitializing, isInitializing) ||
                 other.isInitializing == isInitializing) &&
             (identical(other.isStreamEnded, isStreamEnded) ||
-                other.isStreamEnded == isStreamEnded));
+                other.isStreamEnded == isStreamEnded) &&
+            (identical(other.isAudioMuted, isAudioMuted) ||
+                other.isAudioMuted == isAudioMuted));
   }
 
   @override
@@ -945,6 +985,7 @@ class _$ViewerStreamStateImpl
         runtimeType,
         isConnected,
         remoteVideoTrack,
+        remoteAudioTrack,
         room,
         remoteParticipant,
         isPusherConnected,
@@ -979,7 +1020,8 @@ class _$ViewerStreamStateImpl
         isSelectingWinner,
         currentUserId,
         isInitializing,
-        isStreamEnded
+        isStreamEnded,
+        isAudioMuted
       ]);
 
   /// Create a copy of ViewerStreamState
@@ -996,6 +1038,7 @@ abstract class _ViewerStreamState implements ViewerStreamState {
   const factory _ViewerStreamState(
       {final bool isConnected,
       final VideoTrack? remoteVideoTrack,
+      final RemoteAudioTrack? remoteAudioTrack,
       final Room? room,
       final RemoteParticipant? remoteParticipant,
       final bool isPusherConnected,
@@ -1030,13 +1073,16 @@ abstract class _ViewerStreamState implements ViewerStreamState {
       final bool isSelectingWinner,
       final int currentUserId,
       final bool isInitializing,
-      final bool isStreamEnded}) = _$ViewerStreamStateImpl;
+      final bool isStreamEnded,
+      final bool isAudioMuted}) = _$ViewerStreamStateImpl;
 
 // LiveKit
   @override
   bool get isConnected;
   @override
-  VideoTrack? get remoteVideoTrack; // Room & Participants
+  VideoTrack? get remoteVideoTrack;
+  @override
+  RemoteAudioTrack? get remoteAudioTrack; // Room & Participants
   @override
   Room? get room;
   @override
@@ -1106,7 +1152,9 @@ abstract class _ViewerStreamState implements ViewerStreamState {
   @override
   bool get isInitializing; // Stream status
   @override
-  bool get isStreamEnded;
+  bool get isStreamEnded; // Audio
+  @override
+  bool get isAudioMuted;
 
   /// Create a copy of ViewerStreamState
   /// with the given fields replaced by the non-null parameter values.

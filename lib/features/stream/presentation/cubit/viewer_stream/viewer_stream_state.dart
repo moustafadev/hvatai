@@ -7,6 +7,7 @@ class ViewerStreamState with _$ViewerStreamState {
     // LiveKit
     @Default(false) bool isConnected,
     VideoTrack? remoteVideoTrack,
+    RemoteAudioTrack? remoteAudioTrack,
 
     // Room & Participants
     Room? room,
@@ -59,5 +60,8 @@ class ViewerStreamState with _$ViewerStreamState {
 
     // Stream status
     @Default(false) bool isStreamEnded,
+    
+    // Audio
+    @Default(false) bool isAudioMuted,
   }) = _ViewerStreamState;
 }

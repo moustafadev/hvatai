@@ -51,7 +51,7 @@ class MyCategory extends StatelessWidget {
                       onTap: () =>
                           cubit.toggleInterest(index, category.id ?? 0),
                       child: Container(
-                        margin: const EdgeInsets.symmetric(horizontal: 6),
+                        margin:  EdgeInsets.only(left: index == 0 ? 16 : 12),
                         width: 100,
                         height: 120,
                         decoration: BoxDecoration(
