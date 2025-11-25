@@ -62,7 +62,10 @@ mixin _$ViewerStreamState {
   bool get isInitializing =>
       throw _privateConstructorUsedError; // Stream status
   bool get isStreamEnded => throw _privateConstructorUsedError; // Audio
-  bool get isAudioMuted => throw _privateConstructorUsedError;
+  bool get isAudioMuted => throw _privateConstructorUsedError; // Subscriptions
+  bool get isSubscribed => throw _privateConstructorUsedError;
+  bool get isLoadingSubscription => throw _privateConstructorUsedError;
+  bool get isTogglingSubscription => throw _privateConstructorUsedError;
 
   /// Create a copy of ViewerStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -116,7 +119,10 @@ abstract class $ViewerStreamStateCopyWith<$Res> {
       int currentUserId,
       bool isInitializing,
       bool isStreamEnded,
-      bool isAudioMuted});
+      bool isAudioMuted,
+      bool isSubscribed,
+      bool isLoadingSubscription,
+      bool isTogglingSubscription});
 
   $StreamDataModelCopyWith<$Res> get stream;
   $JoinStreamDataCopyWith<$Res>? get joinData;
@@ -178,6 +184,9 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
     Object? isInitializing = null,
     Object? isStreamEnded = null,
     Object? isAudioMuted = null,
+    Object? isSubscribed = null,
+    Object? isLoadingSubscription = null,
+    Object? isTogglingSubscription = null,
   }) {
     return _then(_value.copyWith(
       isConnected: null == isConnected
@@ -336,6 +345,18 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
           ? _value.isAudioMuted
           : isAudioMuted // ignore: cast_nullable_to_non_nullable
               as bool,
+      isSubscribed: null == isSubscribed
+          ? _value.isSubscribed
+          : isSubscribed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingSubscription: null == isLoadingSubscription
+          ? _value.isLoadingSubscription
+          : isLoadingSubscription // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTogglingSubscription: null == isTogglingSubscription
+          ? _value.isTogglingSubscription
+          : isTogglingSubscription // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -440,7 +461,10 @@ abstract class _$$ViewerStreamStateImplCopyWith<$Res>
       int currentUserId,
       bool isInitializing,
       bool isStreamEnded,
-      bool isAudioMuted});
+      bool isAudioMuted,
+      bool isSubscribed,
+      bool isLoadingSubscription,
+      bool isTogglingSubscription});
 
   @override
   $StreamDataModelCopyWith<$Res> get stream;
@@ -504,6 +528,9 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
     Object? isInitializing = null,
     Object? isStreamEnded = null,
     Object? isAudioMuted = null,
+    Object? isSubscribed = null,
+    Object? isLoadingSubscription = null,
+    Object? isTogglingSubscription = null,
   }) {
     return _then(_$ViewerStreamStateImpl(
       isConnected: null == isConnected
@@ -662,6 +689,18 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
           ? _value.isAudioMuted
           : isAudioMuted // ignore: cast_nullable_to_non_nullable
               as bool,
+      isSubscribed: null == isSubscribed
+          ? _value.isSubscribed
+          : isSubscribed // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingSubscription: null == isLoadingSubscription
+          ? _value.isLoadingSubscription
+          : isLoadingSubscription // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isTogglingSubscription: null == isTogglingSubscription
+          ? _value.isTogglingSubscription
+          : isTogglingSubscription // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -710,7 +749,10 @@ class _$ViewerStreamStateImpl
       this.currentUserId = 0,
       this.isInitializing = false,
       this.isStreamEnded = false,
-      this.isAudioMuted = false})
+      this.isAudioMuted = false,
+      this.isSubscribed = false,
+      this.isLoadingSubscription = false,
+      this.isTogglingSubscription = false})
       : _comments = comments,
         _bids = bids;
 
@@ -843,10 +885,20 @@ class _$ViewerStreamStateImpl
   @override
   @JsonKey()
   final bool isAudioMuted;
+// Subscriptions
+  @override
+  @JsonKey()
+  final bool isSubscribed;
+  @override
+  @JsonKey()
+  final bool isLoadingSubscription;
+  @override
+  @JsonKey()
+  final bool isTogglingSubscription;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ViewerStreamState(isConnected: $isConnected, remoteVideoTrack: $remoteVideoTrack, remoteAudioTrack: $remoteAudioTrack, room: $room, remoteParticipant: $remoteParticipant, isPusherConnected: $isPusherConnected, stream: $stream, joinData: $joinData, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentStreamProductId: $currentStreamProductId, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentBidTotalBids: $currentBidTotalBids, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, currentUserId: $currentUserId, isInitializing: $isInitializing, isStreamEnded: $isStreamEnded, isAudioMuted: $isAudioMuted)';
+    return 'ViewerStreamState(isConnected: $isConnected, remoteVideoTrack: $remoteVideoTrack, remoteAudioTrack: $remoteAudioTrack, room: $room, remoteParticipant: $remoteParticipant, isPusherConnected: $isPusherConnected, stream: $stream, joinData: $joinData, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentStreamProductId: $currentStreamProductId, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentBidTotalBids: $currentBidTotalBids, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, currentUserId: $currentUserId, isInitializing: $isInitializing, isStreamEnded: $isStreamEnded, isAudioMuted: $isAudioMuted, isSubscribed: $isSubscribed, isLoadingSubscription: $isLoadingSubscription, isTogglingSubscription: $isTogglingSubscription)';
   }
 
   @override
@@ -894,7 +946,11 @@ class _$ViewerStreamStateImpl
       ..add(DiagnosticsProperty('currentUserId', currentUserId))
       ..add(DiagnosticsProperty('isInitializing', isInitializing))
       ..add(DiagnosticsProperty('isStreamEnded', isStreamEnded))
-      ..add(DiagnosticsProperty('isAudioMuted', isAudioMuted));
+      ..add(DiagnosticsProperty('isAudioMuted', isAudioMuted))
+      ..add(DiagnosticsProperty('isSubscribed', isSubscribed))
+      ..add(DiagnosticsProperty('isLoadingSubscription', isLoadingSubscription))
+      ..add(DiagnosticsProperty(
+          'isTogglingSubscription', isTogglingSubscription));
   }
 
   @override
@@ -977,7 +1033,13 @@ class _$ViewerStreamStateImpl
             (identical(other.isStreamEnded, isStreamEnded) ||
                 other.isStreamEnded == isStreamEnded) &&
             (identical(other.isAudioMuted, isAudioMuted) ||
-                other.isAudioMuted == isAudioMuted));
+                other.isAudioMuted == isAudioMuted) &&
+            (identical(other.isSubscribed, isSubscribed) ||
+                other.isSubscribed == isSubscribed) &&
+            (identical(other.isLoadingSubscription, isLoadingSubscription) ||
+                other.isLoadingSubscription == isLoadingSubscription) &&
+            (identical(other.isTogglingSubscription, isTogglingSubscription) ||
+                other.isTogglingSubscription == isTogglingSubscription));
   }
 
   @override
@@ -1021,7 +1083,10 @@ class _$ViewerStreamStateImpl
         currentUserId,
         isInitializing,
         isStreamEnded,
-        isAudioMuted
+        isAudioMuted,
+        isSubscribed,
+        isLoadingSubscription,
+        isTogglingSubscription
       ]);
 
   /// Create a copy of ViewerStreamState
@@ -1074,7 +1139,10 @@ abstract class _ViewerStreamState implements ViewerStreamState {
       final int currentUserId,
       final bool isInitializing,
       final bool isStreamEnded,
-      final bool isAudioMuted}) = _$ViewerStreamStateImpl;
+      final bool isAudioMuted,
+      final bool isSubscribed,
+      final bool isLoadingSubscription,
+      final bool isTogglingSubscription}) = _$ViewerStreamStateImpl;
 
 // LiveKit
   @override
@@ -1154,7 +1222,13 @@ abstract class _ViewerStreamState implements ViewerStreamState {
   @override
   bool get isStreamEnded; // Audio
   @override
-  bool get isAudioMuted;
+  bool get isAudioMuted; // Subscriptions
+  @override
+  bool get isSubscribed;
+  @override
+  bool get isLoadingSubscription;
+  @override
+  bool get isTogglingSubscription;
 
   /// Create a copy of ViewerStreamState
   /// with the given fields replaced by the non-null parameter values.

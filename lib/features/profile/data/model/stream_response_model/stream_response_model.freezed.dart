@@ -1950,6 +1950,7 @@ mixin _$StreamUserModel {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
   @JsonKey(name: 'personal_rating')
   double? get personalRating => throw _privateConstructorUsedError;
   @JsonKey(name: 'personal_rating_count')
@@ -1979,6 +1980,7 @@ abstract class $StreamUserModelCopyWith<$Res> {
       {int? id,
       String? name,
       String? email,
+      String? image,
       @JsonKey(name: 'personal_rating') double? personalRating,
       @JsonKey(name: 'personal_rating_count') int? personalRatingCount,
       @JsonKey(name: 'is_favorited') bool? isFavorited,
@@ -2003,6 +2005,7 @@ class _$StreamUserModelCopyWithImpl<$Res, $Val extends StreamUserModel>
     Object? id = freezed,
     Object? name = freezed,
     Object? email = freezed,
+    Object? image = freezed,
     Object? personalRating = freezed,
     Object? personalRatingCount = freezed,
     Object? isFavorited = freezed,
@@ -2020,6 +2023,10 @@ class _$StreamUserModelCopyWithImpl<$Res, $Val extends StreamUserModel>
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String?,
       personalRating: freezed == personalRating
           ? _value.personalRating
@@ -2053,6 +2060,7 @@ abstract class _$$StreamUserModelImplCopyWith<$Res>
       {int? id,
       String? name,
       String? email,
+      String? image,
       @JsonKey(name: 'personal_rating') double? personalRating,
       @JsonKey(name: 'personal_rating_count') int? personalRatingCount,
       @JsonKey(name: 'is_favorited') bool? isFavorited,
@@ -2075,6 +2083,7 @@ class __$$StreamUserModelImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? name = freezed,
     Object? email = freezed,
+    Object? image = freezed,
     Object? personalRating = freezed,
     Object? personalRatingCount = freezed,
     Object? isFavorited = freezed,
@@ -2092,6 +2101,10 @@ class __$$StreamUserModelImplCopyWithImpl<$Res>
       email: freezed == email
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
               as String?,
       personalRating: freezed == personalRating
           ? _value.personalRating
@@ -2120,6 +2133,7 @@ class _$StreamUserModelImpl implements _StreamUserModel {
       {this.id,
       this.name,
       this.email,
+      this.image,
       @JsonKey(name: 'personal_rating') this.personalRating,
       @JsonKey(name: 'personal_rating_count') this.personalRatingCount,
       @JsonKey(name: 'is_favorited') this.isFavorited,
@@ -2135,6 +2149,8 @@ class _$StreamUserModelImpl implements _StreamUserModel {
   @override
   final String? email;
   @override
+  final String? image;
+  @override
   @JsonKey(name: 'personal_rating')
   final double? personalRating;
   @override
@@ -2149,7 +2165,7 @@ class _$StreamUserModelImpl implements _StreamUserModel {
 
   @override
   String toString() {
-    return 'StreamUserModel(id: $id, name: $name, email: $email, personalRating: $personalRating, personalRatingCount: $personalRatingCount, isFavorited: $isFavorited, favoritesCount: $favoritesCount)';
+    return 'StreamUserModel(id: $id, name: $name, email: $email, image: $image, personalRating: $personalRating, personalRatingCount: $personalRatingCount, isFavorited: $isFavorited, favoritesCount: $favoritesCount)';
   }
 
   @override
@@ -2160,6 +2176,7 @@ class _$StreamUserModelImpl implements _StreamUserModel {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.email, email) || other.email == email) &&
+            (identical(other.image, image) || other.image == image) &&
             (identical(other.personalRating, personalRating) ||
                 other.personalRating == personalRating) &&
             (identical(other.personalRatingCount, personalRatingCount) ||
@@ -2172,8 +2189,8 @@ class _$StreamUserModelImpl implements _StreamUserModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, email, personalRating,
-      personalRatingCount, isFavorited, favoritesCount);
+  int get hashCode => Object.hash(runtimeType, id, name, email, image,
+      personalRating, personalRatingCount, isFavorited, favoritesCount);
 
   /// Create a copy of StreamUserModel
   /// with the given fields replaced by the non-null parameter values.
@@ -2197,6 +2214,7 @@ abstract class _StreamUserModel implements StreamUserModel {
       {final int? id,
       final String? name,
       final String? email,
+      final String? image,
       @JsonKey(name: 'personal_rating') final double? personalRating,
       @JsonKey(name: 'personal_rating_count') final int? personalRatingCount,
       @JsonKey(name: 'is_favorited') final bool? isFavorited,
@@ -2212,6 +2230,8 @@ abstract class _StreamUserModel implements StreamUserModel {
   String? get name;
   @override
   String? get email;
+  @override
+  String? get image;
   @override
   @JsonKey(name: 'personal_rating')
   double? get personalRating;

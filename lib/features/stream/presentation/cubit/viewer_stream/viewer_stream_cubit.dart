@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -23,6 +24,8 @@ import 'package:hvatai/features/stream/domain/usecases/get_bid_session_usecase.d
 import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_subscribed_users_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/toggle_subscription_usecase.dart';
 import 'package:livekit_client/livekit_client.dart';
 import 'package:pusher_client_socket/pusher_client_socket.dart';
 
@@ -37,6 +40,8 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     this._getBids,
     this._addBidUsecase,
     this._getBidSessionUsecase,
+    this._getSubscribedUsersUsecase,
+    this._toggleSubscriptionUsecase,
     AppLocal appLocal, {
     required StreamDataModel stream,
     JoinStreamData? joinData,
@@ -55,6 +60,8 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
   final GetStreamBidsUsecase _getBids;
   final AddStreamBidUsecase _addBidUsecase;
   final GetBidSessionUsecase _getBidSessionUsecase;
+  final GetSubscribedUsersUsecase _getSubscribedUsersUsecase;
+  final ToggleSubscriptionUsecase _toggleSubscriptionUsecase;
 
   Timer? _timer;
   TextEditingController controller = TextEditingController();
@@ -75,10 +82,11 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
       isInitializing: false,
     ));
 
-    await _loadActiveBidSession();
-
-    // Load initial comments
-    await loadInitialComments(streamId: state.stream.id ?? 0);
+    Future.wait([
+        _loadActiveBidSession(),
+        _loadSubscriptionStatus(),
+        loadInitialComments(streamId: state.stream.id ?? 0),
+    ]);
 
     // Initialize Pusher
     await _initPusher();
@@ -863,6 +871,44 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
   // ================== Viewer Count ==================
   void updateViewerCount(int viewerCount) {
     emit(state.copyWith(viewerCount: viewerCount));
+  }
+
+  Future<void> _loadSubscriptionStatus() async {
+    final broadcasterId = state.stream.user?.id;
+    if (broadcasterId == null) return;
+
+    emit(state.copyWith(isLoadingSubscription: true));
+    final result = await _getSubscribedUsersUsecase(unit);
+
+    result.fold(
+      (_) => emit(state.copyWith(isLoadingSubscription: false)),
+      (response) {
+        final isSubscribed = response.data
+            .any((user) => user.id == broadcasterId);
+        emit(state.copyWith(
+          isLoadingSubscription: false,
+          isSubscribed: isSubscribed,
+        ));
+      },
+    );
+  }
+
+  Future<void> toggleSubscription() async {
+    final broadcasterId = state.stream.user?.id;
+    if (broadcasterId == null || state.isTogglingSubscription) return;
+
+    emit(state.copyWith(isTogglingSubscription: true));
+    final result = await _toggleSubscriptionUsecase(
+      ToggleSubscriptionParams(userId: broadcasterId),
+    );
+
+    result.fold(
+      (_) => emit(state.copyWith(isTogglingSubscription: false)),
+      (_) {
+        emit(state.copyWith(isTogglingSubscription: false));
+        _loadSubscriptionStatus();
+      },
+    );
   }
 
   // ================== Audio ==================

@@ -135,9 +135,12 @@ class ProfileImplRepository implements ProfileRepository {
   }
 
   @override
-  Future<Either<String, List<ProductModel>>> getMyProducts() {
+  Future<Either<String, List<ProductModel>>> getMyProducts({
+    required List<int> categoryIds,
+  }) {
     return executeAndHandleError<List<ProductModel>>(() async {
-      final res = await _apiServiceProfile.getMyProducts();
+      final res =
+          await _apiServiceProfile.getMyProducts(categoryIds: categoryIds);
       return res;
     });
   }

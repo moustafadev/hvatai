@@ -29,7 +29,9 @@ abstract class ProfileRepository {
   Future<Either<String, List<UserRegistrationData>>> getDeliveryAddress();
   Future<Either<String, List<CardModel>>> getAllCards();
 
-  Future<Either<String, List<ProductModel>>> getMyProducts();
+  Future<Either<String, List<ProductModel>>> getMyProducts({
+    required List<int> categoryIds,
+  });
   Future<Either<String, List<MainCategoryModel>>> getProductCategory();
 
   Future<Either<String, UserRegistrationData>> addNewAddress(

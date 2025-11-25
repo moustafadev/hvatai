@@ -9,18 +9,16 @@ import 'package:hvatai/features/auth/domain/usecases/get_category_usecase.dart';
 import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/create_stream_uscecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
 part 'add_stream_cubit.freezed.dart';
 part 'add_stream_state.dart';
 
 class AddStreamCubit extends Cubit<AddStreamState> {
-  final GetMyProductsUsecase _getMyProductsUsecase;
   final GetCategoryUsecase _getCategoryUsecase;
   final CreateStreamUsecase _createStreamUsecase;
 
-  AddStreamCubit(this._getMyProductsUsecase, this._getCategoryUsecase,
+  AddStreamCubit( this._getCategoryUsecase,
       this._createStreamUsecase)
       : super(
           AddStreamState(
@@ -42,20 +40,7 @@ class AddStreamCubit extends Cubit<AddStreamState> {
           ),
         );
 
-  // ----------------------------
-  // Product Loading Logic
-  // ----------------------------
-  Future<void> loadProducts() async {
-    emit(state.copyWith(isProductsLoading: true, error: null));
-    final result = await _getMyProductsUsecase(unit);
-
-    result.fold(
-      (failure) =>
-          emit(state.copyWith(isProductsLoading: false, error: failure)),
-      (products) =>
-          emit(state.copyWith(isProductsLoading: false, products: products)),
-    );
-  }
+ 
 
   Future<void> loadCategories() async {
     emit(state.copyWith(isCategoriesLoading: true, error: null));

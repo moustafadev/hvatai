@@ -54,6 +54,8 @@ import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/start_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/toggle_bidding_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_subscribed_users_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/toggle_subscription_usecase.dart';
 import 'package:hvatai/locator.dart';
 
 void locatorUseCase() {
@@ -114,5 +116,7 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => GetStreamProductsUsecase(locator()));
   locator.registerLazySingleton(() => GetBidSessionUsecase(locator()));
   locator.registerLazySingleton(() => ToggleBiddingUsecase(locator()));
+  locator.registerLazySingleton(() => GetSubscribedUsersUsecase(locator()));
+  locator.registerLazySingleton(() => ToggleSubscriptionUsecase(locator()));
   locator.registerLazySingleton(() => ChangePasswordUsecase(locator()));
 }

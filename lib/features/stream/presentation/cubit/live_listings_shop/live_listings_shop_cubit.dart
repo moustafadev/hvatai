@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
@@ -296,7 +295,9 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
 
   Future<void> getMyProducts() async {
     emit(state.copyWith(isMyProductsLoading: true, myProductsError: null));
-    final result = await _getMyProductsUsecase(unit);
+    final result = await _getMyProductsUsecase(
+      GetMyProductsParams(categoryIds: state.categoryIds),
+    );
 
     result.fold(
       (failure) => emit(state.copyWith(
@@ -304,13 +305,9 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
         myProductsError: failure,
       )),
       (products) {
-        final filteredProducts = _filterProductsByCategories(
-          products,
-          state.categoryIds,
-        );
         emit(state.copyWith(
           isMyProductsLoading: false,
-          myProducts: filteredProducts,
+          myProducts: products,
           myProductsError: null,
         ));
       },
@@ -329,17 +326,4 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
         .toList();
   }
 
-  List<ProductModel> _filterProductsByCategories(
-    List<ProductModel> products,
-    List<int> categoryIds,
-  ) {
-    if (categoryIds.isEmpty) return products;
-    return products
-        .where(
-          (product) =>
-              product.categoryId != null &&
-              categoryIds.contains(product.categoryId!),
-        )
-        .toList();
-  }
 }

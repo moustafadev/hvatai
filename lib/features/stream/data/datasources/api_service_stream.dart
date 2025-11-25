@@ -8,6 +8,7 @@ import 'package:hvatai/features/stream/data/models/start_stream/start_stream_mod
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
 import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
+import 'package:hvatai/features/stream/data/models/subscribed_users/subscribed_users_response.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.dart';
@@ -253,6 +254,36 @@ class ApiServiceStream extends ApiBase {
 
       throw Exception(
         'Failed to toggle bidding (code: ${res.statusCode})',
+      );
+    });
+  }
+
+  Future<SubscribedUsersResponse> getSubscribedUsers() async {
+    return executeAndHandleErrorServer<SubscribedUsersResponse>(() async {
+      final res = await get(ServerConfig.subscribedUsers);
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        return SubscribedUsersResponse.fromJson(
+          Map<String, dynamic>.from(res.json),
+        );
+      }
+
+      throw Exception(
+        'Failed to fetch subscribed users (code: ${res.statusCode})',
+      );
+    });
+  }
+
+  Future<bool> toggleSubscription({required int userId}) async {
+    return executeAndHandleErrorServer<bool>(() async {
+      final res = await post(ServerConfig.toggleSubscription(userId));
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        return true;
+      }
+
+      throw Exception(
+        'Failed to toggle subscription (code: ${res.statusCode})',
       );
     });
   }

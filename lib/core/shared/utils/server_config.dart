@@ -60,4 +60,7 @@ abstract class ServerConfig {
       "streams/$streamId/current-bid-session";
   static String toggleBidding(int streamId, int streamProductId) =>
       "streams/$streamId/products/$streamProductId/toggle-bidding";
+  static const String subscribedUsers = "me/subscribed-users";
+  static String toggleSubscription(int userId) =>
+      "users/$userId/toggle-subscription";
 }

@@ -121,6 +121,7 @@ class StreamUserModel with _$StreamUserModel {
     int? id,
     String? name,
     String? email,
+    String? image,
     @JsonKey(name: 'personal_rating') double? personalRating,
     @JsonKey(name: 'personal_rating_count') int? personalRatingCount,
     @JsonKey(name: 'is_favorited') bool? isFavorited,

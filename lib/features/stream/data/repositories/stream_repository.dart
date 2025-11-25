@@ -6,6 +6,7 @@ import 'package:hvatai/features/stream/data/models/start_stream/start_stream_mod
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
 import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
+import 'package:hvatai/features/stream/data/models/subscribed_users/subscribed_users_response.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_bid_session_usecase.dart';
@@ -14,6 +15,7 @@ import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_useca
 import 'package:hvatai/features/stream/domain/usecases/get_stream_products_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/toggle_bidding_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/toggle_subscription_usecase.dart';
 
 abstract class StreamRepository {
   Future<Either<String, StreamCommentResponse>> getComments({
@@ -64,5 +66,11 @@ abstract class StreamRepository {
   /// body: { stream_product_id: 1, bid_amount: 150.00, notes: "..." }
   Future<Either<String, ToggleBiddingResponseModel>> toggleBidding({
     required ToggleBiddingParams params,
+  });
+
+  Future<Either<String, SubscribedUsersResponse>> getSubscribedUsers();
+
+  Future<Either<String, bool>> toggleSubscription({
+    required ToggleSubscriptionParams params,
   });
 }

@@ -5,6 +5,7 @@ import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart'
 import 'package:hvatai/features/stream/data/models/bid_session/bid_session_response.dart';
 import 'package:hvatai/features/stream/data/models/bid_stream/bid_stream_response.dart';
 import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
+import 'package:hvatai/features/stream/data/models/subscribed_users/subscribed_users_response.dart';
 import 'package:hvatai/features/stream/data/models/start_stream/start_stream_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
@@ -17,6 +18,7 @@ import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_useca
 import 'package:hvatai/features/stream/domain/usecases/get_stream_products_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/toggle_bidding_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/toggle_subscription_usecase.dart';
 
 class StreamImplRepository implements StreamRepository {
   final ApiServiceStream _apiServiceStream;
@@ -132,6 +134,26 @@ class StreamImplRepository implements StreamRepository {
         notes: params.notes,
       );
       return res;
+    });
+  }
+
+  @override
+  Future<Either<String, SubscribedUsersResponse>> getSubscribedUsers() {
+    return executeAndHandleError<SubscribedUsersResponse>(() async {
+      final res = await _apiServiceStream.getSubscribedUsers();
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, bool>> toggleSubscription({
+    required ToggleSubscriptionParams params,
+  }) {
+    return executeAndHandleError<bool>(() async {
+      final ok = await _apiServiceStream.toggleSubscription(
+        userId: params.userId,
+      );
+      return ok;
     });
   }
 }

@@ -91,9 +91,17 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-  Future<List<ProductModel>> getMyProducts() async {
+  Future<List<ProductModel>> getMyProducts({
+    required List<int> categoryIds,
+  }) async {
     return executeAndHandleErrorServer<List<ProductModel>>(() async {
-      final response = await get(ServerConfig.products);
+      final queryParameters = categoryIds.isNotEmpty
+          ? {
+              'category_ids[]': categoryIds,
+            }
+          : null;
+      final response =
+          await get(ServerConfig.products, queryParameters: queryParameters);
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<dynamic> data = response.json['data'];
         return data.map((e) => ProductModel.fromJson(e)).toList();

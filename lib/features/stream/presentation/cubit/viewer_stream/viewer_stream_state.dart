@@ -63,5 +63,10 @@ class ViewerStreamState with _$ViewerStreamState {
     
     // Audio
     @Default(false) bool isAudioMuted,
+
+    // Subscriptions
+    @Default(false) bool isSubscribed,
+    @Default(false) bool isLoadingSubscription,
+    @Default(false) bool isTogglingSubscription,
   }) = _ViewerStreamState;
 }

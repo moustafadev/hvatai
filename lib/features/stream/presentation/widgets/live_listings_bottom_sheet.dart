@@ -227,35 +227,25 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                               return;
                             }
 
-                            await cubit.getMyProducts();
+                            cubit.getMyProducts();
                             if (!mounted) return;
 
-                            if (cubit.state.myProducts.isEmpty) {
-                              await showModalBottomSheet(
-                                isScrollControlled: true,
-                                context: context,
-                                backgroundColor: Colors.transparent,
-                                builder: (ctx) => _CreateProductSheet(
+                            final selectedProduct =
+                                await showModalBottomSheet<
+                                    StreamProductModel>(
+                              isScrollControlled: true,
+                              context: context,
+                              backgroundColor: Colors.transparent,
+                              builder: (ctx) => BlocProvider.value(
+                                value: cubit,
+                                child: _MyProductsSelectionSheet(
+                                  streamId: widget.streamId,
                                   allowedCategoryIds: cubit.state.categoryIds,
                                 ),
-                              );
-                            } else {
-                              final selectedProduct =
-                                  await showModalBottomSheet<
-                                      StreamProductModel>(
-                                isScrollControlled: true,
-                                context: context,
-                                backgroundColor: Colors.transparent,
-                                builder: (ctx) => BlocProvider.value(
-                                  value: cubit,
-                                  child: _MyProductsSelectionSheet(
-                                    streamId: widget.streamId,
-                                  ),
-                                ),
-                              );
-                              if (selectedProduct != null && mounted) {
-                                Navigator.pop(context, selectedProduct);
-                              }
+                              ),
+                            );
+                            if (selectedProduct != null && mounted) {
+                              Navigator.pop(context, selectedProduct);
                             }
                           },
                           child: Container(
@@ -294,9 +284,11 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
 class _MyProductsSelectionSheet extends StatelessWidget {
   const _MyProductsSelectionSheet({
     required this.streamId,
+    required this.allowedCategoryIds,
   });
 
   final int streamId;
+  final List<int> allowedCategoryIds;
 
   @override
   Widget build(BuildContext context) {
@@ -396,11 +388,31 @@ class _MyProductsSelectionSheet extends StatelessWidget {
                             ),
                             SizedBox(height: 12.h),
                             CustomText(
-                              text: 'Create products first to add them to the stream.',
+                              text:
+                                  'Create products first to add them to the stream.',
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
                               color: AppColors.blackDark.withOpacity(0.6),
                               textAlign: TextAlign.center,
+                            ),
+                            SizedBox(height: 16.h),
+                            CustomButton(
+                              title: 'Create product',
+                              onPressed: () async {
+                                await showModalBottomSheet(
+                                  isScrollControlled: true,
+                                  context: context,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (ctx) => _CreateProductSheet(
+                                    allowedCategoryIds: allowedCategoryIds,
+                                  ),
+                                );
+                                if (context.mounted) {
+                                  context
+                                      .read<LiveListingsShopCubit>()
+                                      .getMyProducts();
+                                }
+                              },
                             ),
                           ],
                         );

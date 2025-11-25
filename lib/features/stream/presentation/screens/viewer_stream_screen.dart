@@ -31,6 +31,8 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
       locator(),
       locator(),
       locator(),
+      locator(),
+      locator(),
       stream: widget.stream,
       joinData: widget.joinData,
     );
@@ -165,120 +167,129 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
               );
             }
 
-            return Scaffold(
-              backgroundColor: Colors.black,
-              body: Stack(
-                children: [
-                  Positioned.fill(child: ViewerVideoView(state: state)),
-                  if (isSelectingWinner || hasWinner)
-                    WinnerBannerOverlay(
-                      isSelecting: isSelectingWinner,
-                      winner: winnerData,
-                      isViewerWinner: viewerIsWinner,
-                      topPadding: MediaQuery.of(context).padding.top,
-                    ),
-                  Positioned(
-                    top: MediaQuery.of(context).padding.top + 20,
-                    left: 16,
-                    right: 16,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InkWell(
-                          onTap: () async {
-                            final action = await _showExitDialog();
-                            await _performExit(action);
-                          },
-                          child: CompanyInfo(
+            return WillPopScope(
+                 onWillPop: () async {
+              final action = await _showExitDialog();
+              if (action == _ExitAction.cancel) return false;
+              await _performExit(action);
+              return false;
+            },
+              child: Scaffold(
+                backgroundColor: Colors.black,
+                body: Stack(
+                  children: [
+                    Positioned.fill(child: ViewerVideoView(state: state)),
+                    if (isSelectingWinner || hasWinner)
+                      WinnerBannerOverlay(
+                        isSelecting: isSelectingWinner,
+                        winner: winnerData,
+                        isViewerWinner: viewerIsWinner,
+                        topPadding: MediaQuery.of(context).padding.top,
+                      ),
+                    Positioned(
+                      top: MediaQuery.of(context).padding.top + 20,
+                      left: 16,
+                      right: 16,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CompanyInfo(
                             streamUserModel: widget.stream.user,
+                            isSubscribed: state.isSubscribed,
+                            isSubscriptionLoading:
+                                state.isLoadingSubscription ||
+                                    state.isTogglingSubscription,
+                            onSubscribeTap: () => context
+                                .read<ViewerStreamCubit>()
+                                .toggleSubscription(),
                           ),
-                        ),
-                        ViewerCountWidget(
-                          count: state.viewerCount,
-                          isViewerMode: true,
-                        ),
-                      ],
+                          ViewerCountWidget(
+                            count: state.viewerCount,
+                            isViewerMode: true,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  Positioned(
-                    right: 16,
-                    bottom: hasProduct ? null : 16,
-                    top: hasProduct ? MediaQuery.of(context).size.height * 0.55 : null,
-                    child: RightSideIcons(
-                      onShopTap: () => _openViewerShop(context),
+                    Positioned(
+                      right: 16,
+                      bottom: hasProduct ? null : 16,
+                      top: hasProduct ? MediaQuery.of(context).size.height * 0.55 : null,
+                      child: RightSideIcons(
+                        onShopTap: () => _openViewerShop(context),
+                      ),
                     ),
-                  ),
-                  Positioned(
-                    left: 16,
-                    right: 16,
-                    bottom: 16,
-                    child: LiveBottomPanel(
-                      comments: state.comments,
-                      controller: _cubit.controller,
-                      onCommentChanged: (t) => context
-                          .read<ViewerStreamCubit>()
-                          .updateCommentText(t),
-                      onSend: () => context
-                          .read<ViewerStreamCubit>()
-                          .sendCommentToServer(streamId: widget.stream.id ?? 0),
-                      timerText: timerText,
-                      productTitle: productTitle,
-                      productCategory: productCategory,
-                      startPrice: displayPrice,
-                      showProductDetails: hasProduct,
-                      showBidActions: hasProduct && !isSelectingWinner,
-                      showSingleBidButton:
-                          isInitialBid && !isSelectingWinner && !hasWinner,
-                      singleBidButtonLabel: singleBidLabel,
-                      isBidLoading: state.isPlacingBid,
-                      postAuctionAction: postAuctionAction,
-                      onSingleBidPressed:
-                          canInteractWithBids && currentProduct != null
-                          ? () => _placeBid(
-                                context: context,
-                                product: currentProduct,
-                                amount: displayPrice,
-                              )
-                          : null,
-                      onEditPressed: (!isInitialBid &&
-                              hasProduct &&
-                              currentProduct != null &&
-                              canInteractWithBids)
-                          ? () async {
-                              final customPrice =
-                                  await showModalBottomSheet<double>(
-                                context: context,
-                                isScrollControlled: true,
-                                backgroundColor: Colors.transparent,
-                                builder: (ctx) => CustomBidPriceBottomSheet(
-                                  minimumPrice: displayPrice,
-                                ),
-                              );
-                              
-                              if (!context.mounted || customPrice == null) {
-                                return;
+                    Positioned(
+                      left: 16,
+                      right: 16,
+                      bottom: 16,
+                      child: LiveBottomPanel(
+                        comments: state.comments,
+                        controller: _cubit.controller,
+                        onCommentChanged: (t) => context
+                            .read<ViewerStreamCubit>()
+                            .updateCommentText(t),
+                        onSend: () => context
+                            .read<ViewerStreamCubit>()
+                            .sendCommentToServer(streamId: widget.stream.id ?? 0),
+                        timerText: timerText,
+                        productTitle: productTitle,
+                        productCategory: productCategory,
+                        startPrice: displayPrice,
+                        showProductDetails: hasProduct,
+                        showBidActions: hasProduct && !isSelectingWinner,
+                        showSingleBidButton:
+                            isInitialBid && !isSelectingWinner && !hasWinner,
+                        singleBidButtonLabel: singleBidLabel,
+                        isBidLoading: state.isPlacingBid,
+                        postAuctionAction: postAuctionAction,
+                        onSingleBidPressed:
+                            canInteractWithBids && currentProduct != null
+                            ? () => _placeBid(
+                                  context: context,
+                                  product: currentProduct,
+                                  amount: displayPrice,
+                                )
+                            : null,
+                        onEditPressed: (!isInitialBid &&
+                                hasProduct &&
+                                currentProduct != null &&
+                                canInteractWithBids)
+                            ? () async {
+                                final customPrice =
+                                    await showModalBottomSheet<double>(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (ctx) => CustomBidPriceBottomSheet(
+                                    minimumPrice: displayPrice,
+                                  ),
+                                );
+                                
+                                if (!context.mounted || customPrice == null) {
+                                  return;
+                                }
+              
+                                _placeBid(
+                                  context: context,
+                                  product: currentProduct,
+                                  amount: customPrice,
+                                );
                               }
-
-                              _placeBid(
-                                context: context,
-                                product: currentProduct,
-                                amount: customPrice,
-                              );
-                            }
-                          : null,
-                      onBidPressed: (!isInitialBid &&
-                              canInteractWithBids &&
-                              currentProduct != null)
-                          ? () => _placeBid(
-                                context: context,
-                                product: currentProduct,
-                                amount: displayPrice,
-                              )
-                          : null,
+                            : null,
+                        onBidPressed: (!isInitialBid &&
+                                canInteractWithBids &&
+                                currentProduct != null)
+                            ? () => _placeBid(
+                                  context: context,
+                                  product: currentProduct,
+                                  amount: displayPrice,
+                                )
+                            : null,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             );
           },

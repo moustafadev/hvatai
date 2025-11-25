@@ -15,7 +15,7 @@ class AddStreamScreen extends StatelessWidget {
       ),
       body: BlocProvider(
         create: (_) =>
-            locator<AddStreamCubit>()..loadProducts()..loadCategories(),
+            locator<AddStreamCubit>()..loadCategories(),
         child: BlocBuilder<AddStreamCubit, AddStreamState>(
           builder: (context, state) {
             final cubit = context.read<AddStreamCubit>();
@@ -179,67 +179,69 @@ class AddStreamScreen extends StatelessWidget {
                       24.ph,
 
                       // product_ids
-                      CustomText(
-                        text: 'select products'.tr(),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w800,
-                      ),
-                      12.ph,
-                      Wrap(
-                        spacing: 8,
-                        runSpacing: 8,
-                        children: () {
-                          final chips = <Widget>[];
-                          for (final id in model.productIds) {
-                            final product = state.products.firstWhere(
-                              (p) => p.id == id,
-                              orElse: () => ProductModel(id: id),
-                            );
+                      // CustomText(
+                      //   text: 'select products'.tr(),
+                      //   fontSize: 20,
+                      //   fontWeight: FontWeight.w800,
+                      // ),
+                    
+                      // 12.ph,
+                      // Wrap(
+                      //   spacing: 8,
+                      //   runSpacing: 8,
+                      //   children: () {
+                      //     final chips = <Widget>[];
+                      //     for (final id in model.productIds) {
+                      //       final product = state.products.firstWhere(
+                      //         (p) => p.id == id,
+                      //         orElse: () => ProductModel(id: id),
+                      //       );
 
-                            final productCategoryId = product.categoryId;
-                            if (productCategoryId == null ||
-                                !selectedCategoryIds
-                                    .contains(productCategoryId)) {
-                              continue;
-                            }
+                      //       final productCategoryId = product.categoryId;
+                      //       if (productCategoryId == null ||
+                      //           !selectedCategoryIds
+                      //               .contains(productCategoryId)) {
+                      //         continue;
+                      //       }
 
-                            chips.add(
-                              InputChip(
-                                label: CustomText(
-                                    text:
-                                        product.productName ?? 'Product $id'),
-                                onDeleted: () => cubit.removeProductId(id),
-                              ),
-                            );
-                          }
-                          return chips;
-                        }(),
-                      ),
-                      12.ph,
-                      CustomDropdown(
-                        hintText: selectedCategoryIds.isEmpty
-                            ? 'select categories first'.tr()
-                            : 'select product'.tr(),
-                        value: null,
-                        items: availableProducts
-                            .where((p) => !model.productIds.contains(p.id))
-                            .map(
-                              (p) => DropdownMenuItem<String>(
-                                value: p.id!.toString(),
-                                child:
-                                    Text(p.productName ?? 'Product ${p.id}'),
-                              ),
-                            )
-                            .toList(),
-                        onChanged: (val) {
-                          if (selectedCategoryIds.isEmpty) return;
-                          final selectedId = int.tryParse(val ?? '');
-                          if (selectedId != null) {
-                            cubit.addProductId(selectedId);
-                          }
-                        },
-                      ),
-                      24.ph,
+                      //       chips.add(
+                      //         InputChip(
+                      //           label: CustomText(
+                      //               text:
+                      //                   product.productName ?? 'Product $id'),
+                      //           onDeleted: () => cubit.removeProductId(id),
+                      //         ),
+                      //       );
+                      //     }
+                      //     return chips;
+                      //   }(),
+                      // ),
+                     
+                      // 12.ph,
+                      // CustomDropdown(
+                      //   hintText: selectedCategoryIds.isEmpty
+                      //       ? 'select categories first'.tr()
+                      //       : 'select product'.tr(),
+                      //   value: null,
+                      //   items: availableProducts
+                      //       .where((p) => !model.productIds.contains(p.id))
+                      //       .map(
+                      //         (p) => DropdownMenuItem<String>(
+                      //           value: p.id!.toString(),
+                      //           child:
+                      //               Text(p.productName ?? 'Product ${p.id}'),
+                      //         ),
+                      //       )
+                      //       .toList(),
+                      //   onChanged: (val) {
+                      //     if (selectedCategoryIds.isEmpty) return;
+                      //     final selectedId = int.tryParse(val ?? '');
+                      //     if (selectedId != null) {
+                      //       cubit.addProductId(selectedId);
+                      //     }
+                      //   },
+                      // ),
+                      // // 24.ph,
 
                       CustomText(
                         text: 'select categories'.tr(),

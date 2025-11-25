@@ -84,7 +84,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AuctionSearchCubit());
   locator.registerFactory(
       () => ProductDetailsCubit(locator(), locator(), locator()));
-  locator.registerFactory(() => AddStreamCubit(locator(), locator(), locator()));
+  locator.registerFactory(() => AddStreamCubit(locator(), locator(), ));
   locator.registerFactory(() => ChatsCubit(
         locator(),
         locator(),

@@ -125,14 +125,8 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InkWell(
-                          onTap: () async {
-                            final action = await _showExitDialog();
-                            await _performExit(action);
-                          },
-                          child: CompanyInfo(
-                            streamUserModel: widget.stream.user,
-                          ),
+                        CompanyInfo(
+                          streamUserModel: widget.stream.user,
                         ),
                         ViewerCountWidget(
                           count: state.viewerCount,

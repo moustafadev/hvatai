@@ -80,7 +80,9 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
 
   Future<void> getMyProducts() async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
-    final result = await getProductsUsecase.call(unit);
+    final result = await getProductsUsecase.call(
+      const GetMyProductsParams(categoryIds: []),
+    );
     result.fold(
       (failure) =>
           emit(state.copyWith(isLoading: false, errorMessage: failure)),
