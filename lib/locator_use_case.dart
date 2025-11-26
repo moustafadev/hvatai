@@ -1,5 +1,6 @@
 import 'package:hvatai/features/all_app/domain/usecases/add_fav_product_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/add_product_to_cart_usecase.dart';
+import 'package:hvatai/features/all_app/domain/usecases/create_order_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/delete_cart_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/get_all_products_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/get_cart_usecase.dart';
@@ -58,6 +59,7 @@ import 'package:hvatai/features/stream/domain/usecases/start_stream_usecase.dart
 import 'package:hvatai/features/stream/domain/usecases/toggle_bidding_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_subscribed_users_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/toggle_subscription_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_my_streams_usecase.dart';
 import 'package:hvatai/features/wallet/domain/usecases/get_wallet_transactions_usecase.dart';
 import 'package:hvatai/features/wallet/domain/usecases/get_wallet_usecase.dart';
 import 'package:hvatai/features/wallet/domain/usecases/withdraw_to_card_usecase.dart';
@@ -129,4 +131,6 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => GetWalletUsecase(locator()));
   locator.registerLazySingleton(() => GetWalletTransactionsUsecase(locator()));
   locator.registerLazySingleton(() => WithdrawToCardUsecase(locator()));
+  locator.registerLazySingleton(() => GetMyStreamsUsecase(locator()));
+  locator.registerLazySingleton(() => CreateOrderUsecase(locator()));
 }

@@ -7,6 +7,7 @@ import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment
 import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
 import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
 import 'package:hvatai/features/stream/data/models/subscribed_users/subscribed_users_response.dart';
+import 'package:hvatai/features/stream/data/models/my_streams/my_streams_response.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_bid_session_usecase.dart';
@@ -73,4 +74,6 @@ abstract class StreamRepository {
   Future<Either<String, bool>> toggleSubscription({
     required ToggleSubscriptionParams params,
   });
+
+  Future<Either<String, MyStreamsResponse>> getMyStreams();
 }

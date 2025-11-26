@@ -6,6 +6,7 @@ import 'package:hvatai/features/stream/data/models/bid_session/bid_session_respo
 import 'package:hvatai/features/stream/data/models/bid_stream/bid_stream_response.dart';
 import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
 import 'package:hvatai/features/stream/data/models/subscribed_users/subscribed_users_response.dart';
+import 'package:hvatai/features/stream/data/models/my_streams/my_streams_response.dart';
 import 'package:hvatai/features/stream/data/models/start_stream/start_stream_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
@@ -154,6 +155,14 @@ class StreamImplRepository implements StreamRepository {
         userId: params.userId,
       );
       return ok;
+    });
+  }
+
+  @override
+  Future<Either<String, MyStreamsResponse>> getMyStreams() {
+    return executeAndHandleError<MyStreamsResponse>(() async {
+      final res = await _apiServiceStream.getMyStreams();
+      return res;
     });
   }
 }

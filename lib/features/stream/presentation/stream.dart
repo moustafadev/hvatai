@@ -24,6 +24,7 @@ import 'package:hvatai/features/stream/data/models/bid_winner/bid_winner_event.d
 import 'package:hvatai/features/stream/presentation/cubit/broadcaster_stream/broadcaster_stream_cubit.dart';
 import 'package:hvatai/features/stream/presentation/cubit/live_listings_shop/live_listings_shop_cubit.dart';
 import 'package:hvatai/features/stream/presentation/cubit/viewer_stream/viewer_stream_cubit.dart';
+import 'package:hvatai/features/stream/presentation/cubit/my_streams_cubit/my_streams_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:livekit_client/livekit_client.dart';
@@ -35,6 +36,7 @@ import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 
 part 'screens/broadcaster_stream_screen.dart';
 part 'screens/viewer_stream_screen.dart';
+part 'screens/my_streams_screen.dart';
 part 'widgets/comments_compact_list.dart';
 part 'widgets/company_details_widget.dart';
 part 'widgets/company_info.dart';

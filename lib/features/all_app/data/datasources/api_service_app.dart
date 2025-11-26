@@ -3,7 +3,9 @@ import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/all_app/data/model/cart_model.dart';
+import 'package:hvatai/features/all_app/data/model/order_response/order_response.dart';
 import 'package:hvatai/features/all_app/domain/usecases/add_fav_product_usecase.dart';
+import 'package:hvatai/features/all_app/domain/usecases/create_order_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/add_product_to_cart_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/delete_cart_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/update_cart_usecase.dart';
@@ -111,6 +113,20 @@ class ApiServiceApp extends ApiBase {
             .toList();
       } else {
         throw Exception;
+      }
+    });
+  }
+
+  Future<OrderResponse> createOrderFromCart(CreateOrderParams params) async {
+    return executeAndHandleErrorServer<OrderResponse>(() async {
+      final response = await post(
+        ServerConfig.orderFromCart,
+        body: params.toJson(),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return OrderResponse.fromJson(response.json);
+      } else {
+        throw Exception('Failed to create order');
       }
     });
   }

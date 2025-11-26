@@ -415,6 +415,7 @@
   "message": "Сообщение",
   "forYou": "Для вас",
   "clips": "Клипы",
+  "noStreams": "Стримы не найдены",
   "pastStreams": "Прошлые трансляции",
   "loremIpsumDolorSitAmet": "Lorem ipsum dolor sit amet",
   "viewMore": "Смотреть больше",
@@ -571,5 +572,13 @@
   "enterAmountUpTo": "Введите сумму до {amount}, Р",
   "invalidAmount": "Неверная сумма",
   "amountExceedsBalance": "Сумма превышает доступный баланс",
-  "pleaseAddPaymentMethod": "Пожалуйста, добавьте способ оплаты"
+  "pleaseAddPaymentMethod": "Пожалуйста, добавьте способ оплаты",
+  "item": "товар",
+  "items": "товаров",
+  "processingPayment": "Обрабатываем платёж...",
+  "operationCompletedSuccessfully": "Операция завершена успешно",
+  "anErrorOccurred": "Произошла какая-то ошибка",
+  "retry": "Повторить",
+  "pleaseAddDeliveryAddress": "Пожалуйста, добавьте адрес доставки",
+  "payment": "Оплата"
 }

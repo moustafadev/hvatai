@@ -24,7 +24,7 @@ class TradeProfileDetailScreen extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            height: screenHeight * (230 / screenHeight),
+            height: screenHeight * (260 / screenHeight),
             color: AppColors.primaryPink,
           ),
           Padding(

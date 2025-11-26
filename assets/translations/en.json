@@ -368,6 +368,7 @@
   "message": "Message",
   "forYou": "For you",
   "clips": "Clips",
+  "noStreams": "No streams found",
   "pastStreams": "Past Streams",
   "loremIpsum": "Lorem ipsum dolor sit amet",
   "viewMore": "View more",
@@ -574,5 +575,13 @@
   "enterAmountUpTo": "Enter amount up to {amount}, R",
   "invalidAmount": "Invalid amount",
   "amountExceedsBalance": "Amount exceeds available balance",
-  "pleaseAddPaymentMethod": "Please add a payment method"
+  "pleaseAddPaymentMethod": "Please add a payment method",
+  "item": "item",
+  "items": "items",
+  "processingPayment": "Processing payment...",
+  "operationCompletedSuccessfully": "Operation completed successfully",
+  "anErrorOccurred": "An error occurred",
+  "retry": "Retry",
+  "pleaseAddDeliveryAddress": "Please add a delivery address",
+  "payment": "Payment"
 }

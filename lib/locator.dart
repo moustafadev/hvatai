@@ -56,6 +56,7 @@ import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart'
 import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
 import 'package:hvatai/features/stream/domain/repositories/stream_impl_repository.dart';
 import 'package:hvatai/features/stream/presentation/cubit/live_listings_shop/live_listings_shop_cubit.dart';
+import 'package:hvatai/features/stream/presentation/cubit/my_streams_cubit/my_streams_cubit.dart';
 import 'package:hvatai/features/wallet/data/datasources/api_service_wallet.dart';
 import 'package:hvatai/features/wallet/data/repositories/wallet_impl_repository.dart';
 import 'package:hvatai/features/wallet/domain/repositories/wallet_repository.dart';
@@ -101,7 +102,7 @@ Future<void> setupLocator() async {
         locator(),
         locator(),
       ));
-  locator.registerFactory(() => BasketCubit(locator(), locator(), locator()));
+  locator.registerFactory(() => BasketCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => SearchCubit(
         locator(),
       ));
@@ -142,6 +143,7 @@ Future<void> setupLocator() async {
       locator(), locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => WalletCubit(
       locator(), locator(), locator()));
+  locator.registerFactory(() => MyStreamsCubit(locator()));
 
   // //CORE
   // //UseCase

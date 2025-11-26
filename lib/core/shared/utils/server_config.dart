@@ -71,4 +71,10 @@ abstract class ServerConfig {
   static String getWallet(int walletId) => "wallets/$walletId";
   static String getWalletTransactions(int walletId) => "wallets/$walletId/transactions";
   static String withdrawToCard(int walletId) => "wallets/$walletId/top-up-card";
+
+  // My Streams endpoint
+  static const String myStreams = "streams/my-streams";
+
+  // Orders endpoint
+  static const String orderFromCart = "orders/from-cart";
 }

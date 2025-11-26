@@ -9,6 +9,7 @@ import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment
 import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
 import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
 import 'package:hvatai/features/stream/data/models/subscribed_users/subscribed_users_response.dart';
+import 'package:hvatai/features/stream/data/models/my_streams/my_streams_response.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.dart';
@@ -284,6 +285,20 @@ class ApiServiceStream extends ApiBase {
 
       throw Exception(
         'Failed to toggle subscription (code: ${res.statusCode})',
+      );
+    });
+  }
+
+  Future<MyStreamsResponse> getMyStreams() async {
+    return executeAndHandleErrorServer<MyStreamsResponse>(() async {
+      final res = await get(ServerConfig.myStreams);
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        return MyStreamsResponse.fromJson(res.json);
+      }
+
+      throw Exception(
+        'Failed to fetch my streams (code: ${res.statusCode})',
       );
     });
   }

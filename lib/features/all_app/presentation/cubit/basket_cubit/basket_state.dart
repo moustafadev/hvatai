@@ -10,5 +10,9 @@ class BasketState with _$BasketState {
     @Default({}) Map<int, int> tempQuantities,
     @Default([]) List<UserRegistrationData> deliveryModel,
     @Default(0.0) double totalCartPrice,
+    @Default(false) bool isCreatingOrder,
+    @Default(false) bool showOrderLoadingScreen,
+    @Default(false) bool showOrderSuccessScreen,
+    @Default(false) bool showOrderErrorScreen,
   }) = _BasketState;
 }

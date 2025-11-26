@@ -24,6 +24,10 @@ mixin _$BasketState {
   List<UserRegistrationData> get deliveryModel =>
       throw _privateConstructorUsedError;
   double get totalCartPrice => throw _privateConstructorUsedError;
+  bool get isCreatingOrder => throw _privateConstructorUsedError;
+  bool get showOrderLoadingScreen => throw _privateConstructorUsedError;
+  bool get showOrderSuccessScreen => throw _privateConstructorUsedError;
+  bool get showOrderErrorScreen => throw _privateConstructorUsedError;
 
   /// Create a copy of BasketState
   /// with the given fields replaced by the non-null parameter values.
@@ -45,7 +49,11 @@ abstract class $BasketStateCopyWith<$Res> {
       CartModel cart,
       Map<int, int> tempQuantities,
       List<UserRegistrationData> deliveryModel,
-      double totalCartPrice});
+      double totalCartPrice,
+      bool isCreatingOrder,
+      bool showOrderLoadingScreen,
+      bool showOrderSuccessScreen,
+      bool showOrderErrorScreen});
 
   $CartModelCopyWith<$Res> get cart;
 }
@@ -72,6 +80,10 @@ class _$BasketStateCopyWithImpl<$Res, $Val extends BasketState>
     Object? tempQuantities = null,
     Object? deliveryModel = null,
     Object? totalCartPrice = null,
+    Object? isCreatingOrder = null,
+    Object? showOrderLoadingScreen = null,
+    Object? showOrderSuccessScreen = null,
+    Object? showOrderErrorScreen = null,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -102,6 +114,22 @@ class _$BasketStateCopyWithImpl<$Res, $Val extends BasketState>
           ? _value.totalCartPrice
           : totalCartPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      isCreatingOrder: null == isCreatingOrder
+          ? _value.isCreatingOrder
+          : isCreatingOrder // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showOrderLoadingScreen: null == showOrderLoadingScreen
+          ? _value.showOrderLoadingScreen
+          : showOrderLoadingScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showOrderSuccessScreen: null == showOrderSuccessScreen
+          ? _value.showOrderSuccessScreen
+          : showOrderSuccessScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showOrderErrorScreen: null == showOrderErrorScreen
+          ? _value.showOrderErrorScreen
+          : showOrderErrorScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -131,7 +159,11 @@ abstract class _$$BasketStateImplCopyWith<$Res>
       CartModel cart,
       Map<int, int> tempQuantities,
       List<UserRegistrationData> deliveryModel,
-      double totalCartPrice});
+      double totalCartPrice,
+      bool isCreatingOrder,
+      bool showOrderLoadingScreen,
+      bool showOrderSuccessScreen,
+      bool showOrderErrorScreen});
 
   @override
   $CartModelCopyWith<$Res> get cart;
@@ -157,6 +189,10 @@ class __$$BasketStateImplCopyWithImpl<$Res>
     Object? tempQuantities = null,
     Object? deliveryModel = null,
     Object? totalCartPrice = null,
+    Object? isCreatingOrder = null,
+    Object? showOrderLoadingScreen = null,
+    Object? showOrderSuccessScreen = null,
+    Object? showOrderErrorScreen = null,
   }) {
     return _then(_$BasketStateImpl(
       isLoading: null == isLoading
@@ -187,6 +223,22 @@ class __$$BasketStateImplCopyWithImpl<$Res>
           ? _value.totalCartPrice
           : totalCartPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      isCreatingOrder: null == isCreatingOrder
+          ? _value.isCreatingOrder
+          : isCreatingOrder // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showOrderLoadingScreen: null == showOrderLoadingScreen
+          ? _value.showOrderLoadingScreen
+          : showOrderLoadingScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showOrderSuccessScreen: null == showOrderSuccessScreen
+          ? _value.showOrderSuccessScreen
+          : showOrderSuccessScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showOrderErrorScreen: null == showOrderErrorScreen
+          ? _value.showOrderErrorScreen
+          : showOrderErrorScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -201,7 +253,11 @@ class _$BasketStateImpl implements _BasketState {
       required this.cart,
       final Map<int, int> tempQuantities = const {},
       final List<UserRegistrationData> deliveryModel = const [],
-      this.totalCartPrice = 0.0})
+      this.totalCartPrice = 0.0,
+      this.isCreatingOrder = false,
+      this.showOrderLoadingScreen = false,
+      this.showOrderSuccessScreen = false,
+      this.showOrderErrorScreen = false})
       : _carts = carts,
         _tempQuantities = tempQuantities,
         _deliveryModel = deliveryModel;
@@ -244,10 +300,22 @@ class _$BasketStateImpl implements _BasketState {
   @override
   @JsonKey()
   final double totalCartPrice;
+  @override
+  @JsonKey()
+  final bool isCreatingOrder;
+  @override
+  @JsonKey()
+  final bool showOrderLoadingScreen;
+  @override
+  @JsonKey()
+  final bool showOrderSuccessScreen;
+  @override
+  @JsonKey()
+  final bool showOrderErrorScreen;
 
   @override
   String toString() {
-    return 'BasketState(isLoading: $isLoading, errorMessage: $errorMessage, carts: $carts, cart: $cart, tempQuantities: $tempQuantities, deliveryModel: $deliveryModel, totalCartPrice: $totalCartPrice)';
+    return 'BasketState(isLoading: $isLoading, errorMessage: $errorMessage, carts: $carts, cart: $cart, tempQuantities: $tempQuantities, deliveryModel: $deliveryModel, totalCartPrice: $totalCartPrice, isCreatingOrder: $isCreatingOrder, showOrderLoadingScreen: $showOrderLoadingScreen, showOrderSuccessScreen: $showOrderSuccessScreen, showOrderErrorScreen: $showOrderErrorScreen)';
   }
 
   @override
@@ -266,7 +334,15 @@ class _$BasketStateImpl implements _BasketState {
             const DeepCollectionEquality()
                 .equals(other._deliveryModel, _deliveryModel) &&
             (identical(other.totalCartPrice, totalCartPrice) ||
-                other.totalCartPrice == totalCartPrice));
+                other.totalCartPrice == totalCartPrice) &&
+            (identical(other.isCreatingOrder, isCreatingOrder) ||
+                other.isCreatingOrder == isCreatingOrder) &&
+            (identical(other.showOrderLoadingScreen, showOrderLoadingScreen) ||
+                other.showOrderLoadingScreen == showOrderLoadingScreen) &&
+            (identical(other.showOrderSuccessScreen, showOrderSuccessScreen) ||
+                other.showOrderSuccessScreen == showOrderSuccessScreen) &&
+            (identical(other.showOrderErrorScreen, showOrderErrorScreen) ||
+                other.showOrderErrorScreen == showOrderErrorScreen));
   }
 
   @override
@@ -278,7 +354,11 @@ class _$BasketStateImpl implements _BasketState {
       cart,
       const DeepCollectionEquality().hash(_tempQuantities),
       const DeepCollectionEquality().hash(_deliveryModel),
-      totalCartPrice);
+      totalCartPrice,
+      isCreatingOrder,
+      showOrderLoadingScreen,
+      showOrderSuccessScreen,
+      showOrderErrorScreen);
 
   /// Create a copy of BasketState
   /// with the given fields replaced by the non-null parameter values.
@@ -297,7 +377,11 @@ abstract class _BasketState implements BasketState {
       required final CartModel cart,
       final Map<int, int> tempQuantities,
       final List<UserRegistrationData> deliveryModel,
-      final double totalCartPrice}) = _$BasketStateImpl;
+      final double totalCartPrice,
+      final bool isCreatingOrder,
+      final bool showOrderLoadingScreen,
+      final bool showOrderSuccessScreen,
+      final bool showOrderErrorScreen}) = _$BasketStateImpl;
 
   @override
   bool get isLoading;
@@ -313,6 +397,14 @@ abstract class _BasketState implements BasketState {
   List<UserRegistrationData> get deliveryModel;
   @override
   double get totalCartPrice;
+  @override
+  bool get isCreatingOrder;
+  @override
+  bool get showOrderLoadingScreen;
+  @override
+  bool get showOrderSuccessScreen;
+  @override
+  bool get showOrderErrorScreen;
 
   /// Create a copy of BasketState
   /// with the given fields replaced by the non-null parameter values.

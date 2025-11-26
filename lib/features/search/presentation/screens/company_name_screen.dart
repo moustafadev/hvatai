@@ -13,7 +13,7 @@ class CompanyNameScreen extends StatelessWidget {
         child: Stack(
           children: [
             Container(
-              height: screenHeight * (230 / screenHeight),
+              height: screenHeight * (260 / screenHeight),
               color: AppColors.darkYellow,
             ),
             Padding(

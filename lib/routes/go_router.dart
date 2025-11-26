@@ -314,6 +314,12 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
+      path: AppRoutes.myStreams,
+      builder: (BuildContext context, GoRouterState state) {
+        return const MyStreamsScreen();
+      },
+    ),
+    GoRoute(
       path: AppRoutes.privacyPolicy, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const PrivacyPolicy();

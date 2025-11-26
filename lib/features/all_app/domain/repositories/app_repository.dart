@@ -3,6 +3,8 @@ import 'package:hvatai/features/all_app/data/model/cart_model.dart';
 import 'package:hvatai/features/all_app/domain/usecases/add_fav_product_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/add_product_to_cart_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/delete_cart_usecase.dart';
+import 'package:hvatai/features/all_app/data/model/order_response/order_response.dart';
+import 'package:hvatai/features/all_app/domain/usecases/create_order_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/update_cart_usecase.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 
@@ -19,4 +21,6 @@ abstract class AppRepository {
   Future<Either<String, ProductModel>> addFavProduct(
       AddFavProductParams params);
   Future<Either<String, CartModel>> updateCart(UpdateCartParams params);
+  Future<Either<String, OrderResponse>> createOrderFromCart(
+      CreateOrderParams params);
 }

@@ -7,6 +7,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/all_app/data/model/cart_model.dart';
+import 'package:hvatai/features/all_app/domain/usecases/create_order_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/get_cart_usecase.dart';
 import 'package:hvatai/features/all_app/domain/usecases/update_cart_usecase.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
@@ -20,11 +21,13 @@ class BasketCubit extends Cubit<BasketState> {
     this.getCartUsecase,
     this.updateCartUsecase,
     this.getDeliveryAddressUsecase,
+    this.createOrderUsecase,
   ) : super(const BasketState(cart: CartModel()));
 
   final GetCartUsecase getCartUsecase;
   final GetDeliveryAddressUsecase getDeliveryAddressUsecase;
   final UpdateCartUsecase updateCartUsecase;
+  final CreateOrderUsecase createOrderUsecase;
 
   final Map<int, Timer> _debounceTimers = {};
   final Map<int, int> _pendingUpdates = {};
@@ -201,6 +204,64 @@ class BasketCubit extends Cubit<BasketState> {
         tempQuantities: {},
       )),
     );
+  }
+
+  Future<void> createOrderFromCart({
+    required int cartId,
+    required int walletId,
+    required String street,
+    required String city,
+    String? floor,
+    String? frontDoor,
+    String? intercomCode,
+    String? apartment,
+    required bool confirmationCall,
+  }) async {
+    emit(state.copyWith(
+      isCreatingOrder: true,
+      showOrderLoadingScreen: true,
+      showOrderSuccessScreen: false,
+      showOrderErrorScreen: false,
+    ));
+
+    final result = await createOrderUsecase.call(CreateOrderParams(
+      cartId: cartId,
+      paymentMethod: 'wallet',
+      walletId: walletId,
+      street: street,
+      city: city,
+      floor: floor,
+      frontDoor: frontDoor,
+      intercomCode: intercomCode,
+      apartment: apartment,
+      confirmationCall: confirmationCall,
+    ));
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(
+          isCreatingOrder: false,
+          showOrderLoadingScreen: false,
+          showOrderErrorScreen: true,
+          errorMessage: failure,
+        ));
+      },
+      (response) {
+        emit(state.copyWith(
+          isCreatingOrder: false,
+          showOrderLoadingScreen: false,
+          showOrderSuccessScreen: true,
+        ));
+      },
+    );
+  }
+
+  void hideOrderSuccessScreen() {
+    emit(state.copyWith(showOrderSuccessScreen: false));
+  }
+
+  void hideOrderErrorScreen() {
+    emit(state.copyWith(showOrderErrorScreen: false));
   }
 
   @override

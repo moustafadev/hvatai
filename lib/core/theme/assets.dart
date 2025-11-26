@@ -77,6 +77,10 @@ class Assets {
   /// Assets for assetsIconsCard
   /// assets/icons/card.png
   static const String assetsIconsCard = "assets/icons/card.png";
+
+  /// Assets for assetsIconsPaymentMethod
+  /// assets/icons/payment_method.png
+  static const String assetsIconsPaymentMethod = "assets/icons/payment_method.png";
   static const String assetsIconsPin = "assets/icons/pin.png";
   static const String assetsIconsCardStream = "assets/icons/card_stream.png";
   static const String assetsIconsVolumeLoud = "assets/icons/Volume_Loud.svg";
