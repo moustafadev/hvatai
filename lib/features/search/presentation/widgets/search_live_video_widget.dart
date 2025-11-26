@@ -16,6 +16,13 @@ class SearchLiveVideoWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (liveStreams.isEmpty) {
+      return const CustomText(
+        text: 'No streams found',
+        fontWeight: FontWeight.w500,
+      );
+    }
+
     return ReusableLiveVideosGrid<SearchLiveStreamModel>(
       items: liveStreams,
       filter: (stream) {

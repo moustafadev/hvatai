@@ -5,21 +5,33 @@ class UsersSearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final dummyUsers = [
-      const UserRegistrationData(firstName: "Alice"),
-      const UserRegistrationData(firstName: "Bob"),
-      const UserRegistrationData(firstName: "Charlie"),
-      const UserRegistrationData(firstName: "Diana"),
-    ];
+    return BlocBuilder<SearchCubit, SearchState>(
+      builder: (context, state) {
+        if (state.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppColors.grey,
+            ),
+          );
+        }
 
-    return ListView.separated(
-      shrinkWrap: true,
-      padding: EdgeInsets.all(0),
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: dummyUsers.length,
-      separatorBuilder: (_, __) =>
-          const Divider(color: AppColors.blackTransparent40),
-      itemBuilder: (context, i) => UserTile(user: dummyUsers[i]),
+        if (state.users.isEmpty) {
+          return const CustomText(
+            text: 'No users found',
+            fontWeight: FontWeight.w500,
+          );
+        }
+
+        return ListView.separated(
+          shrinkWrap: true,
+          padding: EdgeInsets.zero,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: state.users.length,
+          separatorBuilder: (_, __) =>
+              const Divider(color: AppColors.blackTransparent40),
+          itemBuilder: (context, i) => UserTile(user: state.users[i]),
+        );
+      },
     );
   }
 }
@@ -46,12 +58,12 @@ class UserTile extends StatelessWidget {
         fontWeight: FontWeight.w500,
         fontSize: 16.sp,
       ),
-      subtitle: CustomText(
-        text: "15K subscribers".tr(),
-        fontWeight: FontWeight.w400,
-        fontSize: 16.sp,
-        color: Colors.grey,
-      ),
+      // subtitle: CustomText(
+      //   text: "15K subscribers".tr(),
+      //   fontWeight: FontWeight.w400,
+      //   fontSize: 16.sp,
+      //   color: Colors.grey,
+      // ),
       trailing: SizedBox(
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -59,7 +71,7 @@ class UserTile extends StatelessWidget {
             Image.asset(Assets.assetsIconsStar,
                 color: AppColors.goldenColor, height: 16.h, width: 16.w),
             CustomText(
-              text: "4.5",
+              text: user.personalRating.toString(),
               fontSize: 12.sp,
               fontWeight: FontWeight.w700,
               fontFamily: 'GManrope',

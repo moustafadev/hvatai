@@ -5,34 +5,26 @@ class ButtonTabBarSearch extends StatelessWidget {
 
   const ButtonTabBarSearch({required this.onCategorySelected, super.key});
 
-  static const List<String> detailedInterestOptions = [
-    'For you',
-    'Art',
-    'Business',
-    'Health',
-    'Music',
-    'Politics',
-    'Science',
-    'Sports',
-    'Technology',
-    'Travel',
-  ];
-
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<SearchCubit>();
-
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
+        final cubit = context.read<SearchCubit>();
+        final options = state.categories;
+
+        if (options.isEmpty) {
+          return const SizedBox.shrink();
+        }
+
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: detailedInterestOptions.map((item) {
-              final index = detailedInterestOptions.indexOf(item);
+            children: options.map((item) {
+              final index = options.indexOf(item);
               final isSelected = state.selectedIndex == index;
 
               return Padding(
-                padding: EdgeInsets.only(right: 10.w),
+                padding: EdgeInsets.only(right: 10.w, left: index == 0 ? 16.w : 0),
                 child: GestureDetector(
                   onTap: () => cubit.selectCategory(index),
                   child: Container(

@@ -3,9 +3,9 @@ part of 'customs.dart';
 class ReusableCategoryWidget<TCubit, TState> extends StatelessWidget {
   final List<String> interestKeys;
   final List<String> interestImages;
-
   final List<int> selectedIndices;
   final void Function(int index, String key) onTap;
+  final List<String?>? interestViews;
 
   const ReusableCategoryWidget({
     super.key,
@@ -13,25 +13,53 @@ class ReusableCategoryWidget<TCubit, TState> extends StatelessWidget {
     required this.interestImages,
     required this.selectedIndices,
     required this.onTap,
+    this.interestViews,
   });
+
+  String _formatViews(String? raw) {
+    if (raw == null || raw.isEmpty) return '';
+    final value = int.tryParse(raw) ?? 0;
+    if (value >= 1000) {
+      final formatted = value % 1000 == 0
+          ? (value / 1000).toStringAsFixed(0)
+          : (value / 1000).toStringAsFixed(1);
+      return '${formatted.replaceAll('.', ',')}K';
+    }
+    return value.toString();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Row(
-        children: List.generate(interestImages.length, (index) {
-          final isSelected = selectedIndices.contains(index);
+    final itemCount = interestKeys.length;
+    if (itemCount == 0) {
+      return const SizedBox.shrink();
+    }
 
-          return Padding(
-            padding: EdgeInsets.only(right: 12.w),
-            child: GestureDetector(
-              onTap: () => onTap(index, interestKeys[index].tr()),
+    return SizedBox(
+      height: 150,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children: List.generate(itemCount, (index) {
+            final isSelected = selectedIndices.contains(index);
+            final title = interestKeys[index];
+            final imageUrl =
+                interestImages.length > index ? interestImages[index] : '';
+            final views =
+                interestViews != null && interestViews!.length > index
+                    ? interestViews![index]
+                    : null;
+
+            return GestureDetector(
+              onTap: () => onTap(index, title),
               child: Container(
+                margin: EdgeInsets.only(left: index == 0 ? 16 : 12),
+                width: 120,
+                height: 141,
                 decoration: BoxDecoration(
                   color: isSelected ? AppColors.primaryColor : null,
                   borderRadius: BorderRadius.circular(8),
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black12,
                       blurRadius: 4,
@@ -39,85 +67,102 @@ class ReusableCategoryWidget<TCubit, TState> extends StatelessWidget {
                     ),
                   ],
                   border: isSelected
-                      ? Border.all(
-                          width: 1,
-                          color: AppColors.primaryColor,
-                        )
-                      : Border.all(
-                          color: AppColors.transparent,
-                          width: 1,
-                        ),
+                      ? Border.all(width: 0.1, color: Colors.transparent)
+                      : Border.all(color: AppColors.gray, width: 2),
                 ),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: AppColors.gray,
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  padding: EdgeInsets.only(left: 8, right: 8, top: 4),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Center(
-                        child: FittedBox(
-                          child: CustomText(
-                            text: interestKeys[index].tr(),
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.blackDark,
-                            textAlign: TextAlign.center,
+                child: Padding(
+                  padding:
+                      isSelected ? const EdgeInsets.all(2) : EdgeInsets.zero,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: AppColors.gray,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(4),
+                          child: Center(
+                            child: Text(
+                              title,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                            ),
                           ),
                         ),
-                      ),
-                      6.ph,
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 10, vertical: 2.5),
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(10.r),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CircleAvatar(
-                              radius: 4.r,
-                              backgroundColor: AppColors.primaryPink,
-                            ),
-                            5.pw,
-                            FittedBox(
-                              child: CustomText(
-                                text: '2.5k',
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                                textAlign: TextAlign.center,
+                        if ((views ?? '').isNotEmpty)
+                          Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 8, vertical: 4),
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(40),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 8,
+                                    height: 8,
+                                    decoration: const BoxDecoration(
+                                      color: AppColors.primaryPink,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  Text(
+                                    _formatViews(views),
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w700,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 8),
+                                  SvgPicture.asset(
+                                    Assets.assetsIconsEye,
+                                    width: 14,
+                                    height: 14,
+                                  ),
+                                ],
                               ),
                             ),
-                            2.pw,
-                            Icon(
-                              Icons.remove_red_eye_outlined,
-                              size: 14.sp,
-                            ),
-                          ],
+                          ),
+                        Expanded(
+                          child: imageUrl.isEmpty
+                              ? const Icon(
+                                  Icons.image_not_supported,
+                                  size: 30,
+                                  color: Colors.grey,
+                                )
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: CustomImage(
+                                    imageSource: imageUrl,
+                                    width: double.infinity,
+                                    height: double.infinity,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                         ),
-                      ),
-                      6.ph,
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(8.r),
-                        child: Image.asset(
-                          interestImages[index],
-                          width: 100.w,
-                          height: 80.h,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        }),
+            );
+          }),
+        ),
       ),
     );
   }

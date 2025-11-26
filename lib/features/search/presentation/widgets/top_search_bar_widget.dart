@@ -1,10 +1,16 @@
 part of '../search.dart';
 
 class TopBarSearchWidget extends StatelessWidget {
-  const TopBarSearchWidget(
-      {super.key, required this.image, required this.isSearch});
+  const TopBarSearchWidget({
+    super.key,
+    required this.image,
+    required this.isSearch,
+    this.onChanged,
+  });
+
   final String image;
   final bool isSearch;
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +30,7 @@ class TopBarSearchWidget extends StatelessWidget {
                   fillColor: AppColors.white,
                   height: 40,
                   borderRadius: BorderRadius.circular(10.r),
-                  onChanged: (value) {
-                    // setState(() {
-                    //   _searchQuery = value.toLowerCase().trim();
-                    // });
-                  },
+                  onChanged: onChanged,
                   hintText: 'find'.tr(),
                   prefixIcon: Image.asset(
                     Assets.assetsIconsSearch,
@@ -40,19 +42,19 @@ class TopBarSearchWidget extends StatelessWidget {
               )
             : Container(),
         isSearch ? 8.pw : 0.ph,
-        Padding(
-          padding: const EdgeInsets.only(bottom: 8.0),
-          child: GestureDetector(
-            onTap: () {
-              // Get.to(() => NotificationScreen1());
-            },
-            child: Image.asset(
-              image,
-              width: 24,
-              height: 24,
-            ),
-          ),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(bottom: 8.0),
+        //   child: GestureDetector(
+        //     onTap: () {
+        //       // Get.to(() => NotificationScreen1());
+        //     },
+        //     child: Image.asset(
+        //       image,
+        //       width: 24,
+        //       height: 24,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

@@ -3,49 +3,37 @@ part of '../search.dart';
 class MyCategorySearch extends StatelessWidget {
   const MyCategorySearch({super.key});
 
-  static const interestKeys = [
-    'Clothes',
-    'shoes',
-    'electronics',
-    'sport',
-    'toys',
-    'beauty',
-    'accessories',
-    'furniture',
-    'pet_supplies',
-    'automotive',
-    'video_games',
-    'for_children',
-    'books',
-    'hobby',
-  ];
-
-  static const interestImages = [
-    Assets.assetsImagesCloth,
-    Assets.assetsImagesShose,
-    Assets.assetsImagesHearPod,
-    Assets.assetsImagesGym,
-    Assets.assetsImagesMan,
-    Assets.assetsImagesLipstick,
-    Assets.assetsImagesWatch,
-    Assets.assetsImagesDaraz,
-    Assets.assetsImagesCat,
-    Assets.assetsImagesTire,
-    Assets.assetsImagesGamingPod,
-    Assets.assetsImagesBaby,
-    Assets.assetsImagesBooks,
-    Assets.assetsImagesDaga,
-  ];
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
         final cubit = context.read<SearchCubit>();
+        final categories = state.parentCategories;
+
+        if (categories.isEmpty) {
+          return const SizedBox.shrink();
+        }
+
+        final names = <String>[];
+        final icons = <String>[];
+        final views = <String?>[];
+
+        for (final category in categories) {
+          final name = category.name?.trim() ?? '';
+          if (name.isEmpty) continue;
+          names.add(name);
+          icons.add(category.icon ?? '');
+          views.add(category.views);
+        }
+
+        if (names.isEmpty) {
+          return const SizedBox.shrink();
+        }
 
         return ReusableCategoryWidget<SearchCubit, SearchState>(
-          interestKeys: MyCategorySearch.interestKeys,
-          interestImages: MyCategorySearch.interestImages,
+          interestKeys: names,
+          interestImages: icons,
+          interestViews: views,
           selectedIndices: state.selectedIndices.toList(),
           onTap: (index, key) => cubit.toggleInterest(index, key),
         );

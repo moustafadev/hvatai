@@ -47,6 +47,9 @@ import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goo
 import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
+import 'package:hvatai/features/search/data/datasources/api_service_search.dart';
+import 'package:hvatai/features/search/data/repositories/search_repository_impl.dart';
+import 'package:hvatai/features/search/domain/repositories/search_repository.dart';
 import 'package:hvatai/features/search/presentation/cubit/auction_search_cubit/auction_search_cubit.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart';
@@ -151,6 +154,8 @@ Future<void> setupLocator() async {
       () => StreamImplRepository(locator()));
   locator.registerLazySingleton<ProfileRepository>(
       () => ProfileImplRepository(locator(), locator()));
+  locator.registerLazySingleton<SearchRepository>(
+      () => SearchRepositoryImpl(locator()));
   locator.registerLazySingleton<ChangePasswordRepository>(
       () => ChangePasswordImplRepository(
             locator(),
@@ -161,6 +166,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ApiServiceApp());
   locator.registerLazySingleton(() => ApiServiceHome());
   locator.registerLazySingleton(() => ApiServiceProfile());
+  locator.registerLazySingleton(() => ApiServiceSearch());
   locator.registerLazySingleton(() => ApiServiceChat());
   locator.registerLazySingleton(() => ApiServiceStream());
 

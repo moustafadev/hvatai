@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/features/all_app/data/model/cart_model.dart';
 
 part 'product_model.freezed.dart';
 part 'product_model.g.dart';
@@ -57,43 +58,6 @@ class ProductModel with _$ProductModel {
       _$ProductModelFromJson(json);
 }
 
-@freezed
-class UserModel with _$UserModel {
-  const factory UserModel({
-    int? id,
-    @JsonKey(name: 'business_id') int? businessId,
-    String? email,
-    String? name,
-    @JsonKey(name: 'last_name') String? lastName,
-    String? gender,
-    String? country,
-    @JsonKey(name: 'age_confirmation') int? ageConfirmation,
-    @JsonKey(name: 'terms_agreement') int? termsAgreement,
-    @JsonKey(name: 'personal_rating') double? personalRating,
-    String? provider,
-    @JsonKey(name: 'provider_id') String? providerId,
-    String? role,
-    String? phone,
-    String? image,
-    @JsonKey(name: 'image_business') String? imageBusiness,
-    String? description,
-    String? lang,
-    String? visibility,
-    String? sms,
-    @JsonKey(name: 'send_email') String? sendEmail,
-    String? push,
-    String? status,
-    @JsonKey(name: 'email_verified_at') DateTime? emailVerifiedAt,
-    @JsonKey(name: 'created_at') DateTime? createdAt,
-    @JsonKey(name: 'updated_at') DateTime? updatedAt,
-    @JsonKey(name: 'personal_rating_count') int? personalRatingCount,
-    @JsonKey(name: 'is_favorited') bool? isFavorited,
-    @JsonKey(name: 'favorites_count') int? favoritesCount,
-  }) = _UserModel;
-
-  factory UserModel.fromJson(Map<String, dynamic> json) =>
-      _$UserModelFromJson(json);
-}
 
 @freezed
 class OwnerModel with _$OwnerModel {

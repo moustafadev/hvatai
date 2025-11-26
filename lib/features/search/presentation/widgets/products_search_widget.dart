@@ -15,6 +15,13 @@ class ProductsSearchWidget extends StatelessWidget {
           );
         }
 
+        if (state.products.isEmpty) {
+          return const CustomText(
+            text: 'No products found',
+            fontWeight: FontWeight.w500,
+          );
+        }
+
         return ListView.builder(
           padding: EdgeInsets.zero,
           shrinkWrap: true,

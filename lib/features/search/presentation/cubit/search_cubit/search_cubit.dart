@@ -1,31 +1,28 @@
 import 'dart:async';
-import 'package:dartz/dartz.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/features/all_app/data/model/cart_model.dart' as cart;
 import 'package:hvatai/features/all_app/data/model/cart_model.dart';
-import 'package:hvatai/features/all_app/domain/usecases/add_fav_product_usecase.dart';
-import 'package:hvatai/features/all_app/domain/usecases/add_product_to_cart_usecase.dart';
-import 'package:hvatai/features/all_app/domain/usecases/delete_cart_usecase.dart';
-import 'package:hvatai/features/all_app/domain/usecases/get_all_products_usecase.dart';
-import 'package:hvatai/features/all_app/domain/usecases/get_cart_usecase.dart';
 import 'package:hvatai/features/all_app/presentation/event_bus/event_bus.dart';
 import 'package:hvatai/features/all_app/presentation/event_bus/events.dart';
+import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
+import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
+import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
+import 'package:hvatai/features/search/data/model/search_response/search_response_model.dart';
+import 'package:hvatai/features/search/domain/usecases/search_usecase.dart';
 
 part 'search_cubit.freezed.dart';
 part 'search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
-  SearchCubit(
-    this.getAllProductsUsecase,
-  ) : super(SearchState(
-          categories: [],
+  SearchCubit(this._searchUsecase)
+      : super(SearchState(
+          categories: const[],
           selectedIndex: 0,
           product: ProductModel(variants: [VariantModel()]),
-          cartResponse: CartModel(),
+          cartResponse: cart.CartModel(),
         )) {
     EventBus().subscribe<ProductAddedEvent>((event) {
       _handleProductAdded(event);
@@ -34,6 +31,8 @@ class SearchCubit extends Cubit<SearchState> {
       _handleFavoriteUpdated(event);
     });
   }
+
+  static const _defaultQuery = '';
 
   void _handleFavoriteUpdated(FavoriteUpdatedEvent event) {
     final updatedProducts = state.products.map((product) {
@@ -56,15 +55,17 @@ class SearchCubit extends Cubit<SearchState> {
     }
   }
 
+  final SearchUsecase _searchUsecase;
+  Timer? _debounce;
+
   @override
   Future<void> close() {
     EventBus().unsubscribe<FavoriteUpdatedEvent>(_handleFavoriteUpdated);
 
     EventBus().unsubscribe<ProductAddedEvent>(_handleProductAdded);
+    _debounce?.cancel();
     return super.close();
   }
-
-  GetAllProductsUsecase getAllProductsUsecase;
 
   void initProductModel(ProductModel product) {
     emit(state.copyWith(
@@ -77,21 +78,63 @@ class SearchCubit extends Cubit<SearchState> {
     emit(state.copyWith(searchedItems: updatedList));
   }
 
-  void setCategories(List<String> interests) {
-    final newCategories = ['All', ...interests];
-    emit(state.copyWith(categories: newCategories));
+  void initialize() {
+    search(_defaultQuery);
   }
 
-  Future<void> getAllProducts() async {
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
-    final result = await getAllProductsUsecase.call(unit);
+  void onQueryChanged(String query) {
+    emit(state.copyWith(query: query));
+    _debounce?.cancel();
+    _debounce = Timer(const Duration(milliseconds: 350), () {
+      final trimmed = query.trim().isEmpty ? _defaultQuery : query.trim();
+      search(trimmed);
+    });
+  }
+
+  Future<void> search(String query) async {
+    emit(
+      state.copyWith(
+        isLoading: true,
+        errorMessage: '',
+        query: query,
+      ),
+    );
+    final result = await _searchUsecase(SearchParams(query: query));
+
     result.fold(
-      (failure) =>
-          emit(state.copyWith(isLoading: false, errorMessage: failure)),
-      (productsList) => emit(state.copyWith(
-        isLoading: false,
-        products: productsList,
-      )),
+      (failure) => emit(
+        state.copyWith(
+          isLoading: false,
+          errorMessage: failure,
+          hasLoadedInitial: true,
+        ),
+      ),
+      (response) {
+        final data = response.data;
+        final parentCategories = data?.parentCategories ?? [];
+        final childCategories = data?.childCategories ?? [];
+        final products =
+            _mapProducts(data?.products?.data ?? const <SearchProductDto>[]);
+        final streams =
+            _mapStreams(data?.streams ?? const <SearchStreamDto>[]);
+        final users = _mapUsers(data?.users ?? const <SearchUserDto>[]);
+        final categories = _buildCategories(parentCategories);
+
+        emit(
+          state.copyWith(
+            isLoading: false,
+            products: products,
+            liveStreams: streams,
+            users: users,
+            parentCategories: parentCategories,
+            childCategories: childCategories,
+            categories: categories,
+            hasNoResults: data?.hasNoResults ?? false,
+            hasLoadedInitial: true,
+            errorMessage: '',
+          ),
+        );
+      },
     );
   }
 
@@ -117,11 +160,120 @@ class SearchCubit extends Cubit<SearchState> {
   void fetchCategories() => emit(state);
 
   void selectCategory(dynamic index) {
-    emit(state.copyWith(selectedIndex: index));
+    if (state.categories.isEmpty) return;
+    final safeIndex = (index is int) ? index : 0;
+    emit(state.copyWith(selectedIndex: safeIndex.clamp(0, state.categories.length - 1)));
   }
 
   String? get selectedCategory {
-    final category = state.categories[state.selectedIndex];
+    if (state.categories.isEmpty) return null;
+    final safeIndex =
+        state.selectedIndex.clamp(0, state.categories.length - 1);
+    final category = state.categories[safeIndex];
     return category == 'All' ? null : category;
+  }
+
+  List<String> _buildCategories(List<CategoryData> categories) {
+    final names = categories
+        .map((category) => category.name ?? '')
+        .where((name) => name.isNotEmpty)
+        .toList();
+    return names;
+  }
+
+  List<ProductModel> _mapProducts(List<SearchProductDto> products) {
+    return products.map((product) {
+      final variants = product.variants
+              ?.map(
+                (variant) => VariantModel(
+                  id: variant.id,
+                  price: variant.price,
+                  stock: variant.stock ?? 0,
+                  discount: variant.discount,
+                  discountType: variant.discountType,
+                ),
+              )
+              .toList() ??
+          [VariantModel(price: product.price)];
+
+      return ProductModel(
+        id: product.id,
+        productName: product.name,
+        productDescription: product.description,
+        category: product.category == null
+            ? null
+            : MainCategoryModel(
+                id: product.category?.id,
+                name: product.category?.name,
+              ),
+        user: product.user == null
+            ? null
+            : UserModel(
+                id: product.user?.id,
+                name: product.user?.name,
+                email: product.user?.email,
+                image: product.user?.image,
+                description: product.user?.description,
+              ),
+        variants: variants,
+        images: product.images ?? [],
+        deliveryAvailable: product.delivery?.available,
+        deliveryType: product.delivery?.type,
+        deliveryTime: product.delivery?.time,
+        deliveryPrice: _parseDouble(product.delivery?.price),
+        deliveryRadius: _parseDouble(product.delivery?.radius),
+        isFavorited: product.isFavorited ?? false,
+        favoritesCount: product.favoritesCount ?? 0,
+        ratingsCount: product.ratingsCount ?? 0,
+        averageRating: product.rating,
+      );
+    }).toList();
+  }
+
+  List<SearchLiveStreamModel> _mapStreams(List<SearchStreamDto> streams) {
+    return streams.map((stream) {
+      final firstCategory = (stream.categories != null &&
+              stream.categories!.isNotEmpty)
+          ? stream.categories!.first.name ?? ''
+          : '';
+      return SearchLiveStreamModel(
+        channelId: stream.id?.toString() ?? '',
+        adminName: stream.user?.name ?? '',
+        adminPhoto: stream.user?.image ?? '',
+        price: '',
+        viewsCount: stream.viewerCount ?? 0,
+        title: stream.title ?? '',
+        description: stream.description ?? '',
+        liveImage: stream.thumbnail ?? '',
+        selectedProductImage: stream.thumbnail ?? '',
+        category: firstCategory,
+        isBlocked: stream.status == 'blocked',
+        adminId: stream.user?.id?.toString() ?? '',
+        unblockRequested: false,
+        unblockRequestReason: '',
+      );
+    }).toList();
+  }
+
+  List<UserRegistrationData> _mapUsers(List<SearchUserDto> users) {
+    return users
+        .map(
+          (user) => UserRegistrationData(
+            id: user.id,
+            firstName: user.name,
+            email: user.email,
+            image: user.image,
+            description: user.description,
+            personalRating: user.personalRating,
+            personalRatingCount: user.personalRatingCount,
+            favoritesCount: user.favoritesCount,
+          ),
+        )
+        .toList();
+  }
+
+  double? _parseDouble(String? value) {
+    if (value == null) return null;
+    return double.tryParse(value);
   }
 }

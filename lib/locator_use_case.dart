@@ -44,6 +44,7 @@ import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase
 import 'package:hvatai/features/profile/domain/usecases/sign_out_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_type_usecase.dart';
+import 'package:hvatai/features/search/domain/usecases/search_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/end_stream_usecase.dart';
@@ -89,6 +90,7 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => GetProductCategoryUsecase(locator()));
   locator.registerLazySingleton(() => AddNewProductUsecase(locator()));
   locator.registerLazySingleton(() => UpdateProductUsecase(locator()));
+  locator.registerLazySingleton(() => SearchUsecase(locator()));
   locator.registerLazySingleton(() => CreateStreamUsecase(locator()));
   locator.registerLazySingleton(() => AddFavProductUsecase(locator()));
   locator.registerLazySingleton(() => GetFavProductsUsecase(locator()));
