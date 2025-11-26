@@ -42,6 +42,8 @@ class TradeProfileDetailScreen extends StatelessWidget {
                   nickname: user.firstName ?? '',
                   lastName: user.lastName ?? '',
                   image: user.image ?? '',
+                  subscribersCount: user.subscribersCount ?? 0,
+                  subscribedUsersCount: user.subscribedUsersCount ?? 0,
                 ),
                 32.ph,
                 InfoTradeProfileDetailBottom(rating: user.personalRating ?? 0),

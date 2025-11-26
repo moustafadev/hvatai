@@ -7,11 +7,15 @@ class UserInfoTradeProfileDetail extends StatelessWidget {
     required this.nickname,
     required this.lastName,
     required this.image,
+    required this.subscribersCount,
+    required this.subscribedUsersCount,
   });
   final String nickname;
   final String name;
   final String lastName;
   final String image;
+  final int subscribersCount;
+  final int subscribedUsersCount;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +67,7 @@ class UserInfoTradeProfileDetail extends StatelessWidget {
                 ),
                 4.ph,
                 CustomText(
-                  text: "95K subscribers - 132 subscriptions ",
+                  text: "$subscribersCount subscribers - $subscribedUsersCount subscriptions ",
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w400,
                   color: AppColors.white,

@@ -125,6 +125,10 @@ mixin _$UserRegistrationData {
   List<String>? get interests => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
   List<String>? get detailedInterests => throw _privateConstructorUsedError;
+  @JsonKey(name: 'subscribers_count', includeIfNull: false)
+  int? get subscribersCount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'subscribed_users_count', includeIfNull: false)
+  int? get subscribedUsersCount => throw _privateConstructorUsedError;
 
   /// Serializes this UserRegistrationData to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -217,7 +221,11 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       @JsonKey(name: 'wallet_id', includeIfNull: false) int? walletId,
       @JsonKey(name: 'updated_at', includeIfNull: false) String? updatedAt,
       @JsonKey(includeIfNull: false) List<String>? interests,
-      @JsonKey(includeIfNull: false) List<String>? detailedInterests});
+      @JsonKey(includeIfNull: false) List<String>? detailedInterests,
+      @JsonKey(name: 'subscribers_count', includeIfNull: false)
+      int? subscribersCount,
+      @JsonKey(name: 'subscribed_users_count', includeIfNull: false)
+      int? subscribedUsersCount});
 }
 
 /// @nodoc
@@ -288,6 +296,8 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
     Object? updatedAt = freezed,
     Object? interests = freezed,
     Object? detailedInterests = freezed,
+    Object? subscribersCount = freezed,
+    Object? subscribedUsersCount = freezed,
   }) {
     return _then(_value.copyWith(
       firstName: freezed == firstName
@@ -498,6 +508,14 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
           ? _value.detailedInterests
           : detailedInterests // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      subscribersCount: freezed == subscribersCount
+          ? _value.subscribersCount
+          : subscribersCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      subscribedUsersCount: freezed == subscribedUsersCount
+          ? _value.subscribedUsersCount
+          : subscribedUsersCount // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -585,7 +603,11 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       @JsonKey(name: 'wallet_id', includeIfNull: false) int? walletId,
       @JsonKey(name: 'updated_at', includeIfNull: false) String? updatedAt,
       @JsonKey(includeIfNull: false) List<String>? interests,
-      @JsonKey(includeIfNull: false) List<String>? detailedInterests});
+      @JsonKey(includeIfNull: false) List<String>? detailedInterests,
+      @JsonKey(name: 'subscribers_count', includeIfNull: false)
+      int? subscribersCount,
+      @JsonKey(name: 'subscribed_users_count', includeIfNull: false)
+      int? subscribedUsersCount});
 }
 
 /// @nodoc
@@ -653,6 +675,8 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
     Object? updatedAt = freezed,
     Object? interests = freezed,
     Object? detailedInterests = freezed,
+    Object? subscribersCount = freezed,
+    Object? subscribedUsersCount = freezed,
   }) {
     return _then(_$UserRegistrationDataImpl(
       firstName: freezed == firstName
@@ -863,6 +887,14 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
           ? _value._detailedInterests
           : detailedInterests // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      subscribersCount: freezed == subscribersCount
+          ? _value.subscribersCount
+          : subscribersCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      subscribedUsersCount: freezed == subscribedUsersCount
+          ? _value.subscribedUsersCount
+          : subscribedUsersCount // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -941,7 +973,11 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       @JsonKey(name: 'wallet_id', includeIfNull: false) this.walletId,
       @JsonKey(name: 'updated_at', includeIfNull: false) this.updatedAt,
       @JsonKey(includeIfNull: false) final List<String>? interests,
-      @JsonKey(includeIfNull: false) final List<String>? detailedInterests})
+      @JsonKey(includeIfNull: false) final List<String>? detailedInterests,
+      @JsonKey(name: 'subscribers_count', includeIfNull: false)
+      this.subscribersCount,
+      @JsonKey(name: 'subscribed_users_count', includeIfNull: false)
+      this.subscribedUsersCount})
       : _fcmTokens = fcmTokens,
         _interests = interests,
         _detailedInterests = detailedInterests;
@@ -1132,8 +1168,15 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   }
 
   @override
+  @JsonKey(name: 'subscribers_count', includeIfNull: false)
+  final int? subscribersCount;
+  @override
+  @JsonKey(name: 'subscribed_users_count', includeIfNull: false)
+  final int? subscribedUsersCount;
+
+  @override
   String toString() {
-    return 'UserRegistrationData(firstName: $firstName, lastName: $lastName, googleId: $googleId, appleId: $appleId, passwordConfirmation: $passwordConfirmation, currentPassword: $currentPassword, agreedToTerms: $agreedToTerms, isAbove18: $isAbove18, email: $email, token: $token, password: $password, gender: $gender, id: $id, userId: $userId, street: $street, index: $index, city: $city, country: $country, phone: $phone, role: $role, image: $image, imageBusiness: $imageBusiness, description: $description, lang: $lang, businessId: $businessId, visibility: $visibility, sms: $sms, push: $push, sendEmail: $sendEmail, status: $status, fcmTokens: $fcmTokens, emailVerifiedAt: $emailVerifiedAt, address: $address, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount, isFavorited: $isFavorited, favoritesCount: $favoritesCount, floor: $floor, frontDoor: $frontDoor, intercomCode: $intercomCode, apartment: $apartment, isPrimary: $isPrimary, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, walletBalance: $walletBalance, walletId: $walletId, updatedAt: $updatedAt, interests: $interests, detailedInterests: $detailedInterests)';
+    return 'UserRegistrationData(firstName: $firstName, lastName: $lastName, googleId: $googleId, appleId: $appleId, passwordConfirmation: $passwordConfirmation, currentPassword: $currentPassword, agreedToTerms: $agreedToTerms, isAbove18: $isAbove18, email: $email, token: $token, password: $password, gender: $gender, id: $id, userId: $userId, street: $street, index: $index, city: $city, country: $country, phone: $phone, role: $role, image: $image, imageBusiness: $imageBusiness, description: $description, lang: $lang, businessId: $businessId, visibility: $visibility, sms: $sms, push: $push, sendEmail: $sendEmail, status: $status, fcmTokens: $fcmTokens, emailVerifiedAt: $emailVerifiedAt, address: $address, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount, isFavorited: $isFavorited, favoritesCount: $favoritesCount, floor: $floor, frontDoor: $frontDoor, intercomCode: $intercomCode, apartment: $apartment, isPrimary: $isPrimary, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, walletBalance: $walletBalance, walletId: $walletId, updatedAt: $updatedAt, interests: $interests, detailedInterests: $detailedInterests, subscribersCount: $subscribersCount, subscribedUsersCount: $subscribedUsersCount)';
   }
 
   @override
@@ -1225,7 +1268,11 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
             const DeepCollectionEquality()
                 .equals(other._interests, _interests) &&
             const DeepCollectionEquality()
-                .equals(other._detailedInterests, _detailedInterests));
+                .equals(other._detailedInterests, _detailedInterests) &&
+            (identical(other.subscribersCount, subscribersCount) ||
+                other.subscribersCount == subscribersCount) &&
+            (identical(other.subscribedUsersCount, subscribedUsersCount) ||
+                other.subscribedUsersCount == subscribedUsersCount));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1283,7 +1330,9 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
         walletId,
         updatedAt,
         const DeepCollectionEquality().hash(_interests),
-        const DeepCollectionEquality().hash(_detailedInterests)
+        const DeepCollectionEquality().hash(_detailedInterests),
+        subscribersCount,
+        subscribedUsersCount
       ]);
 
   /// Create a copy of UserRegistrationData
@@ -1386,8 +1435,11 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       @JsonKey(name: 'updated_at', includeIfNull: false)
       final String? updatedAt,
       @JsonKey(includeIfNull: false) final List<String>? interests,
-      @JsonKey(includeIfNull: false)
-      final List<String>? detailedInterests}) = _$UserRegistrationDataImpl;
+      @JsonKey(includeIfNull: false) final List<String>? detailedInterests,
+      @JsonKey(name: 'subscribers_count', includeIfNull: false)
+      final int? subscribersCount,
+      @JsonKey(name: 'subscribed_users_count', includeIfNull: false)
+      final int? subscribedUsersCount}) = _$UserRegistrationDataImpl;
 
   factory _UserRegistrationData.fromJson(Map<String, dynamic> json) =
       _$UserRegistrationDataImpl.fromJson;
@@ -1549,6 +1601,12 @@ abstract class _UserRegistrationData implements UserRegistrationData {
   @override
   @JsonKey(includeIfNull: false)
   List<String>? get detailedInterests;
+  @override
+  @JsonKey(name: 'subscribers_count', includeIfNull: false)
+  int? get subscribersCount;
+  @override
+  @JsonKey(name: 'subscribed_users_count', includeIfNull: false)
+  int? get subscribedUsersCount;
 
   /// Create a copy of UserRegistrationData
   /// with the given fields replaced by the non-null parameter values.

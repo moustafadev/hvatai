@@ -85,6 +85,8 @@ class UserRegistrationData with _$UserRegistrationData {
     @JsonKey(name: 'updated_at', includeIfNull: false) String? updatedAt,
     @JsonKey(includeIfNull: false) List<String>? interests,
     @JsonKey(includeIfNull: false) List<String>? detailedInterests,
+    @JsonKey(name: 'subscribers_count', includeIfNull: false) int? subscribersCount,
+    @JsonKey(name: 'subscribed_users_count', includeIfNull: false) int? subscribedUsersCount,
   }) = _UserRegistrationData;
 
   factory UserRegistrationData.fromJson(Map<String, dynamic> json) =>

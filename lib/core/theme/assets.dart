@@ -438,6 +438,8 @@ class Assets {
   /// assets/icons/share.png
   static const String assetsIconsShare = "assets/icons/share.png";
 
+  static const String assetsIconsSuccess = "assets/icons/success.png";
+
   /// Assets for assetsIconsShop
   /// assets/icons/shop.png
   static const String assetsIconsShop = "assets/icons/shop.png";

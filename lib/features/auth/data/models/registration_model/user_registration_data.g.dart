@@ -67,6 +67,8 @@ _$UserRegistrationDataImpl _$$UserRegistrationDataImplFromJson(
       detailedInterests: (json['detailedInterests'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      subscribersCount: (json['subscribers_count'] as num?)?.toInt(),
+      subscribedUsersCount: (json['subscribed_users_count'] as num?)?.toInt(),
     );
 
 Map<String, dynamic> _$$UserRegistrationDataImplToJson(
@@ -129,4 +131,8 @@ Map<String, dynamic> _$$UserRegistrationDataImplToJson(
       if (instance.interests case final value?) 'interests': value,
       if (instance.detailedInterests case final value?)
         'detailedInterests': value,
+      if (instance.subscribersCount case final value?)
+        'subscribers_count': value,
+      if (instance.subscribedUsersCount case final value?)
+        'subscribed_users_count': value,
     };
