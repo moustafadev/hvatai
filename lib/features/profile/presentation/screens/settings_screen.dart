@@ -67,6 +67,7 @@ class SettingsScreen extends StatelessWidget {
                           ),
                           CustomUploadImageWidget(
                             hideMainAndEdit: true,
+                            initialImage: user.image,
                             subTitle:
                                 "Минимальный размер для изображений — 450x450 пикселей. Изображение не должно весить более 120 Кб.",
                             padding: 40,

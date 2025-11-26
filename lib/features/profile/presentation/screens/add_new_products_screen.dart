@@ -1,10 +1,25 @@
 part of '../profile.dart';
 
 class AddNewProductsScreen extends StatelessWidget {
-  const AddNewProductsScreen({super.key});
+  final MyGoodsCubit? cubit;
+  final List<int>? allowedCategoryIds;
+  final bool isEdit;
+  const AddNewProductsScreen({
+    super.key,
+    this.cubit,
+    this.allowedCategoryIds,
+    this.isEdit = false,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final body = NewProductWidgetBody(
+      allowedCategoryIds: allowedCategoryIds,
+      isEdit: isEdit,
+    );
+
+    if (cubit != null) {
+      cubit!.getProductCategory();
     return Scaffold(
         backgroundColor: AppColors.lightGreyBackground,
         appBar: CustomAppBar(
@@ -14,7 +29,28 @@ class AddNewProductsScreen extends StatelessWidget {
           showNotification: false,
           height: 50,
         ),
-        body: const NewProductWidgetBody());
+        body: BlocProvider.value(
+          value: cubit!,
+          child: body,
+        ),
+      );
+    }
+
+    return Scaffold(
+      backgroundColor: AppColors.lightGreyBackground,
+      appBar: CustomAppBar(
+        showBack: true,
+        showSearch: false,
+        showGift: false,
+        showNotification: false,
+        height: 50,
+      ),
+      body: BlocProvider(
+        create: (context) =>
+            locator<MyGoodsCubit>()..getProductCategory(),
+        child: body,
+      ),
+    );
   }
 }
 
@@ -22,15 +58,15 @@ class NewProductWidgetBody extends StatelessWidget {
   const NewProductWidgetBody({
     super.key,
     this.allowedCategoryIds,
+    this.isEdit = false,
   });
 
   final List<int>? allowedCategoryIds;
+  final bool isEdit;
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => locator<MyGoodsCubit>()..getProductCategory(),
-      child: BlocBuilder<MyGoodsCubit, MyGoodsState>(builder: (context, state) {
+    return BlocBuilder<MyGoodsCubit, MyGoodsState>(builder: (context, state) {
         final cubit = context.read<MyGoodsCubit>();
         if (state.isLoading) {
           return const Center(
@@ -254,21 +290,25 @@ class NewProductWidgetBody extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: CustomGradientButton(
-                      text: 'save'.tr(),
-                      // isDisabled: cubit.isDisabled(),
-                      isLoading: state.isLoading,
-                      onPressed: () {
+                    text:
+                        (isEdit || state.product.id != null) ? 'save'.tr() : 'save'.tr(),
+                    isDisabled: cubit.isDisabled(),
+                    isLoading: state.isLoading,
+                    onPressed: () {
+                      if (isEdit || state.product.id != null) {
+                        cubit.updateProduct(context);
+                      } else {
                         cubit.addProduct(context);
-                      },
-                    ),
+                      }
+                    },
                   ),
-                  35.ph,
-                ],
-              ),
+                ),
+                35.ph,
+              ],
             ),
-          ],
-        );
-      }),
-    );
+          ),
+        ],
+      );
+    });
   }
 }

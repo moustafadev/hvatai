@@ -174,21 +174,21 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
   List<Map<String, dynamic>> _buildChangeInfoProfile() {
     return [
-      {
-        "icon": Assets.assetsIconsEmail,
-        "title": "changeEmail".tr(),
-        "screen": (BuildContext context) async {
-          final updatedUser = await context
-              .push<UserRegistrationData>(AppRoutes.changeEmail, extra: {
-            'model': state.user,
-            'cubit': this,
-          });
+      // {
+      //   "icon": Assets.assetsIconsEmail,
+      //   "title": "changeEmail".tr(),
+      //   "screen": (BuildContext context) async {
+      //     final updatedUser = await context
+      //         .push<UserRegistrationData>(AppRoutes.changeEmail, extra: {
+      //       'model': state.user,
+      //       'cubit': this,
+      //     });
 
-          if (updatedUser != null) {
-            updateUserData(updatedUser);
-          }
-        },
-      },
+      //     if (updatedUser != null) {
+      //       updateUserData(updatedUser);
+      //     }
+      //   },
+      // },
       {
         "icon": Assets.assetsIconsPasswordMinimalisticInput,
         "title": "changePassword".tr(),

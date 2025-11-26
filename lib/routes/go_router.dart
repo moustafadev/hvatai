@@ -224,7 +224,28 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.addProduct, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return const AddNewProductsScreen();
+        MyGoodsCubit? extraCubit;
+        List<int>? allowedIds;
+        bool isEdit = false;
+
+        final extra = state.extra;
+        if (extra is Map<String, dynamic>) {
+          extraCubit = extra['cubit'] as MyGoodsCubit?;
+          allowedIds =
+              (extra['allowedCategoryIds'] as List<int>?) ?? allowedIds;
+          final mode = extra['mode'];
+          if (mode is String && mode == 'edit') {
+            isEdit = true;
+          }
+        } else if (extra is MyGoodsCubit) {
+          extraCubit = extra;
+        }
+
+        return AddNewProductsScreen(
+          cubit: extraCubit,
+          allowedCategoryIds: allowedIds,
+          isEdit: isEdit,
+        );
       },
     ),
     GoRoute(

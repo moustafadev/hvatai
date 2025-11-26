@@ -1,7 +1,8 @@
 part of '../profile.dart';
 
 class InfoTradeProfileDetailBottom extends StatelessWidget {
-  const InfoTradeProfileDetailBottom({super.key});
+  const InfoTradeProfileDetailBottom({super.key, required this.rating});
+  final int rating;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class InfoTradeProfileDetailBottom extends StatelessWidget {
           children: [
             CustomStatColumn(
               iconPath: Assets.assetsIconsStar,
-              value: "4.5",
+              value: rating.toString(),
               label: "rating".tr(),
             ),
             CustomVerticalDivider(

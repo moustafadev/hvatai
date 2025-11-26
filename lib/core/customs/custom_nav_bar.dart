@@ -125,7 +125,7 @@ void _showSellBottomSheet(
             title: CustomText(text: "create_product".tr(), fontSize: 16.sp),
             onTap: () {
               Navigator.pop(ctx);
-              // Get.to(() => const CreateProductScreen());
+              ctx.push(AppRoutes.addProduct);
             },
           ),
           ListTile(
@@ -133,20 +133,7 @@ void _showSellBottomSheet(
             title: CustomText(text: "schedule_show".tr(), fontSize: 16.sp),
             onTap: () {
               Navigator.pop(ctx);
-              // Get.to(() => LiveStreamingScreen(...));
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.store, size: 24.sp),
-            title: CustomText(text: "seller_hub".tr(), fontSize: 16.sp),
-            subtitle: CustomText(
-              text: "seller_hub_subtitle".tr(),
-              fontSize: 12.sp,
-              color: Colors.black,
-            ),
-            onTap: () {
-              Navigator.pop(ctx);
-              // Get.to(() => const MyProductsScreen());
+              ctx.push(AppRoutes.addStream);
             },
           ),
         ],

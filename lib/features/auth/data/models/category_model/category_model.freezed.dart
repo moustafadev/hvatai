@@ -210,6 +210,7 @@ mixin _$CategoryData {
   String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
+  String? get views => throw _privateConstructorUsedError;
   List<CategoryChild>? get children => throw _privateConstructorUsedError;
 
   /// Serializes this CategoryData to a JSON map.
@@ -239,6 +240,7 @@ abstract class $CategoryDataCopyWith<$Res> {
       bool? status,
       @JsonKey(name: 'created_at') String? createdAt,
       @JsonKey(name: 'updated_at') String? updatedAt,
+      String? views,
       List<CategoryChild>? children});
 }
 
@@ -267,6 +269,7 @@ class _$CategoryDataCopyWithImpl<$Res, $Val extends CategoryData>
     Object? status = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? views = freezed,
     Object? children = freezed,
   }) {
     return _then(_value.copyWith(
@@ -310,6 +313,10 @@ class _$CategoryDataCopyWithImpl<$Res, $Val extends CategoryData>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      views: freezed == views
+          ? _value.views
+          : views // ignore: cast_nullable_to_non_nullable
+              as String?,
       children: freezed == children
           ? _value.children
           : children // ignore: cast_nullable_to_non_nullable
@@ -337,6 +344,7 @@ abstract class _$$CategoryDataImplCopyWith<$Res>
       bool? status,
       @JsonKey(name: 'created_at') String? createdAt,
       @JsonKey(name: 'updated_at') String? updatedAt,
+      String? views,
       List<CategoryChild>? children});
 }
 
@@ -363,6 +371,7 @@ class __$$CategoryDataImplCopyWithImpl<$Res>
     Object? status = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? views = freezed,
     Object? children = freezed,
   }) {
     return _then(_$CategoryDataImpl(
@@ -406,6 +415,10 @@ class __$$CategoryDataImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      views: freezed == views
+          ? _value.views
+          : views // ignore: cast_nullable_to_non_nullable
+              as String?,
       children: freezed == children
           ? _value._children
           : children // ignore: cast_nullable_to_non_nullable
@@ -428,6 +441,7 @@ class _$CategoryDataImpl implements _CategoryData {
       this.status,
       @JsonKey(name: 'created_at') this.createdAt,
       @JsonKey(name: 'updated_at') this.updatedAt,
+      this.views,
       final List<CategoryChild>? children})
       : _children = children;
 
@@ -458,6 +472,8 @@ class _$CategoryDataImpl implements _CategoryData {
   @override
   @JsonKey(name: 'updated_at')
   final String? updatedAt;
+  @override
+  final String? views;
   final List<CategoryChild>? _children;
   @override
   List<CategoryChild>? get children {
@@ -470,7 +486,7 @@ class _$CategoryDataImpl implements _CategoryData {
 
   @override
   String toString() {
-    return 'CategoryData(id: $id, parentId: $parentId, name: $name, type: $type, icon: $icon, description: $description, userId: $userId, status: $status, createdAt: $createdAt, updatedAt: $updatedAt, children: $children)';
+    return 'CategoryData(id: $id, parentId: $parentId, name: $name, type: $type, icon: $icon, description: $description, userId: $userId, status: $status, createdAt: $createdAt, updatedAt: $updatedAt, views: $views, children: $children)';
   }
 
   @override
@@ -492,6 +508,7 @@ class _$CategoryDataImpl implements _CategoryData {
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
+            (identical(other.views, views) || other.views == views) &&
             const DeepCollectionEquality().equals(other._children, _children));
   }
 
@@ -509,6 +526,7 @@ class _$CategoryDataImpl implements _CategoryData {
       status,
       createdAt,
       updatedAt,
+      views,
       const DeepCollectionEquality().hash(_children));
 
   /// Create a copy of CategoryData
@@ -539,6 +557,7 @@ abstract class _CategoryData implements CategoryData {
       final bool? status,
       @JsonKey(name: 'created_at') final String? createdAt,
       @JsonKey(name: 'updated_at') final String? updatedAt,
+      final String? views,
       final List<CategoryChild>? children}) = _$CategoryDataImpl;
 
   factory _CategoryData.fromJson(Map<String, dynamic> json) =
@@ -568,6 +587,8 @@ abstract class _CategoryData implements CategoryData {
   @override
   @JsonKey(name: 'updated_at')
   String? get updatedAt;
+  @override
+  String? get views;
   @override
   List<CategoryChild>? get children;
 

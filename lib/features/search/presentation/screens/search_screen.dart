@@ -40,86 +40,83 @@ class SearchScreen extends StatelessWidget {
             );
           }
 
-          return SafeArea(
-            bottom: false,
-            child: Scaffold(
-              backgroundColor: AppColors.lightGreyBackground,
-              body: Column(
-                children: [
-                  10.ph,
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: TopBarSearchWidget(
-                      isSearch: true,
-                      image: Assets.assetsIconsShare,
-                    ),
+          return Scaffold(
+            backgroundColor: AppColors.lightGreyBackground,
+            body: Column(
+              children: [
+                50.ph,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: TopBarSearchWidget(
+                    isSearch: true,
+                    image: Assets.assetsIconsShare,
                   ),
-                  16.ph,
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ButtonTabBarSearch(onCategorySelected: (category) {
-                              if (category != null) {
-                                context
-                                    .read<SearchCubit>()
-                                    .selectCategory(category);
-                              }
-                            }),
-                            16.ph,
-                            CustomText(
-                              text: 'recentlySearched'.tr(),
-                              fontWeight: FontWeight.w800,
-                              fontSize: 20.sp,
-                            ),
-                            12.ph,
-                            SearchRecently(),
-                            24.ph,
-                            CustomText(
-                              text: 'category'.tr(),
-                              fontWeight: FontWeight.w800,
-                              fontSize: 20.sp,
-                            ),
-                            12.ph,
-                            MyCategorySearch(),
-                            24.ph,
-                            CustomText(
-                              text: 'goods'.tr(),
-                              fontWeight: FontWeight.w800,
-                              fontSize: 20.sp,
-                            ),
-                            12.ph,
-                            ProductsSearchWidget(),
-                            24.ph,
-                            CustomText(
-                              text: 'streams'.tr(),
-                              fontWeight: FontWeight.w800,
-                              fontSize: 20.sp,
-                            ),
-                            10.ph,
-                            SearchLiveVideoWidget(
-                              liveStreams: generateDummyLiveStreams(4),
-                              currentUserId: '',
-                            ),
-                            24.ph,
-                            CustomText(
-                              text: 'users'.tr(),
-                              fontWeight: FontWeight.w800,
-                              fontSize: 20.sp,
-                            ),
-                            12.ph,
-                            UsersSearchWidget(),
-                            100.ph
-                          ],
-                        ),
+                ),
+                16.ph,
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ButtonTabBarSearch(onCategorySelected: (category) {
+                            if (category != null) {
+                              context
+                                  .read<SearchCubit>()
+                                  .selectCategory(category);
+                            }
+                          }),
+                          16.ph,
+                          CustomText(
+                            text: 'recentlySearched'.tr(),
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20.sp,
+                          ),
+                          12.ph,
+                          SearchRecently(),
+                          24.ph,
+                          CustomText(
+                            text: 'category'.tr(),
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20.sp,
+                          ),
+                          12.ph,
+                          MyCategorySearch(),
+                          24.ph,
+                          CustomText(
+                            text: 'goods'.tr(),
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20.sp,
+                          ),
+                          12.ph,
+                          ProductsSearchWidget(),
+                          24.ph,
+                          CustomText(
+                            text: 'streams'.tr(),
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20.sp,
+                          ),
+                          10.ph,
+                          SearchLiveVideoWidget(
+                            liveStreams: generateDummyLiveStreams(4),
+                            currentUserId: '',
+                          ),
+                          24.ph,
+                          CustomText(
+                            text: 'users'.tr(),
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20.sp,
+                          ),
+                          12.ph,
+                          UsersSearchWidget(),
+                          100.ph
+                        ],
                       ),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           );
         },

@@ -12,7 +12,7 @@ class ProductModel with _$ProductModel {
     @JsonKey(name: 'product_name') String? productName,
     @JsonKey(name: 'product_description') String? productDescription,
     String? type,
-    @JsonKey(name: 'sale_type') @Default('auction') String saleType,
+    @JsonKey(name: 'sale_type') @Default('buy_now') String saleType,
     @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
     bool? deliveryAvailable,
     @JsonKey(name: 'delivery_type') String? deliveryType,
@@ -35,7 +35,7 @@ class ProductModel with _$ProductModel {
     @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
     double? deliveryWeightKg,
     @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
-    @JsonKey(fromJson: _intFromJson) int? status,
+    @JsonKey(fromJson: _boolFromInt, toJson: _boolToJson) bool? status,
     @JsonKey(name: 'go_home') String? goHome,
     @JsonKey(name: 'self_destruction') String? selfDestruction,
     @JsonKey(name: 'user_id') int? userId,
@@ -124,14 +124,6 @@ List<String> _imagesFromJson(dynamic json) {
   return [];
 }
 
-int? _intFromJson(dynamic value) {
-  if (value == null) return null;
-  if (value is int) return value;
-  if (value is String) return int.tryParse(value);
-  if (value is bool) return value ? 1 : 0;
-  return null;
-}
-
 bool _boolFromInt(dynamic value) {
   if (value == null) return false;
   if (value is bool) return value;
@@ -141,6 +133,8 @@ bool _boolFromInt(dynamic value) {
   }
   return false;
 }
+
+bool _boolToJson(bool? value) => value ?? false;
 
 double? _parseDouble(dynamic value) {
   if (value == null) return null;

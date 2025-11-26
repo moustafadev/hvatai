@@ -3,6 +3,18 @@ part of '../home.dart';
 class MyCategory extends StatelessWidget {
   const MyCategory({super.key});
 
+  String _formatViews(String? raw) {
+    if (raw == null || raw.isEmpty) return '';
+    final value = int.tryParse(raw) ?? 0;
+    if (value >= 1000) {
+      final formatted = value % 1000 == 0
+          ? (value / 1000).toStringAsFixed(0)
+          : (value / 1000).toStringAsFixed(1);
+      return '${formatted.replaceAll('.', ',')}K';
+    }
+    return value.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CategoryTabsCubit, CategoryTabsState>(
@@ -52,8 +64,8 @@ class MyCategory extends StatelessWidget {
                           cubit.toggleInterest(index, category.id ?? 0),
                       child: Container(
                         margin:  EdgeInsets.only(left: index == 0 ? 16 : 12),
-                        width: 100,
-                        height: 120,
+                        width: 120,
+                        height: 141,
                         decoration: BoxDecoration(
                           color: isSelected ? Colors.blue : null,
                           borderRadius: BorderRadius.circular(8),
@@ -84,10 +96,8 @@ class MyCategory extends StatelessWidget {
                                   padding: const EdgeInsets.all(4),
                                   child: Center(
                                     child: Text(
-                                      // استخدم Text بدلاً من CustomText مؤقتاً
                                       category.name ?? '',
                                       style: const TextStyle(
-                                        // استخدم TextStyle مباشرة
                                         fontSize: 12, // قيمة ثابتة
                                         fontWeight: FontWeight.w700,
                                         color: Colors.black,
@@ -98,6 +108,47 @@ class MyCategory extends StatelessWidget {
                                     ),
                                   ),
                                 ),
+                                if (category.views?.isNotEmpty == true)
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 4),
+                                    child: Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8, vertical: 4),
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(40),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            width: 8,
+                                            height: 8,
+                                            decoration: const BoxDecoration(
+                                              color: AppColors.primaryPink,
+                                              shape: BoxShape.circle,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          Text(
+                                            _formatViews(category.views),
+                                            style: const TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                          const SizedBox(width: 8),
+                                          SvgPicture.asset(
+                                            Assets.assetsIconsEye,
+                                            width: 14,
+                                            height: 14,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
                                 Expanded(
                                   child: imageUrl.isEmpty
                                       ? const Icon(

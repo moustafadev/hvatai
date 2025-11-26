@@ -222,4 +222,21 @@ class ApiServiceProfile extends ApiBase {
       }
     });
   }
+  Future<ProductModel> updateProduct({
+    required int productId,
+    required FormData formData,
+  }) async {
+    return executeAndHandleErrorServer<ProductModel>(() async {
+      final response = await post(
+        ServerConfig.updateProduct(productId),
+        body: formData,
+        contentType: 'multipart/form-data',
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return ProductModel.fromJson(response.json);
+      }
+      throw Exception;
+    });
+  }
 }

@@ -80,7 +80,8 @@ class Assets {
   static const String assetsIconsPin = "assets/icons/pin.png";
   static const String assetsIconsCardStream = "assets/icons/card_stream.png";
   static const String assetsIconsVolumeLoud = "assets/icons/Volume_Loud.svg";
-
+  static const String assetsIconsEye = "assets/icons/Eye.svg";  
+  static const String assetsIconsEdit = "assets/icons/edit.svg";
   /// Assets for assetsIconsCardAdd
   /// assets/icons/card-add.svg
   static const String assetsIconsCardAdd = "assets/icons/card-add.svg";

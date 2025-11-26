@@ -27,6 +27,7 @@ class CategoryData with _$CategoryData {
     bool? status,
     @JsonKey(name: 'created_at') String? createdAt,
     @JsonKey(name: 'updated_at') String? updatedAt,
+    String? views,
     List<CategoryChild>? children, // recursive nesting
   }) = _CategoryData;
 

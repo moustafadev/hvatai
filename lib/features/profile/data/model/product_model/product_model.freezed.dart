@@ -54,8 +54,8 @@ mixin _$ProductModel {
   double? get deliveryWeightKg => throw _privateConstructorUsedError;
   @JsonKey(name: 'delivery_methods')
   List<String>? get deliveryMethods => throw _privateConstructorUsedError;
-  @JsonKey(fromJson: _intFromJson)
-  int? get status => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _boolFromInt, toJson: _boolToJson)
+  bool? get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'go_home')
   String? get goHome => throw _privateConstructorUsedError;
   @JsonKey(name: 'self_destruction')
@@ -123,7 +123,7 @@ abstract class $ProductModelCopyWith<$Res> {
       @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
       double? deliveryWeightKg,
       @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
-      @JsonKey(fromJson: _intFromJson) int? status,
+      @JsonKey(fromJson: _boolFromInt, toJson: _boolToJson) bool? status,
       @JsonKey(name: 'go_home') String? goHome,
       @JsonKey(name: 'self_destruction') String? selfDestruction,
       @JsonKey(name: 'user_id') int? userId,
@@ -270,7 +270,7 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as bool?,
       goHome: freezed == goHome
           ? _value.goHome
           : goHome // ignore: cast_nullable_to_non_nullable
@@ -408,7 +408,7 @@ abstract class _$$ProductModelImplCopyWith<$Res>
       @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
       double? deliveryWeightKg,
       @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
-      @JsonKey(fromJson: _intFromJson) int? status,
+      @JsonKey(fromJson: _boolFromInt, toJson: _boolToJson) bool? status,
       @JsonKey(name: 'go_home') String? goHome,
       @JsonKey(name: 'self_destruction') String? selfDestruction,
       @JsonKey(name: 'user_id') int? userId,
@@ -556,7 +556,7 @@ class __$$ProductModelImplCopyWithImpl<$Res>
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as bool?,
       goHome: freezed == goHome
           ? _value.goHome
           : goHome // ignore: cast_nullable_to_non_nullable
@@ -626,7 +626,7 @@ class _$ProductModelImpl implements _ProductModel {
       @JsonKey(name: 'product_name') this.productName,
       @JsonKey(name: 'product_description') this.productDescription,
       this.type,
-      @JsonKey(name: 'sale_type') this.saleType = 'auction',
+      @JsonKey(name: 'sale_type') this.saleType = 'buy_now',
       @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
       this.deliveryAvailable,
       @JsonKey(name: 'delivery_type') this.deliveryType,
@@ -648,7 +648,7 @@ class _$ProductModelImpl implements _ProductModel {
       @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
       this.deliveryWeightKg,
       @JsonKey(name: 'delivery_methods') final List<String>? deliveryMethods,
-      @JsonKey(fromJson: _intFromJson) this.status,
+      @JsonKey(fromJson: _boolFromInt, toJson: _boolToJson) this.status,
       @JsonKey(name: 'go_home') this.goHome,
       @JsonKey(name: 'self_destruction') this.selfDestruction,
       @JsonKey(name: 'user_id') this.userId,
@@ -733,8 +733,8 @@ class _$ProductModelImpl implements _ProductModel {
   }
 
   @override
-  @JsonKey(fromJson: _intFromJson)
-  final int? status;
+  @JsonKey(fromJson: _boolFromInt, toJson: _boolToJson)
+  final bool? status;
   @override
   @JsonKey(name: 'go_home')
   final String? goHome;
@@ -944,7 +944,7 @@ abstract class _ProductModel implements ProductModel {
       @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
       final double? deliveryWeightKg,
       @JsonKey(name: 'delivery_methods') final List<String>? deliveryMethods,
-      @JsonKey(fromJson: _intFromJson) final int? status,
+      @JsonKey(fromJson: _boolFromInt, toJson: _boolToJson) final bool? status,
       @JsonKey(name: 'go_home') final String? goHome,
       @JsonKey(name: 'self_destruction') final String? selfDestruction,
       @JsonKey(name: 'user_id') final int? userId,
@@ -1017,8 +1017,8 @@ abstract class _ProductModel implements ProductModel {
   @JsonKey(name: 'delivery_methods')
   List<String>? get deliveryMethods;
   @override
-  @JsonKey(fromJson: _intFromJson)
-  int? get status;
+  @JsonKey(fromJson: _boolFromInt, toJson: _boolToJson)
+  bool? get status;
   @override
   @JsonKey(name: 'go_home')
   String? get goHome;

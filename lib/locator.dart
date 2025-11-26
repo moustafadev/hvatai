@@ -116,6 +116,7 @@ Future<void> setupLocator() async {
         locator(),
         locator(),
         locator(),
+        locator(),
       ));
   locator.registerFactory(() => AnalyticsCubit());
   locator.registerFactory(() => ProductImageCubit());

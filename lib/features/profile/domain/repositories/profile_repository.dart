@@ -11,6 +11,7 @@ import 'package:hvatai/features/profile/domain/usecases/delete_address_usecase.d
 import 'package:hvatai/features/profile/domain/usecases/delete_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/update_product_usecase.dart';
 
 abstract class ProfileRepository {
   Future<Either<String, UserRegistrationData>> getProfileData();
@@ -42,11 +43,11 @@ abstract class ProfileRepository {
   Future<Either<String, ProductModel>> addNewProduct(
       AddNewProductParams params);
 
+  Future<Either<String, ProductModel>> updateProduct(
+      UpdateProductParams params);
+
   Future<Either<String, UserRegistrationData>> editDeliveryAddress(
       EditDeliveryAddressParams params);
-
-
- 
 
   Future<Either<String, StreamResponseModel>> createStream(
       CreateStreamModel model);

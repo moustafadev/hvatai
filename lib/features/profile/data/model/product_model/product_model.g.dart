@@ -13,7 +13,7 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
       productName: json['product_name'] as String?,
       productDescription: json['product_description'] as String?,
       type: json['type'] as String?,
-      saleType: json['sale_type'] as String? ?? 'auction',
+      saleType: json['sale_type'] as String? ?? 'buy_now',
       deliveryAvailable: _boolFromInt(json['delivery_available']),
       deliveryType: json['delivery_type'] as String?,
       deliveryTime: json['delivery_time'] as String?,
@@ -30,7 +30,7 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
       deliveryMethods: (json['delivery_methods'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      status: _intFromJson(json['status']),
+      status: _boolFromInt(json['status']),
       goHome: json['go_home'] as String?,
       selfDestruction: json['self_destruction'] as String?,
       userId: (json['user_id'] as num?)?.toInt(),
@@ -78,7 +78,7 @@ Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
       'delivery_height_cm': instance.deliveryHeightCm,
       'delivery_weight_kg': instance.deliveryWeightKg,
       'delivery_methods': instance.deliveryMethods,
-      'status': instance.status,
+      'status': _boolToJson(instance.status),
       'go_home': instance.goHome,
       'self_destruction': instance.selfDestruction,
       'user_id': instance.userId,

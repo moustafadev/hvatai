@@ -11,6 +11,7 @@ import 'package:dartz/dartz.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/update_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_usecase.dart';
@@ -159,6 +160,18 @@ class ProfileImplRepository implements ProfileRepository {
     return executeAndHandleError<List<MainCategoryModel>>(() async {
       final res = await _apiServiceProfile.getProductCategory();
 
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, ProductModel>> updateProduct(
+      UpdateProductParams params) {
+    return executeAndHandleError<ProductModel>(() async {
+      final res = await _apiServiceProfile.updateProduct(
+        productId: params.productId,
+        formData: params.formData,
+      );
       return res;
     });
   }

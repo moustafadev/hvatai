@@ -44,7 +44,7 @@ class TradeProfileDetailScreen extends StatelessWidget {
                   image: user.image ?? '',
                 ),
                 32.ph,
-                const InfoTradeProfileDetailBottom(),
+                InfoTradeProfileDetailBottom(rating: user.personalRating ?? 0),
                 24.ph,
                 const FourContainerTradeProfileDetail(),
                 24.ph,

@@ -267,7 +267,7 @@ _$StreamEmbeddedProductModelImpl _$$StreamEmbeddedProductModelImplFromJson(
       location: json['location'] as String?,
       latitude: _stringToDouble(json['latitude']),
       longitude: _stringToDouble(json['longitude']),
-      status: (json['status'] as num?)?.toInt(),
+      status: json['status'] as bool?,
       featured: (json['featured'] as num?)?.toInt(),
       meta: json['meta'] as Map<String, dynamic>?,
       createdAt: json['created_at'] == null

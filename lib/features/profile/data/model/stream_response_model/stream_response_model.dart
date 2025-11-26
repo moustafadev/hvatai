@@ -180,7 +180,7 @@ class StreamEmbeddedProductModel with _$StreamEmbeddedProductModel {
     @JsonKey(
         name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
     double? longitude,
-    int? status,
+    bool? status,
     int? featured,
     Map<String, dynamic>? meta,
     @JsonKey(name: 'created_at') DateTime? createdAt,

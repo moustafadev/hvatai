@@ -2809,7 +2809,7 @@ mixin _$StreamEmbeddedProductModel {
   @JsonKey(
       name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
   double? get longitude => throw _privateConstructorUsedError;
-  int? get status => throw _privateConstructorUsedError;
+  bool? get status => throw _privateConstructorUsedError;
   int? get featured => throw _privateConstructorUsedError;
   Map<String, dynamic>? get meta => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
@@ -2869,7 +2869,7 @@ abstract class $StreamEmbeddedProductModelCopyWith<$Res> {
       @JsonKey(
           name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
       double? longitude,
-      int? status,
+      bool? status,
       int? featured,
       Map<String, dynamic>? meta,
       @JsonKey(name: 'created_at') DateTime? createdAt,
@@ -3004,7 +3004,7 @@ class _$StreamEmbeddedProductModelCopyWithImpl<$Res,
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as bool?,
       featured: freezed == featured
           ? _value.featured
           : featured // ignore: cast_nullable_to_non_nullable
@@ -3081,7 +3081,7 @@ abstract class _$$StreamEmbeddedProductModelImplCopyWith<$Res>
       @JsonKey(
           name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
       double? longitude,
-      int? status,
+      bool? status,
       int? featured,
       Map<String, dynamic>? meta,
       @JsonKey(name: 'created_at') DateTime? createdAt,
@@ -3215,7 +3215,7 @@ class __$$StreamEmbeddedProductModelImplCopyWithImpl<$Res>
       status: freezed == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as bool?,
       featured: freezed == featured
           ? _value.featured
           : featured // ignore: cast_nullable_to_non_nullable
@@ -3353,7 +3353,7 @@ class _$StreamEmbeddedProductModelImpl implements _StreamEmbeddedProductModel {
       name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
   final double? longitude;
   @override
-  final int? status;
+  final bool? status;
   @override
   final int? featured;
   final Map<String, dynamic>? _meta;
@@ -3538,7 +3538,7 @@ abstract class _StreamEmbeddedProductModel
       @JsonKey(
           name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
       final double? longitude,
-      final int? status,
+      final bool? status,
       final int? featured,
       final Map<String, dynamic>? meta,
       @JsonKey(name: 'created_at') final DateTime? createdAt,
@@ -3603,7 +3603,7 @@ abstract class _StreamEmbeddedProductModel
       name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
   double? get longitude;
   @override
-  int? get status;
+  bool? get status;
   @override
   int? get featured;
   @override

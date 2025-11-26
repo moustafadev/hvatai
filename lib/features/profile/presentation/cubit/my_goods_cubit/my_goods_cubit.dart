@@ -15,22 +15,29 @@ import 'package:hvatai/features/profile/data/model/product_model/product_model.d
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_product_category_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/update_product_usecase.dart';
 
 part 'my_goods_cubit.freezed.dart';
 part 'my_goods_state.dart';
 
 class MyGoodsCubit extends Cubit<MyGoodsState> {
-  MyGoodsCubit(this.getProductsUsecase, this.getProductCategoryUsecase,
-      this.addNewProductUsecase)
-      : super(MyGoodsState(
-          selectedCategoryIndex: 0,
-          product: ProductModel(variants: [VariantModel()]),
-        )) {
+  MyGoodsCubit(
+    this.getProductsUsecase,
+    this.getProductCategoryUsecase,
+    this.addNewProductUsecase,
+    this.updateProductUsecase,
+  ) : super(
+          MyGoodsState(
+            selectedCategoryIndex: 0,
+            product: ProductModel(variants: [VariantModel()]),
+          ),
+        ) {
     deliveryTimeController.text = state.product.deliveryTime ?? '';
   }
   final GetMyProductsUsecase getProductsUsecase;
   final GetProductCategoryUsecase getProductCategoryUsecase;
   final AddNewProductUsecase addNewProductUsecase;
+  final UpdateProductUsecase updateProductUsecase;
   final TextEditingController deliveryTimeController = TextEditingController();
 
   void changeCategory(int index) {
@@ -345,27 +352,65 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
   }
 
   Future<FormData> _prepareProductFormData(ProductModel product) async {
-    final dataMap = Map<String, dynamic>.from(product.toJson());
-    dataMap['delivery_available'] = product.deliveryAvailable ?? false;
-    dataMap['status'] = product.status != null ? 1 : 0;
-    dataMap['self_pickup'] = product.selfPickup ?? false;
+    final formData = FormData();
+
+    void addField(String key, dynamic value) {
+      if (value == null) return;
+      formData.fields.add(MapEntry(key, value.toString()));
+    }
+
+    void addBoolField(String key, bool? value) {
+      if (value == null) return;
+      formData.fields.add(MapEntry(key, value ? '1' : '0'));
+    }
+
+    addField('product_name', product.productName ?? '');
+    addField('product_description', product.productDescription ?? '');
+    addField('category_id', product.categoryId);
+    addField('sale_type', product.saleType);
+    addBoolField('delivery_available', product.deliveryAvailable ?? true);
+    addField('delivery_type', product.deliveryType);
+    addField('delivery_time', product.deliveryTime);
+    addField('delivery_price', product.deliveryPrice ?? 0);
+    addField('delivery_discount', product.deliveryDiscount ?? 0);
+    addField('delivery_radius', product.deliveryRadius ?? 0);
+    addBoolField('self_pickup', product.selfPickup ?? false);
+    addField('delivery_length_cm', product.deliveryLengthCm);
+    addField('delivery_width_cm', product.deliveryWidthCm);
+    addField('delivery_height_cm', product.deliveryHeightCm);
+    addField('delivery_weight_kg', product.deliveryWeightKg);
+    addBoolField('status', product.status ?? true);
 
     final deliveryMethods = product.deliveryMethods
             ?.where((method) => method.trim().isNotEmpty)
             .toList() ??
         [];
-    dataMap['delivery_methods'] = deliveryMethods;
+    for (var i = 0; i < deliveryMethods.length; i++) {
+      addField('delivery_methods[$i]', deliveryMethods[i]);
+    }
 
-    final variantsJson = product.variants.map((v) => v.toJson()).toList();
-    dataMap['variants'] = variantsJson;
+    final variants = product.variants.isNotEmpty
+        ? product.variants
+        : [VariantModel(price: 0, stock: 1)];
 
-    final formData = FormData.fromMap(dataMap);
+    for (var i = 0; i < variants.length; i++) {
+      final variant = variants[i];
+      addField('variants[$i][price]', variant.price ?? 0);
+      addField('variants[$i][stock]', variant.stock);
+      addField('variants[$i][discount]', variant.discount ?? 0);
+      addField('variants[$i][discount_type]', variant.discountType ?? 'fixed');
+
+      final attributes = variant.attributes ?? {};
+      attributes.forEach((key, value) {
+        addField('variants[$i][attributes][$key]', value);
+      });
+    }
 
     if (product.images.isNotEmpty) {
       for (int i = 0; i < product.images.length; i++) {
         final file = await _prepareImageFile(product.images[i]);
         if (file != null) {
-          formData.files.add(MapEntry("images[$i]", file));
+          formData.files.add(MapEntry('product_pictures[$i]', file));
         }
       }
     }
@@ -395,9 +440,50 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
       emit(state.copyWith(
           isLoading: false, products: [state.product, ...state.products]));
       showFloatingMessageSuccess('productAdded'.tr());
-      context.pop();
+      if (context.mounted) {
+        context.pop(true);
+      }
       deliveryTimeController.clear();
       resetProduct();
+    });
+  }
+
+  Future<void> updateProduct(BuildContext context) async {
+    final productId = state.product.id;
+    if (productId == null) {
+      showFloatingMessageError('somethingWentWrong'.tr());
+      return;
+    }
+
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
+
+    final formData = await _prepareProductFormData(state.product);
+    final result = await updateProductUsecase.call(
+      UpdateProductParams(productId: productId, formData: formData),
+    );
+
+    result.fold((failure) {
+      emit(state.copyWith(isLoading: false, errorMessage: failure));
+      showFloatingMessageError(failure);
+    }, (updatedProduct) {
+      final updatedList = state.products
+          .map<ProductModel>(
+              (item) => item.id == updatedProduct.id ? updatedProduct : item)
+          .toList();
+
+      emit(state.copyWith(
+        isLoading: false,
+        errorMessage: '',
+        products: updatedList,
+        product: updatedProduct,
+      ));
+
+      showFloatingMessageSuccess('productUpdated'.tr());
+      if (context.mounted) {
+        context.pop(true);
+      }
+
+      deliveryTimeController.text = updatedProduct.deliveryTime ?? '';
     });
   }
 }

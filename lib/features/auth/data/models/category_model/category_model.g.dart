@@ -32,6 +32,7 @@ _$CategoryDataImpl _$$CategoryDataImplFromJson(Map<String, dynamic> json) =>
       status: json['status'] as bool?,
       createdAt: json['created_at'] as String?,
       updatedAt: json['updated_at'] as String?,
+      views: json['views'] as String?,
       children: (json['children'] as List<dynamic>?)
           ?.map((e) => CategoryChild.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -49,6 +50,7 @@ Map<String, dynamic> _$$CategoryDataImplToJson(_$CategoryDataImpl instance) =>
       'status': instance.status,
       'created_at': instance.createdAt,
       'updated_at': instance.updatedAt,
+      'views': instance.views,
       'children': instance.children,
     };
 
