@@ -58,6 +58,9 @@ import 'package:hvatai/features/stream/domain/usecases/start_stream_usecase.dart
 import 'package:hvatai/features/stream/domain/usecases/toggle_bidding_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_subscribed_users_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/toggle_subscription_usecase.dart';
+import 'package:hvatai/features/wallet/domain/usecases/get_wallet_transactions_usecase.dart';
+import 'package:hvatai/features/wallet/domain/usecases/get_wallet_usecase.dart';
+import 'package:hvatai/features/wallet/domain/usecases/withdraw_to_card_usecase.dart';
 import 'package:hvatai/locator.dart';
 
 void locatorUseCase() {
@@ -123,4 +126,7 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => GetSubscribedUsersUsecase(locator()));
   locator.registerLazySingleton(() => ToggleSubscriptionUsecase(locator()));
   locator.registerLazySingleton(() => ChangePasswordUsecase(locator()));
+  locator.registerLazySingleton(() => GetWalletUsecase(locator()));
+  locator.registerLazySingleton(() => GetWalletTransactionsUsecase(locator()));
+  locator.registerLazySingleton(() => WithdrawToCardUsecase(locator()));
 }

@@ -23,6 +23,7 @@ import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/features/stream/presentation/stream.dart';
+import 'package:hvatai/features/wallet/presentation/wallet.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:hvatai/routes/shell_route.dart';
 
@@ -304,6 +305,12 @@ final GoRouter router = GoRouter(
       path: AppRoutes.myGoods, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const MyGoodsScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.wallet,
+      builder: (BuildContext context, GoRouterState state) {
+        return const WalletScreen();
       },
     ),
     GoRoute(

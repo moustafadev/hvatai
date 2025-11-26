@@ -56,6 +56,10 @@ import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart'
 import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
 import 'package:hvatai/features/stream/domain/repositories/stream_impl_repository.dart';
 import 'package:hvatai/features/stream/presentation/cubit/live_listings_shop/live_listings_shop_cubit.dart';
+import 'package:hvatai/features/wallet/data/datasources/api_service_wallet.dart';
+import 'package:hvatai/features/wallet/data/repositories/wallet_impl_repository.dart';
+import 'package:hvatai/features/wallet/domain/repositories/wallet_repository.dart';
+import 'package:hvatai/features/wallet/presentation/cubit/wallet_cubit/wallet_cubit.dart';
 import 'package:hvatai/locator_use_case.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -136,6 +140,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => FeaturedActivityCubit());
   locator.registerFactory(() => LiveListingsShopCubit(
       locator(), locator(), locator(), locator(), locator(), locator()));
+  locator.registerFactory(() => WalletCubit(
+      locator(), locator(), locator()));
 
   // //CORE
   // //UseCase
@@ -156,6 +162,8 @@ Future<void> setupLocator() async {
       () => ProfileImplRepository(locator(), locator()));
   locator.registerLazySingleton<SearchRepository>(
       () => SearchRepositoryImpl(locator()));
+  locator.registerLazySingleton<WalletRepository>(
+      () => WalletImplRepository(locator()));
   locator.registerLazySingleton<ChangePasswordRepository>(
       () => ChangePasswordImplRepository(
             locator(),
@@ -169,6 +177,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ApiServiceSearch());
   locator.registerLazySingleton(() => ApiServiceChat());
   locator.registerLazySingleton(() => ApiServiceStream());
+  locator.registerLazySingleton(() => ApiServiceWallet());
 
   // //EXTRNAL
   locator.registerLazySingleton(() => SharedPreferences.getInstance());

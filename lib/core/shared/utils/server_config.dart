@@ -66,4 +66,9 @@ abstract class ServerConfig {
       "users/$userId/toggle-subscription";
 
   static String updateProduct(int productId) => "products/$productId";
+
+  // Wallet endpoints
+  static String getWallet(int walletId) => "wallets/$walletId";
+  static String getWalletTransactions(int walletId) => "wallets/$walletId/transactions";
+  static String withdrawToCard(int walletId) => "wallets/$walletId/top-up-card";
 }

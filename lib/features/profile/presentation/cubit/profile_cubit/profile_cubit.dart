@@ -124,6 +124,9 @@ class ProfileCubit extends Cubit<ProfileState> {
       {
         "icon": Assets.assetsIconsStar2,
         "title": "myReviews".tr(),
+        "screen": (BuildContext context) {
+          context.push(AppRoutes.reviewCompany);
+        },
       },
       {
         "icon": Assets.assetsIconsMessage,
@@ -144,6 +147,9 @@ class ProfileCubit extends Cubit<ProfileState> {
       {
         "icon": Assets.assetsImagesDeliveryIcon,
         "title": "deliverySettings".tr(),
+        "screen": (BuildContext context) {
+          context.push(AppRoutes.newAddress);
+        },
       },
     ];
   }

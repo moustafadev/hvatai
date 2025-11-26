@@ -559,5 +559,20 @@
   "save recording": "Save Recording",
   "select products": "Select Products",
   "select product": "Select Product",
-  "bid duration": "Bid Duration"
+  "bid duration": "Bid Duration",
+  "accountBalance": "Account Balance",
+  "availableForWithdrawal": "Available for Withdrawal",
+  "withdrawMoney": "Withdraw Money",
+  "history": "History",
+  "noTransactions": "No transactions",
+  "withdrawalSuccessful": "Withdrawal Successful",
+  "withdrawalSuccessMessage": "The funds will soon appear in your account",
+  "toMain": "To Main",
+  "processing": "Processing...",
+  "addPaymentMethod": "Add Payment Method",
+  "selectCard": "Select Card",
+  "enterAmountUpTo": "Enter amount up to {amount}, R",
+  "invalidAmount": "Invalid amount",
+  "amountExceedsBalance": "Amount exceeds available balance",
+  "pleaseAddPaymentMethod": "Please add a payment method"
 }

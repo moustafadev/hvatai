@@ -22,6 +22,7 @@ class FourContainerTradeProfileDetail extends StatelessWidget {
         CustomItemFourContainer(
           text: 'wallet'.tr(),
           assetPath: Assets.assetsIconsWallet,
+          onTap: () => context.push(AppRoutes.wallet),
         ),
         8.pw,
         CustomItemFourContainer(

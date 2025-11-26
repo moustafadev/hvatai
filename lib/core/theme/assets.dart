@@ -440,6 +440,7 @@ class Assets {
 
   static const String assetsIconsSuccess = "assets/icons/success.png";
 
+  static const String assetsIconsUpload = "assets/icons/Upload.svg";
   /// Assets for assetsIconsShop
   /// assets/icons/shop.png
   static const String assetsIconsShop = "assets/icons/shop.png";
@@ -471,6 +472,7 @@ class Assets {
   /// Assets for assetsIconsTips
   /// assets/icons/tips.png
   static const String assetsIconsTips = "assets/icons/tips.png";
+    static const String assetsIconsTips2 = "assets/icons/tips2.png";
 
   /// Assets for assetsIconsTrash
   /// assets/icons/trash.png

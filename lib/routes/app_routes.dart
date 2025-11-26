@@ -59,4 +59,5 @@ class AppRoutes {
 
   static const String liveStreamViewer = '/live_stream_viewer';
   static const String liveStreamBroadcaster = '/live_stream_broadcaster';
+  static const String wallet = '/wallet';
 }

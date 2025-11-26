@@ -556,5 +556,20 @@
   "select products": "Выберите продукты",
   "select product": "Выберите продукт",
   "create": "Создать",
-  "bid duration": "Длительность ставки"
+  "bid duration": "Длительность ставки",
+  "accountBalance": "Счёт аккаунта",
+  "availableForWithdrawal": "Доступно для вывода",
+  "withdrawMoney": "Вывести деньги",
+  "history": "История",
+  "noTransactions": "Нет транзакций",
+  "withdrawalSuccessful": "Вывод успешен",
+  "withdrawalSuccessMessage": "Средства скоро появятся на счету",
+  "toMain": "На Главную",
+  "processing": "Обрабатываем...",
+  "addPaymentMethod": "Добавить способ оплаты",
+  "selectCard": "Выберите карту",
+  "enterAmountUpTo": "Введите сумму до {amount}, Р",
+  "invalidAmount": "Неверная сумма",
+  "amountExceedsBalance": "Сумма превышает доступный баланс",
+  "pleaseAddPaymentMethod": "Пожалуйста, добавьте способ оплаты"
 }
