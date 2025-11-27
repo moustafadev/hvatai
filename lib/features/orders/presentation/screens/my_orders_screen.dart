@@ -29,81 +29,102 @@ class _MyOrdersView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightGreyBackground,
-      body: BlocBuilder<MyOrdersCubit, MyOrdersState>(
-        builder: (context, state) {
-          final cubit = context.read<MyOrdersCubit>();
+      body: const MyOrdersBody(),
+    );
+  }
+}
 
-          if (state.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.primaryColor,
-              ),
-            );
-          }
+class MyOrdersBody extends StatelessWidget {
+  const MyOrdersBody({
+    super.key,
+    this.showHeader = true,
+    this.contentPadding = const EdgeInsets.symmetric(horizontal: 16),
+  });
 
-          if (state.errorMessage.isNotEmpty) {
-            return Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: CustomText(
-                  text: state.errorMessage,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            );
-          }
+  final bool showHeader;
+  final EdgeInsetsGeometry contentPadding;
 
-          final filteredOrders = cubit.filteredOrders;
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MyOrdersCubit, MyOrdersState>(
+      builder: (context, state) {
+        final cubit = context.read<MyOrdersCubit>();
 
-          return SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+        if (state.isLoading) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppColors.primaryColor,
+            ),
+          );
+        }
+
+        if (state.errorMessage.isNotEmpty) {
+          return Center(
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: CustomText(
+                text: state.errorMessage,
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                textAlign: TextAlign.center,
+              ),
+            ),
+          );
+        }
+
+        final filteredOrders = cubit.filteredOrders;
+
+        return SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Padding(
+            padding: contentPadding,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (showHeader) ...[
                   CustomAppBar(
                     showSearch: false,
                     showNotification: false,
                     showGift: false,
                     padding: const EdgeInsets.only(top: 8),
                   ),
+                  12.ph,
                   CustomText(
                     text: 'orders'.tr(),
                     fontSize: 20.sp,
                     fontWeight: FontWeight.w800,
                   ),
                   16.ph,
-                  _OrdersFilterBar(
-                    selectedFilter: state.selectedFilter,
-                    onFilterSelected: cubit.selectFilter,
-                  ),
-                  if (filteredOrders.isEmpty)
-                    _OrdersEmptyState(
-                      message: state.orders.isEmpty
-                          ? null
-                          : 'ordersEmptyFilter'.tr(),
-                      onRefresh: () => cubit.fetchOrders(),
-                    )
-                  else
-                    ListView.separated(
-                      shrinkWrap: true,
-                      padding: EdgeInsets.zero,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: filteredOrders.length,
-                      itemBuilder: (context, index) =>
-                          _OrderCard(order: filteredOrders[index]),
-                      separatorBuilder: (_, __) => 0.ph,
-                    ),
-                  24.ph,
                 ],
-              ),
+                if (!showHeader) 8.ph,
+                _OrdersFilterBar(
+                  selectedFilter: state.selectedFilter,
+                  onFilterSelected: cubit.selectFilter,
+                ),
+                16.ph,
+                if (filteredOrders.isEmpty)
+                  _OrdersEmptyState(
+                    message: state.orders.isEmpty
+                        ? null
+                        : 'ordersEmptyFilter'.tr(),
+                    onRefresh: () => cubit.fetchOrders(),
+                  )
+                else
+                  ListView.separated(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: filteredOrders.length,
+                    itemBuilder: (context, index) =>
+                        _OrderCard(order: filteredOrders[index]),
+                    separatorBuilder: (_, __) => 0.ph,
+                  ),
+                24.ph,
+              ],
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
@@ -221,6 +242,48 @@ class _OrderCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      //  Padding(
+                      //   padding: EdgeInsets.only(bottom: 4.h),
+                      //   child: Row(
+                      //     children: [
+                        
+                      //         ClipRRect(
+                      //           borderRadius:
+                      //               BorderRadius.circular(100.r),
+                      //           child: CustomImage(
+                      //             height: 20.h,
+                      //             width: 20.h,
+                      //             imageSource: product.owner?.image ?? '',
+                      //             fit: BoxFit.cover,
+                      //           ),
+                      //         )
+                      //       ,
+                      //       8.pw,
+                      //       Expanded(
+                      //         child: CustomText(
+                      //           text: product.owner?.name ?? '',
+                      //           color: AppColors.blackDark,
+                      //           fontSize: 12.sp,
+                      //           fontWeight: FontWeight.w800,
+                      //           overflow: TextOverflow.ellipsis,
+                      //         ),
+                      //       ),
+                      //       Image.asset(
+                      //         Assets.assetsIconsStar,
+                      //         color: AppColors.goldenColor,
+                      //         height: 16.h,
+                      //         width: 16.w,
+                      //       ),
+                      //       4.pw,
+                      //       CustomText(
+                      //         text: product.averageRating?.toString() ?? '',
+                      //         fontSize: 12.sp,
+                      //         fontWeight: FontWeight.w700,
+                      //         color: AppColors.blackDark,
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       CustomText(
                         text: item?.productName ?? 'ordersUnknownProduct'.tr(),
                         fontSize: 16.sp,

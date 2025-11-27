@@ -55,6 +55,7 @@ import 'package:hvatai/features/search/data/datasources/api_service_search.dart'
 import 'package:hvatai/features/search/data/repositories/search_repository_impl.dart';
 import 'package:hvatai/features/search/domain/repositories/search_repository.dart';
 import 'package:hvatai/features/search/presentation/cubit/auction_search_cubit/auction_search_cubit.dart';
+import 'package:hvatai/features/search/presentation/cubit/company_name_cubit/company_name_cubit.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart';
 import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
@@ -92,11 +93,14 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => ChangePasswordCubit(
         locator(),
       ));
-  locator.registerFactory(() => AwardsClubCubit());
+  locator.registerFactory(() => AwardsClubCubit(locator(), locator()));
   locator.registerFactory(() => AuctionSearchCubit());
   locator.registerFactory(
       () => ProductDetailsCubit(locator(), locator(), locator()));
-  locator.registerFactory(() => AddStreamCubit(locator(), locator(), ));
+  locator.registerFactory(() => AddStreamCubit(
+        locator(),
+        locator(),
+      ));
   locator.registerFactory(() => ChatsCubit(
         locator(),
         locator(),
@@ -106,7 +110,8 @@ Future<void> setupLocator() async {
         locator(),
         locator(),
       ));
-  locator.registerFactory(() => BasketCubit(locator(), locator(), locator(), locator()));
+  locator.registerFactory(
+      () => BasketCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => SearchCubit(
         locator(),
       ));
@@ -145,10 +150,16 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => FeaturedActivityCubit());
   locator.registerFactory(() => LiveListingsShopCubit(
       locator(), locator(), locator(), locator(), locator(), locator()));
-  locator.registerFactory(() => WalletCubit(
-      locator(), locator(), locator()));
+  locator.registerFactory(() => WalletCubit(locator(), locator(), locator()));
   locator.registerFactory(() => MyOrdersCubit(locator()));
   locator.registerFactory(() => MyStreamsCubit(locator()));
+  locator.registerFactory(
+    () => CompanyNameCubit(
+      locator(),
+      locator(),
+      locator(),
+    ),
+  );
 
   // //CORE
   // //UseCase

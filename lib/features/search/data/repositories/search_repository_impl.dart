@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/features/search/data/datasources/api_service_search.dart';
 import 'package:hvatai/features/search/data/model/search_response/search_response_model.dart';
+import 'package:hvatai/features/search/data/model/user_data_model.dart';
 import 'package:hvatai/features/search/domain/repositories/search_repository.dart';
 
 class SearchRepositoryImpl implements SearchRepository {
@@ -16,6 +17,12 @@ class SearchRepositoryImpl implements SearchRepository {
       return response;
     });
   }
+
+  @override
+  Future<Either<String, UserDataModel>> getUserData(int userId) {
+    return executeAndHandleError<UserDataModel>(() async {
+      final response = await _apiService.getUserData(userId);
+      return response;
+    });
+  }
 }
-
-

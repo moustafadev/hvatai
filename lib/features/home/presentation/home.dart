@@ -19,6 +19,11 @@ import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_t
 import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
+import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
+import 'package:hvatai/features/search/data/model/user_data_model.dart';
+import 'package:hvatai/features/search/presentation/cubit/company_name_cubit/company_name_cubit.dart';
+import 'package:hvatai/features/shared/widgets/payment_methods_section.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:pusher_client_socket/pusher_client_socket.dart';

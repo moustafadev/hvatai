@@ -14,6 +14,8 @@ import 'package:hvatai/features/home/data/model/live_stream_model.dart';
 import 'package:hvatai/features/search/data/model/auction_product_search.dart';
 import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
 import 'package:hvatai/features/search/presentation/cubit/auction_search_cubit/auction_search_cubit.dart';
+import 'package:hvatai/features/search/presentation/cubit/company_name_cubit/company_name_cubit.dart';
+import 'package:hvatai/features/search/presentation/cubit/company_name_cubit/company_name_state.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';

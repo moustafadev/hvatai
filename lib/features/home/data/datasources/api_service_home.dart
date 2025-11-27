@@ -87,6 +87,24 @@ class ApiServiceHome extends ApiBase {
     return getStreams(status: 'live', page: page, perPage: perPage);
   }
 
+  Future<void> sendReward({
+    required int userId,
+    required Map<String, dynamic> body,
+  }) async {
+    return executeAndHandleErrorServer<void>(() async {
+      final response = await post(
+        ServerConfig.sendReward(userId),
+        body: body,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return;
+      }
+
+      throw Exception('Failed to send reward');
+    });
+  }
+
   Stream<LiveStreamEvent> watchLiveStreams() {
     return listenToServerSentEvents(
       ServerConfig.streams,

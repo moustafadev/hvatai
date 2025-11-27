@@ -59,7 +59,8 @@ class AllProductsCartScreen extends StatelessWidget {
                 ),
               );
             }
-            if (state.errorMessage.isNotEmpty || profileState.errorMessage.isNotEmpty) {
+            if (state.errorMessage.isNotEmpty ||
+                profileState.errorMessage.isNotEmpty) {
               return Center(child: CustomText(text: state.errorMessage));
             }
             if (state.carts.isEmpty ||
@@ -101,7 +102,7 @@ class AllProductsCartScreen extends StatelessWidget {
                 state.deliveryModel.isNotEmpty ? state.deliveryModel[0] : null;
 
             // Get wallet ID from profile
-           final profileCubit = context.read<ProfileCubit>();
+            final profileCubit = context.read<ProfileCubit>();
             final walletId = profileCubit.state.userProfileModel.walletId ?? 1;
 
             return BlocProvider.value(
@@ -213,170 +214,22 @@ class AllProductsCartScreen extends StatelessWidget {
                         fontWeight: FontWeight.w700,
                       ),
                       12.ph,
-                      // Static payment_method.png row
-                      Row(
-                        children: [
-                          Container(
-                            width: 48.w,
-                            height: 48.h,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFF2F2F2),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Image.asset(
-                                Assets.assetsIconsPaymentMethod,
-                                width: 24.w,
-                                height: 24.h,
-                              ),
-                            ),
-                          ),
-                          12.pw,
-                          Expanded(
-                            child: CustomText(
-                              text: 'СБП',
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Icon(
-                            Icons.radio_button_unchecked,
-                            color: AppColors.gray,
-                            size: 20.sp,
-                          ),
-                        ],
-                      ),
-                      8.ph,
-                      // Payment cards (disabled)
-                      BlocBuilder<PaymentMethodCubit, PaymentMethodState>(
-                        builder: (context, paymentState) {
-                          if (paymentState.isLoading) {
-                            return const SizedBox.shrink();
-                          }
-                          return Column(
-                            children: paymentState.cards.map((card) {
-                              return Padding(
-                                padding: const EdgeInsets.only(bottom: 8),
-                                child: Opacity(
-                                  opacity: 0.5,
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        width: 48.w,
-                                        height: 48.h,
-                                        decoration: BoxDecoration(
-                                          color: const Color(0xFFF2F2F2),
-                                          shape: BoxShape.circle,
-                                        ),
-                                        child: Center(
-                                            child: SvgPicture.asset(card
-                                                        .brand ==
-                                                    'visa'
-                                                ? Assets.assetsIconsVisa
-                                                : Assets
-                                                    .assetsIconsMasterCard)),
-                                      ),
-                                      12.pw,
-                                      Expanded(
-                                        child: CustomText(
-                                          text: '**** ${card.lastFour}',
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Icon(
-                                        Icons.radio_button_unchecked,
-                                        color: AppColors.gray,
-                                        size: 20.sp,
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          );
-                        },
-                      ),
-                      // Wallet row (enabled)
-                      8.ph,
-                      Row(
-                        children: [
-                          Container(
-                            width: 48.w,
-                            height: 48.h,
-                            decoration: BoxDecoration(
-                              color: const Color(0xFFF2F2F2),
-                              shape: BoxShape.circle,
-                            ),
-                            child: Center(
-                              child: Image.asset(
-                                Assets.assetsIconsCard,
-                                width: 24.w,
-                                height: 24.h,
-                              ),
-                            ),
-                          ),
-                          12.pw,
-                          Expanded(
-                            child: CustomText(
-                              text:
-                                  '${profileCubit.state.userProfileModel.walletBalance ?? '0.00'} ₽',
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          Icon(
-                            Icons.radio_button_checked,
-                            color: AppColors.primaryColor,
-                            size: 20.sp,
-                          ),
-                        ],
-                      ),
-                      // Divider
-                      8.ph,
-                      Divider(
-                        height: 1,
-                        color: AppColors.gray,
-                        thickness: 1,
-                      ),
-                      16.ph,
-                      // Add new payment method row
-                      GestureDetector(
-                        onTap: () async {
+                      PaymentMethodsSection(
+                        walletSelected: true,
+                        onAddPaymentTap: () async {
                           PaymentMethodCubit paymentCubit;
                           try {
                             paymentCubit = context.read<PaymentMethodCubit>();
-                          } catch (e) {
+                          } catch (_) {
                             paymentCubit = locator<PaymentMethodCubit>();
                           }
-                          await context.push(
+                        final router = GoRouter.of(context);
+                        await router.push(
                             AppRoutes.addNewPaymentMethod,
                             extra: paymentCubit,
                           );
                           paymentCubit.getPaymentMethods();
                         },
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(
-                              Assets.assetsIconsCardAdd,
-                              width: 24.w,
-                              height: 24.h,
-                            ),
-                            12.pw,
-                            Expanded(
-                              child: CustomText(
-                                text: 'addPaymentMethod'.tr(),
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            Icon(
-                              Icons.chevron_right,
-                              color: AppColors.blackDark,
-                              size: 20.sp,
-                            ),
-                          ],
-                        ),
                       ),
                       24.ph,
                       // Delivery address
@@ -413,6 +266,7 @@ class AllProductsCartScreen extends StatelessWidget {
                                 'model': deliveryAddress,
                               },
                             );
+                            if (!context.mounted) return;
                             if (updatedAddress != null) {
                               context
                                   .read<BasketCubit>()

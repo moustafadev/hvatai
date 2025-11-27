@@ -92,25 +92,19 @@ class CustomProductCard extends StatelessWidget {
                                   padding: EdgeInsets.only(bottom: 4.h),
                                   child: Row(
                                     children: [
-                                      if (product.owner?.image != null &&
-                                          product.owner!.image!.isNotEmpty)
+                                  
                                         ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(100.r),
                                           child: CustomImage(
                                             height: 20.h,
                                             width: 20.h,
-                                            imageSource: product.owner!.image!,
+                                            imageSource: product.owner?.image ?? '',
                                             fit: BoxFit.cover,
                                           ),
                                         )
-                                      else
-                                        Icon(
-                                          Icons.person_2_outlined,
-                                          size: 20.h,
-                                          color: AppColors.graniteGray,
-                                        ),
-                                      2.pw,
+                                     ,
+                                      8.pw,
                                       Expanded(
                                         child: CustomText(
                                           text: product.owner?.name ?? '',
@@ -128,7 +122,7 @@ class CustomProductCard extends StatelessWidget {
                                       ),
                                       4.pw,
                                       CustomText(
-                                        text: "4.5",
+                                        text: product.averageRating?.toString() ?? '',
                                         fontSize: 12.sp,
                                         fontWeight: FontWeight.w700,
                                         color: AppColors.blackDark,

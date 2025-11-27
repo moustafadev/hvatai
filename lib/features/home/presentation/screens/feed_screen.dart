@@ -95,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     child: TopBarWidget(
-                      onGiftTap: () => context.push(AppRoutes.awardsGift),
+                      // onGiftTap: () => context.push(AppRoutes.awardsGift),
                     ),
                   ),
                   16.ph,

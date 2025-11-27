@@ -27,6 +27,7 @@ import 'package:hvatai/features/home/domain/usecases/get_notification_usecase.da
 import 'package:hvatai/features/home/domain/usecases/get_streams_usecases.dart';
 import 'package:hvatai/features/home/domain/usecases/join_stream_usecase.dart';
 import 'package:hvatai/features/home/domain/usecases/mark_read_usecase.dart';
+import 'package:hvatai/features/home/domain/usecases/send_reward_usecase.dart';
 import 'package:hvatai/features/home/domain/usecases/watch_live_streams_usecase.dart';
 import 'package:hvatai/features/orders/domain/usecases/get_user_orders_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
@@ -46,6 +47,7 @@ import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase
 import 'package:hvatai/features/profile/domain/usecases/sign_out_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_type_usecase.dart';
+import 'package:hvatai/features/search/domain/usecases/get_user_data_usecase.dart';
 import 'package:hvatai/features/search/domain/usecases/search_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
@@ -97,6 +99,7 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => AddNewProductUsecase(locator()));
   locator.registerLazySingleton(() => UpdateProductUsecase(locator()));
   locator.registerLazySingleton(() => SearchUsecase(locator()));
+  locator.registerLazySingleton(() => GetUserDataUsecase(locator()));
   locator.registerLazySingleton(() => CreateStreamUsecase(locator()));
   locator.registerLazySingleton(() => AddFavProductUsecase(locator()));
   locator.registerLazySingleton(() => GetFavProductsUsecase(locator()));
@@ -108,6 +111,7 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => GetStreamsUsecase(locator()));
   locator.registerLazySingleton(() => WatchLiveStreamsUsecase(locator()));
   locator.registerLazySingleton(() => JoinStreamUsecase(locator()));
+  locator.registerLazySingleton(() => SendRewardUsecase(locator()));
   locator.registerLazySingleton(() => GetSupportChatUseCase(locator()));
   locator.registerLazySingleton(() => GetSupportMessagesUseCase(locator()));
   locator.registerLazySingleton(() => SendSupportMessagesUseCase(locator()));

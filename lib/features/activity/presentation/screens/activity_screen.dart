@@ -5,8 +5,13 @@ class ActivityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => locator<ActivityCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => locator<ActivityCubit>()),
+        BlocProvider<MyOrdersCubit>(
+          create: (_) => locator<MyOrdersCubit>()..fetchOrders(),
+        ),
+      ],
       child: BlocBuilder<ActivityCubit, ActivityState>(
         builder: (context, state) {
           final cubit = context.read<ActivityCubit>();
@@ -137,9 +142,9 @@ class ActivityScreen extends StatelessWidget {
                     ),
                   ),
                 ],
-                body: TabBarView(
+                body: const TabBarView(
                   children: [
-                    RatesActivityWidget(),
+                    OrdersActivityWidget(),
                     RatesActivityWidget(),
                   ],
                 ),

@@ -2,14 +2,17 @@ part of '../search.dart';
 
 class InfoCompanyNameDetail extends StatelessWidget {
   const InfoCompanyNameDetail({
-    required this.name,
     super.key,
-    required this.companyName,
-    required this.lastName,
+    required this.title,
+    required this.subtitle,
+    required this.statsText,
+    this.imageUrl,
   });
-  final String companyName;
-  final String name;
-  final String lastName;
+
+  final String title;
+  final String subtitle;
+  final String statsText;
+  final String? imageUrl;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -25,11 +28,15 @@ class InfoCompanyNameDetail extends StatelessWidget {
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.white, width: 2),
                 shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: AssetImage(Assets.assetsImagesCompnayProfileBackground)
-                      as ImageProvider,
-                  fit: BoxFit.fill,
-                ),
+              ),
+              child: ClipOval(
+                child: 
+                    CustomImage(
+                      imageSource: imageUrl ?? '',
+                      width: 72.w,
+                      height: 72.h,
+                      fit: BoxFit.cover,
+                    )
               ),
             ),
             Positioned(
@@ -58,21 +65,26 @@ class InfoCompanyNameDetail extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                text: companyName,
+                text: title,
                 fontSize: 20.sp,
                 fontWeight: FontWeight.w700,
                 color: AppColors.blackDark,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
               4.ph,
+              if (subtitle.isNotEmpty)
+                CustomText(
+                  text: subtitle,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.blackDark,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              if (subtitle.isNotEmpty) 4.ph,
               CustomText(
-                text: "$name $lastName",
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
-                color: AppColors.blackDark,
-              ),
-              4.ph,
-              CustomText(
-                text: "95K subscribers - 132 subscriptions ",
+                text: statsText,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w400,
                 color: AppColors.blackDark,

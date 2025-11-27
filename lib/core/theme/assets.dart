@@ -77,6 +77,17 @@ class Assets {
   /// Assets for assetsIconsCard
   /// assets/icons/card.png
   static const String assetsIconsCard = "assets/icons/card.png";
+  // amount icon
+  static const String assetsIconsAmount = "assets/icons/amount.svg";
+
+  // dollar icon
+  static const String assetsIconsDollar2 = "assets/icons/dollar.svg";
+
+  // heart icon svg
+  static const String assetsIconsHeart2 = "assets/icons/heart.svg";
+
+  // message icon
+  static const String assetsIconsMessage2 = "assets/icons/message.svg";
 
   /// Assets for assetsIconsPaymentMethod
   /// assets/icons/payment_method.png

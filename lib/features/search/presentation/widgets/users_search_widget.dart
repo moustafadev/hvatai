@@ -44,7 +44,10 @@ class UserTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () => context.push(AppRoutes.companyName),
+      onTap: () {
+        final userId = user.id ?? user.userId ?? 0;
+        context.push(AppRoutes.companyName, extra: userId);
+      },
       contentPadding: EdgeInsets.all(0),
       leading: CircleAvatar(
         radius: 20.r,
@@ -59,7 +62,7 @@ class UserTile extends StatelessWidget {
         fontSize: 16.sp,
       ),
       // subtitle: CustomText(
-      //   text: "15K subscribers".tr(),
+      //   text: user.subscribersCount.toString(),
       //   fontWeight: FontWeight.w400,
       //   fontSize: 16.sp,
       //   color: Colors.grey,

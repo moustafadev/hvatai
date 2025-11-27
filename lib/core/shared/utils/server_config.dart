@@ -64,12 +64,14 @@ abstract class ServerConfig {
   static const String subscribedUsers = "me/subscribed-users";
   static String toggleSubscription(int userId) =>
       "users/$userId/toggle-subscription";
+  static String sendReward(int userId) => "users/$userId/reward";
 
   static String updateProduct(int productId) => "products/$productId";
 
   // Wallet endpoints
   static String getWallet(int walletId) => "wallets/$walletId";
-  static String getWalletTransactions(int walletId) => "wallets/$walletId/transactions";
+  static String getWalletTransactions(int walletId) =>
+      "wallets/$walletId/transactions";
   static String withdrawToCard(int walletId) => "wallets/$walletId/top-up-card";
 
   // My Streams endpoint
@@ -78,4 +80,5 @@ abstract class ServerConfig {
   // Orders endpoint
   static const String orderFromCart = "orders/from-cart";
   static const String userOrders = "orders/user";
+  static String userData(int userId) => "user-data/$userId";
 }

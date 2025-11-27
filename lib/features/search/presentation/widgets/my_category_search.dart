@@ -7,7 +7,6 @@ class MyCategorySearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
-        final cubit = context.read<SearchCubit>();
         final categories = state.parentCategories;
 
         if (categories.isEmpty) {

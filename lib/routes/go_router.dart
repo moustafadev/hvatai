@@ -21,6 +21,8 @@ import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_pro
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
+import 'package:hvatai/features/search/data/model/user_data_model.dart';
+import 'package:hvatai/features/search/presentation/cubit/company_name_cubit/company_name_cubit.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/features/stream/presentation/stream.dart';
@@ -149,7 +151,16 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.awardsGift, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return AwardsClubScreen();
+        final extras = state.extra as Map<String, dynamic>?;
+        final user = extras?['user'] as UserDataModel?;
+        final isSubscribed = extras?['isSubscribed'] as bool? ?? false;
+        final companyCubit = extras?['companyCubit'] as CompanyNameCubit?;
+
+        return AwardsClubScreen(
+          initialUser: user,
+          initialIsSubscribed: isSubscribed,
+          companyCubit: companyCubit,
+        );
       },
     ),
     GoRoute(
@@ -407,7 +418,10 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.companyName,
-      builder: (context, state) => const CompanyNameScreen(),
+      builder: (context, state) {
+        final userId = (state.extra as int?) ?? 0;
+        return CompanyNameScreen(userId: userId);
+      },
     ),
     GoRoute(
       path: AppRoutes.imageDelay,
@@ -437,7 +451,6 @@ class MyNavigatorObserver extends NavigatorObserver {
 
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
-    print('didPop $previousRoute');
     backStack.removeLast();
   }
 }

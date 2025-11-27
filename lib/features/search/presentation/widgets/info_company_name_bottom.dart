@@ -1,7 +1,18 @@
 part of '../search.dart';
 
 class InfoCompanyNameBottom extends StatelessWidget {
-  const InfoCompanyNameBottom({super.key});
+  const InfoCompanyNameBottom({
+    super.key,
+    required this.rating,
+    required this.reviews,
+    required this.favorites,
+    required this.deliveryEstimate,
+  });
+
+  final double rating;
+  final int reviews;
+  final int favorites;
+  final String deliveryEstimate;
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +28,7 @@ class InfoCompanyNameBottom extends StatelessWidget {
           children: [
             CustomStatColumn(
               iconPath: Assets.assetsIconsStar,
-              value: "4.5",
+              value: rating.toStringAsFixed(1),
               label: "rating".tr(),
             ),
             CustomVerticalDivider(
@@ -27,7 +38,7 @@ class InfoCompanyNameBottom extends StatelessWidget {
               height: 40,
             ),
             CustomStatColumn(
-              value: "33,8K",
+              value: _formatCount(reviews),
               label: "reviews".tr(),
             ),
             CustomVerticalDivider(
@@ -37,8 +48,8 @@ class InfoCompanyNameBottom extends StatelessWidget {
               height: 40,
             ),
             CustomStatColumn(
-              value: "169,7K",
-              label: "sold".tr(),
+              value: _formatCount(favorites),
+              label: "favorites".tr(),
             ),
             CustomVerticalDivider(
               color: AppColors.darkYellow,
@@ -47,12 +58,20 @@ class InfoCompanyNameBottom extends StatelessWidget {
               height: 40,
             ),
             CustomStatColumn(
-              value: "+- 2d.",
+              value: deliveryEstimate,
               label: "delivery".tr(),
             ),
           ],
         ),
       ),
     );
+  }
+
+  String _formatCount(int value) {
+    if (value >= 1000) {
+      final thousands = value / 1000;
+      return '${thousands.toStringAsFixed(1)}K';
+    }
+    return value.toString();
   }
 }

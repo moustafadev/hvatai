@@ -2,12 +2,15 @@ part of '../search.dart';
 
 class CustomRowCompanyName extends StatelessWidget {
   const CustomRowCompanyName(
-      {super.key, required this.text, required this.image});
+      {super.key, required this.text, required this.image, required this.onTap});
   final String text;
   final String image;
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
+    return GestureDetector(
+      onTap: onTap,
+      child: Row(children: [
       CircleAvatar(
         radius: 22.r,
         backgroundColor: AppColors.gray,
@@ -26,6 +29,6 @@ class CustomRowCompanyName extends StatelessWidget {
           fontWeight: FontWeight.w700,
         ),
       )
-    ]);
+    ]));
   }
 }
