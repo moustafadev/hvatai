@@ -19,35 +19,46 @@ class ButtonTabBarSearch extends StatelessWidget {
         return SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
-            children: options.map((item) {
-              final index = options.indexOf(item);
+            children: List.generate(options.length, (index) {
+              final item = options[index];
               final isSelected = state.selectedIndex == index;
 
-              return Padding(
-                padding: EdgeInsets.only(right: 10.w, left: index == 0 ? 16.w : 0),
-                child: GestureDetector(
-                  onTap: () => cubit.selectCategory(index),
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
-                    decoration: BoxDecoration(
-                      color: AppColors.gray,
-                      borderRadius: BorderRadius.circular(10.r),
-                      border: isSelected
-                          ? Border.all(color: AppColors.primaryColor, width: 1)
-                          : Border.all(color: Colors.transparent),
-                    ),
-                    child: Text(
-                      item,
-                      style: TextStyle(
-                        color: AppColors.blackDark,
-                        fontWeight: FontWeight.bold,
+              return GestureDetector(
+                onTap: () => cubit.selectCategory(index),
+                child: Container(
+                  margin: EdgeInsets.only(left: index == 0 ? 16.w : 12.w),
+                  decoration: BoxDecoration(
+                    color: isSelected ? AppColors.primaryColor : null,
+                    borderRadius: BorderRadius.circular(8.r),
+                    border: isSelected
+                        ? Border.all(width: 0.1, color: Colors.transparent)
+                        : Border.all(color: AppColors.gray, width: 2),
+                  ),
+                  child: Padding(
+                    padding: isSelected ? EdgeInsets.all(1.5.r) : EdgeInsets.zero,
+                    child: Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12.w,
+                        vertical: 8.h,
+                      ),
+                      decoration: BoxDecoration(
+                        color: AppColors.gray,
+                        borderRadius: BorderRadius.circular(8.r),
+                      ),
+                      child: CustomText(
+                        text: item,
+                        fontSize: 12.sp,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        fontWeight: FontWeight.w700,
+                        color: Colors.black,
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
                 ),
               );
-            }).toList(),
+            }),
           ),
         );
       },

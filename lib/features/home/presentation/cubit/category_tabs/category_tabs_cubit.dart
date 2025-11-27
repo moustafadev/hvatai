@@ -160,7 +160,7 @@ class CategoryTabsCubit extends Cubit<CategoryTabsState> {
       selectedCategoryIds: updatedIds,
     ));
 
-    addCategories();
+    // addCategories();
   }
 
   void toggleDetail(int index, int categoryId) {
@@ -180,7 +180,7 @@ class CategoryTabsCubit extends Cubit<CategoryTabsState> {
       selectedIndicesDetails: updatedIndices,
       selectedDetailIds: updatedIds,
     ));
-    addCategoriesDetails();
+    // addCategoriesDetails();
   }
 
   // ================= Live Streams =================

@@ -37,6 +37,10 @@ import 'package:hvatai/features/home/domain/repositories/home_repository.dart';
 import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_tabs_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
+import 'package:hvatai/features/orders/data/datasources/api_service_orders.dart';
+import 'package:hvatai/features/orders/data/repositories/orders_impl_repository.dart';
+import 'package:hvatai/features/orders/domain/repositories/orders_repository.dart';
+import 'package:hvatai/features/orders/presentation/cubit/my_orders_cubit.dart';
 import 'package:hvatai/features/profile/data/datasources/api_service_profile.dart';
 import 'package:hvatai/features/profile/data/repositories/profile_impl_repository.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
@@ -143,6 +147,7 @@ Future<void> setupLocator() async {
       locator(), locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => WalletCubit(
       locator(), locator(), locator()));
+  locator.registerFactory(() => MyOrdersCubit(locator()));
   locator.registerFactory(() => MyStreamsCubit(locator()));
 
   // //CORE
@@ -162,6 +167,8 @@ Future<void> setupLocator() async {
       () => StreamImplRepository(locator()));
   locator.registerLazySingleton<ProfileRepository>(
       () => ProfileImplRepository(locator(), locator()));
+  locator.registerLazySingleton<OrdersRepository>(
+      () => OrdersImplRepository(locator()));
   locator.registerLazySingleton<SearchRepository>(
       () => SearchRepositoryImpl(locator()));
   locator.registerLazySingleton<WalletRepository>(
@@ -180,6 +187,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ApiServiceChat());
   locator.registerLazySingleton(() => ApiServiceStream());
   locator.registerLazySingleton(() => ApiServiceWallet());
+  locator.registerLazySingleton(() => ApiServiceOrders());
 
   // //EXTRNAL
   locator.registerLazySingleton(() => SharedPreferences.getInstance());

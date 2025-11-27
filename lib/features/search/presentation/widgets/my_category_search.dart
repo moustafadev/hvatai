@@ -35,7 +35,8 @@ class MyCategorySearch extends StatelessWidget {
           interestImages: icons,
           interestViews: views,
           selectedIndices: state.selectedIndices.toList(),
-          onTap: (index, key) => cubit.toggleInterest(index, key),
+          onTap: (index, key) {},
+          // onTap: (index, key) => cubit.toggleInterest(index, key),
         );
       },
     );

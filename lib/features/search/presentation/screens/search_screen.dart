@@ -26,7 +26,7 @@ class SearchScreen extends StatelessWidget {
             backgroundColor: AppColors.lightGreyBackground,
             body: Column(
               children: [
-                50.ph,
+                59.ph,
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: TopBarSearchWidget(
@@ -63,7 +63,7 @@ class SearchScreen extends StatelessWidget {
                             cubit.selectCategory(category);
                           }
                         }),
-                        16.ph,
+                        10.ph,
                         // CustomText(
                         //   text: 'recentlySearched'.tr(),
                         //   fontWeight: FontWeight.w800,

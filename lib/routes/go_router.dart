@@ -14,6 +14,7 @@ import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_mo
 import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
+import 'package:hvatai/features/orders/presentation/screens/my_orders_screen.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
@@ -311,6 +312,12 @@ final GoRouter router = GoRouter(
       path: AppRoutes.wallet,
       builder: (BuildContext context, GoRouterState state) {
         return const WalletScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.myOrders,
+      builder: (BuildContext context, GoRouterState state) {
+        return const MyOrdersScreen();
       },
     ),
     GoRoute(

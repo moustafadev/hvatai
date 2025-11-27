@@ -17,6 +17,7 @@ class CategoryTabsWidget extends StatelessWidget {
               child: CircularProgressIndicator(
             color: AppColors.grey,
           ));
+          
         }
 
         if (interests.data!.isEmpty) {
@@ -33,20 +34,21 @@ class CategoryTabsWidget extends StatelessWidget {
               return GestureDetector(
                 onTap: () => cubit.toggleDetail(index, category.id ?? 0),
                 child: Container(
-                  margin:  EdgeInsets.only(left: index == 0 ? 16 : 12),
+                    margin: EdgeInsets.only(left: index == 0 ? 16.w : 12.w),
                   decoration: BoxDecoration(
                     color: isSelected ? AppColors.primaryColor : null,
-                    borderRadius: BorderRadius.circular(8),
+                    borderRadius: BorderRadius.circular(8.r),
                     border: isSelected
                         ? Border.all(width: 0.1, color: Colors.transparent)
                         : Border.all(color: AppColors.gray, width: 2),
                   ),
                   child: Padding(
-                    padding:
-                        isSelected ? EdgeInsets.all(1.5.r) : EdgeInsets.zero,
+                    padding: isSelected ? EdgeInsets.all(1.5.r) : EdgeInsets.zero,
                     child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 12.w,
+                        vertical: 8.h,
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.gray,
                         borderRadius: BorderRadius.circular(8.r),

@@ -32,7 +32,9 @@ class TopBarWidget extends StatelessWidget {
                       height: 40,
                       fillColor: AppColors.white,
                       borderRadius: BorderRadius.circular(10.r),
-                      onChanged: (value) {},
+                      // onChanged: (value) {},
+                      readOnly: true,
+                      onTap: () => context.go(AppRoutes.search),
                       hintText: 'find'.tr(),
                       prefixIcon: Image.asset(
                         Assets.assetsIconsSearch,

@@ -74,60 +74,57 @@ class _HomeScreenState extends State<HomeScreen> {
           ..subscribeToLiveStreams()
           ..getCategories()
           ..getFavCategories(),
-        child: SafeArea(
-          bottom: false,
-          child: BlocBuilder<CategoryTabsCubit, CategoryTabsState>(
-            builder: (context, state) {
-              if (state.isLoading) {
-                return const Center(
-                    child: CircularProgressIndicator(
-                  color: AppColors.grey,
-                ));
-              }
-              return RefreshIndicator(
-                onRefresh: () async {
-                  context
-                      .read<CategoryTabsCubit>()
-                      .fetchLiveStreams(isRefresh: true);
-                  context.read<CategoryTabsCubit>().getCategories();
-                  context.read<CategoryTabsCubit>().getFavCategories();
-                },
-                child: ListView(
-                  children: [
-                    10.ph,
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: TopBarWidget(
-                        onGiftTap: () => context.push(AppRoutes.awardsGift),
+        child: BlocBuilder<CategoryTabsCubit, CategoryTabsState>(
+          builder: (context, state) {
+            if (state.isLoading) {
+              return const Center(
+                  child: CircularProgressIndicator(
+                color: AppColors.grey,
+              ));
+            }
+            return RefreshIndicator(
+              onRefresh: () async {
+                context
+                    .read<CategoryTabsCubit>()
+                    .fetchLiveStreams(isRefresh: true);
+                context.read<CategoryTabsCubit>().getCategories();
+                context.read<CategoryTabsCubit>().getFavCategories();
+              },
+              child: ListView(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: TopBarWidget(
+                      onGiftTap: () => context.push(AppRoutes.awardsGift),
+                    ),
+                  ),
+                  16.ph,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CategoryTabsWidget(),
+                      10.ph,
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.0),
+                        child: TitleCategoriesForYou(),
                       ),
-                    ),
-                    16.ph,
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CategoryTabsWidget(),
-                        10.ph,
-                        const Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16.0),
-                          child: TitleCategoriesForYou(),
+                      12.ph,
+                      MyCategory(),
+                      12.ph,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: LiveVideosWidget(
+                          liveStreams: state.liveStreams,
+                          currentUserId: '',
                         ),
-                        MyCategory(),
-                        12.ph,
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: LiveVideosWidget(
-                            liveStreams: state.liveStreams,
-                            currentUserId: '',
-                          ),
-                        ),
-                        100.ph
-                      ],
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
+                      ),
+                      100.ph
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
         ),
       ),
     );

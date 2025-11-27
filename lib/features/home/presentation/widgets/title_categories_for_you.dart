@@ -11,8 +11,9 @@ class TitleCategoriesForYou extends StatelessWidget {
       children: [
         CustomText(
             text: 'categoriesForYou'.tr(),
-            fontWeight: FontWeight.bold,
-            fontSize: 20.sp),
+             fontWeight: FontWeight.w800,
+            fontSize: 20.sp,
+            ),
         const Spacer(),
         GestureDetector(
             onTap: () {}, child: Icon(Icons.double_arrow_sharp, size: 14.sp))

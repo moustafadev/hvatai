@@ -28,6 +28,7 @@ class FourContainerTradeProfileDetail extends StatelessWidget {
         CustomItemFourContainer(
           text: 'orders'.tr(),
           assetPath: Assets.assetsImagesOrderIcon,
+          onTap: () => context.push(AppRoutes.myOrders),
         ),
       ],
     );

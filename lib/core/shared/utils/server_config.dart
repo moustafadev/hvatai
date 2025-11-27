@@ -77,4 +77,5 @@ abstract class ServerConfig {
 
   // Orders endpoint
   static const String orderFromCart = "orders/from-cart";
+  static const String userOrders = "orders/user";
 }

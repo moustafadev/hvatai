@@ -60,8 +60,8 @@ class MyCategory extends StatelessWidget {
                     final String imageUrl = category.icon ?? '';
 
                     return GestureDetector(
-                      onTap: () =>
-                          cubit.toggleInterest(index, category.id ?? 0),
+                      // onTap: () =>
+                      //     cubit.toggleInterest(index, category.id ?? 0),
                       child: Container(
                         margin:  EdgeInsets.only(left: index == 0 ? 16 : 12),
                         width: 120,
