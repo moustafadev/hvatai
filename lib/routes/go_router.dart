@@ -410,11 +410,23 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.clipsCompany,
-      builder: (context, state) => const ClipsCompanyScreen(),
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final userId = extra?['userId'] as int?;
+        return ClipsCompanyScreen(userId: userId);
+      },
     ),
     GoRoute(
       path: AppRoutes.productsCompany,
-      builder: (context, state) => const ProductsCompanyNameScreen(),
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final userId = extra?['userId'] as int? ?? 0;
+        final userName = extra?['userName'] as String?;
+        return ProductsCompanyNameScreen(
+          userId: userId,
+          userName: userName,
+        );
+      },
     ),
     GoRoute(
       path: AppRoutes.companyName,

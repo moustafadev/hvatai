@@ -23,6 +23,7 @@ import 'package:hvatai/features/profile/presentation/cubit/payment_method/paymen
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
 import 'package:hvatai/features/search/presentation/cubit/company_name_cubit/company_name_cubit.dart';
+import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/features/shared/widgets/payment_methods_section.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';

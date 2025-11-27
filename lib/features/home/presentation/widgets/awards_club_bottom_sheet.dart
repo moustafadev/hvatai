@@ -123,7 +123,10 @@ class _AwardsClubBottomSheetBody extends StatelessWidget {
                     CustomRowAwardsGift(
                       title: 'write'.tr(),
                       imagePath: Assets.assetsIconsMessage,
-                      onTap: () {},
+                      onTap: () {
+                        // open chat bottom sheet
+                        showChatBottomSheet(context, user);
+                      },
                     ),
                     12.ph,
                     CustomRowAwardsGift(

@@ -54,8 +54,9 @@ import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile
 import 'package:hvatai/features/search/data/datasources/api_service_search.dart';
 import 'package:hvatai/features/search/data/repositories/search_repository_impl.dart';
 import 'package:hvatai/features/search/domain/repositories/search_repository.dart';
-import 'package:hvatai/features/search/presentation/cubit/auction_search_cubit/auction_search_cubit.dart';
 import 'package:hvatai/features/search/presentation/cubit/company_name_cubit/company_name_cubit.dart';
+import 'package:hvatai/features/search/presentation/cubit/company_products/company_products_cubit.dart';
+import 'package:hvatai/features/search/presentation/cubit/company_streams/company_streams_cubit.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart';
 import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
@@ -94,7 +95,8 @@ Future<void> setupLocator() async {
         locator(),
       ));
   locator.registerFactory(() => AwardsClubCubit(locator(), locator()));
-  locator.registerFactory(() => AuctionSearchCubit());
+  locator.registerFactory(() => CompanyProductsCubit(locator()));
+  locator.registerFactory(() => CompanyStreamsCubit(locator()));
   locator.registerFactory(
       () => ProductDetailsCubit(locator(), locator(), locator()));
   locator.registerFactory(() => AddStreamCubit(

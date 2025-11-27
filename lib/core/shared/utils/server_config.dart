@@ -64,6 +64,8 @@ abstract class ServerConfig {
   static const String subscribedUsers = "me/subscribed-users";
   static String toggleSubscription(int userId) =>
       "users/$userId/toggle-subscription";
+  static String userProducts(int userId) => "users/$userId/products";
+  static String userStreams(int userId) => "users/$userId/streams";
   static String sendReward(int userId) => "users/$userId/reward";
 
   static String updateProduct(int productId) => "products/$productId";

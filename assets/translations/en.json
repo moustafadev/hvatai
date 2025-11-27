@@ -611,5 +611,10 @@
   "anErrorOccurred": "An error occurred",
   "retry": "Retry",
   "pleaseAddDeliveryAddress": "Please add a delivery address",
-  "payment": "Payment"
+  "payment": "Payment",
+  "userIdRequired": "User ID is required",
+  "chatWithSeller": "Chat with seller",
+  "messageSent": "Message sent",
+  "enterMessage": "Enter a message",
+  "allChats": "All chats"
 }

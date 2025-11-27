@@ -1,7 +1,14 @@
 part of '../search.dart';
 
 class FourContainerCompanyName extends StatelessWidget {
-  const FourContainerCompanyName({super.key});
+  const FourContainerCompanyName({
+    super.key,
+    this.userId,
+    this.userName,
+  });
+
+  final int? userId;
+  final String? userName;
 
   @override
   Widget build(BuildContext context) {
@@ -10,18 +17,37 @@ class FourContainerCompanyName extends StatelessWidget {
         CustomItemFourContainer(
           text: 'goods'.tr(),
           assetPath: Assets.assetsIconsUsersGroupRoundedIcon,
-          onTap: () => context.push(AppRoutes.productsCompany),
+          onTap: userId == null
+              ? null
+              : () => context.push(
+                    AppRoutes.productsCompany,
+                    extra: {
+                      'userId': userId,
+                      'userName': userName,
+                    },
+                  ),
         ),
         8.pw,
         CustomItemFourContainer(
           text: 'streams'.tr(),
           assetPath: Assets.assetsImagesStreamIcon,
+           onTap: userId == null
+              ? null
+              : () => context.push(
+                    AppRoutes.clipsCompany,
+                    extra: {'userId': userId},
+                  ),
         ),
         8.pw,
         CustomItemFourContainer(
           text: 'clips'.tr(),
           assetPath: Assets.assetsImagesOrderIcon,
-          onTap: () => context.push(AppRoutes.clipsCompany),
+          onTap: userId == null
+              ? null
+              : () => context.push(
+                    AppRoutes.clipsCompany,
+                    extra: {'userId': userId},
+                  ),
         ),
         8.pw,
         CustomItemFourContainer(

@@ -608,5 +608,10 @@
   "anErrorOccurred": "Произошла какая-то ошибка",
   "retry": "Повторить",
   "pleaseAddDeliveryAddress": "Пожалуйста, добавьте адрес доставки",
-  "payment": "Оплата"
+  "payment": "Оплата",
+  "userIdRequired": "Требуется идентификатор пользователя",
+  "chatWithSeller": "Чат с продавцом",
+  "messageSent": "Сообщение отправлено",
+  "enterMessage": "Введите сообщение",
+  "allChats": "Все чаты"
 }

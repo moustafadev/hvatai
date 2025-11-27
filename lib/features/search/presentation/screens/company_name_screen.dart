@@ -163,10 +163,18 @@ class _CompanyNameView extends StatelessWidget {
                       CustomRowCompanyName(
                         text: 'write'.tr(),
                         image: Assets.assetsIconsMessage,
-                        onTap: () {},
+                        onTap: () {
+                          final user = state.user;
+                          if (user != null) {
+                            showChatBottomSheet(context, user);
+                          }
+                        },
                       ),
                       24.ph,
-                      FourContainerCompanyName(),
+                      FourContainerCompanyName(
+                        userId: user.id,
+                        userName: fullName.isEmpty ? null : fullName,
+                      ),
                       24.ph,
                       CustomButton(
                         title: buttonTitle,
