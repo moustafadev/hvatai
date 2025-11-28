@@ -60,6 +60,24 @@ class StreamDataModel with _$StreamDataModel {
 
     // Optional/derived UI fields
     @JsonKey(name: 'thumbnail_url') String? thumbnailUrl,
+    @JsonKey(name: 'latest_thumbnail_url') String? latestThumbnailUrl,
+    @JsonKey(name: 'latest_gif_url') String? latestGifUrl,
+    @JsonKey(
+      name: 'thumbnail_history',
+      fromJson: _stringListOrNull,
+      toJson: _nullOrStringList,
+    )
+    List<String>? thumbnailHistory,
+    @JsonKey(
+      name: 'gif_history',
+      fromJson: _stringListOrNull,
+      toJson: _nullOrStringList,
+    )
+    List<String>? gifHistory,
+    @JsonKey(name: 'last_thumbnail_generated_at') DateTime? lastThumbnailGeneratedAt,
+    @JsonKey(name: 'last_gif_generated_at') DateTime? lastGifGeneratedAt,
+    @JsonKey(name: 'latest_thumbnail') String? latestThumbnail,
+    @JsonKey(name: 'latest_gif') String? latestGif,
     @JsonKey(name: 'viewer_count') int? viewerCount,
     @JsonKey(name: 'max_viewers') int? maxViewers,
     @JsonKey(name: 'is_public') bool? isPublic,
@@ -227,6 +245,7 @@ class StreamCategoryPivotModel with _$StreamCategoryPivotModel {
 class StreamListResponseModel with _$StreamListResponseModel {
   const factory StreamListResponseModel({
     bool? success,
+    String? message,
     List<StreamDataModel>? data,
     PaginationModel? pagination,
   }) = _StreamListResponseModel;

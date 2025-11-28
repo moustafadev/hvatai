@@ -13,6 +13,8 @@ class SearchLiveStreamModel {
   final bool unblockRequested;
   final String unblockRequestReason;
   final String price;
+  final String latestThumbnailUrl;
+  final String latestGifUrl;
 
   SearchLiveStreamModel({
     required this.channelId,
@@ -29,6 +31,8 @@ class SearchLiveStreamModel {
     required this.adminId,
     required this.unblockRequested,
     required this.unblockRequestReason,
+    required this.latestThumbnailUrl,
+    required this.latestGifUrl,
   });
 
   factory SearchLiveStreamModel.fromJson(Map<String, dynamic> json) {
@@ -39,6 +43,8 @@ class SearchLiveStreamModel {
       viewsCount: json['viewsCount'] ?? 0,
       price: json['price'] ?? '',
       title: json['title'] ?? '',
+      latestThumbnailUrl: json['latestThumbnailUrl'] ?? '',
+      latestGifUrl: json['latestGifUrl'] ?? '',
       description: json['description'] ?? '',
       liveImage: json['liveImage'] ?? '',
       selectedProductImage: json['selectedProductImage'] ?? '',

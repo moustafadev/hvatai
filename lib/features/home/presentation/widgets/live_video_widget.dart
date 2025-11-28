@@ -139,6 +139,8 @@ class LiveVideosWidget extends StatelessWidget {
                   // description: stream.streamProducts?.first.product?.description ?? "",
                   description: "",
                   liveImage: '',
+                  latestThumbnailUrl: stream.latestThumbnailUrl,
+                  latestGifUrl: stream.latestGifUrl,
                 ),
               ],
             );

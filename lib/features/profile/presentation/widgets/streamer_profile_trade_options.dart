@@ -50,7 +50,7 @@ class StreamerProfileTradeOptions extends StatelessWidget {
                       color: AppColors.grey,
                     ),
                     CustomText(
-                      text: state.userProfileModel.walletBalance.toString(),
+                      text: '${state.userProfileModel.walletBalance} ₽',
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                       color: AppColors.primary,

@@ -143,6 +143,8 @@ class SearchLiveVideoWidget extends StatelessWidget {
           liveImage: stream.selectedProductImage.isNotEmpty
               ? stream.selectedProductImage
               : stream.liveImage,
+          latestThumbnailUrl: stream.latestThumbnailUrl,
+          latestGifUrl: stream.latestGifUrl,
         ),
       ),
     );

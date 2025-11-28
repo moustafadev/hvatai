@@ -67,6 +67,18 @@ _$StreamDataModelImpl _$$StreamDataModelImplFromJson(
       recordingSid: json['recording_sid'] as String?,
       recordingFiles: _stringListOrNull(json['recording_files']),
       thumbnailUrl: json['thumbnail_url'] as String?,
+      latestThumbnailUrl: json['latest_thumbnail_url'] as String?,
+      latestGifUrl: json['latest_gif_url'] as String?,
+      thumbnailHistory: _stringListOrNull(json['thumbnail_history']),
+      gifHistory: _stringListOrNull(json['gif_history']),
+      lastThumbnailGeneratedAt: json['last_thumbnail_generated_at'] == null
+          ? null
+          : DateTime.parse(json['last_thumbnail_generated_at'] as String),
+      lastGifGeneratedAt: json['last_gif_generated_at'] == null
+          ? null
+          : DateTime.parse(json['last_gif_generated_at'] as String),
+      latestThumbnail: json['latest_thumbnail'] as String?,
+      latestGif: json['latest_gif'] as String?,
       viewerCount: (json['viewer_count'] as num?)?.toInt(),
       maxViewers: (json['max_viewers'] as num?)?.toInt(),
       isPublic: json['is_public'] as bool?,
@@ -122,6 +134,15 @@ Map<String, dynamic> _$$StreamDataModelImplToJson(
       'recording_sid': instance.recordingSid,
       'recording_files': _nullOrStringList(instance.recordingFiles),
       'thumbnail_url': instance.thumbnailUrl,
+      'latest_thumbnail_url': instance.latestThumbnailUrl,
+      'latest_gif_url': instance.latestGifUrl,
+      'thumbnail_history': _nullOrStringList(instance.thumbnailHistory),
+      'gif_history': _nullOrStringList(instance.gifHistory),
+      'last_thumbnail_generated_at':
+          instance.lastThumbnailGeneratedAt?.toIso8601String(),
+      'last_gif_generated_at': instance.lastGifGeneratedAt?.toIso8601String(),
+      'latest_thumbnail': instance.latestThumbnail,
+      'latest_gif': instance.latestGif,
       'viewer_count': instance.viewerCount,
       'max_viewers': instance.maxViewers,
       'is_public': instance.isPublic,
@@ -365,6 +386,7 @@ _$StreamListResponseModelImpl _$$StreamListResponseModelImplFromJson(
         Map<String, dynamic> json) =>
     _$StreamListResponseModelImpl(
       success: json['success'] as bool?,
+      message: json['message'] as String?,
       data: (json['data'] as List<dynamic>?)
           ?.map((e) => StreamDataModel.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -378,6 +400,7 @@ Map<String, dynamic> _$$StreamListResponseModelImplToJson(
         _$StreamListResponseModelImpl instance) =>
     <String, dynamic>{
       'success': instance.success,
+      'message': instance.message,
       'data': instance.data,
       'pagination': instance.pagination,
     };

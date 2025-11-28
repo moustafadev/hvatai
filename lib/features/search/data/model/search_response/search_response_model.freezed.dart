@@ -2515,6 +2515,10 @@ mixin _$SearchStreamDto {
       throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'latest_thumbnail_url')
+  String? get latestThumbnailUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'latest_gif_url')
+  String? get latestGifUrl => throw _privateConstructorUsedError;
 
   /// Serializes this SearchStreamDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -2542,7 +2546,9 @@ abstract class $SearchStreamDtoCopyWith<$Res> {
       String? thumbnail,
       SearchStreamUserDto? user,
       List<SearchStreamCategoryDto>? categories,
-      @JsonKey(name: 'updated_at') String? updatedAt});
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      @JsonKey(name: 'latest_thumbnail_url') String? latestThumbnailUrl,
+      @JsonKey(name: 'latest_gif_url') String? latestGifUrl});
 
   $SearchStreamUserDtoCopyWith<$Res>? get user;
 }
@@ -2572,6 +2578,8 @@ class _$SearchStreamDtoCopyWithImpl<$Res, $Val extends SearchStreamDto>
     Object? user = freezed,
     Object? categories = freezed,
     Object? updatedAt = freezed,
+    Object? latestThumbnailUrl = freezed,
+    Object? latestGifUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -2614,6 +2622,14 @@ class _$SearchStreamDtoCopyWithImpl<$Res, $Val extends SearchStreamDto>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      latestThumbnailUrl: freezed == latestThumbnailUrl
+          ? _value.latestThumbnailUrl
+          : latestThumbnailUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      latestGifUrl: freezed == latestGifUrl
+          ? _value.latestGifUrl
+          : latestGifUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -2650,7 +2666,9 @@ abstract class _$$SearchStreamDtoImplCopyWith<$Res>
       String? thumbnail,
       SearchStreamUserDto? user,
       List<SearchStreamCategoryDto>? categories,
-      @JsonKey(name: 'updated_at') String? updatedAt});
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      @JsonKey(name: 'latest_thumbnail_url') String? latestThumbnailUrl,
+      @JsonKey(name: 'latest_gif_url') String? latestGifUrl});
 
   @override
   $SearchStreamUserDtoCopyWith<$Res>? get user;
@@ -2679,6 +2697,8 @@ class __$$SearchStreamDtoImplCopyWithImpl<$Res>
     Object? user = freezed,
     Object? categories = freezed,
     Object? updatedAt = freezed,
+    Object? latestThumbnailUrl = freezed,
+    Object? latestGifUrl = freezed,
   }) {
     return _then(_$SearchStreamDtoImpl(
       id: freezed == id
@@ -2721,6 +2741,14 @@ class __$$SearchStreamDtoImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      latestThumbnailUrl: freezed == latestThumbnailUrl
+          ? _value.latestThumbnailUrl
+          : latestThumbnailUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      latestGifUrl: freezed == latestGifUrl
+          ? _value.latestGifUrl
+          : latestGifUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -2738,7 +2766,9 @@ class _$SearchStreamDtoImpl implements _SearchStreamDto {
       this.thumbnail,
       this.user,
       final List<SearchStreamCategoryDto>? categories,
-      @JsonKey(name: 'updated_at') this.updatedAt})
+      @JsonKey(name: 'updated_at') this.updatedAt,
+      @JsonKey(name: 'latest_thumbnail_url') this.latestThumbnailUrl,
+      @JsonKey(name: 'latest_gif_url') this.latestGifUrl})
       : _categories = categories;
 
   factory _$SearchStreamDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -2775,10 +2805,16 @@ class _$SearchStreamDtoImpl implements _SearchStreamDto {
   @override
   @JsonKey(name: 'updated_at')
   final String? updatedAt;
+  @override
+  @JsonKey(name: 'latest_thumbnail_url')
+  final String? latestThumbnailUrl;
+  @override
+  @JsonKey(name: 'latest_gif_url')
+  final String? latestGifUrl;
 
   @override
   String toString() {
-    return 'SearchStreamDto(id: $id, title: $title, description: $description, status: $status, isLive: $isLive, viewerCount: $viewerCount, thumbnail: $thumbnail, user: $user, categories: $categories, updatedAt: $updatedAt)';
+    return 'SearchStreamDto(id: $id, title: $title, description: $description, status: $status, isLive: $isLive, viewerCount: $viewerCount, thumbnail: $thumbnail, user: $user, categories: $categories, updatedAt: $updatedAt, latestThumbnailUrl: $latestThumbnailUrl, latestGifUrl: $latestGifUrl)';
   }
 
   @override
@@ -2800,7 +2836,11 @@ class _$SearchStreamDtoImpl implements _SearchStreamDto {
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            (identical(other.latestThumbnailUrl, latestThumbnailUrl) ||
+                other.latestThumbnailUrl == latestThumbnailUrl) &&
+            (identical(other.latestGifUrl, latestGifUrl) ||
+                other.latestGifUrl == latestGifUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -2816,7 +2856,9 @@ class _$SearchStreamDtoImpl implements _SearchStreamDto {
       thumbnail,
       user,
       const DeepCollectionEquality().hash(_categories),
-      updatedAt);
+      updatedAt,
+      latestThumbnailUrl,
+      latestGifUrl);
 
   /// Create a copy of SearchStreamDto
   /// with the given fields replaced by the non-null parameter values.
@@ -2837,17 +2879,19 @@ class _$SearchStreamDtoImpl implements _SearchStreamDto {
 
 abstract class _SearchStreamDto implements SearchStreamDto {
   const factory _SearchStreamDto(
-          {final int? id,
-          final String? title,
-          final String? description,
-          final String? status,
-          @JsonKey(name: 'is_live') final bool? isLive,
-          @JsonKey(name: 'viewer_count') final int? viewerCount,
-          final String? thumbnail,
-          final SearchStreamUserDto? user,
-          final List<SearchStreamCategoryDto>? categories,
-          @JsonKey(name: 'updated_at') final String? updatedAt}) =
-      _$SearchStreamDtoImpl;
+      {final int? id,
+      final String? title,
+      final String? description,
+      final String? status,
+      @JsonKey(name: 'is_live') final bool? isLive,
+      @JsonKey(name: 'viewer_count') final int? viewerCount,
+      final String? thumbnail,
+      final SearchStreamUserDto? user,
+      final List<SearchStreamCategoryDto>? categories,
+      @JsonKey(name: 'updated_at') final String? updatedAt,
+      @JsonKey(name: 'latest_thumbnail_url') final String? latestThumbnailUrl,
+      @JsonKey(name: 'latest_gif_url')
+      final String? latestGifUrl}) = _$SearchStreamDtoImpl;
 
   factory _SearchStreamDto.fromJson(Map<String, dynamic> json) =
       _$SearchStreamDtoImpl.fromJson;
@@ -2875,6 +2919,12 @@ abstract class _SearchStreamDto implements SearchStreamDto {
   @override
   @JsonKey(name: 'updated_at')
   String? get updatedAt;
+  @override
+  @JsonKey(name: 'latest_thumbnail_url')
+  String? get latestThumbnailUrl;
+  @override
+  @JsonKey(name: 'latest_gif_url')
+  String? get latestGifUrl;
 
   /// Create a copy of SearchStreamDto
   /// with the given fields replaced by the non-null parameter values.

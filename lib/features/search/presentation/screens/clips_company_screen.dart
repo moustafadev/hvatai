@@ -164,6 +164,8 @@ class ClipsCompanyScreen extends StatelessWidget {
                                     liveImage: stream.thumbnailUrl ??
                                         stream.recordUrl ??
                                         '',
+                                    latestThumbnailUrl: stream.latestThumbnailUrl,
+                                    latestGifUrl: stream.latestGifUrl,
                                   ),
                                 );
                               },

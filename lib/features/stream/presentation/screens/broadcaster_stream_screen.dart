@@ -127,6 +127,7 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
                       children: [
                         CompanyInfo(
                           streamUserModel: widget.stream.user,
+                          isViewerMode: false,
                         ),
                         ViewerCountWidget(
                           count: state.viewerCount,

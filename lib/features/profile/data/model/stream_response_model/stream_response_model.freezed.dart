@@ -368,6 +368,28 @@ mixin _$StreamDataModel {
       throw _privateConstructorUsedError; // Optional/derived UI fields
   @JsonKey(name: 'thumbnail_url')
   String? get thumbnailUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'latest_thumbnail_url')
+  String? get latestThumbnailUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'latest_gif_url')
+  String? get latestGifUrl => throw _privateConstructorUsedError;
+  @JsonKey(
+      name: 'thumbnail_history',
+      fromJson: _stringListOrNull,
+      toJson: _nullOrStringList)
+  List<String>? get thumbnailHistory => throw _privateConstructorUsedError;
+  @JsonKey(
+      name: 'gif_history',
+      fromJson: _stringListOrNull,
+      toJson: _nullOrStringList)
+  List<String>? get gifHistory => throw _privateConstructorUsedError;
+  @JsonKey(name: 'last_thumbnail_generated_at')
+  DateTime? get lastThumbnailGeneratedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'last_gif_generated_at')
+  DateTime? get lastGifGeneratedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'latest_thumbnail')
+  String? get latestThumbnail => throw _privateConstructorUsedError;
+  @JsonKey(name: 'latest_gif')
+  String? get latestGif => throw _privateConstructorUsedError;
   @JsonKey(name: 'viewer_count')
   int? get viewerCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'max_viewers')
@@ -452,6 +474,23 @@ abstract class $StreamDataModelCopyWith<$Res> {
           toJson: _nullOrStringList)
       List<String>? recordingFiles,
       @JsonKey(name: 'thumbnail_url') String? thumbnailUrl,
+      @JsonKey(name: 'latest_thumbnail_url') String? latestThumbnailUrl,
+      @JsonKey(name: 'latest_gif_url') String? latestGifUrl,
+      @JsonKey(
+          name: 'thumbnail_history',
+          fromJson: _stringListOrNull,
+          toJson: _nullOrStringList)
+      List<String>? thumbnailHistory,
+      @JsonKey(
+          name: 'gif_history',
+          fromJson: _stringListOrNull,
+          toJson: _nullOrStringList)
+      List<String>? gifHistory,
+      @JsonKey(name: 'last_thumbnail_generated_at')
+      DateTime? lastThumbnailGeneratedAt,
+      @JsonKey(name: 'last_gif_generated_at') DateTime? lastGifGeneratedAt,
+      @JsonKey(name: 'latest_thumbnail') String? latestThumbnail,
+      @JsonKey(name: 'latest_gif') String? latestGif,
       @JsonKey(name: 'viewer_count') int? viewerCount,
       @JsonKey(name: 'max_viewers') int? maxViewers,
       @JsonKey(name: 'is_public') bool? isPublic,
@@ -516,6 +555,14 @@ class _$StreamDataModelCopyWithImpl<$Res, $Val extends StreamDataModel>
     Object? recordingSid = freezed,
     Object? recordingFiles = freezed,
     Object? thumbnailUrl = freezed,
+    Object? latestThumbnailUrl = freezed,
+    Object? latestGifUrl = freezed,
+    Object? thumbnailHistory = freezed,
+    Object? gifHistory = freezed,
+    Object? lastThumbnailGeneratedAt = freezed,
+    Object? lastGifGeneratedAt = freezed,
+    Object? latestThumbnail = freezed,
+    Object? latestGif = freezed,
     Object? viewerCount = freezed,
     Object? maxViewers = freezed,
     Object? isPublic = freezed,
@@ -619,6 +666,38 @@ class _$StreamDataModelCopyWithImpl<$Res, $Val extends StreamDataModel>
       thumbnailUrl: freezed == thumbnailUrl
           ? _value.thumbnailUrl
           : thumbnailUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      latestThumbnailUrl: freezed == latestThumbnailUrl
+          ? _value.latestThumbnailUrl
+          : latestThumbnailUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      latestGifUrl: freezed == latestGifUrl
+          ? _value.latestGifUrl
+          : latestGifUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      thumbnailHistory: freezed == thumbnailHistory
+          ? _value.thumbnailHistory
+          : thumbnailHistory // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      gifHistory: freezed == gifHistory
+          ? _value.gifHistory
+          : gifHistory // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      lastThumbnailGeneratedAt: freezed == lastThumbnailGeneratedAt
+          ? _value.lastThumbnailGeneratedAt
+          : lastThumbnailGeneratedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      lastGifGeneratedAt: freezed == lastGifGeneratedAt
+          ? _value.lastGifGeneratedAt
+          : lastGifGeneratedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      latestThumbnail: freezed == latestThumbnail
+          ? _value.latestThumbnail
+          : latestThumbnail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      latestGif: freezed == latestGif
+          ? _value.latestGif
+          : latestGif // ignore: cast_nullable_to_non_nullable
               as String?,
       viewerCount: freezed == viewerCount
           ? _value.viewerCount
@@ -758,6 +837,23 @@ abstract class _$$StreamDataModelImplCopyWith<$Res>
           toJson: _nullOrStringList)
       List<String>? recordingFiles,
       @JsonKey(name: 'thumbnail_url') String? thumbnailUrl,
+      @JsonKey(name: 'latest_thumbnail_url') String? latestThumbnailUrl,
+      @JsonKey(name: 'latest_gif_url') String? latestGifUrl,
+      @JsonKey(
+          name: 'thumbnail_history',
+          fromJson: _stringListOrNull,
+          toJson: _nullOrStringList)
+      List<String>? thumbnailHistory,
+      @JsonKey(
+          name: 'gif_history',
+          fromJson: _stringListOrNull,
+          toJson: _nullOrStringList)
+      List<String>? gifHistory,
+      @JsonKey(name: 'last_thumbnail_generated_at')
+      DateTime? lastThumbnailGeneratedAt,
+      @JsonKey(name: 'last_gif_generated_at') DateTime? lastGifGeneratedAt,
+      @JsonKey(name: 'latest_thumbnail') String? latestThumbnail,
+      @JsonKey(name: 'latest_gif') String? latestGif,
       @JsonKey(name: 'viewer_count') int? viewerCount,
       @JsonKey(name: 'max_viewers') int? maxViewers,
       @JsonKey(name: 'is_public') bool? isPublic,
@@ -822,6 +918,14 @@ class __$$StreamDataModelImplCopyWithImpl<$Res>
     Object? recordingSid = freezed,
     Object? recordingFiles = freezed,
     Object? thumbnailUrl = freezed,
+    Object? latestThumbnailUrl = freezed,
+    Object? latestGifUrl = freezed,
+    Object? thumbnailHistory = freezed,
+    Object? gifHistory = freezed,
+    Object? lastThumbnailGeneratedAt = freezed,
+    Object? lastGifGeneratedAt = freezed,
+    Object? latestThumbnail = freezed,
+    Object? latestGif = freezed,
     Object? viewerCount = freezed,
     Object? maxViewers = freezed,
     Object? isPublic = freezed,
@@ -925,6 +1029,38 @@ class __$$StreamDataModelImplCopyWithImpl<$Res>
       thumbnailUrl: freezed == thumbnailUrl
           ? _value.thumbnailUrl
           : thumbnailUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      latestThumbnailUrl: freezed == latestThumbnailUrl
+          ? _value.latestThumbnailUrl
+          : latestThumbnailUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      latestGifUrl: freezed == latestGifUrl
+          ? _value.latestGifUrl
+          : latestGifUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      thumbnailHistory: freezed == thumbnailHistory
+          ? _value._thumbnailHistory
+          : thumbnailHistory // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      gifHistory: freezed == gifHistory
+          ? _value._gifHistory
+          : gifHistory // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      lastThumbnailGeneratedAt: freezed == lastThumbnailGeneratedAt
+          ? _value.lastThumbnailGeneratedAt
+          : lastThumbnailGeneratedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      lastGifGeneratedAt: freezed == lastGifGeneratedAt
+          ? _value.lastGifGeneratedAt
+          : lastGifGeneratedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      latestThumbnail: freezed == latestThumbnail
+          ? _value.latestThumbnail
+          : latestThumbnail // ignore: cast_nullable_to_non_nullable
+              as String?,
+      latestGif: freezed == latestGif
+          ? _value.latestGif
+          : latestGif // ignore: cast_nullable_to_non_nullable
               as String?,
       viewerCount: freezed == viewerCount
           ? _value.viewerCount
@@ -1031,6 +1167,23 @@ class _$StreamDataModelImpl implements _StreamDataModel {
           toJson: _nullOrStringList)
       final List<String>? recordingFiles,
       @JsonKey(name: 'thumbnail_url') this.thumbnailUrl,
+      @JsonKey(name: 'latest_thumbnail_url') this.latestThumbnailUrl,
+      @JsonKey(name: 'latest_gif_url') this.latestGifUrl,
+      @JsonKey(
+          name: 'thumbnail_history',
+          fromJson: _stringListOrNull,
+          toJson: _nullOrStringList)
+      final List<String>? thumbnailHistory,
+      @JsonKey(
+          name: 'gif_history',
+          fromJson: _stringListOrNull,
+          toJson: _nullOrStringList)
+      final List<String>? gifHistory,
+      @JsonKey(name: 'last_thumbnail_generated_at')
+      this.lastThumbnailGeneratedAt,
+      @JsonKey(name: 'last_gif_generated_at') this.lastGifGeneratedAt,
+      @JsonKey(name: 'latest_thumbnail') this.latestThumbnail,
+      @JsonKey(name: 'latest_gif') this.latestGif,
       @JsonKey(name: 'viewer_count') this.viewerCount,
       @JsonKey(name: 'max_viewers') this.maxViewers,
       @JsonKey(name: 'is_public') this.isPublic,
@@ -1056,6 +1209,8 @@ class _$StreamDataModelImpl implements _StreamDataModel {
       @JsonKey(name: 'categories') final List<StreamCategoryModel>? categories,
       @JsonKey(name: 'record_url') this.recordUrl})
       : _recordingFiles = recordingFiles,
+        _thumbnailHistory = thumbnailHistory,
+        _gifHistory = gifHistory,
         _streamSettings = streamSettings,
         _streamProducts = streamProducts,
         _categories = categories;
@@ -1140,6 +1295,53 @@ class _$StreamDataModelImpl implements _StreamDataModel {
   @JsonKey(name: 'thumbnail_url')
   final String? thumbnailUrl;
   @override
+  @JsonKey(name: 'latest_thumbnail_url')
+  final String? latestThumbnailUrl;
+  @override
+  @JsonKey(name: 'latest_gif_url')
+  final String? latestGifUrl;
+  final List<String>? _thumbnailHistory;
+  @override
+  @JsonKey(
+      name: 'thumbnail_history',
+      fromJson: _stringListOrNull,
+      toJson: _nullOrStringList)
+  List<String>? get thumbnailHistory {
+    final value = _thumbnailHistory;
+    if (value == null) return null;
+    if (_thumbnailHistory is EqualUnmodifiableListView)
+      return _thumbnailHistory;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  final List<String>? _gifHistory;
+  @override
+  @JsonKey(
+      name: 'gif_history',
+      fromJson: _stringListOrNull,
+      toJson: _nullOrStringList)
+  List<String>? get gifHistory {
+    final value = _gifHistory;
+    if (value == null) return null;
+    if (_gifHistory is EqualUnmodifiableListView) return _gifHistory;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  @JsonKey(name: 'last_thumbnail_generated_at')
+  final DateTime? lastThumbnailGeneratedAt;
+  @override
+  @JsonKey(name: 'last_gif_generated_at')
+  final DateTime? lastGifGeneratedAt;
+  @override
+  @JsonKey(name: 'latest_thumbnail')
+  final String? latestThumbnail;
+  @override
+  @JsonKey(name: 'latest_gif')
+  final String? latestGif;
+  @override
   @JsonKey(name: 'viewer_count')
   final int? viewerCount;
   @override
@@ -1222,7 +1424,7 @@ class _$StreamDataModelImpl implements _StreamDataModel {
 
   @override
   String toString() {
-    return 'StreamDataModel(id: $id, userId: $userId, title: $title, description: $description, channelName: $channelName, muxLiveStreamId: $muxLiveStreamId, muxStreamKey: $muxStreamKey, muxPlaybackId: $muxPlaybackId, livekitRoomName: $livekitRoomName, livekitServerUrl: $livekitServerUrl, livekitConfig: $livekitConfig, livekitRoomCreatedAt: $livekitRoomCreatedAt, status: $status, scheduledAt: $scheduledAt, startedAt: $startedAt, endedAt: $endedAt, isRecordingEnabled: $isRecordingEnabled, recordingResourceId: $recordingResourceId, recordingSid: $recordingSid, recordingFiles: $recordingFiles, thumbnailUrl: $thumbnailUrl, viewerCount: $viewerCount, maxViewers: $maxViewers, isPublic: $isPublic, createdAt: $createdAt, updatedAt: $updatedAt, autoDeleteAfterEnd: $autoDeleteAfterEnd, autoDeleteHours: $autoDeleteHours, saveRecording: $saveRecording, enableComments: $enableComments, enableBidding: $enableBidding, minimumBidIncrement: $minimumBidIncrement, bidDurationSeconds: $bidDurationSeconds, streamSettings: $streamSettings, isMine: $isMine, user: $user, streamProducts: $streamProducts, categories: $categories, recordUrl: $recordUrl)';
+    return 'StreamDataModel(id: $id, userId: $userId, title: $title, description: $description, channelName: $channelName, muxLiveStreamId: $muxLiveStreamId, muxStreamKey: $muxStreamKey, muxPlaybackId: $muxPlaybackId, livekitRoomName: $livekitRoomName, livekitServerUrl: $livekitServerUrl, livekitConfig: $livekitConfig, livekitRoomCreatedAt: $livekitRoomCreatedAt, status: $status, scheduledAt: $scheduledAt, startedAt: $startedAt, endedAt: $endedAt, isRecordingEnabled: $isRecordingEnabled, recordingResourceId: $recordingResourceId, recordingSid: $recordingSid, recordingFiles: $recordingFiles, thumbnailUrl: $thumbnailUrl, latestThumbnailUrl: $latestThumbnailUrl, latestGifUrl: $latestGifUrl, thumbnailHistory: $thumbnailHistory, gifHistory: $gifHistory, lastThumbnailGeneratedAt: $lastThumbnailGeneratedAt, lastGifGeneratedAt: $lastGifGeneratedAt, latestThumbnail: $latestThumbnail, latestGif: $latestGif, viewerCount: $viewerCount, maxViewers: $maxViewers, isPublic: $isPublic, createdAt: $createdAt, updatedAt: $updatedAt, autoDeleteAfterEnd: $autoDeleteAfterEnd, autoDeleteHours: $autoDeleteHours, saveRecording: $saveRecording, enableComments: $enableComments, enableBidding: $enableBidding, minimumBidIncrement: $minimumBidIncrement, bidDurationSeconds: $bidDurationSeconds, streamSettings: $streamSettings, isMine: $isMine, user: $user, streamProducts: $streamProducts, categories: $categories, recordUrl: $recordUrl)';
   }
 
   @override
@@ -1267,6 +1469,22 @@ class _$StreamDataModelImpl implements _StreamDataModel {
                 .equals(other._recordingFiles, _recordingFiles) &&
             (identical(other.thumbnailUrl, thumbnailUrl) ||
                 other.thumbnailUrl == thumbnailUrl) &&
+            (identical(other.latestThumbnailUrl, latestThumbnailUrl) ||
+                other.latestThumbnailUrl == latestThumbnailUrl) &&
+            (identical(other.latestGifUrl, latestGifUrl) ||
+                other.latestGifUrl == latestGifUrl) &&
+            const DeepCollectionEquality()
+                .equals(other._thumbnailHistory, _thumbnailHistory) &&
+            const DeepCollectionEquality()
+                .equals(other._gifHistory, _gifHistory) &&
+            (identical(other.lastThumbnailGeneratedAt, lastThumbnailGeneratedAt) ||
+                other.lastThumbnailGeneratedAt == lastThumbnailGeneratedAt) &&
+            (identical(other.lastGifGeneratedAt, lastGifGeneratedAt) ||
+                other.lastGifGeneratedAt == lastGifGeneratedAt) &&
+            (identical(other.latestThumbnail, latestThumbnail) ||
+                other.latestThumbnail == latestThumbnail) &&
+            (identical(other.latestGif, latestGif) ||
+                other.latestGif == latestGif) &&
             (identical(other.viewerCount, viewerCount) ||
                 other.viewerCount == viewerCount) &&
             (identical(other.maxViewers, maxViewers) ||
@@ -1299,8 +1517,7 @@ class _$StreamDataModelImpl implements _StreamDataModel {
                 .equals(other._streamProducts, _streamProducts) &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
-            (identical(other.recordUrl, recordUrl) ||
-                other.recordUrl == recordUrl));
+            (identical(other.recordUrl, recordUrl) || other.recordUrl == recordUrl));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1328,6 +1545,14 @@ class _$StreamDataModelImpl implements _StreamDataModel {
         recordingSid,
         const DeepCollectionEquality().hash(_recordingFiles),
         thumbnailUrl,
+        latestThumbnailUrl,
+        latestGifUrl,
+        const DeepCollectionEquality().hash(_thumbnailHistory),
+        const DeepCollectionEquality().hash(_gifHistory),
+        lastThumbnailGeneratedAt,
+        lastGifGeneratedAt,
+        latestThumbnail,
+        latestGif,
         viewerCount,
         maxViewers,
         isPublic,
@@ -1393,6 +1618,24 @@ abstract class _StreamDataModel implements StreamDataModel {
           toJson: _nullOrStringList)
       final List<String>? recordingFiles,
       @JsonKey(name: 'thumbnail_url') final String? thumbnailUrl,
+      @JsonKey(name: 'latest_thumbnail_url') final String? latestThumbnailUrl,
+      @JsonKey(name: 'latest_gif_url') final String? latestGifUrl,
+      @JsonKey(
+          name: 'thumbnail_history',
+          fromJson: _stringListOrNull,
+          toJson: _nullOrStringList)
+      final List<String>? thumbnailHistory,
+      @JsonKey(
+          name: 'gif_history',
+          fromJson: _stringListOrNull,
+          toJson: _nullOrStringList)
+      final List<String>? gifHistory,
+      @JsonKey(name: 'last_thumbnail_generated_at')
+      final DateTime? lastThumbnailGeneratedAt,
+      @JsonKey(name: 'last_gif_generated_at')
+      final DateTime? lastGifGeneratedAt,
+      @JsonKey(name: 'latest_thumbnail') final String? latestThumbnail,
+      @JsonKey(name: 'latest_gif') final String? latestGif,
       @JsonKey(name: 'viewer_count') final int? viewerCount,
       @JsonKey(name: 'max_viewers') final int? maxViewers,
       @JsonKey(name: 'is_public') final bool? isPublic,
@@ -1485,6 +1728,36 @@ abstract class _StreamDataModel implements StreamDataModel {
   @override
   @JsonKey(name: 'thumbnail_url')
   String? get thumbnailUrl;
+  @override
+  @JsonKey(name: 'latest_thumbnail_url')
+  String? get latestThumbnailUrl;
+  @override
+  @JsonKey(name: 'latest_gif_url')
+  String? get latestGifUrl;
+  @override
+  @JsonKey(
+      name: 'thumbnail_history',
+      fromJson: _stringListOrNull,
+      toJson: _nullOrStringList)
+  List<String>? get thumbnailHistory;
+  @override
+  @JsonKey(
+      name: 'gif_history',
+      fromJson: _stringListOrNull,
+      toJson: _nullOrStringList)
+  List<String>? get gifHistory;
+  @override
+  @JsonKey(name: 'last_thumbnail_generated_at')
+  DateTime? get lastThumbnailGeneratedAt;
+  @override
+  @JsonKey(name: 'last_gif_generated_at')
+  DateTime? get lastGifGeneratedAt;
+  @override
+  @JsonKey(name: 'latest_thumbnail')
+  String? get latestThumbnail;
+  @override
+  @JsonKey(name: 'latest_gif')
+  String? get latestGif;
   @override
   @JsonKey(name: 'viewer_count')
   int? get viewerCount;
@@ -4101,6 +4374,7 @@ StreamListResponseModel _$StreamListResponseModelFromJson(
 /// @nodoc
 mixin _$StreamListResponseModel {
   bool? get success => throw _privateConstructorUsedError;
+  String? get message => throw _privateConstructorUsedError;
   List<StreamDataModel>? get data => throw _privateConstructorUsedError;
   PaginationModel? get pagination => throw _privateConstructorUsedError;
 
@@ -4122,6 +4396,7 @@ abstract class $StreamListResponseModelCopyWith<$Res> {
   @useResult
   $Res call(
       {bool? success,
+      String? message,
       List<StreamDataModel>? data,
       PaginationModel? pagination});
 
@@ -4145,6 +4420,7 @@ class _$StreamListResponseModelCopyWithImpl<$Res,
   @override
   $Res call({
     Object? success = freezed,
+    Object? message = freezed,
     Object? data = freezed,
     Object? pagination = freezed,
   }) {
@@ -4153,6 +4429,10 @@ class _$StreamListResponseModelCopyWithImpl<$Res,
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
       data: freezed == data
           ? _value.data
           : data // ignore: cast_nullable_to_non_nullable
@@ -4190,6 +4470,7 @@ abstract class _$$StreamListResponseModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {bool? success,
+      String? message,
       List<StreamDataModel>? data,
       PaginationModel? pagination});
 
@@ -4213,6 +4494,7 @@ class __$$StreamListResponseModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? success = freezed,
+    Object? message = freezed,
     Object? data = freezed,
     Object? pagination = freezed,
   }) {
@@ -4221,6 +4503,10 @@ class __$$StreamListResponseModelImplCopyWithImpl<$Res>
           ? _value.success
           : success // ignore: cast_nullable_to_non_nullable
               as bool?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
       data: freezed == data
           ? _value._data
           : data // ignore: cast_nullable_to_non_nullable
@@ -4237,7 +4523,10 @@ class __$$StreamListResponseModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$StreamListResponseModelImpl implements _StreamListResponseModel {
   const _$StreamListResponseModelImpl(
-      {this.success, final List<StreamDataModel>? data, this.pagination})
+      {this.success,
+      this.message,
+      final List<StreamDataModel>? data,
+      this.pagination})
       : _data = data;
 
   factory _$StreamListResponseModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -4245,6 +4534,8 @@ class _$StreamListResponseModelImpl implements _StreamListResponseModel {
 
   @override
   final bool? success;
+  @override
+  final String? message;
   final List<StreamDataModel>? _data;
   @override
   List<StreamDataModel>? get data {
@@ -4260,7 +4551,7 @@ class _$StreamListResponseModelImpl implements _StreamListResponseModel {
 
   @override
   String toString() {
-    return 'StreamListResponseModel(success: $success, data: $data, pagination: $pagination)';
+    return 'StreamListResponseModel(success: $success, message: $message, data: $data, pagination: $pagination)';
   }
 
   @override
@@ -4269,6 +4560,7 @@ class _$StreamListResponseModelImpl implements _StreamListResponseModel {
         (other.runtimeType == runtimeType &&
             other is _$StreamListResponseModelImpl &&
             (identical(other.success, success) || other.success == success) &&
+            (identical(other.message, message) || other.message == message) &&
             const DeepCollectionEquality().equals(other._data, _data) &&
             (identical(other.pagination, pagination) ||
                 other.pagination == pagination));
@@ -4276,7 +4568,7 @@ class _$StreamListResponseModelImpl implements _StreamListResponseModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, success,
+  int get hashCode => Object.hash(runtimeType, success, message,
       const DeepCollectionEquality().hash(_data), pagination);
 
   /// Create a copy of StreamListResponseModel
@@ -4299,6 +4591,7 @@ class _$StreamListResponseModelImpl implements _StreamListResponseModel {
 abstract class _StreamListResponseModel implements StreamListResponseModel {
   const factory _StreamListResponseModel(
       {final bool? success,
+      final String? message,
       final List<StreamDataModel>? data,
       final PaginationModel? pagination}) = _$StreamListResponseModelImpl;
 
@@ -4307,6 +4600,8 @@ abstract class _StreamListResponseModel implements StreamListResponseModel {
 
   @override
   bool? get success;
+  @override
+  String? get message;
   @override
   List<StreamDataModel>? get data;
   @override

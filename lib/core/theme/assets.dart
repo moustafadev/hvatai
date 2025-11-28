@@ -89,6 +89,8 @@ class Assets {
   // message icon
   static const String assetsIconsMessage2 = "assets/icons/message.svg";
 
+  static const String assetsIconsStreamPlaceholder = "assets/icons/stream_placeholder.png";
+
   /// Assets for assetsIconsPaymentMethod
   /// assets/icons/payment_method.png
   static const String assetsIconsPaymentMethod = "assets/icons/payment_method.png";

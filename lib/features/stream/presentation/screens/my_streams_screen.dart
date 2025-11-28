@@ -111,7 +111,8 @@ class MyStreamsScreen extends StatelessWidget {
                                     }
                                   },
                                   child: CustomLiveVideoCard(
-                                    price: 'Стартовая цена $startingPrice Р',
+                                    // price: 'Стартовая цена $startingPrice Р',
+                                    price: "",
                                     title: product?.name ?? stream.title ?? '',
                                     adminName: stream.user?.name ?? 'company_name',
                                     adminImage: stream.user?.image ?? '',
@@ -119,6 +120,8 @@ class MyStreamsScreen extends StatelessWidget {
                                     description: categoryName,
                                     liveImage: stream.thumbnailUrl ?? 
                                         stream.recordUrl ?? '',
+                                    latestThumbnailUrl: stream.latestThumbnailUrl,
+                                    latestGifUrl: stream.latestGifUrl,
                                   ),
                                 );
                               },

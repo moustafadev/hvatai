@@ -5,11 +5,13 @@ class CompanyDetailsWidget extends StatelessWidget {
   final bool? isSubscribed;
   final bool isSubscriptionLoading;
   final VoidCallback? onSubscribeTap;
+  final bool isViewerMode;
 
   const CompanyDetailsWidget({
     super.key,
     this.streamUserModel,
     this.isSubscribed,
+    this.isViewerMode = true,
     this.isSubscriptionLoading = false,
     this.onSubscribeTap,
   });
@@ -40,6 +42,7 @@ class CompanyDetailsWidget extends StatelessWidget {
               color: Colors.white,
             ),
             SizedBox(width: 12.w),
+            if (isViewerMode)
             GestureDetector(
               onTap: canToggle && !isSubscriptionLoading ? onSubscribeTap : null,
               behavior: HitTestBehavior.opaque,

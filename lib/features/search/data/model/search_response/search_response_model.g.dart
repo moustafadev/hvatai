@@ -242,6 +242,8 @@ _$SearchStreamDtoImpl _$$SearchStreamDtoImplFromJson(
               SearchStreamCategoryDto.fromJson(e as Map<String, dynamic>))
           .toList(),
       updatedAt: json['updated_at'] as String?,
+      latestThumbnailUrl: json['latest_thumbnail_url'] as String?,
+      latestGifUrl: json['latest_gif_url'] as String?,
     );
 
 Map<String, dynamic> _$$SearchStreamDtoImplToJson(
@@ -257,6 +259,8 @@ Map<String, dynamic> _$$SearchStreamDtoImplToJson(
       'user': instance.user,
       'categories': instance.categories,
       'updated_at': instance.updatedAt,
+      'latest_thumbnail_url': instance.latestThumbnailUrl,
+      'latest_gif_url': instance.latestGifUrl,
     };
 
 _$SearchStreamUserDtoImpl _$$SearchStreamUserDtoImplFromJson(

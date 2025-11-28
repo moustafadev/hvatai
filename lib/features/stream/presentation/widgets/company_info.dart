@@ -5,11 +5,13 @@ class CompanyInfo extends StatelessWidget {
   final bool? isSubscribed;
   final bool isSubscriptionLoading;
   final VoidCallback? onSubscribeTap;
+  final bool isViewerMode;
 
   const CompanyInfo({
     super.key,
     this.streamUserModel,
     this.isSubscribed,
+    this.isViewerMode = true,
     this.isSubscriptionLoading = false,
     this.onSubscribeTap,
   });
@@ -46,6 +48,7 @@ class CompanyInfo extends StatelessWidget {
         CompanyDetailsWidget(
           streamUserModel: streamUserModel,
           isSubscribed: isSubscribed,
+          isViewerMode: isViewerMode,
           isSubscriptionLoading: isSubscriptionLoading,
           onSubscribeTap: onSubscribeTap,
         ),

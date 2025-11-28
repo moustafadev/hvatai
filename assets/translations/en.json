@@ -243,6 +243,7 @@
   "ordersMoreItems": "+{count} more items",
   "inviteFriendTitle": "Invite a friend and get up to 10,000 ₽",
   "balanceAmount": "Balance: ",
+  
   "tips": "Tips",
   "analytics": "Analytics",
   "editProfile": "Edit Profile",
@@ -589,6 +590,8 @@
   "select products": "Select Products",
   "select product": "Select Product",
   "bid duration": "Bid Duration",
+  "bid duration seconds": "Bid Duration (seconds)",
+  "select categories": "Select Categories",
   "accountBalance": "Account Balance",
   "availableForWithdrawal": "Available for Withdrawal",
   "withdrawMoney": "Withdraw Money",

@@ -1,12 +1,14 @@
 part of 'customs.dart';
 
-class CustomLiveVideoCard extends StatelessWidget {
+class CustomLiveVideoCard extends StatefulWidget {
   final String adminName;
   final String adminImage;
   final int viewsCount;
   final String title;
   final String description;
   final String liveImage;
+  final String? latestThumbnailUrl;
+  final String? latestGifUrl;
   final String price;
 
   final bool? isFavorite;
@@ -21,9 +23,18 @@ class CustomLiveVideoCard extends StatelessWidget {
     required this.title,
     required this.description,
     required this.liveImage,
+    this.latestThumbnailUrl,
+    this.latestGifUrl,
     this.isFavorite,
     this.onFavoriteToggle,
   });
+
+  @override
+  State<CustomLiveVideoCard> createState() => _CustomLiveVideoCardState();
+}
+
+class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
+  bool _showGif = false;
 
   @override
   Widget build(BuildContext context) {
@@ -41,41 +52,100 @@ class CustomLiveVideoCard extends StatelessWidget {
         // Live Image + Favorite Overlay
         Expanded(
           flex: 3,
-          child: Stack(
-            children: [
-              CustomContainer(
-                width: double.infinity,
-                height: double.infinity,
-                border: Border.all(
-                  color: AppColors.transparent,
+          child: GestureDetector(
+            onLongPress: (widget.latestGifUrl != null && widget.latestGifUrl!.isNotEmpty)
+                ? () {
+                    // Toggle GIF display on long press
+                    setState(() {
+                      _showGif = !_showGif;
+                    });
+                    
+                    // Auto-hide GIF after 5 seconds
+                    if (_showGif) {
+                      Future.delayed(const Duration(seconds: 5), () {
+                        if (mounted) {
+                          setState(() {
+                            _showGif = false;
+                          });
+                        }
+                      });
+                    }
+                  }
+                : null,
+            child: Stack(
+              children: [
+                // Background image - GIF or latest thumbnail or placeholder
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10.r),
+                  child: (_showGif && widget.latestGifUrl != null && widget.latestGifUrl!.isNotEmpty)
+                      ? CachedNetworkImage(
+                          imageUrl: widget.latestGifUrl!,
+                          width: double.infinity,
+                          height: double.infinity,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Image.asset(
+                            Assets.assetsIconsStreamPlaceholder,
+                            width: double.infinity,
+                            height: double.infinity,
+                            fit: BoxFit.fill,
+                          ),
+                          errorWidget: (context, url, error) => Image.asset(
+                            Assets.assetsIconsStreamPlaceholder,
+                            width: double.infinity,
+                            height: double.infinity,
+                            fit: BoxFit.fill,
+                          ),
+                        )
+                      : (widget.latestThumbnailUrl != null && widget.latestThumbnailUrl!.isNotEmpty)
+                          ? CachedNetworkImage(
+                              imageUrl: widget.latestThumbnailUrl!,
+                              width: double.infinity,
+                              height: double.infinity,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => Image.asset(
+                                Assets.assetsIconsStreamPlaceholder,
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.fill,
+                              ),
+                              errorWidget: (context, url, error) => Image.asset(
+                                Assets.assetsIconsStreamPlaceholder,
+                                width: double.infinity,
+                                height: double.infinity,
+                                fit: BoxFit.fill,
+                              ),
+                            )
+                          : Image.asset(
+                              Assets.assetsIconsStreamPlaceholder,
+                              width: double.infinity,
+                              height: double.infinity,
+                              fit: BoxFit.fill,
+                            ),
                 ),
-                borderRadius: BorderRadius.circular(10.r),
-                image: DecorationImage(
-                  image: AssetImage(Assets.assetsImagesLive),
-                  fit: BoxFit.fill,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Align(
-                    alignment: Alignment.topLeft,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 6, vertical: 3),
-                      decoration: BoxDecoration(
-                        color: AppColors.primaryPink,
-                        borderRadius: BorderRadius.circular(6),
-                      ),
-                      child: CustomText(
-                        text: "Live • $viewsCount",
-                        textAlign: TextAlign.center,
-                        color: AppColors.white,
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
+                // Overlay content
+                Positioned.fill(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: Alignment.topLeft,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 6, vertical: 3),
+                        decoration: BoxDecoration(
+                          color: AppColors.primaryPink,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: CustomText(
+                          text: "Live • ${widget.viewsCount}",
+                          textAlign: TextAlign.center,
+                          color: AppColors.white,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
               // if (isFavorite != null && onFavoriteToggle != null)
               Positioned(
                 top: 10,
@@ -83,7 +153,7 @@ class CustomLiveVideoCard extends StatelessWidget {
                 child: Column(
                   children: [
                     GestureDetector(
-                        onTap: onFavoriteToggle,
+                        onTap: widget.onFavoriteToggle,
                         child: CircleAvatar(
                           radius: 12.r,
                           backgroundColor: AppColors.blackDark,
@@ -97,7 +167,7 @@ class CustomLiveVideoCard extends StatelessWidget {
                         )),
                     4.ph,
                     CustomText(
-                        text: viewsCount.toString(),
+                        text: widget.viewsCount.toString(),
                         color: AppColors.white,
                         fontSize: 12.sp,
                         fontWeight: FontWeight.bold),
@@ -127,12 +197,13 @@ class CustomLiveVideoCard extends StatelessWidget {
                   ),
                 ),
               ),
-            ],
+              ],
+            ),
           ),
         ),
         8.ph,
         CustomText(
-          text: price,
+          text: widget.price,
           fontSize: 12,
           fontWeight: FontWeight.bold,
           color: AppColors.primaryPink,
@@ -141,7 +212,7 @@ class CustomLiveVideoCard extends StatelessWidget {
         ),
 
         CustomText(
-          text: title,
+          text: widget.title,
           fontSize: 14,
           fontWeight: FontWeight.bold,
           color: AppColors.blackDark,
@@ -150,7 +221,7 @@ class CustomLiveVideoCard extends StatelessWidget {
         ),
         4.ph,
         CustomText(
-          text: description,
+          text: widget.description,
           fontSize: 12,
           fontWeight: FontWeight.w600,
           color: AppColors.grey,
@@ -172,7 +243,7 @@ class CustomLiveVideoCard extends StatelessWidget {
             5.pw,
             Flexible(
               child: CustomText(
-                text: adminName,
+                text: widget.adminName,
                 color: AppColors.blackDark,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.bold,

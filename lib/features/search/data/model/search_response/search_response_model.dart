@@ -147,6 +147,8 @@ class SearchStreamDto with _$SearchStreamDto {
     SearchStreamUserDto? user,
     List<SearchStreamCategoryDto>? categories,
     @JsonKey(name: 'updated_at') String? updatedAt,
+    @JsonKey(name: 'latest_thumbnail_url') String? latestThumbnailUrl,
+    @JsonKey(name: 'latest_gif_url') String? latestGifUrl,
   }) = _SearchStreamDto;
 
   factory SearchStreamDto.fromJson(Map<String, dynamic> json) =>

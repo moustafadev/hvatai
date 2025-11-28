@@ -15,7 +15,7 @@ class RegistrationForm extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              10.ph,
+              50.ph,
               Row(
                 children: [
                   const Spacer(),

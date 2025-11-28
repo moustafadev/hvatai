@@ -20,15 +20,7 @@ class AddStreamScreen extends StatelessWidget {
           builder: (context, state) {
             final cubit = context.read<AddStreamCubit>();
             final model = state.createStreamModel;
-            final selectedCategoryIds = model.categoryIds;
-            final availableProducts = selectedCategoryIds.isEmpty
-                ? <ProductModel>[]
-                : state.products
-                    .where((product) =>
-                        product.id != null &&
-                        product.categoryId != null &&
-                        selectedCategoryIds.contains(product.categoryId!))
-                    .toList();
+          
             if (state.isProductsLoading || state.isCategoriesLoading) {
               return const Center(
                   child: CircularProgressIndicator(
@@ -110,7 +102,7 @@ class AddStreamScreen extends StatelessWidget {
                       if (model.enableBidding) ...[
                         12.ph,
                         CustomTextField(
-                          hintText: 'minimum bid increment',
+                          hintText: 'minimum bid increment'.tr(),
                           keyboardType: TextInputType.number,
                           onChanged: (val) {
                             final parsed = double.tryParse(val);
@@ -133,7 +125,7 @@ class AddStreamScreen extends StatelessWidget {
                       if (model.autoDeleteAfterEnd) ...[
                         12.ph,
                         CustomTextField(
-                          hintText: 'auto delete hours',
+                          hintText: 'auto delete hours'.tr(),
                           keyboardType: TextInputType.number,
                           onChanged: (val) {
                             final parsed = int.tryParse(val);
@@ -160,7 +152,7 @@ class AddStreamScreen extends StatelessWidget {
                       ),
                       12.ph,
                       CustomDropdown(
-                        hintText: 'bid duration seconds',
+                        hintText: 'bid duration seconds'.tr(),
                         value: model.bidDurationSeconds.toString(),
                         items: List.generate(40, (index) {
                           final seconds = index + 1;
@@ -266,7 +258,7 @@ class AddStreamScreen extends StatelessWidget {
                       ),
                       12.ph,
                       CustomDropdown(
-                        hintText: 'select category'.tr(),
+                        hintText: 'selectCategory'.tr(),
                         value: null,
                         items: _buildAvailableCategories(
                           state.categories,

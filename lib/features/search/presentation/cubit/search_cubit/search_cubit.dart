@@ -241,6 +241,8 @@ class SearchCubit extends Cubit<SearchState> {
         adminName: stream.user?.name ?? '',
         adminPhoto: stream.user?.image ?? '',
         price: '',
+        latestThumbnailUrl: stream.latestThumbnailUrl ?? '',
+        latestGifUrl: stream.latestGifUrl ?? '',
         viewsCount: stream.viewerCount ?? 0,
         title: stream.title ?? '',
         description: stream.description ?? '',
