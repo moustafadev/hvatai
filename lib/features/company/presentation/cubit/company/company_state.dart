@@ -1,8 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
 
-class CompanyNameState extends Equatable {
-  const CompanyNameState({
+class CompanyState extends Equatable {
+  const CompanyState({
     this.isLoading = false,
     this.errorMessage = '',
     this.user,
@@ -16,14 +16,14 @@ class CompanyNameState extends Equatable {
   final bool isSubscribed;
   final bool isToggleLoading;
 
-  CompanyNameState copyWith({
+  CompanyState copyWith({
     bool? isLoading,
     String? errorMessage,
     UserDataModel? user,
     bool? isSubscribed,
     bool? isToggleLoading,
   }) {
-    return CompanyNameState(
+    return CompanyState(
       isLoading: isLoading ?? this.isLoading,
       errorMessage: errorMessage ?? this.errorMessage,
       user: user ?? this.user,

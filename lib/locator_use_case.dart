@@ -47,9 +47,9 @@ import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase
 import 'package:hvatai/features/profile/domain/usecases/sign_out_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_type_usecase.dart';
-import 'package:hvatai/features/search/domain/usecases/get_company_products_usecase.dart';
-import 'package:hvatai/features/search/domain/usecases/get_company_streams_usecase.dart';
-import 'package:hvatai/features/search/domain/usecases/get_user_data_usecase.dart';
+import 'package:hvatai/features/company/domain/usecases/get_company_products_usecase.dart';
+import 'package:hvatai/features/company/domain/usecases/get_company_streams_usecase.dart';
+import 'package:hvatai/features/company/domain/usecases/get_user_data_usecase.dart';
 import 'package:hvatai/features/search/domain/usecases/search_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';

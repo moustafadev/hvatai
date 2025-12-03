@@ -1,7 +1,7 @@
-part of '../search.dart';
+part of '../company.dart';
 
-class InfoCompanyNameBottom extends StatelessWidget {
-  const InfoCompanyNameBottom({
+class InfoCompanyBottom extends StatelessWidget {
+  const InfoCompanyBottom({
     super.key,
     required this.rating,
     required this.reviews,

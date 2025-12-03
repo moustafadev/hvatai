@@ -1,7 +1,7 @@
-part of '../search.dart';
+part of '../company.dart';
 
-class CompanyNameScreen extends StatelessWidget {
-  const CompanyNameScreen({
+class CompanyScreen extends StatelessWidget {
+  const CompanyScreen({
     required this.userId,
     super.key,
   });
@@ -11,15 +11,15 @@ class CompanyNameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
-    return BlocProvider<CompanyNameCubit>(
-      create: (_) => locator<CompanyNameCubit>()..loadCompanyProfile(userId),
-      child: _CompanyNameView(screenHeight: screenHeight),
+    return BlocProvider<CompanyCubit>(
+      create: (_) => locator<CompanyCubit>()..loadCompanyProfile(userId),
+      child: _CompanyView(screenHeight: screenHeight),
     );
   }
 }
 
-class _CompanyNameView extends StatelessWidget {
-  const _CompanyNameView({required this.screenHeight});
+class _CompanyView extends StatelessWidget {
+  const _CompanyView({required this.screenHeight});
 
   final double screenHeight;
 
@@ -27,9 +27,9 @@ class _CompanyNameView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightGreyBackground,
-      body: BlocBuilder<CompanyNameCubit, CompanyNameState>(
+      body: BlocBuilder<CompanyCubit, CompanyState>(
         builder: (context, state) {
-          final cubit = context.read<CompanyNameCubit>();
+          final cubit = context.read<CompanyCubit>();
 
           if (state.isLoading) {
             return const Center(
@@ -101,14 +101,14 @@ class _CompanyNameView extends StatelessWidget {
                         ),
                       ),
                       22.ph,
-                      InfoCompanyNameDetail(
+                      InfoCompanyDetail(
                         title: fullName.isEmpty ? 'companyName'.tr() : fullName,
                         subtitle: user.email ?? user.phone ?? '',
                         statsText: statsText,
                         imageUrl: user.image,
                       ),
                       32.ph,
-                      InfoCompanyNameBottom(
+                      InfoCompanyBottom(
                         rating: user.personalAvg ?? 0,
                         reviews: user.personalRatingCount ?? 0,
                         favorites: user.favoritesCount ?? 0,
@@ -141,7 +141,7 @@ class _CompanyNameView extends StatelessWidget {
                         ),
                       ),
                       16.ph,
-                      CustomRowCompanyName(
+                      CustomRowCompany(
                         text: 'sendReward'.tr(),
                         image: Assets.assetsIconsTips,
                         onTap: () {
@@ -160,7 +160,7 @@ class _CompanyNameView extends StatelessWidget {
                         },
                       ),
                       12.ph,
-                      CustomRowCompanyName(
+                      CustomRowCompany(
                         text: 'write'.tr(),
                         image: Assets.assetsIconsMessage,
                         onTap: () {
@@ -171,7 +171,7 @@ class _CompanyNameView extends StatelessWidget {
                         },
                       ),
                       24.ph,
-                      FourContainerCompanyName(
+                      FourContainerCompany(
                         userId: user.id,
                         userName: fullName.isEmpty ? null : fullName,
                       ),

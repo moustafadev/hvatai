@@ -23,8 +23,8 @@ import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goo
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
-import 'package:hvatai/features/search/presentation/cubit/company_name_cubit/company_name_cubit.dart';
-import 'package:hvatai/features/search/presentation/search.dart';
+import 'package:hvatai/features/company/presentation/company.dart';
+import 'package:hvatai/features/company/presentation/cubit/company/company_cubit.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/features/stream/presentation/stream.dart';
 import 'package:hvatai/features/wallet/presentation/wallet.dart';
@@ -155,7 +155,7 @@ final GoRouter router = GoRouter(
         final extras = state.extra as Map<String, dynamic>?;
         final user = extras?['user'] as UserDataModel?;
         final isSubscribed = extras?['isSubscribed'] as bool? ?? false;
-        final companyCubit = extras?['companyCubit'] as CompanyNameCubit?;
+        final companyCubit = extras?['companyCubit'] as CompanyCubit?;
 
         return AwardsClubScreen(
           initialUser: user,
@@ -415,7 +415,7 @@ final GoRouter router = GoRouter(
         final extra = state.extra as Map<String, dynamic>?;
         final userId = extra?['userId'] as int? ?? 0;
         final userName = extra?['userName'] as String?;
-        return ProductsCompanyNameScreen(
+        return ProductsCompanyScreen(
           userId: userId,
           userName: userName,
         );
@@ -425,7 +425,7 @@ final GoRouter router = GoRouter(
       path: AppRoutes.companyName,
       builder: (context, state) {
         final userId = (state.extra as int?) ?? 0;
-        return CompanyNameScreen(userId: userId);
+        return CompanyScreen(userId: userId);
       },
     ),
     GoRoute(

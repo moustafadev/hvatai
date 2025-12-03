@@ -1,7 +1,7 @@
-part of '../search.dart';
+part of '../company.dart';
 
-class InfoCompanyNameDetail extends StatelessWidget {
-  const InfoCompanyNameDetail({
+class InfoCompanyDetail extends StatelessWidget {
+  const InfoCompanyDetail({
     super.key,
     required this.title,
     required this.subtitle,
@@ -30,14 +30,12 @@ class InfoCompanyNameDetail extends StatelessWidget {
                 shape: BoxShape.circle,
               ),
               child: ClipOval(
-                child: 
-                    CustomImage(
-                      imageSource: imageUrl ?? '',
-                      width: 72.w,
-                      height: 72.h,
-                      fit: BoxFit.cover,
-                    )
-              ),
+                  child: CustomImage(
+                imageSource: imageUrl ?? '',
+                width: 72.w,
+                height: 72.h,
+                fit: BoxFit.cover,
+              )),
             ),
             Positioned(
               right: 6,

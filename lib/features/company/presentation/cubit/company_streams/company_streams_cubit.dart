@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/features/company/domain/usecases/get_company_streams_usecase.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
-import 'package:hvatai/features/search/domain/usecases/get_company_streams_usecase.dart';
 import 'package:hvatai/features/stream/data/models/my_streams/my_streams_response.dart';
 
 part 'company_streams_cubit.freezed.dart';
@@ -35,4 +35,3 @@ class CompanyStreamsCubit extends Cubit<CompanyStreamsState> {
     );
   }
 }
-

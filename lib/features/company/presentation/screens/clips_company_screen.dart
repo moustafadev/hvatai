@@ -1,4 +1,4 @@
-part of '../search.dart';
+part of '../company.dart';
 
 class ClipsCompanyScreen extends StatelessWidget {
   const ClipsCompanyScreen({
@@ -129,8 +129,6 @@ class ClipsCompanyScreen extends StatelessWidget {
                                         true
                                     ? stream.streamProducts!.first
                                     : null;
-                                final startingPrice =
-                                    firstProduct?.startingPrice ?? '0';
                                 final product = firstProduct?.product;
                                 final categoryName =
                                     stream.categories?.isNotEmpty == true
@@ -181,3 +179,4 @@ class ClipsCompanyScreen extends StatelessWidget {
     );
   }
 }
+

@@ -1,7 +1,7 @@
-part of '../search.dart';
+part of '../company.dart';
 
-class FourContainerCompanyName extends StatelessWidget {
-  const FourContainerCompanyName({
+class FourContainerCompany extends StatelessWidget {
+  const FourContainerCompany({
     super.key,
     this.userId,
     this.userName,
@@ -31,7 +31,7 @@ class FourContainerCompanyName extends StatelessWidget {
         CustomItemFourContainer(
           text: 'streams'.tr(),
           assetPath: Assets.assetsImagesStreamIcon,
-           onTap: userId == null
+          onTap: userId == null
               ? null
               : () => context.push(
                     AppRoutes.clipsCompany,

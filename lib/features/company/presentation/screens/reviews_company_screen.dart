@@ -1,4 +1,4 @@
-part of '../search.dart';
+part of '../company.dart';
 
 class ReviewsCompanyScreen extends StatelessWidget {
   const ReviewsCompanyScreen({super.key});
@@ -54,7 +54,7 @@ class ReviewsCompanyScreen extends StatelessWidget {
               ]),
             ),
           ),
-    
+
           /// Push button to bottom
           SliverFillRemaining(
             hasScrollBody: false,
@@ -62,8 +62,8 @@ class ReviewsCompanyScreen extends StatelessWidget {
               children: [
                 const Spacer(),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16, vertical: 16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
                   child: CustomButton(
                     title: 'leaveReview'.tr(),
                     fontSize: 16.sp,

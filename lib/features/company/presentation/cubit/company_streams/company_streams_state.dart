@@ -10,4 +10,3 @@ class CompanyStreamsState with _$CompanyStreamsState {
     MyStreamsStats? stats,
   }) = _CompanyStreamsState;
 }
-

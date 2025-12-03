@@ -1,18 +1,18 @@
 import 'package:dartz/dartz.dart' show unit;
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hvatai/features/company/domain/usecases/get_user_data_usecase.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
-import 'package:hvatai/features/search/domain/usecases/get_user_data_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_subscribed_users_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/toggle_subscription_usecase.dart';
 
-import 'company_name_state.dart';
+import 'company_state.dart';
 
-class CompanyNameCubit extends Cubit<CompanyNameState> {
-  CompanyNameCubit(
+class CompanyCubit extends Cubit<CompanyState> {
+  CompanyCubit(
     this._getUserDataUsecase,
     this._getSubscribedUsersUsecase,
     this._toggleSubscriptionUsecase,
-  ) : super(const CompanyNameState());
+  ) : super(const CompanyState());
 
   final GetUserDataUsecase _getUserDataUsecase;
   final GetSubscribedUsersUsecase _getSubscribedUsersUsecase;
@@ -50,7 +50,7 @@ class CompanyNameCubit extends Cubit<CompanyNameState> {
     required bool isSubscribed,
   }) {
     emit(
-      CompanyNameState(
+      CompanyState(
         user: user,
         isSubscribed: isSubscribed,
       ),
@@ -118,6 +118,6 @@ class CompanyNameCubit extends Cubit<CompanyNameState> {
   }
 
   void clearUser() {
-    emit(const CompanyNameState());
+    emit(const CompanyState());
   }
 }

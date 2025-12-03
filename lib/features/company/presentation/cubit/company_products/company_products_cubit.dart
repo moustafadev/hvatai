@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/features/company/domain/usecases/get_company_products_usecase.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
-import 'package:hvatai/features/search/domain/usecases/get_company_products_usecase.dart';
 
 part 'company_products_cubit.freezed.dart';
 part 'company_products_state.dart';

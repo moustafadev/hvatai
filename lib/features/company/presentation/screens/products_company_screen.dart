@@ -1,7 +1,7 @@
-part of '../search.dart';
+part of '../company.dart';
 
-class ProductsCompanyNameScreen extends StatelessWidget {
-  const ProductsCompanyNameScreen({
+class ProductsCompanyScreen extends StatelessWidget {
+  const ProductsCompanyScreen({
     super.key,
     required this.userId,
     this.userName,
@@ -21,7 +21,7 @@ class ProductsCompanyNameScreen extends StatelessWidget {
           create: (_) => locator<ProductDetailsCubit>(),
         ),
       ],
-      child: _ProductsCompanyNameView(
+      child: _ProductsCompanyView(
         userId: userId,
         userName: userName,
       ),
@@ -29,8 +29,8 @@ class ProductsCompanyNameScreen extends StatelessWidget {
   }
 }
 
-class _ProductsCompanyNameView extends StatelessWidget {
-  const _ProductsCompanyNameView({
+class _ProductsCompanyView extends StatelessWidget {
+  const _ProductsCompanyView({
     required this.userId,
     this.userName,
   });
@@ -87,7 +87,6 @@ class _ProductsCompanyNameView extends StatelessWidget {
               image: Assets.assetsIconsTune,
             ),
           ),
-         
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: CustomText(

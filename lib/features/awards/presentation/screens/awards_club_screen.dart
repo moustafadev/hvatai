@@ -10,7 +10,7 @@ class AwardsClubScreen extends StatelessWidget {
 
   final UserDataModel? initialUser;
   final bool initialIsSubscribed;
-  final CompanyNameCubit? companyCubit;
+  final CompanyCubit? companyCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class _AwardsClubView extends StatelessWidget {
     this.companyCubit,
   });
 
-  final CompanyNameCubit? companyCubit;
+  final CompanyCubit? companyCubit;
 
   @override
   Widget build(BuildContext context) {
