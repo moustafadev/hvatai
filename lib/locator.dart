@@ -31,12 +31,19 @@ import 'package:hvatai/features/chat/data/datasources/api_service_chat.dart';
 import 'package:hvatai/features/chat/data/repositories/chat_impl_repository.dart';
 import 'package:hvatai/features/chat/domain/repositories/chat_repository.dart';
 import 'package:hvatai/features/chat/presentation/cubit/chats_cubit.dart';
+import 'package:hvatai/features/awards/data/datasources/api_service_awards.dart';
+import 'package:hvatai/features/awards/data/repositories/awards_impl_repository.dart';
+import 'package:hvatai/features/awards/domain/repositories/awards_repository.dart';
 import 'package:hvatai/features/home/data/datasources/api_service_home.dart';
 import 'package:hvatai/features/home/data/repositories/home_impl_repository.dart';
 import 'package:hvatai/features/home/domain/repositories/home_repository.dart';
-import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_cubit.dart';
-import 'package:hvatai/features/home/presentation/cubit/category_tabs/category_tabs_cubit.dart';
-import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
+import 'package:hvatai/features/notifications/data/datasources/api_service_notifications.dart';
+import 'package:hvatai/features/notifications/data/repositories/notifications_impl_repository.dart';
+import 'package:hvatai/features/notifications/domain/repositories/notifications_repository.dart';
+import 'package:hvatai/features/awards/presentation/cubit/awards_club_cubit.dart';
+import 'package:hvatai/features/home/presentation/cubit/categories/categories_cubit.dart';
+import 'package:hvatai/features/home/presentation/cubit/live_streams/live_streams_cubit.dart';
+import 'package:hvatai/features/notifications/presentation/cubit/notifications_cubit/notifications_cubit.dart';
 import 'package:hvatai/features/orders/data/datasources/api_service_orders.dart';
 import 'package:hvatai/features/orders/data/repositories/orders_impl_repository.dart';
 import 'package:hvatai/features/orders/domain/repositories/orders_repository.dart';
@@ -119,10 +126,12 @@ Future<void> setupLocator() async {
         locator(),
       ));
 
-  locator.registerFactory(() => CategoryTabsCubit(
+  locator.registerFactory(() => CategoriesCubit(
         locator(),
         locator(),
         locator(),
+      ));
+  locator.registerFactory(() => LiveStreamsCubit(
         locator(),
         locator(),
         locator(),
@@ -140,7 +149,7 @@ Future<void> setupLocator() async {
       ));
   locator.registerFactory(() => AnalyticsCubit());
   locator.registerFactory(() => ProductImageCubit());
-  locator.registerFactory(() => MainNotificationCubit(locator(), locator()));
+  locator.registerFactory(() => NotificationsCubit(locator(), locator()));
 
   locator.registerFactory(() => SocialLoginCubit(locator(), locator()));
   locator.registerFactory(() => RegistrationCubit(
@@ -176,6 +185,10 @@ Future<void> setupLocator() async {
       .registerLazySingleton<AppRepository>(() => AppImplRepository(locator()));
   locator.registerLazySingleton<HomeRepository>(
       () => HomeImplRepository(locator()));
+  locator.registerLazySingleton<AwardsRepository>(
+      () => AwardsImplRepository(locator()));
+  locator.registerLazySingleton<NotificationsRepository>(
+      () => NotificationsImplRepository(locator()));
   locator.registerLazySingleton<ChatRepository>(
       () => ChatImplRepository(locator()));
   locator.registerLazySingleton<StreamRepository>(
@@ -197,6 +210,8 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ApiServiceChangePassword());
   locator.registerLazySingleton(() => ApiServiceApp());
   locator.registerLazySingleton(() => ApiServiceHome());
+  locator.registerLazySingleton(() => ApiServiceAwards());
+  locator.registerLazySingleton(() => ApiServiceNotifications());
   locator.registerLazySingleton(() => ApiServiceProfile());
   locator.registerLazySingleton(() => ApiServiceSearch());
   locator.registerLazySingleton(() => ApiServiceChat());

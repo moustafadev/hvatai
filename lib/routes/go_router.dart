@@ -11,9 +11,10 @@ import 'package:hvatai/features/change_password/presentation/change_password.dar
 import 'package:hvatai/features/chat/data/models/chat/chat_model.dart';
 import 'package:hvatai/features/chat/presentation/chat.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
-import 'package:hvatai/features/home/presentation/cubit/awards_club/awards_club_cubit.dart';
-import 'package:hvatai/features/home/presentation/cubit/notification_cubit/main_notification_cubit.dart';
-import 'package:hvatai/features/home/presentation/home.dart';
+import 'package:hvatai/features/awards/presentation/awards.dart';
+import 'package:hvatai/features/awards/presentation/cubit/awards_club_cubit.dart';
+import 'package:hvatai/features/notifications/presentation/cubit/notifications_cubit/notifications_cubit.dart';
+import 'package:hvatai/features/notifications/presentation/notifications.dart';
 import 'package:hvatai/features/orders/presentation/screens/my_orders_screen.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
@@ -229,7 +230,6 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.deliveryAddress,
       builder: (context, state) {
-
         return DeliveryAddressScreen();
       },
     ),
@@ -381,10 +381,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.mainNotification,
       builder: (BuildContext context, GoRouterState state) {
-        final cubit = state.extra as MainNotificationCubit..getNotifications();
+        final cubit = state.extra as NotificationsCubit..getNotifications();
 
         return BlocProvider.value(
-            value: cubit, child: const MainNotificationScreen());
+            value: cubit, child: const NotificationsScreen());
       },
     ),
     GoRoute(

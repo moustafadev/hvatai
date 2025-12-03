@@ -17,7 +17,7 @@ class MyCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CategoryTabsCubit, CategoryTabsState>(
+    return BlocConsumer<CategoriesCubit, CategoriesState>(
       listener: (context, state) {
         if (state.error?.isNotEmpty == true) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -26,7 +26,6 @@ class MyCategory extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final cubit = context.read<CategoryTabsCubit>();
         final interests = state.categories;
 
         if (interests == null || interests.data == null) {
@@ -63,7 +62,7 @@ class MyCategory extends StatelessWidget {
                       // onTap: () =>
                       //     cubit.toggleInterest(index, category.id ?? 0),
                       child: Container(
-                        margin:  EdgeInsets.only(left: index == 0 ? 16 : 12),
+                        margin: EdgeInsets.only(left: index == 0 ? 16 : 12),
                         width: 120,
                         height: 141,
                         decoration: BoxDecoration(
@@ -120,7 +119,8 @@ class MyCategory extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(40),
                                       ),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
                                         children: [
                                           Container(
                                             width: 8,

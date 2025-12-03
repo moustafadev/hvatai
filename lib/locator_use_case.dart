@@ -23,11 +23,11 @@ import 'package:hvatai/features/chat/domain/usecases/get_support_messages_usecas
 import 'package:hvatai/features/chat/domain/usecases/mark_as_read_usecase.dart';
 import 'package:hvatai/features/chat/domain/usecases/send_message.dart';
 import 'package:hvatai/features/chat/domain/usecases/send_support_messages_usecase.dart';
-import 'package:hvatai/features/home/domain/usecases/get_notification_usecase.dart';
 import 'package:hvatai/features/home/domain/usecases/get_streams_usecases.dart';
 import 'package:hvatai/features/home/domain/usecases/join_stream_usecase.dart';
-import 'package:hvatai/features/home/domain/usecases/mark_read_usecase.dart';
-import 'package:hvatai/features/home/domain/usecases/send_reward_usecase.dart';
+import 'package:hvatai/features/notifications/domain/usecases/get_notification_usecase.dart';
+import 'package:hvatai/features/notifications/domain/usecases/mark_read_usecase.dart';
+import 'package:hvatai/features/awards/domain/usecases/send_reward_usecase.dart';
 import 'package:hvatai/features/home/domain/usecases/watch_live_streams_usecase.dart';
 import 'package:hvatai/features/orders/domain/usecases/get_user_orders_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';

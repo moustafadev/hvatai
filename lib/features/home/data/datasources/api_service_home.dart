@@ -5,42 +5,9 @@ import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/home/data/model/live_stream_event/live_stream_event.dart';
-import 'package:hvatai/features/home/data/model/notification_model/notification_model.dart';
-import 'package:hvatai/features/home/domain/usecases/mark_read_usecase.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 
 class ApiServiceHome extends ApiBase {
-  Future<NotificationModel> getNotifications() async {
-    return executeAndHandleErrorServer<NotificationModel>(() async {
-      final response = await get(ServerConfig.notifications);
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return NotificationModel.fromJson(response.json);
-      } else {
-        throw Exception;
-      }
-    });
-  }
-
-  Future<NotificationModel> markReadNotification(
-      MarkReadUsecaseParams params) async {
-    return executeAndHandleErrorServer<NotificationModel>(() async {
-      final id = params.notificationItem.id;
-      if (id == null) throw Exception("Notification ID is null");
-
-      final url = ServerConfig.notificationMarkRead(id);
-      final response = await patch(url);
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return NotificationModel.fromJson({
-          'data': [response.json['data']]
-        });
-      } else {
-        throw Exception;
-      }
-    });
-  }
-
   Future<StreamListResponseModel> getStreams({
     String? status, // e.g., 'live'
     int page = 1,
@@ -85,24 +52,6 @@ class ApiServiceHome extends ApiBase {
   Future<StreamListResponseModel> getLiveStreams(
       {int page = 1, int perPage = 15}) {
     return getStreams(status: 'live', page: page, perPage: perPage);
-  }
-
-  Future<void> sendReward({
-    required int userId,
-    required Map<String, dynamic> body,
-  }) async {
-    return executeAndHandleErrorServer<void>(() async {
-      final response = await post(
-        ServerConfig.sendReward(userId),
-        body: body,
-      );
-
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return;
-      }
-
-      throw Exception('Failed to send reward');
-    });
   }
 
   Stream<LiveStreamEvent> watchLiveStreams() {

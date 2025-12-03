@@ -115,12 +115,12 @@ class LiveVideosWidget extends StatelessWidget {
       },
       liveCardBuilder: (context, stream) => GestureDetector(
         onTap: () {
-          context.read<CategoryTabsCubit>().joinStream(
+          context.read<LiveStreamsCubit>().joinStream(
               stream: stream,
               isPublisher: false, // viewer
               context: context);
         },
-        child: BlocBuilder<CategoryTabsCubit, CategoryTabsState>(
+        child: BlocBuilder<LiveStreamsCubit, LiveStreamsState>(
           builder: (context, state) {
             print('state.isJoining: ${state.isJoining}');
             return Stack(

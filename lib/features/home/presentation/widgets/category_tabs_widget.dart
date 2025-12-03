@@ -7,9 +7,9 @@ class CategoryTabsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CategoryTabsCubit, CategoryTabsState>(
+    return BlocBuilder<CategoriesCubit, CategoriesState>(
       builder: (context, state) {
-        final cubit = context.read<CategoryTabsCubit>();
+        final cubit = context.read<CategoriesCubit>();
         final interests = state.filteredCategories;
 
         if (interests == null || interests.data == null) {
@@ -17,7 +17,6 @@ class CategoryTabsWidget extends StatelessWidget {
               child: CircularProgressIndicator(
             color: AppColors.grey,
           ));
-          
         }
 
         if (interests.data!.isEmpty) {
@@ -34,7 +33,7 @@ class CategoryTabsWidget extends StatelessWidget {
               return GestureDetector(
                 onTap: () => cubit.toggleDetail(index, category.id ?? 0),
                 child: Container(
-                    margin: EdgeInsets.only(left: index == 0 ? 16.w : 12.w),
+                  margin: EdgeInsets.only(left: index == 0 ? 16.w : 12.w),
                   decoration: BoxDecoration(
                     color: isSelected ? AppColors.primaryColor : null,
                     borderRadius: BorderRadius.circular(8.r),
@@ -43,7 +42,8 @@ class CategoryTabsWidget extends StatelessWidget {
                         : Border.all(color: AppColors.gray, width: 2),
                   ),
                   child: Padding(
-                    padding: isSelected ? EdgeInsets.all(1.5.r) : EdgeInsets.zero,
+                    padding:
+                        isSelected ? EdgeInsets.all(1.5.r) : EdgeInsets.zero,
                     child: Container(
                       padding: EdgeInsets.symmetric(
                         horizontal: 12.w,
