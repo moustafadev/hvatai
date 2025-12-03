@@ -10,7 +10,6 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
 import 'package:hvatai/features/activity/presentation/cubit/featured_activity/featured_activity_cubit.dart';
 import 'package:hvatai/features/activity/presentation/cubit/rates_activity/rates_activity_cubit.dart';
-import 'package:hvatai/features/all_app/presentation/basket.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
 import 'package:hvatai/features/orders/presentation/cubit/my_orders_cubit.dart';
@@ -19,7 +18,6 @@ import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
 part 'screens/activity_screen.dart';
-part 'screens/favorite_screen.dart';
 part 'widgets/rates_activity_widget.dart';
 part 'widgets/message_list_widget.dart';
 part 'widgets/featured_activity_widget.dart';

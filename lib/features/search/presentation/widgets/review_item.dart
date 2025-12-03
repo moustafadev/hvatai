@@ -1,5 +1,7 @@
 part of '../search.dart';
 
+
+// will chnage with the actual review item
 class ReviewItem extends StatelessWidget {
   final String username;
   final String rating;

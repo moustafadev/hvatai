@@ -53,10 +53,7 @@ class ActivityScreen extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 13.0),
                           child: GestureDetector(
                             onTap: () {
-                              context.push(
-                                AppRoutes.favorite,
-                                extra: context.read<ActivityCubit>(),
-                              );
+                              context.push(AppRoutes.favorite);
                             },
                             child: Row(
                               children: [

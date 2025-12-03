@@ -6,12 +6,13 @@ import 'package:hvatai/core/shared/utils/network_info.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
 import 'package:hvatai/features/activity/presentation/cubit/featured_activity/featured_activity_cubit.dart';
 import 'package:hvatai/features/activity/presentation/cubit/rates_activity/rates_activity_cubit.dart';
-import 'package:hvatai/features/all_app/data/datasources/api_service_app.dart';
-import 'package:hvatai/features/all_app/data/repositories/app_impl_repository.dart';
-import 'package:hvatai/features/all_app/domain/repositories/app_repository.dart';
-import 'package:hvatai/features/all_app/presentation/cubit/basket_cubit/basket_cubit.dart';
-import 'package:hvatai/features/all_app/presentation/cubit/edit_address/edit_address_cubit.dart';
-import 'package:hvatai/features/all_app/presentation/cubit/product_detials/product_details_cubit.dart';
+import 'package:hvatai/features/favorites/presentation/favorites.dart';
+import 'package:hvatai/features/product/data/datasources/api_service_product.dart';
+import 'package:hvatai/features/product/data/repositories/product_repository_impl.dart';
+import 'package:hvatai/features/product/domain/repositories/product_repository.dart';
+import 'package:hvatai/features/product/presentation/cubit/basket_cubit/basket_cubit.dart';
+import 'package:hvatai/features/product/presentation/cubit/edit_address/edit_address_cubit.dart';
+import 'package:hvatai/features/product/presentation/cubit/product_detials/product_details_cubit.dart';
 import 'package:hvatai/features/auth/data/datasources/api_service_auth.dart';
 import 'package:hvatai/features/auth/data/repositories/auth_impl_repository.dart';
 import 'package:hvatai/features/auth/domain/repositories/auth_repository.dart';
@@ -67,6 +68,9 @@ import 'package:hvatai/features/company/domain/repositories/company_repository.d
 import 'package:hvatai/features/company/presentation/cubit/company/company_cubit.dart';
 import 'package:hvatai/features/company/presentation/cubit/company_products/company_products_cubit.dart';
 import 'package:hvatai/features/company/presentation/cubit/company_streams/company_streams_cubit.dart';
+import 'package:hvatai/features/favorites/data/datasources/api_service_favorites.dart';
+import 'package:hvatai/features/favorites/data/repositories/favorites_repository_impl.dart';
+import 'package:hvatai/features/favorites/domain/repositories/favorites_repository.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart';
 import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
@@ -98,9 +102,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(
       () => InterestsDetailCubit(locator(), locator(), locator()));
   locator.registerFactory(() => ProfileCubit(locator(), locator()));
-  locator.registerFactory(() => ActivityCubit(
-        locator(),
-      ));
+  locator.registerFactory(() => ActivityCubit());
+  locator.registerFactory(() => FavoriteCubit(locator()));
   locator.registerFactory(() => NotificationCubit());
   locator.registerFactory(() => ChangePasswordCubit(
         locator(),
@@ -184,8 +187,8 @@ Future<void> setupLocator() async {
   // //REPOSITORISE
   locator.registerLazySingleton<AuthRepository>(
       () => AuthImplRepository(locator(), locator()));
-  locator
-      .registerLazySingleton<AppRepository>(() => AppImplRepository(locator()));
+  locator.registerLazySingleton<ProductRepository>(
+      () => ProductRepositoryImpl(locator()));
   locator.registerLazySingleton<HomeRepository>(
       () => HomeImplRepository(locator()));
   locator.registerLazySingleton<AwardsRepository>(
@@ -204,6 +207,8 @@ Future<void> setupLocator() async {
       () => SearchRepositoryImpl(locator()));
   locator.registerLazySingleton<CompanyRepository>(
       () => CompanyRepositoryImpl(locator()));
+  locator.registerLazySingleton<FavoritesRepository>(
+      () => FavoritesRepositoryImpl(locator()));
   locator.registerLazySingleton<WalletRepository>(
       () => WalletImplRepository(locator()));
   locator.registerLazySingleton<ChangePasswordRepository>(
@@ -213,13 +218,14 @@ Future<void> setupLocator() async {
   // //DATASOURSE
   locator.registerLazySingleton(() => ApiServiceAuth());
   locator.registerLazySingleton(() => ApiServiceChangePassword());
-  locator.registerLazySingleton(() => ApiServiceApp());
+  locator.registerLazySingleton(() => ApiServiceProduct());
   locator.registerLazySingleton(() => ApiServiceHome());
   locator.registerLazySingleton(() => ApiServiceAwards());
   locator.registerLazySingleton(() => ApiServiceNotifications());
   locator.registerLazySingleton(() => ApiServiceProfile());
   locator.registerLazySingleton(() => ApiServiceSearch());
   locator.registerLazySingleton(() => ApiServiceCompany());
+  locator.registerLazySingleton(() => ApiServiceFavorites());
   locator.registerLazySingleton(() => ApiServiceChat());
   locator.registerLazySingleton(() => ApiServiceStream());
   locator.registerLazySingleton(() => ApiServiceWallet());
