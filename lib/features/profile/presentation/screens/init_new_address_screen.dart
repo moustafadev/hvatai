@@ -108,7 +108,7 @@ class InitNewAddressScreen extends StatelessWidget {
                               },
                             );
                             if (updatedAddress != null) {
-                              cubit.initDeliveryModel(updatedAddress);
+                              // cubit.initDeliveryModel(updatedAddress);
                               print(
                                   'dsknxbncv,m.bnc.,vbnkfg;nbfdnbklfxmnb,xcv');
                             }

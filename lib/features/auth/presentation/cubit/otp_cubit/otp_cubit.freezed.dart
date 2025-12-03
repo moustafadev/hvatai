@@ -20,7 +20,7 @@ mixin _$OtpState {
   bool get isVerifying => throw _privateConstructorUsedError;
   bool get success => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
-  UserRegistrationData get user => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
 
   /// Create a copy of OtpState
   /// with the given fields replaced by the non-null parameter values.
@@ -39,9 +39,7 @@ abstract class $OtpStateCopyWith<$Res> {
       bool isVerifying,
       bool success,
       String errorMessage,
-      UserRegistrationData user});
-
-  $UserRegistrationDataCopyWith<$Res> get user;
+      String email});
 }
 
 /// @nodoc
@@ -63,7 +61,7 @@ class _$OtpStateCopyWithImpl<$Res, $Val extends OtpState>
     Object? isVerifying = null,
     Object? success = null,
     Object? errorMessage = null,
-    Object? user = null,
+    Object? email = null,
   }) {
     return _then(_value.copyWith(
       code: null == code
@@ -82,21 +80,11 @@ class _$OtpStateCopyWithImpl<$Res, $Val extends OtpState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as UserRegistrationData,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
-  }
-
-  /// Create a copy of OtpState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $UserRegistrationDataCopyWith<$Res> get user {
-    return $UserRegistrationDataCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value) as $Val);
-    });
   }
 }
 
@@ -113,10 +101,7 @@ abstract class _$$OtpStateImplCopyWith<$Res>
       bool isVerifying,
       bool success,
       String errorMessage,
-      UserRegistrationData user});
-
-  @override
-  $UserRegistrationDataCopyWith<$Res> get user;
+      String email});
 }
 
 /// @nodoc
@@ -136,7 +121,7 @@ class __$$OtpStateImplCopyWithImpl<$Res>
     Object? isVerifying = null,
     Object? success = null,
     Object? errorMessage = null,
-    Object? user = null,
+    Object? email = null,
   }) {
     return _then(_$OtpStateImpl(
       code: null == code
@@ -155,10 +140,10 @@ class __$$OtpStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as UserRegistrationData,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
@@ -171,7 +156,7 @@ class _$OtpStateImpl implements _OtpState {
       this.isVerifying = false,
       this.success = false,
       this.errorMessage = '',
-      required this.user});
+      this.email = ''});
 
   @override
   @JsonKey()
@@ -186,11 +171,12 @@ class _$OtpStateImpl implements _OtpState {
   @JsonKey()
   final String errorMessage;
   @override
-  final UserRegistrationData user;
+  @JsonKey()
+  final String email;
 
   @override
   String toString() {
-    return 'OtpState(code: $code, isVerifying: $isVerifying, success: $success, errorMessage: $errorMessage, user: $user)';
+    return 'OtpState(code: $code, isVerifying: $isVerifying, success: $success, errorMessage: $errorMessage, email: $email)';
   }
 
   @override
@@ -204,12 +190,12 @@ class _$OtpStateImpl implements _OtpState {
             (identical(other.success, success) || other.success == success) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.email, email) || other.email == email));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, code, isVerifying, success, errorMessage, user);
+      Object.hash(runtimeType, code, isVerifying, success, errorMessage, email);
 
   /// Create a copy of OtpState
   /// with the given fields replaced by the non-null parameter values.
@@ -226,7 +212,7 @@ abstract class _OtpState implements OtpState {
       final bool isVerifying,
       final bool success,
       final String errorMessage,
-      required final UserRegistrationData user}) = _$OtpStateImpl;
+      final String email}) = _$OtpStateImpl;
 
   @override
   String get code;
@@ -237,7 +223,7 @@ abstract class _OtpState implements OtpState {
   @override
   String get errorMessage;
   @override
-  UserRegistrationData get user;
+  String get email;
 
   /// Create a copy of OtpState
   /// with the given fields replaced by the non-null parameter values.

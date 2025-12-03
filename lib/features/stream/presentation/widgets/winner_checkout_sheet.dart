@@ -159,14 +159,16 @@ class _WinnerCheckoutSheetState extends State<WinnerCheckoutSheet> {
     );
   }
 
-  String _formatAddress(UserRegistrationData data) {
+  String _formatAddress(AddressModel data) {
     final parts = <String>[];
     for (final value in [
-      data.intercomCode,
+      data.country,
       data.city,
       data.street,
+      data.floor,
       data.apartment,
       data.frontDoor,
+      data.intercomCode,
     ]) {
       if (value != null && value.isNotEmpty) {
         parts.add(value);

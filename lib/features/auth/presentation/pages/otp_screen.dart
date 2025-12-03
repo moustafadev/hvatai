@@ -1,14 +1,14 @@
 part of '../auth.dart';
 
 class OtpScreen extends StatelessWidget {
-  const OtpScreen({super.key, required this.data});
+  const OtpScreen({super.key, required this.email});
 
-  final UserRegistrationData data;
+  final String email;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => locator<OtpCubit>()..initRegistrationModel(data),
+      create: (_) => locator<OtpCubit>()..initEmail(email),
       child: BlocBuilder<OtpCubit, OtpState>(
         builder: (context, state) {
           final cubit = context.read<OtpCubit>();

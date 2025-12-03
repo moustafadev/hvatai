@@ -17,8 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$RegistrationState {
   bool get obscurePassword => throw _privateConstructorUsedError;
-  double get passwordStrength => throw _privateConstructorUsedError;
-  String get passwordStrengthText => throw _privateConstructorUsedError;
   String? get emailError => throw _privateConstructorUsedError;
   bool get isRegisterLoading => throw _privateConstructorUsedError;
   bool get successRegister => throw _privateConstructorUsedError;
@@ -40,8 +38,6 @@ abstract class $RegistrationStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool obscurePassword,
-      double passwordStrength,
-      String passwordStrengthText,
       String? emailError,
       bool isRegisterLoading,
       bool successRegister,
@@ -67,8 +63,6 @@ class _$RegistrationStateCopyWithImpl<$Res, $Val extends RegistrationState>
   @override
   $Res call({
     Object? obscurePassword = null,
-    Object? passwordStrength = null,
-    Object? passwordStrengthText = null,
     Object? emailError = freezed,
     Object? isRegisterLoading = null,
     Object? successRegister = null,
@@ -80,14 +74,6 @@ class _$RegistrationStateCopyWithImpl<$Res, $Val extends RegistrationState>
           ? _value.obscurePassword
           : obscurePassword // ignore: cast_nullable_to_non_nullable
               as bool,
-      passwordStrength: null == passwordStrength
-          ? _value.passwordStrength
-          : passwordStrength // ignore: cast_nullable_to_non_nullable
-              as double,
-      passwordStrengthText: null == passwordStrengthText
-          ? _value.passwordStrengthText
-          : passwordStrengthText // ignore: cast_nullable_to_non_nullable
-              as String,
       emailError: freezed == emailError
           ? _value.emailError
           : emailError // ignore: cast_nullable_to_non_nullable
@@ -132,8 +118,6 @@ abstract class _$$RegistrationStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {bool obscurePassword,
-      double passwordStrength,
-      String passwordStrengthText,
       String? emailError,
       bool isRegisterLoading,
       bool successRegister,
@@ -158,8 +142,6 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? obscurePassword = null,
-    Object? passwordStrength = null,
-    Object? passwordStrengthText = null,
     Object? emailError = freezed,
     Object? isRegisterLoading = null,
     Object? successRegister = null,
@@ -171,14 +153,6 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
           ? _value.obscurePassword
           : obscurePassword // ignore: cast_nullable_to_non_nullable
               as bool,
-      passwordStrength: null == passwordStrength
-          ? _value.passwordStrength
-          : passwordStrength // ignore: cast_nullable_to_non_nullable
-              as double,
-      passwordStrengthText: null == passwordStrengthText
-          ? _value.passwordStrengthText
-          : passwordStrengthText // ignore: cast_nullable_to_non_nullable
-              as String,
       emailError: freezed == emailError
           ? _value.emailError
           : emailError // ignore: cast_nullable_to_non_nullable
@@ -207,9 +181,7 @@ class __$$RegistrationStateImplCopyWithImpl<$Res>
 
 class _$RegistrationStateImpl implements _RegistrationState {
   const _$RegistrationStateImpl(
-      {this.obscurePassword = false,
-      this.passwordStrength = 0.0,
-      this.passwordStrengthText = '',
+      {this.obscurePassword = true,
       this.emailError,
       this.isRegisterLoading = false,
       this.successRegister = false,
@@ -219,12 +191,6 @@ class _$RegistrationStateImpl implements _RegistrationState {
   @override
   @JsonKey()
   final bool obscurePassword;
-  @override
-  @JsonKey()
-  final double passwordStrength;
-  @override
-  @JsonKey()
-  final String passwordStrengthText;
   @override
   final String? emailError;
   @override
@@ -241,7 +207,7 @@ class _$RegistrationStateImpl implements _RegistrationState {
 
   @override
   String toString() {
-    return 'RegistrationState(obscurePassword: $obscurePassword, passwordStrength: $passwordStrength, passwordStrengthText: $passwordStrengthText, emailError: $emailError, isRegisterLoading: $isRegisterLoading, successRegister: $successRegister, errorMessage: $errorMessage, user: $user)';
+    return 'RegistrationState(obscurePassword: $obscurePassword, emailError: $emailError, isRegisterLoading: $isRegisterLoading, successRegister: $successRegister, errorMessage: $errorMessage, user: $user)';
   }
 
   @override
@@ -251,10 +217,6 @@ class _$RegistrationStateImpl implements _RegistrationState {
             other is _$RegistrationStateImpl &&
             (identical(other.obscurePassword, obscurePassword) ||
                 other.obscurePassword == obscurePassword) &&
-            (identical(other.passwordStrength, passwordStrength) ||
-                other.passwordStrength == passwordStrength) &&
-            (identical(other.passwordStrengthText, passwordStrengthText) ||
-                other.passwordStrengthText == passwordStrengthText) &&
             (identical(other.emailError, emailError) ||
                 other.emailError == emailError) &&
             (identical(other.isRegisterLoading, isRegisterLoading) ||
@@ -267,16 +229,8 @@ class _$RegistrationStateImpl implements _RegistrationState {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      obscurePassword,
-      passwordStrength,
-      passwordStrengthText,
-      emailError,
-      isRegisterLoading,
-      successRegister,
-      errorMessage,
-      user);
+  int get hashCode => Object.hash(runtimeType, obscurePassword, emailError,
+      isRegisterLoading, successRegister, errorMessage, user);
 
   /// Create a copy of RegistrationState
   /// with the given fields replaced by the non-null parameter values.
@@ -291,8 +245,6 @@ class _$RegistrationStateImpl implements _RegistrationState {
 abstract class _RegistrationState implements RegistrationState {
   const factory _RegistrationState(
       {final bool obscurePassword,
-      final double passwordStrength,
-      final String passwordStrengthText,
       final String? emailError,
       final bool isRegisterLoading,
       final bool successRegister,
@@ -301,10 +253,6 @@ abstract class _RegistrationState implements RegistrationState {
 
   @override
   bool get obscurePassword;
-  @override
-  double get passwordStrength;
-  @override
-  String get passwordStrengthText;
   @override
   String? get emailError;
   @override

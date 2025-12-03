@@ -10,7 +10,7 @@ class AddDeliveryAddressScreen extends StatelessWidget {
     return BlocBuilder<DeliveryAddressCubit, DeliveryAddressState>(
         builder: (context, state) {
       final cubit = context.read<DeliveryAddressCubit>();
-      final user = state.user;
+      final address = state.address;
       return Scaffold(
         backgroundColor: AppColors.lightGreyBackground,
         appBar: AppBar(
@@ -38,13 +38,13 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                     CustomDropdown(
                       hintText: 'country'.tr(),
                       value:
-                          (user.country ?? '').isEmpty ? null : user.country,
+                          (address.country ?? '').isEmpty ? null : address.country,
                       onChanged: (v) => cubit.updateField('country', v ?? ''),
-                      prefix: user.country == 'Russia'
+                      prefix: address.country == 'Russia'
                           ? const Text('🇷🇺')
-                          : user.country == 'United States'
+                          : address.country == 'United States'
                               ? const Text('🇺🇸')
-                              : user.country == 'India'
+                              : address.country == 'India'
                                   ? const Text('🇮🇳')
                                   : null,
                       items: const ['Russia', 'United States', 'India']
@@ -58,7 +58,7 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                     CustomTextField(
                       key: ValueKey('city_${state.lastUpdated}'),
                       onChanged: (v) => cubit.updateField('city', v),
-                      initialValue: user.city,
+                      initialValue: address.city,
                       hintText: 'city'.tr(),
                       isRequired: false,
                       validator: (v) => v!.isEmpty ? 'enterCity'.tr() : null,
@@ -71,7 +71,7 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                       validator: (v) =>
                           v!.isEmpty ? 'enterStreet'.tr() : null,
                       onChanged: (v) => cubit.updateField('street', v),
-                      initialValue: user.street,
+                      initialValue: address.street,
                     ),
                     20.ph,
                     Row(
@@ -84,7 +84,7 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                             validator: (v) =>
                                 v!.isEmpty ? 'enterHouse'.tr() : null,
                             onChanged: (v) => cubit.updateField('house', v),
-                            initialValue: user.frontDoor,
+                            initialValue: address.frontDoor,
                           ),
                         ),
                         10.pw,
@@ -95,7 +95,7 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                             hintText: 'apartment'.tr(),
                             onChanged: (v) =>
                                 cubit.updateField('apartment', v),
-                            initialValue: user.apartment,
+                            initialValue: address.apartment,
                           ),
                         ),
                       ],
@@ -112,7 +112,7 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                                 v!.isEmpty ? 'enterEntrance'.tr() : null,
                             onChanged: (v) =>
                                 cubit.updateField('entrance', v),
-                            initialValue: user.floor,
+                            initialValue: address.floor,
                           ),
                         ),
                         10.pw,
@@ -124,7 +124,7 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                             validator: (v) =>
                                 v!.isEmpty ? 'enterIndex'.tr() : null,
                             onChanged: (v) => cubit.updateField('index', v),
-                            initialValue: user.intercomCode,
+                            initialValue: address.intercomCode,
                           ),
                         ),
                       ],
@@ -132,7 +132,7 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                     24.ph,
                     CustomSwitchWidget(
                       title: 'makeItThePrimaryAddress'.tr(),
-                      value: state.user.isPrimary == 1,
+                      value: address.isPrimary == 1,
                       onChanged: (val) {
                         cubit.toggleMainAddress();
                       },
@@ -158,13 +158,13 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                     CustomGradientButton(
                       text: 'save'.tr(),
                       isLoading: state.isLoading,
-                      isDisabled: !((state.user.city?.isNotEmpty ?? false) &&
-                          (state.user.street?.isNotEmpty ?? false) &&
-                          (state.user.country?.isNotEmpty ?? false) &&
-                          (state.user.frontDoor?.isNotEmpty ?? false) &&
-                          (state.user.apartment?.isNotEmpty ?? false) &&
-                          (state.user.floor?.isNotEmpty ?? false) &&
-                          (state.user.intercomCode?.isNotEmpty ?? false)),
+                      isDisabled: !((address.city?.isNotEmpty ?? false) &&
+                          (address.street?.isNotEmpty ?? false) &&
+                          (address.country?.isNotEmpty ?? false) &&
+                          (address.frontDoor?.isNotEmpty ?? false) &&
+                          (address.apartment?.isNotEmpty ?? false) &&
+                          (address.floor?.isNotEmpty ?? false) &&
+                          (address.intercomCode?.isNotEmpty ?? false)),
                       onPressed: () => cubit.updateAddress(context),
                     ),
                     20.ph,

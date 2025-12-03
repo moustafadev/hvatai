@@ -4,6 +4,7 @@ import 'package:hvatai/features/auth/data/datasources/api_service_auth.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/login_model/login_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
+import 'package:hvatai/features/auth/data/models/registration_response_model/registration_response_model.dart';
 import 'package:hvatai/features/auth/data/models/social_login_response.dart/social_login_response.dart';
 import 'package:hvatai/features/auth/domain/repositories/auth_repository.dart';
 import 'package:hvatai/features/auth/domain/usecases/add_fav_category_usecase.dart';
@@ -46,15 +47,12 @@ class AuthImplRepository implements AuthRepository {
   }
 
   @override
-  Future<Either<String, UserRegistrationData>> register(
+  Future<Either<String, RegistrationResponseModel>> register(
       RegisterParams params) async {
-    return executeAndHandleError<UserRegistrationData>(() async {
+    return executeAndHandleError<RegistrationResponseModel>(() async {
       final res = await _apiServiceAuth.register(params);
-      print("===================================");
-      print(res.id);
-      print("===================================");
 
-      await _appLocal.saveUserId(res.id);
+      await _appLocal.saveUserId(res.userId ?? res.data?.id);
 
       return res;
     });

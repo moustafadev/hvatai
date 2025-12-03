@@ -8,6 +8,7 @@ import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/login_model/login_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
+import 'package:hvatai/features/auth/data/models/registration_response_model/registration_response_model.dart';
 import 'package:hvatai/features/auth/domain/usecases/add_fav_category_usecase.dart';
 import 'package:hvatai/features/auth/data/models/social_login_response.dart/social_login_response.dart';
 import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
@@ -196,12 +197,12 @@ class ApiServiceAuth extends ApiBase {
     });
   }
 
-  Future<UserRegistrationData> register(RegisterParams params) async {
-    return executeAndHandleErrorServer<UserRegistrationData>(() async {
+  Future<RegistrationResponseModel> register(RegisterParams params) async {
+    return executeAndHandleErrorServer<RegistrationResponseModel>(() async {
       final response = await post(ServerConfig.register, body: params.toJson());
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return UserRegistrationData.fromJson(response.json['data']);
+        return RegistrationResponseModel.fromJson(response.json);
       } else {
         throw Exception();
       }

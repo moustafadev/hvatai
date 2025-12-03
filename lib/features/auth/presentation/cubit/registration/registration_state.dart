@@ -5,9 +5,7 @@ part of 'registration_cubit.dart';
 @freezed
 class RegistrationState with _$RegistrationState {
   const factory RegistrationState({
-    @Default(false) bool obscurePassword,
-    @Default(0.0) double passwordStrength,
-    @Default('') String passwordStrengthText,
+    @Default(true) bool obscurePassword,
     String? emailError,
     @Default(false) bool isRegisterLoading,
     @Default(false) bool successRegister,

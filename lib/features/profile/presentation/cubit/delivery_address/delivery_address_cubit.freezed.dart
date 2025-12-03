@@ -16,12 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$DeliveryAddressState {
-  UserRegistrationData get user => throw _privateConstructorUsedError;
+  AddressModel get address => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   int get lastUpdated => throw _privateConstructorUsedError;
-  List<UserRegistrationData> get deliveryModel =>
-      throw _privateConstructorUsedError;
+  List<AddressModel> get deliveryModel => throw _privateConstructorUsedError;
 
   /// Create a copy of DeliveryAddressState
   /// with the given fields replaced by the non-null parameter values.
@@ -37,13 +36,13 @@ abstract class $DeliveryAddressStateCopyWith<$Res> {
       _$DeliveryAddressStateCopyWithImpl<$Res, DeliveryAddressState>;
   @useResult
   $Res call(
-      {UserRegistrationData user,
+      {AddressModel address,
       bool isLoading,
       String errorMessage,
       int lastUpdated,
-      List<UserRegistrationData> deliveryModel});
+      List<AddressModel> deliveryModel});
 
-  $UserRegistrationDataCopyWith<$Res> get user;
+  $AddressModelCopyWith<$Res> get address;
 }
 
 /// @nodoc
@@ -62,17 +61,17 @@ class _$DeliveryAddressStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = null,
+    Object? address = null,
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? lastUpdated = null,
     Object? deliveryModel = null,
   }) {
     return _then(_value.copyWith(
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as UserRegistrationData,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as AddressModel,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -88,7 +87,7 @@ class _$DeliveryAddressStateCopyWithImpl<$Res,
       deliveryModel: null == deliveryModel
           ? _value.deliveryModel
           : deliveryModel // ignore: cast_nullable_to_non_nullable
-              as List<UserRegistrationData>,
+              as List<AddressModel>,
     ) as $Val);
   }
 
@@ -96,9 +95,9 @@ class _$DeliveryAddressStateCopyWithImpl<$Res,
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $UserRegistrationDataCopyWith<$Res> get user {
-    return $UserRegistrationDataCopyWith<$Res>(_value.user, (value) {
-      return _then(_value.copyWith(user: value) as $Val);
+  $AddressModelCopyWith<$Res> get address {
+    return $AddressModelCopyWith<$Res>(_value.address, (value) {
+      return _then(_value.copyWith(address: value) as $Val);
     });
   }
 }
@@ -112,14 +111,14 @@ abstract class _$$DeliveryAddressStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {UserRegistrationData user,
+      {AddressModel address,
       bool isLoading,
       String errorMessage,
       int lastUpdated,
-      List<UserRegistrationData> deliveryModel});
+      List<AddressModel> deliveryModel});
 
   @override
-  $UserRegistrationDataCopyWith<$Res> get user;
+  $AddressModelCopyWith<$Res> get address;
 }
 
 /// @nodoc
@@ -135,17 +134,17 @@ class __$$DeliveryAddressStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = null,
+    Object? address = null,
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? lastUpdated = null,
     Object? deliveryModel = null,
   }) {
     return _then(_$DeliveryAddressStateImpl(
-      user: null == user
-          ? _value.user
-          : user // ignore: cast_nullable_to_non_nullable
-              as UserRegistrationData,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as AddressModel,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -161,7 +160,7 @@ class __$$DeliveryAddressStateImplCopyWithImpl<$Res>
       deliveryModel: null == deliveryModel
           ? _value._deliveryModel
           : deliveryModel // ignore: cast_nullable_to_non_nullable
-              as List<UserRegistrationData>,
+              as List<AddressModel>,
     ));
   }
 }
@@ -170,15 +169,16 @@ class __$$DeliveryAddressStateImplCopyWithImpl<$Res>
 
 class _$DeliveryAddressStateImpl implements _DeliveryAddressState {
   const _$DeliveryAddressStateImpl(
-      {required this.user,
+      {this.address = const AddressModel(),
       this.isLoading = false,
       this.errorMessage = '',
       this.lastUpdated = 0,
-      final List<UserRegistrationData> deliveryModel = const []})
+      final List<AddressModel> deliveryModel = const []})
       : _deliveryModel = deliveryModel;
 
   @override
-  final UserRegistrationData user;
+  @JsonKey()
+  final AddressModel address;
   @override
   @JsonKey()
   final bool isLoading;
@@ -188,10 +188,10 @@ class _$DeliveryAddressStateImpl implements _DeliveryAddressState {
   @override
   @JsonKey()
   final int lastUpdated;
-  final List<UserRegistrationData> _deliveryModel;
+  final List<AddressModel> _deliveryModel;
   @override
   @JsonKey()
-  List<UserRegistrationData> get deliveryModel {
+  List<AddressModel> get deliveryModel {
     if (_deliveryModel is EqualUnmodifiableListView) return _deliveryModel;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_deliveryModel);
@@ -199,7 +199,7 @@ class _$DeliveryAddressStateImpl implements _DeliveryAddressState {
 
   @override
   String toString() {
-    return 'DeliveryAddressState(user: $user, isLoading: $isLoading, errorMessage: $errorMessage, lastUpdated: $lastUpdated, deliveryModel: $deliveryModel)';
+    return 'DeliveryAddressState(address: $address, isLoading: $isLoading, errorMessage: $errorMessage, lastUpdated: $lastUpdated, deliveryModel: $deliveryModel)';
   }
 
   @override
@@ -207,7 +207,7 @@ class _$DeliveryAddressStateImpl implements _DeliveryAddressState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DeliveryAddressStateImpl &&
-            (identical(other.user, user) || other.user == user) &&
+            (identical(other.address, address) || other.address == address) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -219,7 +219,7 @@ class _$DeliveryAddressStateImpl implements _DeliveryAddressState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user, isLoading, errorMessage,
+  int get hashCode => Object.hash(runtimeType, address, isLoading, errorMessage,
       lastUpdated, const DeepCollectionEquality().hash(_deliveryModel));
 
   /// Create a copy of DeliveryAddressState
@@ -235,15 +235,14 @@ class _$DeliveryAddressStateImpl implements _DeliveryAddressState {
 
 abstract class _DeliveryAddressState implements DeliveryAddressState {
   const factory _DeliveryAddressState(
-          {required final UserRegistrationData user,
-          final bool isLoading,
-          final String errorMessage,
-          final int lastUpdated,
-          final List<UserRegistrationData> deliveryModel}) =
-      _$DeliveryAddressStateImpl;
+      {final AddressModel address,
+      final bool isLoading,
+      final String errorMessage,
+      final int lastUpdated,
+      final List<AddressModel> deliveryModel}) = _$DeliveryAddressStateImpl;
 
   @override
-  UserRegistrationData get user;
+  AddressModel get address;
   @override
   bool get isLoading;
   @override
@@ -251,7 +250,7 @@ abstract class _DeliveryAddressState implements DeliveryAddressState {
   @override
   int get lastUpdated;
   @override
-  List<UserRegistrationData> get deliveryModel;
+  List<AddressModel> get deliveryModel;
 
   /// Create a copy of DeliveryAddressState
   /// with the given fields replaced by the non-null parameter values.

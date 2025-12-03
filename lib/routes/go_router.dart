@@ -6,7 +6,7 @@ import 'package:hvatai/features/all_app/presentation/basket.dart';
 import 'package:hvatai/features/all_app/presentation/cubit/product_detials/product_details_cubit.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
-import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/change_password/presentation/change_password.dart';
 import 'package:hvatai/features/chat/data/models/chat/chat_model.dart';
 import 'package:hvatai/features/chat/presentation/chat.dart';
@@ -137,7 +137,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.addDeliveryAddress, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        final cubit = state.extra as DeliveryAddressCubit..clearUserData();
+        final cubit = state.extra as DeliveryAddressCubit..clearAddress();
         return BlocProvider.value(
             value: cubit, child: const AddDeliveryAddressScreen());
       },
@@ -229,9 +229,8 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.deliveryAddress,
       builder: (context, state) {
-        final userData = state.extra as UserRegistrationData;
 
-        return DeliveryAddressScreen(data: userData);
+        return DeliveryAddressScreen();
       },
     ),
     GoRoute(
@@ -350,12 +349,6 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: AppRoutes.verificationCode, // Remove the leading '/'
-      builder: (BuildContext context, GoRouterState state) {
-        return const VerificationCodeScreen();
-      },
-    ),
-    GoRoute(
       path: AppRoutes.interests,
       builder: (BuildContext context, GoRouterState state) {
         return InterestsScreen();
@@ -444,9 +437,9 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.otp,
       builder: (context, state) {
-        final data = state.extra as UserRegistrationData?;
+        final email = state.extra as String? ?? '';
 
-        return OtpScreen(data: data!);
+        return OtpScreen(email: email);
       },
     ),
     statefulShellRoute,

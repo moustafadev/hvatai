@@ -168,7 +168,7 @@ class _$LoginStateImpl implements _LoginState {
   const _$LoginStateImpl(
       {this.email = '',
       this.password = '',
-      this.obscurePassword = false,
+      this.obscurePassword = true,
       this.isLoading = false,
       this.successLogin = false,
       this.errorMessage = ''});

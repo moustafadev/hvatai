@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
-import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
@@ -14,12 +13,12 @@ part 'otp_cubit.freezed.dart';
 class OtpCubit extends Cubit<OtpState> {
   OtpCubit(
     this.checkOtpUseCase,
-  ) : super(OtpState(user: UserRegistrationData()));
+  ) : super(const OtpState());
 
   final CheckOtpUseCase checkOtpUseCase;
 
-  void initRegistrationModel(UserRegistrationData user) {
-    emit(state.copyWith(user: user));
+  void initEmail(String email) {
+    emit(state.copyWith(email: email));
   }
 
   void updateCode(String code) {
@@ -27,7 +26,7 @@ class OtpCubit extends Cubit<OtpState> {
   }
 
   Future<void> verifyOtp(BuildContext context) async {
-    if (state.code.length != 4 || state.user.email == null) {
+    if (state.code.length != 4 || state.email.isEmpty) {
       emit(state.copyWith(errorMessage: 'Please enter a valid code.'));
 
       showFloatingMessageError('enterValidCode'.tr());
@@ -35,11 +34,9 @@ class OtpCubit extends Cubit<OtpState> {
       return;
     }
 
-    final currentUser = state.user;
-
     emit(state.copyWith(isVerifying: true, errorMessage: ''));
 
-    final params = CheckOtpParams(email: currentUser.email!, code: state.code);
+    final params = CheckOtpParams(email: state.email, code: state.code);
     final result = await checkOtpUseCase.call(params);
 
     result.fold(
@@ -51,18 +48,13 @@ class OtpCubit extends Cubit<OtpState> {
         showFloatingMessageError('codeNotRight'.tr());
       },
       (userData) {
-        final updatedUser = currentUser.copyWith(
-          token: userData.token,
-        );
-
         emit(state.copyWith(
           isVerifying: false,
           success: true,
-          user: updatedUser,
         ));
 
         showFloatingMessageSuccess('emailVerified'.tr());
-        context.push(AppRoutes.deliveryAddress, extra: updatedUser);
+        context.push(AppRoutes.deliveryAddress);
       },
     );
   }

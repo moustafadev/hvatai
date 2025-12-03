@@ -1,6 +1,7 @@
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/login_model/login_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
+import 'package:hvatai/features/auth/data/models/registration_response_model/registration_response_model.dart';
 import 'package:hvatai/features/auth/domain/usecases/add_fav_category_usecase.dart';
 import 'package:hvatai/features/auth/data/models/social_login_response.dart/social_login_response.dart';
 import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
@@ -14,7 +15,8 @@ abstract class AuthRepository {
 
   Future<Either<String, LoginModel>> checkOtp(CheckOtpParams params);
 
-  Future<Either<String, UserRegistrationData>> register(RegisterParams params);
+  Future<Either<String, RegistrationResponseModel>> register(
+      RegisterParams params);
 
   Future<Either<String, Unit>> addFavCategory(AddFavCategoryParams params);
 

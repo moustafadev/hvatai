@@ -7,6 +7,6 @@ class OtpState with _$OtpState {
     @Default(false) bool isVerifying,
     @Default(false) bool success,
     @Default('') String errorMessage,
-    required UserRegistrationData user,
+    @Default('') String email,
   }) = _OtpState;
 }

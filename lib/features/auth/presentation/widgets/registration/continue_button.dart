@@ -14,12 +14,7 @@ class ContinueButton extends StatelessWidget {
             cubit.register(context);
           },
           isLoading: cubit.state.isRegisterLoading,
-          isDisabled: !(cubit.state.user.agreedToTerms == true &&
-              cubit.state.user.isAbove18 == true &&
-              (cubit.state.user.firstName?.isNotEmpty ?? false) &&
-              (cubit.state.user.lastName?.isNotEmpty ?? false) &&
-              (cubit.state.user.email?.isNotEmpty ?? false) &&
-              (cubit.state.user.password?.isNotEmpty ?? false)));
+          isDisabled: !cubit.isFormValid);
     });
   }
 }

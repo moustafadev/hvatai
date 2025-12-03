@@ -26,12 +26,8 @@ class RegistrationCubit extends Cubit<RegistrationState> {
       password: field == 'password' ? value : state.user.password,
     );
 
-    final strength = field == 'password' ? _evaluatePassword(value) : null;
-
     emit(state.copyWith(
       user: updatedUser,
-      passwordStrength: strength?.$1 ?? state.passwordStrength,
-      passwordStrengthText: strength?.$2 ?? state.passwordStrengthText,
       emailError: field == 'email' ? null : state.emailError,
     ));
   }
@@ -66,6 +62,15 @@ class RegistrationCubit extends Cubit<RegistrationState> {
     ));
   }
 
+  bool get isFormValid {
+    return state.user.agreedToTerms == true &&
+        state.user.isAbove18 == true &&
+        (state.user.firstName?.isNotEmpty ?? false) &&
+        (state.user.lastName?.isNotEmpty ?? false) &&
+        (state.user.email?.isNotEmpty ?? false) &&
+        (state.user.password?.isNotEmpty ?? false);
+  }
+
   void register(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
       emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
@@ -91,52 +96,23 @@ class RegistrationCubit extends Cubit<RegistrationState> {
         ));
         showFloatingMessageError('somethingWentWrong'.tr());
       },
-      (_) {
+      (response) {
         emit(state.copyWith(
           isRegisterLoading: false,
           successRegister: true,
           errorMessage: '',
         ));
-        context.push(AppRoutes.otp, extra: state.user);
+        final email = response.data?.email ?? state.user.email ?? '';
+        context.push(AppRoutes.otp, extra: email);
       },
     );
   }
 
-  (double, String) _evaluatePassword(String password) {
-    double strength = 0.0;
-    String label = 'Weak';
-
-    if (password.isEmpty) return (0.0, '');
-    if (password.length < 6) return (0.2, 'Weak');
-    if (password.length < 8) return (0.4, 'Fair');
-
-    final hasLetters = RegExp(r'[A-Za-z]').hasMatch(password);
-    final hasDigits = RegExp(r'\d').hasMatch(password);
-    final hasSpecial = RegExp(r'[@$!%*?&]').hasMatch(password);
-    final hasUpper = RegExp(r'[A-Z]').hasMatch(password);
-    final hasLower = RegExp(r'[a-z]').hasMatch(password);
-
-    if (hasLetters && hasDigits) strength = 0.6;
-    if (hasLetters && hasDigits && hasSpecial) strength = 0.8;
-    if (password.length >= 10 &&
-        hasUpper &&
-        hasLower &&
-        hasDigits &&
-        hasSpecial) strength = 1.0;
-
-    if (strength == 0.6)
-      label = 'Good';
-    else if (strength == 0.8)
-      label = 'Very Good';
-    else if (strength == 1.0) label = 'Strong';
-
-    return (strength, label);
-  }
-
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) return 'Please enter your email.';
-    if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(value))
+    if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(value)) {
       return 'Please enter a valid email.';
+    }
     return null;
   }
 
@@ -146,8 +122,9 @@ class RegistrationCubit extends Cubit<RegistrationState> {
     if (!RegExp(r'(?=.*[A-Z])').hasMatch(value)) return 'Must have uppercase.';
     if (!RegExp(r'(?=.*[a-z])').hasMatch(value)) return 'Must have lowercase.';
     if (!RegExp(r'(?=.*\d)').hasMatch(value)) return 'Must have a digit.';
-    if (!RegExp(r'(?=.*[@$!%*?&])').hasMatch(value))
+    if (!RegExp(r'(?=.*[@$!%*?&])').hasMatch(value)) {
       return 'Must have special character.';
+    }
     return null;
   }
 }

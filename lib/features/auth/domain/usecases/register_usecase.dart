@@ -1,15 +1,18 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
+import 'package:hvatai/features/auth/data/models/registration_response_model/registration_response_model.dart';
 import 'package:hvatai/features/auth/domain/repositories/auth_repository.dart';
 
-class RegisterUseCase implements UseCase<UserRegistrationData, RegisterParams> {
+class RegisterUseCase
+    implements UseCase<RegistrationResponseModel, RegisterParams> {
   final AuthRepository _authRepository;
 
   RegisterUseCase(this._authRepository);
 
   @override
-  Future<Either<String, UserRegistrationData>> call(RegisterParams params) {
+  Future<Either<String, RegistrationResponseModel>> call(
+      RegisterParams params) {
     return _authRepository.register(params);
   }
 }

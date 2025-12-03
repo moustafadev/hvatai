@@ -7,27 +7,25 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/features/auth/data/models/address_model/address_model.dart';
+// ignore: unused_import
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
-import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_delivery_address_usecase.dart';
-import 'package:hvatai/routes/app_routes.dart';
 
 part 'delivery_address_cubit.freezed.dart';
 part 'delivery_address_state.dart';
 
 class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
   DeliveryAddressCubit(
-      this.deliveryAddressUseCase,
       this.editDeliveryAddressUsecase,
       this.getDeliveryAddressDataUseCase,
       this.addNewAddressUsecase,
       this.deleteAddressUsecase)
-      : super(DeliveryAddressState(user: UserRegistrationData()));
+      : super(const DeliveryAddressState());
 
-  final DeliveryAddressUseCase deliveryAddressUseCase;
   final EditDeliveryAddressUsecase editDeliveryAddressUsecase;
   final GetDeliveryAddressUsecase getDeliveryAddressDataUseCase;
   final AddNewAddressUsecase addNewAddressUsecase;
@@ -35,56 +33,40 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
 
   final formKey = GlobalKey<FormState>();
 
-  void initRegistrationModel(UserRegistrationData user) {
-    emit(state.copyWith(
-        user: state.user.copyWith(
-      country: user.country ?? '',
-      street: user.street ?? '',
-      floor: user.floor ?? '',
-      id: user.id ?? 0,
-      frontDoor: user.frontDoor ?? '',
-      intercomCode: user.intercomCode ?? '',
-      city: user.city ?? '',
-      apartment: user.apartment ?? '',
-      isPrimary: user.isPrimary,
-    )));
-  }
-
-  void initDeliveryModel(UserRegistrationData user) {
-    emit(state.copyWith(deliveryModel: [user]));
+  void initAddress(AddressModel address) {
+    emit(state.copyWith(address: address));
   }
 
   void updateField(String field, String value) {
-    UserRegistrationData updatedUser;
+    AddressModel updatedAddress;
 
     switch (field) {
       case 'country':
-        updatedUser = state.user.copyWith(country: value);
+        updatedAddress = state.address.copyWith(country: value);
         break;
       case 'house':
-        updatedUser = state.user.copyWith(floor: value);
+        updatedAddress = state.address.copyWith(floor: value);
         break;
       case 'city':
-        updatedUser = state.user.copyWith(city: value);
+        updatedAddress = state.address.copyWith(city: value);
         break;
       case 'street':
-        updatedUser = state.user.copyWith(street: value);
+        updatedAddress = state.address.copyWith(street: value);
         break;
       case 'entrance':
-        updatedUser = state.user.copyWith(frontDoor: value);
+        updatedAddress = state.address.copyWith(frontDoor: value);
         break;
       case 'index':
-        updatedUser = state.user.copyWith(intercomCode: value);
+        updatedAddress = state.address.copyWith(intercomCode: value);
         break;
       case 'apartment':
-        updatedUser = state.user.copyWith(apartment: value);
+        updatedAddress = state.address.copyWith(apartment: value);
         break;
-
       default:
-        updatedUser = state.user;
+        updatedAddress = state.address;
     }
 
-    emit(state.copyWith(user: updatedUser));
+    emit(state.copyWith(address: updatedAddress));
   }
 
   Future<Position?> determinePosition() async {
@@ -111,13 +93,13 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
     }
   }
 
-  void updateControllersFromAddress(UserRegistrationData data) {
+  void updateControllersFromAddress(AddressModel data) {
     emit(state.copyWith(
-      user: state.user.copyWith(
-        country: data.country ?? state.user.country,
-        city: data.city ?? state.user.city,
-        street: data.street ?? state.user.street,
-        intercomCode: data.intercomCode ?? state.user.intercomCode,
+      address: state.address.copyWith(
+        country: data.country ?? state.address.country,
+        city: data.city ?? state.address.city,
+        street: data.street ?? state.address.street,
+        intercomCode: data.intercomCode ?? state.address.intercomCode,
       ),
       lastUpdated: DateTime.now().millisecondsSinceEpoch,
     ));
@@ -129,19 +111,18 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
       if (position == null) return;
 
       final addressData = await getAddressFromPosition(position);
-
       updateControllersFromAddress(addressData);
     } catch (e) {
       showFloatingMessageError('somethingWentWrong'.tr());
     }
   }
 
-  Future<UserRegistrationData> getAddressFromPosition(Position position) async {
+  Future<AddressModel> getAddressFromPosition(Position position) async {
     List<Placemark> placemarks =
         await placemarkFromCoordinates(position.latitude, position.longitude);
     final place = placemarks.first;
 
-    return UserRegistrationData(
+    return AddressModel(
       country: place.country ?? '',
       city: place.locality ?? '',
       street: place.street ?? '',
@@ -157,28 +138,33 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
     result.fold(
       (failure) =>
           emit(state.copyWith(isLoading: false, errorMessage: failure)),
-      (deliveryAddressList) => emit(state.copyWith(
-        isLoading: false,
-        deliveryModel: deliveryAddressList,
-      )),
+      (deliveryAddressList) {
+        final addressList = deliveryAddressList
+            .map((data) => AddressModelFactory.fromUserRegistrationData(data))
+            .toList();
+        emit(state.copyWith(
+          isLoading: false,
+          deliveryModel: addressList,
+        ));
+      },
     );
   }
 
-  bool isFormValid() {
-    final u = state.user;
+  bool get isFormValid {
+    final address = state.address;
     return [
-      u.country,
-      u.city,
-      u.street,
-      u.floor,
-      u.apartment,
-      u.frontDoor,
-      u.intercomCode,
+      address.country,
+      address.city,
+      address.street,
+      address.floor,
+      address.apartment,
+      address.frontDoor,
+      address.intercomCode,
     ].every((e) => e?.isNotEmpty ?? false);
   }
 
   Future<void> updateAddress(BuildContext context) async {
-    if (!formKey.currentState!.validate() || !isFormValid()) {
+    if (!formKey.currentState!.validate() || !isFormValid) {
       emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
       showFloatingMessageError('fillAllFields'.tr());
       return;
@@ -188,14 +174,16 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
 
     final position = await determinePosition();
 
-    final updatedUser = state.user.copyWith(
+    final updatedAddress = state.address.copyWith(
       latitude: position?.latitude.toString() ?? '',
       longitude: position?.longitude.toString() ?? '',
-      isPrimary: state.user.isPrimary ?? 1,
+      isPrimary: state.address.isPrimary ?? 1,
     );
 
+    final userData = updatedAddress.toUserRegistrationData();
+
     final result = await addNewAddressUsecase.call(
-      AddNewAddressParams(userRegistrationData: updatedUser),
+      AddNewAddressParams(userRegistrationData: userData),
     );
 
     result.fold(
@@ -204,9 +192,11 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
         showFloatingMessageError('somethingWentWrong'.tr());
       },
       (newAddress) {
+        final addressModel =
+            AddressModelFactory.fromUserRegistrationData(newAddress);
         emit(state.copyWith(
             isLoading: false,
-            deliveryModel: [...state.deliveryModel, newAddress]));
+            deliveryModel: [...state.deliveryModel, addressModel]));
         showFloatingMessageSuccess('addressAdded'.tr());
         context.pop();
       },
@@ -214,7 +204,7 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
   }
 
   Future<void> editNewAddress(BuildContext context) async {
-    if (!formKey.currentState!.validate() || !isFormValid()) {
+    if (!formKey.currentState!.validate() || !isFormValid) {
       emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
       showFloatingMessageError('fillAllFields'.tr());
       return;
@@ -223,14 +213,16 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
     final position = await determinePosition();
-    final updatedUser = state.user.copyWith(
+    final updatedAddress = state.address.copyWith(
       latitude: position?.latitude.toString() ?? '',
       longitude: position?.longitude.toString() ?? '',
-      isPrimary: state.user.isPrimary ?? 1,
+      isPrimary: state.address.isPrimary ?? 1,
     );
 
+    final userData = updatedAddress.toUserRegistrationData();
+
     final result = await editDeliveryAddressUsecase.call(
-      EditDeliveryAddressParams(userRegistrationData: updatedUser),
+      EditDeliveryAddressParams(userRegistrationData: userData),
     );
 
     result.fold(
@@ -239,16 +231,18 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
         showFloatingMessageError('somethingWentWrong'.tr());
       },
       (userData) {
+        final updatedAddressModel =
+            AddressModelFactory.fromUserRegistrationData(userData);
         final updatedDeliveryModel = state.deliveryModel.map((address) {
-          if (address.id == userData.id) {
-            return userData;
+          if (address.id == updatedAddressModel.id) {
+            return updatedAddressModel;
           }
           return address;
         }).toList();
 
         emit(state.copyWith(
           isLoading: false,
-          user: userData,
+          address: updatedAddressModel,
           deliveryModel: updatedDeliveryModel,
         ));
         showFloatingMessageSuccess('AddressUpdated'.tr());
@@ -257,24 +251,24 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
     );
   }
 
-  void clearUserData() {
-    emit(state.copyWith(user: const UserRegistrationData()));
+  void clearAddress() {
+    emit(state.copyWith(address: const AddressModel()));
   }
 
   void toggleMainAddress() {
-    final newValue = state.user.isPrimary == 1 ? 0 : 1;
+    final newValue = state.address.isPrimary == 1 ? 0 : 1;
 
-    final updatedUser = state.user.copyWith(isPrimary: newValue);
+    final updatedAddress = state.address.copyWith(isPrimary: newValue);
 
     final updatedDeliveryModel = state.deliveryModel.map((address) {
-      if (address.id == state.user.id) {
+      if (address.id == state.address.id) {
         return address.copyWith(isPrimary: newValue);
       }
       return address;
     }).toList();
 
     emit(state.copyWith(
-      user: updatedUser,
+      address: updatedAddress,
       deliveryModel: updatedDeliveryModel,
     ));
   }
@@ -306,53 +300,6 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
         ));
 
         showFloatingMessageSuccess('addressDeletedSuccessfully'.tr());
-      },
-    );
-  }
-
-  void prefill(String? country) {
-    if (country != null && country.isNotEmpty) {
-      emit(state.copyWith(user: state.user.copyWith(country: country)));
-    }
-  }
-
-  Future<void> submit(BuildContext context) async {
-    if (!formKey.currentState!.validate()) {
-      emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
-      showFloatingMessageError('fillAllFields'.tr());
-      return;
-    }
-
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
-
-    final position = await determinePosition();
-
-    final updatedUser = state.user.copyWith(
-      country: state.user.country,
-      city: state.user.city,
-      street: state.user.street,
-      floor: state.user.floor,
-      apartment: state.user.apartment,
-      frontDoor: state.user.frontDoor,
-      intercomCode: state.user.intercomCode,
-      latitude: position?.latitude.toString() ?? '',
-      longitude: position?.longitude.toString() ?? '',
-      isPrimary: state.user.isPrimary ?? 1,
-    );
-
-    final result = await deliveryAddressUseCase.call(
-      DeliveryAddressParams(userRegistrationData: updatedUser),
-    );
-
-    result.fold(
-      (failure) {
-        emit(state.copyWith(isLoading: false, errorMessage: failure));
-        showFloatingMessageError('somethingWentWrong'.tr());
-      },
-      (userData) {
-        emit(state.copyWith(isLoading: false));
-        showFloatingMessageSuccess('addressAdded'.tr());
-        context.push(AppRoutes.interests, extra: userData);
       },
     );
   }

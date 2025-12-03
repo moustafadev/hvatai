@@ -110,12 +110,13 @@ class InterestsScreen extends StatelessWidget {
                                             fontSize: 12.sp,
                                             fontWeight: FontWeight.w700,
                                             color: Colors.black,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.center,
                                           ),
                                         ),
                                         Expanded(
-                                          child: imageUrl.isEmpty ||
-                                                  imageUrl == null
+                                          child: imageUrl.isEmpty
                                               ? Icon(Icons.image_not_supported,
                                                   size: 30, color: Colors.grey)
                                               : ClipRRect(

@@ -15,14 +15,14 @@ import 'package:hvatai/features/all_app/presentation/cubit/product_detials/produ
 import 'package:hvatai/features/auth/data/datasources/api_service_auth.dart';
 import 'package:hvatai/features/auth/data/repositories/auth_impl_repository.dart';
 import 'package:hvatai/features/auth/domain/repositories/auth_repository.dart';
-import 'package:hvatai/features/auth/presentation/cubit/delivery_address/delivery_address_cubit.dart';
+import 'package:hvatai/features/auth/presentation/cubit/add_address/add_address_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/interests/interests_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/interests_detail/interests_detail_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/otp_cubit/otp_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/registration/registration_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/social_login.dart/social_login_cubit.dart';
-import 'package:hvatai/features/auth/presentation/cubit/verification/verification_cubit.dart';
 import 'package:hvatai/features/change_password/data/datasources/api_service_change_password.dart';
 import 'package:hvatai/features/change_password/data/repositories/change_password_impl_repository.dart';
 import 'package:hvatai/features/change_password/domain/repositories/change_password_repository.dart';
@@ -75,8 +75,9 @@ GetIt locator = GetIt.instance;
 
 Future<void> setupLocator() async {
   //BLOC
-  locator.registerFactory(() => LoginCubit(locator(), locator()));
-  locator.registerFactory(() => VerificationCubit());
+  locator.registerFactory(() => LoginCubit(
+        locator(),
+      ));
   locator.registerFactory(() => InterestsCubit(
         locator(),
         locator(),
@@ -145,8 +146,9 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => RegistrationCubit(
         locator(),
       ));
-  locator.registerFactory(() => DeliveryAddressCubit(
-      locator(), locator(), locator(), locator(), locator()));
+  locator.registerFactory(() => AddAddressCubit(locator()));
+  locator.registerFactory(
+      () => DeliveryAddressCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => OtpCubit(locator()));
   locator.registerFactory(() => RatesActivityCubit());
   locator.registerFactory(() => FeaturedActivityCubit());
