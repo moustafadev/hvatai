@@ -834,7 +834,7 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
       location: null,
       latitude: null,
       longitude: null,
-      status: product.status,
+      status: product.status == null ? null : (product.status! ? 1 : 0),
       featured: null,
       meta: null,
       createdAt: null,

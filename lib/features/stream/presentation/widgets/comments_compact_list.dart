@@ -43,16 +43,26 @@ class CommentsCompactList extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(
-                width: 40,
-                height: 40,
-                child: Center(
-                  child: Image(
-                    image: AssetImage(Assets.assetsImagesAvatar),
+              // make it as avatar with 40 X 40
+   Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            color: Colors.black,
+            borderRadius: BorderRadius.circular(24),
+          ),
+          child: 
+              ClipRRect(
+                  borderRadius: BorderRadius.circular(24),
+                  child: CustomImage(
+                    imageSource: c.user?.image ?? '',
+                    width: 40,
+                    height: 40,
+                    fit: BoxFit.cover,
                   ),
-                ),
-              ),
-              SizedBox(width: 8.w),
+                )
+              ,
+        ),              SizedBox(width: 8.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

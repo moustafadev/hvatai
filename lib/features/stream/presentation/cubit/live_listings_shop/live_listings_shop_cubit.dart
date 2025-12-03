@@ -279,7 +279,7 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
       location: null,
       latitude: null,
       longitude: null,
-      status: product.status,
+      status: product.status == null ? null : (product.status! ? 1 : 0),
       featured: null,
       meta: null,
       createdAt: null,
