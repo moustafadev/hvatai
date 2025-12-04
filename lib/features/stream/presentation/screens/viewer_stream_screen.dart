@@ -103,7 +103,8 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
             final activeProduct = state.activeStreamProduct;
             final hasProduct =
                 activeProduct != null && (activeProduct.isActive ?? true);
-            StreamProductModel? currentProduct = hasProduct ? activeProduct : null;
+            StreamProductModel? currentProduct =
+                hasProduct ? activeProduct : null;
             var productTitle = '';
             var productCategory = '';
             var displayPrice = 0.0;
@@ -120,12 +121,11 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
               productTitle = embeddedProduct?.name ?? '';
               final categoryId = embeddedProduct?.categoryId;
               productCategory = _resolveCategoryName(categoryId);
-              
-              displayPrice =
-                  double.tryParse(currentProduct.currentBid ?? '') ??
+
+              displayPrice = double.tryParse(currentProduct.currentBid ?? '') ??
                   double.tryParse(currentProduct.startingPrice ?? '') ??
                   0.0;
-              
+
               if (state.currentBidRemainingSeconds != null) {
                 final remaining = state.currentBidRemainingSeconds!;
                 timerText = remaining <= 0
@@ -158,8 +158,9 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
             if (hasWinner) {
               postAuctionAction = PostAuctionButton(
                 label: viewerIsWinner ? 'Забрать' : 'Ждём следующий лот',
-                backgroundColor:
-                    viewerIsWinner ? AppColors.primaryColor : const Color(0x99000000),
+                backgroundColor: viewerIsWinner
+                    ? AppColors.primaryColor
+                    : const Color(0x99000000),
                 textColor: viewerIsWinner ? Colors.black : Colors.white,
                 onPressed: viewerIsWinner
                     ? () => _showWinnerCheckoutSheet(context)
@@ -168,12 +169,12 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
             }
 
             return WillPopScope(
-                 onWillPop: () async {
-              final action = await _showExitDialog();
-              if (action == _ExitAction.cancel) return false;
-              await _performExit(action);
-              return false;
-            },
+              onWillPop: () async {
+                final action = await _showExitDialog();
+                if (action == _ExitAction.cancel) return false;
+                await _performExit(action);
+                return false;
+              },
               child: Scaffold(
                 backgroundColor: Colors.black,
                 body: Stack(
@@ -214,7 +215,9 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                     Positioned(
                       right: 16,
                       bottom: hasProduct ? null : 16,
-                      top: hasProduct ? MediaQuery.of(context).size.height * 0.55 : null,
+                      top: hasProduct
+                          ? MediaQuery.of(context).size.height * 0.55
+                          : null,
                       child: RightSideIcons(
                         onShopTap: () => _openViewerShop(context),
                       ),
@@ -231,7 +234,8 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                             .updateCommentText(t),
                         onSend: () => context
                             .read<ViewerStreamCubit>()
-                            .sendCommentToServer(streamId: widget.stream.id ?? 0),
+                            .sendCommentToServer(
+                                streamId: widget.stream.id ?? 0),
                         timerText: timerText,
                         productTitle: productTitle,
                         productCategory: productCategory,
@@ -245,12 +249,12 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                         postAuctionAction: postAuctionAction,
                         onSingleBidPressed:
                             canInteractWithBids && currentProduct != null
-                            ? () => _placeBid(
-                                  context: context,
-                                  product: currentProduct,
-                                  amount: displayPrice,
-                                )
-                            : null,
+                                ? () => _placeBid(
+                                      context: context,
+                                      product: currentProduct,
+                                      amount: displayPrice,
+                                    )
+                                : null,
                         onEditPressed: (!isInitialBid &&
                                 hasProduct &&
                                 currentProduct != null &&
@@ -265,11 +269,11 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                                     minimumPrice: displayPrice,
                                   ),
                                 );
-                                
+
                                 if (!context.mounted || customPrice == null) {
                                   return;
                                 }
-              
+
                                 _placeBid(
                                   context: context,
                                   product: currentProduct,
@@ -301,11 +305,9 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
   Future<void> _openViewerShop(BuildContext context) async {
     final streamId = widget.stream.id;
     if (streamId == null) return;
-    final categories = widget.stream.categories
-            ?.map((c) => c.id)
-            .whereType<int>()
-            .toList() ??
-        [];
+    final categories =
+        widget.stream.categories?.map((c) => c.id).whereType<int>().toList() ??
+            [];
 
     await showModalBottomSheet(
       context: context,
@@ -325,9 +327,9 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
   }
 
   void _openProductDetails(ProductModel product) {
-    final cubit = locator<ProductDetailsCubit>();
+    final cubit = locator<CartProductDetailsCubit>();
     context.push(
-      AppRoutes.productDetails,
+      AppRoutes.cartProductDetails,
       extra: {
         'model': product,
         'products': [product],

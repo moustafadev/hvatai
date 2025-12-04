@@ -2,10 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hvatai/features/product/presentation/product.dart';
-import 'package:hvatai/features/product/presentation/cubit/product_detials/product_details_cubit.dart';
+import 'package:hvatai/features/cart/presentation/cart.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
+import 'package:hvatai/features/cart/presentation/cubit/cart_product_details/cart_product_details_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/change_password/presentation/change_password.dart';
 import 'package:hvatai/features/chat/data/models/chat/chat_model.dart';
@@ -288,17 +288,17 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: AppRoutes.productDetails,
+      path: AppRoutes.cartProductDetails,
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, Object>;
         final model = extra['model'] as ProductModel;
         final products = extra['products'] as List<ProductModel>;
-        final cubit = extra['cubit'] as ProductDetailsCubit
+        final cubit = extra['cubit'] as CartProductDetailsCubit
           ..initProductModel(model);
 
         return BlocProvider.value(
           value: cubit,
-          child: ProductDetailsScreen(
+          child: CartProductDetailsScreen(
             product: model,
             products: products,
             // cart: cart,
@@ -307,9 +307,9 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: AppRoutes.allProductCart,
+      path: AppRoutes.cart,
       builder: (BuildContext context, GoRouterState state) {
-        return AllProductsCartScreen();
+        return const CartScreen();
       },
     ),
     GoRoute(

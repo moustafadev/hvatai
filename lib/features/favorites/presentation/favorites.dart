@@ -6,11 +6,11 @@ import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
-import 'package:hvatai/features/product/presentation/product.dart';
+import 'package:hvatai/features/cart/presentation/cart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:dartz/dartz.dart';
-import 'package:hvatai/features/product/presentation/event_bus/event_bus.dart';
-import 'package:hvatai/features/product/presentation/event_bus/events.dart';
+import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
+import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
 import 'package:hvatai/features/favorites/domain/usecases/get_fav_products_usecase.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 

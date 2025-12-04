@@ -13,8 +13,8 @@ import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
-import 'package:hvatai/features/product/presentation/cubit/product_detials/product_details_cubit.dart';
 import 'package:hvatai/features/auth/data/models/address_model/address_model.dart';
+import 'package:hvatai/features/cart/presentation/cubit/cart_product_details/cart_product_details_cubit.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
@@ -32,7 +32,6 @@ import 'package:livekit_client/livekit_client.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:hvatai/features/profile/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
-import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 
 part 'screens/broadcaster_stream_screen.dart';

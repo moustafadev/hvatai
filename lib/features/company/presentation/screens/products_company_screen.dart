@@ -18,7 +18,7 @@ class ProductsCompanyScreen extends StatelessWidget {
           create: (_) => locator<CompanyProductsCubit>()..fetchProducts(userId),
         ),
         BlocProvider(
-          create: (_) => locator<ProductDetailsCubit>(),
+          create: (_) => locator<CartProductDetailsCubit>(),
         ),
       ],
       child: _ProductsCompanyView(
@@ -43,7 +43,7 @@ class _ProductsCompanyView extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.lightGreyBackground,
       floatingActionButton:
-          BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
+          BlocBuilder<CartProductDetailsCubit, CartProductDetailsState>(
         builder: (context, state) {
           return Container(
             decoration: BoxDecoration(
@@ -53,11 +53,10 @@ class _ProductsCompanyView extends StatelessWidget {
             child: FloatingActionButton.extended(
               backgroundColor: AppColors.primaryPink,
               onPressed: () async {
-                final result =
-                    await context.push<double>(AppRoutes.allProductCart);
+                final result = await context.push<double>(AppRoutes.cart);
                 if (!context.mounted) return;
                 if (result != null) {
-                  context.read<ProductDetailsCubit>().updateTotalPrice(result);
+                  context.read<CartProductDetailsCubit>().updateTotalPrice(result);
                 }
               },
               icon: Image.asset(
@@ -125,7 +124,7 @@ class _ProductsCompanyView extends StatelessWidget {
                   );
                 }
 
-                final cartCubit = context.read<ProductDetailsCubit>();
+                final cartCubit = context.read<CartProductDetailsCubit>();
 
                 return RefreshIndicator(
                   onRefresh: () => context

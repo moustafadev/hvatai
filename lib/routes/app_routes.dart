@@ -12,8 +12,8 @@ class AppRoutes {
   static const String addStream = '/add_stream';
   static const String inviteFriends = '/invite_friends';
   static const String myProductDetails = '/my_product_details';
-  static const String productDetails = '/product_details';
-  static const String allProductCart = '/all_product_cart';
+  static const String cartProductDetails = '/cart_product_details';
+  static const String cart = '/cart';
   static const String login = '/login';
   static const String selectAwaySend = '/select_away_send';
   static const String clipsCompany = '/clips_company';

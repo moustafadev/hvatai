@@ -2,10 +2,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hvatai/features/product/data/model/cart_model.dart' as cart;
-import 'package:hvatai/features/product/data/model/cart_model.dart';
-import 'package:hvatai/features/product/presentation/event_bus/event_bus.dart';
-import 'package:hvatai/features/product/presentation/event_bus/events.dart';
+import 'package:hvatai/features/cart/data/model/cart_model.dart' as cart;
+import 'package:hvatai/features/cart/data/model/cart_model.dart';
+import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
+import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
@@ -19,7 +19,7 @@ part 'search_state.dart';
 class SearchCubit extends Cubit<SearchState> {
   SearchCubit(this._searchUsecase)
       : super(SearchState(
-          categories: const[],
+          categories: const [],
           selectedIndex: 0,
           product: ProductModel(variants: [VariantModel()]),
           cartResponse: cart.CartModel(),
@@ -115,8 +115,7 @@ class SearchCubit extends Cubit<SearchState> {
         final childCategories = data?.childCategories ?? [];
         final products =
             _mapProducts(data?.products?.data ?? const <SearchProductDto>[]);
-        final streams =
-            _mapStreams(data?.streams ?? const <SearchStreamDto>[]);
+        final streams = _mapStreams(data?.streams ?? const <SearchStreamDto>[]);
         final users = _mapUsers(data?.users ?? const <SearchUserDto>[]);
         final categories = _buildCategories(parentCategories);
 
@@ -162,13 +161,13 @@ class SearchCubit extends Cubit<SearchState> {
   void selectCategory(dynamic index) {
     if (state.categories.isEmpty) return;
     final safeIndex = (index is int) ? index : 0;
-    emit(state.copyWith(selectedIndex: safeIndex.clamp(0, state.categories.length - 1)));
+    emit(state.copyWith(
+        selectedIndex: safeIndex.clamp(0, state.categories.length - 1)));
   }
 
   String? get selectedCategory {
     if (state.categories.isEmpty) return null;
-    final safeIndex =
-        state.selectedIndex.clamp(0, state.categories.length - 1);
+    final safeIndex = state.selectedIndex.clamp(0, state.categories.length - 1);
     final category = state.categories[safeIndex];
     return category == 'All' ? null : category;
   }
@@ -232,10 +231,10 @@ class SearchCubit extends Cubit<SearchState> {
 
   List<SearchLiveStreamModel> _mapStreams(List<SearchStreamDto> streams) {
     return streams.map((stream) {
-      final firstCategory = (stream.categories != null &&
-              stream.categories!.isNotEmpty)
-          ? stream.categories!.first.name ?? ''
-          : '';
+      final firstCategory =
+          (stream.categories != null && stream.categories!.isNotEmpty)
+              ? stream.categories!.first.name ?? ''
+              : '';
       return SearchLiveStreamModel(
         channelId: stream.id?.toString() ?? '',
         adminName: stream.user?.name ?? '',
