@@ -11,6 +11,7 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
+import 'package:hvatai/features/wallet/data/models/transaction_model/transaction_model.dart';
 import 'package:hvatai/features/wallet/presentation/cubit/wallet_cubit/wallet_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -19,4 +20,9 @@ part 'screens/wallet_screen.dart';
 part 'widgets/withdraw_bottom_sheet.dart';
 part 'widgets/wallet_loading_screen.dart';
 part 'widgets/wallet_success_screen.dart';
-
+part 'widgets/wallet_header.dart';
+part 'widgets/wallet_balance_card.dart';
+part 'widgets/wallet_tips_section.dart';
+part 'widgets/wallet_transaction_item.dart';
+part 'widgets/wallet_transactions_list.dart';
+part 'widgets/wallet_content.dart';
