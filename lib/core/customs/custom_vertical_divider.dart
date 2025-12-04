@@ -7,12 +7,12 @@ class CustomVerticalDivider extends StatelessWidget {
   final double? height;
 
   const CustomVerticalDivider({
-    Key? key,
+    super.key,
     this.thickness = 1,
     this.width = 20,
     this.color = Colors.pink, // غير اللون الافتراضي حسب حاجتك
     this.height,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

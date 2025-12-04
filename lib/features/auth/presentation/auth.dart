@@ -47,3 +47,5 @@ part 'widgets/terms_and_policy_text.dart';
 part 'widgets/interests_detail_widget.dart';
 part 'widgets/category_options_section.dart';
 part 'widgets/custom_pinput_widget.dart';
+part 'widgets/custom_background_scaffold.dart';
+part 'widgets/social_circle_button.dart';

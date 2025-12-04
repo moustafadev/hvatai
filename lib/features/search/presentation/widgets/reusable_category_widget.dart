@@ -1,19 +1,15 @@
-part of 'customs.dart';
+part of '../search.dart';
 
-class ReusableCategoryWidget<TCubit, TState> extends StatelessWidget {
-  final List<String> interestKeys;
-  final List<String> interestImages;
+class ReusableCategoryWidget extends StatelessWidget {
+  final List<CategoryData> categories;
   final List<int> selectedIndices;
   final void Function(int index, String key) onTap;
-  final List<String?>? interestViews;
 
   const ReusableCategoryWidget({
     super.key,
-    required this.interestKeys,
-    required this.interestImages,
+    required this.categories,
     required this.selectedIndices,
     required this.onTap,
-    this.interestViews,
   });
 
   String _formatViews(String? raw) {
@@ -30,7 +26,7 @@ class ReusableCategoryWidget<TCubit, TState> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final itemCount = interestKeys.length;
+    final itemCount = categories.length;
     if (itemCount == 0) {
       return const SizedBox.shrink();
     }
@@ -41,17 +37,14 @@ class ReusableCategoryWidget<TCubit, TState> extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         child: Row(
           children: List.generate(itemCount, (index) {
+            final category = categories[index];
             final isSelected = selectedIndices.contains(index);
-            final title = interestKeys[index];
-            final imageUrl =
-                interestImages.length > index ? interestImages[index] : '';
-            final views =
-                interestViews != null && interestViews!.length > index
-                    ? interestViews![index]
-                    : null;
+            final title = category.name?.trim() ?? '';
+            final imageUrl = category.icon ?? '';
+            final views = category.views;
 
             return GestureDetector(
-              onTap: () => onTap(index, title),
+              onTap: () => onTap(index, title.isEmpty ? '' : title),
               child: Container(
                 margin: EdgeInsets.only(left: index == 0 ? 16 : 12),
                 width: 120,

@@ -13,26 +13,16 @@ class MyCategorySearch extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        final names = <String>[];
-        final icons = <String>[];
-        final views = <String?>[];
+        final filteredCategories = categories
+            .where((category) => (category.name?.trim() ?? '').isNotEmpty)
+            .toList();
 
-        for (final category in categories) {
-          final name = category.name?.trim() ?? '';
-          if (name.isEmpty) continue;
-          names.add(name);
-          icons.add(category.icon ?? '');
-          views.add(category.views);
-        }
-
-        if (names.isEmpty) {
+        if (filteredCategories.isEmpty) {
           return const SizedBox.shrink();
         }
 
-        return ReusableCategoryWidget<SearchCubit, SearchState>(
-          interestKeys: names,
-          interestImages: icons,
-          interestViews: views,
+        return ReusableCategoryWidget(
+          categories: filteredCategories,
           selectedIndices: state.selectedIndices.toList(),
           onTap: (index, key) {},
           // onTap: (index, key) => cubit.toggleInterest(index, key),

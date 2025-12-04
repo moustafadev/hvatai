@@ -1,4 +1,4 @@
-part of 'customs.dart';
+part of '../activity.dart';
 
 class FavLiveVideoCard extends StatelessWidget {
   final String adminName;

@@ -22,4 +22,5 @@ part 'widgets/rates_activity_widget.dart';
 part 'widgets/message_list_widget.dart';
 part 'widgets/featured_activity_widget.dart';
 part 'widgets/fav_live_video_widget.dart';
+part 'widgets/fav_live_video_card.dart';
 part 'widgets/orders_activity_widget.dart';

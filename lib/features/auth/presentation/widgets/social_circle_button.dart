@@ -1,4 +1,4 @@
-part of 'customs.dart';
+part of '../auth.dart';
 
 class SocialCircleButton extends StatelessWidget {
   final VoidCallback onTap;

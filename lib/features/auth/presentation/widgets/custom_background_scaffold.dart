@@ -1,4 +1,4 @@
-part of 'customs.dart';
+part of '../auth.dart';
 
 class CustomBackgroundScaffold extends StatelessWidget {
   final Widget child;
@@ -9,7 +9,9 @@ class CustomBackgroundScaffold extends StatelessWidget {
     return CustomContainer(
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
-      image: DecorationImage(image: AssetImage(Assets.assetsImagesBackgroundScaffold),fit: BoxFit.fill),
+      image: DecorationImage(
+          image: AssetImage(Assets.assetsImagesBackgroundScaffold),
+          fit: BoxFit.fill),
       child: child,
     );
   }
