@@ -1,15 +1,15 @@
 import 'package:hvatai/core/shared/utils/usecase.dart';
 import 'package:dartz/dartz.dart';
-import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
+import 'package:hvatai/features/address/domain/repositories/address_repository.dart';
 
 class DeleteAddressUsecase implements UseCase<Unit, DeleteAddressParams> {
-  final ProfileRepository _profileRepository;
+  final AddressRepository _addressRepository;
 
-  DeleteAddressUsecase(this._profileRepository);
+  DeleteAddressUsecase(this._addressRepository);
 
   @override
   Future<Either<String, Unit>> call(DeleteAddressParams params) {
-    return _profileRepository.deleteAddress(params);
+    return _addressRepository.deleteAddress(params);
   }
 }
 

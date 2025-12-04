@@ -30,7 +30,7 @@ import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:livekit_client/livekit_client.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
-import 'package:hvatai/features/profile/presentation/cubit/delivery_address/delivery_address_cubit.dart';
+import 'package:hvatai/features/address/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 

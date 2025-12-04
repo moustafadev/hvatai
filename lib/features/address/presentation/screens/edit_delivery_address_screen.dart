@@ -1,4 +1,4 @@
-part of '../profile.dart';
+part of '../address.dart';
 
 class EditDeliveryAddressScreen extends StatelessWidget {
   const EditDeliveryAddressScreen({

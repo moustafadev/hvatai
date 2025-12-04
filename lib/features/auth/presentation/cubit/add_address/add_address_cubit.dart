@@ -7,7 +7,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/auth/data/models/address_model/address_model.dart';
-import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
+import 'package:hvatai/features/address/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
 part 'add_address_cubit.freezed.dart';

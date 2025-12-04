@@ -1,4 +1,4 @@
-part of '../profile.dart';
+part of '../address.dart';
 
 class InitNewAddressScreen extends StatelessWidget {
   const InitNewAddressScreen({super.key});
@@ -11,12 +11,12 @@ class InitNewAddressScreen extends StatelessWidget {
         builder: (context, state) {
           final cubit = context.read<DeliveryAddressCubit>();
           if (state.isLoading) {
-          return Scaffold(
-            body: Center(
-                child: CircularProgressIndicator(
-              color: AppColors.grey,
-            )),
-          );
+            return Scaffold(
+              body: Center(
+                  child: CircularProgressIndicator(
+                color: AppColors.grey,
+              )),
+            );
           }
 
           if (state.errorMessage.isNotEmpty) {
@@ -28,8 +28,8 @@ class InitNewAddressScreen extends StatelessWidget {
             appBar: AppBar(
               backgroundColor: AppColors.lightGreyBackground,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back_ios,
-                    color: AppColors.blackColorIcon),
+                icon:
+                    Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
                 onPressed: () {
                   context.pop();
                 },

@@ -11,7 +11,7 @@ import 'package:hvatai/features/cart/domain/usecases/create_order_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/get_cart_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/update_cart_usecase.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
-import 'package:hvatai/features/profile/domain/usecases/get_delivery_address_usecase.dart';
+import 'package:hvatai/features/address/domain/usecases/get_delivery_address_usecase.dart';
 
 part 'cart_cubit.freezed.dart';
 part 'cart_state.dart';

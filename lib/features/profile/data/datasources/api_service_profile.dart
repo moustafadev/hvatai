@@ -8,17 +8,17 @@ import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
-import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/delete_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_card_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_usecase.dart';
+import 'package:hvatai/features/address/domain/usecases/add_new_address_usecase.dart';
+import 'package:hvatai/features/address/domain/usecases/delete_address_usecase.dart';
+import 'package:hvatai/features/address/domain/usecases/edit_delivery_address_usecase.dart';
 
 class ApiServiceProfile extends ApiBase {
   Future<ProductModel> addNewProduct(FormData formData) async {
     return executeAndHandleErrorServer<ProductModel>(() async {
       // print the form data
-      
+
       final response = await post(
         ServerConfig.products,
         body: formData,
@@ -67,17 +67,6 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-  Future<List<UserRegistrationData>> getDeliveryAddress() async {
-    return executeAndHandleErrorServer<List<UserRegistrationData>>(() async {
-      final response = await get(ServerConfig.deliveryAddress);
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final List<dynamic> data = response.json;
-        return data.map((e) => UserRegistrationData.fromJson(e)).toList();
-      } else {
-        throw Exception;
-      }
-    });
-  }
 
   Future<List<CardModel>> getAllCards() async {
     return executeAndHandleErrorServer<List<CardModel>>(() async {
@@ -148,30 +137,6 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-  Future<UserRegistrationData> addNewAddress(AddNewAddressParams params) async {
-    return executeAndHandleErrorServer<UserRegistrationData>(() async {
-      final response =
-          await post(ServerConfig.deliveryAddress, body: params.toJson());
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return UserRegistrationData.fromJson(response.json);
-      } else {
-        throw Exception;
-      }
-    });
-  }
-
-  Future<Unit> deleteAddress(DeleteAddressParams params) async {
-    return executeAndHandleErrorServer<Unit>(() async {
-      final response =
-          await delete(ServerConfig.deliveryAddressId(params.addressId));
-      if ([200, 201, 204].contains(response.statusCode)) {
-        return unit;
-      } else {
-        throw Exception;
-      }
-    });
-  }
-
   Future<Unit> deleteCard(DeleteCardParams params) async {
     return executeAndHandleErrorServer<Unit>(() async {
       final response = await delete(ServerConfig.cardId(params.cardId));
@@ -205,23 +170,6 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-  Future<UserRegistrationData> editDeliveryAddress(
-      EditDeliveryAddressParams params) async {
-    return executeAndHandleErrorServer<UserRegistrationData>(() async {
-      if (params.userRegistrationData.id == null) {
-        throw Exception("Address ID is null, cannot update");
-      }
-      final response = await put(
-        ServerConfig.deliveryAddressId(params.userRegistrationData.id!),
-        body: params.toJson(),
-      );
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return UserRegistrationData.fromJson(response.json);
-      } else {
-        throw Exception;
-      }
-    });
-  }
   Future<ProductModel> updateProduct({
     required int productId,
     required FormData formData,

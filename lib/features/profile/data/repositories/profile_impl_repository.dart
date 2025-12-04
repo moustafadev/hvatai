@@ -8,13 +8,10 @@ import 'package:hvatai/features/profile/data/model/product_model/product_model.d
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_product_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/delete_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_card_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 
 class ProfileImplRepository implements ProfileRepository {
@@ -27,15 +24,6 @@ class ProfileImplRepository implements ProfileRepository {
   Future<Either<String, UserRegistrationData>> getProfileData() async {
     return executeAndHandleError<UserRegistrationData>(() async {
       final res = await _apiServiceProfile.getProfileData();
-      return res;
-    });
-  }
-
-  @override
-  Future<Either<String, List<UserRegistrationData>>>
-      getDeliveryAddress() async {
-    return executeAndHandleError<List<UserRegistrationData>>(() async {
-      final res = await _apiServiceProfile.getDeliveryAddress();
       return res;
     });
   }
@@ -74,15 +62,6 @@ class ProfileImplRepository implements ProfileRepository {
     });
   }
 
-  @override
-  Future<Either<String, UserRegistrationData>> addNewAddress(
-      AddNewAddressParams params) async {
-    return executeAndHandleError<UserRegistrationData>(() async {
-      final res = await _apiServiceProfile.addNewAddress(params);
-
-      return res;
-    });
-  }
 
   @override
   Future<Either<String, CardModel>> addNewCard(AddNewCardParams params) async {
@@ -92,14 +71,6 @@ class ProfileImplRepository implements ProfileRepository {
     });
   }
 
-  @override
-  Future<Either<String, UserRegistrationData>> editDeliveryAddress(
-      EditDeliveryAddressParams params) async {
-    return executeAndHandleError<UserRegistrationData>(() async {
-      final res = await _apiServiceProfile.editDeliveryAddress(params);
-      return res;
-    });
-  }
 
   @override
   Future<Either<String, Unit>> deleteAccount() {
@@ -110,13 +81,6 @@ class ProfileImplRepository implements ProfileRepository {
     });
   }
 
-  @override
-  Future<Either<String, Unit>> deleteAddress(DeleteAddressParams params) {
-    return executeAndHandleError<Unit>(() async {
-      final res = await _apiServiceProfile.deleteAddress(params);
-      return res;
-    });
-  }
 
   @override
   Future<Either<String, Unit>> deleteCard(DeleteCardParams params) {

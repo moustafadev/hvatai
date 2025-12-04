@@ -1,4 +1,4 @@
-part of '../profile.dart';
+part of '../address.dart';
 
 class AddDeliveryAddressScreen extends StatelessWidget {
   const AddDeliveryAddressScreen({
@@ -37,8 +37,9 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                     20.ph,
                     CustomDropdown(
                       hintText: 'country'.tr(),
-                      value:
-                          (address.country ?? '').isEmpty ? null : address.country,
+                      value: (address.country ?? '').isEmpty
+                          ? null
+                          : address.country,
                       onChanged: (v) => cubit.updateField('country', v ?? ''),
                       prefix: address.country == 'Russia'
                           ? const Text('🇷🇺')
@@ -68,8 +69,7 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                       key: ValueKey('street_${state.lastUpdated}'),
                       isRequired: false,
                       hintText: 'street'.tr(),
-                      validator: (v) =>
-                          v!.isEmpty ? 'enterStreet'.tr() : null,
+                      validator: (v) => v!.isEmpty ? 'enterStreet'.tr() : null,
                       onChanged: (v) => cubit.updateField('street', v),
                       initialValue: address.street,
                     ),
@@ -93,8 +93,7 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                             isRequired: false,
                             key: ValueKey('apartment_${state.lastUpdated}'),
                             hintText: 'apartment'.tr(),
-                            onChanged: (v) =>
-                                cubit.updateField('apartment', v),
+                            onChanged: (v) => cubit.updateField('apartment', v),
                             initialValue: address.apartment,
                           ),
                         ),
@@ -110,8 +109,7 @@ class AddDeliveryAddressScreen extends StatelessWidget {
                             key: ValueKey('entrance_${state.lastUpdated}'),
                             validator: (v) =>
                                 v!.isEmpty ? 'enterEntrance'.tr() : null,
-                            onChanged: (v) =>
-                                cubit.updateField('entrance', v),
+                            onChanged: (v) => cubit.updateField('entrance', v),
                             initialValue: address.floor,
                           ),
                         ),

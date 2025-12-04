@@ -10,10 +10,10 @@ import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/auth/data/models/address_model/address_model.dart';
 // ignore: unused_import
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
-import 'package:hvatai/features/profile/domain/usecases/add_new_address_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/delete_address_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/edit_delivery_address_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/get_delivery_address_usecase.dart';
+import 'package:hvatai/features/address/domain/usecases/add_new_address_usecase.dart';
+import 'package:hvatai/features/address/domain/usecases/delete_address_usecase.dart';
+import 'package:hvatai/features/address/domain/usecases/edit_delivery_address_usecase.dart';
+import 'package:hvatai/features/address/domain/usecases/get_delivery_address_usecase.dart';
 
 part 'delivery_address_cubit.freezed.dart';
 part 'delivery_address_state.dart';
