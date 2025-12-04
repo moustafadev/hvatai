@@ -13,7 +13,7 @@ import 'package:hvatai/features/activity/presentation/cubit/rates_activity/rates
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
 import 'package:hvatai/features/orders/presentation/cubit/my_orders_cubit.dart';
-import 'package:hvatai/features/orders/presentation/screens/my_orders_screen.dart';
+import 'package:hvatai/features/orders/presentation/widgets/orders_content.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 

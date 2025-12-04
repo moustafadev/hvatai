@@ -5,13 +5,15 @@ class OrdersActivityWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: AppColors.lightGreyBackground,
-      body: MyOrdersBody(
-        showHeader: false,
-        contentPadding: EdgeInsets.symmetric(horizontal: 16),
+      body: BlocProvider<MyOrdersCubit>(
+        create: (_) => locator<MyOrdersCubit>()..fetchOrders(),
+        child: const OrdersContent(
+          showHeader: false,
+          contentPadding: EdgeInsets.symmetric(horizontal: 16),
+        ),
       ),
     );
   }
 }
-
