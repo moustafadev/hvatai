@@ -34,13 +34,13 @@ import 'package:hvatai/features/address/domain/usecases/add_new_address_usecase.
 import 'package:hvatai/features/address/domain/usecases/delete_address_usecase.dart';
 import 'package:hvatai/features/address/domain/usecases/edit_delivery_address_usecase.dart';
 import 'package:hvatai/features/address/domain/usecases/get_delivery_address_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
+import 'package:hvatai/features/payment_method/domain/usecases/add_new_card_usecase.dart';
+import 'package:hvatai/features/payment_method/domain/usecases/delete_card_usecase.dart';
+import 'package:hvatai/features/payment_method/domain/usecases/get_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/create_stream_uscecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_account_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/delete_card_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/get_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_product_category_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';

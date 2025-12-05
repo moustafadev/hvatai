@@ -1,16 +1,16 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
-import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
-import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
+import 'package:hvatai/features/payment_method/data/model/card_model/card_model.dart';
+import 'package:hvatai/features/payment_method/domain/repositories/payment_method_repository.dart';
 
 class AddNewCardUsecase implements UseCase<CardModel, AddNewCardParams> {
-  final ProfileRepository _profileRepository;
+  final PaymentMethodRepository _paymentMethodRepository;
 
-  AddNewCardUsecase(this._profileRepository);
+  AddNewCardUsecase(this._paymentMethodRepository);
 
   @override
   Future<Either<String, CardModel>> call(AddNewCardParams params) {
-    return _profileRepository.addNewCard(params);
+    return _paymentMethodRepository.addNewCard(params);
   }
 }
 

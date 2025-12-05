@@ -5,10 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
-import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
-import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/delete_card_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/get_card_usecase.dart';
+import 'package:hvatai/features/payment_method/data/model/card_model/card_model.dart';
+import 'package:hvatai/features/payment_method/domain/usecases/add_new_card_usecase.dart';
+import 'package:hvatai/features/payment_method/domain/usecases/delete_card_usecase.dart';
+import 'package:hvatai/features/payment_method/domain/usecases/get_card_usecase.dart';
 part 'payment_method_cubit.freezed.dart';
 part 'payment_method_state.dart';
 

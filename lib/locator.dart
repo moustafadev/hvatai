@@ -27,6 +27,9 @@ import 'package:hvatai/features/auth/presentation/cubit/social_login.dart/social
 import 'package:hvatai/features/address/data/datasources/api_service_address.dart';
 import 'package:hvatai/features/address/data/repositories/address_impl_repository.dart';
 import 'package:hvatai/features/address/domain/repositories/address_repository.dart';
+import 'package:hvatai/features/payment_method/data/datasources/api_service_payment_method.dart';
+import 'package:hvatai/features/payment_method/data/repositories/payment_method_impl_repository.dart';
+import 'package:hvatai/features/payment_method/domain/repositories/payment_method_repository.dart';
 import 'package:hvatai/features/change_password/data/datasources/api_service_change_password.dart';
 import 'package:hvatai/features/change_password/data/repositories/change_password_impl_repository.dart';
 import 'package:hvatai/features/change_password/domain/repositories/change_password_repository.dart';
@@ -60,7 +63,7 @@ import 'package:hvatai/features/profile/presentation/cubit/analytics_cubit/analy
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
+import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/search/data/datasources/api_service_search.dart';
 import 'package:hvatai/features/search/data/repositories/search_repository_impl.dart';
@@ -220,9 +223,12 @@ Future<void> setupLocator() async {
           ));
   locator.registerLazySingleton<AddressRepository>(
       () => AddressImplRepository(locator()));
+  locator.registerLazySingleton<PaymentMethodRepository>(
+      () => PaymentMethodImplRepository(locator()));
   // //DATASOURSE
   locator.registerLazySingleton(() => ApiServiceAuth());
   locator.registerLazySingleton(() => ApiServiceAddress());
+  locator.registerLazySingleton(() => ApiServicePaymentMethod());
   locator.registerLazySingleton(() => ApiServiceChangePassword());
   locator.registerLazySingleton(() => ApiServiceCart());
   locator.registerLazySingleton(() => ApiServiceHome());

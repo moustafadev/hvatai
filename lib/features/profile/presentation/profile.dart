@@ -22,13 +22,10 @@ import 'package:hvatai/features/profile/presentation/cubit/analytics_cubit/analy
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
-import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
-part 'screens/add_new_payment_method_screen.dart';
 part 'screens/add_new_products_screen.dart';
 part 'screens/add_stream_screen.dart';
 part 'screens/analytics_screen.dart';
@@ -39,7 +36,6 @@ part 'screens/my_awards_screen.dart';
 part 'screens/my_goods_screen.dart';
 part 'screens/my_product_details_screen.dart';
 part 'screens/notification_settings_screen.dart';
-part 'screens/payment_methods_screen.dart';
 part 'screens/profile_screen.dart';
 part 'screens/settings_screen.dart';
 part 'screens/trade_profile_detail_screen.dart';

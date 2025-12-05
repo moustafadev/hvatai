@@ -13,7 +13,7 @@ import 'package:hvatai/features/cart/presentation/cubit/cart_cubit/cart_cubit.da
 import 'package:hvatai/features/cart/presentation/cubit/cart_product_details/cart_product_details_cubit.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
-import 'package:hvatai/features/profile/presentation/cubit/payment_method/payment_method_cubit.dart';
+import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/locator.dart';

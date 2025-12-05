@@ -1,15 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
-import 'package:hvatai/features/profile/data/model/card_model/card_model.dart';
 import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
-import 'package:hvatai/features/profile/domain/usecases/add_new_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/delete_card_usecase.dart';
-import 'package:hvatai/features/address/domain/usecases/add_new_address_usecase.dart';
-import 'package:hvatai/features/address/domain/usecases/delete_address_usecase.dart';
-import 'package:hvatai/features/address/domain/usecases/edit_delivery_address_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_product_usecase.dart';
 
@@ -22,26 +16,18 @@ abstract class ProfileRepository {
 
   Future<Either<String, UserRegistrationData>> updateProfileType();
 
-  Future<Either<String, Unit>> deleteCard(DeleteCardParams params);
-
   Future<Either<String, Unit>> signOut();
-
-  Future<Either<String, List<CardModel>>> getAllCards();
 
   Future<Either<String, List<ProductModel>>> getMyProducts({
     required List<int> categoryIds,
   });
   Future<Either<String, List<MainCategoryModel>>> getProductCategory();
 
-
-  Future<Either<String, CardModel>> addNewCard(AddNewCardParams params);
-
   Future<Either<String, ProductModel>> addNewProduct(
       AddNewProductParams params);
 
   Future<Either<String, ProductModel>> updateProduct(
       UpdateProductParams params);
-
 
   Future<Either<String, StreamResponseModel>> createStream(
       CreateStreamModel model);

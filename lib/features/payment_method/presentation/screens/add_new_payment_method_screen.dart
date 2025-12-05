@@ -1,4 +1,4 @@
-part of '../profile.dart';
+part of '../payment_method.dart';
 
 class AddNewPaymentMethodScreen extends StatelessWidget {
   const AddNewPaymentMethodScreen({super.key});

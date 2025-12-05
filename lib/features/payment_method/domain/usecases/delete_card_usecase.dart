@@ -1,15 +1,15 @@
 import 'package:hvatai/core/shared/utils/usecase.dart';
 import 'package:dartz/dartz.dart';
-import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
+import 'package:hvatai/features/payment_method/domain/repositories/payment_method_repository.dart';
 
 class DeleteCardUsecase implements UseCase<Unit, DeleteCardParams> {
-  final ProfileRepository _profileRepository;
+  final PaymentMethodRepository _paymentMethodRepository;
 
-  DeleteCardUsecase(this._profileRepository);
+  DeleteCardUsecase(this._paymentMethodRepository);
 
   @override
   Future<Either<String, Unit>> call(DeleteCardParams params) {
-    return _profileRepository.deleteCard(params);
+    return _paymentMethodRepository.deleteCard(params);
   }
 }
 
