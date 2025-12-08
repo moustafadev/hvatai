@@ -6,6 +6,7 @@ import 'package:hvatai/core/shared/utils/network_info.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
 import 'package:hvatai/features/activity/presentation/cubit/featured_activity/featured_activity_cubit.dart';
 import 'package:hvatai/features/activity/presentation/cubit/rates_activity/rates_activity_cubit.dart';
+import 'package:hvatai/features/favorites/presentation/cubit/favorite/favorite_cubit.dart';
 import 'package:hvatai/features/favorites/presentation/favorites.dart';
 import 'package:hvatai/features/cart/data/datasources/api_service_cart.dart';
 import 'package:hvatai/features/cart/data/repositories/cart_repository_impl.dart';

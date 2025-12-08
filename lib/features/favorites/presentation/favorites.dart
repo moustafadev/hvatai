@@ -7,14 +7,5 @@ import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/features/cart/presentation/cart.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:dartz/dartz.dart';
-import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
-import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
-import 'package:hvatai/features/favorites/domain/usecases/get_fav_products_usecase.dart';
-import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
-
+import 'package:hvatai/features/favorites/presentation/cubit/favorite/favorite_cubit.dart';
 part 'screens/favorite_screen.dart';
-part 'cubit/favorite/favorite_state.dart';
-part 'cubit/favorite/favorite_cubit.dart';
-part 'favorites.freezed.dart';

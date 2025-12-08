@@ -1,4 +1,16 @@
-part of '../../favorites.dart';
+import 'dart:async';
+import 'package:dartz/dartz.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
+import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
+import 'package:hvatai/features/favorites/domain/usecases/get_fav_products_usecase.dart';
+import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
+
+part 'favorite_cubit.freezed.dart';
+part 'favorite_state.dart';
+
+
 
 class FavoriteCubit extends Cubit<FavoriteState> {
   FavoriteCubit(this.getFavProductsUsecase) : super(const FavoriteState()) {
