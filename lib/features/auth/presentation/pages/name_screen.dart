@@ -1,24 +1,23 @@
 part of '../auth.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class NameScreen extends StatelessWidget {
+  const NameScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => locator<LoginCubit>(),
-      child: Scaffold(
-        backgroundColor: AppColors.lightGreyBackground,
-        body: SafeArea(
-          bottom: false,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: BlocBuilder<LoginCubit, LoginState>(
-              builder: (context, state) {
-                final cubit = context.read<LoginCubit>();
-                return Form(
+      create: (_) => locator<NameCubit>(),
+      child: BlocBuilder<NameCubit, NameState>(
+        builder: (context, state) {
+          final cubit = context.read<NameCubit>();
+          return Scaffold(
+            backgroundColor: AppColors.lightGreyBackground,
+            body: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Form(
                   key: cubit.formKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: CustomScrollView(
                     slivers: [
                       SliverToBoxAdapter(
@@ -34,7 +33,7 @@ class LoginScreen extends StatelessWidget {
                                 children: [
                                   SizedBox(width: 16.w),
                                   CustomText(
-                                    text: 'Войти',
+                                    text: 'Ваше имя',
                                     color: AppColors.blackDark,
                                     fontWeight: FontWeight.w700,
                                     fontSize: 18.sp,
@@ -49,13 +48,12 @@ class LoginScreen extends StatelessWidget {
                             ),
                             20.ph,
                             CustomTextField(
-                              hintText: 'Номер телефона',
-                              keyboardType: TextInputType.phone,
+                              hintText: 'Укажите имя профиля',
                               isRequired: false,
-                              onChanged: cubit.updatePhone,
+                              onChanged: cubit.updateName,
                               validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Введите номер телефона';
+                                if (value == null || value.trim().isEmpty) {
+                                  return 'Введите имя';
                                 }
                                 return null;
                               },
@@ -69,10 +67,10 @@ class LoginScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             CustomGradientButton(
-                              text: 'Получить код',
-                              isLoading: cubit.state.isLoading,
-                              isDisabled: cubit.state.phone.isEmpty,
-                              onPressed: () => cubit.login(context),
+                              text: 'Продолжить',
+                              isLoading: state.isLoading,
+                              isDisabled: state.name.trim().isEmpty,
+                              onPressed: () => cubit.submit(context),
                             ),
                             20.ph,
                           ],
@@ -80,11 +78,11 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                );
-              },
+                ),
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

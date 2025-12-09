@@ -17,8 +17,8 @@ class OtpCubit extends Cubit<OtpState> {
 
   final CheckOtpUseCase checkOtpUseCase;
 
-  void initEmail(String email) {
-    emit(state.copyWith(email: email));
+  void initPhone(String phone) {
+    emit(state.copyWith(phone: phone));
   }
 
   void updateCode(String code) {
@@ -26,7 +26,7 @@ class OtpCubit extends Cubit<OtpState> {
   }
 
   Future<void> verifyOtp(BuildContext context) async {
-    if (state.code.length != 4 || state.email.isEmpty) {
+    if (state.code.length != 4 || state.phone.isEmpty) {
       emit(state.copyWith(errorMessage: 'Please enter a valid code.'));
 
       showFloatingMessageError('enterValidCode'.tr());
@@ -36,7 +36,7 @@ class OtpCubit extends Cubit<OtpState> {
 
     emit(state.copyWith(isVerifying: true, errorMessage: ''));
 
-    final params = CheckOtpParams(email: state.email, code: state.code);
+    final params = CheckOtpParams(phone: state.phone, code: state.code);
     final result = await checkOtpUseCase.call(params);
 
     result.fold(
@@ -53,8 +53,10 @@ class OtpCubit extends Cubit<OtpState> {
           success: true,
         ));
 
-        showFloatingMessageSuccess('emailVerified'.tr());
-        context.push(AppRoutes.deliveryAddress);
+        showFloatingMessageSuccess(userData.message.isNotEmpty
+            ? userData.message
+            : 'emailVerified'.tr());
+        context.push(AppRoutes.name);
       },
     );
   }

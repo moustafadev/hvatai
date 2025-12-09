@@ -230,12 +230,6 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: AppRoutes.deliveryAddress,
-      builder: (context, state) {
-        return DeliveryAddressScreen();
-      },
-    ),
-    GoRoute(
       path: AppRoutes.addProduct, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         MyGoodsCubit? extraCubit;
@@ -345,12 +339,6 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: AppRoutes.registration, // Remove the leading '/'
-      builder: (BuildContext context, GoRouterState state) {
-        return const RegistrationScreen();
-      },
-    ),
-    GoRoute(
       path: AppRoutes.interests,
       builder: (BuildContext context, GoRouterState state) {
         return InterestsScreen();
@@ -439,9 +427,15 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.otp,
       builder: (context, state) {
-        final email = state.extra as String? ?? '';
+        final phone = state.extra as String? ?? '';
 
-        return OtpScreen(email: email);
+        return OtpScreen(phone: phone);
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.name,
+      builder: (context, state) {
+        return const NameScreen();
       },
     ),
     statefulShellRoute,

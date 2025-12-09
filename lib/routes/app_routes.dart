@@ -2,7 +2,15 @@ class AppRoutes {
   AppRoutes._(); // Private constructor to prevent instantiation
 
   static const String splash = '/';
-  static const String onboarding = '/onboarding';
+
+  // =============================== Auth routes ===============================
+  static const String socialLogin = '/social_login';
+  static const String login = '/login';
+  static const String otp = '/otp';
+  static const String name = '/name';
+
+  // =============================== Home routes ===============================
+
   static const String home = '/home';
   static const String search = '/search';
   static const String profile = '/profile';
@@ -14,7 +22,6 @@ class AppRoutes {
   static const String myProductDetails = '/my_product_details';
   static const String cartProductDetails = '/cart_product_details';
   static const String cart = '/cart';
-  static const String login = '/login';
   static const String selectAwaySend = '/select_away_send';
   static const String clipsCompany = '/clips_company';
   static const String productsCompany = '/products_company';
@@ -22,11 +29,9 @@ class AppRoutes {
   static const String companyName = '/company_name';
   static const String sendReward = '/send_reward';
   static const String awardsGift = '/awards_gift';
-  static const String registration = '/registration';
   static const String deliveryAddress = '/delivery_address';
   static const String verificationCode = '/verification_code';
   static const String analytics = '/analytics';
-  static const String socialLogin = '/social_login';
   static const String termAndConditions = '/term_and_conditions';
   static const String privacyPolicy = '/privacy_policy';
   static const String interests = '/interests';
@@ -48,7 +53,6 @@ class AppRoutes {
   static const String editDeliveryAddress = '/edit_delivery_address';
   static const String tradeProfileDetail = '/trade_profile_detail';
   static const String addProduct = '/add_product';
-  static const String otp = '/otp';
   static const String liveStream = '/live_stream';
   static const String chatRoot = '/chat_root';
 

@@ -24,6 +24,7 @@ class CustomTextField extends StatelessWidget {
   final Color? textColor;
   final Color? hintColor;
   final TextInputAction? textInputAction;
+  final int? maxLength;
   const CustomTextField({
     super.key,
     required this.hintText,
@@ -49,6 +50,7 @@ class CustomTextField extends StatelessWidget {
     this.textColor,
     this.hintColor,
     this.textInputAction,
+    this.maxLength,
   });
 
   @override
@@ -71,6 +73,7 @@ class CustomTextField extends StatelessWidget {
         onChanged: onChanged,
         textInputAction: textInputAction,
         inputFormatters: inputFormatters,
+        maxLength: maxLength,
         style: TextStyle(color: textColor ?? Colors.black),
         decoration: InputDecoration(
           hintText: isRequired ? '$hintText *' : hintText,
@@ -98,6 +101,7 @@ class CustomTextField extends StatelessWidget {
             color: Colors.redAccent,
             fontSize: 13,
           ),
+          counterText: '',
         ),
       ),
     );

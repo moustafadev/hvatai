@@ -8,13 +8,10 @@ import 'package:hvatai/features/favorites/domain/usecases/get_fav_products_useca
 import 'package:hvatai/features/cart/domain/usecases/update_cart_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/add_fav_category_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
-import 'package:hvatai/features/auth/domain/usecases/delivery_address_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/get_category_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/get_fav_category_usecase.dart';
-import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
-import 'package:hvatai/features/auth/domain/usecases/login_with_apple_usecase.dart';
-import 'package:hvatai/features/auth/domain/usecases/login_with_google_usecase.dart';
-import 'package:hvatai/features/auth/domain/usecases/register_usecase.dart';
+import 'package:hvatai/features/auth/domain/usecases/send_otp_usecase.dart';
+import 'package:hvatai/features/auth/domain/usecases/update_name_usecase.dart';
 import 'package:hvatai/features/change_password/domain/usecases/change_password_usecase.dart';
 import 'package:hvatai/features/chat/domain/usecases/get_chats_usecase.dart';
 import 'package:hvatai/features/chat/domain/usecases/get_messages_usecase.dart';
@@ -72,11 +69,9 @@ import 'package:hvatai/locator.dart';
 
 void locatorUseCase() {
   // //UseCase
-  locator.registerLazySingleton(() => LoginUseCase(locator()));
-  locator.registerLazySingleton(() => RegisterUseCase(locator()));
+  locator.registerLazySingleton(() => SendOtpUseCase(locator()));
+  locator.registerLazySingleton(() => UpdateNameUseCase(locator()));
   locator.registerLazySingleton(() => CheckOtpUseCase(locator()));
-  locator.registerLazySingleton(() => DeliveryAddressUseCase(locator()));
-  locator.registerLazySingleton(() => LoginWithGoogleUseCase(locator()));
   locator.registerLazySingleton(() => GetProfileDataUsecase(locator()));
   locator.registerLazySingleton(() => UpdateProfileDataUsecase(locator()));
   locator.registerLazySingleton(() => GetDeliveryAddressUsecase(locator()));
@@ -93,7 +88,6 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => AddFavCategoryUsecase(locator()));
   locator.registerLazySingleton(() => GetFavCategoryUsecase(locator()));
   locator.registerLazySingleton(() => MarkReadUsecase(locator()));
-  locator.registerLazySingleton(() => LoginWithAppleUsecase(locator()));
   locator.registerLazySingleton(() => UpdateProfileTypeUsecase(locator()));
   locator.registerLazySingleton(() => GetMyProductsUsecase(locator()));
   locator.registerLazySingleton(() => GetAllProductsUsecase(locator()));

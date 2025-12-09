@@ -43,7 +43,7 @@ class InterestsDetailWidget extends StatelessWidget {
                     cubit.toggleDetail(detailId, categoryData.id ?? 0);
                   },
                 );
-              }).toList(),
+              }),
             ],
           ),
         );

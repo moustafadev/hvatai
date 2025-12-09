@@ -16,9 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$LoginState {
-  String get email => throw _privateConstructorUsedError;
-  String get password => throw _privateConstructorUsedError;
-  bool get obscurePassword => throw _privateConstructorUsedError;
+  String get phone => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get successLogin => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
@@ -37,12 +35,7 @@ abstract class $LoginStateCopyWith<$Res> {
       _$LoginStateCopyWithImpl<$Res, LoginState>;
   @useResult
   $Res call(
-      {String email,
-      String password,
-      bool obscurePassword,
-      bool isLoading,
-      bool successLogin,
-      String errorMessage});
+      {String phone, bool isLoading, bool successLogin, String errorMessage});
 }
 
 /// @nodoc
@@ -60,26 +53,16 @@ class _$LoginStateCopyWithImpl<$Res, $Val extends LoginState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = null,
-    Object? password = null,
-    Object? obscurePassword = null,
+    Object? phone = null,
     Object? isLoading = null,
     Object? successLogin = null,
     Object? errorMessage = null,
   }) {
     return _then(_value.copyWith(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
               as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      obscurePassword: null == obscurePassword
-          ? _value.obscurePassword
-          : obscurePassword // ignore: cast_nullable_to_non_nullable
-              as bool,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -105,12 +88,7 @@ abstract class _$$LoginStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String email,
-      String password,
-      bool obscurePassword,
-      bool isLoading,
-      bool successLogin,
-      String errorMessage});
+      {String phone, bool isLoading, bool successLogin, String errorMessage});
 }
 
 /// @nodoc
@@ -126,26 +104,16 @@ class __$$LoginStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? email = null,
-    Object? password = null,
-    Object? obscurePassword = null,
+    Object? phone = null,
     Object? isLoading = null,
     Object? successLogin = null,
     Object? errorMessage = null,
   }) {
     return _then(_$LoginStateImpl(
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
               as String,
-      password: null == password
-          ? _value.password
-          : password // ignore: cast_nullable_to_non_nullable
-              as String,
-      obscurePassword: null == obscurePassword
-          ? _value.obscurePassword
-          : obscurePassword // ignore: cast_nullable_to_non_nullable
-              as bool,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -166,22 +134,14 @@ class __$$LoginStateImplCopyWithImpl<$Res>
 
 class _$LoginStateImpl implements _LoginState {
   const _$LoginStateImpl(
-      {this.email = '',
-      this.password = '',
-      this.obscurePassword = true,
+      {this.phone = '',
       this.isLoading = false,
       this.successLogin = false,
       this.errorMessage = ''});
 
   @override
   @JsonKey()
-  final String email;
-  @override
-  @JsonKey()
-  final String password;
-  @override
-  @JsonKey()
-  final bool obscurePassword;
+  final String phone;
   @override
   @JsonKey()
   final bool isLoading;
@@ -194,7 +154,7 @@ class _$LoginStateImpl implements _LoginState {
 
   @override
   String toString() {
-    return 'LoginState(email: $email, password: $password, obscurePassword: $obscurePassword, isLoading: $isLoading, successLogin: $successLogin, errorMessage: $errorMessage)';
+    return 'LoginState(phone: $phone, isLoading: $isLoading, successLogin: $successLogin, errorMessage: $errorMessage)';
   }
 
   @override
@@ -202,11 +162,7 @@ class _$LoginStateImpl implements _LoginState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$LoginStateImpl &&
-            (identical(other.email, email) || other.email == email) &&
-            (identical(other.password, password) ||
-                other.password == password) &&
-            (identical(other.obscurePassword, obscurePassword) ||
-                other.obscurePassword == obscurePassword) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.successLogin, successLogin) ||
@@ -216,8 +172,8 @@ class _$LoginStateImpl implements _LoginState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, email, password, obscurePassword,
-      isLoading, successLogin, errorMessage);
+  int get hashCode =>
+      Object.hash(runtimeType, phone, isLoading, successLogin, errorMessage);
 
   /// Create a copy of LoginState
   /// with the given fields replaced by the non-null parameter values.
@@ -230,19 +186,13 @@ class _$LoginStateImpl implements _LoginState {
 
 abstract class _LoginState implements LoginState {
   const factory _LoginState(
-      {final String email,
-      final String password,
-      final bool obscurePassword,
+      {final String phone,
       final bool isLoading,
       final bool successLogin,
       final String errorMessage}) = _$LoginStateImpl;
 
   @override
-  String get email;
-  @override
-  String get password;
-  @override
-  bool get obscurePassword;
+  String get phone;
   @override
   bool get isLoading;
   @override

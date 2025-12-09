@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'social_login_cubit.dart';
+part of 'name_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,47 +15,50 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$SocialLoginState {
+mixin _$NameState {
+  String get name => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
-  bool get successLogin => throw _privateConstructorUsedError;
 
-  /// Create a copy of SocialLoginState
+  /// Create a copy of NameState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $SocialLoginStateCopyWith<SocialLoginState> get copyWith =>
+  $NameStateCopyWith<NameState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SocialLoginStateCopyWith<$Res> {
-  factory $SocialLoginStateCopyWith(
-          SocialLoginState value, $Res Function(SocialLoginState) then) =
-      _$SocialLoginStateCopyWithImpl<$Res, SocialLoginState>;
+abstract class $NameStateCopyWith<$Res> {
+  factory $NameStateCopyWith(NameState value, $Res Function(NameState) then) =
+      _$NameStateCopyWithImpl<$Res, NameState>;
   @useResult
-  $Res call({bool isLoading, String errorMessage, bool successLogin});
+  $Res call({String name, bool isLoading, String errorMessage});
 }
 
 /// @nodoc
-class _$SocialLoginStateCopyWithImpl<$Res, $Val extends SocialLoginState>
-    implements $SocialLoginStateCopyWith<$Res> {
-  _$SocialLoginStateCopyWithImpl(this._value, this._then);
+class _$NameStateCopyWithImpl<$Res, $Val extends NameState>
+    implements $NameStateCopyWith<$Res> {
+  _$NameStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of SocialLoginState
+  /// Create a copy of NameState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? name = null,
     Object? isLoading = null,
     Object? errorMessage = null,
-    Object? successLogin = null,
   }) {
     return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -64,43 +67,43 @@ class _$SocialLoginStateCopyWithImpl<$Res, $Val extends SocialLoginState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      successLogin: null == successLogin
-          ? _value.successLogin
-          : successLogin // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$SocialLoginStateImplCopyWith<$Res>
-    implements $SocialLoginStateCopyWith<$Res> {
-  factory _$$SocialLoginStateImplCopyWith(_$SocialLoginStateImpl value,
-          $Res Function(_$SocialLoginStateImpl) then) =
-      __$$SocialLoginStateImplCopyWithImpl<$Res>;
+abstract class _$$NameStateImplCopyWith<$Res>
+    implements $NameStateCopyWith<$Res> {
+  factory _$$NameStateImplCopyWith(
+          _$NameStateImpl value, $Res Function(_$NameStateImpl) then) =
+      __$$NameStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool isLoading, String errorMessage, bool successLogin});
+  $Res call({String name, bool isLoading, String errorMessage});
 }
 
 /// @nodoc
-class __$$SocialLoginStateImplCopyWithImpl<$Res>
-    extends _$SocialLoginStateCopyWithImpl<$Res, _$SocialLoginStateImpl>
-    implements _$$SocialLoginStateImplCopyWith<$Res> {
-  __$$SocialLoginStateImplCopyWithImpl(_$SocialLoginStateImpl _value,
-      $Res Function(_$SocialLoginStateImpl) _then)
+class __$$NameStateImplCopyWithImpl<$Res>
+    extends _$NameStateCopyWithImpl<$Res, _$NameStateImpl>
+    implements _$$NameStateImplCopyWith<$Res> {
+  __$$NameStateImplCopyWithImpl(
+      _$NameStateImpl _value, $Res Function(_$NameStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of SocialLoginState
+  /// Create a copy of NameState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? name = null,
     Object? isLoading = null,
     Object? errorMessage = null,
-    Object? successLogin = null,
   }) {
-    return _then(_$SocialLoginStateImpl(
+    return _then(_$NameStateImpl(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -109,81 +112,72 @@ class __$$SocialLoginStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      successLogin: null == successLogin
-          ? _value.successLogin
-          : successLogin // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
 
 /// @nodoc
 
-class _$SocialLoginStateImpl implements _SocialLoginState {
-  const _$SocialLoginStateImpl(
-      {this.isLoading = false,
-      this.errorMessage = '',
-      this.successLogin = false});
+class _$NameStateImpl implements _NameState {
+  const _$NameStateImpl(
+      {this.name = '', this.isLoading = false, this.errorMessage = ''});
 
+  @override
+  @JsonKey()
+  final String name;
   @override
   @JsonKey()
   final bool isLoading;
   @override
   @JsonKey()
   final String errorMessage;
-  @override
-  @JsonKey()
-  final bool successLogin;
 
   @override
   String toString() {
-    return 'SocialLoginState(isLoading: $isLoading, errorMessage: $errorMessage, successLogin: $successLogin)';
+    return 'NameState(name: $name, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SocialLoginStateImpl &&
+            other is _$NameStateImpl &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage) &&
-            (identical(other.successLogin, successLogin) ||
-                other.successLogin == successLogin));
+                other.errorMessage == errorMessage));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, isLoading, errorMessage, successLogin);
+  int get hashCode => Object.hash(runtimeType, name, isLoading, errorMessage);
 
-  /// Create a copy of SocialLoginState
+  /// Create a copy of NameState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SocialLoginStateImplCopyWith<_$SocialLoginStateImpl> get copyWith =>
-      __$$SocialLoginStateImplCopyWithImpl<_$SocialLoginStateImpl>(
-          this, _$identity);
+  _$$NameStateImplCopyWith<_$NameStateImpl> get copyWith =>
+      __$$NameStateImplCopyWithImpl<_$NameStateImpl>(this, _$identity);
 }
 
-abstract class _SocialLoginState implements SocialLoginState {
-  const factory _SocialLoginState(
-      {final bool isLoading,
-      final String errorMessage,
-      final bool successLogin}) = _$SocialLoginStateImpl;
+abstract class _NameState implements NameState {
+  const factory _NameState(
+      {final String name,
+      final bool isLoading,
+      final String errorMessage}) = _$NameStateImpl;
 
+  @override
+  String get name;
   @override
   bool get isLoading;
   @override
   String get errorMessage;
-  @override
-  bool get successLogin;
 
-  /// Create a copy of SocialLoginState
+  /// Create a copy of NameState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SocialLoginStateImplCopyWith<_$SocialLoginStateImpl> get copyWith =>
+  _$$NameStateImplCopyWith<_$NameStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

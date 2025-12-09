@@ -5,22 +5,19 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 
-import 'package:hvatai/features/auth/domain/usecases/login_usecase.dart';
+import 'package:hvatai/features/auth/domain/usecases/send_otp_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
 part 'login_state.dart';
 part 'login_cubit.freezed.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  LoginCubit(this.loginUseCase) : super(const LoginState());
+  LoginCubit(this.sendOtpUseCase) : super(const LoginState());
 
   final formKey = GlobalKey<FormState>();
-  final LoginUseCase loginUseCase;
+  final SendOtpUseCase sendOtpUseCase;
 
-  void updateEmail(String value) => emit(state.copyWith(email: value));
-  void updatePassword(String value) => emit(state.copyWith(password: value));
-  void togglePasswordVisibility() =>
-      emit(state.copyWith(obscurePassword: !state.obscurePassword));
+  void updatePhone(String value) => emit(state.copyWith(phone: value));
 
   void login(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
@@ -30,8 +27,7 @@ class LoginCubit extends Cubit<LoginState> {
 
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
-    final loginData = LoginParams(email: state.email, password: state.password);
-    final result = await loginUseCase.call(loginData);
+    final result = await sendOtpUseCase.call(SendOtpParams(phone: state.phone));
 
     result.fold(
       (failure) {
@@ -41,22 +37,17 @@ class LoginCubit extends Cubit<LoginState> {
         ));
         showFloatingMessageError('invalidEmailOrPassword'.tr());
       },
-      (loginModel) async {
+      (otpResponse) async {
         emit(state.copyWith(
           isLoading: false,
           successLogin: true,
         ));
 
-        showFloatingMessageSuccess('loginSuccessful'.tr());
+        showFloatingMessageSuccess(otpResponse.message.isNotEmpty
+            ? otpResponse.message
+            : 'OTP sent successfully');
 
-        final isSetup = loginModel.isSetup ?? false;
-        if (isSetup) {
-          context.push(AppRoutes.home);
-        } else {
-          context.push(
-            AppRoutes.interests,
-          );
-        }
+        context.push(AppRoutes.otp, extra: state.phone);
       },
     );
   }

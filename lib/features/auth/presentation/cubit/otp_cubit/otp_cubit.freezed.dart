@@ -20,7 +20,7 @@ mixin _$OtpState {
   bool get isVerifying => throw _privateConstructorUsedError;
   bool get success => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
-  String get email => throw _privateConstructorUsedError;
+  String get phone => throw _privateConstructorUsedError;
 
   /// Create a copy of OtpState
   /// with the given fields replaced by the non-null parameter values.
@@ -39,7 +39,7 @@ abstract class $OtpStateCopyWith<$Res> {
       bool isVerifying,
       bool success,
       String errorMessage,
-      String email});
+      String phone});
 }
 
 /// @nodoc
@@ -61,7 +61,7 @@ class _$OtpStateCopyWithImpl<$Res, $Val extends OtpState>
     Object? isVerifying = null,
     Object? success = null,
     Object? errorMessage = null,
-    Object? email = null,
+    Object? phone = null,
   }) {
     return _then(_value.copyWith(
       code: null == code
@@ -80,9 +80,9 @@ class _$OtpStateCopyWithImpl<$Res, $Val extends OtpState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -101,7 +101,7 @@ abstract class _$$OtpStateImplCopyWith<$Res>
       bool isVerifying,
       bool success,
       String errorMessage,
-      String email});
+      String phone});
 }
 
 /// @nodoc
@@ -121,7 +121,7 @@ class __$$OtpStateImplCopyWithImpl<$Res>
     Object? isVerifying = null,
     Object? success = null,
     Object? errorMessage = null,
-    Object? email = null,
+    Object? phone = null,
   }) {
     return _then(_$OtpStateImpl(
       code: null == code
@@ -140,9 +140,9 @@ class __$$OtpStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      email: null == email
-          ? _value.email
-          : email // ignore: cast_nullable_to_non_nullable
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -156,7 +156,7 @@ class _$OtpStateImpl implements _OtpState {
       this.isVerifying = false,
       this.success = false,
       this.errorMessage = '',
-      this.email = ''});
+      this.phone = ''});
 
   @override
   @JsonKey()
@@ -172,11 +172,11 @@ class _$OtpStateImpl implements _OtpState {
   final String errorMessage;
   @override
   @JsonKey()
-  final String email;
+  final String phone;
 
   @override
   String toString() {
-    return 'OtpState(code: $code, isVerifying: $isVerifying, success: $success, errorMessage: $errorMessage, email: $email)';
+    return 'OtpState(code: $code, isVerifying: $isVerifying, success: $success, errorMessage: $errorMessage, phone: $phone)';
   }
 
   @override
@@ -190,12 +190,12 @@ class _$OtpStateImpl implements _OtpState {
             (identical(other.success, success) || other.success == success) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
-            (identical(other.email, email) || other.email == email));
+            (identical(other.phone, phone) || other.phone == phone));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, code, isVerifying, success, errorMessage, email);
+      Object.hash(runtimeType, code, isVerifying, success, errorMessage, phone);
 
   /// Create a copy of OtpState
   /// with the given fields replaced by the non-null parameter values.
@@ -212,7 +212,7 @@ abstract class _OtpState implements OtpState {
       final bool isVerifying,
       final bool success,
       final String errorMessage,
-      final String email}) = _$OtpStateImpl;
+      final String phone}) = _$OtpStateImpl;
 
   @override
   String get code;
@@ -223,7 +223,7 @@ abstract class _OtpState implements OtpState {
   @override
   String get errorMessage;
   @override
-  String get email;
+  String get phone;
 
   /// Create a copy of OtpState
   /// with the given fields replaced by the non-null parameter values.

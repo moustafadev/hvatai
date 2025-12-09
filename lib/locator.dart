@@ -7,7 +7,6 @@ import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cu
 import 'package:hvatai/features/activity/presentation/cubit/featured_activity/featured_activity_cubit.dart';
 import 'package:hvatai/features/activity/presentation/cubit/rates_activity/rates_activity_cubit.dart';
 import 'package:hvatai/features/favorites/presentation/cubit/favorite/favorite_cubit.dart';
-import 'package:hvatai/features/favorites/presentation/favorites.dart';
 import 'package:hvatai/features/cart/data/datasources/api_service_cart.dart';
 import 'package:hvatai/features/cart/data/repositories/cart_repository_impl.dart';
 import 'package:hvatai/features/cart/domain/repositories/cart_repository.dart';
@@ -17,14 +16,12 @@ import 'package:hvatai/features/cart/presentation/cubit/cart_product_details/car
 import 'package:hvatai/features/auth/data/datasources/api_service_auth.dart';
 import 'package:hvatai/features/auth/data/repositories/auth_impl_repository.dart';
 import 'package:hvatai/features/auth/domain/repositories/auth_repository.dart';
-import 'package:hvatai/features/auth/presentation/cubit/add_address/add_address_cubit.dart';
 import 'package:hvatai/features/address/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/interests/interests_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/interests_detail/interests_detail_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/otp_cubit/otp_cubit.dart';
-import 'package:hvatai/features/auth/presentation/cubit/registration/registration_cubit.dart';
-import 'package:hvatai/features/auth/presentation/cubit/social_login.dart/social_login_cubit.dart';
+import 'package:hvatai/features/auth/presentation/cubit/name_cubit/name_cubit.dart';
 import 'package:hvatai/features/address/data/datasources/api_service_address.dart';
 import 'package:hvatai/features/address/data/repositories/address_impl_repository.dart';
 import 'package:hvatai/features/address/domain/repositories/address_repository.dart';
@@ -106,6 +103,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => EditAddressCubit(
         locator(),
       ));
+  locator.registerFactory(() => NameCubit(locator()));
   locator.registerFactory(
       () => InterestsDetailCubit(locator(), locator(), locator()));
   locator.registerFactory(() => ProfileCubit(locator(), locator()));
@@ -171,11 +169,6 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => ProductImageCubit());
   locator.registerFactory(() => NotificationsCubit(locator(), locator()));
 
-  locator.registerFactory(() => SocialLoginCubit(locator(), locator()));
-  locator.registerFactory(() => RegistrationCubit(
-        locator(),
-      ));
-  locator.registerFactory(() => AddAddressCubit(locator()));
   locator.registerFactory(
       () => DeliveryAddressCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => OtpCubit(locator()));

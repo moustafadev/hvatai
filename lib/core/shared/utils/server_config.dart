@@ -3,13 +3,15 @@ abstract class ServerConfig {
   static const baseUrl = "${domen}api/v1/";
   static String token = "";
 
-  static const String login = "sign-in";
-  static const String register = "sign-up";
-  static const String checkOtp = "submit-otp";
+  // =============================== Auth endpoints ===============================
+  static const String auth = "auth";
+  static const String verifyAuthOtp = "verify-auth-otp";
   static const String interestsCategories = "interestsCategories";
-  static const String loginWithGoogle = "auth/google";
-  static const String loginWithApple = "auth/apple";
 
+  // =============================== Profile endpoints ===============================
+  static const String profile = "profile";
+
+  // =============================== Delivery address endpoints ===============================
   static const String deliveryAddress = "addresses";
   static String deliveryAddressId(int addressId) =>
       '$deliveryAddress/$addressId';
@@ -18,7 +20,6 @@ abstract class ServerConfig {
   static String cardId(int cardId) => '$cards/$cardId';
   static String cartId(int cartId) => '$cart/$cartId/clear';
   static String updateCart(int cartId) => '$addToCart/$cartId';
-  static const String profile = "profile";
   static const String cards = "cards";
   static const String cart = "cart";
   static const String notifications = "notifications";

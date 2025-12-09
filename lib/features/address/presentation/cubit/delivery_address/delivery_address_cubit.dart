@@ -7,7 +7,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
-import 'package:hvatai/features/auth/data/models/address_model/address_model.dart';
+import 'package:hvatai/features/address/data/models/address_model/address_model.dart';
 // ignore: unused_import
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/address/domain/usecases/add_new_address_usecase.dart';
