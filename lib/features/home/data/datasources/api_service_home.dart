@@ -5,24 +5,28 @@ import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/home/data/model/live_stream_event/live_stream_event.dart';
+import 'package:hvatai/features/home/domain/usecases/get_streams_usecases.dart';
+import 'package:hvatai/features/home/domain/usecases/get_live_streams_usecases.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 
 class ApiServiceHome extends ApiBase {
   Future<StreamListResponseModel> getStreams({
-    String? status, // e.g., 'live'
-    int page = 1,
-    int perPage = 15,
+    required GetStreamsParams getStreamsParams,
   }) async {
     return executeAndHandleErrorServer<StreamListResponseModel>(() async {
-      final uri = Uri.parse(ServerConfig.streams).replace(
-        queryParameters: {
-          if (status != null) 'status': status,
-          'page': '$page',
-          'per_page': '$perPage',
-        },
-      );
+      final categories = getStreamsParams.categoryIds ?? [];
 
-      final response = await get(uri.toString());
+      // Send category_ids[] as repeated params like ?category_ids[]=1&category_ids[]=2
+      final queryParameters = <String, dynamic>{
+        if (getStreamsParams.status != null) 'status': getStreamsParams.status!,
+        'page': getStreamsParams.page,
+        'per_page': getStreamsParams.perPage,
+        if (categories.isNotEmpty)
+          'categories_ids[]': categories.map((e) => e.toString()).toList(),
+      };
+
+      final response =
+          await get(ServerConfig.streams, queryParameters: queryParameters);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final json = Map<String, dynamic>.from(response.json);
@@ -50,8 +54,13 @@ class ApiServiceHome extends ApiBase {
   }
 
   Future<StreamListResponseModel> getLiveStreams(
-      {int page = 1, int perPage = 15}) {
-    return getStreams(status: 'live', page: page, perPage: perPage);
+      {required GetLiveStreamsParams getLiveStreamsParams}) {
+    return getStreams(
+        getStreamsParams: GetStreamsParams(
+            status: 'live',
+            page: getLiveStreamsParams.page,
+            perPage: getLiveStreamsParams.perPage,
+            categoryIds: getLiveStreamsParams.categoryIds));
   }
 
   Stream<LiveStreamEvent> watchLiveStreams() {

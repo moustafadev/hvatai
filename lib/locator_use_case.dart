@@ -20,6 +20,7 @@ import 'package:hvatai/features/chat/domain/usecases/get_support_messages_usecas
 import 'package:hvatai/features/chat/domain/usecases/mark_as_read_usecase.dart';
 import 'package:hvatai/features/chat/domain/usecases/send_message.dart';
 import 'package:hvatai/features/chat/domain/usecases/send_support_messages_usecase.dart';
+import 'package:hvatai/features/home/domain/usecases/get_live_streams_usecases.dart';
 import 'package:hvatai/features/home/domain/usecases/get_streams_usecases.dart';
 import 'package:hvatai/features/home/domain/usecases/join_stream_usecase.dart';
 import 'package:hvatai/features/notifications/domain/usecases/get_notification_usecase.dart';

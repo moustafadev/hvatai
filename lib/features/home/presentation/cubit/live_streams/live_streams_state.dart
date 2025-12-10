@@ -16,6 +16,7 @@ class LiveStreamsState with _$LiveStreamsState {
     @Default(false) bool isJoining,
     String? joinError,
     JoinStreamData? joinData,
+    @Default(<int>[]) List<int> categoryIds,
   }) = _LiveStreamsState;
 
   factory LiveStreamsState.initial() => const LiveStreamsState(
@@ -28,5 +29,6 @@ class LiveStreamsState with _$LiveStreamsState {
         isJoining: false,
         joinError: null,
         joinData: null,
+        categoryIds: <int>[],
       );
 }

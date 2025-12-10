@@ -25,6 +25,7 @@ mixin _$LiveStreamsState {
   bool get isJoining => throw _privateConstructorUsedError;
   String? get joinError => throw _privateConstructorUsedError;
   JoinStreamData? get joinData => throw _privateConstructorUsedError;
+  List<int> get categoryIds => throw _privateConstructorUsedError;
 
   /// Create a copy of LiveStreamsState
   /// with the given fields replaced by the non-null parameter values.
@@ -48,7 +49,8 @@ abstract class $LiveStreamsStateCopyWith<$Res> {
       bool hasMore,
       bool isJoining,
       String? joinError,
-      JoinStreamData? joinData});
+      JoinStreamData? joinData,
+      List<int> categoryIds});
 
   $JoinStreamDataCopyWith<$Res>? get joinData;
 }
@@ -77,6 +79,7 @@ class _$LiveStreamsStateCopyWithImpl<$Res, $Val extends LiveStreamsState>
     Object? isJoining = null,
     Object? joinError = freezed,
     Object? joinData = freezed,
+    Object? categoryIds = null,
   }) {
     return _then(_value.copyWith(
       liveStreams: null == liveStreams
@@ -115,6 +118,10 @@ class _$LiveStreamsStateCopyWithImpl<$Res, $Val extends LiveStreamsState>
           ? _value.joinData
           : joinData // ignore: cast_nullable_to_non_nullable
               as JoinStreamData?,
+      categoryIds: null == categoryIds
+          ? _value.categoryIds
+          : categoryIds // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ) as $Val);
   }
 
@@ -150,7 +157,8 @@ abstract class _$$LiveStreamsStateImplCopyWith<$Res>
       bool hasMore,
       bool isJoining,
       String? joinError,
-      JoinStreamData? joinData});
+      JoinStreamData? joinData,
+      List<int> categoryIds});
 
   @override
   $JoinStreamDataCopyWith<$Res>? get joinData;
@@ -178,6 +186,7 @@ class __$$LiveStreamsStateImplCopyWithImpl<$Res>
     Object? isJoining = null,
     Object? joinError = freezed,
     Object? joinData = freezed,
+    Object? categoryIds = null,
   }) {
     return _then(_$LiveStreamsStateImpl(
       liveStreams: null == liveStreams
@@ -216,6 +225,10 @@ class __$$LiveStreamsStateImplCopyWithImpl<$Res>
           ? _value.joinData
           : joinData // ignore: cast_nullable_to_non_nullable
               as JoinStreamData?,
+      categoryIds: null == categoryIds
+          ? _value._categoryIds
+          : categoryIds // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 }
@@ -232,8 +245,10 @@ class _$LiveStreamsStateImpl implements _LiveStreamsState {
       this.hasMore = true,
       this.isJoining = false,
       this.joinError,
-      this.joinData})
-      : _liveStreams = liveStreams;
+      this.joinData,
+      final List<int> categoryIds = const <int>[]})
+      : _liveStreams = liveStreams,
+        _categoryIds = categoryIds;
 
   final List<StreamDataModel> _liveStreams;
   @override
@@ -265,10 +280,18 @@ class _$LiveStreamsStateImpl implements _LiveStreamsState {
   final String? joinError;
   @override
   final JoinStreamData? joinData;
+  final List<int> _categoryIds;
+  @override
+  @JsonKey()
+  List<int> get categoryIds {
+    if (_categoryIds is EqualUnmodifiableListView) return _categoryIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_categoryIds);
+  }
 
   @override
   String toString() {
-    return 'LiveStreamsState(liveStreams: $liveStreams, isLoading: $isLoading, error: $error, page: $page, lastPage: $lastPage, hasMore: $hasMore, isJoining: $isJoining, joinError: $joinError, joinData: $joinData)';
+    return 'LiveStreamsState(liveStreams: $liveStreams, isLoading: $isLoading, error: $error, page: $page, lastPage: $lastPage, hasMore: $hasMore, isJoining: $isJoining, joinError: $joinError, joinData: $joinData, categoryIds: $categoryIds)';
   }
 
   @override
@@ -290,7 +313,9 @@ class _$LiveStreamsStateImpl implements _LiveStreamsState {
             (identical(other.joinError, joinError) ||
                 other.joinError == joinError) &&
             (identical(other.joinData, joinData) ||
-                other.joinData == joinData));
+                other.joinData == joinData) &&
+            const DeepCollectionEquality()
+                .equals(other._categoryIds, _categoryIds));
   }
 
   @override
@@ -304,7 +329,8 @@ class _$LiveStreamsStateImpl implements _LiveStreamsState {
       hasMore,
       isJoining,
       joinError,
-      joinData);
+      joinData,
+      const DeepCollectionEquality().hash(_categoryIds));
 
   /// Create a copy of LiveStreamsState
   /// with the given fields replaced by the non-null parameter values.
@@ -326,7 +352,8 @@ abstract class _LiveStreamsState implements LiveStreamsState {
       final bool hasMore,
       final bool isJoining,
       final String? joinError,
-      final JoinStreamData? joinData}) = _$LiveStreamsStateImpl;
+      final JoinStreamData? joinData,
+      final List<int> categoryIds}) = _$LiveStreamsStateImpl;
 
   @override
   List<StreamDataModel> get liveStreams;
@@ -346,6 +373,8 @@ abstract class _LiveStreamsState implements LiveStreamsState {
   String? get joinError;
   @override
   JoinStreamData? get joinData;
+  @override
+  List<int> get categoryIds;
 
   /// Create a copy of LiveStreamsState
   /// with the given fields replaced by the non-null parameter values.

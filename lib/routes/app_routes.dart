@@ -12,6 +12,9 @@ class AppRoutes {
   // =============================== Home routes ===============================
 
   static const String home = '/home';
+  static const String categoriesForYou = '/categories_for_you';
+ 
+ 
   static const String search = '/search';
   static const String profile = '/profile';
   static const String activity = '/activity';

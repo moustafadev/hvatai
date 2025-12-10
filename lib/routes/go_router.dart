@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/cart/presentation/cart.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
@@ -14,6 +15,9 @@ import 'package:hvatai/features/chat/presentation/chat.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/awards/presentation/awards.dart';
 import 'package:hvatai/features/awards/presentation/cubit/awards_club_cubit.dart';
+import 'package:hvatai/features/home/presentation/cubit/live_streams/live_streams_cubit.dart';
+import 'package:hvatai/features/home/presentation/cubit/categories/categories_cubit.dart';
+import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/notifications/presentation/cubit/notifications_cubit/notifications_cubit.dart';
 import 'package:hvatai/features/notifications/presentation/notifications.dart';
 import 'package:hvatai/features/orders/presentation/screens/my_orders_screen.dart';
@@ -260,6 +264,20 @@ final GoRouter router = GoRouter(
       path: AppRoutes.termAndConditions, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const TermsAndCondition();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.categoriesForYou,
+      builder: (context, state) {
+        final extra = state.extra as Map<String, Object>;
+        final liveStreamsCubit = extra['liveStreamsCubit'] as LiveStreamsCubit;
+        final categoriesCubit = extra['categoriesCubit'] as CategoriesCubit;
+        final categories = extra['categories'] as List<CategoryData>;
+        return CategoriesForYouScreen(
+          liveStreamsCubit: liveStreamsCubit,
+          categoriesCubit: categoriesCubit,
+          categories: categories,
+        );
       },
     ),
     GoRoute(

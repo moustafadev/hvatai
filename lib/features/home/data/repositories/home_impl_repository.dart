@@ -8,6 +8,8 @@ import 'package:hvatai/features/home/data/datasources/api_service_home.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/home/data/model/live_stream_event/live_stream_event.dart';
 import 'package:hvatai/features/home/domain/repositories/home_repository.dart';
+import 'package:hvatai/features/home/domain/usecases/get_live_streams_usecases.dart';
+import 'package:hvatai/features/home/domain/usecases/get_streams_usecases.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/locator.dart';
 
@@ -23,15 +25,11 @@ class HomeImplRepository implements HomeRepository {
 
   @override
   Future<Either<String, StreamListResponseModel>> getStreams({
-    String? status,
-    int page = 1,
-    int perPage = 15,
+    required GetStreamsParams getStreamsParams,
   }) {
     return executeAndHandleError<StreamListResponseModel>(() async {
       final res = await _apiServiceHome.getStreams(
-        status: status,
-        page: page,
-        perPage: perPage,
+        getStreamsParams: getStreamsParams,
       );
       return res;
     });
@@ -39,13 +37,11 @@ class HomeImplRepository implements HomeRepository {
 
   @override
   Future<Either<String, StreamListResponseModel>> getLiveStreams({
-    int page = 1,
-    int perPage = 15,
+    required GetLiveStreamsParams getLiveStreamsParams,
   }) {
     return executeAndHandleError<StreamListResponseModel>(() async {
       final res = await _apiServiceHome.getLiveStreams(
-        page: page,
-        perPage: perPage,
+        getLiveStreamsParams: getLiveStreamsParams,
       );
       return res;
     });

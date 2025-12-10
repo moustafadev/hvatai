@@ -31,7 +31,12 @@ class CategoryTabsWidget extends StatelessWidget {
               final isSelected = state.selectedIndicesDetails.contains(index);
 
               return GestureDetector(
-                onTap: () => cubit.toggleDetail(index, category.id ?? 0),
+                onTap: () {
+                  cubit.toggleDetail(index, category.id ?? 0);
+                  context.read<LiveStreamsCubit>().fetchLiveStreams(
+                      isRefresh: true,
+                      categoryIds: cubit.state.selectedDetailIds);
+                },
                 child: Container(
                   margin: EdgeInsets.only(left: index == 0 ? 16.w : 12.w),
                   decoration: BoxDecoration(

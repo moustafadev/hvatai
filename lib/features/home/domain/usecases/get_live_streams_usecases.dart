@@ -1,38 +1,36 @@
+
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
 import 'package:hvatai/features/home/domain/repositories/home_repository.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 
-/// Fetch streams with optional status + pagination
-class GetStreamsUsecase
-    implements UseCase<StreamListResponseModel, GetStreamsParams> {
+/// Convenience use case for live streams (status = 'live')
+class GetLiveStreamsUsecase
+    implements UseCase<StreamListResponseModel, GetLiveStreamsParams> {
   final HomeRepository _repo;
-  GetStreamsUsecase(this._repo);
+  GetLiveStreamsUsecase(this._repo);
 
   @override
   Future<Either<String, StreamListResponseModel>> call(
-      GetStreamsParams params) {
-    return _repo.getStreams(
-      getStreamsParams: params,
+      GetLiveStreamsParams params) {
+    return _repo.getLiveStreams(
+      getLiveStreamsParams: params,
     );
   }
 }
 
-class GetStreamsParams {
-  final String? status; // e.g. 'live', 'ended', etc.
+class GetLiveStreamsParams {
   final int page;
   final int perPage;
   final List<int>? categoryIds;
 
-  GetStreamsParams({
-    this.status,
+  GetLiveStreamsParams({
     this.page = 1,
     this.perPage = 15,
     this.categoryIds,
   });
 
   Map<String, dynamic> toJson() => {
-        if (status != null) 'status': status,
         'page': page,
         'per_page': perPage,
         if (categoryIds != null && categoryIds!.isNotEmpty)

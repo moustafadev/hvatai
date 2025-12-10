@@ -64,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     inChat = false;
+    locator<ApiServiceProfile>().getMyProducts(categoryIds: [1,2]);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -103,15 +104,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CategoryTabsWidget(),
-                      10.ph,
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16.0),
                         child: TitleCategoriesForYou(),
                       ),
                       12.ph,
                       MyCategory(),
-                      12.ph,
+                      15.ph,
+                      CategoryTabsWidget(),
+                      24.ph,
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: LiveVideosWidget(

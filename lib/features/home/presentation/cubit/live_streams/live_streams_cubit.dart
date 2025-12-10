@@ -7,7 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/home/data/model/live_stream_event/live_stream_event.dart';
-import 'package:hvatai/features/home/domain/usecases/get_streams_usecases.dart';
+import 'package:hvatai/features/home/domain/usecases/get_live_streams_usecases.dart';
 import 'package:hvatai/features/home/domain/usecases/join_stream_usecase.dart';
 import 'package:hvatai/features/home/domain/usecases/watch_live_streams_usecase.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
@@ -36,6 +36,7 @@ class LiveStreamsCubit extends Cubit<LiveStreamsState> {
       lastPage: 1,
       hasMore: true,
       liveStreams: [],
+      categoryIds: state.categoryIds,
     ));
 
     await _fetchLiveStreamsInternal(page: 1, append: false);
@@ -148,21 +149,30 @@ class LiveStreamsCubit extends Cubit<LiveStreamsState> {
     _liveStreamsSubscription = null;
   }
 
-  Future<void> fetchLiveStreams({bool isRefresh = false}) async {
+  Future<void> fetchLiveStreams(
+      {bool isRefresh = false, List<int>? categoryIds}) async {
     final next = isRefresh ? 1 : state.page + 1;
     final targetPage = state.liveStreams.isEmpty ? 1 : next;
     final append = state.liveStreams.isNotEmpty && !isRefresh;
 
-    emit(state.copyWith(isLoading: true, error: null));
-    await _fetchLiveStreamsInternal(page: targetPage, append: append);
+    emit(state.copyWith(
+        isLoading: true,
+        error: null,
+        categoryIds: categoryIds ?? state.categoryIds));
+    await _fetchLiveStreamsInternal(
+      page: targetPage,
+      append: append,
+      categoryIds: categoryIds ?? state.categoryIds,
+    );
   }
 
   Future<void> _fetchLiveStreamsInternal({
     required int page,
     required bool append,
+    List<int>? categoryIds,
   }) async {
-    final res =
-        await _getLiveStreams(GetLiveStreamsParams(page: page, perPage: 15));
+    final res = await _getLiveStreams(GetLiveStreamsParams(
+        page: page, perPage: 15, categoryIds: categoryIds));
 
     res.fold(
       (err) => emit(state.copyWith(isLoading: false, error: err)),
@@ -185,6 +195,7 @@ class LiveStreamsCubit extends Cubit<LiveStreamsState> {
           page: currentPage,
           lastPage: lastPage,
           hasMore: hasMore,
+          categoryIds: categoryIds ?? state.categoryIds,
         ));
       },
     );

@@ -10,13 +10,23 @@ class TitleCategoriesForYou extends StatelessWidget {
     return Row(
       children: [
         CustomText(
-            text: 'categoriesForYou'.tr(),
-             fontWeight: FontWeight.w800,
-            fontSize: 20.sp,
-            ),
+          text: 'categoriesForYou'.tr(),
+          fontWeight: FontWeight.w800,
+          fontSize: 20.sp,
+        ),
         const Spacer(),
         GestureDetector(
-            onTap: () {}, child: Icon(Icons.double_arrow_sharp, size: 14.sp))
+            onTap: () {
+              final liveStreamsCubit = context.read<LiveStreamsCubit>();
+              final categoriesCubit = context.read<CategoriesCubit>();
+              final categories = categoriesCubit.state.categories?.data ?? [];
+              context.push(AppRoutes.categoriesForYou, extra: {
+                'liveStreamsCubit': liveStreamsCubit,
+                'categoriesCubit': categoriesCubit,
+                'categories': categories,
+              });
+            },
+            child: Icon(Icons.double_arrow_sharp, size: 14.sp))
       ],
     );
   }
