@@ -64,7 +64,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     inChat = false;
-    locator<ApiServiceProfile>().getMyProducts(categoryIds: [1,2]);
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
