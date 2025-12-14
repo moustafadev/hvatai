@@ -173,5 +173,12 @@ class ProfileCubit extends Cubit<ProfileState> {
         "title": "termsConditions".tr(),
       },
     ];
+
+
+
+  }
+
+  void updateRole(bool isSeller) {
+    emit(state.copyWith(isSeller: isSeller));
   }
 }

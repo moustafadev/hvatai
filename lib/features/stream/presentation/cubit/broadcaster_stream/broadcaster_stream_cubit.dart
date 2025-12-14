@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/start_stream_usecase.dart';
 import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:livekit_client/livekit_client.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pusher_client_socket/pusher_client_socket.dart';
@@ -51,6 +53,7 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
   final StartStreamUsecase _startStreamUsecase;
 
   Timer? _timer;
+  bool _previewScheduled = false;
   TextEditingController controller = TextEditingController();
   final _pusherManager = PusherManager();
   PusherClient? _pusher;
@@ -63,7 +66,6 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
     // Initialize timer
     _startTimer();
 
-    
     emit(state.copyWith(
       viewerCount: state.stream.viewerCount ?? 0,
       isInitializing: false,
@@ -115,8 +117,8 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
     final updatedSession = hasSessionUpdate
         ? product.bidSession?.copyWith(
               id: sessionData.id ?? product.bidSession?.id,
-              sessionEndTime:
-                  sessionData.sessionEndsAt ?? product.bidSession?.sessionEndTime,
+              sessionEndTime: sessionData.sessionEndsAt ??
+                  product.bidSession?.sessionEndTime,
               status: sessionData.status ?? product.bidSession?.status,
             ) ??
             ToggleBiddingSessionModel(
@@ -231,8 +233,10 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
       final nextSelecting = shouldResetWinner ? false : state.isSelectingWinner;
 
       // Update bids list
-      final updatedBids = List<BidStreamItem>.from(state.bids)..insert(0, event.bid);
-      final updatedStreamProductId = state.currentStreamProductId ?? event.bid.streamProductId;
+      final updatedBids = List<BidStreamItem>.from(state.bids)
+        ..insert(0, event.bid);
+      final updatedStreamProductId =
+          state.currentStreamProductId ?? event.bid.streamProductId;
       final updatedCurrentBid = (state.currentStreamProductId == null ||
               state.currentStreamProductId == event.bid.streamProductId)
           ? event.bid
@@ -248,33 +252,38 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         // Always update timer from the new bid session when a bid is placed
         DateTime? timerEndTime;
         int? timerRemainingSeconds;
-        
+
         if (event.bidSession != null) {
           final session = event.bidSession!;
           timerEndTime = session.sessionEndsAt;
           timerRemainingSeconds = session.remainingSeconds;
 
           // Calculate end time if we have remaining seconds but no end time
-          if (timerEndTime == null && timerRemainingSeconds != null && timerRemainingSeconds > 0) {
-            timerEndTime = DateTime.now().add(Duration(seconds: timerRemainingSeconds));
+          if (timerEndTime == null &&
+              timerRemainingSeconds != null &&
+              timerRemainingSeconds > 0) {
+            timerEndTime =
+                DateTime.now().add(Duration(seconds: timerRemainingSeconds));
           }
 
           // Calculate remaining seconds if we have end time but no remaining seconds
           if (timerRemainingSeconds == null && timerEndTime != null) {
-            timerRemainingSeconds = timerEndTime.difference(DateTime.now()).inSeconds;
+            timerRemainingSeconds =
+                timerEndTime.difference(DateTime.now()).inSeconds;
             if (timerRemainingSeconds < 0) {
               timerRemainingSeconds = 0;
             }
           }
 
           if (timerEndTime != null || timerRemainingSeconds != null) {
-            debugPrint('⏰ Updating bid session timer (new bid placed) - Remaining: ${timerRemainingSeconds}s, EndTime: $timerEndTime');
+            debugPrint(
+                '⏰ Updating bid session timer (new bid placed) - Remaining: ${timerRemainingSeconds}s, EndTime: $timerEndTime');
           }
         }
 
         // Resolve timing from product as fallback
         final bidTiming = _resolveBidTiming(product);
-        
+
         // Use timer values from bid session if available, otherwise use resolved timing
         emit(state.copyWith(
           bids: updatedBids,
@@ -282,10 +291,12 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
             streamProducts: _updateStreamProducts(product),
           ),
           activeStreamProduct: product,
-          currentStreamProductId: product.id ?? product.productId ?? updatedStreamProductId,
+          currentStreamProductId:
+              product.id ?? product.productId ?? updatedStreamProductId,
           currentProductStreamBid: updatedCurrentBid,
           currentBidEndTime: timerEndTime ?? bidTiming.endTime,
-          currentBidRemainingSeconds: timerRemainingSeconds ?? bidTiming.remainingSeconds,
+          currentBidRemainingSeconds:
+              timerRemainingSeconds ?? bidTiming.remainingSeconds,
           currentWinner: nextWinner,
           isSelectingWinner: nextSelecting,
         ));
@@ -518,6 +529,9 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         audioTrack: audioTrack,
       ));
 
+      // Schedule preview capture/send in background after publish starts.
+      // _schedulePreviewUpload();
+
       debugPrint('✅ Started publishing stream');
     } catch (e, st) {
       debugPrint('❌ Failed to start publishing: $e');
@@ -556,10 +570,10 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
   // ================== Microphone ==================
   Future<void> toggleMicrophone() async {
     if (state.localParticipant == null) return;
-    
+
     final newMutedState = !state.isMicrophoneMuted;
     emit(state.copyWith(isMicrophoneMuted: newMutedState));
-    
+
     try {
       await state.localParticipant!.setMicrophoneEnabled(!newMutedState);
       debugPrint('✅ Microphone ${newMutedState ? 'muted' : 'unmuted'}');
@@ -595,6 +609,88 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         };
       },
     );
+  }
+
+  // ================== Preview Upload (placeholder) ==================
+  void _schedulePreviewUpload() {
+    if (_previewScheduled) return;
+    _previewScheduled = true;
+
+    // Delay 5 seconds after publishing starts, run in background.
+    Future.delayed(const Duration(seconds: 5), () async {
+      if (!state.isPublishing || state.videoTrack == null) return;
+      await _sendPreviewClip();
+    });
+  }
+
+  Future<void> _sendPreviewClip() async {
+    try {
+      if (state.videoTrack == null) {
+        debugPrint('📤 Preview skipped: no active video track');
+        return;
+      }
+
+      final frames = await _capturePreviewFrames(
+        track: state.videoTrack!,
+        duration: const Duration(seconds: 2),
+        fps: 1, // easiest path: 1 frame per second for 5 seconds
+      );
+
+      if (frames.isEmpty) {
+        debugPrint('📤 Preview capture returned no frames');
+        return;
+      }
+
+      final totalBytes =
+          frames.fold<int>(0, (sum, bytes) => sum + bytes.length);
+
+      debugPrint(
+        '📹 Captured 5-second preview clip (frames: ${frames.length}, total bytes: $totalBytes)',
+      );
+
+      // TODO: Encode frames to desired format (e.g., MP4/GIF) and upload to backend when endpoint is ready.
+    } catch (e, st) {
+      debugPrint('❌ Preview send placeholder failed: $e');
+      debugPrintStack(stackTrace: st);
+    }
+  }
+
+  Future<Uint8List?> _captureFrameBytes(LocalVideoTrack track) async {
+    try {
+      // Directly capture a frame from the underlying media stream track.
+      final MediaStreamTrack mediaTrack = track.mediaStreamTrack;
+      final frameBuffer = await mediaTrack.captureFrame();
+      return frameBuffer.asUint8List();
+    } catch (e, st) {
+      debugPrint('❌ Failed to capture frame: $e');
+      debugPrintStack(stackTrace: st);
+      return null;
+    }
+  }
+
+  Future<List<Uint8List>> _capturePreviewFrames({
+    required LocalVideoTrack track,
+    required Duration duration,
+    required int fps,
+  }) async {
+    final frames = <Uint8List>[];
+    if (fps <= 0) return frames;
+
+    final totalFrames = duration.inSeconds * fps;
+    final frameIntervalMs = 1000 ~/ fps;
+
+    for (var i = 0; i < totalFrames; i++) {
+      if (!state.isPublishing || state.videoTrack == null) break;
+      final bytes = await _captureFrameBytes(track);
+      if (bytes != null && bytes.isNotEmpty) {
+        frames.add(bytes);
+      }
+      if (i < totalFrames - 1) {
+        await Future.delayed(Duration(milliseconds: frameIntervalMs));
+      }
+    }
+
+    return frames;
   }
 
   Future<bool> leaveStream({required int streamId}) async {
@@ -850,9 +946,8 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         final updated = List<BidStreamItem>.from(state.bids)
           ..insert(0, createdBid);
 
-        final bool matchesSelection =
-            state.currentStreamProductId == null ||
-                state.currentStreamProductId == createdBid.streamProductId;
+        final bool matchesSelection = state.currentStreamProductId == null ||
+            state.currentStreamProductId == createdBid.streamProductId;
 
         emit(state.copyWith(
           isPlacingBid: false,
@@ -931,12 +1026,14 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         }
       }
     }
-    
+
     // Only start the timer if there are actual bids placed by users for this product
     // Timer will be started when first bid is placed via socket event (_handleBid)
     // When auction is started, there are no bids yet, so timer should not start
-    final bidTiming = hasBidsForProduct ? _resolveBidTiming(product) : (endTime: null, remainingSeconds: null);
-    
+    final bidTiming = hasBidsForProduct
+        ? _resolveBidTiming(product)
+        : (endTime: null, remainingSeconds: null);
+
     emit(state.copyWith(
       stream: state.stream.copyWith(streamProducts: streamProducts),
       activeStreamProduct: product,

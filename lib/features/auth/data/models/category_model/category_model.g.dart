@@ -26,7 +26,7 @@ _$CategoryDataImpl _$$CategoryDataImplFromJson(Map<String, dynamic> json) =>
       parentId: (json['parent_id'] as num?)?.toInt(),
       name: json['name'] as String?,
       type: json['type'] as String?,
-      icon: json['icon'] as String?,
+      icon: _iconFromJson(json['icon'] as String?),
       description: json['description'] as String?,
       userId: (json['user_id'] as num?)?.toInt(),
       status: json['status'] as bool?,

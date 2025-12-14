@@ -26,6 +26,7 @@ mixin _$ProfileState {
   List<Map<String, dynamic>> get streamerOptions =>
       throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
+  bool get isSeller => throw _privateConstructorUsedError;
   UserRegistrationData get userProfileModel =>
       throw _privateConstructorUsedError;
 
@@ -50,6 +51,7 @@ abstract class $ProfileStateCopyWith<$Res> {
       List<Map<String, dynamic>> helpAndContact,
       List<Map<String, dynamic>> streamerOptions,
       String errorMessage,
+      bool isSeller,
       UserRegistrationData userProfileModel});
 
   $UserRegistrationDataCopyWith<$Res> get userProfileModel;
@@ -77,6 +79,7 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
     Object? helpAndContact = null,
     Object? streamerOptions = null,
     Object? errorMessage = null,
+    Object? isSeller = null,
     Object? userProfileModel = null,
   }) {
     return _then(_value.copyWith(
@@ -108,6 +111,10 @@ class _$ProfileStateCopyWithImpl<$Res, $Val extends ProfileState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      isSeller: null == isSeller
+          ? _value.isSeller
+          : isSeller // ignore: cast_nullable_to_non_nullable
+              as bool,
       userProfileModel: null == userProfileModel
           ? _value.userProfileModel
           : userProfileModel // ignore: cast_nullable_to_non_nullable
@@ -143,6 +150,7 @@ abstract class _$$ProfileStateImplCopyWith<$Res>
       List<Map<String, dynamic>> helpAndContact,
       List<Map<String, dynamic>> streamerOptions,
       String errorMessage,
+      bool isSeller,
       UserRegistrationData userProfileModel});
 
   @override
@@ -169,6 +177,7 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
     Object? helpAndContact = null,
     Object? streamerOptions = null,
     Object? errorMessage = null,
+    Object? isSeller = null,
     Object? userProfileModel = null,
   }) {
     return _then(_$ProfileStateImpl(
@@ -200,6 +209,10 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      isSeller: null == isSeller
+          ? _value.isSeller
+          : isSeller // ignore: cast_nullable_to_non_nullable
+              as bool,
       userProfileModel: null == userProfileModel
           ? _value.userProfileModel
           : userProfileModel // ignore: cast_nullable_to_non_nullable
@@ -219,6 +232,7 @@ class _$ProfileStateImpl implements _ProfileState {
       final List<Map<String, dynamic>> helpAndContact = const [],
       final List<Map<String, dynamic>> streamerOptions = const [],
       this.errorMessage = '',
+      this.isSeller = false,
       required this.userProfileModel})
       : _settingsOptions = settingsOptions,
         _helpAndContact = helpAndContact,
@@ -263,11 +277,14 @@ class _$ProfileStateImpl implements _ProfileState {
   @JsonKey()
   final String errorMessage;
   @override
+  @JsonKey()
+  final bool isSeller;
+  @override
   final UserRegistrationData userProfileModel;
 
   @override
   String toString() {
-    return 'ProfileState(isLoading: $isLoading, passwordError: $passwordError, emailError: $emailError, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, streamerOptions: $streamerOptions, errorMessage: $errorMessage, userProfileModel: $userProfileModel)';
+    return 'ProfileState(isLoading: $isLoading, passwordError: $passwordError, emailError: $emailError, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, streamerOptions: $streamerOptions, errorMessage: $errorMessage, isSeller: $isSeller, userProfileModel: $userProfileModel)';
   }
 
   @override
@@ -289,6 +306,8 @@ class _$ProfileStateImpl implements _ProfileState {
                 .equals(other._streamerOptions, _streamerOptions) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
+            (identical(other.isSeller, isSeller) ||
+                other.isSeller == isSeller) &&
             (identical(other.userProfileModel, userProfileModel) ||
                 other.userProfileModel == userProfileModel));
   }
@@ -303,6 +322,7 @@ class _$ProfileStateImpl implements _ProfileState {
       const DeepCollectionEquality().hash(_helpAndContact),
       const DeepCollectionEquality().hash(_streamerOptions),
       errorMessage,
+      isSeller,
       userProfileModel);
 
   /// Create a copy of ProfileState
@@ -323,6 +343,7 @@ abstract class _ProfileState implements ProfileState {
           final List<Map<String, dynamic>> helpAndContact,
           final List<Map<String, dynamic>> streamerOptions,
           final String errorMessage,
+          final bool isSeller,
           required final UserRegistrationData userProfileModel}) =
       _$ProfileStateImpl;
 
@@ -340,6 +361,8 @@ abstract class _ProfileState implements ProfileState {
   List<Map<String, dynamic>> get streamerOptions;
   @override
   String get errorMessage;
+  @override
+  bool get isSeller;
   @override
   UserRegistrationData get userProfileModel;
 

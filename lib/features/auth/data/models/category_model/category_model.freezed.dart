@@ -201,6 +201,7 @@ mixin _$CategoryData {
   int? get parentId => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
+  @JsonKey(fromJson: _iconFromJson)
   String? get icon => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
@@ -234,7 +235,7 @@ abstract class $CategoryDataCopyWith<$Res> {
       @JsonKey(name: 'parent_id') int? parentId,
       String? name,
       String? type,
-      String? icon,
+      @JsonKey(fromJson: _iconFromJson) String? icon,
       String? description,
       @JsonKey(name: 'user_id') int? userId,
       bool? status,
@@ -338,7 +339,7 @@ abstract class _$$CategoryDataImplCopyWith<$Res>
       @JsonKey(name: 'parent_id') int? parentId,
       String? name,
       String? type,
-      String? icon,
+      @JsonKey(fromJson: _iconFromJson) String? icon,
       String? description,
       @JsonKey(name: 'user_id') int? userId,
       bool? status,
@@ -435,7 +436,7 @@ class _$CategoryDataImpl implements _CategoryData {
       @JsonKey(name: 'parent_id') this.parentId,
       this.name,
       this.type,
-      this.icon,
+      @JsonKey(fromJson: _iconFromJson) this.icon,
       this.description,
       @JsonKey(name: 'user_id') this.userId,
       this.status,
@@ -458,6 +459,7 @@ class _$CategoryDataImpl implements _CategoryData {
   @override
   final String? type;
   @override
+  @JsonKey(fromJson: _iconFromJson)
   final String? icon;
   @override
   final String? description;
@@ -551,7 +553,7 @@ abstract class _CategoryData implements CategoryData {
       @JsonKey(name: 'parent_id') final int? parentId,
       final String? name,
       final String? type,
-      final String? icon,
+      @JsonKey(fromJson: _iconFromJson) final String? icon,
       final String? description,
       @JsonKey(name: 'user_id') final int? userId,
       final bool? status,
@@ -573,6 +575,7 @@ abstract class _CategoryData implements CategoryData {
   @override
   String? get type;
   @override
+  @JsonKey(fromJson: _iconFromJson)
   String? get icon;
   @override
   String? get description;

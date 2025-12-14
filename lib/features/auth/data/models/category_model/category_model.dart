@@ -1,8 +1,21 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/core/shared/utils/server_config.dart';
 
 part 'category_model.freezed.dart';
 part 'category_model.g.dart';
+
+String? _iconFromJson(String? value) {
+  if (value == null || value.isEmpty) return value;
+  // Avoid double-prefixing if the value is already a full URL
+  if (value.startsWith('http')) return value;
+  // If value contains '/', prepend domain only; otherwise prepend domain + "storage"
+  if (value.contains('/')) {
+    return "${ServerConfig.domen}$value";
+  } else {
+    return "${ServerConfig.domen}storage/$value";
+  }
+}
 
 @freezed
 class CategoryModel with _$CategoryModel {
@@ -22,7 +35,7 @@ class CategoryData with _$CategoryData {
     @JsonKey(name: 'parent_id') int? parentId,
     String? name,
     String? type,
-    String? icon,
+    @JsonKey(fromJson: _iconFromJson) String? icon,
     String? description,
     @JsonKey(name: 'user_id') int? userId,
     bool? status,

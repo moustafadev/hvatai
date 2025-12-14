@@ -41,6 +41,7 @@ class AppColors {
   static const Color greyBorder = Color(0xFFE6E6E6);
   static const Color lightGreyBackground = Color(0xFFF6F6F6);
   static const Color blackTransparent40 = Color(0x662A2A2A);
+  static const Color greyTransparent = Color(0xFFBCBCBC);
   static const Color green = Color(0xFF48994F);
   static const Color primaryPink = Color(0xFFF4A8A1);
   static const Color disabledPink = Color(0xFFFBD7D3);

@@ -535,6 +535,8 @@ class Assets {
   /// assets/icons/withdraw_icon.png
   static const String assetsIconsWithdrawIcon = "assets/icons/withdraw_icon.png";
 
+
+  static const String assetsIconsAddCircle = "assets/icons/add_circle.svg";
   /// Assets for assetsIconsWontext
   /// assets/icons/wontext.png
   static const String assetsIconsWontext = "assets/icons/wontext.png";

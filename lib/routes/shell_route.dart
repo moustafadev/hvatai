@@ -169,7 +169,7 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
                 return buildCupertinoTransitionPage(
                   context: context,
                   state: state,
-                  child: TradeProfileDetailScreen(),
+                  child: const ProfileScreen(),
                 );
               }),
         ]),

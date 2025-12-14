@@ -1,6 +1,5 @@
 part of '../search.dart';
 
-
 // will chnage with the actual review item
 class ReviewItem extends StatelessWidget {
   final String username;
@@ -31,13 +30,6 @@ class ReviewItem extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(12.r),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 4,
-            offset: Offset(2, 2),
-          ),
-        ],
       ),
       child: Column(
         children: [
@@ -51,7 +43,11 @@ class ReviewItem extends StatelessWidget {
                 fontWeight: FontWeight.w800,
               ),
               const Spacer(),
-              Image.asset(moreIcon, color: AppColors.primaryPink),
+              CustomText(
+                  text: 'Ответить',
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.primaryPink)
             ],
           ),
           8.ph,

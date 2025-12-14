@@ -10,6 +10,7 @@ class ProfileState with _$ProfileState {
     @Default([]) List<Map<String, dynamic>> helpAndContact,
     @Default([]) List<Map<String, dynamic>> streamerOptions,
     @Default('') String errorMessage,
+    @Default(false) bool isSeller,
     required UserRegistrationData userProfileModel,
   }) = _ProfileState;
 }

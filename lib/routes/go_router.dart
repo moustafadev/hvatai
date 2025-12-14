@@ -34,6 +34,7 @@ import 'package:hvatai/features/company/presentation/cubit/company/company_cubit
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/features/stream/presentation/stream.dart';
 import 'package:hvatai/features/wallet/presentation/wallet.dart';
+import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:hvatai/routes/shell_route.dart';
 
@@ -283,11 +284,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.tradeProfile,
       builder: (BuildContext context, GoRouterState state) {
-        final extra = state.extra as Map<String, Object>;
-        final model = extra['model'] as UserRegistrationData;
-        final cubit = extra['cubit'] as EditProfileCubit
-          ..initProfileModel(model);
-        return BlocProvider.value(value: cubit, child: TradeProfileScreen());
+        return const ProfileScreen();
       },
     ),
     GoRoute(
@@ -389,7 +386,14 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.mainNotification,
       builder: (BuildContext context, GoRouterState state) {
-        final cubit = state.extra as NotificationsCubit..getNotifications();
+        late NotificationsCubit cubit ;
+        if (state.extra != null && state.extra is NotificationsCubit) {
+          cubit = state.extra as NotificationsCubit;
+          cubit.getNotifications();
+        } else {
+          cubit = locator<NotificationsCubit>();
+          cubit.getNotifications();
+        }
 
         return BlocProvider.value(
             value: cubit, child: const NotificationsScreen());

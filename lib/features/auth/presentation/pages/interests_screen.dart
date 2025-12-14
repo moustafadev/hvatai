@@ -69,6 +69,11 @@ class InterestsScreen extends StatelessWidget {
                                 state.selectedIndices.contains(index);
 
                             final String imageUrl = category.icon ?? '';
+                            print("================");
+
+                            print(imageUrl);
+                            print(category.icon);
+                            print("================");
 
                             return GestureDetector(
                               onTap: () =>

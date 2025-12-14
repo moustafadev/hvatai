@@ -12,6 +12,12 @@ class BodyNormalProfile extends StatelessWidget {
         builder: (context, state) {
           final cubit = context.read<ProfileCubit>();
 
+          if (state.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(color: AppColors.grey),
+            );
+          }
+
           if (state.errorMessage.isNotEmpty) {
             return Center(
               child: Column(

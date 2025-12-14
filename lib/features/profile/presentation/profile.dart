@@ -1,11 +1,9 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -23,6 +21,9 @@ import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_pro
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
+import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
+import 'package:hvatai/features/search/presentation/search.dart';
+import 'package:hvatai/features/stream/presentation/cubit/my_streams_cubit/my_streams_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
@@ -38,12 +39,8 @@ part 'screens/my_product_details_screen.dart';
 part 'screens/notification_settings_screen.dart';
 part 'screens/profile_screen.dart';
 part 'screens/settings_screen.dart';
-part 'screens/trade_profile_detail_screen.dart';
-part 'screens/trade_profile_screen.dart';
 part 'widgets/add_delivery_option_dropdown.dart';
 part 'widgets/add_product_action_button.dart';
-part 'widgets/body_normal_profile.dart';
-part 'widgets/build_profile_image.dart';
 part 'widgets/cart_item_actions_button.dart';
 part 'widgets/category_dropdown.dart';
 part 'widgets/category_everything_tabs.dart';
@@ -72,3 +69,11 @@ part 'widgets/streams_analytics_widget.dart';
 part 'widgets/top_profile_info.dart';
 part 'widgets/update_country_dropdown.dart';
 part 'widgets/user_info_trade_profile_detail.dart';
+part 'widgets/profile_screen/header_profile.dart';
+part 'widgets/profile_screen/role_switch_profile.dart';
+part 'widgets/profile_screen/stats_row_profile.dart';
+part 'widgets/profile_screen/products_tab_profile.dart';
+part 'widgets/profile_screen/reviews_tab_profile.dart';
+part 'widgets/profile_screen/streams_tab_profile.dart';
+part 'widgets/profile_screen/clips_tab_profile.dart';
+part 'widgets/body_normal_profile.dart';
