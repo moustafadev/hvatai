@@ -1,4 +1,4 @@
-part of '../profile.dart';
+part of '../../profile.dart';
 
 class UpdateCountryDropdown extends StatelessWidget {
   const UpdateCountryDropdown({super.key, required this.country});

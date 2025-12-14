@@ -41,7 +41,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       email: userData.email ?? '',
       phone: userData.phone ?? '',
       country: userData.country ?? '',
-      gender: userData.gender ?? '',
+      gender: _normalizeGender(userData.gender),
       sms: userData.sms,
       push: userData.push,
       sendEmail: userData.sendEmail,
@@ -52,12 +52,51 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     emit(state.copyWith(
       user: updatedUser,
       changeInfoProfile: _buildChangeInfoProfile(),
+      settingsOptions: _buildSettingsOptions(),
     ));
   }
 
+  List<Map<String, dynamic>> _buildSettingsOptions() {
+    return [
+      {
+        "icon": Assets.assetsIconsCard,
+        "title": "paymentMethod".tr(),
+        "screen": (BuildContext context) {
+          context.push(AppRoutes.payments);
+        },
+      },
+      {
+        "icon": Assets.assetsIconsMapPoint,
+        "title": "addresses".tr(),
+        "screen": (BuildContext context) {
+          context.push(AppRoutes.newAddress);
+        },
+      },
+    ];
+  }
+
   void setNewGender(String? gender) {
-    final updatedUser = state.user.copyWith(gender: gender);
+    final normalizedGender = _normalizeGender(gender);
+    final updatedUser = state.user.copyWith(gender: normalizedGender);
     emit(state.copyWith(user: updatedUser));
+  }
+
+  String? _normalizeGender(String? gender) {
+    if (gender == null || gender.isEmpty) return null;
+    final lowerGender = gender.toLowerCase();
+    switch (lowerGender) {
+      case 'male':
+      case 'm':
+        return 'male';
+      case 'female':
+      case 'f':
+        return 'female';
+      case 'other':
+      case 'o':
+        return 'other';
+      default:
+        return null;
+    }
   }
 
   void toggleStreamsFromSubscriptions() {
@@ -150,7 +189,7 @@ class EditProfileCubit extends Cubit<EditProfileState> {
         updatedUser = currentUser.copyWith(lastName: value);
         break;
       case 'gender':
-        updatedUser = currentUser.copyWith(gender: value);
+        updatedUser = currentUser.copyWith(gender: _normalizeGender(value));
         break;
       case 'email':
         updatedUser = currentUser.copyWith(email: value);
@@ -169,44 +208,60 @@ class EditProfileCubit extends Cubit<EditProfileState> {
   }
 
   void updateUserData(UserRegistrationData user) {
-    emit(state.copyWith(user: user));
+    emit(state.copyWith(
+      user: user,
+      changeInfoProfile: _buildChangeInfoProfile(),
+    ));
+  }
+
+  void setPendingEmail(String? email) {
+    emit(state.copyWith(pendingEmail: email));
+  }
+
+  Future<void> sendEmailVerification(BuildContext context) async {
+    final email = state.pendingEmail ?? state.user.email;
+    if (email == null || email.isEmpty) {
+      showFloatingMessageError('pleaseEnterEmail'.tr());
+      return;
+    }
+
+    if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email)) {
+      showFloatingMessageError('pleaseEnterValidEmail'.tr());
+      return;
+    }
+
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
+
+    // TODO: Call backend API to send verification email
+    // For now, simulate the API call
+    await Future.delayed(const Duration(seconds: 1));
+
+    emit(state.copyWith(
+      isLoading: false,
+      emailVerificationSent: true,
+      pendingEmail: email,
+    ));
+  }
+
+  void resetEmailVerification() {
+    emit(state.copyWith(
+      emailVerificationSent: false,
+      pendingEmail: null,
+    ));
   }
 
   List<Map<String, dynamic>> _buildChangeInfoProfile() {
+    final hasEmail = state.user.email != null && state.user.email!.isNotEmpty;
+    final isEmailVerified = state.user.emailVerifiedAt != null &&
+        state.user.emailVerifiedAt!.isNotEmpty;
     return [
-      // {
-      //   "icon": Assets.assetsIconsEmail,
-      //   "title": "changeEmail".tr(),
-      //   "screen": (BuildContext context) async {
-      //     final updatedUser = await context
-      //         .push<UserRegistrationData>(AppRoutes.changeEmail, extra: {
-      //       'model': state.user,
-      //       'cubit': this,
-      //     });
-
-      //     if (updatedUser != null) {
-      //       updateUserData(updatedUser);
-      //     }
-      //   },
-      // },
       {
-        "icon": Assets.assetsIconsPasswordMinimalisticInput,
-        "title": "changePassword".tr(),
-        "screen": (BuildContext context) async {
-          final updatedUser = await context.push<UserRegistrationData>(
-              AppRoutes.changePassword,
-              extra: state.user);
-          if (updatedUser != null) {
-            updateUserData(updatedUser);
-          }
-        },
-      },
-      {
-        "icon": Assets.assetsIconsProfileType,
-        "title": "profileType".tr(),
+        "icon": Assets.assetsIconsEmail,
+        "title": hasEmail ? (state.user.email ?? '') : "Добавить E-Mail",
+        "isEmailVerified": isEmailVerified,
         "screen": (BuildContext context) async {
           final updatedUser = await context
-              .push<UserRegistrationData>(AppRoutes.tradeProfile, extra: {
+              .push<UserRegistrationData>(AppRoutes.changeEmail, extra: {
             'model': state.user,
             'cubit': this,
           });
@@ -216,6 +271,33 @@ class EditProfileCubit extends Cubit<EditProfileState> {
           }
         },
       },
+      // {
+      //   "icon": Assets.assetsIconsPasswordMinimalisticInput,
+      //   "title": "changePassword".tr(),
+      //   "screen": (BuildContext context) async {
+      //     final updatedUser = await context.push<UserRegistrationData>(
+      //         AppRoutes.changePassword,
+      //         extra: state.user);
+      //     if (updatedUser != null) {
+      //       updateUserData(updatedUser);
+      //     }
+      //   },
+      // },
+      // {
+      //   "icon": Assets.assetsIconsProfileType,
+      //   "title": "profileType".tr(),
+      //   "screen": (BuildContext context) async {
+      //     final updatedUser = await context
+      //         .push<UserRegistrationData>(AppRoutes.tradeProfile, extra: {
+      //       'model': state.user,
+      //       'cubit': this,
+      //     });
+
+      //     if (updatedUser != null) {
+      //       updateUserData(updatedUser);
+      //     }
+      //   },
+      // },
       {
         "icon": Assets.assetsIconsBell,
         "title": "settingUpNotifications".tr(),

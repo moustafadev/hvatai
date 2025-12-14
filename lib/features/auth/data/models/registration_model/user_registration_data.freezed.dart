@@ -60,9 +60,10 @@ mixin _$UserRegistrationData {
   String? get phone => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
   String? get role => throw _privateConstructorUsedError;
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: _imageFromJson)
   String? get image => throw _privateConstructorUsedError;
-  @JsonKey(name: 'image_business', includeIfNull: false)
+  @JsonKey(
+      name: 'image_business', includeIfNull: false, fromJson: _imageFromJson)
   String? get imageBusiness => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
   String? get description => throw _privateConstructorUsedError;
@@ -155,8 +156,7 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       String? passwordConfirmation,
       @JsonKey(name: 'current_password', includeIfNull: false)
       String? currentPassword,
-      @JsonKey(
-          name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
+      @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
       bool? agreedToTerms,
       @JsonKey(
           name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
@@ -173,8 +173,11 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       @JsonKey(includeIfNull: false) String? country,
       @JsonKey(includeIfNull: false) String? phone,
       @JsonKey(includeIfNull: false) String? role,
-      @JsonKey(includeIfNull: false) String? image,
-      @JsonKey(name: 'image_business', includeIfNull: false)
+      @JsonKey(includeIfNull: false, fromJson: _imageFromJson) String? image,
+      @JsonKey(
+          name: 'image_business',
+          includeIfNull: false,
+          fromJson: _imageFromJson)
       String? imageBusiness,
       @JsonKey(includeIfNull: false) String? description,
       @JsonKey(includeIfNull: false) String? lang,
@@ -537,8 +540,7 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       String? passwordConfirmation,
       @JsonKey(name: 'current_password', includeIfNull: false)
       String? currentPassword,
-      @JsonKey(
-          name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
+      @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
       bool? agreedToTerms,
       @JsonKey(
           name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
@@ -555,8 +557,11 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       @JsonKey(includeIfNull: false) String? country,
       @JsonKey(includeIfNull: false) String? phone,
       @JsonKey(includeIfNull: false) String? role,
-      @JsonKey(includeIfNull: false) String? image,
-      @JsonKey(name: 'image_business', includeIfNull: false)
+      @JsonKey(includeIfNull: false, fromJson: _imageFromJson) String? image,
+      @JsonKey(
+          name: 'image_business',
+          includeIfNull: false,
+          fromJson: _imageFromJson)
       String? imageBusiness,
       @JsonKey(includeIfNull: false) String? description,
       @JsonKey(includeIfNull: false) String? lang,
@@ -929,8 +934,12 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       @JsonKey(includeIfNull: false) this.country,
       @JsonKey(includeIfNull: false) this.phone,
       @JsonKey(includeIfNull: false) this.role,
-      @JsonKey(includeIfNull: false) this.image,
-      @JsonKey(name: 'image_business', includeIfNull: false) this.imageBusiness,
+      @JsonKey(includeIfNull: false, fromJson: _imageFromJson) this.image,
+      @JsonKey(
+          name: 'image_business',
+          includeIfNull: false,
+          fromJson: _imageFromJson)
+      this.imageBusiness,
       @JsonKey(includeIfNull: false) this.description,
       @JsonKey(includeIfNull: false) this.lang,
       @JsonKey(name: 'business_id', includeIfNull: false) this.businessId,
@@ -943,14 +952,18 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       @JsonKey(includeIfNull: false) this.status,
       @JsonKey(name: 'fcm_tokens', includeIfNull: false)
       final List<String>? fcmTokens,
-      @JsonKey(name: 'email_verified_at', includeIfNull: false)
+      @JsonKey(
+          name: 'email_verified_at', includeIfNull: false)
       this.emailVerifiedAt,
       @JsonKey(includeIfNull: false) this.address,
-      @JsonKey(name: 'personal_rating', includeIfNull: false)
+      @JsonKey(
+          name: 'personal_rating', includeIfNull: false)
       this.personalRating,
-      @JsonKey(name: 'personal_rating_count', includeIfNull: false)
+      @JsonKey(
+          name: 'personal_rating_count', includeIfNull: false)
       this.personalRatingCount,
-      @JsonKey(name: 'business_rating', includeIfNull: false)
+      @JsonKey(
+          name: 'business_rating', includeIfNull: false)
       this.businessRating,
       @JsonKey(name: 'business_rating_count', includeIfNull: false)
       this.businessRatingCount,
@@ -1046,10 +1059,11 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   @JsonKey(includeIfNull: false)
   final String? role;
   @override
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: _imageFromJson)
   final String? image;
   @override
-  @JsonKey(name: 'image_business', includeIfNull: false)
+  @JsonKey(
+      name: 'image_business', includeIfNull: false, fromJson: _imageFromJson)
   final String? imageBusiness;
   @override
   @JsonKey(includeIfNull: false)
@@ -1363,8 +1377,7 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       final String? passwordConfirmation,
       @JsonKey(name: 'current_password', includeIfNull: false)
       final String? currentPassword,
-      @JsonKey(
-          name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
+      @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
       final bool? agreedToTerms,
       @JsonKey(
           name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
@@ -1381,8 +1394,12 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       @JsonKey(includeIfNull: false) final String? country,
       @JsonKey(includeIfNull: false) final String? phone,
       @JsonKey(includeIfNull: false) final String? role,
-      @JsonKey(includeIfNull: false) final String? image,
-      @JsonKey(name: 'image_business', includeIfNull: false)
+      @JsonKey(includeIfNull: false, fromJson: _imageFromJson)
+      final String? image,
+      @JsonKey(
+          name: 'image_business',
+          includeIfNull: false,
+          fromJson: _imageFromJson)
       final String? imageBusiness,
       @JsonKey(includeIfNull: false) final String? description,
       @JsonKey(includeIfNull: false) final String? lang,
@@ -1505,10 +1522,11 @@ abstract class _UserRegistrationData implements UserRegistrationData {
   @JsonKey(includeIfNull: false)
   String? get role;
   @override
-  @JsonKey(includeIfNull: false)
+  @JsonKey(includeIfNull: false, fromJson: _imageFromJson)
   String? get image;
   @override
-  @JsonKey(name: 'image_business', includeIfNull: false)
+  @JsonKey(
+      name: 'image_business', includeIfNull: false, fromJson: _imageFromJson)
   String? get imageBusiness;
   @override
   @JsonKey(includeIfNull: false)

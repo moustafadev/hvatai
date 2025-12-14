@@ -63,6 +63,7 @@ import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goo
 import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/report_violation_cubit/report_violation_cubit.dart';
 import 'package:hvatai/features/search/data/datasources/api_service_search.dart';
 import 'package:hvatai/features/search/data/repositories/search_repository_impl.dart';
 import 'package:hvatai/features/search/domain/repositories/search_repository.dart';
@@ -106,7 +107,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => NameCubit(locator()));
   locator.registerFactory(
       () => InterestsDetailCubit(locator(), locator(), locator()));
-  locator.registerFactory(() => ProfileCubit(locator(), locator()));
+  locator.registerFactory(() => ProfileCubit(locator(), locator(), locator()));
   locator.registerFactory(() => ActivityCubit());
   locator.registerFactory(() => FavoriteCubit(locator()));
   locator.registerFactory(() => NotificationCubit());
@@ -168,6 +169,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AnalyticsCubit());
   locator.registerFactory(() => ProductImageCubit());
   locator.registerFactory(() => NotificationsCubit(locator(), locator()));
+  locator.registerFactory(() => ReportViolationCubit());
 
   locator.registerFactory(
       () => DeliveryAddressCubit(locator(), locator(), locator(), locator()));

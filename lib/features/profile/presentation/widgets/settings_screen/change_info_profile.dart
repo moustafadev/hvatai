@@ -1,38 +1,26 @@
-part of '../profile.dart';
+part of '../../profile.dart';
 
-class HelpContacts extends StatelessWidget {
-  const HelpContacts({
+class ChangeInfoProfile extends StatelessWidget {
+  const ChangeInfoProfile({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
+    return BlocBuilder<EditProfileCubit, EditProfileState>(
+        builder: (context, state) {
       return ListView.builder(
         shrinkWrap: true,
         padding: EdgeInsets.all(0),
         physics: NeverScrollableScrollPhysics(),
-        itemCount: state.helpAndContact.length + 1,
+        itemCount: state.changeInfoProfile.length,
         itemBuilder: (context, index) {
-          if (index == 0) {
-            return ListTile(
-              contentPadding: EdgeInsets.all(0),
-              leading: CustomText(
-                text: "helpContacts".tr(),
-                fontWeight: FontWeight.w800,
-                fontSize: 20.sp,
-                fontFamily: "Manrope",
-              ),
-            );
-          }
-
-          final item = state.helpAndContact[index - 1];
-
+          final item = state.changeInfoProfile[index];
           return ListTile(
             contentPadding: EdgeInsets.all(0),
             leading: Container(
               decoration: BoxDecoration(
-                color: AppColors.gray,
+                color: Color(0xff000000).withOpacity(0.05),
                 shape: BoxShape.circle,
               ),
               child: Padding(
@@ -46,11 +34,25 @@ class HelpContacts extends StatelessWidget {
                 ),
               ),
             ),
-            title: CustomText(
-              text: item['title'],
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
-              color: AppColors.blackDark,
+            title: Row(
+              children: [
+                if (item['isEmailVerified'] == true) ...[
+                  SvgPicture.asset(
+                    Assets.assetsIconsWavyCheck,
+                    width: 24.w,
+                    height: 24.h,
+                  ),
+                  8.pw,
+                ],
+                Expanded(
+                  child: CustomText(
+                    text: item['title'],
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.blackDark,
+                  ),
+                ),
+              ],
             ),
             trailing: Icon(
               Icons.chevron_right,

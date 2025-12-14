@@ -1,15 +1,11 @@
 part of '../../profile.dart';
 
 class ProductsTabProfile extends StatelessWidget {
-  const ProductsTabProfile({
-    super.key,
-    required this.goodsCubit,
-  });
-
-  final MyGoodsCubit goodsCubit;
+  const ProductsTabProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final goodsCubit = context.read<MyGoodsCubit>();
     return BlocBuilder<MyGoodsCubit, MyGoodsState>(
       bloc: goodsCubit,
       builder: (context, state) {

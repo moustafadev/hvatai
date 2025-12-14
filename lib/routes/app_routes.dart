@@ -14,9 +14,15 @@ class AppRoutes {
   static const String home = '/home';
   static const String categoriesForYou = '/categories_for_you';
  
- 
-  static const String search = '/search';
+  // =============================== Profile routes ===============================
   static const String profile = '/profile';
+  static const String profileSettings = '/profile_settings';
+  static const String settings = '/settings';
+  static const String termsAndConditions = '/terms_and_conditions';
+  static const String privacyPolicyProfile = '/privacy_policy_profile';
+
+
+  static const String search = '/search';
   static const String activity = '/activity';
   static const String menu = '/menu';
   static const String favorite = '/favorite';
@@ -32,7 +38,6 @@ class AppRoutes {
   static const String companyName = '/company_name';
   static const String sendReward = '/send_reward';
   static const String awardsGift = '/awards_gift';
-  static const String deliveryAddress = '/delivery_address';
   static const String verificationCode = '/verification_code';
   static const String analytics = '/analytics';
   static const String termAndConditions = '/term_and_conditions';
@@ -42,7 +47,6 @@ class AppRoutes {
   static const String imageDelay = '/image_delay';
   //static const String bottomNavBar = '/bottom_nav_bar';
   static const String myAwards = '/my_awards';
-  static const String settings = '/settings';
   static const String myGoods = '/my_goods';
   static const String newAddress = '/newAddress';
   static const String addNewPaymentMethod = '/add_new_payment_method';
@@ -69,4 +73,5 @@ class AppRoutes {
   static const String wallet = '/wallet';
   static const String myStreams = '/my_streams';
   static const String myOrders = '/my_orders';
+  static const String reportViolation = '/report_violation';
 }

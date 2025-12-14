@@ -27,6 +27,7 @@ import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_pro
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
 import 'package:hvatai/features/payment_method/presentation/payment_method.dart';
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
 import 'package:hvatai/features/company/presentation/company.dart';
@@ -342,9 +343,27 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
+      path: AppRoutes.reportViolation,
+      builder: (BuildContext context, GoRouterState state) {
+        return const ReportViolationScreen();
+      },
+    ),
+    GoRoute(
       path: AppRoutes.myStreams,
       builder: (BuildContext context, GoRouterState state) {
         return const MyStreamsScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.termsAndConditions,
+      builder: (BuildContext context, GoRouterState state) {
+        return const TermsAndConditionsScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.privacyPolicyProfile,
+      builder: (BuildContext context, GoRouterState state) {
+        return const PrivacyPolicyProfileScreen();
       },
     ),
     GoRoute(
@@ -357,6 +376,16 @@ final GoRouter router = GoRouter(
       path: AppRoutes.interests,
       builder: (BuildContext context, GoRouterState state) {
         return InterestsScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.profileSettings,
+      builder: (context, state) {
+        final profileCubit = state.extra as ProfileCubit;
+        return BlocProvider.value(
+          value: profileCubit,
+          child: ProfileSettingsScreen(),
+        );
       },
     ),
     GoRoute(
@@ -386,7 +415,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.mainNotification,
       builder: (BuildContext context, GoRouterState state) {
-        late NotificationsCubit cubit ;
+        late NotificationsCubit cubit;
         if (state.extra != null && state.extra is NotificationsCubit) {
           cubit = state.extra as NotificationsCubit;
           cubit.getNotifications();

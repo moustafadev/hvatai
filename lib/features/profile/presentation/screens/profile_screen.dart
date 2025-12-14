@@ -1,46 +1,21 @@
 part of '../profile.dart';
 
-class ProfileScreen extends StatefulWidget {
+class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen>
-    with SingleTickerProviderStateMixin {
-  late final ProfileCubit _profileCubit;
-  late final MyGoodsCubit _goodsCubit;
-  late final MyStreamsCubit _streamsCubit;
-  late final TabController _tabController;
-
-  @override
-  void initState() {
-    super.initState();
-    _profileCubit = locator<ProfileCubit>()..getProfile();
-    _goodsCubit = locator<MyGoodsCubit>()..getMyProducts();
-    _streamsCubit = locator<MyStreamsCubit>()..loadMyStreams();
-    _tabController = TabController(length: 4, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    _goodsCubit.close();
-    _streamsCubit.close();
-    _profileCubit.close();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final extra = GoRouterState.of(context).extra as UserRegistrationData?;
-
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(value: _profileCubit),
-        BlocProvider.value(value: _goodsCubit),
-        BlocProvider.value(value: _streamsCubit),
+        BlocProvider(
+          create: (_) => locator<ProfileCubit>()..getProfile(),
+        ),
+        BlocProvider(
+          create: (_) => locator<MyGoodsCubit>()..getMyProducts(),
+        ),
+        BlocProvider(
+          create: (_) => locator<MyStreamsCubit>()..loadMyStreams(),
+        ),
       ],
       child: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
@@ -62,69 +37,66 @@ class _ProfileScreenState extends State<ProfileScreen>
             );
           }
 
-          if (extra != null) {
-            context.read<ProfileCubit>().updateUserData(extra);
-          }
-
           final user = state.userProfileModel;
 
-          return Scaffold(
-            backgroundColor: AppColors.background,
-            body: SafeArea(
-              bottom: false,
-              child: NestedScrollView(
-                headerSliverBuilder:
-                    (BuildContext context, bool innerBoxIsScrolled) {
-                  return [
-                    SliverToBoxAdapter(
-                      child: Column(
-                        children: [
-                          HeaderProfile(user: user),
-                          RoleSwitchProfile(),
-                          16.ph,
-                          StatsRowProfile(user: user),
-                        ],
-                      ),
-                    ),
-                    SliverPersistentHeader(
-                      pinned: true,
-                      delegate: _SliverTabBarDelegate(
-                        TabBar(
-                          controller: _tabController,
-                          indicatorColor: AppColors.primaryColor,
-                          dividerColor: Colors.transparent,
-                          indicatorWeight: 2,
-                          labelStyle: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w800,
-                            color: AppColors.blackColorIcon,
-                          ),
-                          unselectedLabelStyle: TextStyle(
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.greyTransparent,
-                          ),
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          labelPadding: EdgeInsets.zero,
-                          tabs: const [
-                            Tab(text: 'Товары'),
-                            Tab(text: 'Отзывы'),
-                            Tab(text: 'Стримы'),
-                            Tab(text: 'Клипы'),
+          return DefaultTabController(
+            length: 4,
+            child: Scaffold(
+              backgroundColor: AppColors.background,
+              body: SafeArea(
+                bottom: false,
+                child: NestedScrollView(
+                  headerSliverBuilder:
+                      (BuildContext context, bool innerBoxIsScrolled) {
+                    return [
+                      SliverToBoxAdapter(
+                        child: Column(
+                          children: [
+                            const HeaderProfile(),
+                            RoleSwitchProfile(),
+                            16.ph,
+                            StatsRowProfile(user: user),
                           ],
                         ),
                       ),
-                    ),
-                  ];
-                },
-                body: TabBarView(
-                  controller: _tabController,
-                  children: [
-                    ProductsTabProfile(goodsCubit: _goodsCubit),
-                    const ReviewsTabProfile(),
-                    StreamsTabProfile(streamsCubit: _streamsCubit),
-                    ClipsTabProfile(streamsCubit: _streamsCubit),
-                  ],
+                      SliverPersistentHeader(
+                        pinned: true,
+                        delegate: _SliverTabBarDelegate(
+                          TabBar(
+                            indicatorColor: AppColors.primaryColor,
+                            dividerColor: Colors.transparent,
+                            indicatorWeight: 2,
+                            labelStyle: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w800,
+                              color: AppColors.blackColorIcon,
+                            ),
+                            unselectedLabelStyle: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.greyTransparent,
+                            ),
+                            indicatorSize: TabBarIndicatorSize.tab,
+                            labelPadding: EdgeInsets.zero,
+                            tabs: const [
+                              Tab(text: 'Товары'),
+                              Tab(text: 'Отзывы'),
+                              Tab(text: 'Стримы'),
+                              Tab(text: 'Клипы'),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ];
+                  },
+                  body: const TabBarView(
+                    children: [
+                      ProductsTabProfile(),
+                      ReviewsTabProfile(),
+                      StreamsTabProfile(),
+                      ClipsTabProfile(),
+                    ],
+                  ),
                 ),
               ),
             ),

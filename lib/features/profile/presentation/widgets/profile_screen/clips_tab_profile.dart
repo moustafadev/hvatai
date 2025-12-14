@@ -1,17 +1,11 @@
 part of '../../profile.dart';
 
 class ClipsTabProfile extends StatelessWidget {
-  const ClipsTabProfile({
-    super.key,
-    required this.streamsCubit,
-  });
-
-  final MyStreamsCubit streamsCubit;
+  const ClipsTabProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MyStreamsCubit, MyStreamsState>(
-      bloc: streamsCubit,
       builder: (context, state) {
         if (state.isLoading) {
           return const Center(

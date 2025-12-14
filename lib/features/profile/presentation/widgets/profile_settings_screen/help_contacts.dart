@@ -1,26 +1,38 @@
-part of '../profile.dart';
+part of '../../profile.dart';
 
-class ChangeInfoProfile extends StatelessWidget {
-  const ChangeInfoProfile({
+class HelpContacts extends StatelessWidget {
+  const HelpContacts({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<EditProfileCubit, EditProfileState>(
-        builder: (context, state) {
+    return BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
       return ListView.builder(
         shrinkWrap: true,
         padding: EdgeInsets.all(0),
         physics: NeverScrollableScrollPhysics(),
-        itemCount: state.changeInfoProfile.length,
+        itemCount: state.helpAndContact.length + 1,
         itemBuilder: (context, index) {
-          final item = state.changeInfoProfile[index];
+          if (index == 0) {
+            return ListTile(
+              contentPadding: EdgeInsets.all(0),
+              leading: CustomText(
+                text: "helpContacts".tr(),
+                fontWeight: FontWeight.w800,
+                fontSize: 20.sp,
+                fontFamily: "Manrope",
+              ),
+            );
+          }
+
+          final item = state.helpAndContact[index - 1];
+
           return ListTile(
             contentPadding: EdgeInsets.all(0),
             leading: Container(
               decoration: BoxDecoration(
-                color: Color(0xff000000).withOpacity(0.05),
+                color: AppColors.gray,
                 shape: BoxShape.circle,
               ),
               child: Padding(

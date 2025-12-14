@@ -18,5 +18,8 @@ class EditProfileState with _$EditProfileState {
     @Default(false) bool isAllSelected,
     String? type,
     @Default([]) List<Map<String, dynamic>> changeInfoProfile,
+    @Default([]) List<Map<String, dynamic>> settingsOptions,
+    @Default(false) bool emailVerificationSent,
+    String? pendingEmail,
   }) = _EditProfileState;
 }

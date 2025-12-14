@@ -32,6 +32,10 @@ mixin _$EditProfileState {
   String? get type => throw _privateConstructorUsedError;
   List<Map<String, dynamic>> get changeInfoProfile =>
       throw _privateConstructorUsedError;
+  List<Map<String, dynamic>> get settingsOptions =>
+      throw _privateConstructorUsedError;
+  bool get emailVerificationSent => throw _privateConstructorUsedError;
+  String? get pendingEmail => throw _privateConstructorUsedError;
 
   /// Create a copy of EditProfileState
   /// with the given fields replaced by the non-null parameter values.
@@ -61,7 +65,10 @@ abstract class $EditProfileStateCopyWith<$Res> {
       bool bookmarksFromStreams,
       bool isAllSelected,
       String? type,
-      List<Map<String, dynamic>> changeInfoProfile});
+      List<Map<String, dynamic>> changeInfoProfile,
+      List<Map<String, dynamic>> settingsOptions,
+      bool emailVerificationSent,
+      String? pendingEmail});
 
   $UserRegistrationDataCopyWith<$Res> get user;
 }
@@ -96,6 +103,9 @@ class _$EditProfileStateCopyWithImpl<$Res, $Val extends EditProfileState>
     Object? isAllSelected = null,
     Object? type = freezed,
     Object? changeInfoProfile = null,
+    Object? settingsOptions = null,
+    Object? emailVerificationSent = null,
+    Object? pendingEmail = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -158,6 +168,18 @@ class _$EditProfileStateCopyWithImpl<$Res, $Val extends EditProfileState>
           ? _value.changeInfoProfile
           : changeInfoProfile // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
+      settingsOptions: null == settingsOptions
+          ? _value.settingsOptions
+          : settingsOptions // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      emailVerificationSent: null == emailVerificationSent
+          ? _value.emailVerificationSent
+          : emailVerificationSent // ignore: cast_nullable_to_non_nullable
+              as bool,
+      pendingEmail: freezed == pendingEmail
+          ? _value.pendingEmail
+          : pendingEmail // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -195,7 +217,10 @@ abstract class _$$EditProfileStateImplCopyWith<$Res>
       bool bookmarksFromStreams,
       bool isAllSelected,
       String? type,
-      List<Map<String, dynamic>> changeInfoProfile});
+      List<Map<String, dynamic>> changeInfoProfile,
+      List<Map<String, dynamic>> settingsOptions,
+      bool emailVerificationSent,
+      String? pendingEmail});
 
   @override
   $UserRegistrationDataCopyWith<$Res> get user;
@@ -229,6 +254,9 @@ class __$$EditProfileStateImplCopyWithImpl<$Res>
     Object? isAllSelected = null,
     Object? type = freezed,
     Object? changeInfoProfile = null,
+    Object? settingsOptions = null,
+    Object? emailVerificationSent = null,
+    Object? pendingEmail = freezed,
   }) {
     return _then(_$EditProfileStateImpl(
       isLoading: null == isLoading
@@ -291,6 +319,18 @@ class __$$EditProfileStateImplCopyWithImpl<$Res>
           ? _value._changeInfoProfile
           : changeInfoProfile // ignore: cast_nullable_to_non_nullable
               as List<Map<String, dynamic>>,
+      settingsOptions: null == settingsOptions
+          ? _value._settingsOptions
+          : settingsOptions // ignore: cast_nullable_to_non_nullable
+              as List<Map<String, dynamic>>,
+      emailVerificationSent: null == emailVerificationSent
+          ? _value.emailVerificationSent
+          : emailVerificationSent // ignore: cast_nullable_to_non_nullable
+              as bool,
+      pendingEmail: freezed == pendingEmail
+          ? _value.pendingEmail
+          : pendingEmail // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -313,8 +353,12 @@ class _$EditProfileStateImpl implements _EditProfileState {
       this.bookmarksFromStreams = true,
       this.isAllSelected = false,
       this.type,
-      final List<Map<String, dynamic>> changeInfoProfile = const []})
-      : _changeInfoProfile = changeInfoProfile;
+      final List<Map<String, dynamic>> changeInfoProfile = const [],
+      final List<Map<String, dynamic>> settingsOptions = const [],
+      this.emailVerificationSent = false,
+      this.pendingEmail})
+      : _changeInfoProfile = changeInfoProfile,
+        _settingsOptions = settingsOptions;
 
   @override
   @JsonKey()
@@ -366,9 +410,24 @@ class _$EditProfileStateImpl implements _EditProfileState {
     return EqualUnmodifiableListView(_changeInfoProfile);
   }
 
+  final List<Map<String, dynamic>> _settingsOptions;
+  @override
+  @JsonKey()
+  List<Map<String, dynamic>> get settingsOptions {
+    if (_settingsOptions is EqualUnmodifiableListView) return _settingsOptions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_settingsOptions);
+  }
+
+  @override
+  @JsonKey()
+  final bool emailVerificationSent;
+  @override
+  final String? pendingEmail;
+
   @override
   String toString() {
-    return 'EditProfileState(isLoading: $isLoading, success: $success, errorMessage: $errorMessage, user: $user, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, obscurePassword: $obscurePassword, passwordStrength: $passwordStrength, passwordStrengthText: $passwordStrengthText, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, type: $type, changeInfoProfile: $changeInfoProfile)';
+    return 'EditProfileState(isLoading: $isLoading, success: $success, errorMessage: $errorMessage, user: $user, streamsFromSubscriptions: $streamsFromSubscriptions, streamsISaved: $streamsISaved, obscurePassword: $obscurePassword, passwordStrength: $passwordStrength, passwordStrengthText: $passwordStrengthText, recommendedStreams: $recommendedStreams, newSubscriber: $newSubscriber, bookmarksFromStreams: $bookmarksFromStreams, isAllSelected: $isAllSelected, type: $type, changeInfoProfile: $changeInfoProfile, settingsOptions: $settingsOptions, emailVerificationSent: $emailVerificationSent, pendingEmail: $pendingEmail)';
   }
 
   @override
@@ -403,7 +462,13 @@ class _$EditProfileStateImpl implements _EditProfileState {
                 other.isAllSelected == isAllSelected) &&
             (identical(other.type, type) || other.type == type) &&
             const DeepCollectionEquality()
-                .equals(other._changeInfoProfile, _changeInfoProfile));
+                .equals(other._changeInfoProfile, _changeInfoProfile) &&
+            const DeepCollectionEquality()
+                .equals(other._settingsOptions, _settingsOptions) &&
+            (identical(other.emailVerificationSent, emailVerificationSent) ||
+                other.emailVerificationSent == emailVerificationSent) &&
+            (identical(other.pendingEmail, pendingEmail) ||
+                other.pendingEmail == pendingEmail));
   }
 
   @override
@@ -423,7 +488,10 @@ class _$EditProfileStateImpl implements _EditProfileState {
       bookmarksFromStreams,
       isAllSelected,
       type,
-      const DeepCollectionEquality().hash(_changeInfoProfile));
+      const DeepCollectionEquality().hash(_changeInfoProfile),
+      const DeepCollectionEquality().hash(_settingsOptions),
+      emailVerificationSent,
+      pendingEmail);
 
   /// Create a copy of EditProfileState
   /// with the given fields replaced by the non-null parameter values.
@@ -437,22 +505,24 @@ class _$EditProfileStateImpl implements _EditProfileState {
 
 abstract class _EditProfileState implements EditProfileState {
   const factory _EditProfileState(
-          {final bool isLoading,
-          final bool success,
-          final String errorMessage,
-          required final UserRegistrationData user,
-          final bool streamsFromSubscriptions,
-          final bool streamsISaved,
-          final bool obscurePassword,
-          final double passwordStrength,
-          final String passwordStrengthText,
-          final bool recommendedStreams,
-          final bool newSubscriber,
-          final bool bookmarksFromStreams,
-          final bool isAllSelected,
-          final String? type,
-          final List<Map<String, dynamic>> changeInfoProfile}) =
-      _$EditProfileStateImpl;
+      {final bool isLoading,
+      final bool success,
+      final String errorMessage,
+      required final UserRegistrationData user,
+      final bool streamsFromSubscriptions,
+      final bool streamsISaved,
+      final bool obscurePassword,
+      final double passwordStrength,
+      final String passwordStrengthText,
+      final bool recommendedStreams,
+      final bool newSubscriber,
+      final bool bookmarksFromStreams,
+      final bool isAllSelected,
+      final String? type,
+      final List<Map<String, dynamic>> changeInfoProfile,
+      final List<Map<String, dynamic>> settingsOptions,
+      final bool emailVerificationSent,
+      final String? pendingEmail}) = _$EditProfileStateImpl;
 
   @override
   bool get isLoading;
@@ -484,6 +554,12 @@ abstract class _EditProfileState implements EditProfileState {
   String? get type;
   @override
   List<Map<String, dynamic>> get changeInfoProfile;
+  @override
+  List<Map<String, dynamic>> get settingsOptions;
+  @override
+  bool get emailVerificationSent;
+  @override
+  String? get pendingEmail;
 
   /// Create a copy of EditProfileState
   /// with the given fields replaced by the non-null parameter values.

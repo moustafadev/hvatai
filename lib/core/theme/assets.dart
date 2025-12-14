@@ -541,6 +541,7 @@ class Assets {
   /// assets/icons/wontext.png
   static const String assetsIconsWontext = "assets/icons/wontext.png";
 
+  static const String assetsIconsWavyCheck = "assets/icons/Wavy_Check.svg";
   /// Assets for assetsImagesAnalyticsIcon
   /// assets/images/analytics_icon.png
   static const String assetsImagesAnalyticsIcon = "assets/images/analytics_icon.png";

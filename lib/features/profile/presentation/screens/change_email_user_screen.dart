@@ -6,87 +6,155 @@ class ChangeEmailUserScreen extends StatelessWidget {
   });
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.lightGreyBackground,
-      appBar: AppBar(
+    final extra = GoRouterState.of(context).extra as Map<String, dynamic>?;
+    final user = extra?['model'] as UserRegistrationData?;
+    final cubit = extra?['cubit'] as EditProfileCubit?;
+
+    return BlocProvider.value(
+      value: cubit ?? locator<EditProfileCubit>()
+        ..initProfileModel(user ?? UserRegistrationData()),
+      child: Scaffold(
         backgroundColor: AppColors.lightGreyBackground,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
-          onPressed: () {
-            context.pop();
+        appBar: AppBar(
+          backgroundColor: AppColors.lightGreyBackground,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
+            onPressed: () {
+              context.pop();
+            },
+          ),
+        ),
+        body: BlocBuilder<EditProfileCubit, EditProfileState>(
+          builder: (context, state) {
+            final cubit = context.read<EditProfileCubit>();
+
+            // Show confirmation screen if verification was sent
+            if (state.emailVerificationSent) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            text: 'Добавить Е-mail',
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20.sp,
+                          ),
+                          12.ph,
+                          CustomText(
+                            text:
+                                'Ссылка для подтверждения отправлена вам на почту',
+                            fontSize: 14.sp,
+                            color: AppColors.grey,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          20.ph,
+                          CustomTextField(
+                            hintText: 'Email',
+                            initialValue:
+                                state.pendingEmail ?? state.user.email,
+                            keyboardType: TextInputType.emailAddress,
+                            isRequired: false,
+                            readOnly: true,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SliverFillRemaining(
+                      hasScrollBody: false,
+                      fillOverscroll: true,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          CustomGradientButton(
+                            text: 'Ок',
+                            onPressed: () {
+                              final updatedEmail =
+                                  state.pendingEmail ?? state.user.email;
+                              final updatedUser =
+                                  state.user.copyWith(email: updatedEmail);
+                              cubit.resetEmailVerification();
+                              cubit.updateUserData(updatedUser);
+                              context.pop(updatedUser);
+                            },
+                          ),
+                          20.ph,
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }
+
+            // Show input screen
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: 'Добавить Е-mail',
+                          fontWeight: FontWeight.w800,
+                          fontSize: 20.sp,
+                        ),
+                        12.ph,
+                        CustomText(
+                          text: 'Укажите и подтвердите e-mail для верификации',
+                          fontSize: 14.sp,
+                          color: AppColors.grey,
+                          fontWeight: FontWeight.w400,
+                        ),
+                        20.ph,
+                        CustomTextField(
+                          hintText: 'Email',
+                          initialValue: state.pendingEmail,
+                          onChanged: (v) {
+                            cubit.updateNewField('email', v);
+                            cubit.setPendingEmail(v);
+                          },
+                          keyboardType: TextInputType.emailAddress,
+                          isRequired: false,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    fillOverscroll: true,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        CustomGradientButton(
+                          text: 'Подтвердить',
+                          isLoading: state.isLoading,
+                          isDisabled:
+                              !(state.pendingEmail?.isNotEmpty ?? false) ||
+                                  !_isValidEmail(state.pendingEmail ?? ''),
+                          onPressed: () {
+                            cubit.sendEmailVerification(context);
+                          },
+                        ),
+                        20.ph,
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
           },
         ),
       ),
-      body: BlocBuilder<EditProfileCubit, EditProfileState>(
-          builder: (context, state) {
-        final cubit = context.read<EditProfileCubit>();
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                      text: 'changeEmail'.tr(),
-                      fontWeight: FontWeight.w800,
-                      fontSize: 20.sp,
-                    ),
-                    12.ph,
-                    CustomText(
-                      text: 'currentEmail'.tr(),
-                      fontSize: 12.sp,
-                      color: AppColors.grey,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    8.ph,
-                    CustomTextField(
-                      hintText: 'oldEmail'.tr(),
-                      initialValue: state.user.email,
-                      keyboardType: TextInputType.emailAddress,
-                      isRequired: false,
-                      readOnly: true,
-                    ),
-                    16.ph,
-                    CustomText(
-                      text: 'EnterNewEmail'.tr(),
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.grey,
-                    ),
-                    8.ph,
-                    CustomTextField(
-                      hintText: 'email'.tr(),
-                      onChanged: (v) => cubit.updateNewField('email', v),
-                      keyboardType: TextInputType.emailAddress,
-                      isRequired: false,
-                    ),
-                  ],
-                ),
-              ),
-              SliverFillRemaining(
-                hasScrollBody: false,
-                fillOverscroll: true,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    CustomGradientButton(
-                      text: 'save'.tr(),
-                      isLoading: state.isLoading,
-                      isDisabled: !(state.user.email?.isNotEmpty ?? false),
-                      onPressed: () {
-                        cubit.submit(context);
-                      },
-                    ),
-                    20.ph,
-                  ],
-                ),
-              ),
-            ],
-          ),
-        );
-      }),
     );
+  }
+
+  bool _isValidEmail(String email) {
+    return RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(email);
   }
 }

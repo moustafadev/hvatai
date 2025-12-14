@@ -7,7 +7,7 @@ class CustomSelectGender extends StatelessWidget {
   final List<String> items;
 
   // Gender keys that map to translations
-  static const List<String> _genderKeys = ['Male', 'Female', 'Other'];
+  static const List<String> _genderKeys = ['Male', 'Female'];
 
   const CustomSelectGender({
     super.key,
@@ -23,8 +23,7 @@ class CustomSelectGender extends StatelessWidget {
         return const Icon(Icons.male);
       case 'Female':
         return const Icon(Icons.female);
-      case 'Other':
-        return const Icon(Icons.transgender);
+    
       default:
         return null;
     }
@@ -36,8 +35,6 @@ class CustomSelectGender extends StatelessWidget {
         return 'male'.tr();
       case 'Female':
         return 'female'.tr();
-      case 'Other':
-        return 'other'.tr();
       default:
         return key;
     }

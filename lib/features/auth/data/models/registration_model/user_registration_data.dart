@@ -1,6 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/core/shared/utils/server_config.dart';
 
 part 'user_registration_data.freezed.dart';
 part 'user_registration_data.g.dart';
@@ -13,6 +14,18 @@ bool? intToBool(dynamic value) {
 }
 
 String? toStringNullable(dynamic value) => value?.toString();
+
+String? _imageFromJson(String? value) {
+  if (value == null || value.isEmpty) return value;
+  // Avoid double-prefixing if the value is already a full URL
+  if (value.startsWith('http')) return value;
+  // If value contains '/', prepend domain only; otherwise prepend domain + "storage"
+  if (value.contains('/')) {
+    return "${ServerConfig.domen}storage/$value";
+  } else {
+    return "${ServerConfig.domen}storage/$value";
+  }
+}
 
 @freezed
 class UserRegistrationData with _$UserRegistrationData {
@@ -42,8 +55,9 @@ class UserRegistrationData with _$UserRegistrationData {
     @JsonKey(includeIfNull: false) String? country,
     @JsonKey(includeIfNull: false) String? phone,
     @JsonKey(includeIfNull: false) String? role,
-    @JsonKey(includeIfNull: false) String? image,
-    @JsonKey(name: 'image_business', includeIfNull: false)
+    @JsonKey(includeIfNull: false, fromJson: _imageFromJson) String? image,
+    @JsonKey(
+        name: 'image_business', includeIfNull: false, fromJson: _imageFromJson)
     String? imageBusiness,
     @JsonKey(includeIfNull: false) String? description,
     @JsonKey(includeIfNull: false) String? lang,
@@ -85,8 +99,10 @@ class UserRegistrationData with _$UserRegistrationData {
     @JsonKey(name: 'updated_at', includeIfNull: false) String? updatedAt,
     @JsonKey(includeIfNull: false) List<String>? interests,
     @JsonKey(includeIfNull: false) List<String>? detailedInterests,
-    @JsonKey(name: 'subscribers_count', includeIfNull: false) int? subscribersCount,
-    @JsonKey(name: 'subscribed_users_count', includeIfNull: false) int? subscribedUsersCount,
+    @JsonKey(name: 'subscribers_count', includeIfNull: false)
+    int? subscribersCount,
+    @JsonKey(name: 'subscribed_users_count', includeIfNull: false)
+    int? subscribedUsersCount,
   }) = _UserRegistrationData;
 
   factory UserRegistrationData.fromJson(Map<String, dynamic> json) =>

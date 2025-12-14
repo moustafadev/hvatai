@@ -1,4 +1,4 @@
-part of '../profile.dart';
+part of '../../profile.dart';
 
 class PaymentAndDelivery extends StatelessWidget {
   const PaymentAndDelivery({
@@ -7,7 +7,8 @@ class PaymentAndDelivery extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileCubit, ProfileState>(builder: (context, state) {
+    return BlocBuilder<EditProfileCubit, EditProfileState>(
+        builder: (context, state) {
       return ListView.builder(
         padding: EdgeInsets.all(0),
         shrinkWrap: true,

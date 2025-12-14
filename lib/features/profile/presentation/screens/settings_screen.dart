@@ -63,17 +63,6 @@ class SettingsScreen extends StatelessWidget {
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w800,
                         ),
-                        CustomUploadImageWidget(
-                          hideMainAndEdit: true,
-                          initialImage: user.image,
-                          subTitle:
-                              "Минимальный размер для изображений — 450x450 пикселей. Изображение не должно весить более 120 Кб.",
-                          padding: 40,
-                          updateImage: (imageUpdate) {
-                            cubit.updateUserImages(imageUpdate ?? '');
-                          },
-                          title: '',
-                        ),
                         12.ph,
                         CustomTextField(
                           initialValue: state.user.firstName,
@@ -103,8 +92,9 @@ class SettingsScreen extends StatelessWidget {
                               ? user.country ?? ''
                               : state.user.country!,
                         ),
-                        12.ph,
+                        20.ph,
                         ChangeInfoProfile(),
+                        const PaymentAndDelivery(),
                         50.ph,
                         GestureDetector(
                           onTap: () {
