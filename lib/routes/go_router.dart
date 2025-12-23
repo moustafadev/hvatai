@@ -25,6 +25,7 @@ import 'package:hvatai/features/profile/data/model/product_model/product_model.d
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/my_product_details_cubit/my_product_details_cubit.dart';
 import 'package:hvatai/features/payment_method/presentation/payment_method.dart';
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
@@ -293,10 +294,12 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, Object>;
         final model = extra['model'] as ProductModel;
-        final cubit = extra['cubit'] as MyGoodsCubit..initProductModel(model);
+        final cubit = locator<MyProductDetailsCubit>()..initProduct(model);
 
         return BlocProvider.value(
-            value: cubit, child: const MyProductDetailsScreen());
+          value: cubit,
+          child: const MyProductDetailsScreen(),
+        );
       },
     ),
     GoRoute(
@@ -322,12 +325,6 @@ final GoRouter router = GoRouter(
       path: AppRoutes.cart,
       builder: (BuildContext context, GoRouterState state) {
         return const CartScreen();
-      },
-    ),
-    GoRoute(
-      path: AppRoutes.myGoods, // Remove the leading '/'
-      builder: (BuildContext context, GoRouterState state) {
-        return const MyGoodsScreen();
       },
     ),
     GoRoute(

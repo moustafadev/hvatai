@@ -11,7 +11,7 @@ class ProfileScreen extends StatelessWidget {
           create: (_) => locator<ProfileCubit>()..getProfile(),
         ),
         BlocProvider(
-          create: (_) => locator<MyGoodsCubit>()..getMyProducts(),
+          create: (_) => locator<MyProductsCubit>()..getMyProducts(),
         ),
         BlocProvider(
           create: (_) => locator<MyStreamsCubit>()..loadMyStreams(),

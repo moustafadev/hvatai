@@ -20,6 +20,8 @@ import 'package:hvatai/features/profile/presentation/cubit/add_stream/add_stream
 import 'package:hvatai/features/profile/presentation/cubit/analytics_cubit/analytics_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/my_products_cubit/my_products_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/my_product_details_cubit/my_product_details_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/report_violation_cubit/report_violation_cubit.dart';
@@ -37,7 +39,6 @@ part 'screens/my_awards_screen.dart';
 part 'screens/privacy_policy_profile_screen.dart';
 part 'screens/terms_and_conditions_screen.dart';
 //part 'widgets/change_password_field.dart';
-part 'screens/my_goods_screen.dart';
 part 'screens/profile_settings_screen.dart';
 part 'screens/my_product_details_screen.dart';
 part 'screens/notification_settings_screen.dart';

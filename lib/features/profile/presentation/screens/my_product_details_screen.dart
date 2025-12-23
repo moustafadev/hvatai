@@ -5,18 +5,20 @@ class MyProductDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.read<MyGoodsCubit>().resetImageIndex();
-    return BlocBuilder<MyGoodsCubit, MyGoodsState>(builder: (context, state) {
+    final detailsCubit = context.read<MyProductDetailsCubit>();
+    detailsCubit.resetImageIndex();
+    return BlocBuilder<MyProductDetailsCubit, MyProductDetailsState>(
+        builder: (context, state) {
       final product = state.product;
       final variant =
-          product.variants.isNotEmpty ? product.variants.first : VariantModel();
+          product?.variants.isNotEmpty ?? false ? product?.variants.first : VariantModel();
 
-      final deliveryType = product.deliveryType ?? '';
+      final deliveryType = product?.deliveryType ?? '';
       final deliveryText = deliveryType.isNotEmpty
           ? '${deliveryType[0].toUpperCase()}${deliveryType.substring(1)}'
           : 'notAvailable'.tr();
 
-      final images = product.images;
+      final images = product?.images ?? [];
 
       return Scaffold(
         backgroundColor: AppColors.lightGreyBackground,
@@ -36,7 +38,7 @@ class MyProductDetailsScreen extends StatelessWidget {
                             itemCount: images.isEmpty ? 1 : images.length,
                             onPageChanged: (index) {
                               context
-                                  .read<MyGoodsCubit>()
+                                  .read<MyProductDetailsCubit>()
                                   .changeImageIndex(index);
                             },
                             itemBuilder: (context, index) {
@@ -68,34 +70,32 @@ class MyProductDetailsScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                  if (product.id != null)
-                    Positioned(
-                      bottom: 16,
-                      right: 16,
-                      child: GestureDetector(
-                        onTap: () async {
-                          final cubit = context.read<MyGoodsCubit>();
-                          cubit.initProductModel(product);
-                          final result = await context.push<bool>(
-                            AppRoutes.addProduct,
-                            extra: {
-                              'cubit': cubit,
-                              'mode': 'edit',
-                            },
-                          );
-                          if (result == true && context.mounted) {
-                            context.pop(true);
-                          }
-                        },
-                        child: Center(
-                          child: SvgPicture.asset(
-                            Assets.assetsIconsEdit,
-                         
-                           
+                        if (product?.id != null)
+                          Positioned(
+                            bottom: 16,
+                            right: 16,
+                            child: GestureDetector(
+                              onTap: () async {
+                                final goodsCubit = locator<MyGoodsCubit>();
+                                goodsCubit.initProductModel(product!);
+                                final result = await context.push<bool>(
+                                  AppRoutes.addProduct,
+                                  extra: {
+                                    'cubit': goodsCubit,
+                                    'mode': 'edit',
+                                  },
+                                );
+                                if (result == true && context.mounted) {
+                                  context.pop(true);
+                                }
+                              },
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  Assets.assetsIconsEdit,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
                       ],
                     ),
                   ),
@@ -121,12 +121,12 @@ class MyProductDetailsScreen extends StatelessWidget {
                           children: [
                             Flexible(
                               child: CustomText(
-                                text: product.productName ?? '',
+                                text: product?.productName ?? '',
                                 fontSize: 20.sp,
                                 fontWeight: FontWeight.w800,
                               ),
                             ),
-                            if (variant.price != null)
+                            if (variant?.price != null)
                               Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 12, vertical: 2),
@@ -135,9 +135,9 @@ class MyProductDetailsScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.r),
                                 ),
                                 child: CustomText(
-                                  text: variant.price! % 1 == 0
-                                      ? "${variant.price!.toInt()} ₽"
-                                      : "${variant.price} ₽",
+                                  text: (variant?.price?.toInt() ?? 1) % 1 == 0
+                                      ? "${variant?.price!.toInt()} ₽"
+                                      : "${variant?.price} ₽",
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   color: AppColors.white,
@@ -146,11 +146,11 @@ class MyProductDetailsScreen extends StatelessWidget {
                           ],
                         ),
                         8.ph,
-                        if (product.category?.name != null)
+                        if (product?.category?.name != null)
                           Row(
                             children: [
                               CustomText(
-                                text: '${product.category?.name} ',
+                                text: '${product?.category?.name} ',
                                 color: AppColors.blackLite,
                                 fontSize: 14.sp,
                               ),
@@ -166,14 +166,14 @@ class MyProductDetailsScreen extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(10.r),
                                   color: AppColors.gray),
                               child: CustomText(
-                                text: '${variant.stock} шт.',
+                                text: '${variant?.stock ?? 0} шт.',
                                 fontSize: 10.sp,
                                 fontWeight: FontWeight.w600,
                                 color: AppColors.blackLite,
                               ),
                             ),
                             8.pw,
-                            if (product.saleType.isNotEmpty)
+                            if (product?.saleType.isNotEmpty ?? false)
                               Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 3),
@@ -182,7 +182,7 @@ class MyProductDetailsScreen extends StatelessWidget {
                                     color: AppColors.gray),
                                 child: CustomText(
                                   text:
-                                      "${product.saleType[0].toUpperCase()}${product.saleType.substring(1)}",
+                                      "${product?.saleType[0].toUpperCase()}${product?.saleType.substring(1)}",
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.blackLite,
@@ -191,9 +191,9 @@ class MyProductDetailsScreen extends StatelessWidget {
                           ],
                         ),
                         8.ph,
-                        if (product.productDescription?.isNotEmpty ?? false)
+                        if (product?.productDescription?.isNotEmpty ?? false)
                           CustomText(
-                            text: product.productDescription ?? '',
+                            text: product?.productDescription ?? '',
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
                           ),
@@ -234,7 +234,7 @@ class MyProductDetailsScreen extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                             ),
                             CustomText(
-                              text: product.selfPickup == true
+                              text: product?.selfPickup == true
                                   ? 'free'.tr()
                                   : 'paid'.tr(),
                               color: AppColors.blackDark,
@@ -281,7 +281,6 @@ class MyProductDetailsScreen extends StatelessWidget {
       ),
     );
   }
-
 }
 
 class _CircleButton extends StatelessWidget {

@@ -1,10 +1,10 @@
 import 'dart:io';
 
-import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +13,6 @@ import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
 import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_product_category_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_product_usecase.dart';
 
@@ -22,27 +21,20 @@ part 'my_goods_state.dart';
 
 class MyGoodsCubit extends Cubit<MyGoodsState> {
   MyGoodsCubit(
-    this.getProductsUsecase,
     this.getProductCategoryUsecase,
     this.addNewProductUsecase,
     this.updateProductUsecase,
   ) : super(
           MyGoodsState(
-            selectedCategoryIndex: 0,
             product: ProductModel(variants: [VariantModel()]),
           ),
         ) {
     deliveryTimeController.text = state.product.deliveryTime ?? '';
   }
-  final GetMyProductsUsecase getProductsUsecase;
   final GetProductCategoryUsecase getProductCategoryUsecase;
   final AddNewProductUsecase addNewProductUsecase;
   final UpdateProductUsecase updateProductUsecase;
   final TextEditingController deliveryTimeController = TextEditingController();
-
-  void changeCategory(int index) {
-    emit(state.copyWith(selectedCategoryIndex: index));
-  }
 
   bool isDisabled() {
     return (state.product.productName == null ||
@@ -83,21 +75,6 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
 
   void changeImageIndex(int index) {
     emit(state.copyWith(currentImageIndex: index));
-  }
-
-  Future<void> getMyProducts() async {
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
-    final result = await getProductsUsecase.call(
-      const GetMyProductsParams(categoryIds: []),
-    );
-    result.fold(
-      (failure) =>
-          emit(state.copyWith(isLoading: false, errorMessage: failure)),
-      (productsList) => emit(state.copyWith(
-        isLoading: false,
-        products: productsList,
-      )),
-    );
   }
 
   Future<void> getProductCategory() async {

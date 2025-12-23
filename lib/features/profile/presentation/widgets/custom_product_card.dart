@@ -3,14 +3,12 @@ part of '../profile.dart';
 class MyCustomProductCard<T extends Cubit> extends StatelessWidget {
   final ProductModel product;
   final int selectedCategoryIndex;
-  final T cubit;
   final VoidCallback? onTap;
 
   const MyCustomProductCard({
     super.key,
     required this.product,
     required this.selectedCategoryIndex,
-    required this.cubit,
     this.onTap,
   });
 
@@ -26,7 +24,6 @@ class MyCustomProductCard<T extends Cubit> extends StatelessWidget {
               AppRoutes.myProductDetails,
               extra: {
                 'model': product,
-                'cubit': cubit,
               },
             );
           },

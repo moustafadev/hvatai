@@ -5,9 +5,9 @@ class ProductsTabProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final goodsCubit = context.read<MyGoodsCubit>();
-    return BlocBuilder<MyGoodsCubit, MyGoodsState>(
-      bloc: goodsCubit,
+    final productsCubit = context.read<MyProductsCubit>();
+    return BlocBuilder<MyProductsCubit, MyProductsState>(
+      bloc: productsCubit,
       builder: (context, state) {
         if (state.isLoading) {
           return const Center(
@@ -42,11 +42,13 @@ class ProductsTabProfile extends StatelessWidget {
                           builder: (context, profileState) {
                             if (profileState.isSeller) {
                               return GestureDetector(
-                                onTap: () {
-                                  context.push(
+                                onTap: () async {
+                                  final result = await context.push<bool>(
                                     AppRoutes.addProduct,
-                                    extra: goodsCubit,
                                   );
+                                  if (result == true && context.mounted) {
+                                    productsCubit.getMyProducts();
+                                  }
                                 },
                                 child: SvgPicture.asset(
                                   Assets.assetsIconsAddCircle,
@@ -63,7 +65,7 @@ class ProductsTabProfile extends StatelessWidget {
                     12.ph,
                     MyGoodsTabs(
                       selectedIndex: state.selectedCategoryIndex,
-                      onSelect: goodsCubit.changeCategory,
+                      onSelect: productsCubit.changeCategory,
                     ),
                     20.ph,
                     CustomTextField(
@@ -105,7 +107,6 @@ class ProductsTabProfile extends StatelessWidget {
                       return MyCustomProductCard<MyGoodsCubit>(
                         product: product,
                         selectedCategoryIndex: state.selectedCategoryIndex,
-                        cubit: goodsCubit,
                       );
                     },
                     childCount: products.length,

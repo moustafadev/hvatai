@@ -430,7 +430,7 @@ class _MyProductsSelectionSheet extends StatelessWidget {
                                          LiveListingsShopCubit>(
                                   product: product,
                                   selectedCategoryIndex: index,
-                                  cubit: context.read<LiveListingsShopCubit>(),
+                                  // cubit: context.read<LiveListingsShopCubit>(),
                                   onTap: state.isAddingProduct
                                       ? null
                                       : () async {
