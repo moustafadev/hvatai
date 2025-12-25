@@ -53,33 +53,27 @@ class _EmptyLiveListings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 120.w,
-            height: 120.h,
-            decoration: BoxDecoration(
-              color: AppColors.goldenColor.withOpacity(0.3),
-              shape: BoxShape.circle,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              Assets.assetsImagesEmptyProducts,
+              height: 60,
+              width: 60,
             ),
-            child: Icon(
-              Icons.inbox_outlined,
-              size: 60.sp,
-              color: AppColors.goldenColor,
+            SizedBox(height: 24.h),
+            CustomText(
+              text: 'У вас пока нет товаров',
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w700,
+              color: AppColors.blackDark,
+              textAlign: TextAlign.center,
             ),
-          ),
-          SizedBox(height: 24.h),
-          CustomText(
-            text: "There's nothing here at the moment!",
-            fontSize: 16.sp,
-            fontWeight: FontWeight.w600,
-            color: AppColors.blackDark,
-            textAlign: TextAlign.center,
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
-

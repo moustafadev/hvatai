@@ -15,6 +15,9 @@ class LiveListingsShopState extends Equatable {
     this.myProductsError,
     this.categoryIds = const [],
     this.streamId,
+    this.searchQuery = '',
+    this.showMyProducts = false,
+    this.selectedProductIds = const {},
     List<String>? tabs,
   }) : tabs = tabs ?? const ['Auction', 'Buy Now'];
 
@@ -31,22 +34,52 @@ class LiveListingsShopState extends Equatable {
   final String? myProductsError;
   final List<int> categoryIds;
   final int? streamId;
+  final String searchQuery;
+  final bool showMyProducts;
+  final Set<int> selectedProductIds;
 
   List<StreamProductItemModel> get filteredProducts {
     if (products == null || products!.isEmpty) return [];
 
-    switch (selectedTabIndex) {
-      case 0: // Auction
-        return products!
-            .where((sp) => sp.product?.saleType == 'auction')
-            .toList();
-      case 1: // Buy Now
-        return products!
-            .where((sp) => sp.product?.saleType == 'buy_now')
-            .toList();
-      default:
-        return products!;
+    var filtered = products!;
+
+    // Filter by search query
+    if (searchQuery.isNotEmpty) {
+      final query = searchQuery.toLowerCase();
+      filtered = filtered.where((sp) {
+        final productName = sp.product?.productName?.toLowerCase() ?? '';
+        final productDescription =
+            sp.product?.productDescription?.toLowerCase() ?? '';
+        final productCode = sp.product?.productCode?.toLowerCase() ?? '';
+        return productName.contains(query) ||
+            productDescription.contains(query) ||
+            productCode.contains(query);
+      }).toList();
     }
+
+    return filtered;
+  }
+
+  List<ProductModel> get filteredMyProducts {
+    if (myProducts.isEmpty) return [];
+
+    var filtered = myProducts;
+
+    // Filter by search query
+    if (searchQuery.isNotEmpty) {
+      final query = searchQuery.toLowerCase();
+      filtered = filtered.where((product) {
+        final productName = product.productName?.toLowerCase() ?? '';
+        final productDescription =
+            product.productDescription?.toLowerCase() ?? '';
+        final productCode = product.productCode?.toLowerCase() ?? '';
+        return productName.contains(query) ||
+            productDescription.contains(query) ||
+            productCode.contains(query);
+      }).toList();
+    }
+
+    return filtered;
   }
 
   LiveListingsShopState copyWith({
@@ -62,6 +95,9 @@ class LiveListingsShopState extends Equatable {
     String? myProductsError,
     List<int>? categoryIds,
     int? streamId,
+    String? searchQuery,
+    bool? showMyProducts,
+    Set<int>? selectedProductIds,
     List<String>? tabs,
   }) {
     return LiveListingsShopState(
@@ -79,6 +115,9 @@ class LiveListingsShopState extends Equatable {
       myProductsError: myProductsError ?? this.myProductsError,
       categoryIds: categoryIds ?? this.categoryIds,
       streamId: streamId ?? this.streamId,
+      searchQuery: searchQuery ?? this.searchQuery,
+      showMyProducts: showMyProducts ?? this.showMyProducts,
+      selectedProductIds: selectedProductIds ?? this.selectedProductIds,
       tabs: tabs ?? this.tabs,
     );
   }
@@ -98,5 +137,8 @@ class LiveListingsShopState extends Equatable {
         myProductsError,
         categoryIds,
         streamId,
+        searchQuery,
+        showMyProducts,
+        selectedProductIds,
       ];
 }

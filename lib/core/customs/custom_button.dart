@@ -93,7 +93,7 @@ class CustomButton extends StatelessWidget {
                 ],
                 CustomText(
                   text: title,
-                  color: disabled! ? AppColors.eerieBlack : textColor,
+                  color: disabled! ? AppColors.disabledBackground : textColor,
                   fontWeight: fontWeight,
                   textAlign: textAlign,
                   maxLines: maxLines,

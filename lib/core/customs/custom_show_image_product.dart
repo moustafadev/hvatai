@@ -33,14 +33,14 @@ class CustomShowImageProduct extends StatelessWidget {
     }
 
     return DottedBorder(
-      padding: const EdgeInsets.all(1),
-      borderType: BorderType.RRect,
-      radius: const Radius.circular(12),
-      dashPattern: const [6, 3],
-      color: AppColors.grey,
-      strokeWidth: 1.5,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(11),
+        padding: const EdgeInsets.all(1),
+        borderType: BorderType.RRect,
+        radius: const Radius.circular(12),
+        dashPattern: const [6, 3],
+        color: AppColors.grey,
+        strokeWidth: 1.5,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(11),
         child: InkWell(
           onTap: onTap,
           child: SizedBox(

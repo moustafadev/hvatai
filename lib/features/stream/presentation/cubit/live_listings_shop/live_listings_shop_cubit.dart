@@ -73,6 +73,58 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
     }
   }
 
+  void searchProducts(String query) {
+    emit(state.copyWith(searchQuery: query));
+  }
+
+  void showMyProductsMode() {
+    emit(state.copyWith(
+      showMyProducts: true,
+      searchQuery: '',
+      selectedProductIds: {},
+    ));
+    getMyProducts();
+  }
+
+  void hideMyProductsMode() {
+    emit(state.copyWith(
+      showMyProducts: false,
+      searchQuery: '',
+      selectedProductIds: {},
+    ));
+  }
+
+  void toggleProductSelection(int productId) {
+    final currentSelected = Set<int>.from(state.selectedProductIds);
+    if (currentSelected.contains(productId)) {
+      currentSelected.remove(productId);
+    } else {
+      currentSelected.add(productId);
+    }
+    emit(state.copyWith(selectedProductIds: currentSelected));
+  }
+
+  Future<void> addSelectedProductsToStream() async {
+    if (state.selectedProductIds.isEmpty || state.streamId == null) return;
+
+    for (final productId in state.selectedProductIds) {
+      final product = state.myProducts.firstWhere(
+        (p) => p.id == productId,
+        orElse: () => throw Exception('Product not found'),
+      );
+      await addProductToStream(
+        streamId: state.streamId!,
+        product: product,
+      );
+    }
+
+    // Clear selection and hide my products mode
+    emit(state.copyWith(
+      showMyProducts: false,
+      selectedProductIds: {},
+    ));
+  }
+
   Future<bool> addProductToStream({
     required int streamId,
     required ProductModel product,

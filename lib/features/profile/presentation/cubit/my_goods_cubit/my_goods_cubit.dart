@@ -164,6 +164,24 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
         final doubleValue = double.tryParse(value) ?? 0.0;
         product = state.product.copyWith(deliveryDiscount: doubleValue);
         break;
+      case 'bidTime':
+        // Store bid time as string in deliveryTime field temporarily
+        // or use a custom field if available in ProductModel
+        product = state.product.copyWith(deliveryTime: value.toString());
+        break;
+      case 'saleType':
+        product = state.product.copyWith(saleType: value.toString());
+        break;
+      case 'stock':
+        final intValue = int.tryParse(value) ?? 1;
+        final updatedVariants = (state.product.variants.isNotEmpty)
+            ? [
+                state.product.variants.first.copyWith(stock: intValue),
+                ...state.product.variants.skip(1),
+              ]
+            : [VariantModel(stock: intValue)];
+        product = state.product.copyWith(variants: updatedVariants);
+        break;
 
       default:
         product = state.product;
