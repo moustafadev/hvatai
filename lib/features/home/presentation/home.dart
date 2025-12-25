@@ -17,7 +17,6 @@ import 'package:hvatai/features/home/presentation/cubit/categories/categories_cu
 import 'package:hvatai/features/home/presentation/cubit/categories/categories_state.dart';
 import 'package:hvatai/features/home/presentation/cubit/live_streams/live_streams_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/live_streams/live_streams_state.dart';
-import 'package:hvatai/features/profile/data/datasources/api_service_profile.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -30,3 +29,4 @@ part 'widgets/live_video_widget.dart';
 part 'widgets/my_category.dart';
 part 'widgets/title_categories_for_you.dart';
 part 'widgets/category_card.dart';
+part 'widgets/all_child_categories_widget.dart';

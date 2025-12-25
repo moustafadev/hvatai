@@ -26,7 +26,10 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     this.updateProductUsecase,
   ) : super(
           MyGoodsState(
-            product: ProductModel(variants: [VariantModel()]),
+            product: ProductModel(
+              variants: [VariantModel()],
+              saleType: 'buy_now',
+            ),
           ),
         ) {
     deliveryTimeController.text = state.product.deliveryTime ?? '';
@@ -156,6 +159,10 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
               ]
             : [VariantModel(price: doubleValue)];
         product = state.product.copyWith(variants: updatedVariants);
+        break;
+      case 'deliveryDiscount':
+        final doubleValue = double.tryParse(value) ?? 0.0;
+        product = state.product.copyWith(deliveryDiscount: doubleValue);
         break;
 
       default:

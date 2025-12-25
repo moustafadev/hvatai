@@ -100,27 +100,55 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                   ),
                   16.ph,
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                        child: TitleCategoriesForYou(),
-                      ),
-                      12.ph,
-                      MyCategory(),
-                      15.ph,
-                      CategoryTabsWidget(),
-                      24.ph,
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: LiveVideosWidget(
-                          liveStreams: liveStreamsState.liveStreams,
-                          currentUserId: '',
-                        ),
-                      ),
-                      100.ph
-                    ],
+                  BlocBuilder<CategoriesCubit, CategoriesState>(
+                    builder: (context, categoriesState) {
+                      final hasSelectedFavCategory =
+                          categoriesState.selectedFavCategoryId != null;
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // State 1: No favorite category selected
+                          // Show: All child categories -> Categories for you -> Favorite categories
+                          if (!hasSelectedFavCategory) ...[
+                            // All child categories at the top
+                            const AllChildCategoriesWidget(),
+                            // Categories for you
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                              child: TitleCategoriesForYou(),
+                            ),
+                            12.ph,
+                            MyCategory(),
+                          ],
+
+                          // State 2: Favorite category selected
+                          // Show: Categories for you -> Favorite categories -> Subcategories
+                          if (hasSelectedFavCategory) ...[
+                            // Categories for you
+                            const Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 16.0),
+                              child: TitleCategoriesForYou(),
+                            ),
+                            12.ph,
+                            MyCategory(),
+                            // Subcategories of selected favorite category
+                            CategoryTabsWidget(),
+                          ],
+
+                          24.ph,
+                          Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16.0),
+                            child: LiveVideosWidget(
+                              liveStreams: liveStreamsState.liveStreams,
+                              currentUserId: '',
+                            ),
+                          ),
+                          100.ph
+                        ],
+                      );
+                    },
                   ),
                 ],
               ),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/domain/usecases/add_fav_category_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/get_category_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/get_fav_category_usecase.dart';
@@ -162,6 +163,36 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       selectedDetailIds: updatedIds,
     ));
     // addCategoriesDetails();
+  }
+
+  void selectFavCategory(int? categoryId) {
+    if (categoryId == null) {
+      emit(state.copyWith(
+        selectedFavCategoryId: null,
+        filteredSubCategories: null,
+      ));
+      return;
+    }
+
+    // Filter subcategories from filteredCategories based on parent
+    final allSubCategories = state.filteredCategories?.data ?? [];
+    final subCategories = allSubCategories
+        .where((cat) => cat.parentId == categoryId)
+        .toList();
+
+    emit(state.copyWith(
+      selectedFavCategoryId: categoryId,
+      filteredSubCategories: subCategories.isNotEmpty
+          ? CategoryModel(data: subCategories)
+          : null,
+    ));
+  }
+
+  void clearFavCategoryFilter() {
+    emit(state.copyWith(
+      selectedFavCategoryId: null,
+      filteredSubCategories: null,
+    ));
   }
 
   @override

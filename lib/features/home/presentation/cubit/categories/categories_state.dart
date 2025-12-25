@@ -17,6 +17,8 @@ class CategoriesState with _$CategoriesState {
     DateTime? lastRequestTime,
     @Default(false) bool isLoading,
     String? error,
+    int? selectedFavCategoryId,
+    CategoryModel? filteredSubCategories,
   }) = _CategoriesState;
 
   factory CategoriesState.initial() => const CategoriesState(

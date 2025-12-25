@@ -22,7 +22,7 @@ class ApiServiceHome extends ApiBase {
         'page': getStreamsParams.page,
         'per_page': getStreamsParams.perPage,
         if (categories.isNotEmpty)
-          'categories_ids[]': categories.map((e) => e.toString()).toList(),
+          'category_ids[]': categories.map((e) => e.toString()).toList(),
       };
 
       final response =

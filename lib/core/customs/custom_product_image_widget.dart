@@ -31,22 +31,51 @@ class ProductImageCubit extends Cubit<ProductImageState> {
     emit(state.copyWith(images: newImages, isLoading: false));
   }
 
-  Future<void> addImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      final updated = List<String>.from(state.images)..add(pickedFile.path);
-      await updateImageList(updated);
-    }
+  Future<void> addImage(BuildContext context) async {
+    showPhotoOptionsDialog(
+      context: context,
+      onTakePhoto: () async {
+        final pickedFile = await picker.pickImage(source: ImageSource.camera);
+        if (pickedFile != null) {
+          final updated = List<String>.from(state.images)..add(pickedFile.path);
+          await updateImageList(updated);
+        }
+      },
+      onChoosePhoto: () async {
+        final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+        if (pickedFile != null) {
+          final updated = List<String>.from(state.images)..add(pickedFile.path);
+          await updateImageList(updated);
+        }
+      },
+    );
   }
 
-  Future<void> editImage(int index) async {
+  Future<void> showImageOptionsDialog(BuildContext context, int index) async {
     if (index >= 0 && index < state.images.length) {
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        final updated = List<String>.from(state.images);
-        updated[index] = pickedFile.path;
-        await updateImageList(updated);
-      }
+      showPhotoOptionsDialog(
+        context: context,
+        onTakePhoto: () async {
+          final pickedFile = await picker.pickImage(source: ImageSource.camera);
+          if (pickedFile != null) {
+            final updated = List<String>.from(state.images);
+            updated[index] = pickedFile.path;
+            await updateImageList(updated);
+          }
+        },
+        onChoosePhoto: () async {
+          final pickedFile =
+              await picker.pickImage(source: ImageSource.gallery);
+          if (pickedFile != null) {
+            final updated = List<String>.from(state.images);
+            updated[index] = pickedFile.path;
+            await updateImageList(updated);
+          }
+        },
+        onDelete: () async {
+          await deleteImage(index);
+        },
+      );
     }
   }
 
@@ -171,70 +200,52 @@ class CustomProductImageWidget extends StatelessWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomText(
-                text: title,
-                fontSize: 20.sp,
-                fontWeight: FontWeight.w800,
-              ),
+              if (title.isNotEmpty) ...[
+                CustomText(
+                  text: title,
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w800,
+                ),
+              ],
               const SizedBox(height: 20),
               CustomScrollView(
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 slivers: [
-                  SliverToBoxAdapter(
-                    child: state.images.isEmpty
-                        ? PlaceHolder(
-                            isLoading: state.isLoading,
-                            onTap: () =>
-                                context.read<ProductImageCubit>().addImage(),
-                          )
-                        : CustomShowImageProduct(
-                            image: _resolveImagePath(state.images[0]),
-                            index: 0,
-                            onTapEdit: () =>
-                                context.read<ProductImageCubit>().editImage(0),
-                            onTapDelete: () => context
-                                .read<ProductImageCubit>()
-                                .deleteImage(0),
-                          ),
-                  ),
-                  const SliverToBoxAdapter(child: SizedBox(height: 15)),
                   SliverGrid(
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 15,
-                      childAspectRatio: 1.8,
+                      mainAxisExtent: 200,
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        final gridIndex = index + 1;
-                        if (gridIndex < state.images.length) {
+                        if (index < state.images.length) {
                           return CustomShowImageProduct(
-                            image: _resolveImagePath(state.images[gridIndex]),
-                            index: gridIndex,
-                            onTapEdit: () => context
+                            image: _resolveImagePath(state.images[index]),
+                            index: index,
+                            onTap: () => context
                                 .read<ProductImageCubit>()
-                                .editImage(gridIndex),
-                            onTapDelete: () => context
-                                .read<ProductImageCubit>()
-                                .deleteImage(gridIndex),
+                                .showImageOptionsDialog(context, index),
                           );
                         }
-                        if (gridIndex == state.images.length &&
+                        if (index == state.images.length &&
                             state.images.length < 8) {
                           return PlaceHolder(
                             isLoading: state.isLoading,
                             isShowMinimum: false,
-                            onTap: () =>
-                                context.read<ProductImageCubit>().addImage(),
+                            onTap: () => context
+                                .read<ProductImageCubit>()
+                                .addImage(context),
                           );
                         }
                         return const SizedBox();
                       },
-                      childCount:
-                          state.images.isNotEmpty ? state.images.length : 0,
+                      childCount: state.images.length < 8
+                          ? state.images.length + 1
+                          : state.images.length,
                     ),
                   ),
                 ],

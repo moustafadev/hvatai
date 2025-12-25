@@ -87,9 +87,7 @@ class CustomUploadImageWidget extends StatelessWidget {
                 CustomShowImageProduct(
                   image: _resolveImagePath(image),
                   index: 0,
-                  onTapEdit: () => _showPhotoOptions(context),
-                  onTapDelete: () =>
-                      context.read<UploadImageCubit>().deleteImage(),
+                  onTap: () => _showPhotoOptions(context),
                 ),
             ],
           );
@@ -101,29 +99,24 @@ class CustomUploadImageWidget extends StatelessWidget {
   void _showPhotoOptions(BuildContext context) {
     final cubit = context.read<UploadImageCubit>();
 
-    showDialog(
+    showPhotoOptionsDialog(
       context: context,
-      barrierDismissible: true,
-      builder: (BuildContext context) {
-        return PhotoOptionsDialog(
-          onTakePhoto: () async {
-            final pickedFile =
-                await ImagePicker().pickImage(source: ImageSource.camera);
-            if (pickedFile != null) {
-              cubit.updateImage(pickedFile.path);
-            }
-          },
-          onChoosePhoto: () async {
-            final pickedFile =
-                await ImagePicker().pickImage(source: ImageSource.gallery);
-            if (pickedFile != null) {
-              cubit.updateImage(pickedFile.path);
-            }
-          },
-          onDelete: () {
-            cubit.deleteImage();
-          },
-        );
+      onTakePhoto: () async {
+        final pickedFile =
+            await ImagePicker().pickImage(source: ImageSource.camera);
+        if (pickedFile != null) {
+          cubit.updateImage(pickedFile.path);
+        }
+      },
+      onChoosePhoto: () async {
+        final pickedFile =
+            await ImagePicker().pickImage(source: ImageSource.gallery);
+        if (pickedFile != null) {
+          cubit.updateImage(pickedFile.path);
+        }
+      },
+      onDelete: () {
+        cubit.deleteImage();
       },
     );
   }
@@ -149,18 +142,40 @@ class CustomUploadImageWidget extends StatelessWidget {
 //   );
 // }
 
+/// --- Helper Function ---
+
+/// Shows a reusable photo options dialog with customizable callbacks
+void showPhotoOptionsDialog({
+  required BuildContext context,
+  required VoidCallback onTakePhoto,
+  required VoidCallback onChoosePhoto,
+  VoidCallback? onDelete,
+}) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext dialogContext) {
+      return PhotoOptionsDialog(
+        onTakePhoto: onTakePhoto,
+        onChoosePhoto: onChoosePhoto,
+        onDelete: onDelete,
+      );
+    },
+  );
+}
+
 /// --- PhotoOptionsDialog ---
 
 class PhotoOptionsDialog extends StatelessWidget {
   final VoidCallback onTakePhoto;
   final VoidCallback onChoosePhoto;
-  final VoidCallback onDelete;
+  final VoidCallback? onDelete;
 
   const PhotoOptionsDialog({
     super.key,
     required this.onTakePhoto,
     required this.onChoosePhoto,
-    required this.onDelete,
+    this.onDelete,
   });
 
   @override
@@ -194,15 +209,17 @@ class PhotoOptionsDialog extends StatelessWidget {
                     onChoosePhoto();
                   },
                 ),
-                const Divider(height: 1, color: Colors.grey),
-                _buildOption(
-                  text: 'delete'.tr(),
-                  textColor: Colors.red,
-                  onTap: () {
-                    context.pop();
-                    onDelete();
-                  },
-                ),
+                if (onDelete != null) ...[
+                  const Divider(height: 1, color: Colors.grey),
+                  _buildOption(
+                    text: 'delete'.tr(),
+                    textColor: Colors.red,
+                    onTap: () {
+                      context.pop();
+                      onDelete!();
+                    },
+                  ),
+                ],
               ],
             ),
           ),

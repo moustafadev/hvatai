@@ -16,20 +16,10 @@ class MyCategory extends StatelessWidget {
       builder: (context, state) {
         final interests = state.categories;
 
-        if (interests == null || interests.data == null) {
-          return SizedBox(
-            height: 150,
-            child: const Center(
-              child: CircularProgressIndicator(color: Colors.grey),
-            ),
-          );
-        }
-
-        if (interests.data!.isEmpty) {
-          return SizedBox(
-            height: 100,
-            child: Center(child: Text('noCategories')),
-          );
+        if (interests == null ||
+            interests.data == null ||
+            interests.data!.isEmpty) {
+          return SizedBox();
         }
 
         return Column(
@@ -54,6 +44,12 @@ class MyCategory extends StatelessWidget {
                           category: category,
                           isSelected: isSelected,
                           onTap: () {
+                            // If clicking on a favorite category, filter by it
+                            if (!isSelected) {
+                              cubit.selectFavCategory(category.id);
+                            } else {
+                              cubit.clearFavCategoryFilter();
+                            }
                             cubit.toggleInterest(index, category.id ?? 0);
                             context.read<LiveStreamsCubit>().fetchLiveStreams(
                                   isRefresh: true,

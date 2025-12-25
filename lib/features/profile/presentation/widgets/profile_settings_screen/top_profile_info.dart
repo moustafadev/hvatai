@@ -8,27 +8,22 @@ class TopProfileInfo extends StatelessWidget {
   void _showImagePickerDialog(
     BuildContext context,
   ) {
-    showDialog(
+    showPhotoOptionsDialog(
       context: context,
-      barrierDismissible: true,
-      builder: (BuildContext dialogContext) {
-        return PhotoOptionsDialog(
-          onTakePhoto: () {
-            context.read<ProfileCubit>().pickAndUpdateImage(
-                  context,
-                  ImageSource.camera,
-                );
-          },
-          onChoosePhoto: () {
-            context.read<ProfileCubit>().pickAndUpdateImage(
-                  context,
-                  ImageSource.gallery,
-                );
-          },
-          onDelete: () {
-            Navigator.of(dialogContext).pop();
-          },
-        );
+      onTakePhoto: () {
+        context.read<ProfileCubit>().pickAndUpdateImage(
+              context,
+              ImageSource.camera,
+            );
+      },
+      onChoosePhoto: () {
+        context.read<ProfileCubit>().pickAndUpdateImage(
+              context,
+              ImageSource.gallery,
+            );
+      },
+      onDelete: () {
+        // Delete functionality can be added here if needed
       },
     );
   }

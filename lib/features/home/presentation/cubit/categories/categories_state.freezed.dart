@@ -27,6 +27,9 @@ mixin _$CategoriesState {
   DateTime? get lastRequestTime => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
+  int? get selectedFavCategoryId => throw _privateConstructorUsedError;
+  CategoryModel? get filteredSubCategories =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of CategoriesState
   /// with the given fields replaced by the non-null parameter values.
@@ -52,10 +55,13 @@ abstract class $CategoriesStateCopyWith<$Res> {
       Set<int> selectedIndicesDetails,
       DateTime? lastRequestTime,
       bool isLoading,
-      String? error});
+      String? error,
+      int? selectedFavCategoryId,
+      CategoryModel? filteredSubCategories});
 
   $CategoryModelCopyWith<$Res>? get categories;
   $CategoryModelCopyWith<$Res>? get filteredCategories;
+  $CategoryModelCopyWith<$Res>? get filteredSubCategories;
 }
 
 /// @nodoc
@@ -84,6 +90,8 @@ class _$CategoriesStateCopyWithImpl<$Res, $Val extends CategoriesState>
     Object? lastRequestTime = freezed,
     Object? isLoading = null,
     Object? error = freezed,
+    Object? selectedFavCategoryId = freezed,
+    Object? filteredSubCategories = freezed,
   }) {
     return _then(_value.copyWith(
       categories: freezed == categories
@@ -130,6 +138,14 @@ class _$CategoriesStateCopyWithImpl<$Res, $Val extends CategoriesState>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
+      selectedFavCategoryId: freezed == selectedFavCategoryId
+          ? _value.selectedFavCategoryId
+          : selectedFavCategoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      filteredSubCategories: freezed == filteredSubCategories
+          ? _value.filteredSubCategories
+          : filteredSubCategories // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
     ) as $Val);
   }
 
@@ -160,6 +176,20 @@ class _$CategoriesStateCopyWithImpl<$Res, $Val extends CategoriesState>
       return _then(_value.copyWith(filteredCategories: value) as $Val);
     });
   }
+
+  /// Create a copy of CategoriesState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CategoryModelCopyWith<$Res>? get filteredSubCategories {
+    if (_value.filteredSubCategories == null) {
+      return null;
+    }
+
+    return $CategoryModelCopyWith<$Res>(_value.filteredSubCategories!, (value) {
+      return _then(_value.copyWith(filteredSubCategories: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -181,12 +211,16 @@ abstract class _$$CategoriesStateImplCopyWith<$Res>
       Set<int> selectedIndicesDetails,
       DateTime? lastRequestTime,
       bool isLoading,
-      String? error});
+      String? error,
+      int? selectedFavCategoryId,
+      CategoryModel? filteredSubCategories});
 
   @override
   $CategoryModelCopyWith<$Res>? get categories;
   @override
   $CategoryModelCopyWith<$Res>? get filteredCategories;
+  @override
+  $CategoryModelCopyWith<$Res>? get filteredSubCategories;
 }
 
 /// @nodoc
@@ -213,6 +247,8 @@ class __$$CategoriesStateImplCopyWithImpl<$Res>
     Object? lastRequestTime = freezed,
     Object? isLoading = null,
     Object? error = freezed,
+    Object? selectedFavCategoryId = freezed,
+    Object? filteredSubCategories = freezed,
   }) {
     return _then(_$CategoriesStateImpl(
       categories: freezed == categories
@@ -259,6 +295,14 @@ class __$$CategoriesStateImplCopyWithImpl<$Res>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String?,
+      selectedFavCategoryId: freezed == selectedFavCategoryId
+          ? _value.selectedFavCategoryId
+          : selectedFavCategoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      filteredSubCategories: freezed == filteredSubCategories
+          ? _value.filteredSubCategories
+          : filteredSubCategories // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
     ));
   }
 }
@@ -277,7 +321,9 @@ class _$CategoriesStateImpl implements _CategoriesState {
       final Set<int> selectedIndicesDetails = const {},
       this.lastRequestTime,
       this.isLoading = false,
-      this.error})
+      this.error,
+      this.selectedFavCategoryId,
+      this.filteredSubCategories})
       : _selectedDetailIds = selectedDetailIds,
         _selectedInterests = selectedInterests,
         _selectedIndices = selectedIndices,
@@ -346,10 +392,14 @@ class _$CategoriesStateImpl implements _CategoriesState {
   final bool isLoading;
   @override
   final String? error;
+  @override
+  final int? selectedFavCategoryId;
+  @override
+  final CategoryModel? filteredSubCategories;
 
   @override
   String toString() {
-    return 'CategoriesState(categories: $categories, selectedDetailIds: $selectedDetailIds, filteredCategories: $filteredCategories, selectedIndex: $selectedIndex, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, selectedCategoryIds: $selectedCategoryIds, selectedIndicesDetails: $selectedIndicesDetails, lastRequestTime: $lastRequestTime, isLoading: $isLoading, error: $error)';
+    return 'CategoriesState(categories: $categories, selectedDetailIds: $selectedDetailIds, filteredCategories: $filteredCategories, selectedIndex: $selectedIndex, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, selectedCategoryIds: $selectedCategoryIds, selectedIndicesDetails: $selectedIndicesDetails, lastRequestTime: $lastRequestTime, isLoading: $isLoading, error: $error, selectedFavCategoryId: $selectedFavCategoryId, filteredSubCategories: $filteredSubCategories)';
   }
 
   @override
@@ -377,7 +427,11 @@ class _$CategoriesStateImpl implements _CategoriesState {
                 other.lastRequestTime == lastRequestTime) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            (identical(other.error, error) || other.error == error));
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.selectedFavCategoryId, selectedFavCategoryId) ||
+                other.selectedFavCategoryId == selectedFavCategoryId) &&
+            (identical(other.filteredSubCategories, filteredSubCategories) ||
+                other.filteredSubCategories == filteredSubCategories));
   }
 
   @override
@@ -393,7 +447,9 @@ class _$CategoriesStateImpl implements _CategoriesState {
       const DeepCollectionEquality().hash(_selectedIndicesDetails),
       lastRequestTime,
       isLoading,
-      error);
+      error,
+      selectedFavCategoryId,
+      filteredSubCategories);
 
   /// Create a copy of CategoriesState
   /// with the given fields replaced by the non-null parameter values.
@@ -417,7 +473,9 @@ abstract class _CategoriesState implements CategoriesState {
       final Set<int> selectedIndicesDetails,
       final DateTime? lastRequestTime,
       final bool isLoading,
-      final String? error}) = _$CategoriesStateImpl;
+      final String? error,
+      final int? selectedFavCategoryId,
+      final CategoryModel? filteredSubCategories}) = _$CategoriesStateImpl;
 
   @override
   CategoryModel? get categories;
@@ -441,6 +499,10 @@ abstract class _CategoriesState implements CategoriesState {
   bool get isLoading;
   @override
   String? get error;
+  @override
+  int? get selectedFavCategoryId;
+  @override
+  CategoryModel? get filteredSubCategories;
 
   /// Create a copy of CategoriesState
   /// with the given fields replaced by the non-null parameter values.
