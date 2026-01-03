@@ -22,6 +22,8 @@ class HeaderProfile extends StatelessWidget {
                   const Spacer(),
                   _IconButton(
                     onTap: () {
+                      ChatsCubit.get(context).getChats();
+                      ChatsCubit.get(context).getSupportChat();
                       context.push(AppRoutes.chatRoot);
                     },
                     asset: Assets.assetsIconsMessage,

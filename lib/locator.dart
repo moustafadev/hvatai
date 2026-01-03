@@ -145,6 +145,7 @@ Future<void> setupLocator() async {
       () => CartCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => SearchCubit(
         locator(),
+        locator(),
       ));
 
   locator.registerFactory(() => CategoriesCubit(

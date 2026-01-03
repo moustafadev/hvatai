@@ -33,6 +33,7 @@ abstract class ServerConfig {
   static const String getFavProduct = "favorites?type=product";
   static const String streams = "streams";
   static const String search = "search";
+  static const String searchSuggestions = "search/suggestions";
   static const String addToCart = "cart/items";
   static const String changePassword = "change-password";
   static const String favFilter = "category-favorites/filtered";

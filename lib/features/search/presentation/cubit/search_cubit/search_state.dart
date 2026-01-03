@@ -27,5 +27,9 @@ class SearchState with _$SearchState {
     required ProductModel product,
     required CartModel cartResponse,
     @Default(0.0) double totalCartPrice,
+    @Default([]) List<String> suggestions,
+    @Default(false) bool isLoadingSuggestions,
+    @Default(false) bool showSuggestions,
+    @Default(false) bool isSearchFocused,
   }) = _SearchState;
 }

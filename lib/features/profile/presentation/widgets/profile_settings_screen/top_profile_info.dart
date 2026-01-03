@@ -10,19 +10,19 @@ class TopProfileInfo extends StatelessWidget {
   ) {
     showPhotoOptionsDialog(
       context: context,
-      onTakePhoto: () {
-        context.read<ProfileCubit>().pickAndUpdateImage(
-              context,
-              ImageSource.camera,
-            );
-      },
-      onChoosePhoto: () {
-        context.read<ProfileCubit>().pickAndUpdateImage(
-              context,
-              ImageSource.gallery,
-            );
-      },
-      onDelete: () {
+          onTakePhoto: () {
+            context.read<ProfileCubit>().pickAndUpdateImage(
+                  context,
+                  ImageSource.camera,
+                );
+          },
+          onChoosePhoto: () {
+            context.read<ProfileCubit>().pickAndUpdateImage(
+                  context,
+                  ImageSource.gallery,
+                );
+          },
+          onDelete: () {
         // Delete functionality can be added here if needed
       },
     );

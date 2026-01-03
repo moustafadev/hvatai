@@ -6,11 +6,15 @@ class TopBarSearchWidget extends StatelessWidget {
     required this.image,
     required this.isSearch,
     this.onChanged,
+    this.onFocus,
+    this.initialValue,
   });
 
   final String image;
   final bool isSearch;
   final ValueChanged<String>? onChanged;
+  final VoidCallback? onFocus;
+  final String? initialValue;
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +31,13 @@ class TopBarSearchWidget extends StatelessWidget {
         isSearch
             ? Expanded(
                 child: CustomTextField(
+                  key: ValueKey(initialValue ?? ''),
                   fillColor: AppColors.white,
                   height: 40,
                   borderRadius: BorderRadius.circular(10.r),
                   onChanged: onChanged,
+                  onTap: onFocus,
+                  initialValue: initialValue,
                   hintText: 'find'.tr(),
                   prefixIcon: Image.asset(
                     Assets.assetsIconsSearch,

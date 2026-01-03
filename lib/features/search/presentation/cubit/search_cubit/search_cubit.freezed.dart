@@ -41,6 +41,10 @@ mixin _$SearchState {
   ProductModel get product => throw _privateConstructorUsedError;
   cart.CartModel get cartResponse => throw _privateConstructorUsedError;
   double get totalCartPrice => throw _privateConstructorUsedError;
+  List<String> get suggestions => throw _privateConstructorUsedError;
+  bool get isLoadingSuggestions => throw _privateConstructorUsedError;
+  bool get showSuggestions => throw _privateConstructorUsedError;
+  bool get isSearchFocused => throw _privateConstructorUsedError;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -79,7 +83,11 @@ abstract class $SearchStateCopyWith<$Res> {
       PageController? pageController,
       ProductModel product,
       cart.CartModel cartResponse,
-      double totalCartPrice});
+      double totalCartPrice,
+      List<String> suggestions,
+      bool isLoadingSuggestions,
+      bool showSuggestions,
+      bool isSearchFocused});
 
   $ProductModelCopyWith<$Res> get product;
   $CartModelCopyWith<$Res> get cartResponse;
@@ -124,6 +132,10 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     Object? product = null,
     Object? cartResponse = null,
     Object? totalCartPrice = null,
+    Object? suggestions = null,
+    Object? isLoadingSuggestions = null,
+    Object? showSuggestions = null,
+    Object? isSearchFocused = null,
   }) {
     return _then(_value.copyWith(
       categories: null == categories
@@ -222,6 +234,22 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           ? _value.totalCartPrice
           : totalCartPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      suggestions: null == suggestions
+          ? _value.suggestions
+          : suggestions // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      isLoadingSuggestions: null == isLoadingSuggestions
+          ? _value.isLoadingSuggestions
+          : isLoadingSuggestions // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showSuggestions: null == showSuggestions
+          ? _value.showSuggestions
+          : showSuggestions // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSearchFocused: null == isSearchFocused
+          ? _value.isSearchFocused
+          : isSearchFocused // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -278,7 +306,11 @@ abstract class _$$SearchStateImplCopyWith<$Res>
       PageController? pageController,
       ProductModel product,
       cart.CartModel cartResponse,
-      double totalCartPrice});
+      double totalCartPrice,
+      List<String> suggestions,
+      bool isLoadingSuggestions,
+      bool showSuggestions,
+      bool isSearchFocused});
 
   @override
   $ProductModelCopyWith<$Res> get product;
@@ -323,6 +355,10 @@ class __$$SearchStateImplCopyWithImpl<$Res>
     Object? product = null,
     Object? cartResponse = null,
     Object? totalCartPrice = null,
+    Object? suggestions = null,
+    Object? isLoadingSuggestions = null,
+    Object? showSuggestions = null,
+    Object? isSearchFocused = null,
   }) {
     return _then(_$SearchStateImpl(
       categories: null == categories
@@ -421,6 +457,22 @@ class __$$SearchStateImplCopyWithImpl<$Res>
           ? _value.totalCartPrice
           : totalCartPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      suggestions: null == suggestions
+          ? _value._suggestions
+          : suggestions // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      isLoadingSuggestions: null == isLoadingSuggestions
+          ? _value.isLoadingSuggestions
+          : isLoadingSuggestions // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showSuggestions: null == showSuggestions
+          ? _value.showSuggestions
+          : showSuggestions // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSearchFocused: null == isSearchFocused
+          ? _value.isSearchFocused
+          : isSearchFocused // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -452,7 +504,11 @@ class _$SearchStateImpl implements _SearchState {
       this.pageController,
       required this.product,
       required this.cartResponse,
-      this.totalCartPrice = 0.0})
+      this.totalCartPrice = 0.0,
+      final List<String> suggestions = const [],
+      this.isLoadingSuggestions = false,
+      this.showSuggestions = false,
+      this.isSearchFocused = false})
       : _categories = categories,
         _products = products,
         _liveStreams = liveStreams,
@@ -462,7 +518,8 @@ class _$SearchStateImpl implements _SearchState {
         _carts = carts,
         _selectedInterests = selectedInterests,
         _selectedIndices = selectedIndices,
-        _searchedItems = searchedItems;
+        _searchedItems = searchedItems,
+        _suggestions = suggestions;
 
   final List<String> _categories;
   @override
@@ -593,10 +650,28 @@ class _$SearchStateImpl implements _SearchState {
   @override
   @JsonKey()
   final double totalCartPrice;
+  final List<String> _suggestions;
+  @override
+  @JsonKey()
+  List<String> get suggestions {
+    if (_suggestions is EqualUnmodifiableListView) return _suggestions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_suggestions);
+  }
+
+  @override
+  @JsonKey()
+  final bool isLoadingSuggestions;
+  @override
+  @JsonKey()
+  final bool showSuggestions;
+  @override
+  @JsonKey()
+  final bool isSearchFocused;
 
   @override
   String toString() {
-    return 'SearchState(categories: $categories, selectedIndex: $selectedIndex, query: $query, isLoading: $isLoading, hasLoadedInitial: $hasLoadedInitial, isFavourites: $isFavourites, isCart: $isCart, errorMessage: $errorMessage, products: $products, liveStreams: $liveStreams, users: $users, parentCategories: $parentCategories, childCategories: $childCategories, hasNoResults: $hasNoResults, carts: $carts, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, searchedItems: $searchedItems, selectedCategoryIndex: $selectedCategoryIndex, currentImageIndex: $currentImageIndex, pageController: $pageController, product: $product, cartResponse: $cartResponse, totalCartPrice: $totalCartPrice)';
+    return 'SearchState(categories: $categories, selectedIndex: $selectedIndex, query: $query, isLoading: $isLoading, hasLoadedInitial: $hasLoadedInitial, isFavourites: $isFavourites, isCart: $isCart, errorMessage: $errorMessage, products: $products, liveStreams: $liveStreams, users: $users, parentCategories: $parentCategories, childCategories: $childCategories, hasNoResults: $hasNoResults, carts: $carts, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, searchedItems: $searchedItems, selectedCategoryIndex: $selectedCategoryIndex, currentImageIndex: $currentImageIndex, pageController: $pageController, product: $product, cartResponse: $cartResponse, totalCartPrice: $totalCartPrice, suggestions: $suggestions, isLoadingSuggestions: $isLoadingSuggestions, showSuggestions: $showSuggestions, isSearchFocused: $isSearchFocused)';
   }
 
   @override
@@ -645,7 +720,15 @@ class _$SearchStateImpl implements _SearchState {
             (identical(other.cartResponse, cartResponse) ||
                 other.cartResponse == cartResponse) &&
             (identical(other.totalCartPrice, totalCartPrice) ||
-                other.totalCartPrice == totalCartPrice));
+                other.totalCartPrice == totalCartPrice) &&
+            const DeepCollectionEquality()
+                .equals(other._suggestions, _suggestions) &&
+            (identical(other.isLoadingSuggestions, isLoadingSuggestions) ||
+                other.isLoadingSuggestions == isLoadingSuggestions) &&
+            (identical(other.showSuggestions, showSuggestions) ||
+                other.showSuggestions == showSuggestions) &&
+            (identical(other.isSearchFocused, isSearchFocused) ||
+                other.isSearchFocused == isSearchFocused));
   }
 
   @override
@@ -674,7 +757,11 @@ class _$SearchStateImpl implements _SearchState {
         pageController,
         product,
         cartResponse,
-        totalCartPrice
+        totalCartPrice,
+        const DeepCollectionEquality().hash(_suggestions),
+        isLoadingSuggestions,
+        showSuggestions,
+        isSearchFocused
       ]);
 
   /// Create a copy of SearchState
@@ -711,7 +798,11 @@ abstract class _SearchState implements SearchState {
       final PageController? pageController,
       required final ProductModel product,
       required final cart.CartModel cartResponse,
-      final double totalCartPrice}) = _$SearchStateImpl;
+      final double totalCartPrice,
+      final List<String> suggestions,
+      final bool isLoadingSuggestions,
+      final bool showSuggestions,
+      final bool isSearchFocused}) = _$SearchStateImpl;
 
   @override
   List<String> get categories;
@@ -761,6 +852,14 @@ abstract class _SearchState implements SearchState {
   cart.CartModel get cartResponse;
   @override
   double get totalCartPrice;
+  @override
+  List<String> get suggestions;
+  @override
+  bool get isLoadingSuggestions;
+  @override
+  bool get showSuggestions;
+  @override
+  bool get isSearchFocused;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.

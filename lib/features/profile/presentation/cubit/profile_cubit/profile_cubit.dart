@@ -88,51 +88,8 @@ class ProfileCubit extends Cubit<ProfileState> {
         isLoading: false,
         userProfileModel: userProfile,
         helpAndContact: _buildHelpOptions(),
-        streamerOptions: _buildTradeStreamerOptions(),
       ));
     });
-  }
-
-  List<Map<String, dynamic>> _buildTradeStreamerOptions() {
-    return [
-      {
-        "icon": Assets.assetsIconsUsersGroupRoundedIcon,
-        "title": "Invite a friend and get up to 10,000 ₽\nBalance: 300 ₽".tr(),
-        "screen": (BuildContext context) {
-          context.push(AppRoutes.inviteFriends);
-        },
-      },
-      {
-        "icon": Assets.assetsIconsStar2,
-        "title": "myReviews".tr(),
-        "screen": (BuildContext context) {
-          context.push(AppRoutes.reviewCompany);
-        },
-      },
-      {
-        "icon": Assets.assetsIconsMessage,
-        "title": "chat".tr(),
-        "screen": (BuildContext context) {
-          ChatsCubit.get(context).getChats();
-          // ChatsCubit.get(context).getSupportChat();
-          context.push('${AppRoutes.chatRoot}/${AppRoutes.chat}');
-        },
-      },
-      {
-        "icon": Assets.assetsImagesAnalyticsIcon,
-        "title": "analytics".tr(),
-        "screen": (BuildContext context) {
-          context.push(AppRoutes.analytics);
-        },
-      },
-      {
-        "icon": Assets.assetsImagesDeliveryIcon,
-        "title": "deliverySettings".tr(),
-        "screen": (BuildContext context) {
-          context.push(AppRoutes.newAddress);
-        },
-      },
-    ];
   }
 
   List<Map<String, dynamic>> _buildHelpOptions() {

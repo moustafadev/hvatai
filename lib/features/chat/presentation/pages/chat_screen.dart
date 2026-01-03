@@ -69,15 +69,18 @@ class ChatScreen extends StatelessWidget {
                         Expanded(
                           child: Column(
                             children: [
-                              // // 🔹 Show support chat first if it has a last message
-                              // if (state.supportChat?.lastMessage != null)
-                              //   SupportChatTile(chat: state.supportChat!),
-                          
-                              // // 🔹 Divider between support chat and normal chats
-                              // if (state.supportChat?.lastMessage != null &&
-                              //     state.chats.isNotEmpty)
-                              //   const CustomDivider(),
-                          
+                              // 🔹 Show support chat first if it has a last message
+                              if (state.supportChat?.lastMessage != null)
+                                SupportChatTile(chat: state.supportChat!),
+
+                              // 🔹 Divider between support chat and normal chats
+                              if (state.supportChat?.lastMessage != null &&
+                                  state.chats.isNotEmpty)
+                                const Divider(
+                                  color: Color(0xffAFB3B6),
+                                  height: 1,
+                                ),
+
                               // 🔹 Normal chat list
                               Expanded(
                                 child: ListView.builder(
@@ -85,13 +88,13 @@ class ChatScreen extends StatelessWidget {
                                   itemBuilder: (context, index) {
                                     final chat = state.chats[index];
                                     final user = chat.otherUser;
-                          
+
                                     return InkWell(
                                       onTap: () async {
                                         final cubit = ChatsCubit.get(context);
                                         cubit.markMessageAsRead(chat.id ?? 0);
                                         cubit.getMessages(chat.id ?? 0);
-                          
+
                                         context.push(
                                           '${AppRoutes.chatRoot}/${AppRoutes.chatDetails}',
                                           extra: {

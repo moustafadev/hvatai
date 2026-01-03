@@ -101,22 +101,22 @@ class CustomUploadImageWidget extends StatelessWidget {
 
     showPhotoOptionsDialog(
       context: context,
-      onTakePhoto: () async {
-        final pickedFile =
-            await ImagePicker().pickImage(source: ImageSource.camera);
-        if (pickedFile != null) {
-          cubit.updateImage(pickedFile.path);
-        }
-      },
-      onChoosePhoto: () async {
-        final pickedFile =
-            await ImagePicker().pickImage(source: ImageSource.gallery);
-        if (pickedFile != null) {
-          cubit.updateImage(pickedFile.path);
-        }
-      },
-      onDelete: () {
-        cubit.deleteImage();
+          onTakePhoto: () async {
+            final pickedFile =
+                await ImagePicker().pickImage(source: ImageSource.camera);
+            if (pickedFile != null) {
+              cubit.updateImage(pickedFile.path);
+            }
+          },
+          onChoosePhoto: () async {
+            final pickedFile =
+                await ImagePicker().pickImage(source: ImageSource.gallery);
+            if (pickedFile != null) {
+              cubit.updateImage(pickedFile.path);
+            }
+          },
+          onDelete: () {
+            cubit.deleteImage();
       },
     );
   }
@@ -210,15 +210,15 @@ class PhotoOptionsDialog extends StatelessWidget {
                   },
                 ),
                 if (onDelete != null) ...[
-                  const Divider(height: 1, color: Colors.grey),
-                  _buildOption(
-                    text: 'delete'.tr(),
-                    textColor: Colors.red,
-                    onTap: () {
-                      context.pop();
+                const Divider(height: 1, color: Colors.grey),
+                _buildOption(
+                  text: 'delete'.tr(),
+                  textColor: Colors.red,
+                  onTap: () {
+                    context.pop();
                       onDelete!();
-                    },
-                  ),
+                  },
+                ),
                 ],
               ],
             ),

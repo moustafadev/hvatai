@@ -12,12 +12,13 @@ import 'package:hvatai/features/profile/data/model/product_model/product_model.d
 import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
 import 'package:hvatai/features/search/data/model/search_response/search_response_model.dart';
 import 'package:hvatai/features/search/domain/usecases/search_usecase.dart';
+import 'package:hvatai/features/search/domain/usecases/search_suggestions_usecase.dart';
 
 part 'search_cubit.freezed.dart';
 part 'search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
-  SearchCubit(this._searchUsecase)
+  SearchCubit(this._searchUsecase, this._searchSuggestionsUsecase)
       : super(SearchState(
           categories: const [],
           selectedIndex: 0,
@@ -56,7 +57,9 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   final SearchUsecase _searchUsecase;
+  final SearchSuggestionsUsecase _searchSuggestionsUsecase;
   Timer? _debounce;
+  Timer? _suggestionsDebounce;
 
   @override
   Future<void> close() {
@@ -64,6 +67,7 @@ class SearchCubit extends Cubit<SearchState> {
 
     EventBus().unsubscribe<ProductAddedEvent>(_handleProductAdded);
     _debounce?.cancel();
+    _suggestionsDebounce?.cancel();
     return super.close();
   }
 
@@ -83,12 +87,101 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   void onQueryChanged(String query) {
-    emit(state.copyWith(query: query));
+    emit(state.copyWith(
+      query: query,
+      showSuggestions: state.isSearchFocused && query.isNotEmpty,
+    ));
+    
+    // Fetch suggestions with shorter debounce
+    _suggestionsDebounce?.cancel();
+    _suggestionsDebounce = Timer(const Duration(milliseconds: 200), () {
+      if (state.isSearchFocused && query.trim().isNotEmpty) {
+        fetchSuggestions(query.trim());
+      } else {
+        emit(state.copyWith(
+          suggestions: [],
+          showSuggestions: false,
+        ));
+      }
+    });
+    
+    // Full search with longer debounce
     _debounce?.cancel();
     _debounce = Timer(const Duration(milliseconds: 350), () {
       final trimmed = query.trim().isEmpty ? _defaultQuery : query.trim();
       search(trimmed);
     });
+  }
+
+  void onSearchFieldFocused() {
+    emit(state.copyWith(
+      isSearchFocused: true,
+      showSuggestions: state.query.isNotEmpty && state.suggestions.isNotEmpty,
+    ));
+    // Fetch suggestions if query exists
+    if (state.query.trim().isNotEmpty) {
+      fetchSuggestions(state.query.trim());
+    }
+  }
+
+  void onSearchFieldUnfocused() {
+    // Don't hide immediately, let user click outside handle it
+  }
+
+  Future<void> fetchSuggestions(String query) async {
+    if (query.isEmpty) {
+      emit(state.copyWith(
+        suggestions: [],
+        showSuggestions: false,
+        isLoadingSuggestions: false,
+      ));
+      return;
+    }
+
+    emit(state.copyWith(isLoadingSuggestions: true));
+
+    final result = await _searchSuggestionsUsecase(
+      SearchSuggestionsParams(query: query),
+    );
+
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          isLoadingSuggestions: false,
+          suggestions: [],
+        ),
+      ),
+      (response) {
+        emit(
+          state.copyWith(
+            isLoadingSuggestions: false,
+            suggestions: response.data.suggestions,
+            showSuggestions: response.data.suggestions.isNotEmpty,
+          ),
+        );
+      },
+    );
+  }
+
+  void selectSuggestion(String suggestion) {
+    emit(state.copyWith(
+      query: suggestion,
+      showSuggestions: false,
+    ));
+    search(suggestion);
+  }
+
+  void hideSuggestions() {
+    emit(state.copyWith(
+      showSuggestions: false,
+      isSearchFocused: false,
+    ));
+  }
+
+  void onScroll() {
+    if (state.showSuggestions) {
+      emit(state.copyWith(showSuggestions: false));
+    }
   }
 
   Future<void> search(String query) async {
