@@ -10,13 +10,9 @@ class MyProductDetailsScreen extends StatelessWidget {
     return BlocBuilder<MyProductDetailsCubit, MyProductDetailsState>(
         builder: (context, state) {
       final product = state.product;
-      final variant =
-          product?.variants.isNotEmpty ?? false ? product?.variants.first : VariantModel();
-
-      final deliveryType = product?.deliveryType ?? '';
-      final deliveryText = deliveryType.isNotEmpty
-          ? '${deliveryType[0].toUpperCase()}${deliveryType.substring(1)}'
-          : 'notAvailable'.tr();
+      final variant = product?.variants.isNotEmpty ?? false
+          ? product?.variants.first
+          : VariantModel();
 
       final images = product?.images ?? [];
 
@@ -76,16 +72,18 @@ class MyProductDetailsScreen extends StatelessWidget {
                             right: 16,
                             child: GestureDetector(
                               onTap: () async {
-                                final goodsCubit = locator<MyGoodsCubit>();
-                                goodsCubit.initProductModel(product!);
                                 final result = await context.push<bool>(
                                   AppRoutes.addProduct,
                                   extra: {
-                                    'cubit': goodsCubit,
-                                    'mode': 'edit',
+                                    'product': product!,
+                                    'isEdit': true,
                                   },
                                 );
                                 if (result == true && context.mounted) {
+                                  print("================================");
+                                  print('product: $product');
+                                  print('result: $result');
+                                  print("================================");
                                   context.pop(true);
                                 }
                               },
@@ -198,31 +196,32 @@ class MyProductDetailsScreen extends StatelessWidget {
                             fontWeight: FontWeight.w600,
                           ),
                         17.ph,
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 9),
-                          decoration: BoxDecoration(
-                            color: AppColors.gray,
-                            borderRadius: BorderRadius.circular(6.r),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CustomText(
-                                text: 'delivery'.tr(),
-                                color: AppColors.blackDark,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w700,
-                              ),
-                              CustomText(
-                                text: deliveryText,
-                                color: AppColors.blackDark,
-                                fontSize: 14.sp,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ],
-                          ),
-                        ),
+                        // Container(
+                        //   padding: const EdgeInsets.symmetric(
+                        //       horizontal: 12, vertical: 9),
+                        //   decoration: BoxDecoration(
+                        //     color: AppColors.gray,
+                        //     borderRadius: BorderRadius.circular(6.r),
+                        //   ),
+                        //   child: Row(
+                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       CustomText(
+                        //         text: 'delivery'.tr(),
+                        //         color: AppColors.blackDark,
+                        //         fontSize: 14.sp,
+                        //         fontWeight: FontWeight.w700,
+                        //       ),
+                        //       CustomText(
+                        //         text: product?.deliveryMethods?.first ?? '',
+                        //         color: AppColors.blackDark,
+                        //         fontSize: 14.sp,
+                        //         fontWeight: FontWeight.w700,
+                        //       ),
+                        //     ],
+                        //   ),
+                        // ),
+
                         9.ph,
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

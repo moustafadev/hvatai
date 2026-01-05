@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'my_goods_cubit.dart';
+part of 'product_form_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,40 +15,36 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$MyGoodsState {
-  int get selectedCategoryIndex => throw _privateConstructorUsedError;
+mixin _$ProductFormState {
   List<File> get selectedImages => throw _privateConstructorUsedError;
   bool get selfDestruction => throw _privateConstructorUsedError;
   ProductModel get product => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   int get currentImageIndex => throw _privateConstructorUsedError;
-  List<ProductModel> get products => throw _privateConstructorUsedError;
   PageController? get pageController => throw _privateConstructorUsedError;
   List<MainCategoryModel> get category => throw _privateConstructorUsedError;
 
-  /// Create a copy of MyGoodsState
+  /// Create a copy of ProductFormState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $MyGoodsStateCopyWith<MyGoodsState> get copyWith =>
+  $ProductFormStateCopyWith<ProductFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $MyGoodsStateCopyWith<$Res> {
-  factory $MyGoodsStateCopyWith(
-          MyGoodsState value, $Res Function(MyGoodsState) then) =
-      _$MyGoodsStateCopyWithImpl<$Res, MyGoodsState>;
+abstract class $ProductFormStateCopyWith<$Res> {
+  factory $ProductFormStateCopyWith(
+          ProductFormState value, $Res Function(ProductFormState) then) =
+      _$ProductFormStateCopyWithImpl<$Res, ProductFormState>;
   @useResult
   $Res call(
-      {int selectedCategoryIndex,
-      List<File> selectedImages,
+      {List<File> selectedImages,
       bool selfDestruction,
       ProductModel product,
       bool isLoading,
       String errorMessage,
       int currentImageIndex,
-      List<ProductModel> products,
       PageController? pageController,
       List<MainCategoryModel> category});
 
@@ -56,36 +52,30 @@ abstract class $MyGoodsStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
-    implements $MyGoodsStateCopyWith<$Res> {
-  _$MyGoodsStateCopyWithImpl(this._value, this._then);
+class _$ProductFormStateCopyWithImpl<$Res, $Val extends ProductFormState>
+    implements $ProductFormStateCopyWith<$Res> {
+  _$ProductFormStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of MyGoodsState
+  /// Create a copy of ProductFormState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selectedCategoryIndex = null,
     Object? selectedImages = null,
     Object? selfDestruction = null,
     Object? product = null,
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? currentImageIndex = null,
-    Object? products = null,
     Object? pageController = freezed,
     Object? category = null,
   }) {
     return _then(_value.copyWith(
-      selectedCategoryIndex: null == selectedCategoryIndex
-          ? _value.selectedCategoryIndex
-          : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
-              as int,
       selectedImages: null == selectedImages
           ? _value.selectedImages
           : selectedImages // ignore: cast_nullable_to_non_nullable
@@ -110,10 +100,6 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
           ? _value.currentImageIndex
           : currentImageIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      products: null == products
-          ? _value.products
-          : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductModel>,
       pageController: freezed == pageController
           ? _value.pageController
           : pageController // ignore: cast_nullable_to_non_nullable
@@ -125,7 +111,7 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
     ) as $Val);
   }
 
-  /// Create a copy of MyGoodsState
+  /// Create a copy of ProductFormState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -137,22 +123,20 @@ class _$MyGoodsStateCopyWithImpl<$Res, $Val extends MyGoodsState>
 }
 
 /// @nodoc
-abstract class _$$MyGoodsStateImplCopyWith<$Res>
-    implements $MyGoodsStateCopyWith<$Res> {
-  factory _$$MyGoodsStateImplCopyWith(
-          _$MyGoodsStateImpl value, $Res Function(_$MyGoodsStateImpl) then) =
-      __$$MyGoodsStateImplCopyWithImpl<$Res>;
+abstract class _$$ProductFormStateImplCopyWith<$Res>
+    implements $ProductFormStateCopyWith<$Res> {
+  factory _$$ProductFormStateImplCopyWith(_$ProductFormStateImpl value,
+          $Res Function(_$ProductFormStateImpl) then) =
+      __$$ProductFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {int selectedCategoryIndex,
-      List<File> selectedImages,
+      {List<File> selectedImages,
       bool selfDestruction,
       ProductModel product,
       bool isLoading,
       String errorMessage,
       int currentImageIndex,
-      List<ProductModel> products,
       PageController? pageController,
       List<MainCategoryModel> category});
 
@@ -161,34 +145,28 @@ abstract class _$$MyGoodsStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$MyGoodsStateImplCopyWithImpl<$Res>
-    extends _$MyGoodsStateCopyWithImpl<$Res, _$MyGoodsStateImpl>
-    implements _$$MyGoodsStateImplCopyWith<$Res> {
-  __$$MyGoodsStateImplCopyWithImpl(
-      _$MyGoodsStateImpl _value, $Res Function(_$MyGoodsStateImpl) _then)
+class __$$ProductFormStateImplCopyWithImpl<$Res>
+    extends _$ProductFormStateCopyWithImpl<$Res, _$ProductFormStateImpl>
+    implements _$$ProductFormStateImplCopyWith<$Res> {
+  __$$ProductFormStateImplCopyWithImpl(_$ProductFormStateImpl _value,
+      $Res Function(_$ProductFormStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of MyGoodsState
+  /// Create a copy of ProductFormState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? selectedCategoryIndex = null,
     Object? selectedImages = null,
     Object? selfDestruction = null,
     Object? product = null,
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? currentImageIndex = null,
-    Object? products = null,
     Object? pageController = freezed,
     Object? category = null,
   }) {
-    return _then(_$MyGoodsStateImpl(
-      selectedCategoryIndex: null == selectedCategoryIndex
-          ? _value.selectedCategoryIndex
-          : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+    return _then(_$ProductFormStateImpl(
       selectedImages: null == selectedImages
           ? _value._selectedImages
           : selectedImages // ignore: cast_nullable_to_non_nullable
@@ -213,10 +191,6 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
           ? _value.currentImageIndex
           : currentImageIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      products: null == products
-          ? _value._products
-          : products // ignore: cast_nullable_to_non_nullable
-              as List<ProductModel>,
       pageController: freezed == pageController
           ? _value.pageController
           : pageController // ignore: cast_nullable_to_non_nullable
@@ -231,25 +205,19 @@ class __$$MyGoodsStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$MyGoodsStateImpl implements _MyGoodsState {
-  const _$MyGoodsStateImpl(
-      {this.selectedCategoryIndex = 0,
-      final List<File> selectedImages = const [],
+class _$ProductFormStateImpl implements _ProductFormState {
+  const _$ProductFormStateImpl(
+      {final List<File> selectedImages = const [],
       this.selfDestruction = false,
       required this.product,
       this.isLoading = false,
       this.errorMessage = '',
       this.currentImageIndex = 0,
-      final List<ProductModel> products = const [],
       this.pageController,
       final List<MainCategoryModel> category = const []})
       : _selectedImages = selectedImages,
-        _products = products,
         _category = category;
 
-  @override
-  @JsonKey()
-  final int selectedCategoryIndex;
   final List<File> _selectedImages;
   @override
   @JsonKey()
@@ -273,15 +241,6 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
   @override
   @JsonKey()
   final int currentImageIndex;
-  final List<ProductModel> _products;
-  @override
-  @JsonKey()
-  List<ProductModel> get products {
-    if (_products is EqualUnmodifiableListView) return _products;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_products);
-  }
-
   @override
   final PageController? pageController;
   final List<MainCategoryModel> _category;
@@ -295,16 +254,14 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
 
   @override
   String toString() {
-    return 'MyGoodsState(selectedCategoryIndex: $selectedCategoryIndex, selectedImages: $selectedImages, selfDestruction: $selfDestruction, product: $product, isLoading: $isLoading, errorMessage: $errorMessage, currentImageIndex: $currentImageIndex, products: $products, pageController: $pageController, category: $category)';
+    return 'ProductFormState(selectedImages: $selectedImages, selfDestruction: $selfDestruction, product: $product, isLoading: $isLoading, errorMessage: $errorMessage, currentImageIndex: $currentImageIndex, pageController: $pageController, category: $category)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$MyGoodsStateImpl &&
-            (identical(other.selectedCategoryIndex, selectedCategoryIndex) ||
-                other.selectedCategoryIndex == selectedCategoryIndex) &&
+            other is _$ProductFormStateImpl &&
             const DeepCollectionEquality()
                 .equals(other._selectedImages, _selectedImages) &&
             (identical(other.selfDestruction, selfDestruction) ||
@@ -316,7 +273,6 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
                 other.errorMessage == errorMessage) &&
             (identical(other.currentImageIndex, currentImageIndex) ||
                 other.currentImageIndex == currentImageIndex) &&
-            const DeepCollectionEquality().equals(other._products, _products) &&
             (identical(other.pageController, pageController) ||
                 other.pageController == pageController) &&
             const DeepCollectionEquality().equals(other._category, _category));
@@ -325,41 +281,36 @@ class _$MyGoodsStateImpl implements _MyGoodsState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      selectedCategoryIndex,
       const DeepCollectionEquality().hash(_selectedImages),
       selfDestruction,
       product,
       isLoading,
       errorMessage,
       currentImageIndex,
-      const DeepCollectionEquality().hash(_products),
       pageController,
       const DeepCollectionEquality().hash(_category));
 
-  /// Create a copy of MyGoodsState
+  /// Create a copy of ProductFormState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$MyGoodsStateImplCopyWith<_$MyGoodsStateImpl> get copyWith =>
-      __$$MyGoodsStateImplCopyWithImpl<_$MyGoodsStateImpl>(this, _$identity);
+  _$$ProductFormStateImplCopyWith<_$ProductFormStateImpl> get copyWith =>
+      __$$ProductFormStateImplCopyWithImpl<_$ProductFormStateImpl>(
+          this, _$identity);
 }
 
-abstract class _MyGoodsState implements MyGoodsState {
-  const factory _MyGoodsState(
-      {final int selectedCategoryIndex,
-      final List<File> selectedImages,
+abstract class _ProductFormState implements ProductFormState {
+  const factory _ProductFormState(
+      {final List<File> selectedImages,
       final bool selfDestruction,
       required final ProductModel product,
       final bool isLoading,
       final String errorMessage,
       final int currentImageIndex,
-      final List<ProductModel> products,
       final PageController? pageController,
-      final List<MainCategoryModel> category}) = _$MyGoodsStateImpl;
+      final List<MainCategoryModel> category}) = _$ProductFormStateImpl;
 
-  @override
-  int get selectedCategoryIndex;
   @override
   List<File> get selectedImages;
   @override
@@ -373,16 +324,14 @@ abstract class _MyGoodsState implements MyGoodsState {
   @override
   int get currentImageIndex;
   @override
-  List<ProductModel> get products;
-  @override
   PageController? get pageController;
   @override
   List<MainCategoryModel> get category;
 
-  /// Create a copy of MyGoodsState
+  /// Create a copy of ProductFormState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$MyGoodsStateImplCopyWith<_$MyGoodsStateImpl> get copyWith =>
+  _$$ProductFormStateImplCopyWith<_$ProductFormStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

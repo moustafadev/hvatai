@@ -5,7 +5,6 @@ class ProductDetailsContent extends StatelessWidget {
     super.key,
     required this.product,
     required this.variant,
-    required this.deliveryText,
     required this.ownerProducts,
     required this.products,
     required this.isFavorited,
@@ -15,7 +14,6 @@ class ProductDetailsContent extends StatelessWidget {
 
   final ProductModel product;
   final VariantModel variant;
-  final String deliveryText;
   final List<ProductModel> ownerProducts;
   final List<ProductModel> products;
   final bool isFavorited;
@@ -64,10 +62,7 @@ class ProductDetailsContent extends StatelessWidget {
               fontWeight: FontWeight.w600,
             ),
           17.ph,
-          ProductDetailsDeliveryInfo(
-            deliveryText: deliveryText,
-            isSelfPickup: product.selfPickup,
-          ),
+         
           12.ph,
           ProductDetailsSeller(
             ownerName: product.owner?.name,

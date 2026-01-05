@@ -41,6 +41,7 @@ part 'custom_nav_bar.dart';
 part 'custom_product_image_widget.dart';
 part 'custom_select_gender.dart';
 part 'custom_show_image_product.dart';
+part 'custom_show_media_product.dart';
 part 'custom_stat_column.dart';
 part 'custom_swipeable_list_title.dart';
 part 'custom_switch_widget.dart';

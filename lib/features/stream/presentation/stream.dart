@@ -19,7 +19,7 @@ import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_mo
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
-import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/product_form_cubit/product_form_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/categories/categories_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/categories/categories_state.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';

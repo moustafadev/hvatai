@@ -1,21 +1,32 @@
 part of 'customs.dart';
 
 // --- State ---
+enum MediaType { image, video }
+
+class MediaItem {
+  final String path;
+  final MediaType type;
+
+  MediaItem({required this.path, required this.type});
+}
+
 class ProductImageState {
-  final List<String> images;
+  final List<MediaItem> mediaItems;
   final bool isLoading;
 
   ProductImageState({
-    required this.images,
+    required this.mediaItems,
     this.isLoading = false,
   });
 
-  ProductImageState copyWith({List<String>? images, bool? isLoading}) {
+  ProductImageState copyWith({List<MediaItem>? mediaItems, bool? isLoading}) {
     return ProductImageState(
-      images: images ?? this.images,
+      mediaItems: mediaItems ?? this.mediaItems,
       isLoading: isLoading ?? this.isLoading,
     );
   }
+
+  List<String> get paths => mediaItems.map((item) => item.path).toList();
 }
 
 // --- Cubit ---
@@ -23,66 +34,121 @@ class ProductImageCubit extends Cubit<ProductImageState> {
   final ImagePicker picker = ImagePicker();
 
   ProductImageCubit([List<String>? initialImages])
-      : super(ProductImageState(images: initialImages ?? []));
+      : super(ProductImageState(
+          mediaItems: (initialImages ?? [])
+              .map((path) => MediaItem(
+                    path: path,
+                    type: _getMediaType(path),
+                  ))
+              .toList(),
+        ));
 
-  Future<void> updateImageList(List<String> newImages) async {
-    emit(state.copyWith(isLoading: true));
-    await Future.delayed(const Duration(milliseconds: 300));
-    emit(state.copyWith(images: newImages, isLoading: false));
+  static MediaType _getMediaType(String path) {
+    final extension = path.toLowerCase().split('.').last;
+    if (['mp4', 'mov', 'avi', 'mkv', 'webm'].contains(extension)) {
+      return MediaType.video;
+    }
+    return MediaType.image;
   }
 
-  Future<void> addImage(BuildContext context) async {
-    showPhotoOptionsDialog(
+  Future<void> updateMediaList(List<MediaItem> newMediaItems) async {
+    emit(state.copyWith(isLoading: true));
+    await Future.delayed(const Duration(milliseconds: 300));
+    emit(state.copyWith(mediaItems: newMediaItems, isLoading: false));
+  }
+
+  Future<void> addMedia(BuildContext context) async {
+    showMediaOptionsDialog(
       context: context,
       onTakePhoto: () async {
         final pickedFile = await picker.pickImage(source: ImageSource.camera);
         if (pickedFile != null) {
-          final updated = List<String>.from(state.images)..add(pickedFile.path);
-          await updateImageList(updated);
+          final updated = List<MediaItem>.from(state.mediaItems)
+            ..add(MediaItem(path: pickedFile.path, type: MediaType.image));
+          await updateMediaList(updated);
         }
       },
       onChoosePhoto: () async {
         final pickedFile = await picker.pickImage(source: ImageSource.gallery);
         if (pickedFile != null) {
-          final updated = List<String>.from(state.images)..add(pickedFile.path);
-          await updateImageList(updated);
+          final updated = List<MediaItem>.from(state.mediaItems)
+            ..add(MediaItem(path: pickedFile.path, type: MediaType.image));
+          await updateMediaList(updated);
+        }
+      },
+      onTakeVideo: () async {
+        final pickedFile = await picker.pickVideo(source: ImageSource.camera);
+        if (pickedFile != null) {
+          final updated = List<MediaItem>.from(state.mediaItems)
+            ..add(MediaItem(path: pickedFile.path, type: MediaType.video));
+          await updateMediaList(updated);
+        }
+      },
+      onChooseVideo: () async {
+        final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
+        if (pickedFile != null) {
+          final updated = List<MediaItem>.from(state.mediaItems)
+            ..add(MediaItem(path: pickedFile.path, type: MediaType.video));
+          await updateMediaList(updated);
         }
       },
     );
   }
 
-  Future<void> showImageOptionsDialog(BuildContext context, int index) async {
-    if (index >= 0 && index < state.images.length) {
-      showPhotoOptionsDialog(
+  Future<void> _showMediaOptionsDialogForIndex(
+      BuildContext context, int index) async {
+    if (index >= 0 && index < state.mediaItems.length) {
+      showMediaOptionsDialog(
         context: context,
         onTakePhoto: () async {
           final pickedFile = await picker.pickImage(source: ImageSource.camera);
           if (pickedFile != null) {
-            final updated = List<String>.from(state.images);
-            updated[index] = pickedFile.path;
-            await updateImageList(updated);
+            final updated = List<MediaItem>.from(state.mediaItems);
+            updated[index] =
+                MediaItem(path: pickedFile.path, type: MediaType.image);
+            await updateMediaList(updated);
           }
         },
         onChoosePhoto: () async {
           final pickedFile =
               await picker.pickImage(source: ImageSource.gallery);
           if (pickedFile != null) {
-            final updated = List<String>.from(state.images);
-            updated[index] = pickedFile.path;
-            await updateImageList(updated);
+            final updated = List<MediaItem>.from(state.mediaItems);
+            updated[index] =
+                MediaItem(path: pickedFile.path, type: MediaType.image);
+            await updateMediaList(updated);
+          }
+        },
+        onTakeVideo: () async {
+          final pickedFile = await picker.pickVideo(source: ImageSource.camera);
+          if (pickedFile != null) {
+            final updated = List<MediaItem>.from(state.mediaItems);
+            updated[index] =
+                MediaItem(path: pickedFile.path, type: MediaType.video);
+            await updateMediaList(updated);
+          }
+        },
+        onChooseVideo: () async {
+          final pickedFile =
+              await picker.pickVideo(source: ImageSource.gallery);
+          if (pickedFile != null) {
+            final updated = List<MediaItem>.from(state.mediaItems);
+            updated[index] =
+                MediaItem(path: pickedFile.path, type: MediaType.video);
+            await updateMediaList(updated);
           }
         },
         onDelete: () async {
-          await deleteImage(index);
+          await deleteMedia(index);
         },
       );
     }
   }
 
-  Future<void> deleteImage(int index) async {
-    if (index >= 0 && index < state.images.length) {
-      final updated = List<String>.from(state.images)..removeAt(index);
-      await updateImageList(updated);
+  Future<void> deleteMedia(int index) async {
+    if (index >= 0 && index < state.mediaItems.length) {
+      final updated = List<MediaItem>.from(state.mediaItems)..removeAt(index);
+      await updateMediaList(updated);
     }
   }
 }
@@ -137,7 +203,7 @@ class PlaceHolder extends StatelessWidget {
                 ),
                 5.ph,
                 CustomText(
-                  text: 'uploadPhoto'.tr(),
+                  text: 'uploadPhotoOrVideo'.tr(),
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.blackDark,
@@ -194,7 +260,7 @@ class CustomProductImageWidget extends StatelessWidget {
       create: (_) => ProductImageCubit(initialImages),
       child: BlocConsumer<ProductImageCubit, ProductImageState>(
         listener: (context, state) {
-          if (!state.isLoading) updateImage(state.images);
+          if (!state.isLoading) updateImage(state.paths);
         },
         builder: (context, state) {
           return Column(
@@ -222,30 +288,32 @@ class CustomProductImageWidget extends StatelessWidget {
                     ),
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        if (index < state.images.length) {
-                          return CustomShowImageProduct(
-                            image: _resolveImagePath(state.images[index]),
+                        if (index < state.mediaItems.length) {
+                          final mediaItem = state.mediaItems[index];
+                          return CustomShowMediaProduct(
+                            mediaItem: mediaItem,
                             index: index,
                             onTap: () => context
                                 .read<ProductImageCubit>()
-                                .showImageOptionsDialog(context, index),
+                                ._showMediaOptionsDialogForIndex(
+                                    context, index),
                           );
                         }
-                        if (index == state.images.length &&
-                            state.images.length < 8) {
+                        if (index == state.mediaItems.length &&
+                            state.mediaItems.length < 8) {
                           return PlaceHolder(
                             isLoading: state.isLoading,
                             isShowMinimum: false,
                             onTap: () => context
                                 .read<ProductImageCubit>()
-                                .addImage(context),
+                                .addMedia(context),
                           );
                         }
                         return const SizedBox();
                       },
-                      childCount: state.images.length < 8
-                          ? state.images.length + 1
-                          : state.images.length,
+                      childCount: state.mediaItems.length < 8
+                          ? state.mediaItems.length + 1
+                          : state.mediaItems.length,
                     ),
                   ),
                 ],
@@ -254,13 +322,13 @@ class CustomProductImageWidget extends StatelessWidget {
               Row(
                 children: [
                   CustomText(
-                    text: 'photosUploaded'.tr(),
+                    text: 'mediaUploaded'.tr(),
                     fontSize: 10.sp,
                     fontWeight: FontWeight.w400,
                     color: AppColors.graniteGray,
                   ),
                   CustomText(
-                    text: ' ${initialImages?.length ?? 0}/8',
+                    text: ' ${state.mediaItems.length}/8',
                     fontSize: 10.sp,
                     fontWeight: FontWeight.w400,
                     color: AppColors.graniteGray,
@@ -272,15 +340,5 @@ class CustomProductImageWidget extends StatelessWidget {
         },
       ),
     );
-  }
-
-  String _resolveImagePath(String path) {
-    if (path.startsWith('http://') || path.startsWith('https://')) {
-      return path;
-    } else if (path.startsWith('/')) {
-      return path;
-    } else {
-      return '${ServerConfig.domen}$path';
-    }
   }
 }

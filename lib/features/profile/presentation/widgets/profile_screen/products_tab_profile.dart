@@ -104,7 +104,7 @@ class ProductsTabProfile extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       final product = products[index];
-                      return MyCustomProductCard<MyGoodsCubit>(
+                      return MyCustomProductCard(
                         product: product,
                         selectedCategoryIndex: state.selectedCategoryIndex,
                       );

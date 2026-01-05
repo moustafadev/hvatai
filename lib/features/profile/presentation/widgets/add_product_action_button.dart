@@ -5,9 +5,9 @@ class AddProductActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MyGoodsCubit, MyGoodsState>(
+    return BlocBuilder<ProductFormCubit, ProductFormState>(
       builder: (context, state) {
-        final cubit = context.read<MyGoodsCubit>();
+        final cubit = context.read<ProductFormCubit>();
         return Row(
           children: [
             CustomText(

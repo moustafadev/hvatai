@@ -16,28 +16,25 @@ import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.
 import 'package:hvatai/features/profile/domain/usecases/get_product_category_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_product_usecase.dart';
 
-part 'my_goods_cubit.freezed.dart';
-part 'my_goods_state.dart';
+part 'product_form_cubit.freezed.dart';
+part 'product_form_state.dart';
 
-class MyGoodsCubit extends Cubit<MyGoodsState> {
-  MyGoodsCubit(
+class ProductFormCubit extends Cubit<ProductFormState> {
+  ProductFormCubit(
     this.getProductCategoryUsecase,
     this.addNewProductUsecase,
     this.updateProductUsecase,
   ) : super(
-          MyGoodsState(
+          ProductFormState(
             product: ProductModel(
               variants: [VariantModel()],
               saleType: 'buy_now',
             ),
           ),
-        ) {
-    deliveryTimeController.text = state.product.deliveryTime ?? '';
-  }
+        );
   final GetProductCategoryUsecase getProductCategoryUsecase;
   final AddNewProductUsecase addNewProductUsecase;
   final UpdateProductUsecase updateProductUsecase;
-  final TextEditingController deliveryTimeController = TextEditingController();
 
   bool isDisabled() {
     return (state.product.productName == null ||
@@ -50,12 +47,8 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
         state.product.categoryId == null ||
         state.product.categoryId == 0 ||
         (state.product.deliveryAvailable == true &&
-            (state.product.deliveryTime == null ||
-                state.product.deliveryTime!.isEmpty ||
-                state.product.deliveryPrice == null ||
-                state.product.deliveryPrice == 0.0 ||
-                state.product.deliveryType == null ||
-                state.product.deliveryType!.isEmpty)));
+            (state.product.variants.first.price == null ||
+                state.product.variants.first.price == 0.0)));
   }
 
   void setCategory(int id, String? name) {
@@ -93,20 +86,6 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     );
   }
 
-  void setOptionDelivery(String option) {
-    List<String> newMethods = [];
-
-    if (option.isNotEmpty) {
-      newMethods = [option];
-    }
-
-    final updatedProduct = state.product.copyWith(
-      deliveryMethods: newMethods.isNotEmpty ? newMethods : null,
-    );
-
-    emit(state.copyWith(product: updatedProduct));
-  }
-
   void initProductModel(ProductModel product) {
     emit(state.copyWith(product: product));
   }
@@ -115,40 +94,11 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     ProductModel product;
 
     switch (field) {
-      case 'deliveryMethods':
-        product = state.product.copyWith(
-          deliveryMethods: value is List<String> ? value : null,
-        );
-        break;
-      case 'deliveryTime':
-        product = state.product.copyWith(deliveryTime: value);
-        deliveryTimeController.text = value;
-        break;
-      case 'deliveryPrice':
-        final doubleValue = double.tryParse(value) ?? 0.0;
-        product = state.product.copyWith(deliveryPrice: doubleValue);
-        break;
       case 'name':
         product = state.product.copyWith(productName: value);
         break;
       case 'description':
         product = state.product.copyWith(productDescription: value);
-        break;
-      case 'length':
-        final doubleValue = double.tryParse(value) ?? 0.0;
-        product = state.product.copyWith(deliveryLengthCm: doubleValue);
-        break;
-      case 'width':
-        final doubleValue = double.tryParse(value) ?? 0.0;
-        product = state.product.copyWith(deliveryWidthCm: doubleValue);
-        break;
-      case 'height':
-        final doubleValue = double.tryParse(value) ?? 0.0;
-        product = state.product.copyWith(deliveryHeightCm: doubleValue);
-        break;
-      case 'weight':
-        final doubleValue = double.tryParse(value) ?? 0.0;
-        product = state.product.copyWith(deliveryWeightKg: doubleValue);
         break;
       case 'startingBid':
         final doubleValue = double.tryParse(value) ?? 0.0;
@@ -160,29 +110,9 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
             : [VariantModel(price: doubleValue)];
         product = state.product.copyWith(variants: updatedVariants);
         break;
-      case 'deliveryDiscount':
-        final doubleValue = double.tryParse(value) ?? 0.0;
-        product = state.product.copyWith(deliveryDiscount: doubleValue);
-        break;
-      case 'bidTime':
-        // Store bid time as string in deliveryTime field temporarily
-        // or use a custom field if available in ProductModel
-        product = state.product.copyWith(deliveryTime: value.toString());
-        break;
       case 'saleType':
         product = state.product.copyWith(saleType: value.toString());
         break;
-      case 'stock':
-        final intValue = int.tryParse(value) ?? 1;
-        final updatedVariants = (state.product.variants.isNotEmpty)
-            ? [
-                state.product.variants.first.copyWith(stock: intValue),
-                ...state.product.variants.skip(1),
-              ]
-            : [VariantModel(stock: intValue)];
-        product = state.product.copyWith(variants: updatedVariants);
-        break;
-
       default:
         product = state.product;
     }
@@ -196,23 +126,12 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     emit(state.copyWith(product: updatedProduct));
   }
 
-  void setDeliverType(String value) {
-    final updatedProduct = state.product.copyWith(deliveryType: value);
-    emit(state.copyWith(product: updatedProduct));
-  }
-
   void updateProductImages(List<String> imagePaths) {
     emit(state.copyWith(product: state.product.copyWith(images: imagePaths)));
   }
 
   void setProductMainImage(String imagePath) {
     emit(state.copyWith(product: state.product.copyWith(images: [imagePath])));
-  }
-
-  void toggleSelfDestruction() {
-    emit(state.copyWith(
-      selfDestruction: !state.selfDestruction,
-    ));
   }
 
   void togglePickupFree() {
@@ -265,11 +184,10 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
   }
 
   void resetProduct() {
-    emit(state.copyWith(
+    emit(ProductFormState(
       product: ProductModel(variants: [VariantModel()]),
       selectedImages: [],
     ));
-    deliveryTimeController.clear();
   }
 
   Future<File> compressImage(File file, {int quality = 70}) async {
@@ -286,13 +204,24 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     return result != null ? File(result.path) : file;
   }
 
-  Future<MultipartFile?> _prepareImageFile(String? imagePath) async {
-    if (imagePath == null || imagePath.isEmpty) return null;
+  Future<MultipartFile?> _prepareImageFile(String? filePath) async {
+    if (filePath == null || filePath.isEmpty) return null;
 
     try {
-      File file = File(imagePath);
+      File file = File(filePath);
       if (!await file.exists()) return null;
 
+      // Check if it's a video file
+      final extension = filePath.toLowerCase().split('.').last;
+      final isVideo = ['mp4', 'mov', 'avi', 'mkv', 'webm'].contains(extension);
+
+      // For videos, just return the file as is (no compression)
+      if (isVideo) {
+        return MultipartFile.fromFile(file.path,
+            filename: file.path.split('/').last);
+      }
+
+      // For images, apply compression logic
       // Get original file size
       final originalSize = await file.length();
 
@@ -347,8 +276,8 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
       return MultipartFile.fromFile(compressedFile.path,
           filename: compressedFile.path.split('/').last);
     } catch (e) {
-      debugPrint('Error preparing image file: $e');
-      // Instead of throwing exception, return null to skip this image
+      debugPrint('Error preparing media file: $e');
+      // Instead of throwing exception, return null to skip this file
       return null;
     }
   }
@@ -371,43 +300,9 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
     addField('category_id', product.categoryId);
     addField('sale_type', product.saleType);
     addBoolField('delivery_available', product.deliveryAvailable ?? true);
-    addField('delivery_type', product.deliveryType);
-    addField('delivery_time', product.deliveryTime);
-    addField('delivery_price', product.deliveryPrice ?? 0);
-    addField('delivery_discount', product.deliveryDiscount ?? 0);
-    addField('delivery_radius', product.deliveryRadius ?? 0);
     addBoolField('self_pickup', product.selfPickup ?? false);
-    addField('delivery_length_cm', product.deliveryLengthCm);
-    addField('delivery_width_cm', product.deliveryWidthCm);
-    addField('delivery_height_cm', product.deliveryHeightCm);
-    addField('delivery_weight_kg', product.deliveryWeightKg);
-    addBoolField('status', product.status ?? true);
-
-    final deliveryMethods = product.deliveryMethods
-            ?.where((method) => method.trim().isNotEmpty)
-            .toList() ??
-        [];
-    for (var i = 0; i < deliveryMethods.length; i++) {
-      addField('delivery_methods[$i]', deliveryMethods[i]);
-    }
-
-    final variants = product.variants.isNotEmpty
-        ? product.variants
-        : [VariantModel(price: 0, stock: 1)];
-
-    for (var i = 0; i < variants.length; i++) {
-      final variant = variants[i];
-      addField('variants[$i][price]', variant.price ?? 0);
-      addField('variants[$i][stock]', variant.stock);
-      addField('variants[$i][discount]', variant.discount ?? 0);
-      addField('variants[$i][discount_type]', variant.discountType ?? 'fixed');
-
-      final attributes = variant.attributes ?? {};
-      attributes.forEach((key, value) {
-        addField('variants[$i][attributes][$key]', value);
-      });
-    }
-
+    addField('variants[0][price]', product.variants.first.price ?? 0.0);
+    addField('variants[0][stock]', product.variants.first.stock);
     if (product.images.isNotEmpty) {
       for (int i = 0; i < product.images.length; i++) {
         final file = await _prepareImageFile(product.images[i]);
@@ -416,7 +311,6 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
         }
       }
     }
-
     return formData;
   }
 
@@ -439,13 +333,11 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
 
       EventBus().publish(ProductAddedEvent(completeProduct));
 
-      emit(state.copyWith(
-          isLoading: false, products: [state.product, ...state.products]));
+      emit(state.copyWith(isLoading: false));
       showFloatingMessageSuccess('productAdded'.tr());
       if (context.mounted) {
         context.pop(true);
       }
-      deliveryTimeController.clear();
       resetProduct();
     });
   }
@@ -468,15 +360,9 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
       emit(state.copyWith(isLoading: false, errorMessage: failure));
       showFloatingMessageError(failure);
     }, (updatedProduct) {
-      final updatedList = state.products
-          .map<ProductModel>(
-              (item) => item.id == updatedProduct.id ? updatedProduct : item)
-          .toList();
-
       emit(state.copyWith(
         isLoading: false,
         errorMessage: '',
-        products: updatedList,
         product: updatedProduct,
       ));
 
@@ -484,8 +370,6 @@ class MyGoodsCubit extends Cubit<MyGoodsState> {
       if (context.mounted) {
         context.pop(true);
       }
-
-      deliveryTimeController.text = updatedProduct.deliveryTime ?? '';
     });
   }
 }

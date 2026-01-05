@@ -1,14 +1,15 @@
 part of '../stream.dart';
 
 class AddProductBottomSheet extends StatelessWidget {
-  const AddProductBottomSheet({super.key, 
+  const AddProductBottomSheet({
+    super.key,
     required this.allowedCategoryIds,
   });
 
   final List<int> allowedCategoryIds;
 
   /// Check if the form is disabled based on required fields in this form only
-  bool _isFormDisabled(MyGoodsState state) {
+  bool _isFormDisabled(ProductFormState state) {
     // Required fields for this form:
     // 1. Name (Название)
     if (state.product.productName == null ||
@@ -43,7 +44,7 @@ class AddProductBottomSheet extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => locator<MyGoodsCubit>()..getProductCategory(),
+          create: (_) => locator<ProductFormCubit>()..getProductCategory(),
         ),
       ],
       child: Container(
@@ -54,9 +55,9 @@ class AddProductBottomSheet extends StatelessWidget {
             top: Radius.circular(20.r),
           ),
         ),
-        child: BlocBuilder<MyGoodsCubit, MyGoodsState>(
+        child: BlocBuilder<ProductFormCubit, ProductFormState>(
           builder: (context, state) {
-            final cubit = context.read<MyGoodsCubit>();
+            final cubit = context.read<ProductFormCubit>();
             return Column(
               children: [
                 Center(
@@ -100,10 +101,11 @@ class AddProductBottomSheet extends StatelessWidget {
                         ),
                         SizedBox(height: 12.h),
                         // 2. Category dropdown - show all categories
-                        BlocBuilder<MyGoodsCubit, MyGoodsState>(
-                          builder: (context, state) {
+                        BlocBuilder<ProductFormCubit, ProductFormState>(
+                          builder: (context, categoryState) {
                             // Show loading indicator while categories are loading
-                            if (state.isLoading && state.category.isEmpty) {
+                            if (categoryState.isLoading &&
+                                categoryState.category.isEmpty) {
                               return Container(
                                 padding: EdgeInsets.symmetric(vertical: 16.h),
                                 child: Row(
@@ -132,7 +134,7 @@ class AddProductBottomSheet extends StatelessWidget {
                               );
                             }
 
-                            final allCategories = state.category;
+                            final allCategories = categoryState.category;
                             if (allCategories.isEmpty) {
                               return CustomText(
                                 text: 'Категории не найдены',
@@ -142,7 +144,8 @@ class AddProductBottomSheet extends StatelessWidget {
                               );
                             }
 
-                            final selectedCategoryId = state.product.categoryId;
+                            final selectedCategoryId =
+                                categoryState.product.categoryId;
                             final selectedCategory = allCategories.firstWhere(
                               (c) => c.id == selectedCategoryId,
                               orElse: () => MainCategoryModel(),
@@ -174,10 +177,10 @@ class AddProductBottomSheet extends StatelessWidget {
                         ),
                         SizedBox(height: 12.h),
                         // 3. Sale type button
-                        BlocBuilder<MyGoodsCubit, MyGoodsState>(
-                          builder: (context, state) {
+                        BlocBuilder<ProductFormCubit, ProductFormState>(
+                          builder: (context, saleState) {
                             return SaleTypeButton(
-                              selectedSaleType: state.product.saleType,
+                              selectedSaleType: saleState.product.saleType,
                               onTap: (value) =>
                                   cubit.updateField('saleType', value),
                             );
@@ -196,8 +199,8 @@ class AddProductBottomSheet extends StatelessWidget {
                         ),
                         SizedBox(height: 12.h),
                         // 5. Time until next bid dropdown
-                        BlocBuilder<MyGoodsCubit, MyGoodsState>(
-                          builder: (context, state) {
+                        BlocBuilder<ProductFormCubit, ProductFormState>(
+                          builder: (context, bidState) {
                             final timeOptions = [
                               '10 c',
                               '20 c',
@@ -211,10 +214,10 @@ class AddProductBottomSheet extends StatelessWidget {
                             // Get current value from state and convert to display format
                             String? currentValue;
                             // Check if deliveryTime contains a bid time value (should be just a number)
-                            if (state.product.deliveryTime != null &&
-                                state.product.deliveryTime!.isNotEmpty) {
+                            if (bidState.product.variants.first.price != null &&
+                                bidState.product.variants.first.price != 0.0) {
                               final storedValue =
-                                  state.product.deliveryTime!.trim();
+                                  bidState.product.variants.first.price.toString();
                               // Check if it's a number (bid time) or contains text (delivery time)
                               final isNumeric =
                                   RegExp(r'^\d+$').hasMatch(storedValue);
@@ -314,62 +317,7 @@ class AddProductBottomSheet extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 12.h),
-                        // 7. Delivery methods dropdown
-                        BlocBuilder<MyGoodsCubit, MyGoodsState>(
-                          builder: (context, state) {
-                            final deliveryMethods = [
-                              'Почта России',
-                              'СДЭК',
-                              'Яндекс Доставка'
-                            ];
-
-                            // Get current selected value
-                            String? currentValue;
-                            if (state.product.deliveryMethods != null &&
-                                state.product.deliveryMethods!.isNotEmpty) {
-                              currentValue =
-                                  state.product.deliveryMethods!.first;
-                              // Check if stored value matches any option
-                              if (!deliveryMethods.contains(currentValue)) {
-                                currentValue = null;
-                              }
-                            }
-
-                            return CustomDropdown(
-                              hintText: 'Способы доставки',
-                              value: currentValue,
-                              onChanged: (value) {
-                                if (value != null) {
-                                  cubit.updateField('deliveryMethods', [value]);
-                                }
-                              },
-                              items: deliveryMethods
-                                  .map((method) => DropdownMenuItem(
-                                        value: method,
-                                        child: Text(method),
-                                      ))
-                                  .toList(),
-                            );
-                          },
-                        ),
-                        SizedBox(height: 12.h),
-                        // 8. Payment by seller toggle
-                        BlocBuilder<MyGoodsCubit, MyGoodsState>(
-                          builder: (context, state) {
-                            final isPaymentBySeller =
-                                (state.product.deliveryDiscount ?? 0) > 0;
-                            return CustomSwitchWidget(
-                              title: 'Оплата продавцом',
-                              value: isPaymentBySeller,
-                              onChanged: (val) {
-                                cubit.updateField(
-                                  'deliveryDiscount',
-                                  val ? '100' : '0',
-                                );
-                              },
-                            );
-                          },
-                        ),
+                       
                         SizedBox(height: 24.h),
                       ],
                     ),
@@ -407,4 +355,3 @@ class AddProductBottomSheet extends StatelessWidget {
     );
   }
 }
-

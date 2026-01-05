@@ -312,35 +312,21 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
     if (product == null) return null;
     return StreamEmbeddedProductModel(
       id: product.id,
-      name: product.productName ?? product.productCode,
-      type: product.type,
+      name: product.productName,
       description: product.productDescription,
       userId: product.userId,
       categoryId: product.categoryId,
-      code: product.productCode,
       unit: null,
       deliveryAvailable:
           product.deliveryAvailable == null ? null : (product.deliveryAvailable! ? 1 : 0),
       selfPickup: product.selfPickup == null ? null : (product.selfPickup! ? 1 : 0),
-      deliveryType: product.deliveryType,
-      deliveryTime: product.deliveryTime,
-      deliveryPrice:
-          product.deliveryPrice?.toString(),
-      deliveryDiscount: product.deliveryDiscount?.toString(),
-      deliveryRadius: product.deliveryRadius?.toString(),
       location: null,
       latitude: null,
       longitude: null,
-      status: product.status == null ? null : (product.status! ? 1 : 0),
       featured: null,
       meta: null,
       createdAt: null,
       updatedAt: null,
-      deliveryLengthCm: product.deliveryLengthCm?.toString(),
-      deliveryWidthCm: product.deliveryWidthCm?.toString(),
-      deliveryHeightCm: product.deliveryHeightCm?.toString(),
-      deliveryWeightKg: product.deliveryWeightKg?.toString(),
-      deliveryMethods: product.deliveryMethods,
       saleType: product.saleType,
     );
   }

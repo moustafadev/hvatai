@@ -23,11 +23,6 @@ class CartProductDetailsScreen extends StatelessWidget {
             ? product.variants.first
             : VariantModel();
 
-        final deliveryType = product.deliveryType ?? '';
-        final deliveryText = deliveryType.isNotEmpty
-            ? '${deliveryType[0].toUpperCase()}${deliveryType.substring(1)}'
-            : 'notAvailable'.tr();
-
         final images = product.images;
 
         final ownerProducts = products
@@ -79,7 +74,6 @@ class CartProductDetailsScreen extends StatelessWidget {
                 ProductDetailsContent(
                   product: product,
                   variant: variant,
-                  deliveryText: deliveryText,
                   ownerProducts: ownerProducts,
                   products: products,
                   isFavorited: state.isFavourites ?? product.isFavorited,

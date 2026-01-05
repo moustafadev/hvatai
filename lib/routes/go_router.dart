@@ -24,7 +24,7 @@ import 'package:hvatai/features/orders/presentation/screens/my_orders_screen.dar
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/product_form_cubit/product_form_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_product_details_cubit/my_product_details_cubit.dart';
 import 'package:hvatai/features/payment_method/presentation/payment_method.dart';
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
@@ -239,26 +239,20 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.addProduct, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        MyGoodsCubit? extraCubit;
-        List<int>? allowedIds;
+        ProductModel? product;
         bool isEdit = false;
 
         final extra = state.extra;
         if (extra is Map<String, dynamic>) {
-          extraCubit = extra['cubit'] as MyGoodsCubit?;
-          allowedIds =
-              (extra['allowedCategoryIds'] as List<int>?) ?? allowedIds;
+          product = extra['product'] as ProductModel?;
           final mode = extra['mode'];
           if (mode is String && mode == 'edit') {
             isEdit = true;
           }
-        } else if (extra is MyGoodsCubit) {
-          extraCubit = extra;
-        }
+        } 
 
         return AddNewProductsScreen(
-          cubit: extraCubit,
-          allowedCategoryIds: allowedIds,
+          product: product,
           isEdit: isEdit,
         );
       },

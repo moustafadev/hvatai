@@ -50,10 +50,8 @@ class LiveListingsShopState extends Equatable {
         final productName = sp.product?.productName?.toLowerCase() ?? '';
         final productDescription =
             sp.product?.productDescription?.toLowerCase() ?? '';
-        final productCode = sp.product?.productCode?.toLowerCase() ?? '';
         return productName.contains(query) ||
-            productDescription.contains(query) ||
-            productCode.contains(query);
+            productDescription.contains(query);
       }).toList();
     }
 
@@ -72,10 +70,8 @@ class LiveListingsShopState extends Equatable {
         final productName = product.productName?.toLowerCase() ?? '';
         final productDescription =
             product.productDescription?.toLowerCase() ?? '';
-        final productCode = product.productCode?.toLowerCase() ?? '';
         return productName.contains(query) ||
-            productDescription.contains(query) ||
-            productCode.contains(query);
+            productDescription.contains(query);
       }).toList();
     }
 

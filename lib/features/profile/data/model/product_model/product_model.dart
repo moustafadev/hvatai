@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/cart/data/model/cart_model.dart';
 
 part 'product_model.freezed.dart';
@@ -9,35 +10,14 @@ part 'product_model.g.dart';
 class ProductModel with _$ProductModel {
   const factory ProductModel({
     int? id,
-    @JsonKey(name: 'product_code') String? productCode,
     @JsonKey(name: 'product_name') String? productName,
     @JsonKey(name: 'product_description') String? productDescription,
-    String? type,
     @JsonKey(name: 'sale_type') @Default('buy_now') String saleType,
     @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
     bool? deliveryAvailable,
-    @JsonKey(name: 'delivery_type') String? deliveryType,
-    @JsonKey(name: 'delivery_time') String? deliveryTime,
-    @JsonKey(name: 'delivery_price', fromJson: _parseDouble)
-    double? deliveryPrice,
-    @JsonKey(name: 'delivery_discount', fromJson: _parseDouble)
-    double? deliveryDiscount,
-    @JsonKey(name: 'delivery_radius', fromJson: _parseDouble)
-    double? deliveryRadius,
     @JsonKey(name: 'self_pickup', fromJson: _boolFromInt)
     @Default(false)
     bool? selfPickup,
-    @JsonKey(name: 'delivery_length_cm', fromJson: _parseDouble)
-    double? deliveryLengthCm,
-    @JsonKey(name: 'delivery_width_cm', fromJson: _parseDouble)
-    double? deliveryWidthCm,
-    @JsonKey(name: 'delivery_height_cm', fromJson: _parseDouble)
-    double? deliveryHeightCm,
-    @JsonKey(name: 'delivery_weight_kg', fromJson: _parseDouble)
-    double? deliveryWeightKg,
-    @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
-    @JsonKey(fromJson: _boolFromInt, toJson: _boolToJson) bool? status,
-    @JsonKey(name: 'go_home') String? goHome,
     @JsonKey(name: 'self_destruction') String? selfDestruction,
     @JsonKey(name: 'user_id') int? userId,
     @JsonKey(name: 'category_id') int? categoryId,
@@ -77,9 +57,23 @@ List<String> _imagesFromJson(dynamic json) {
     if (json.isEmpty) return [];
     return json
         .map((e) {
-          if (e is String) return e;
-          if (e is Map<String, dynamic>) return e['url'] as String?;
-          return null;
+          String? imagePath;
+          if (e is String) {
+            imagePath = e;
+          } else if (e is Map<String, dynamic>) {
+            imagePath = e['url'] as String?;
+          }
+          if (imagePath == null || imagePath.isEmpty) return null;
+          // Avoid double-prefixing if the value is already a full URL
+          if (imagePath.startsWith('http://') ||
+              imagePath.startsWith('https://')) {
+            return imagePath;
+          }
+          // Remove leading slash if present
+          String normalizedPath =
+              imagePath.startsWith('/') ? imagePath.substring(1) : imagePath;
+          // Prepend base URL
+          return "${ServerConfig.domen}storage/$normalizedPath";
         })
         .whereType<String>()
         .toList();

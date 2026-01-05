@@ -101,22 +101,22 @@ class CustomUploadImageWidget extends StatelessWidget {
 
     showPhotoOptionsDialog(
       context: context,
-          onTakePhoto: () async {
-            final pickedFile =
-                await ImagePicker().pickImage(source: ImageSource.camera);
-            if (pickedFile != null) {
-              cubit.updateImage(pickedFile.path);
-            }
-          },
-          onChoosePhoto: () async {
-            final pickedFile =
-                await ImagePicker().pickImage(source: ImageSource.gallery);
-            if (pickedFile != null) {
-              cubit.updateImage(pickedFile.path);
-            }
-          },
-          onDelete: () {
-            cubit.deleteImage();
+      onTakePhoto: () async {
+        final pickedFile =
+            await ImagePicker().pickImage(source: ImageSource.camera);
+        if (pickedFile != null) {
+          cubit.updateImage(pickedFile.path);
+        }
+      },
+      onChoosePhoto: () async {
+        final pickedFile =
+            await ImagePicker().pickImage(source: ImageSource.gallery);
+        if (pickedFile != null) {
+          cubit.updateImage(pickedFile.path);
+        }
+      },
+      onDelete: () {
+        cubit.deleteImage();
       },
     );
   }
@@ -158,6 +158,30 @@ void showPhotoOptionsDialog({
       return PhotoOptionsDialog(
         onTakePhoto: onTakePhoto,
         onChoosePhoto: onChoosePhoto,
+        onDelete: onDelete,
+      );
+    },
+  );
+}
+
+/// Shows a media options dialog (image/video) with customizable callbacks
+void showMediaOptionsDialog({
+  required BuildContext context,
+  required VoidCallback onTakePhoto,
+  required VoidCallback onChoosePhoto,
+  required VoidCallback onTakeVideo,
+  required VoidCallback onChooseVideo,
+  VoidCallback? onDelete,
+}) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext dialogContext) {
+      return MediaOptionsDialog(
+        onTakePhoto: onTakePhoto,
+        onChoosePhoto: onChoosePhoto,
+        onTakeVideo: onTakeVideo,
+        onChooseVideo: onChooseVideo,
         onDelete: onDelete,
       );
     },
@@ -210,15 +234,138 @@ class PhotoOptionsDialog extends StatelessWidget {
                   },
                 ),
                 if (onDelete != null) ...[
-                const Divider(height: 1, color: Colors.grey),
+                  const Divider(height: 1, color: Colors.grey),
+                  _buildOption(
+                    text: 'delete'.tr(),
+                    textColor: Colors.red,
+                    onTap: () {
+                      context.pop();
+                      onDelete!();
+                    },
+                  ),
+                ],
+              ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.grey[50],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: _buildOption(
+              text: 'cancel'.tr(),
+              textColor: Colors.blue,
+              onTap: () => context.pop(),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOption({
+    required String text,
+    required Color textColor,
+    required VoidCallback onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+        child: Text(
+          text,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: textColor,
+            fontSize: 18,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// --- MediaOptionsDialog ---
+
+class MediaOptionsDialog extends StatelessWidget {
+  final VoidCallback onTakePhoto;
+  final VoidCallback onChoosePhoto;
+  final VoidCallback onTakeVideo;
+  final VoidCallback onChooseVideo;
+  final VoidCallback? onDelete;
+
+  const MediaOptionsDialog({
+    super.key,
+    required this.onTakePhoto,
+    required this.onChoosePhoto,
+    required this.onTakeVideo,
+    required this.onChooseVideo,
+    this.onDelete,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Dialog(
+      backgroundColor: Colors.transparent,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey[300],
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Column(
+              children: [
                 _buildOption(
-                  text: 'delete'.tr(),
-                  textColor: Colors.red,
+                  text: 'takePhoto'.tr(),
+                  textColor: Colors.blue,
                   onTap: () {
                     context.pop();
-                      onDelete!();
+                    onTakePhoto();
                   },
                 ),
+                const Divider(height: 1, color: Colors.grey),
+                _buildOption(
+                  text: 'selectPhoto'.tr(),
+                  textColor: Colors.blue,
+                  onTap: () {
+                    context.pop();
+                    onChoosePhoto();
+                  },
+                ),
+                const Divider(height: 1, color: Colors.grey),
+                _buildOption(
+                  text: 'takeVideo'.tr(),
+                  textColor: Colors.blue,
+                  onTap: () {
+                    context.pop();
+                    onTakeVideo();
+                  },
+                ),
+                const Divider(height: 1, color: Colors.grey),
+                _buildOption(
+                  text: 'selectVideo'.tr(),
+                  textColor: Colors.blue,
+                  onTap: () {
+                    context.pop();
+                    onChooseVideo();
+                  },
+                ),
+                if (onDelete != null) ...[
+                  const Divider(height: 1, color: Colors.grey),
+                  _buildOption(
+                    text: 'delete'.tr(),
+                    textColor: Colors.red,
+                    onTap: () {
+                      context.pop();
+                      onDelete!();
+                    },
+                  ),
                 ],
               ],
             ),

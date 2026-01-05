@@ -3,24 +3,15 @@ part of '../profile.dart';
 class CategoryDropdown extends StatelessWidget {
   const CategoryDropdown({
     super.key,
-    this.allowedCategoryIds,
   });
-
-  final List<int>? allowedCategoryIds;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MyGoodsCubit, MyGoodsState>(
+    return BlocBuilder<ProductFormCubit, ProductFormState>(
       builder: (context, state) {
-        final cubit = context.read<MyGoodsCubit>();
+        final cubit = context.read<ProductFormCubit>();
         final allCategories = state.category;
-        final filteredCategories = allowedCategoryIds == null
-            ? allCategories
-            : allCategories
-                .where((category) =>
-                    category.id != null &&
-                    allowedCategoryIds!.contains(category.id!))
-                .toList();
+        final filteredCategories = allCategories;
 
         if (filteredCategories.isEmpty) {
           return CustomText(
@@ -29,22 +20,6 @@ class CategoryDropdown extends StatelessWidget {
             fontWeight: FontWeight.w600,
             color: AppColors.grey,
           );
-        }
-
-        final selectedCategoryId = state.product.categoryId;
-        final hasSelectedCategory = selectedCategoryId != null &&
-            filteredCategories.any((c) => c.id == selectedCategoryId);
-
-        final shouldAutoSelect =
-            allowedCategoryIds != null && !hasSelectedCategory;
-
-        if (shouldAutoSelect) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            final firstCategory = filteredCategories.first;
-            if (firstCategory.id != null) {
-              cubit.setCategory(firstCategory.id!, firstCategory.name);
-            }
-          });
         }
 
         final selectedCategoryName = filteredCategories

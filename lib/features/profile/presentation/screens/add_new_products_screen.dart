@@ -1,41 +1,16 @@
 part of '../profile.dart';
 
 class AddNewProductsScreen extends StatelessWidget {
-  final MyGoodsCubit? cubit;
-  final List<int>? allowedCategoryIds;
+  final ProductModel? product;
   final bool isEdit;
   const AddNewProductsScreen({
     super.key,
-    this.cubit,
-    this.allowedCategoryIds,
+    this.product,
     this.isEdit = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final body = NewProductWidgetBody(
-      allowedCategoryIds: allowedCategoryIds,
-      isEdit: isEdit,
-    );
-
-    if (cubit != null) {
-      cubit!.getProductCategory();
-      return Scaffold(
-        backgroundColor: AppColors.lightGreyBackground,
-        appBar: CustomAppBar(
-          showBack: true,
-          showSearch: false,
-          showGift: false,
-          showNotification: false,
-          height: 50,
-        ),
-        body: BlocProvider.value(
-          value: cubit!,
-          child: body,
-        ),
-      );
-    }
-
     return Scaffold(
       backgroundColor: AppColors.lightGreyBackground,
       appBar: CustomAppBar(
@@ -46,8 +21,17 @@ class AddNewProductsScreen extends StatelessWidget {
         height: 50,
       ),
       body: BlocProvider(
-        create: (context) => locator<MyGoodsCubit>()..getProductCategory(),
-        child: body,
+        create: (context) {
+          final formCubit = locator<ProductFormCubit>();
+          if (product != null) {
+            formCubit.initProductModel(product!);
+          }
+          formCubit.getProductCategory();
+          return formCubit;
+        },
+        child: NewProductWidgetBody(
+          isEdit: isEdit,
+        ),
       ),
     );
   }
@@ -56,17 +40,16 @@ class AddNewProductsScreen extends StatelessWidget {
 class NewProductWidgetBody extends StatelessWidget {
   const NewProductWidgetBody({
     super.key,
-    this.allowedCategoryIds,
     this.isEdit = false,
   });
 
-  final List<int>? allowedCategoryIds;
   final bool isEdit;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<MyGoodsCubit, MyGoodsState>(builder: (context, state) {
-      final cubit = context.read<MyGoodsCubit>();
+    return BlocBuilder<ProductFormCubit, ProductFormState>(
+        builder: (context, state) {
+      final cubit = context.read<ProductFormCubit>();
       if (state.isLoading) {
         return const Center(
             child: CircularProgressIndicator(
@@ -106,9 +89,7 @@ class NewProductWidgetBody extends StatelessWidget {
                   maxLines: 5,
                 ),
                 12.ph,
-                CategoryDropdown(
-                  allowedCategoryIds: allowedCategoryIds,
-                ),
+                CategoryDropdown(),
                 12.ph,
                 CustomTextField(
                   key: ValueKey('price_field'),
@@ -141,30 +122,28 @@ class NewProductWidgetBody extends StatelessWidget {
                   title: '',
                 ),
                 24.ph,
-                CustomText(
-                  text: 'delivery'.tr(),
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w800,
-                ),
-                12.ph,
-                AddDeliveryOptionDropdown(),
-                12.ph,
+                // CustomText(
+                //   text: 'delivery'.tr(),
+                //   fontSize: 20.sp,
+                //   fontWeight: FontWeight.w800,
+                // ),
+                // 12.ph,
                 CustomSwitchWidget(
                   title: 'pickupFree'.tr(),
                   value: state.product.selfPickup == true,
                   onChanged: (val) => cubit.togglePickupFree(),
                 ),
                 12.ph,
-                CustomSwitchWidget(
-                  title: 'Оплата продавцом',
-                  value: (state.product.deliveryDiscount ?? 0) > 0,
-                  onChanged: (val) {
-                    cubit.updateField(
-                      'deliveryDiscount',
-                      val ? '100' : '0',
-                    );
-                  },
-                ),
+                // CustomSwitchWidget(
+                //   title: 'Оплата продавцом',
+                //   value: (state.product.deliveryDiscount ?? 0) > 0,
+                //   onChanged: (val) {
+                //     cubit.updateField(
+                //       'deliveryDiscount',
+                //       val ? '100' : '0',
+                //     );
+                //   },
+                // ),
                 30.ph,
               ]),
             ),

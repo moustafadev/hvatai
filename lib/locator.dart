@@ -59,7 +59,7 @@ import 'package:hvatai/features/profile/domain/repositories/profile_repository.d
 import 'package:hvatai/features/profile/presentation/cubit/add_stream/add_stream_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/analytics_cubit/analytics_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/my_goods_cubit/my_goods_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/product_form_cubit/product_form_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_products_cubit/my_products_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_product_details_cubit/my_product_details_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
@@ -163,7 +163,7 @@ Future<void> setupLocator() async {
       () => PaymentMethodCubit(locator(), locator(), locator()));
   locator
       .registerFactory(() => EditProfileCubit(locator(), locator(), locator()));
-  locator.registerFactory(() => MyGoodsCubit(
+  locator.registerFactory(() => ProductFormCubit(
         locator(),
         locator(),
         locator(),
