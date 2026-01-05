@@ -3054,53 +3054,19 @@ StreamEmbeddedProductModel _$StreamEmbeddedProductModelFromJson(
 mixin _$StreamEmbeddedProductModel {
   int? get id => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
-  String? get type => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
   int? get userId => throw _privateConstructorUsedError;
   @JsonKey(name: 'category_id')
   int? get categoryId => throw _privateConstructorUsedError;
-  String? get code => throw _privateConstructorUsedError;
-  String? get unit => throw _privateConstructorUsedError;
-  @JsonKey(name: 'delivery_available')
-  int? get deliveryAvailable => throw _privateConstructorUsedError;
   @JsonKey(name: 'self_pickup')
   int? get selfPickup => throw _privateConstructorUsedError;
-  @JsonKey(name: 'delivery_type')
-  String? get deliveryType => throw _privateConstructorUsedError;
-  @JsonKey(name: 'delivery_time')
-  String? get deliveryTime => throw _privateConstructorUsedError;
-  @JsonKey(name: 'delivery_price')
-  String? get deliveryPrice => throw _privateConstructorUsedError;
-  @JsonKey(name: 'delivery_discount')
-  String? get deliveryDiscount => throw _privateConstructorUsedError;
-  @JsonKey(name: 'delivery_radius')
-  String? get deliveryRadius => throw _privateConstructorUsedError;
   String? get location => throw _privateConstructorUsedError;
   @JsonKey(name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
   double? get latitude => throw _privateConstructorUsedError;
   @JsonKey(
       name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
   double? get longitude => throw _privateConstructorUsedError;
-  int? get status => throw _privateConstructorUsedError;
-  int? get featured => throw _privateConstructorUsedError;
-  Map<String, dynamic>? get meta => throw _privateConstructorUsedError;
-  @JsonKey(name: 'created_at')
-  DateTime? get createdAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'updated_at')
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'delivery_length_cm')
-  String? get deliveryLengthCm => throw _privateConstructorUsedError;
-  @JsonKey(name: 'delivery_width_cm')
-  String? get deliveryWidthCm => throw _privateConstructorUsedError;
-  @JsonKey(name: 'delivery_height_cm')
-  String? get deliveryHeightCm => throw _privateConstructorUsedError;
-  @JsonKey(name: 'delivery_weight_kg')
-  String? get deliveryWeightKg => throw _privateConstructorUsedError;
-  @JsonKey(name: 'delivery_methods')
-  List<String>? get deliveryMethods => throw _privateConstructorUsedError;
-  @JsonKey(name: 'sale_type')
-  String? get saleType => throw _privateConstructorUsedError;
 
   /// Serializes this StreamEmbeddedProductModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -3122,37 +3088,17 @@ abstract class $StreamEmbeddedProductModelCopyWith<$Res> {
   $Res call(
       {int? id,
       String? name,
-      String? type,
       String? description,
       @JsonKey(name: 'user_id') int? userId,
       @JsonKey(name: 'category_id') int? categoryId,
-      String? code,
-      String? unit,
-      @JsonKey(name: 'delivery_available') int? deliveryAvailable,
       @JsonKey(name: 'self_pickup') int? selfPickup,
-      @JsonKey(name: 'delivery_type') String? deliveryType,
-      @JsonKey(name: 'delivery_time') String? deliveryTime,
-      @JsonKey(name: 'delivery_price') String? deliveryPrice,
-      @JsonKey(name: 'delivery_discount') String? deliveryDiscount,
-      @JsonKey(name: 'delivery_radius') String? deliveryRadius,
       String? location,
       @JsonKey(
           name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
       double? latitude,
       @JsonKey(
           name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
-      double? longitude,
-      int? status,
-      int? featured,
-      Map<String, dynamic>? meta,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt,
-      @JsonKey(name: 'delivery_length_cm') String? deliveryLengthCm,
-      @JsonKey(name: 'delivery_width_cm') String? deliveryWidthCm,
-      @JsonKey(name: 'delivery_height_cm') String? deliveryHeightCm,
-      @JsonKey(name: 'delivery_weight_kg') String? deliveryWeightKg,
-      @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
-      @JsonKey(name: 'sale_type') String? saleType});
+      double? longitude});
 }
 
 /// @nodoc
@@ -3173,33 +3119,13 @@ class _$StreamEmbeddedProductModelCopyWithImpl<$Res,
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? type = freezed,
     Object? description = freezed,
     Object? userId = freezed,
     Object? categoryId = freezed,
-    Object? code = freezed,
-    Object? unit = freezed,
-    Object? deliveryAvailable = freezed,
     Object? selfPickup = freezed,
-    Object? deliveryType = freezed,
-    Object? deliveryTime = freezed,
-    Object? deliveryPrice = freezed,
-    Object? deliveryDiscount = freezed,
-    Object? deliveryRadius = freezed,
     Object? location = freezed,
     Object? latitude = freezed,
     Object? longitude = freezed,
-    Object? status = freezed,
-    Object? featured = freezed,
-    Object? meta = freezed,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
-    Object? deliveryLengthCm = freezed,
-    Object? deliveryWidthCm = freezed,
-    Object? deliveryHeightCm = freezed,
-    Object? deliveryWeightKg = freezed,
-    Object? deliveryMethods = freezed,
-    Object? saleType = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -3209,10 +3135,6 @@ class _$StreamEmbeddedProductModelCopyWithImpl<$Res,
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
               as String?,
       description: freezed == description
           ? _value.description
@@ -3226,42 +3148,10 @@ class _$StreamEmbeddedProductModelCopyWithImpl<$Res,
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: freezed == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String?,
-      unit: freezed == unit
-          ? _value.unit
-          : unit // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryAvailable: freezed == deliveryAvailable
-          ? _value.deliveryAvailable
-          : deliveryAvailable // ignore: cast_nullable_to_non_nullable
-              as int?,
       selfPickup: freezed == selfPickup
           ? _value.selfPickup
           : selfPickup // ignore: cast_nullable_to_non_nullable
               as int?,
-      deliveryType: freezed == deliveryType
-          ? _value.deliveryType
-          : deliveryType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryTime: freezed == deliveryTime
-          ? _value.deliveryTime
-          : deliveryTime // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryPrice: freezed == deliveryPrice
-          ? _value.deliveryPrice
-          : deliveryPrice // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryDiscount: freezed == deliveryDiscount
-          ? _value.deliveryDiscount
-          : deliveryDiscount // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryRadius: freezed == deliveryRadius
-          ? _value.deliveryRadius
-          : deliveryRadius // ignore: cast_nullable_to_non_nullable
-              as String?,
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
@@ -3274,50 +3164,6 @@ class _$StreamEmbeddedProductModelCopyWithImpl<$Res,
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double?,
-      status: freezed == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as int?,
-      featured: freezed == featured
-          ? _value.featured
-          : featured // ignore: cast_nullable_to_non_nullable
-              as int?,
-      meta: freezed == meta
-          ? _value.meta
-          : meta // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      deliveryLengthCm: freezed == deliveryLengthCm
-          ? _value.deliveryLengthCm
-          : deliveryLengthCm // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryWidthCm: freezed == deliveryWidthCm
-          ? _value.deliveryWidthCm
-          : deliveryWidthCm // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryHeightCm: freezed == deliveryHeightCm
-          ? _value.deliveryHeightCm
-          : deliveryHeightCm // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryWeightKg: freezed == deliveryWeightKg
-          ? _value.deliveryWeightKg
-          : deliveryWeightKg // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryMethods: freezed == deliveryMethods
-          ? _value.deliveryMethods
-          : deliveryMethods // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      saleType: freezed == saleType
-          ? _value.saleType
-          : saleType // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -3334,37 +3180,17 @@ abstract class _$$StreamEmbeddedProductModelImplCopyWith<$Res>
   $Res call(
       {int? id,
       String? name,
-      String? type,
       String? description,
       @JsonKey(name: 'user_id') int? userId,
       @JsonKey(name: 'category_id') int? categoryId,
-      String? code,
-      String? unit,
-      @JsonKey(name: 'delivery_available') int? deliveryAvailable,
       @JsonKey(name: 'self_pickup') int? selfPickup,
-      @JsonKey(name: 'delivery_type') String? deliveryType,
-      @JsonKey(name: 'delivery_time') String? deliveryTime,
-      @JsonKey(name: 'delivery_price') String? deliveryPrice,
-      @JsonKey(name: 'delivery_discount') String? deliveryDiscount,
-      @JsonKey(name: 'delivery_radius') String? deliveryRadius,
       String? location,
       @JsonKey(
           name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
       double? latitude,
       @JsonKey(
           name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
-      double? longitude,
-      int? status,
-      int? featured,
-      Map<String, dynamic>? meta,
-      @JsonKey(name: 'created_at') DateTime? createdAt,
-      @JsonKey(name: 'updated_at') DateTime? updatedAt,
-      @JsonKey(name: 'delivery_length_cm') String? deliveryLengthCm,
-      @JsonKey(name: 'delivery_width_cm') String? deliveryWidthCm,
-      @JsonKey(name: 'delivery_height_cm') String? deliveryHeightCm,
-      @JsonKey(name: 'delivery_weight_kg') String? deliveryWeightKg,
-      @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
-      @JsonKey(name: 'sale_type') String? saleType});
+      double? longitude});
 }
 
 /// @nodoc
@@ -3384,33 +3210,13 @@ class __$$StreamEmbeddedProductModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? name = freezed,
-    Object? type = freezed,
     Object? description = freezed,
     Object? userId = freezed,
     Object? categoryId = freezed,
-    Object? code = freezed,
-    Object? unit = freezed,
-    Object? deliveryAvailable = freezed,
     Object? selfPickup = freezed,
-    Object? deliveryType = freezed,
-    Object? deliveryTime = freezed,
-    Object? deliveryPrice = freezed,
-    Object? deliveryDiscount = freezed,
-    Object? deliveryRadius = freezed,
     Object? location = freezed,
     Object? latitude = freezed,
     Object? longitude = freezed,
-    Object? status = freezed,
-    Object? featured = freezed,
-    Object? meta = freezed,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
-    Object? deliveryLengthCm = freezed,
-    Object? deliveryWidthCm = freezed,
-    Object? deliveryHeightCm = freezed,
-    Object? deliveryWeightKg = freezed,
-    Object? deliveryMethods = freezed,
-    Object? saleType = freezed,
   }) {
     return _then(_$StreamEmbeddedProductModelImpl(
       id: freezed == id
@@ -3420,10 +3226,6 @@ class __$$StreamEmbeddedProductModelImplCopyWithImpl<$Res>
       name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      type: freezed == type
-          ? _value.type
-          : type // ignore: cast_nullable_to_non_nullable
               as String?,
       description: freezed == description
           ? _value.description
@@ -3437,42 +3239,10 @@ class __$$StreamEmbeddedProductModelImplCopyWithImpl<$Res>
           ? _value.categoryId
           : categoryId // ignore: cast_nullable_to_non_nullable
               as int?,
-      code: freezed == code
-          ? _value.code
-          : code // ignore: cast_nullable_to_non_nullable
-              as String?,
-      unit: freezed == unit
-          ? _value.unit
-          : unit // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryAvailable: freezed == deliveryAvailable
-          ? _value.deliveryAvailable
-          : deliveryAvailable // ignore: cast_nullable_to_non_nullable
-              as int?,
       selfPickup: freezed == selfPickup
           ? _value.selfPickup
           : selfPickup // ignore: cast_nullable_to_non_nullable
               as int?,
-      deliveryType: freezed == deliveryType
-          ? _value.deliveryType
-          : deliveryType // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryTime: freezed == deliveryTime
-          ? _value.deliveryTime
-          : deliveryTime // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryPrice: freezed == deliveryPrice
-          ? _value.deliveryPrice
-          : deliveryPrice // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryDiscount: freezed == deliveryDiscount
-          ? _value.deliveryDiscount
-          : deliveryDiscount // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryRadius: freezed == deliveryRadius
-          ? _value.deliveryRadius
-          : deliveryRadius // ignore: cast_nullable_to_non_nullable
-              as String?,
       location: freezed == location
           ? _value.location
           : location // ignore: cast_nullable_to_non_nullable
@@ -3485,50 +3255,6 @@ class __$$StreamEmbeddedProductModelImplCopyWithImpl<$Res>
           ? _value.longitude
           : longitude // ignore: cast_nullable_to_non_nullable
               as double?,
-      status: freezed == status
-          ? _value.status
-          : status // ignore: cast_nullable_to_non_nullable
-              as int?,
-      featured: freezed == featured
-          ? _value.featured
-          : featured // ignore: cast_nullable_to_non_nullable
-              as int?,
-      meta: freezed == meta
-          ? _value._meta
-          : meta // ignore: cast_nullable_to_non_nullable
-              as Map<String, dynamic>?,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      deliveryLengthCm: freezed == deliveryLengthCm
-          ? _value.deliveryLengthCm
-          : deliveryLengthCm // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryWidthCm: freezed == deliveryWidthCm
-          ? _value.deliveryWidthCm
-          : deliveryWidthCm // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryHeightCm: freezed == deliveryHeightCm
-          ? _value.deliveryHeightCm
-          : deliveryHeightCm // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryWeightKg: freezed == deliveryWeightKg
-          ? _value.deliveryWeightKg
-          : deliveryWeightKg // ignore: cast_nullable_to_non_nullable
-              as String?,
-      deliveryMethods: freezed == deliveryMethods
-          ? _value._deliveryMethods
-          : deliveryMethods // ignore: cast_nullable_to_non_nullable
-              as List<String>?,
-      saleType: freezed == saleType
-          ? _value.saleType
-          : saleType // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -3539,39 +3265,17 @@ class _$StreamEmbeddedProductModelImpl implements _StreamEmbeddedProductModel {
   const _$StreamEmbeddedProductModelImpl(
       {this.id,
       this.name,
-      this.type,
       this.description,
       @JsonKey(name: 'user_id') this.userId,
       @JsonKey(name: 'category_id') this.categoryId,
-      this.code,
-      this.unit,
-      @JsonKey(name: 'delivery_available') this.deliveryAvailable,
       @JsonKey(name: 'self_pickup') this.selfPickup,
-      @JsonKey(name: 'delivery_type') this.deliveryType,
-      @JsonKey(name: 'delivery_time') this.deliveryTime,
-      @JsonKey(name: 'delivery_price') this.deliveryPrice,
-      @JsonKey(name: 'delivery_discount') this.deliveryDiscount,
-      @JsonKey(name: 'delivery_radius') this.deliveryRadius,
       this.location,
       @JsonKey(
           name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
       this.latitude,
       @JsonKey(
           name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
-      this.longitude,
-      this.status,
-      this.featured,
-      final Map<String, dynamic>? meta,
-      @JsonKey(name: 'created_at') this.createdAt,
-      @JsonKey(name: 'updated_at') this.updatedAt,
-      @JsonKey(name: 'delivery_length_cm') this.deliveryLengthCm,
-      @JsonKey(name: 'delivery_width_cm') this.deliveryWidthCm,
-      @JsonKey(name: 'delivery_height_cm') this.deliveryHeightCm,
-      @JsonKey(name: 'delivery_weight_kg') this.deliveryWeightKg,
-      @JsonKey(name: 'delivery_methods') final List<String>? deliveryMethods,
-      @JsonKey(name: 'sale_type') this.saleType})
-      : _meta = meta,
-        _deliveryMethods = deliveryMethods;
+      this.longitude});
 
   factory _$StreamEmbeddedProductModelImpl.fromJson(
           Map<String, dynamic> json) =>
@@ -3582,8 +3286,6 @@ class _$StreamEmbeddedProductModelImpl implements _StreamEmbeddedProductModel {
   @override
   final String? name;
   @override
-  final String? type;
-  @override
   final String? description;
   @override
   @JsonKey(name: 'user_id')
@@ -3592,30 +3294,8 @@ class _$StreamEmbeddedProductModelImpl implements _StreamEmbeddedProductModel {
   @JsonKey(name: 'category_id')
   final int? categoryId;
   @override
-  final String? code;
-  @override
-  final String? unit;
-  @override
-  @JsonKey(name: 'delivery_available')
-  final int? deliveryAvailable;
-  @override
   @JsonKey(name: 'self_pickup')
   final int? selfPickup;
-  @override
-  @JsonKey(name: 'delivery_type')
-  final String? deliveryType;
-  @override
-  @JsonKey(name: 'delivery_time')
-  final String? deliveryTime;
-  @override
-  @JsonKey(name: 'delivery_price')
-  final String? deliveryPrice;
-  @override
-  @JsonKey(name: 'delivery_discount')
-  final String? deliveryDiscount;
-  @override
-  @JsonKey(name: 'delivery_radius')
-  final String? deliveryRadius;
   @override
   final String? location;
   @override
@@ -3625,56 +3305,10 @@ class _$StreamEmbeddedProductModelImpl implements _StreamEmbeddedProductModel {
   @JsonKey(
       name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
   final double? longitude;
-  @override
-  final int? status;
-  @override
-  final int? featured;
-  final Map<String, dynamic>? _meta;
-  @override
-  Map<String, dynamic>? get meta {
-    final value = _meta;
-    if (value == null) return null;
-    if (_meta is EqualUnmodifiableMapView) return _meta;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(value);
-  }
-
-  @override
-  @JsonKey(name: 'created_at')
-  final DateTime? createdAt;
-  @override
-  @JsonKey(name: 'updated_at')
-  final DateTime? updatedAt;
-  @override
-  @JsonKey(name: 'delivery_length_cm')
-  final String? deliveryLengthCm;
-  @override
-  @JsonKey(name: 'delivery_width_cm')
-  final String? deliveryWidthCm;
-  @override
-  @JsonKey(name: 'delivery_height_cm')
-  final String? deliveryHeightCm;
-  @override
-  @JsonKey(name: 'delivery_weight_kg')
-  final String? deliveryWeightKg;
-  final List<String>? _deliveryMethods;
-  @override
-  @JsonKey(name: 'delivery_methods')
-  List<String>? get deliveryMethods {
-    final value = _deliveryMethods;
-    if (value == null) return null;
-    if (_deliveryMethods is EqualUnmodifiableListView) return _deliveryMethods;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(value);
-  }
-
-  @override
-  @JsonKey(name: 'sale_type')
-  final String? saleType;
 
   @override
   String toString() {
-    return 'StreamEmbeddedProductModel(id: $id, name: $name, type: $type, description: $description, userId: $userId, categoryId: $categoryId, code: $code, unit: $unit, deliveryAvailable: $deliveryAvailable, selfPickup: $selfPickup, deliveryType: $deliveryType, deliveryTime: $deliveryTime, deliveryPrice: $deliveryPrice, deliveryDiscount: $deliveryDiscount, deliveryRadius: $deliveryRadius, location: $location, latitude: $latitude, longitude: $longitude, status: $status, featured: $featured, meta: $meta, createdAt: $createdAt, updatedAt: $updatedAt, deliveryLengthCm: $deliveryLengthCm, deliveryWidthCm: $deliveryWidthCm, deliveryHeightCm: $deliveryHeightCm, deliveryWeightKg: $deliveryWeightKg, deliveryMethods: $deliveryMethods, saleType: $saleType)';
+    return 'StreamEmbeddedProductModel(id: $id, name: $name, description: $description, userId: $userId, categoryId: $categoryId, selfPickup: $selfPickup, location: $location, latitude: $latitude, longitude: $longitude)';
   }
 
   @override
@@ -3684,90 +3318,25 @@ class _$StreamEmbeddedProductModelImpl implements _StreamEmbeddedProductModel {
             other is _$StreamEmbeddedProductModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.type, type) || other.type == type) &&
             (identical(other.description, description) ||
                 other.description == description) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.categoryId, categoryId) ||
                 other.categoryId == categoryId) &&
-            (identical(other.code, code) || other.code == code) &&
-            (identical(other.unit, unit) || other.unit == unit) &&
-            (identical(other.deliveryAvailable, deliveryAvailable) ||
-                other.deliveryAvailable == deliveryAvailable) &&
             (identical(other.selfPickup, selfPickup) ||
                 other.selfPickup == selfPickup) &&
-            (identical(other.deliveryType, deliveryType) ||
-                other.deliveryType == deliveryType) &&
-            (identical(other.deliveryTime, deliveryTime) ||
-                other.deliveryTime == deliveryTime) &&
-            (identical(other.deliveryPrice, deliveryPrice) ||
-                other.deliveryPrice == deliveryPrice) &&
-            (identical(other.deliveryDiscount, deliveryDiscount) ||
-                other.deliveryDiscount == deliveryDiscount) &&
-            (identical(other.deliveryRadius, deliveryRadius) ||
-                other.deliveryRadius == deliveryRadius) &&
             (identical(other.location, location) ||
                 other.location == location) &&
             (identical(other.latitude, latitude) ||
                 other.latitude == latitude) &&
             (identical(other.longitude, longitude) ||
-                other.longitude == longitude) &&
-            (identical(other.status, status) || other.status == status) &&
-            (identical(other.featured, featured) ||
-                other.featured == featured) &&
-            const DeepCollectionEquality().equals(other._meta, _meta) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.deliveryLengthCm, deliveryLengthCm) ||
-                other.deliveryLengthCm == deliveryLengthCm) &&
-            (identical(other.deliveryWidthCm, deliveryWidthCm) ||
-                other.deliveryWidthCm == deliveryWidthCm) &&
-            (identical(other.deliveryHeightCm, deliveryHeightCm) ||
-                other.deliveryHeightCm == deliveryHeightCm) &&
-            (identical(other.deliveryWeightKg, deliveryWeightKg) ||
-                other.deliveryWeightKg == deliveryWeightKg) &&
-            const DeepCollectionEquality()
-                .equals(other._deliveryMethods, _deliveryMethods) &&
-            (identical(other.saleType, saleType) ||
-                other.saleType == saleType));
+                other.longitude == longitude));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        name,
-        type,
-        description,
-        userId,
-        categoryId,
-        code,
-        unit,
-        deliveryAvailable,
-        selfPickup,
-        deliveryType,
-        deliveryTime,
-        deliveryPrice,
-        deliveryDiscount,
-        deliveryRadius,
-        location,
-        latitude,
-        longitude,
-        status,
-        featured,
-        const DeepCollectionEquality().hash(_meta),
-        createdAt,
-        updatedAt,
-        deliveryLengthCm,
-        deliveryWidthCm,
-        deliveryHeightCm,
-        deliveryWeightKg,
-        const DeepCollectionEquality().hash(_deliveryMethods),
-        saleType
-      ]);
+  int get hashCode => Object.hash(runtimeType, id, name, description, userId,
+      categoryId, selfPickup, location, latitude, longitude);
 
   /// Create a copy of StreamEmbeddedProductModel
   /// with the given fields replaced by the non-null parameter values.
@@ -3791,38 +3360,17 @@ abstract class _StreamEmbeddedProductModel
   const factory _StreamEmbeddedProductModel(
       {final int? id,
       final String? name,
-      final String? type,
       final String? description,
       @JsonKey(name: 'user_id') final int? userId,
       @JsonKey(name: 'category_id') final int? categoryId,
-      final String? code,
-      final String? unit,
-      @JsonKey(name: 'delivery_available') final int? deliveryAvailable,
       @JsonKey(name: 'self_pickup') final int? selfPickup,
-      @JsonKey(name: 'delivery_type') final String? deliveryType,
-      @JsonKey(name: 'delivery_time') final String? deliveryTime,
-      @JsonKey(name: 'delivery_price') final String? deliveryPrice,
-      @JsonKey(name: 'delivery_discount') final String? deliveryDiscount,
-      @JsonKey(name: 'delivery_radius') final String? deliveryRadius,
       final String? location,
       @JsonKey(
           name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
       final double? latitude,
       @JsonKey(
           name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
-      final double? longitude,
-      final int? status,
-      final int? featured,
-      final Map<String, dynamic>? meta,
-      @JsonKey(name: 'created_at') final DateTime? createdAt,
-      @JsonKey(name: 'updated_at') final DateTime? updatedAt,
-      @JsonKey(name: 'delivery_length_cm') final String? deliveryLengthCm,
-      @JsonKey(name: 'delivery_width_cm') final String? deliveryWidthCm,
-      @JsonKey(name: 'delivery_height_cm') final String? deliveryHeightCm,
-      @JsonKey(name: 'delivery_weight_kg') final String? deliveryWeightKg,
-      @JsonKey(name: 'delivery_methods') final List<String>? deliveryMethods,
-      @JsonKey(name: 'sale_type')
-      final String? saleType}) = _$StreamEmbeddedProductModelImpl;
+      final double? longitude}) = _$StreamEmbeddedProductModelImpl;
 
   factory _StreamEmbeddedProductModel.fromJson(Map<String, dynamic> json) =
       _$StreamEmbeddedProductModelImpl.fromJson;
@@ -3832,8 +3380,6 @@ abstract class _StreamEmbeddedProductModel
   @override
   String? get name;
   @override
-  String? get type;
-  @override
   String? get description;
   @override
   @JsonKey(name: 'user_id')
@@ -3842,30 +3388,8 @@ abstract class _StreamEmbeddedProductModel
   @JsonKey(name: 'category_id')
   int? get categoryId;
   @override
-  String? get code;
-  @override
-  String? get unit;
-  @override
-  @JsonKey(name: 'delivery_available')
-  int? get deliveryAvailable;
-  @override
   @JsonKey(name: 'self_pickup')
   int? get selfPickup;
-  @override
-  @JsonKey(name: 'delivery_type')
-  String? get deliveryType;
-  @override
-  @JsonKey(name: 'delivery_time')
-  String? get deliveryTime;
-  @override
-  @JsonKey(name: 'delivery_price')
-  String? get deliveryPrice;
-  @override
-  @JsonKey(name: 'delivery_discount')
-  String? get deliveryDiscount;
-  @override
-  @JsonKey(name: 'delivery_radius')
-  String? get deliveryRadius;
   @override
   String? get location;
   @override
@@ -3875,36 +3399,6 @@ abstract class _StreamEmbeddedProductModel
   @JsonKey(
       name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
   double? get longitude;
-  @override
-  int? get status;
-  @override
-  int? get featured;
-  @override
-  Map<String, dynamic>? get meta;
-  @override
-  @JsonKey(name: 'created_at')
-  DateTime? get createdAt;
-  @override
-  @JsonKey(name: 'updated_at')
-  DateTime? get updatedAt;
-  @override
-  @JsonKey(name: 'delivery_length_cm')
-  String? get deliveryLengthCm;
-  @override
-  @JsonKey(name: 'delivery_width_cm')
-  String? get deliveryWidthCm;
-  @override
-  @JsonKey(name: 'delivery_height_cm')
-  String? get deliveryHeightCm;
-  @override
-  @JsonKey(name: 'delivery_weight_kg')
-  String? get deliveryWeightKg;
-  @override
-  @JsonKey(name: 'delivery_methods')
-  List<String>? get deliveryMethods;
-  @override
-  @JsonKey(name: 'sale_type')
-  String? get saleType;
 
   /// Create a copy of StreamEmbeddedProductModel
   /// with the given fields replaced by the non-null parameter values.

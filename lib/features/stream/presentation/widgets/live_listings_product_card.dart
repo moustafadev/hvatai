@@ -24,179 +24,172 @@ class LiveListingsProductCard extends StatelessWidget {
     }
 
     final variant = productModel.variants.firstOrNull ?? VariantModel();
-    final String imageUrl = productModel.images.firstOrNull ?? '';
+    final categoryName = productModel.category?.name ?? 'Без категории';
+    final quantity = variant.stock;
+    final saleType = productModel.saleType.toLowerCase();
+    final isAuction = saleType == 'auction';
+    final saleLabel = isAuction ? 'Аукцион' : 'Фикс';
+    final saleColor =
+        isAuction ? const Color(0xFF7BE4EE) : const Color(0xFFA1F4A8);
+
     final double variantPrice = variant.price ?? 0.0;
     final double startingBid = streamProduct.startingBid ?? 0.0;
     final double currentHighestBid = streamProduct.currentHighestBid ?? 0.0;
     final double effectiveBidAmount = startingBid > 0
         ? startingBid
         : (currentHighestBid > 0 ? currentHighestBid : variantPrice);
-    final String priceLabel = effectiveBidAmount == 0
+    final priceLabel = effectiveBidAmount == 0
         ? '—'
         : (effectiveBidAmount % 1 == 0
             ? '${effectiveBidAmount.toInt()} ₽'
             : '${effectiveBidAmount.toStringAsFixed(2)} ₽');
-    final saleType = productModel.saleType;
-    final isAuction = saleType == 'auction';
-    final isBuyNow = saleType == 'buy_now';
 
     final isCurrentAuction = currentStreamProductId != null &&
         streamProduct.streamProductId != null &&
         currentStreamProductId == streamProduct.streamProductId;
 
-    return GestureDetector(
-      onTap: () {
-        // Reserved for future navigation.
-      },
-      child: Container(
-        margin: EdgeInsets.only(bottom: 12.h),
-        decoration: BoxDecoration(
-          color: AppColors.lightGreyBackground,
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _ProductImage(
-              imageUrl: imageUrl,
-              variant: variant,
-            ),
-            10.pw,
-            Expanded(
-              child: SizedBox(
-                height: 150.h,
+    return BlocBuilder<LiveListingsShopCubit, LiveListingsShopState>(
+      builder: (context, cubitState) {
+        final streamProductId = streamProduct.streamProductId;
+        final isSelected = streamProductId != null &&
+            cubitState.selectedStreamProductIds.contains(streamProductId);
+
+        return Padding(
+          padding: EdgeInsets.only(bottom: 12.h),
+          child: GestureDetector(
+            onTap: () {
+              // Handle tap based on mode
+              if (isViewerMode) {
+                // In viewer mode, handle buy now
+                if (saleType == 'buy_now' && onBuyNowPressed != null) {
+                  Navigator.pop(context);
+                  onBuyNowPressed!(productModel);
+                }
+              } else {
+                // In broadcaster mode, toggle selection for auction products
+                if (isAuction && !isCurrentAuction && streamProductId != null) {
+                  context
+                      .read<LiveListingsShopCubit>()
+                      .toggleStreamProductSelection(streamProductId);
+                }
+              }
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(12.r),
+                border: isCurrentAuction || isSelected
+                    ? Border.all(
+                        color: AppColors.primaryColor,
+                        width: 2,
+                      )
+                    : Border.all(
+                        color: Colors.transparent,
+                        width: 2,
+                      ),
+              ),
+              child: Container(
+                padding: EdgeInsets.all(16.w),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomText(
-                      text: productModel.productName ?? '',
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w700,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              // Category
+                              CustomText(
+                                text: categoryName,
+                                fontSize: 10.sp,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.text,
+                              ),
+                              SizedBox(height: 4.h),
+                              // Product name
+                              CustomText(
+                                text: productModel.productName ?? '',
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w700,
+                                color: AppColors.text,
+                              ),
+                              SizedBox(height: 4.h),
+                              // Quantity tag
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 8.w, vertical: 4.h),
+                                decoration: BoxDecoration(
+                                  color: AppColors.greyButton,
+                                  borderRadius: BorderRadius.circular(10.r),
+                                ),
+                                child: CustomText(
+                                  text: '$quantity шт.',
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.text,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Sale type tag
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 6.w, vertical: 2.h),
+                          decoration: BoxDecoration(
+                            color: saleColor,
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                          child: CustomText(
+                            text: saleLabel,
+                            fontSize: 10.sp,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.text,
+                          ),
+                        ),
+                      ],
                     ),
-                    CustomText(
-                      text: priceLabel,
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
+                    SizedBox(height: 12.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        // Current bid/price
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CustomText(
+                              text: 'Текущая ставка:',
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.text,
+                            ),
+                            SizedBox(height: 2.h),
+                            CustomText(
+                              text: priceLabel,
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.text,
+                            ),
+                          ],
+                        ),
+
+                        SvgPicture.asset(
+                          Assets.assetsIconsSettings2,
+                          width: 32.w,
+                          height: 32.h,
+                        ),
+                      ],
                     ),
-                    if (!isViewerMode && !isCurrentAuction && isAuction)
-                      _StartAuctionButton(
-                        streamProduct: streamProduct,
-                        bidAmount: effectiveBidAmount,
-                        streamId: streamId,
-                      ),
-                    if (isViewerMode && isBuyNow)
-                      CustomButton(
-                        title: 'Купить сейчас',
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        onPressed: onBuyNowPressed == null
-                            ? null
-                            : () {
-                                Navigator.pop(context);
-                                onBuyNowPressed!(productModel);
-                              },
-                      ),
-                    5.ph,
                   ],
                 ),
               ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class _ProductImage extends StatelessWidget {
-  const _ProductImage({
-    required this.imageUrl,
-    required this.variant,
-  });
-
-  final String imageUrl;
-  final VariantModel variant;
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ClipRRect(
-          borderRadius: BorderRadius.circular(12.r),
-          child: CustomImage(
-            width: 140.w,
-            height: 150.h,
-            imageSource: imageUrl,
-            fit: BoxFit.cover,
           ),
-        ),
-        if (variant.discountType != null)
-          Positioned(
-            top: 8.h,
-            left: 8.w,
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 8.w,
-                vertical: 4.h,
-              ),
-              decoration: BoxDecoration(
-                color: variant.discountType == 'fixed'
-                    ? AppColors.primary
-                    : AppColors.primaryColor,
-                borderRadius: BorderRadius.circular(10.r),
-              ),
-              child: CustomText(
-                text: variant.discountType ?? '',
-                fontWeight: FontWeight.w600,
-                fontSize: 10.sp,
-              ),
-            ),
-          ),
-      ],
-    );
-  }
-}
-
-class _StartAuctionButton extends StatelessWidget {
-  const _StartAuctionButton({
-    required this.streamProduct,
-    required this.bidAmount,
-    required this.streamId,
-  });
-
-  final StreamProductItemModel streamProduct;
-  final double bidAmount;
-  final int streamId;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<LiveListingsShopCubit, LiveListingsShopState>(
-      builder: (context, cubitState) {
-        final streamProductId = streamProduct.streamProductId;
-        final isLoading = cubitState.isStartingAuction &&
-            cubitState.startingAuctionProductId == streamProductId;
-        return CustomButton(
-          title: 'Start Auction',
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          isLoading: isLoading,
-          onPressed: streamProductId == null
-              ? null
-              : () async {
-                  final toggledProduct = await context
-                      .read<LiveListingsShopCubit>()
-                      .toggleBidding(
-                        streamId: streamId,
-                        streamProductId: streamProductId,
-                        bidAmount: bidAmount,
-                      );
-                  if (toggledProduct != null &&
-                      context.mounted) {
-                    Navigator.pop(context, toggledProduct);
-                  }
-                },
         );
       },
     );
   }
 }
-

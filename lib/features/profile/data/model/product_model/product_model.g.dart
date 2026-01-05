@@ -18,7 +18,7 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
           : _boolFromInt(json['self_pickup']),
       selfDestruction: json['self_destruction'] as String?,
       userId: (json['user_id'] as num?)?.toInt(),
-      categoryId: (json['category_id'] as num?)?.toInt(),
+      categoryId: _categoryIdFromJson(json['category_id']),
       averageRating: _parseDouble(json['average_rating']),
       ratingsCount: (json['ratings_count'] as num?)?.toInt() ?? 0,
       images:

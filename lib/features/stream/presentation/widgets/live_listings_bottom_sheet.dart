@@ -77,17 +77,17 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                         builder: (context, state) {
                           return Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16.w),
-                              child: Row(
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 // Back button (only when showing my products)
                                 if (state.showMyProducts)
                                   GestureDetector(
-                                      onTap: () {
-                                        context
-                                            .read<LiveListingsShopCubit>()
+                                    onTap: () {
+                                      context
+                                          .read<LiveListingsShopCubit>()
                                           .hideMyProductsMode();
-                                      },
+                                    },
                                     child: Icon(
                                       Icons.arrow_back,
                                       size: 24.sp,
@@ -99,16 +99,16 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                                 // Title
                                 Expanded(
                                   child: Center(
-                                              child: CustomText(
+                                    child: CustomText(
                                       text: state.showMyProducts
                                           ? 'Мои товары'
                                           : 'Live Listings',
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.w800,
-                                                  color: AppColors.blackDark,
-                                        ),
-                                      ),
+                                      color: AppColors.blackDark,
                                     ),
+                                  ),
+                                ),
                                 // Close button placeholder for alignment
                                 const SizedBox(width: 24),
                               ],
@@ -185,19 +185,13 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                         child: BlocBuilder<LiveListingsShopCubit,
                             LiveListingsShopState>(
                           builder: (context, state) {
-                            if (state.showMyProducts) {
-                              return MyProductsList(
-                                state: state,
-                                streamId: widget.streamId,
-                              );
-                            }
                             return LiveListingsContent(
-                          state: state,
+                              state: state,
                               currentStreamProductId:
                                   widget.currentStreamProductId,
-                          isViewerMode: widget.isViewerMode,
-                          streamId: widget.streamId,
-                          onBuyNowPressed: widget.onBuyNowPressed,
+                              isViewerMode: widget.isViewerMode,
+                              streamId: widget.streamId,
+                              onBuyNowPressed: widget.onBuyNowPressed,
                             );
                           },
                         ),
@@ -234,8 +228,8 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                               context: context,
                               backgroundColor: Colors.transparent,
                               builder: (ctx) => AddProductOptionsSheet(
-                                  streamId: widget.streamId,
-                                  allowedCategoryIds: cubit.state.categoryIds,
+                                streamId: widget.streamId,
+                                allowedCategoryIds: cubit.state.categoryIds,
                                 cubit: cubit,
                               ),
                             );
@@ -248,8 +242,12 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                                 isScrollControlled: true,
                                 context: context,
                                 backgroundColor: Colors.transparent,
-                                builder: (ctx) => AddProductBottomSheet(
-                                  allowedCategoryIds: cubit.state.categoryIds,
+                                builder: (ctx) => BlocProvider.value(
+                                  value: cubit,
+                                  child: AddProductBottomSheet(
+                                    allowedCategoryIds: cubit.state.categoryIds,
+                                    streamId: widget.streamId,
+                                  ),
                                 ),
                               );
                               if (mounted) {
@@ -260,7 +258,22 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                                 );
                               }
                             } else if (option == 'select') {
-                              cubit.showMyProductsMode();
+                              // Show my products selection bottom sheet
+                              await showModalBottomSheet(
+                                isScrollControlled: true,
+                                context: context,
+                                backgroundColor: Colors.transparent,
+                                builder: (ctx) =>
+                                    MyProductsSelectionBottomSheet(
+                                  streamId: widget.streamId,
+                                ),
+                              );
+                              if (mounted) {
+                                await cubit.getStreamProducts(
+                                  streamId: widget.streamId,
+                                  categoryIds: cubit.state.categoryIds,
+                                );
+                              }
                             }
                           },
                           child: SvgPicture.asset(

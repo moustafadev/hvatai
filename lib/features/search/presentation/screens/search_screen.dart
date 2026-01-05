@@ -30,41 +30,41 @@ class SearchScreen extends StatelessWidget {
               }
             },
             child: Scaffold(
-              backgroundColor: AppColors.lightGreyBackground,
+            backgroundColor: AppColors.lightGreyBackground,
               body: Stack(
                 children: [
                   Column(
-                    children: [
-                      59.ph,
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: TopBarSearchWidget(
-                          isSearch: true,
-                          image: Assets.assetsIconsShare,
-                          onChanged: cubit.onQueryChanged,
+              children: [
+                59.ph,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: TopBarSearchWidget(
+                    isSearch: true,
+                    image: Assets.assetsIconsShare,
+                    onChanged: cubit.onQueryChanged,
                           onFocus: cubit.onSearchFieldFocused,
                           initialValue: state.query,
-                        ),
-                      ),
-                      if (state.errorMessage.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: CustomText(
-                            text: state.errorMessage,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.red,
-                          ),
-                        )
-                      else if (state.hasNoResults)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                          child: CustomText(
-                            text: 'No results found',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      16.ph,
-                      Expanded(
+                  ),
+                ),
+                if (state.errorMessage.isNotEmpty)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: CustomText(
+                      text: state.errorMessage,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.red,
+                    ),
+                  )
+                else if (state.hasNoResults)
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: CustomText(
+                      text: 'No results found',
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                16.ph,
+                Expanded(
                         child: NotificationListener<ScrollNotification>(
                           onNotification: (notification) {
                             if (notification is ScrollUpdateNotification ||
@@ -73,81 +73,81 @@ class SearchScreen extends StatelessWidget {
                             }
                             return false;
                           },
-                          child: SingleChildScrollView(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
                                 ButtonTabBarSearch(
                                     onCategorySelected: (category) {
-                                  if (category != null) {
-                                    cubit.selectCategory(category);
-                                  }
-                                }),
-                                10.ph,
-                                // CustomText(
-                                //   text: 'recentlySearched'.tr(),
-                                //   fontWeight: FontWeight.w800,
-                                //   fontSize: 20.sp,
-                                // ),
-                                // 12.ph,
-                                // SearchRecently(),
-                                // 24.ph,
-                                Padding(
+                          if (category != null) {
+                            cubit.selectCategory(category);
+                          }
+                        }),
+                        10.ph,
+                        // CustomText(
+                        //   text: 'recentlySearched'.tr(),
+                        //   fontWeight: FontWeight.w800,
+                        //   fontSize: 20.sp,
+                        // ),
+                        // 12.ph,
+                        // SearchRecently(),
+                        // 24.ph,
+                        Padding(
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 16.0),
-                                  child: CustomText(
-                                    text: 'category'.tr(),
-                                    fontWeight: FontWeight.w800,
-                                    fontSize: 20.sp,
-                                  ),
-                                ),
-                                12.ph,
-                                MyCategorySearch(),
-                                24.ph,
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      CustomText(
-                                        text: 'goods'.tr(),
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 20.sp,
-                                      ),
-                                      12.ph,
-                                      ProductsSearchWidget(),
-                                      24.ph,
-                                      CustomText(
-                                        text: 'streams'.tr(),
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 20.sp,
-                                      ),
-                                      10.ph,
-                                      SearchLiveVideoWidget(
-                                        liveStreams: state.liveStreams,
-                                        currentUserId: '',
-                                        searchQuery: state.query,
-                                        selectedCategory:
-                                            cubit.selectedCategory,
-                                      ),
-                                      24.ph,
-                                      CustomText(
-                                        text: 'users'.tr(),
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 20.sp,
-                                      ),
-                                      12.ph,
-                                      UsersSearchWidget(),
-                                    ],
-                                  ),
-                                ),
-                                100.ph
-                              ],
-                            ),
+                          child: CustomText(
+                            text: 'category'.tr(),
+                            fontWeight: FontWeight.w800,
+                            fontSize: 20.sp,
                           ),
                         ),
+                        12.ph,
+                        MyCategorySearch(),
+                        24.ph,
+                        Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                          child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text: 'goods'.tr(),
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20.sp,
+                              ),
+                              12.ph,
+                              ProductsSearchWidget(),
+                              24.ph,
+                              CustomText(
+                                text: 'streams'.tr(),
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20.sp,
+                              ),
+                              10.ph,
+                              SearchLiveVideoWidget(
+                                liveStreams: state.liveStreams,
+                                currentUserId: '',
+                                searchQuery: state.query,
+                                        selectedCategory:
+                                            cubit.selectedCategory,
+                              ),
+                              24.ph,
+                              CustomText(
+                                text: 'users'.tr(),
+                                fontWeight: FontWeight.w800,
+                                fontSize: 20.sp,
+                              ),
+                              12.ph,
+                              UsersSearchWidget(),
+                            ],
+                          ),
+                        ),
+                        100.ph
+                      ],
+                    ),
+                  ),
+                ),
                       ),
                     ],
                   ),
@@ -157,7 +157,7 @@ class SearchScreen extends StatelessWidget {
                     left: 32.w,
                     child: const SearchSuggestionsWidget(),
                   ),
-                ],
+              ],
               ),
             ),
           );

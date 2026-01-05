@@ -272,39 +272,13 @@ _$StreamEmbeddedProductModelImpl _$$StreamEmbeddedProductModelImplFromJson(
     _$StreamEmbeddedProductModelImpl(
       id: (json['id'] as num?)?.toInt(),
       name: json['name'] as String?,
-      type: json['type'] as String?,
       description: json['description'] as String?,
       userId: (json['user_id'] as num?)?.toInt(),
       categoryId: (json['category_id'] as num?)?.toInt(),
-      code: json['code'] as String?,
-      unit: json['unit'] as String?,
-      deliveryAvailable: (json['delivery_available'] as num?)?.toInt(),
       selfPickup: (json['self_pickup'] as num?)?.toInt(),
-      deliveryType: json['delivery_type'] as String?,
-      deliveryTime: json['delivery_time'] as String?,
-      deliveryPrice: json['delivery_price'] as String?,
-      deliveryDiscount: json['delivery_discount'] as String?,
-      deliveryRadius: json['delivery_radius'] as String?,
       location: json['location'] as String?,
       latitude: _stringToDouble(json['latitude']),
       longitude: _stringToDouble(json['longitude']),
-      status: (json['status'] as num?)?.toInt(),
-      featured: (json['featured'] as num?)?.toInt(),
-      meta: json['meta'] as Map<String, dynamic>?,
-      createdAt: json['created_at'] == null
-          ? null
-          : DateTime.parse(json['created_at'] as String),
-      updatedAt: json['updated_at'] == null
-          ? null
-          : DateTime.parse(json['updated_at'] as String),
-      deliveryLengthCm: json['delivery_length_cm'] as String?,
-      deliveryWidthCm: json['delivery_width_cm'] as String?,
-      deliveryHeightCm: json['delivery_height_cm'] as String?,
-      deliveryWeightKg: json['delivery_weight_kg'] as String?,
-      deliveryMethods: (json['delivery_methods'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
-      saleType: json['sale_type'] as String?,
     );
 
 Map<String, dynamic> _$$StreamEmbeddedProductModelImplToJson(
@@ -312,33 +286,13 @@ Map<String, dynamic> _$$StreamEmbeddedProductModelImplToJson(
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'type': instance.type,
       'description': instance.description,
       'user_id': instance.userId,
       'category_id': instance.categoryId,
-      'code': instance.code,
-      'unit': instance.unit,
-      'delivery_available': instance.deliveryAvailable,
       'self_pickup': instance.selfPickup,
-      'delivery_type': instance.deliveryType,
-      'delivery_time': instance.deliveryTime,
-      'delivery_price': instance.deliveryPrice,
-      'delivery_discount': instance.deliveryDiscount,
-      'delivery_radius': instance.deliveryRadius,
       'location': instance.location,
       'latitude': _doubleToString(instance.latitude),
       'longitude': _doubleToString(instance.longitude),
-      'status': instance.status,
-      'featured': instance.featured,
-      'meta': instance.meta,
-      'created_at': instance.createdAt?.toIso8601String(),
-      'updated_at': instance.updatedAt?.toIso8601String(),
-      'delivery_length_cm': instance.deliveryLengthCm,
-      'delivery_width_cm': instance.deliveryWidthCm,
-      'delivery_height_cm': instance.deliveryHeightCm,
-      'delivery_weight_kg': instance.deliveryWeightKg,
-      'delivery_methods': instance.deliveryMethods,
-      'sale_type': instance.saleType,
     };
 
 _$StreamCategoryModelImpl _$$StreamCategoryModelImplFromJson(

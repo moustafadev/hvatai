@@ -167,6 +167,7 @@ Future<void> setupLocator() async {
         locator(),
         locator(),
         locator(),
+        locator(),
       ));
   locator.registerFactory(() => MyProductsCubit(locator()));
   locator.registerFactory(() => MyProductDetailsCubit());

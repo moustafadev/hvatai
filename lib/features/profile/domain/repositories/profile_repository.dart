@@ -22,6 +22,7 @@ abstract class ProfileRepository {
     required List<int> categoryIds,
   });
   Future<Either<String, List<MainCategoryModel>>> getProductCategory();
+  Future<Either<String, List<MainCategoryModel>>> getLastUsedCategories();
 
   Future<Either<String, ProductModel>> addNewProduct(
       AddNewProductParams params);

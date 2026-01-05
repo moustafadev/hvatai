@@ -161,11 +161,14 @@ class NewProductWidgetBody extends StatelessWidget {
                         : 'create'.tr(),
                     isDisabled: cubit.isDisabled(),
                     isLoading: state.isLoading,
-                    onPressed: () {
+                    onPressed: () async {
                       if (isEdit || state.product.id != null) {
-                        cubit.updateProduct(context);
+                        await cubit.updateProduct(context);
                       } else {
-                        cubit.addProduct(context);
+                        await cubit.addProduct(context);
+                        if (context.mounted) {
+                          context.pop(true);
+                        }
                       }
                     },
                   ),

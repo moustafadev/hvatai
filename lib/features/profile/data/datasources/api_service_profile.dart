@@ -19,7 +19,10 @@ class ApiServiceProfile extends ApiBase {
         contentType: 'multipart/form-data',
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        return ProductModel.fromJson(response.json);
+        print('==============================');
+        print('response.json: ${response.json}');
+        print('==============================');
+        return ProductModel.fromJson(response.json['data']);
       }
       throw Exception;
     });
@@ -84,6 +87,18 @@ class ApiServiceProfile extends ApiBase {
   Future<List<MainCategoryModel>> getProductCategory() async {
     return executeAndHandleErrorServer<List<MainCategoryModel>>(() async {
       final response = await get(ServerConfig.categories);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final List<dynamic> data = response.json['data'];
+        return data.map((e) => MainCategoryModel.fromJson(e)).toList();
+      } else {
+        throw Exception;
+      }
+    });
+  }
+
+  Future<List<MainCategoryModel>> getLastUsedCategories() async {
+    return executeAndHandleErrorServer<List<MainCategoryModel>>(() async {
+      final response = await get(ServerConfig.lastUsedCategories);
       if (response.statusCode == 200 || response.statusCode == 201) {
         final List<dynamic> data = response.json['data'];
         return data.map((e) => MainCategoryModel.fromJson(e)).toList();

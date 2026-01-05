@@ -11,5 +11,6 @@ class ProductFormState with _$ProductFormState {
     @Default(0) int currentImageIndex,
     PageController? pageController,
     @Default([]) List<MainCategoryModel> category,
+    @Default([]) List<MainCategoryModel> lastUsedCategories,
   }) = _ProductFormState;
 }

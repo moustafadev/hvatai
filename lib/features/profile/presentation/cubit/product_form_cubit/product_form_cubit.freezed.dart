@@ -24,6 +24,8 @@ mixin _$ProductFormState {
   int get currentImageIndex => throw _privateConstructorUsedError;
   PageController? get pageController => throw _privateConstructorUsedError;
   List<MainCategoryModel> get category => throw _privateConstructorUsedError;
+  List<MainCategoryModel> get lastUsedCategories =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of ProductFormState
   /// with the given fields replaced by the non-null parameter values.
@@ -46,7 +48,8 @@ abstract class $ProductFormStateCopyWith<$Res> {
       String errorMessage,
       int currentImageIndex,
       PageController? pageController,
-      List<MainCategoryModel> category});
+      List<MainCategoryModel> category,
+      List<MainCategoryModel> lastUsedCategories});
 
   $ProductModelCopyWith<$Res> get product;
 }
@@ -74,6 +77,7 @@ class _$ProductFormStateCopyWithImpl<$Res, $Val extends ProductFormState>
     Object? currentImageIndex = null,
     Object? pageController = freezed,
     Object? category = null,
+    Object? lastUsedCategories = null,
   }) {
     return _then(_value.copyWith(
       selectedImages: null == selectedImages
@@ -108,6 +112,10 @@ class _$ProductFormStateCopyWithImpl<$Res, $Val extends ProductFormState>
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
               as List<MainCategoryModel>,
+      lastUsedCategories: null == lastUsedCategories
+          ? _value.lastUsedCategories
+          : lastUsedCategories // ignore: cast_nullable_to_non_nullable
+              as List<MainCategoryModel>,
     ) as $Val);
   }
 
@@ -138,7 +146,8 @@ abstract class _$$ProductFormStateImplCopyWith<$Res>
       String errorMessage,
       int currentImageIndex,
       PageController? pageController,
-      List<MainCategoryModel> category});
+      List<MainCategoryModel> category,
+      List<MainCategoryModel> lastUsedCategories});
 
   @override
   $ProductModelCopyWith<$Res> get product;
@@ -165,6 +174,7 @@ class __$$ProductFormStateImplCopyWithImpl<$Res>
     Object? currentImageIndex = null,
     Object? pageController = freezed,
     Object? category = null,
+    Object? lastUsedCategories = null,
   }) {
     return _then(_$ProductFormStateImpl(
       selectedImages: null == selectedImages
@@ -199,6 +209,10 @@ class __$$ProductFormStateImplCopyWithImpl<$Res>
           ? _value._category
           : category // ignore: cast_nullable_to_non_nullable
               as List<MainCategoryModel>,
+      lastUsedCategories: null == lastUsedCategories
+          ? _value._lastUsedCategories
+          : lastUsedCategories // ignore: cast_nullable_to_non_nullable
+              as List<MainCategoryModel>,
     ));
   }
 }
@@ -214,9 +228,11 @@ class _$ProductFormStateImpl implements _ProductFormState {
       this.errorMessage = '',
       this.currentImageIndex = 0,
       this.pageController,
-      final List<MainCategoryModel> category = const []})
+      final List<MainCategoryModel> category = const [],
+      final List<MainCategoryModel> lastUsedCategories = const []})
       : _selectedImages = selectedImages,
-        _category = category;
+        _category = category,
+        _lastUsedCategories = lastUsedCategories;
 
   final List<File> _selectedImages;
   @override
@@ -252,9 +268,19 @@ class _$ProductFormStateImpl implements _ProductFormState {
     return EqualUnmodifiableListView(_category);
   }
 
+  final List<MainCategoryModel> _lastUsedCategories;
+  @override
+  @JsonKey()
+  List<MainCategoryModel> get lastUsedCategories {
+    if (_lastUsedCategories is EqualUnmodifiableListView)
+      return _lastUsedCategories;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_lastUsedCategories);
+  }
+
   @override
   String toString() {
-    return 'ProductFormState(selectedImages: $selectedImages, selfDestruction: $selfDestruction, product: $product, isLoading: $isLoading, errorMessage: $errorMessage, currentImageIndex: $currentImageIndex, pageController: $pageController, category: $category)';
+    return 'ProductFormState(selectedImages: $selectedImages, selfDestruction: $selfDestruction, product: $product, isLoading: $isLoading, errorMessage: $errorMessage, currentImageIndex: $currentImageIndex, pageController: $pageController, category: $category, lastUsedCategories: $lastUsedCategories)';
   }
 
   @override
@@ -275,7 +301,9 @@ class _$ProductFormStateImpl implements _ProductFormState {
                 other.currentImageIndex == currentImageIndex) &&
             (identical(other.pageController, pageController) ||
                 other.pageController == pageController) &&
-            const DeepCollectionEquality().equals(other._category, _category));
+            const DeepCollectionEquality().equals(other._category, _category) &&
+            const DeepCollectionEquality()
+                .equals(other._lastUsedCategories, _lastUsedCategories));
   }
 
   @override
@@ -288,7 +316,8 @@ class _$ProductFormStateImpl implements _ProductFormState {
       errorMessage,
       currentImageIndex,
       pageController,
-      const DeepCollectionEquality().hash(_category));
+      const DeepCollectionEquality().hash(_category),
+      const DeepCollectionEquality().hash(_lastUsedCategories));
 
   /// Create a copy of ProductFormState
   /// with the given fields replaced by the non-null parameter values.
@@ -302,14 +331,16 @@ class _$ProductFormStateImpl implements _ProductFormState {
 
 abstract class _ProductFormState implements ProductFormState {
   const factory _ProductFormState(
-      {final List<File> selectedImages,
-      final bool selfDestruction,
-      required final ProductModel product,
-      final bool isLoading,
-      final String errorMessage,
-      final int currentImageIndex,
-      final PageController? pageController,
-      final List<MainCategoryModel> category}) = _$ProductFormStateImpl;
+          {final List<File> selectedImages,
+          final bool selfDestruction,
+          required final ProductModel product,
+          final bool isLoading,
+          final String errorMessage,
+          final int currentImageIndex,
+          final PageController? pageController,
+          final List<MainCategoryModel> category,
+          final List<MainCategoryModel> lastUsedCategories}) =
+      _$ProductFormStateImpl;
 
   @override
   List<File> get selectedImages;
@@ -327,6 +358,8 @@ abstract class _ProductFormState implements ProductFormState {
   PageController? get pageController;
   @override
   List<MainCategoryModel> get category;
+  @override
+  List<MainCategoryModel> get lastUsedCategories;
 
   /// Create a copy of ProductFormState
   /// with the given fields replaced by the non-null parameter values.

@@ -20,7 +20,8 @@ class ProductModel with _$ProductModel {
     bool? selfPickup,
     @JsonKey(name: 'self_destruction') String? selfDestruction,
     @JsonKey(name: 'user_id') int? userId,
-    @JsonKey(name: 'category_id') int? categoryId,
+    @JsonKey(name: 'category_id', fromJson: _categoryIdFromJson)
+    int? categoryId,
     @JsonKey(name: 'average_rating', fromJson: _parseDouble)
     double? averageRating,
     @JsonKey(name: 'ratings_count') @Default(0) int ratingsCount,
@@ -91,7 +92,15 @@ bool _boolFromInt(dynamic value) {
   return false;
 }
 
-bool _boolToJson(bool? value) => value ?? false;
+
+int? _categoryIdFromJson(dynamic value) {
+  if (value == null) return null;
+  if (value is int) return value;
+  if (value is String) {
+    return int.tryParse(value);
+  }
+  return null;
+}
 
 double? _parseDouble(dynamic value) {
   if (value == null) return null;

@@ -32,19 +32,69 @@ class LiveListingsContent extends StatelessWidget {
       return _EmptyLiveListings();
     }
 
-    return ListView.builder(
-      padding: EdgeInsets.symmetric(horizontal: 16.w),
-      itemCount: filteredProducts.length,
-      itemBuilder: (context, index) {
-        final streamProduct = filteredProducts[index];
-        return LiveListingsProductCard(
-          streamProduct: streamProduct,
-          currentStreamProductId: currentStreamProductId,
-          isViewerMode: isViewerMode,
-          streamId: streamId,
-          onBuyNowPressed: onBuyNowPressed,
-        );
-      },
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            itemCount: filteredProducts.length,
+            itemBuilder: (context, index) {
+              final streamProduct = filteredProducts[index];
+              return LiveListingsProductCard(
+                streamProduct: streamProduct,
+                currentStreamProductId: currentStreamProductId,
+                isViewerMode: isViewerMode,
+                streamId: streamId,
+                onBuyNowPressed: onBuyNowPressed,
+              );
+            },
+          ),
+        ),
+        // Start Auction button (only for broadcaster mode)
+        if (!isViewerMode)
+          Padding(
+            padding: EdgeInsets.all(16.w),
+            child: SizedBox(
+              width: double.infinity,
+              child: BlocBuilder<LiveListingsShopCubit, LiveListingsShopState>(
+                builder: (context, cubitState) {
+                  final hasSelectedAuctionProducts =
+                      cubitState.selectedStreamProductIds.isNotEmpty;
+                  return CustomButton(
+                    title: 'Начать аукцион',
+                    fontSize: 16.sp,
+                    isLoading: cubitState.isStartingAuction,
+                    fontWeight: FontWeight.w800,
+                    onPressed: hasSelectedAuctionProducts
+                        ? () async {
+                            final startingPrice = cubitState.products
+                                ?.firstWhere((p) =>
+                                    p.streamProductId ==
+                                    cubitState.selectedStreamProductIds.first)
+                                .product
+                                ?.variants
+                                .first
+                                .price;
+                            final toggledProduct = await context
+                                .read<LiveListingsShopCubit>()
+                                .toggleBidding(
+                                    streamId: streamId,
+                                    streamProductId: cubitState
+                                        .selectedStreamProductIds.first,
+                                    bidAmount: startingPrice ?? 0);
+                            if (toggledProduct != null && context.mounted) {
+                              Navigator.pop(context, toggledProduct);
+                            }
+                          }
+                        : null,
+                    disabled: !hasSelectedAuctionProducts,
+                  );
+                },
+              ),
+            ),
+          ),
+        24.ph,
+      ],
     );
   }
 }

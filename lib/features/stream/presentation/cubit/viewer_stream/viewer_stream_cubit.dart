@@ -818,20 +818,9 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
       description: product.productDescription,
       userId: product.userId,
       categoryId: product.categoryId,
-      unit: null,
-      deliveryAvailable: product.deliveryAvailable == null
-          ? null
-          : (product.deliveryAvailable! ? 1 : 0),
-      selfPickup:
-          product.selfPickup == null ? null : (product.selfPickup! ? 1 : 0),
       location: null,
       latitude: null,
       longitude: null,
-      featured: null,
-      meta: null,
-      createdAt: null,
-      updatedAt: null,
-      saleType: product.saleType,
     );
   }
 

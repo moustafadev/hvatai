@@ -99,6 +99,14 @@ class ProfileImplRepository implements ProfileRepository {
   }
 
   @override
+  Future<Either<String, List<MainCategoryModel>>> getLastUsedCategories() {
+    return executeAndHandleError<List<MainCategoryModel>>(() async {
+      final res = await _apiServiceProfile.getLastUsedCategories();
+      return res;
+    });
+  }
+
+  @override
   Future<Either<String, ProductModel>> updateProduct(
       UpdateProductParams params) {
     return executeAndHandleError<ProductModel>(() async {

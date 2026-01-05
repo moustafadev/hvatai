@@ -35,7 +35,7 @@ mixin _$ProductModel {
   String? get selfDestruction => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
   int? get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'category_id')
+  @JsonKey(name: 'category_id', fromJson: _categoryIdFromJson)
   int? get categoryId => throw _privateConstructorUsedError;
   @JsonKey(name: 'average_rating', fromJson: _parseDouble)
   double? get averageRating => throw _privateConstructorUsedError;
@@ -79,7 +79,8 @@ abstract class $ProductModelCopyWith<$Res> {
       @JsonKey(name: 'self_pickup', fromJson: _boolFromInt) bool? selfPickup,
       @JsonKey(name: 'self_destruction') String? selfDestruction,
       @JsonKey(name: 'user_id') int? userId,
-      @JsonKey(name: 'category_id') int? categoryId,
+      @JsonKey(name: 'category_id', fromJson: _categoryIdFromJson)
+      int? categoryId,
       @JsonKey(name: 'average_rating', fromJson: _parseDouble)
       double? averageRating,
       @JsonKey(name: 'ratings_count') int ratingsCount,
@@ -273,7 +274,8 @@ abstract class _$$ProductModelImplCopyWith<$Res>
       @JsonKey(name: 'self_pickup', fromJson: _boolFromInt) bool? selfPickup,
       @JsonKey(name: 'self_destruction') String? selfDestruction,
       @JsonKey(name: 'user_id') int? userId,
-      @JsonKey(name: 'category_id') int? categoryId,
+      @JsonKey(name: 'category_id', fromJson: _categoryIdFromJson)
+      int? categoryId,
       @JsonKey(name: 'average_rating', fromJson: _parseDouble)
       double? averageRating,
       @JsonKey(name: 'ratings_count') int ratingsCount,
@@ -422,7 +424,8 @@ class _$ProductModelImpl implements _ProductModel {
       this.selfPickup = false,
       @JsonKey(name: 'self_destruction') this.selfDestruction,
       @JsonKey(name: 'user_id') this.userId,
-      @JsonKey(name: 'category_id') this.categoryId,
+      @JsonKey(name: 'category_id', fromJson: _categoryIdFromJson)
+      this.categoryId,
       @JsonKey(name: 'average_rating', fromJson: _parseDouble)
       this.averageRating,
       @JsonKey(name: 'ratings_count') this.ratingsCount = 0,
@@ -465,7 +468,7 @@ class _$ProductModelImpl implements _ProductModel {
   @JsonKey(name: 'user_id')
   final int? userId;
   @override
-  @JsonKey(name: 'category_id')
+  @JsonKey(name: 'category_id', fromJson: _categoryIdFromJson)
   final int? categoryId;
   @override
   @JsonKey(name: 'average_rating', fromJson: _parseDouble)
@@ -608,7 +611,8 @@ abstract class _ProductModel implements ProductModel {
       final bool? selfPickup,
       @JsonKey(name: 'self_destruction') final String? selfDestruction,
       @JsonKey(name: 'user_id') final int? userId,
-      @JsonKey(name: 'category_id') final int? categoryId,
+      @JsonKey(name: 'category_id', fromJson: _categoryIdFromJson)
+      final int? categoryId,
       @JsonKey(name: 'average_rating', fromJson: _parseDouble)
       final double? averageRating,
       @JsonKey(name: 'ratings_count') final int ratingsCount,
@@ -648,7 +652,7 @@ abstract class _ProductModel implements ProductModel {
   @JsonKey(name: 'user_id')
   int? get userId;
   @override
-  @JsonKey(name: 'category_id')
+  @JsonKey(name: 'category_id', fromJson: _categoryIdFromJson)
   int? get categoryId;
   @override
   @JsonKey(name: 'average_rating', fromJson: _parseDouble)

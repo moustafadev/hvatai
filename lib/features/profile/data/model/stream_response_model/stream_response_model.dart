@@ -179,36 +179,16 @@ class StreamEmbeddedProductModel with _$StreamEmbeddedProductModel {
   const factory StreamEmbeddedProductModel({
     int? id,
     String? name,
-    String? type,
     String? description,
     @JsonKey(name: 'user_id') int? userId,
     @JsonKey(name: 'category_id') int? categoryId,
-    String? code,
-    String? unit,
-    @JsonKey(name: 'delivery_available') int? deliveryAvailable,
     @JsonKey(name: 'self_pickup') int? selfPickup,
-    @JsonKey(name: 'delivery_type') String? deliveryType,
-    @JsonKey(name: 'delivery_time') String? deliveryTime,
-    @JsonKey(name: 'delivery_price') String? deliveryPrice,
-    @JsonKey(name: 'delivery_discount') String? deliveryDiscount,
-    @JsonKey(name: 'delivery_radius') String? deliveryRadius,
     String? location,
     @JsonKey(name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
     double? latitude,
     @JsonKey(
         name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
     double? longitude,
-    int? status,
-    int? featured,
-    Map<String, dynamic>? meta,
-    @JsonKey(name: 'created_at') DateTime? createdAt,
-    @JsonKey(name: 'updated_at') DateTime? updatedAt,
-    @JsonKey(name: 'delivery_length_cm') String? deliveryLengthCm,
-    @JsonKey(name: 'delivery_width_cm') String? deliveryWidthCm,
-    @JsonKey(name: 'delivery_height_cm') String? deliveryHeightCm,
-    @JsonKey(name: 'delivery_weight_kg') String? deliveryWeightKg,
-    @JsonKey(name: 'delivery_methods') List<String>? deliveryMethods,
-    @JsonKey(name: 'sale_type') String? saleType,
   }) = _StreamEmbeddedProductModel;
 
   factory StreamEmbeddedProductModel.fromJson(Map<String, dynamic> json) =>

@@ -55,12 +55,9 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
           emit(state.copyWith(errorMessage: failure, isLoading: false)),
       (response) {
         final products = response.data?.products ?? [];
-        final filteredProducts = _filterStreamProductsByCategories(
-          products,
-          updatedCategoryIds,
-        );
+
         emit(state.copyWith(
-          products: filteredProducts,
+          products: products,
           isLoading: false,
         ));
       },
@@ -97,11 +94,27 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
   void toggleProductSelection(int productId) {
     final currentSelected = Set<int>.from(state.selectedProductIds);
     if (currentSelected.contains(productId)) {
+      // Deselect if already selected
       currentSelected.remove(productId);
     } else {
+      // Select only this one (clear previous selection)
+      currentSelected.clear();
       currentSelected.add(productId);
     }
     emit(state.copyWith(selectedProductIds: currentSelected));
+  }
+
+  void toggleStreamProductSelection(int streamProductId) {
+    final currentSelected = Set<int>.from(state.selectedStreamProductIds);
+    if (currentSelected.contains(streamProductId)) {
+      // Deselect if already selected
+      currentSelected.remove(streamProductId);
+    } else {
+      // Select only this one (clear previous selection)
+      currentSelected.clear();
+      currentSelected.add(streamProductId);
+    }
+    emit(state.copyWith(selectedStreamProductIds: currentSelected));
   }
 
   Future<void> addSelectedProductsToStream() async {
@@ -316,25 +329,21 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
       description: product.productDescription,
       userId: product.userId,
       categoryId: product.categoryId,
-      unit: null,
-      deliveryAvailable:
-          product.deliveryAvailable == null ? null : (product.deliveryAvailable! ? 1 : 0),
-      selfPickup: product.selfPickup == null ? null : (product.selfPickup! ? 1 : 0),
       location: null,
       latitude: null,
       longitude: null,
-      featured: null,
-      meta: null,
-      createdAt: null,
-      updatedAt: null,
-      saleType: product.saleType,
     );
   }
 
-  Future<void> getMyProducts() async {
-    emit(state.copyWith(isMyProductsLoading: true, myProductsError: null));
+  Future<void> getMyProducts({List<int>? categoryIds}) async {
+    final idsToUse = categoryIds ?? state.categoryIds;
+    emit(state.copyWith(
+      isMyProductsLoading: true,
+      myProductsError: null,
+      categoryIds: idsToUse,
+    ));
     final result = await _getMyProductsUsecase(
-      GetMyProductsParams(categoryIds: state.categoryIds),
+      GetMyProductsParams(categoryIds: idsToUse),
     );
 
     result.fold(
@@ -351,17 +360,4 @@ class LiveListingsShopCubit extends Cubit<LiveListingsShopState> {
       },
     );
   }
-
-  List<StreamProductItemModel> _filterStreamProductsByCategories(
-    List<StreamProductItemModel> products,
-    List<int> categoryIds,
-  ) {
-    if (categoryIds.isEmpty) return products;
-    return products
-        .where((streamProduct) =>
-            streamProduct.product?.categoryId != null &&
-            categoryIds.contains(streamProduct.product!.categoryId!))
-        .toList();
-  }
-
 }

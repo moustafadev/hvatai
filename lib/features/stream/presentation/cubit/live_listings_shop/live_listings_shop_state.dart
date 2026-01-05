@@ -18,6 +18,7 @@ class LiveListingsShopState extends Equatable {
     this.searchQuery = '',
     this.showMyProducts = false,
     this.selectedProductIds = const {},
+    this.selectedStreamProductIds = const {},
     List<String>? tabs,
   }) : tabs = tabs ?? const ['Auction', 'Buy Now'];
 
@@ -37,6 +38,7 @@ class LiveListingsShopState extends Equatable {
   final String searchQuery;
   final bool showMyProducts;
   final Set<int> selectedProductIds;
+  final Set<int> selectedStreamProductIds;
 
   List<StreamProductItemModel> get filteredProducts {
     if (products == null || products!.isEmpty) return [];
@@ -94,6 +96,7 @@ class LiveListingsShopState extends Equatable {
     String? searchQuery,
     bool? showMyProducts,
     Set<int>? selectedProductIds,
+    Set<int>? selectedStreamProductIds,
     List<String>? tabs,
   }) {
     return LiveListingsShopState(
@@ -114,6 +117,8 @@ class LiveListingsShopState extends Equatable {
       searchQuery: searchQuery ?? this.searchQuery,
       showMyProducts: showMyProducts ?? this.showMyProducts,
       selectedProductIds: selectedProductIds ?? this.selectedProductIds,
+      selectedStreamProductIds:
+          selectedStreamProductIds ?? this.selectedStreamProductIds,
       tabs: tabs ?? this.tabs,
     );
   }
@@ -136,5 +141,6 @@ class LiveListingsShopState extends Equatable {
         searchQuery,
         showMyProducts,
         selectedProductIds,
+        selectedStreamProductIds,
       ];
 }

@@ -71,6 +71,7 @@ abstract class ServerConfig {
   static String sendReward(int userId) => "users/$userId/reward";
 
   static String updateProduct(int productId) => "products/$productId";
+  static const String lastUsedCategories = "products/last-used-categories";
 
   // Wallet endpoints
   static String getWallet(int walletId) => "wallets/$walletId";

@@ -4,9 +4,11 @@ class AddProductBottomSheet extends StatelessWidget {
   const AddProductBottomSheet({
     super.key,
     required this.allowedCategoryIds,
+    required this.streamId,
   });
 
   final List<int> allowedCategoryIds;
+  final int streamId;
 
   /// Check if the form is disabled based on required fields in this form only
   bool _isFormDisabled(ProductFormState state) {
@@ -44,7 +46,9 @@ class AddProductBottomSheet extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => locator<ProductFormCubit>()..getProductCategory(),
+          create: (_) => locator<ProductFormCubit>()
+            ..getProductCategory()
+            ..getLastUsedCategories(),
         ),
       ],
       child: Container(
@@ -176,6 +180,9 @@ class AddProductBottomSheet extends StatelessWidget {
                           },
                         ),
                         SizedBox(height: 12.h),
+                        // Last used categories
+                        LastUsedCategoriesWidget(),
+                        SizedBox(height: 12.h),
                         // 3. Sale type button
                         BlocBuilder<ProductFormCubit, ProductFormState>(
                           builder: (context, saleState) {
@@ -199,59 +206,59 @@ class AddProductBottomSheet extends StatelessWidget {
                         ),
                         SizedBox(height: 12.h),
                         // 5. Time until next bid dropdown
-                        BlocBuilder<ProductFormCubit, ProductFormState>(
-                          builder: (context, bidState) {
-                            final timeOptions = [
-                              '10 c',
-                              '20 c',
-                              '30 c',
-                              '40 c',
-                              '50 c',
-                              '60 c',
-                              '90 c'
-                            ];
+                        // BlocBuilder<ProductFormCubit, ProductFormState>(
+                        //   builder: (context, bidState) {
+                        //     final timeOptions = [
+                        //       '10 c',
+                        //       '20 c',
+                        //       '30 c',
+                        //       '40 c',
+                        //       '50 c',
+                        //       '60 c',
+                        //       '90 c'
+                        //     ];
 
-                            // Get current value from state and convert to display format
-                            String? currentValue;
-                            // Check if deliveryTime contains a bid time value (should be just a number)
-                            if (bidState.product.variants.first.price != null &&
-                                bidState.product.variants.first.price != 0.0) {
-                              final storedValue =
-                                  bidState.product.variants.first.price.toString();
-                              // Check if it's a number (bid time) or contains text (delivery time)
-                              final isNumeric =
-                                  RegExp(r'^\d+$').hasMatch(storedValue);
-                              if (isNumeric) {
-                                // Convert stored seconds (e.g., "10") to display format (e.g., "10 c")
-                                final displayValue = '$storedValue c';
-                                // Check if the display value exists in options
-                                if (timeOptions.contains(displayValue)) {
-                                  currentValue = displayValue;
-                                }
-                              }
-                            }
+                        //     // Get current value from state and convert to display format
+                        //     String? currentValue;
+                        //     // Check if deliveryTime contains a bid time value (should be just a number)
+                        //     if (bidState.product.variants.first.price != null &&
+                        //         bidState.product.variants.first.price != 0.0) {
+                        //       final storedValue =
+                        //           bidState.product.variants.first.price.toString();
+                        //       // Check if it's a number (bid time) or contains text (delivery time)
+                        //       final isNumeric =
+                        //           RegExp(r'^\d+$').hasMatch(storedValue);
+                        //       if (isNumeric) {
+                        //         // Convert stored seconds (e.g., "10") to display format (e.g., "10 c")
+                        //         final displayValue = '$storedValue c';
+                        //         // Check if the display value exists in options
+                        //         if (timeOptions.contains(displayValue)) {
+                        //           currentValue = displayValue;
+                        //         }
+                        //       }
+                        //     }
 
-                            return CustomDropdown(
-                              hintText: 'Время до следующей ставки',
-                              value: currentValue,
-                              onChanged: (value) {
-                                if (value != null) {
-                                  // Extract number from string like "10 c" -> "10"
-                                  final seconds = value.replaceAll(' c', '');
-                                  cubit.updateField('bidTime', seconds);
-                                }
-                              },
-                              items: timeOptions
-                                  .map((time) => DropdownMenuItem(
-                                        value: time,
-                                        child: Text(time),
-                                      ))
-                                  .toList(),
-                            );
-                          },
-                        ),
-                        SizedBox(height: 12.h),
-                        // 6. Quantity: Количество: on left, minus - quantity - plus on right
+                        //     return CustomDropdown(
+                        //       hintText: 'Время до следующей ставки',
+                        //       value: currentValue,
+                        //       onChanged: (value) {
+                        //         if (value != null) {
+                        //           // Extract number from string like "10 c" -> "10"
+                        //           final seconds = value.replaceAll(' c', '');
+                        //           cubit.updateField('bidTime', seconds);
+                        //         }
+                        //       },
+                        //       items: timeOptions
+                        //           .map((time) => DropdownMenuItem(
+                        //                 value: time,
+                        //                 child: Text(time),
+                        //               ))
+                        //           .toList(),
+                        //     );
+                        //   },
+                        // ),
+                        // SizedBox(height: 12.h),
+                        // // 6. Quantity: Количество: on left, minus - quantity - plus on right
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -317,7 +324,7 @@ class AddProductBottomSheet extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 12.h),
-                       
+
                         SizedBox(height: 24.h),
                       ],
                     ),
@@ -337,9 +344,34 @@ class AddProductBottomSheet extends StatelessWidget {
                           : AppColors.white,
                       onPressed: _isFormDisabled(state)
                           ? null
-                          : () {
-                              cubit.addProduct(context);
-                              Navigator.pop(context);
+                          : () async {
+                              // Add the product and get the created product
+                              final createdProduct =
+                                  await cubit.addProduct(context);
+                              // If product was created successfully, add it to stream
+                              if (createdProduct != null &&
+                                  createdProduct.id != null &&
+                                  context.mounted) {
+                                // Access LiveListingsShopCubit from the widget tree
+                                final liveListingsCubit =
+                                    context.read<LiveListingsShopCubit>();
+                                await liveListingsCubit.addProductToStream(
+                                  streamId: streamId,
+                                  product: createdProduct,
+                                );
+
+                                // Close the bottom sheet after adding to stream
+                                if (context.mounted) {
+                                  Navigator.pop(context);
+                                  // Reset the form after closing the bottom sheet
+                                  cubit.resetProduct();
+                                }
+                              } else if (context.mounted) {
+                                // Close even if product creation failed
+                                Navigator.pop(context);
+                                // Reset the form after closing the bottom sheet
+                                cubit.resetProduct();
+                              }
                             },
                       disabled: _isFormDisabled(state),
                       isLoading: state.isLoading,

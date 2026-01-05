@@ -21,7 +21,6 @@ class StreamProductsResponseModel with _$StreamProductsResponseModel {
 @freezed
 class StreamProductsDataModel with _$StreamProductsDataModel {
   const factory StreamProductsDataModel({
-    StreamDataModel? stream,
     @Default([]) List<StreamProductItemModel> products,
     @JsonKey(name: 'total_products') @Default(0) int totalProducts,
     @JsonKey(name: 'active_products') @Default(0) int activeProducts,

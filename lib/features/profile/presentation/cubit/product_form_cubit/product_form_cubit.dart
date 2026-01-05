@@ -14,6 +14,7 @@ import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_product_category_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/get_last_used_categories_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_product_usecase.dart';
 
 part 'product_form_cubit.freezed.dart';
@@ -22,6 +23,7 @@ part 'product_form_state.dart';
 class ProductFormCubit extends Cubit<ProductFormState> {
   ProductFormCubit(
     this.getProductCategoryUsecase,
+    this.getLastUsedCategoriesUsecase,
     this.addNewProductUsecase,
     this.updateProductUsecase,
   ) : super(
@@ -33,6 +35,7 @@ class ProductFormCubit extends Cubit<ProductFormState> {
           ),
         );
   final GetProductCategoryUsecase getProductCategoryUsecase;
+  final GetLastUsedCategoriesUsecase getLastUsedCategoriesUsecase;
   final AddNewProductUsecase addNewProductUsecase;
   final UpdateProductUsecase updateProductUsecase;
 
@@ -82,6 +85,18 @@ class ProductFormCubit extends Cubit<ProductFormState> {
       (productsCategory) => emit(state.copyWith(
         isLoading: false,
         category: productsCategory,
+      )),
+    );
+  }
+
+  Future<void> getLastUsedCategories() async {
+    final result = await getLastUsedCategoriesUsecase.call(unit);
+    result.fold(
+      (failure) => emit(state.copyWith(
+        lastUsedCategories: [],
+      )),
+      (lastUsedCategories) => emit(state.copyWith(
+        lastUsedCategories: lastUsedCategories,
       )),
     );
   }
@@ -296,7 +311,7 @@ class ProductFormCubit extends Cubit<ProductFormState> {
     }
 
     addField('product_name', product.productName ?? '');
-    addField('product_description', product.productDescription ?? '');
+    addField('product_description', product.productDescription ?? '-');
     addField('category_id', product.categoryId);
     addField('sale_type', product.saleType);
     addBoolField('delivery_available', product.deliveryAvailable ?? true);
@@ -314,7 +329,7 @@ class ProductFormCubit extends Cubit<ProductFormState> {
     return formData;
   }
 
-  Future<void> addProduct(BuildContext context) async {
+  Future<ProductModel?> addProduct(BuildContext context) async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
     final formData = await _prepareProductFormData(state.product);
@@ -323,10 +338,16 @@ class ProductFormCubit extends Cubit<ProductFormState> {
       AddNewProductParams(formData: formData),
     );
 
+    ProductModel? createdProduct;
+
     result.fold((failure) {
       emit(state.copyWith(isLoading: false, errorMessage: failure));
       showFloatingMessageError('somethingWentWrong'.tr());
+      createdProduct = null;
     }, (newProduct) {
+      print('==============================');
+      print('newProduct: $newProduct');
+      print('==============================');
       final completeProduct = state.product.copyWith(
         id: newProduct.id,
       );
@@ -335,11 +356,12 @@ class ProductFormCubit extends Cubit<ProductFormState> {
 
       emit(state.copyWith(isLoading: false));
       showFloatingMessageSuccess('productAdded'.tr());
-      if (context.mounted) {
-        context.pop(true);
-      }
-      resetProduct();
+      createdProduct = completeProduct;
+
+      // Don't reset here - let the widget handle it after closing the bottom sheet
     });
+
+    return createdProduct;
   }
 
   Future<void> updateProduct(BuildContext context) async {
