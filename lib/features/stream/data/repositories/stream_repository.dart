@@ -76,4 +76,15 @@ abstract class StreamRepository {
   });
 
   Future<Either<String, MyStreamsResponse>> getMyStreams();
+
+  /// PUT streams/{streamId}/media
+  /// body: FormData with { title: "...", description: "...", thumbnail: MultipartFile, is_public: true }
+  /// OR body: { title: "...", description: "...", is_public: true } (if no thumbnail)
+  Future<Either<String, bool>> updateStreamMedia({
+    required int streamId,
+    required String title,
+    required String description,
+    List<int>? thumbnailBytes,
+    bool isPublic = true,
+  });
 }

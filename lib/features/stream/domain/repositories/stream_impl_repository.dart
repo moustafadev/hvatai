@@ -165,4 +165,24 @@ class StreamImplRepository implements StreamRepository {
       return res;
     });
   }
+
+  @override
+  Future<Either<String, bool>> updateStreamMedia({
+    required int streamId,
+    required String title,
+    required String description,
+    List<int>? thumbnailBytes,
+    bool isPublic = true,
+  }) {
+    return executeAndHandleError<bool>(() async {
+      final res = await _apiServiceStream.updateStreamMedia(
+        streamId: streamId,
+        title: title,
+        description: description,
+        thumbnailBytes: thumbnailBytes,
+        isPublic: isPublic,
+      );
+      return res;
+    });
+  }
 }

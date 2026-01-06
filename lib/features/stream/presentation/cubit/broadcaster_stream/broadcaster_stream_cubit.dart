@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'dart:ui' as ui;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/features/chat/presentation/pages/chat_service.dart';
@@ -20,8 +21,8 @@ import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_useca
 import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/start_stream_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/update_stream_media_usecase.dart';
 import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
-import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:livekit_client/livekit_client.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:pusher_client_socket/pusher_client_socket.dart';
@@ -38,7 +39,8 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
     this._getBids,
     this._addBidUsecase,
     this._endUsecase,
-    this._startStreamUsecase, {
+    this._startStreamUsecase,
+    this._updateStreamMediaUsecase, {
     required StreamDataModel stream,
   }) : super(BroadcasterStreamState(stream: stream)) {
     _initialize();
@@ -51,9 +53,9 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
   final GetStreamBidsUsecase _getBids;
   final AddStreamBidUsecase _addBidUsecase;
   final StartStreamUsecase _startStreamUsecase;
+  final UpdateStreamMediaUsecase _updateStreamMediaUsecase;
 
   Timer? _timer;
-  bool _previewScheduled = false;
   TextEditingController controller = TextEditingController();
   final _pusherManager = PusherManager();
   PusherClient? _pusher;
@@ -529,10 +531,12 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         audioTrack: audioTrack,
       ));
 
-      // Schedule preview capture/send in background after publish starts.
-      // _schedulePreviewUpload();
-
       debugPrint('✅ Started publishing stream');
+
+      // Capture thumbnail and update stream media after a short delay
+      Future.delayed(const Duration(seconds: 2), () {
+        addStreamPreview();
+      });
     } catch (e, st) {
       debugPrint('❌ Failed to start publishing: $e');
       debugPrintStack(stackTrace: st);
@@ -609,88 +613,6 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         };
       },
     );
-  }
-
-  // ================== Preview Upload (placeholder) ==================
-  void _schedulePreviewUpload() {
-    if (_previewScheduled) return;
-    _previewScheduled = true;
-
-    // Delay 5 seconds after publishing starts, run in background.
-    Future.delayed(const Duration(seconds: 5), () async {
-      if (!state.isPublishing || state.videoTrack == null) return;
-      await _sendPreviewClip();
-    });
-  }
-
-  Future<void> _sendPreviewClip() async {
-    try {
-      if (state.videoTrack == null) {
-        debugPrint('📤 Preview skipped: no active video track');
-        return;
-      }
-
-      final frames = await _capturePreviewFrames(
-        track: state.videoTrack!,
-        duration: const Duration(seconds: 2),
-        fps: 1, // easiest path: 1 frame per second for 5 seconds
-      );
-
-      if (frames.isEmpty) {
-        debugPrint('📤 Preview capture returned no frames');
-        return;
-      }
-
-      final totalBytes =
-          frames.fold<int>(0, (sum, bytes) => sum + bytes.length);
-
-      debugPrint(
-        '📹 Captured 5-second preview clip (frames: ${frames.length}, total bytes: $totalBytes)',
-      );
-
-      // TODO: Encode frames to desired format (e.g., MP4/GIF) and upload to backend when endpoint is ready.
-    } catch (e, st) {
-      debugPrint('❌ Preview send placeholder failed: $e');
-      debugPrintStack(stackTrace: st);
-    }
-  }
-
-  Future<Uint8List?> _captureFrameBytes(LocalVideoTrack track) async {
-    try {
-      // Directly capture a frame from the underlying media stream track.
-      final MediaStreamTrack mediaTrack = track.mediaStreamTrack;
-      final frameBuffer = await mediaTrack.captureFrame();
-      return frameBuffer.asUint8List();
-    } catch (e, st) {
-      debugPrint('❌ Failed to capture frame: $e');
-      debugPrintStack(stackTrace: st);
-      return null;
-    }
-  }
-
-  Future<List<Uint8List>> _capturePreviewFrames({
-    required LocalVideoTrack track,
-    required Duration duration,
-    required int fps,
-  }) async {
-    final frames = <Uint8List>[];
-    if (fps <= 0) return frames;
-
-    final totalFrames = duration.inSeconds * fps;
-    final frameIntervalMs = 1000 ~/ fps;
-
-    for (var i = 0; i < totalFrames; i++) {
-      if (!state.isPublishing || state.videoTrack == null) break;
-      final bytes = await _captureFrameBytes(track);
-      if (bytes != null && bytes.isNotEmpty) {
-        frames.add(bytes);
-      }
-      if (i < totalFrames - 1) {
-        await Future.delayed(Duration(milliseconds: frameIntervalMs));
-      }
-    }
-
-    return frames;
   }
 
   Future<bool> leaveStream({required int streamId}) async {
@@ -1152,5 +1074,73 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
   Future<void> close() async {
     await cleanup();
     return super.close();
+  }
+
+  // ================== Stream Preview (Thumbnail) ==================
+  /// Updates the thumbnail key for RepaintBoundary
+  void updateThumbnailKey(GlobalKey key) {
+    emit(state.copyWith(thumbnailKey: key));
+  }
+
+  /// Captures a screenshot from the video feed and updates stream media
+  Future<void> addStreamPreview() async {
+    if (state.thumbnailKey == null ||
+        state.thumbnailKey!.currentContext == null) {
+      debugPrint('⚠️ Thumbnail key not available');
+      return;
+    }
+
+    try {
+      // Capture screenshot
+      final thumbnailBytes = await _captureThumbnail();
+      if (thumbnailBytes == null) {
+        debugPrint('⚠️ Failed to capture thumbnail');
+        return;
+      }
+
+      // Update stream media with thumbnail bytes
+      final streamId = state.stream.id ?? 0;
+      final title = state.stream.title ?? '';
+      final description = state.stream.description ?? '';
+      final isPublic = state.stream.isPublic ?? true;
+
+      final result = await _updateStreamMediaUsecase.call(
+        UpdateStreamMediaParams(
+          streamId: streamId,
+          title: title,
+          description: description,
+          thumbnailBytes: thumbnailBytes,
+          isPublic: isPublic,
+        ),
+      );
+
+      result.fold(
+        (failure) {
+          debugPrint('❌ Failed to update stream media: $failure');
+        },
+        (success) {
+          debugPrint('✅ Stream media updated successfully');
+        },
+      );
+    } catch (e, st) {
+      debugPrint('❌ Error in addStreamPreview: $e');
+      debugPrintStack(stackTrace: st);
+    }
+  }
+
+  /// Captures a screenshot from the RepaintBoundary
+  Future<List<int>?> _captureThumbnail() async {
+    try {
+      final boundary = state.thumbnailKey!.currentContext!.findRenderObject()
+          as RenderRepaintBoundary;
+
+      final image = await boundary.toImage(pixelRatio: 2.0);
+      final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+
+      return byteData?.buffer.asUint8List();
+    } catch (e) {
+      debugPrint('Error capturing thumbnail: $e');
+      return null;
+    }
   }
 }

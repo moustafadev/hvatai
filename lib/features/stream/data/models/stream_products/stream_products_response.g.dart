@@ -28,9 +28,6 @@ Map<String, dynamic> _$$StreamProductsResponseModelImplToJson(
 _$StreamProductsDataModelImpl _$$StreamProductsDataModelImplFromJson(
         Map<String, dynamic> json) =>
     _$StreamProductsDataModelImpl(
-      stream: json['stream'] == null
-          ? null
-          : StreamDataModel.fromJson(json['stream'] as Map<String, dynamic>),
       products: (json['products'] as List<dynamic>?)
               ?.map((e) =>
                   StreamProductItemModel.fromJson(e as Map<String, dynamic>))
@@ -44,7 +41,6 @@ _$StreamProductsDataModelImpl _$$StreamProductsDataModelImplFromJson(
 Map<String, dynamic> _$$StreamProductsDataModelImplToJson(
         _$StreamProductsDataModelImpl instance) =>
     <String, dynamic>{
-      'stream': instance.stream,
       'products': instance.products,
       'total_products': instance.totalProducts,
       'active_products': instance.activeProducts,

@@ -31,6 +31,7 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
       locator(),
       locator(),
       locator(),
+      locator(),
       stream: widget.stream,
     );
   }
@@ -140,7 +141,9 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
                   Positioned(
                     right: 16,
                     bottom: hasProduct ? null : 16,
-                    top: hasProduct ? MediaQuery.of(context).size.height * 0.55 : null,
+                    top: hasProduct
+                        ? MediaQuery.of(context).size.height * 0.55
+                        : null,
                     child: const RightSideIcons(),
                   ),
                   Positioned(
@@ -180,10 +183,21 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
       return _waitingBox('Starting stream...');
     }
 
-    return VideoTrackRenderer(
-      renderMode: VideoRenderMode.auto,
-      state.videoTrack!,
-      fit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+    // Initialize thumbnail key if not exists
+    final thumbnailKey = state.thumbnailKey ?? GlobalKey();
+    if (state.thumbnailKey == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _cubit.updateThumbnailKey(thumbnailKey);
+      });
+    }
+
+    return RepaintBoundary(
+      key: thumbnailKey,
+      child: VideoTrackRenderer(
+        renderMode: VideoRenderMode.auto,
+        state.videoTrack!,
+        fit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover,
+      ),
     );
   }
 

@@ -45,7 +45,6 @@ class BroadcasterStreamState with _$BroadcasterStreamState {
     @Default('') String sendCommentError,
     @Default('') String bidsError,
     @Default('') String addBidError,
-
     StreamProductModel? activeStreamProduct,
     DateTime? currentBidEndTime,
     int? currentBidRemainingSeconds,
@@ -56,8 +55,11 @@ class BroadcasterStreamState with _$BroadcasterStreamState {
 
     // Initialization
     @Default(false) bool isInitializing,
-    
+
     // Microphone
     @Default(false) bool isMicrophoneMuted,
+
+    // Thumbnail capture
+    GlobalKey? thumbnailKey,
   }) = _BroadcasterStreamState;
 }

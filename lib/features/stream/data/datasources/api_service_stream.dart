@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
@@ -299,6 +300,70 @@ class ApiServiceStream extends ApiBase {
 
       throw Exception(
         'Failed to fetch my streams (code: ${res.statusCode})',
+      );
+    });
+  }
+
+  /// PUT: streams/{streamId}/media
+  /// body: FormData with { title: "...", description: "...", thumbnail: MultipartFile, is_public: true }
+  /// OR body: { title: "...", description: "...", is_public: true } (if no thumbnail)
+  Future<bool> updateStreamMedia({
+    required int streamId,
+    required String title,
+    required String description,
+    List<int>? thumbnailBytes,
+    bool isPublic = true,
+  }) async {
+    return executeAndHandleErrorServer<bool>(() async {
+      final path = ServerConfig.updateStreamMedia(streamId);
+
+      // If thumbnail bytes are provided, use FormData
+      if (thumbnailBytes != null && thumbnailBytes.isNotEmpty) {
+        final formData = FormData.fromMap({
+          'title': title,
+          'description': description,
+          'is_public': isPublic,
+          'thumbnail': MultipartFile.fromBytes(
+            thumbnailBytes,
+            filename: 'thumbnail.png',
+          ),
+        });
+        print('formData: $formData');
+
+        /// print the form data
+        print('formData.fields: ${formData.fields}');
+        print('formData.files: ${formData.files}');
+
+        final res = await post(
+          path,
+          body: formData,
+          contentType: 'multipart/form-data',
+        );
+
+        if (res.statusCode == 200 || res.statusCode == 201) {
+          return true;
+        }
+
+        throw Exception(
+          'Failed to update stream media (code: ${res.statusCode})',
+        );
+      }
+
+      // Otherwise, use JSON body
+      final body = <String, dynamic>{
+        'title': title,
+        'description': description,
+        'is_public': isPublic,
+      };
+
+      final res = await put(path, body: body);
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        return true;
+      }
+
+      throw Exception(
+        'Failed to update stream media (code: ${res.statusCode})',
       );
     });
   }

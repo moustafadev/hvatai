@@ -236,7 +236,6 @@ StreamProductsDataModel _$StreamProductsDataModelFromJson(
 
 /// @nodoc
 mixin _$StreamProductsDataModel {
-  StreamDataModel? get stream => throw _privateConstructorUsedError;
   List<StreamProductItemModel> get products =>
       throw _privateConstructorUsedError;
   @JsonKey(name: 'total_products')
@@ -263,13 +262,10 @@ abstract class $StreamProductsDataModelCopyWith<$Res> {
       _$StreamProductsDataModelCopyWithImpl<$Res, StreamProductsDataModel>;
   @useResult
   $Res call(
-      {StreamDataModel? stream,
-      List<StreamProductItemModel> products,
+      {List<StreamProductItemModel> products,
       @JsonKey(name: 'total_products') int totalProducts,
       @JsonKey(name: 'active_products') int activeProducts,
       @JsonKey(name: 'biddable_products') int biddableProducts});
-
-  $StreamDataModelCopyWith<$Res>? get stream;
 }
 
 /// @nodoc
@@ -288,17 +284,12 @@ class _$StreamProductsDataModelCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? stream = freezed,
     Object? products = null,
     Object? totalProducts = null,
     Object? activeProducts = null,
     Object? biddableProducts = null,
   }) {
     return _then(_value.copyWith(
-      stream: freezed == stream
-          ? _value.stream
-          : stream // ignore: cast_nullable_to_non_nullable
-              as StreamDataModel?,
       products: null == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
@@ -317,20 +308,6 @@ class _$StreamProductsDataModelCopyWithImpl<$Res,
               as int,
     ) as $Val);
   }
-
-  /// Create a copy of StreamProductsDataModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $StreamDataModelCopyWith<$Res>? get stream {
-    if (_value.stream == null) {
-      return null;
-    }
-
-    return $StreamDataModelCopyWith<$Res>(_value.stream!, (value) {
-      return _then(_value.copyWith(stream: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -343,14 +320,10 @@ abstract class _$$StreamProductsDataModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {StreamDataModel? stream,
-      List<StreamProductItemModel> products,
+      {List<StreamProductItemModel> products,
       @JsonKey(name: 'total_products') int totalProducts,
       @JsonKey(name: 'active_products') int activeProducts,
       @JsonKey(name: 'biddable_products') int biddableProducts});
-
-  @override
-  $StreamDataModelCopyWith<$Res>? get stream;
 }
 
 /// @nodoc
@@ -368,17 +341,12 @@ class __$$StreamProductsDataModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? stream = freezed,
     Object? products = null,
     Object? totalProducts = null,
     Object? activeProducts = null,
     Object? biddableProducts = null,
   }) {
     return _then(_$StreamProductsDataModelImpl(
-      stream: freezed == stream
-          ? _value.stream
-          : stream // ignore: cast_nullable_to_non_nullable
-              as StreamDataModel?,
       products: null == products
           ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
@@ -403,8 +371,7 @@ class __$$StreamProductsDataModelImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$StreamProductsDataModelImpl implements _StreamProductsDataModel {
   const _$StreamProductsDataModelImpl(
-      {this.stream,
-      final List<StreamProductItemModel> products = const [],
+      {final List<StreamProductItemModel> products = const [],
       @JsonKey(name: 'total_products') this.totalProducts = 0,
       @JsonKey(name: 'active_products') this.activeProducts = 0,
       @JsonKey(name: 'biddable_products') this.biddableProducts = 0})
@@ -413,8 +380,6 @@ class _$StreamProductsDataModelImpl implements _StreamProductsDataModel {
   factory _$StreamProductsDataModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$StreamProductsDataModelImplFromJson(json);
 
-  @override
-  final StreamDataModel? stream;
   final List<StreamProductItemModel> _products;
   @override
   @JsonKey()
@@ -436,7 +401,7 @@ class _$StreamProductsDataModelImpl implements _StreamProductsDataModel {
 
   @override
   String toString() {
-    return 'StreamProductsDataModel(stream: $stream, products: $products, totalProducts: $totalProducts, activeProducts: $activeProducts, biddableProducts: $biddableProducts)';
+    return 'StreamProductsDataModel(products: $products, totalProducts: $totalProducts, activeProducts: $activeProducts, biddableProducts: $biddableProducts)';
   }
 
   @override
@@ -444,7 +409,6 @@ class _$StreamProductsDataModelImpl implements _StreamProductsDataModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$StreamProductsDataModelImpl &&
-            (identical(other.stream, stream) || other.stream == stream) &&
             const DeepCollectionEquality().equals(other._products, _products) &&
             (identical(other.totalProducts, totalProducts) ||
                 other.totalProducts == totalProducts) &&
@@ -458,7 +422,6 @@ class _$StreamProductsDataModelImpl implements _StreamProductsDataModel {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      stream,
       const DeepCollectionEquality().hash(_products),
       totalProducts,
       activeProducts,
@@ -483,8 +446,7 @@ class _$StreamProductsDataModelImpl implements _StreamProductsDataModel {
 
 abstract class _StreamProductsDataModel implements StreamProductsDataModel {
   const factory _StreamProductsDataModel(
-          {final StreamDataModel? stream,
-          final List<StreamProductItemModel> products,
+          {final List<StreamProductItemModel> products,
           @JsonKey(name: 'total_products') final int totalProducts,
           @JsonKey(name: 'active_products') final int activeProducts,
           @JsonKey(name: 'biddable_products') final int biddableProducts}) =
@@ -493,8 +455,6 @@ abstract class _StreamProductsDataModel implements StreamProductsDataModel {
   factory _StreamProductsDataModel.fromJson(Map<String, dynamic> json) =
       _$StreamProductsDataModelImpl.fromJson;
 
-  @override
-  StreamDataModel? get stream;
   @override
   List<StreamProductItemModel> get products;
   @override
