@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/chat/data/models/message/message_model.dart';
 
 part 'socket_message_model.freezed.dart';
@@ -25,6 +26,11 @@ class SocketMessage with _$SocketMessage {
     @JsonKey(name: 'images') List<MessageImageModel>? images,
     @JsonKey(name: 'reply_to') dynamic replyTo,
     @JsonKey(name: 'chat_id') int? chatId,
+    List<String>? suggestions,
+    @JsonKey(name: 'bot_intent') String? botIntent,
+    @JsonKey(name: 'bot_confidence') String? botConfidence,
+    @JsonKey(name: 'bot_reply_source') String? botReplySource,
+    @JsonKey(name: 'bot_metadata') dynamic botMetadata,
   }) = _SocketMessage;
 
   factory SocketMessage.fromJson(Map<String, dynamic> json) =>
@@ -43,7 +49,6 @@ class SenderReceiverModel with _$SenderReceiverModel {
     String? image,
     @JsonKey(name: 'image_business') String? imageBusiness,
     String? lang,
-    String? visibility,
     String? sms,
     @JsonKey(name: 'send_email') String? sendEmail,
     String? push,
@@ -83,7 +88,6 @@ extension SocketMessageMapper on SocketMessage {
               image: sender?.image,
               imageBusiness: sender?.imageBusiness,
               lang: sender?.lang,
-              visibility: sender?.visibility,
               sms: sender?.sms,
               sendEmail: sender?.sendEmail,
               push: sender?.push,
@@ -98,6 +102,11 @@ extension SocketMessageMapper on SocketMessage {
             )
           : null,
       images: images ?? [],
+      suggestions: suggestions,
+      botIntent: botIntent,
+      botConfidence: botConfidence,
+      botReplySource: botReplySource,
+      botMetadata: botMetadata,
     );
   }
 }

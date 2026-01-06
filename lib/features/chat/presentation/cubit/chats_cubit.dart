@@ -14,6 +14,7 @@ import 'package:hvatai/features/chat/domain/usecases/send_message.dart';
 import 'package:hvatai/features/chat/domain/usecases/send_support_messages_usecase.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/locator.dart';
+
 import 'package:toastification/toastification.dart';
 
 part 'chats_state.dart';
@@ -149,7 +150,8 @@ class ChatsCubit extends Cubit<ChatsState> {
     final res = await _getChatsUseCase.call();
 
     res.fold(
-      (failure) => emit(state.copyWith(isError: true, errorMessage: failure)),
+      (failure) => emit(state.copyWith(
+          isError: true, isLoading: false, errorMessage: failure)),
       (chats) => emit(state.copyWith(
           chats: chats, isLoading: false, isError: false, errorMessage: '')),
     );
@@ -221,8 +223,19 @@ class ChatsCubit extends Cubit<ChatsState> {
             messages: updatedMessages, isError: true, errorMessage: failure));
       },
       (sentMessage) {
-        emit(state.copyWith(
-            isSendedMessage: true, isError: false, errorMessage: ''));
+        // Store chatId from response if this is a new chat
+        final newChatId = sentMessage.message?.chatId ?? sentMessage.chat?.id;
+        if (newChatId != null && state.currentChatId == null) {
+          emit(state.copyWith(
+            currentChatId: newChatId,
+            isSendedMessage: true,
+            isError: false,
+            errorMessage: '',
+          ));
+        } else {
+          emit(state.copyWith(
+              isSendedMessage: true, isError: false, errorMessage: ''));
+        }
         // Step 3: Replace temp message with real one (or just wait for socket update)
         // Optional: You can update UI now, or wait for socket message
       },
@@ -276,6 +289,17 @@ class ChatsCubit extends Cubit<ChatsState> {
     }).toList();
 
     emit(state.copyWith(messages: updatedMessages));
+  }
+
+  /// Find chat by participant ID (receiver ID)
+  ChatModel? findChatByParticipantId(int participantId) {
+    try {
+      return state.chats.firstWhere(
+        (chat) => chat.participantId == participantId,
+      );
+    } catch (e) {
+      return null;
+    }
   }
 
   void updateChatWithNewMessage(MessageModel message) {

@@ -35,7 +35,6 @@ class UserChatModel with _$UserChatModel {
     String? image,
     @JsonKey(name: 'image_business') String? imageBusiness,
     String? lang,
-    String? visibility,
     String? sms,
     @JsonKey(name: 'send_email') String? sendEmail,
     String? push,
@@ -49,9 +48,9 @@ class UserChatModel with _$UserChatModel {
     @JsonKey(name: 'business_rating_count') int? businessRatingCount,
   }) = _UserChatModel;
 
-  String get fullImageUrl => image != null ? "${ServerConfig.domen}$image" : "";
+  String get fullImageUrl => image != null ? "${ServerConfig.domenStorage}$image" : "";
   String get fullImageBusinessUrl =>
-      imageBusiness != null ? "${ServerConfig.domen}$imageBusiness" : "";
+      imageBusiness != null ? "${ServerConfig.domenStorage}$imageBusiness" : "";
 
   factory UserChatModel.fromJson(Map<String, dynamic> json) =>
       _$UserChatModelFromJson(json);
@@ -71,7 +70,6 @@ class ParticipantModel with _$ParticipantModel {
     String? image,
     @JsonKey(name: 'image_business') String? imageBusiness,
     String? lang,
-    String? visibility,
     String? sms,
     @JsonKey(name: 'send_email') String? sendEmail,
     String? push,
@@ -84,9 +82,9 @@ class ParticipantModel with _$ParticipantModel {
     @JsonKey(name: 'business_rating') int? businessRating,
     @JsonKey(name: 'business_rating_count') int? businessRatingCount,
   }) = _ParticipantModel;
-  String get fullImageUrl => image != null ? "${ServerConfig.domen}$image" : "";
+  String get fullImageUrl => image != null ? "${ServerConfig.domenStorage}$image" : "";
   String get fullImageBusinessUrl =>
-      imageBusiness != null ? "${ServerConfig.domen}$imageBusiness" : "";
+      imageBusiness != null ? "${ServerConfig.domenStorage}$imageBusiness" : "";
 
   factory ParticipantModel.fromJson(Map<String, dynamic> json) =>
       _$ParticipantModelFromJson(json);
@@ -99,12 +97,21 @@ class LastMessageModel with _$LastMessageModel {
   const factory LastMessageModel({
     int? id,
     @JsonKey(name: 'chat_id') int? chatId,
+    @JsonKey(name: 'chat_type') String? chatType,
     @JsonKey(name: 'sender_id') int? senderId,
+    @JsonKey(name: 'sender_type') String? senderType,
+    @JsonKey(name: 'is_bot') bool? isBot,
+    @JsonKey(name: 'bot_intent') String? botIntent,
+    @JsonKey(name: 'bot_confidence') String? botConfidence,
+    @JsonKey(name: 'bot_reply_source') String? botReplySource,
+    @JsonKey(name: 'bot_metadata') dynamic botMetadata,
     @JsonKey(name: 'receiver_id') int? receiverId,
+    @JsonKey(name: 'reply_to') dynamic replyTo,
     String? content,
     @JsonKey(name: 'read_at') String? readAt,
     @JsonKey(name: 'created_at') String? createdAt,
     @JsonKey(name: 'updated_at') String? updatedAt,
+    List<String>? suggestions,
   }) = _LastMessageModel;
 
   factory LastMessageModel.fromJson(Map<String, dynamic> json) =>

@@ -30,6 +30,13 @@ _$MessageModelImpl _$$MessageModelImplFromJson(Map<String, dynamic> json) =>
       localImages: (json['localImages'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
+      suggestions: (json['suggestions'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      botIntent: json['bot_intent'] as String?,
+      botConfidence: json['bot_confidence'] as String?,
+      botReplySource: json['bot_reply_source'] as String?,
+      botMetadata: json['bot_metadata'],
     );
 
 Map<String, dynamic> _$$MessageModelImplToJson(_$MessageModelImpl instance) =>
@@ -48,6 +55,11 @@ Map<String, dynamic> _$$MessageModelImplToJson(_$MessageModelImpl instance) =>
       'receiver': instance.receiver,
       'images': instance.images,
       'localImages': instance.localImages,
+      'suggestions': instance.suggestions,
+      'bot_intent': instance.botIntent,
+      'bot_confidence': instance.botConfidence,
+      'bot_reply_source': instance.botReplySource,
+      'bot_metadata': instance.botMetadata,
     };
 
 _$MessageImageModelImpl _$$MessageImageModelImplFromJson(
@@ -81,7 +93,10 @@ _$SenderModelImpl _$$SenderModelImplFromJson(Map<String, dynamic> json) =>
       image: json['image'] as String?,
       imageBusiness: json['image_business'] as String?,
       lang: json['lang'] as String?,
-      visibility: json['visibility'] as String?,
+      visibility: json['visibility'] == null
+          ? null
+          : VisibilityModel.fromJson(
+              json['visibility'] as Map<String, dynamic>),
       sms: json['sms'] as String?,
       sendEmail: json['send_email'] as String?,
       push: json['push'] as String?,
@@ -118,4 +133,20 @@ Map<String, dynamic> _$$SenderModelImplToJson(_$SenderModelImpl instance) =>
       'personal_rating_count': instance.personalRatingCount,
       'business_rating': instance.businessRating,
       'business_rating_count': instance.businessRatingCount,
+    };
+
+_$VisibilityModelImpl _$$VisibilityModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$VisibilityModelImpl(
+      profile: json['profile'] as bool,
+      phone: json['phone'] as bool,
+      email: json['email'] as bool,
+    );
+
+Map<String, dynamic> _$$VisibilityModelImplToJson(
+        _$VisibilityModelImpl instance) =>
+    <String, dynamic>{
+      'profile': instance.profile,
+      'phone': instance.phone,
+      'email': instance.email,
     };

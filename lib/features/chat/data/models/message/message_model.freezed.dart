@@ -46,6 +46,17 @@ mixin _$MessageModel {
   /// 🆕 Local image paths (not sent to/from backend)
   List<String>? get localImages => throw _privateConstructorUsedError;
 
+  /// 🆕 Suggestions for quick replies
+  List<String>? get suggestions => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_intent')
+  String? get botIntent => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_confidence')
+  String? get botConfidence => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_reply_source')
+  String? get botReplySource => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_metadata')
+  dynamic get botMetadata => throw _privateConstructorUsedError;
+
   /// Serializes this MessageModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
@@ -76,7 +87,12 @@ abstract class $MessageModelCopyWith<$Res> {
       SenderModel? sender,
       SenderModel? receiver,
       @JsonKey(name: 'images') List<MessageImageModel>? images,
-      List<String>? localImages});
+      List<String>? localImages,
+      List<String>? suggestions,
+      @JsonKey(name: 'bot_intent') String? botIntent,
+      @JsonKey(name: 'bot_confidence') String? botConfidence,
+      @JsonKey(name: 'bot_reply_source') String? botReplySource,
+      @JsonKey(name: 'bot_metadata') dynamic botMetadata});
 
   $SenderModelCopyWith<$Res>? get sender;
   $SenderModelCopyWith<$Res>? get receiver;
@@ -111,6 +127,11 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
     Object? receiver = freezed,
     Object? images = freezed,
     Object? localImages = freezed,
+    Object? suggestions = freezed,
+    Object? botIntent = freezed,
+    Object? botConfidence = freezed,
+    Object? botReplySource = freezed,
+    Object? botMetadata = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -169,6 +190,26 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
           ? _value.localImages
           : localImages // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      suggestions: freezed == suggestions
+          ? _value.suggestions
+          : suggestions // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      botIntent: freezed == botIntent
+          ? _value.botIntent
+          : botIntent // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botConfidence: freezed == botConfidence
+          ? _value.botConfidence
+          : botConfidence // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botReplySource: freezed == botReplySource
+          ? _value.botReplySource
+          : botReplySource // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botMetadata: freezed == botMetadata
+          ? _value.botMetadata
+          : botMetadata // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
   }
 
@@ -223,7 +264,12 @@ abstract class _$$MessageModelImplCopyWith<$Res>
       SenderModel? sender,
       SenderModel? receiver,
       @JsonKey(name: 'images') List<MessageImageModel>? images,
-      List<String>? localImages});
+      List<String>? localImages,
+      List<String>? suggestions,
+      @JsonKey(name: 'bot_intent') String? botIntent,
+      @JsonKey(name: 'bot_confidence') String? botConfidence,
+      @JsonKey(name: 'bot_reply_source') String? botReplySource,
+      @JsonKey(name: 'bot_metadata') dynamic botMetadata});
 
   @override
   $SenderModelCopyWith<$Res>? get sender;
@@ -258,6 +304,11 @@ class __$$MessageModelImplCopyWithImpl<$Res>
     Object? receiver = freezed,
     Object? images = freezed,
     Object? localImages = freezed,
+    Object? suggestions = freezed,
+    Object? botIntent = freezed,
+    Object? botConfidence = freezed,
+    Object? botReplySource = freezed,
+    Object? botMetadata = freezed,
   }) {
     return _then(_$MessageModelImpl(
       id: freezed == id
@@ -316,6 +367,26 @@ class __$$MessageModelImplCopyWithImpl<$Res>
           ? _value._localImages
           : localImages // ignore: cast_nullable_to_non_nullable
               as List<String>?,
+      suggestions: freezed == suggestions
+          ? _value._suggestions
+          : suggestions // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      botIntent: freezed == botIntent
+          ? _value.botIntent
+          : botIntent // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botConfidence: freezed == botConfidence
+          ? _value.botConfidence
+          : botConfidence // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botReplySource: freezed == botReplySource
+          ? _value.botReplySource
+          : botReplySource // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botMetadata: freezed == botMetadata
+          ? _value.botMetadata
+          : botMetadata // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ));
   }
 }
@@ -337,9 +408,15 @@ class _$MessageModelImpl implements _MessageModel {
       required this.sender,
       this.receiver,
       @JsonKey(name: 'images') final List<MessageImageModel>? images,
-      final List<String>? localImages})
+      final List<String>? localImages,
+      final List<String>? suggestions,
+      @JsonKey(name: 'bot_intent') this.botIntent,
+      @JsonKey(name: 'bot_confidence') this.botConfidence,
+      @JsonKey(name: 'bot_reply_source') this.botReplySource,
+      @JsonKey(name: 'bot_metadata') this.botMetadata})
       : _images = images,
-        _localImages = localImages;
+        _localImages = localImages,
+        _suggestions = suggestions;
 
   factory _$MessageModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$MessageModelImplFromJson(json);
@@ -400,9 +477,35 @@ class _$MessageModelImpl implements _MessageModel {
     return EqualUnmodifiableListView(value);
   }
 
+  /// 🆕 Suggestions for quick replies
+  final List<String>? _suggestions;
+
+  /// 🆕 Suggestions for quick replies
+  @override
+  List<String>? get suggestions {
+    final value = _suggestions;
+    if (value == null) return null;
+    if (_suggestions is EqualUnmodifiableListView) return _suggestions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  @JsonKey(name: 'bot_intent')
+  final String? botIntent;
+  @override
+  @JsonKey(name: 'bot_confidence')
+  final String? botConfidence;
+  @override
+  @JsonKey(name: 'bot_reply_source')
+  final String? botReplySource;
+  @override
+  @JsonKey(name: 'bot_metadata')
+  final dynamic botMetadata;
+
   @override
   String toString() {
-    return 'MessageModel(id: $id, chatId: $chatId, senderId: $senderId, chat_type: $chat_type, receiverId: $receiverId, content: $content, readAt: $readAt, createdAt: $createdAt, updatedAt: $updatedAt, replyTo: $replyTo, sender: $sender, receiver: $receiver, images: $images, localImages: $localImages)';
+    return 'MessageModel(id: $id, chatId: $chatId, senderId: $senderId, chat_type: $chat_type, receiverId: $receiverId, content: $content, readAt: $readAt, createdAt: $createdAt, updatedAt: $updatedAt, replyTo: $replyTo, sender: $sender, receiver: $receiver, images: $images, localImages: $localImages, suggestions: $suggestions, botIntent: $botIntent, botConfidence: $botConfidence, botReplySource: $botReplySource, botMetadata: $botMetadata)';
   }
 
   @override
@@ -430,27 +533,43 @@ class _$MessageModelImpl implements _MessageModel {
                 other.receiver == receiver) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
             const DeepCollectionEquality()
-                .equals(other._localImages, _localImages));
+                .equals(other._localImages, _localImages) &&
+            const DeepCollectionEquality()
+                .equals(other._suggestions, _suggestions) &&
+            (identical(other.botIntent, botIntent) ||
+                other.botIntent == botIntent) &&
+            (identical(other.botConfidence, botConfidence) ||
+                other.botConfidence == botConfidence) &&
+            (identical(other.botReplySource, botReplySource) ||
+                other.botReplySource == botReplySource) &&
+            const DeepCollectionEquality()
+                .equals(other.botMetadata, botMetadata));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      chatId,
-      senderId,
-      chat_type,
-      receiverId,
-      content,
-      readAt,
-      createdAt,
-      updatedAt,
-      replyTo,
-      sender,
-      receiver,
-      const DeepCollectionEquality().hash(_images),
-      const DeepCollectionEquality().hash(_localImages));
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        chatId,
+        senderId,
+        chat_type,
+        receiverId,
+        content,
+        readAt,
+        createdAt,
+        updatedAt,
+        replyTo,
+        sender,
+        receiver,
+        const DeepCollectionEquality().hash(_images),
+        const DeepCollectionEquality().hash(_localImages),
+        const DeepCollectionEquality().hash(_suggestions),
+        botIntent,
+        botConfidence,
+        botReplySource,
+        const DeepCollectionEquality().hash(botMetadata)
+      ]);
 
   /// Create a copy of MessageModel
   /// with the given fields replaced by the non-null parameter values.
@@ -470,20 +589,26 @@ class _$MessageModelImpl implements _MessageModel {
 
 abstract class _MessageModel implements MessageModel {
   const factory _MessageModel(
-      {required final int? id,
-      @JsonKey(name: 'chat_id') required final int? chatId,
-      @JsonKey(name: 'sender_id') required final int? senderId,
-      @JsonKey(name: 'chat_type') final String? chat_type,
-      @JsonKey(name: 'receiver_id') required final int? receiverId,
-      required final String? content,
-      @JsonKey(name: 'read_at') final String? readAt,
-      @JsonKey(name: 'created_at') required final String? createdAt,
-      @JsonKey(name: 'updated_at') required final String? updatedAt,
-      @JsonKey(name: 'reply_to') final int? replyTo,
-      required final SenderModel? sender,
-      final SenderModel? receiver,
-      @JsonKey(name: 'images') final List<MessageImageModel>? images,
-      final List<String>? localImages}) = _$MessageModelImpl;
+          {required final int? id,
+          @JsonKey(name: 'chat_id') required final int? chatId,
+          @JsonKey(name: 'sender_id') required final int? senderId,
+          @JsonKey(name: 'chat_type') final String? chat_type,
+          @JsonKey(name: 'receiver_id') required final int? receiverId,
+          required final String? content,
+          @JsonKey(name: 'read_at') final String? readAt,
+          @JsonKey(name: 'created_at') required final String? createdAt,
+          @JsonKey(name: 'updated_at') required final String? updatedAt,
+          @JsonKey(name: 'reply_to') final int? replyTo,
+          required final SenderModel? sender,
+          final SenderModel? receiver,
+          @JsonKey(name: 'images') final List<MessageImageModel>? images,
+          final List<String>? localImages,
+          final List<String>? suggestions,
+          @JsonKey(name: 'bot_intent') final String? botIntent,
+          @JsonKey(name: 'bot_confidence') final String? botConfidence,
+          @JsonKey(name: 'bot_reply_source') final String? botReplySource,
+          @JsonKey(name: 'bot_metadata') final dynamic botMetadata}) =
+      _$MessageModelImpl;
 
   factory _MessageModel.fromJson(Map<String, dynamic> json) =
       _$MessageModelImpl.fromJson;
@@ -527,6 +652,22 @@ abstract class _MessageModel implements MessageModel {
   /// 🆕 Local image paths (not sent to/from backend)
   @override
   List<String>? get localImages;
+
+  /// 🆕 Suggestions for quick replies
+  @override
+  List<String>? get suggestions;
+  @override
+  @JsonKey(name: 'bot_intent')
+  String? get botIntent;
+  @override
+  @JsonKey(name: 'bot_confidence')
+  String? get botConfidence;
+  @override
+  @JsonKey(name: 'bot_reply_source')
+  String? get botReplySource;
+  @override
+  @JsonKey(name: 'bot_metadata')
+  dynamic get botMetadata;
 
   /// Create a copy of MessageModel
   /// with the given fields replaced by the non-null parameter values.
@@ -803,7 +944,8 @@ mixin _$SenderModel {
   @JsonKey(name: 'image_business')
   String? get imageBusiness => throw _privateConstructorUsedError;
   String? get lang => throw _privateConstructorUsedError;
-  String? get visibility => throw _privateConstructorUsedError;
+  VisibilityModel? get visibility =>
+      throw _privateConstructorUsedError; // <-- updated
   String? get sms => throw _privateConstructorUsedError;
   @JsonKey(name: 'send_email')
   String? get sendEmail => throw _privateConstructorUsedError;
@@ -850,7 +992,7 @@ abstract class $SenderModelCopyWith<$Res> {
       String? image,
       @JsonKey(name: 'image_business') String? imageBusiness,
       String? lang,
-      String? visibility,
+      VisibilityModel? visibility,
       String? sms,
       @JsonKey(name: 'send_email') String? sendEmail,
       String? push,
@@ -862,6 +1004,8 @@ abstract class $SenderModelCopyWith<$Res> {
       @JsonKey(name: 'personal_rating_count') int? personalRatingCount,
       @JsonKey(name: 'business_rating') int? businessRating,
       @JsonKey(name: 'business_rating_count') int? businessRatingCount});
+
+  $VisibilityModelCopyWith<$Res>? get visibility;
 }
 
 /// @nodoc
@@ -941,7 +1085,7 @@ class _$SenderModelCopyWithImpl<$Res, $Val extends SenderModel>
       visibility: freezed == visibility
           ? _value.visibility
           : visibility // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as VisibilityModel?,
       sms: freezed == sms
           ? _value.sms
           : sms // ignore: cast_nullable_to_non_nullable
@@ -988,6 +1132,20 @@ class _$SenderModelCopyWithImpl<$Res, $Val extends SenderModel>
               as int?,
     ) as $Val);
   }
+
+  /// Create a copy of SenderModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $VisibilityModelCopyWith<$Res>? get visibility {
+    if (_value.visibility == null) {
+      return null;
+    }
+
+    return $VisibilityModelCopyWith<$Res>(_value.visibility!, (value) {
+      return _then(_value.copyWith(visibility: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -1008,7 +1166,7 @@ abstract class _$$SenderModelImplCopyWith<$Res>
       String? image,
       @JsonKey(name: 'image_business') String? imageBusiness,
       String? lang,
-      String? visibility,
+      VisibilityModel? visibility,
       String? sms,
       @JsonKey(name: 'send_email') String? sendEmail,
       String? push,
@@ -1020,6 +1178,9 @@ abstract class _$$SenderModelImplCopyWith<$Res>
       @JsonKey(name: 'personal_rating_count') int? personalRatingCount,
       @JsonKey(name: 'business_rating') int? businessRating,
       @JsonKey(name: 'business_rating_count') int? businessRatingCount});
+
+  @override
+  $VisibilityModelCopyWith<$Res>? get visibility;
 }
 
 /// @nodoc
@@ -1097,7 +1258,7 @@ class __$$SenderModelImplCopyWithImpl<$Res>
       visibility: freezed == visibility
           ? _value.visibility
           : visibility // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as VisibilityModel?,
       sms: freezed == sms
           ? _value.sms
           : sms // ignore: cast_nullable_to_non_nullable
@@ -1198,7 +1359,8 @@ class _$SenderModelImpl extends _SenderModel {
   @override
   final String? lang;
   @override
-  final String? visibility;
+  final VisibilityModel? visibility;
+// <-- updated
   @override
   final String? sms;
   @override
@@ -1328,7 +1490,7 @@ abstract class _SenderModel extends SenderModel {
       final String? image,
       @JsonKey(name: 'image_business') final String? imageBusiness,
       final String? lang,
-      final String? visibility,
+      final VisibilityModel? visibility,
       final String? sms,
       @JsonKey(name: 'send_email') final String? sendEmail,
       final String? push,
@@ -1368,7 +1530,7 @@ abstract class _SenderModel extends SenderModel {
   @override
   String? get lang;
   @override
-  String? get visibility;
+  VisibilityModel? get visibility; // <-- updated
   @override
   String? get sms;
   @override
@@ -1405,5 +1567,191 @@ abstract class _SenderModel extends SenderModel {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SenderModelImplCopyWith<_$SenderModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+VisibilityModel _$VisibilityModelFromJson(Map<String, dynamic> json) {
+  return _VisibilityModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$VisibilityModel {
+  bool get profile => throw _privateConstructorUsedError;
+  bool get phone => throw _privateConstructorUsedError;
+  bool get email => throw _privateConstructorUsedError;
+
+  /// Serializes this VisibilityModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of VisibilityModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $VisibilityModelCopyWith<VisibilityModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $VisibilityModelCopyWith<$Res> {
+  factory $VisibilityModelCopyWith(
+          VisibilityModel value, $Res Function(VisibilityModel) then) =
+      _$VisibilityModelCopyWithImpl<$Res, VisibilityModel>;
+  @useResult
+  $Res call({bool profile, bool phone, bool email});
+}
+
+/// @nodoc
+class _$VisibilityModelCopyWithImpl<$Res, $Val extends VisibilityModel>
+    implements $VisibilityModelCopyWith<$Res> {
+  _$VisibilityModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of VisibilityModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? profile = null,
+    Object? phone = null,
+    Object? email = null,
+  }) {
+    return _then(_value.copyWith(
+      profile: null == profile
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as bool,
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as bool,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$VisibilityModelImplCopyWith<$Res>
+    implements $VisibilityModelCopyWith<$Res> {
+  factory _$$VisibilityModelImplCopyWith(_$VisibilityModelImpl value,
+          $Res Function(_$VisibilityModelImpl) then) =
+      __$$VisibilityModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool profile, bool phone, bool email});
+}
+
+/// @nodoc
+class __$$VisibilityModelImplCopyWithImpl<$Res>
+    extends _$VisibilityModelCopyWithImpl<$Res, _$VisibilityModelImpl>
+    implements _$$VisibilityModelImplCopyWith<$Res> {
+  __$$VisibilityModelImplCopyWithImpl(
+      _$VisibilityModelImpl _value, $Res Function(_$VisibilityModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of VisibilityModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? profile = null,
+    Object? phone = null,
+    Object? email = null,
+  }) {
+    return _then(_$VisibilityModelImpl(
+      profile: null == profile
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as bool,
+      phone: null == phone
+          ? _value.phone
+          : phone // ignore: cast_nullable_to_non_nullable
+              as bool,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as bool,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$VisibilityModelImpl implements _VisibilityModel {
+  const _$VisibilityModelImpl(
+      {required this.profile, required this.phone, required this.email});
+
+  factory _$VisibilityModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$VisibilityModelImplFromJson(json);
+
+  @override
+  final bool profile;
+  @override
+  final bool phone;
+  @override
+  final bool email;
+
+  @override
+  String toString() {
+    return 'VisibilityModel(profile: $profile, phone: $phone, email: $email)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$VisibilityModelImpl &&
+            (identical(other.profile, profile) || other.profile == profile) &&
+            (identical(other.phone, phone) || other.phone == phone) &&
+            (identical(other.email, email) || other.email == email));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, profile, phone, email);
+
+  /// Create a copy of VisibilityModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$VisibilityModelImplCopyWith<_$VisibilityModelImpl> get copyWith =>
+      __$$VisibilityModelImplCopyWithImpl<_$VisibilityModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$VisibilityModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _VisibilityModel implements VisibilityModel {
+  const factory _VisibilityModel(
+      {required final bool profile,
+      required final bool phone,
+      required final bool email}) = _$VisibilityModelImpl;
+
+  factory _VisibilityModel.fromJson(Map<String, dynamic> json) =
+      _$VisibilityModelImpl.fromJson;
+
+  @override
+  bool get profile;
+  @override
+  bool get phone;
+  @override
+  bool get email;
+
+  /// Create a copy of VisibilityModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$VisibilityModelImplCopyWith<_$VisibilityModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

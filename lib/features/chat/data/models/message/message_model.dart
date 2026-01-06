@@ -23,6 +23,13 @@ class MessageModel with _$MessageModel {
 
     /// 🆕 Local image paths (not sent to/from backend)
     List<String>? localImages,
+    
+    /// 🆕 Suggestions for quick replies
+    List<String>? suggestions,
+    @JsonKey(name: 'bot_intent') String? botIntent,
+    @JsonKey(name: 'bot_confidence') String? botConfidence,
+    @JsonKey(name: 'bot_reply_source') String? botReplySource,
+    @JsonKey(name: 'bot_metadata') dynamic botMetadata,
   }) = _MessageModel;
 
   factory MessageModel.fromJson(Map<String, dynamic> json) =>
@@ -44,7 +51,7 @@ class MessageImageModel with _$MessageImageModel {
 
   const MessageImageModel._();
 
-  String get fullUrl => path != null ? "${ServerConfig.domen}$path" : "";
+  String get fullUrl => path != null ? "${ServerConfig.domenStorage}$path" : "";
 }
 
 @freezed
@@ -59,7 +66,7 @@ class SenderModel with _$SenderModel {
     String? image,
     @JsonKey(name: 'image_business') String? imageBusiness,
     String? lang,
-    String? visibility,
+    VisibilityModel? visibility, // <-- updated
     String? sms,
     @JsonKey(name: 'send_email') String? sendEmail,
     String? push,
@@ -77,5 +84,17 @@ class SenderModel with _$SenderModel {
       _$SenderModelFromJson(json);
   const SenderModel._();
 
-  String get fullUrl => image != null ? "${ServerConfig.domen}$image" : "";
+  String get fullUrl => image != null ? "${ServerConfig.domenStorage}$image" : "";
+}
+
+@freezed
+class VisibilityModel with _$VisibilityModel {
+  const factory VisibilityModel({
+    required bool profile,
+    required bool phone,
+    required bool email,
+  }) = _VisibilityModel;
+
+  factory VisibilityModel.fromJson(Map<String, dynamic> json) =>
+      _$VisibilityModelFromJson(json);
 }

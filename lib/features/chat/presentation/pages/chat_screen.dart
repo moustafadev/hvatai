@@ -8,26 +8,28 @@ class ChatScreen extends StatelessWidget {
     inChat = true;
     return Scaffold(
       backgroundColor: AppColors.background,
+      appBar: const CustomAppBar(
+        showSearch: false,
+        showNotification: false,
+        showGift: false,
+      ),
       body: SafeArea(
         bottom: false,
         child: Column(
           children: [
-            16.ph,
-            Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: GestureDetector(
-                  onTap: () {
-                    context.pop();
-                  },
-                  child: const Icon(Icons.arrow_back_ios),
+            SizedBox(height: 16.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: CustomText(
+                  text: "Чаты",
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
             ),
-            16.ph,
-            const ChatTitle(),
-            SizedBox(height: 16.h),
+            const SizedBox(height: 16),
             Expanded(
               child: BlocBuilder<ChatsCubit, ChatsState>(
                 builder: (context, state) {
@@ -48,7 +50,8 @@ class ChatScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.asset(Assets.assetsImagesChatEmpty),
+                          const CustomImage(
+                              imageSource: Assets.assetsImagesChatEmpty),
                           SizedBox(
                             height: 20.h,
                           ),
@@ -61,11 +64,6 @@ class ChatScreen extends StatelessWidget {
                   } else {
                     return Column(
                       children: [
-                        // CustomSearchField(
-                        //   controller: TextEditingController(),
-                        //   color: Colors.white,
-                        // ),
-                        // const SizedBox(height: 16),
                         Expanded(
                           child: Column(
                             children: [
@@ -76,9 +74,14 @@ class ChatScreen extends StatelessWidget {
                               // 🔹 Divider between support chat and normal chats
                               if (state.supportChat?.lastMessage != null &&
                                   state.chats.isNotEmpty)
-                                const Divider(
-                                  color: Color(0xffAFB3B6),
-                                  height: 1,
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0),
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 1,
+                                    color: const Color(0xffF2F2F2),
+                                  ),
                                 ),
 
                               // 🔹 Normal chat list

@@ -6,12 +6,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/datasources/local/app_local.dart';
-import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/shared/utils/date_utils_format.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:hvatai/core/customs/customs.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/chat/data/models/chat/chat_model.dart';
@@ -31,4 +31,3 @@ part 'widgets/chat_message_list.dart';
 part 'widgets/chat_input_field.dart';
 part 'widgets/chat_tile.dart';
 part 'widgets/support_chat_tile.dart';
-part 'widgets/chat_title.dart';

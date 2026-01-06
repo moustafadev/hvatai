@@ -13,6 +13,7 @@ class ChatDetailsHeader extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.only(left: 16, top: 16),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             GestureDetector(
               onTap: () {
@@ -20,43 +21,25 @@ class ChatDetailsHeader extends StatelessWidget {
               },
               child: const Icon(Icons.arrow_back_ios),
             ),
-            SizedBox(
-              width: 100.w,
-            ),
-            CircleAvatar(
-              radius: 16,
-              backgroundImage: user.fullImageUrl.isNotEmpty
-                  ? NetworkImage(user.fullImageUrl)
-                  : const AssetImage(Assets.assetsImagesPlaceholder)
-                      as ImageProvider,
-            ),
-            SizedBox(width: 20.w),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
               children: [
+                CircleAvatar(
+                    radius: 16,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(32),
+                        child: CustomImage(
+                            imageSource: user.fullImageUrl,
+                            width: 32,
+                            height: 32))),
+                SizedBox(width: 10.w),
                 CustomText(
                   text: user.name ?? 'No name', // Display user's name
-                  fontSize: 18.sp,
-                  fontWeight: FontWeight.w700,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w800,
                 ),
-                // InkWell(
-                //   onTap: () {
-                //     final id = user.id;
-                //     if (id == null) return; // or show a toast/snackbar
-
-                //     showReportBottomSheet(
-                //       context,
-                //       id: id,
-                //       type: 'User', // <- per your requirement
-                //     );
-                //   },
-                //   child: const CommonTextWidget(
-                //     text: 'Пожаловаться',
-                //     color: AppColors.primary,
-                //   ),
-                // ),
               ],
             ),
+            SizedBox(width: 30.w),
           ],
         ),
       ),

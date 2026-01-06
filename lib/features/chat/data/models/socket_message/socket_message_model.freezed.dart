@@ -198,6 +198,15 @@ mixin _$SocketMessage {
   dynamic get replyTo => throw _privateConstructorUsedError;
   @JsonKey(name: 'chat_id')
   int? get chatId => throw _privateConstructorUsedError;
+  List<String>? get suggestions => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_intent')
+  String? get botIntent => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_confidence')
+  String? get botConfidence => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_reply_source')
+  String? get botReplySource => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_metadata')
+  dynamic get botMetadata => throw _privateConstructorUsedError;
 
   /// Serializes this SocketMessage to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -223,7 +232,12 @@ abstract class $SocketMessageCopyWith<$Res> {
       SenderReceiverModel? receiver,
       @JsonKey(name: 'images') List<MessageImageModel>? images,
       @JsonKey(name: 'reply_to') dynamic replyTo,
-      @JsonKey(name: 'chat_id') int? chatId});
+      @JsonKey(name: 'chat_id') int? chatId,
+      List<String>? suggestions,
+      @JsonKey(name: 'bot_intent') String? botIntent,
+      @JsonKey(name: 'bot_confidence') String? botConfidence,
+      @JsonKey(name: 'bot_reply_source') String? botReplySource,
+      @JsonKey(name: 'bot_metadata') dynamic botMetadata});
 
   $SenderReceiverModelCopyWith<$Res>? get sender;
   $SenderReceiverModelCopyWith<$Res>? get receiver;
@@ -252,6 +266,11 @@ class _$SocketMessageCopyWithImpl<$Res, $Val extends SocketMessage>
     Object? images = freezed,
     Object? replyTo = freezed,
     Object? chatId = freezed,
+    Object? suggestions = freezed,
+    Object? botIntent = freezed,
+    Object? botConfidence = freezed,
+    Object? botReplySource = freezed,
+    Object? botMetadata = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -286,6 +305,26 @@ class _$SocketMessageCopyWithImpl<$Res, $Val extends SocketMessage>
           ? _value.chatId
           : chatId // ignore: cast_nullable_to_non_nullable
               as int?,
+      suggestions: freezed == suggestions
+          ? _value.suggestions
+          : suggestions // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      botIntent: freezed == botIntent
+          ? _value.botIntent
+          : botIntent // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botConfidence: freezed == botConfidence
+          ? _value.botConfidence
+          : botConfidence // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botReplySource: freezed == botReplySource
+          ? _value.botReplySource
+          : botReplySource // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botMetadata: freezed == botMetadata
+          ? _value.botMetadata
+          : botMetadata // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ) as $Val);
   }
 
@@ -334,7 +373,12 @@ abstract class _$$SocketMessageImplCopyWith<$Res>
       SenderReceiverModel? receiver,
       @JsonKey(name: 'images') List<MessageImageModel>? images,
       @JsonKey(name: 'reply_to') dynamic replyTo,
-      @JsonKey(name: 'chat_id') int? chatId});
+      @JsonKey(name: 'chat_id') int? chatId,
+      List<String>? suggestions,
+      @JsonKey(name: 'bot_intent') String? botIntent,
+      @JsonKey(name: 'bot_confidence') String? botConfidence,
+      @JsonKey(name: 'bot_reply_source') String? botReplySource,
+      @JsonKey(name: 'bot_metadata') dynamic botMetadata});
 
   @override
   $SenderReceiverModelCopyWith<$Res>? get sender;
@@ -363,6 +407,11 @@ class __$$SocketMessageImplCopyWithImpl<$Res>
     Object? images = freezed,
     Object? replyTo = freezed,
     Object? chatId = freezed,
+    Object? suggestions = freezed,
+    Object? botIntent = freezed,
+    Object? botConfidence = freezed,
+    Object? botReplySource = freezed,
+    Object? botMetadata = freezed,
   }) {
     return _then(_$SocketMessageImpl(
       id: null == id
@@ -397,6 +446,26 @@ class __$$SocketMessageImplCopyWithImpl<$Res>
           ? _value.chatId
           : chatId // ignore: cast_nullable_to_non_nullable
               as int?,
+      suggestions: freezed == suggestions
+          ? _value._suggestions
+          : suggestions // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      botIntent: freezed == botIntent
+          ? _value.botIntent
+          : botIntent // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botConfidence: freezed == botConfidence
+          ? _value.botConfidence
+          : botConfidence // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botReplySource: freezed == botReplySource
+          ? _value.botReplySource
+          : botReplySource // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botMetadata: freezed == botMetadata
+          ? _value.botMetadata
+          : botMetadata // ignore: cast_nullable_to_non_nullable
+              as dynamic,
     ));
   }
 }
@@ -412,8 +481,14 @@ class _$SocketMessageImpl implements _SocketMessage {
       this.receiver,
       @JsonKey(name: 'images') final List<MessageImageModel>? images,
       @JsonKey(name: 'reply_to') this.replyTo,
-      @JsonKey(name: 'chat_id') this.chatId})
-      : _images = images;
+      @JsonKey(name: 'chat_id') this.chatId,
+      final List<String>? suggestions,
+      @JsonKey(name: 'bot_intent') this.botIntent,
+      @JsonKey(name: 'bot_confidence') this.botConfidence,
+      @JsonKey(name: 'bot_reply_source') this.botReplySource,
+      @JsonKey(name: 'bot_metadata') this.botMetadata})
+      : _images = images,
+        _suggestions = suggestions;
 
   factory _$SocketMessageImpl.fromJson(Map<String, dynamic> json) =>
       _$$SocketMessageImplFromJson(json);
@@ -446,10 +521,32 @@ class _$SocketMessageImpl implements _SocketMessage {
   @override
   @JsonKey(name: 'chat_id')
   final int? chatId;
+  final List<String>? _suggestions;
+  @override
+  List<String>? get suggestions {
+    final value = _suggestions;
+    if (value == null) return null;
+    if (_suggestions is EqualUnmodifiableListView) return _suggestions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
+  @override
+  @JsonKey(name: 'bot_intent')
+  final String? botIntent;
+  @override
+  @JsonKey(name: 'bot_confidence')
+  final String? botConfidence;
+  @override
+  @JsonKey(name: 'bot_reply_source')
+  final String? botReplySource;
+  @override
+  @JsonKey(name: 'bot_metadata')
+  final dynamic botMetadata;
 
   @override
   String toString() {
-    return 'SocketMessage(id: $id, content: $content, createdAt: $createdAt, sender: $sender, receiver: $receiver, images: $images, replyTo: $replyTo, chatId: $chatId)';
+    return 'SocketMessage(id: $id, content: $content, createdAt: $createdAt, sender: $sender, receiver: $receiver, images: $images, replyTo: $replyTo, chatId: $chatId, suggestions: $suggestions, botIntent: $botIntent, botConfidence: $botConfidence, botReplySource: $botReplySource, botMetadata: $botMetadata)';
   }
 
   @override
@@ -466,7 +563,17 @@ class _$SocketMessageImpl implements _SocketMessage {
                 other.receiver == receiver) &&
             const DeepCollectionEquality().equals(other._images, _images) &&
             const DeepCollectionEquality().equals(other.replyTo, replyTo) &&
-            (identical(other.chatId, chatId) || other.chatId == chatId));
+            (identical(other.chatId, chatId) || other.chatId == chatId) &&
+            const DeepCollectionEquality()
+                .equals(other._suggestions, _suggestions) &&
+            (identical(other.botIntent, botIntent) ||
+                other.botIntent == botIntent) &&
+            (identical(other.botConfidence, botConfidence) ||
+                other.botConfidence == botConfidence) &&
+            (identical(other.botReplySource, botReplySource) ||
+                other.botReplySource == botReplySource) &&
+            const DeepCollectionEquality()
+                .equals(other.botMetadata, botMetadata));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -480,7 +587,12 @@ class _$SocketMessageImpl implements _SocketMessage {
       receiver,
       const DeepCollectionEquality().hash(_images),
       const DeepCollectionEquality().hash(replyTo),
-      chatId);
+      chatId,
+      const DeepCollectionEquality().hash(_suggestions),
+      botIntent,
+      botConfidence,
+      botReplySource,
+      const DeepCollectionEquality().hash(botMetadata));
 
   /// Create a copy of SocketMessage
   /// with the given fields replaced by the non-null parameter values.
@@ -500,14 +612,20 @@ class _$SocketMessageImpl implements _SocketMessage {
 
 abstract class _SocketMessage implements SocketMessage {
   const factory _SocketMessage(
-      {required final int id,
-      final String? content,
-      @JsonKey(name: 'created_at') final String? createdAt,
-      final SenderReceiverModel? sender,
-      final SenderReceiverModel? receiver,
-      @JsonKey(name: 'images') final List<MessageImageModel>? images,
-      @JsonKey(name: 'reply_to') final dynamic replyTo,
-      @JsonKey(name: 'chat_id') final int? chatId}) = _$SocketMessageImpl;
+          {required final int id,
+          final String? content,
+          @JsonKey(name: 'created_at') final String? createdAt,
+          final SenderReceiverModel? sender,
+          final SenderReceiverModel? receiver,
+          @JsonKey(name: 'images') final List<MessageImageModel>? images,
+          @JsonKey(name: 'reply_to') final dynamic replyTo,
+          @JsonKey(name: 'chat_id') final int? chatId,
+          final List<String>? suggestions,
+          @JsonKey(name: 'bot_intent') final String? botIntent,
+          @JsonKey(name: 'bot_confidence') final String? botConfidence,
+          @JsonKey(name: 'bot_reply_source') final String? botReplySource,
+          @JsonKey(name: 'bot_metadata') final dynamic botMetadata}) =
+      _$SocketMessageImpl;
 
   factory _SocketMessage.fromJson(Map<String, dynamic> json) =
       _$SocketMessageImpl.fromJson;
@@ -532,6 +650,20 @@ abstract class _SocketMessage implements SocketMessage {
   @override
   @JsonKey(name: 'chat_id')
   int? get chatId;
+  @override
+  List<String>? get suggestions;
+  @override
+  @JsonKey(name: 'bot_intent')
+  String? get botIntent;
+  @override
+  @JsonKey(name: 'bot_confidence')
+  String? get botConfidence;
+  @override
+  @JsonKey(name: 'bot_reply_source')
+  String? get botReplySource;
+  @override
+  @JsonKey(name: 'bot_metadata')
+  dynamic get botMetadata;
 
   /// Create a copy of SocketMessage
   /// with the given fields replaced by the non-null parameter values.
@@ -558,7 +690,6 @@ mixin _$SenderReceiverModel {
   @JsonKey(name: 'image_business')
   String? get imageBusiness => throw _privateConstructorUsedError;
   String? get lang => throw _privateConstructorUsedError;
-  String? get visibility => throw _privateConstructorUsedError;
   String? get sms => throw _privateConstructorUsedError;
   @JsonKey(name: 'send_email')
   String? get sendEmail => throw _privateConstructorUsedError;
@@ -605,7 +736,6 @@ abstract class $SenderReceiverModelCopyWith<$Res> {
       String? image,
       @JsonKey(name: 'image_business') String? imageBusiness,
       String? lang,
-      String? visibility,
       String? sms,
       @JsonKey(name: 'send_email') String? sendEmail,
       String? push,
@@ -643,7 +773,6 @@ class _$SenderReceiverModelCopyWithImpl<$Res, $Val extends SenderReceiverModel>
     Object? image = freezed,
     Object? imageBusiness = freezed,
     Object? lang = freezed,
-    Object? visibility = freezed,
     Object? sms = freezed,
     Object? sendEmail = freezed,
     Object? push = freezed,
@@ -692,10 +821,6 @@ class _$SenderReceiverModelCopyWithImpl<$Res, $Val extends SenderReceiverModel>
       lang: freezed == lang
           ? _value.lang
           : lang // ignore: cast_nullable_to_non_nullable
-              as String?,
-      visibility: freezed == visibility
-          ? _value.visibility
-          : visibility // ignore: cast_nullable_to_non_nullable
               as String?,
       sms: freezed == sms
           ? _value.sms
@@ -763,7 +888,6 @@ abstract class _$$SenderReceiverModelImplCopyWith<$Res>
       String? image,
       @JsonKey(name: 'image_business') String? imageBusiness,
       String? lang,
-      String? visibility,
       String? sms,
       @JsonKey(name: 'send_email') String? sendEmail,
       String? push,
@@ -799,7 +923,6 @@ class __$$SenderReceiverModelImplCopyWithImpl<$Res>
     Object? image = freezed,
     Object? imageBusiness = freezed,
     Object? lang = freezed,
-    Object? visibility = freezed,
     Object? sms = freezed,
     Object? sendEmail = freezed,
     Object? push = freezed,
@@ -848,10 +971,6 @@ class __$$SenderReceiverModelImplCopyWithImpl<$Res>
       lang: freezed == lang
           ? _value.lang
           : lang // ignore: cast_nullable_to_non_nullable
-              as String?,
-      visibility: freezed == visibility
-          ? _value.visibility
-          : visibility // ignore: cast_nullable_to_non_nullable
               as String?,
       sms: freezed == sms
           ? _value.sms
@@ -914,7 +1033,6 @@ class _$SenderReceiverModelImpl implements _SenderReceiverModel {
       this.image,
       @JsonKey(name: 'image_business') this.imageBusiness,
       this.lang,
-      this.visibility,
       this.sms,
       @JsonKey(name: 'send_email') this.sendEmail,
       this.push,
@@ -951,8 +1069,6 @@ class _$SenderReceiverModelImpl implements _SenderReceiverModel {
   @override
   final String? lang;
   @override
-  final String? visibility;
-  @override
   final String? sms;
   @override
   @JsonKey(name: 'send_email')
@@ -985,7 +1101,7 @@ class _$SenderReceiverModelImpl implements _SenderReceiverModel {
 
   @override
   String toString() {
-    return 'SenderReceiverModel(id: $id, businessId: $businessId, email: $email, name: $name, role: $role, phone: $phone, image: $image, imageBusiness: $imageBusiness, lang: $lang, visibility: $visibility, sms: $sms, sendEmail: $sendEmail, push: $push, status: $status, emailVerifiedAt: $emailVerifiedAt, createdAt: $createdAt, updatedAt: $updatedAt, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount)';
+    return 'SenderReceiverModel(id: $id, businessId: $businessId, email: $email, name: $name, role: $role, phone: $phone, image: $image, imageBusiness: $imageBusiness, lang: $lang, sms: $sms, sendEmail: $sendEmail, push: $push, status: $status, emailVerifiedAt: $emailVerifiedAt, createdAt: $createdAt, updatedAt: $updatedAt, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount)';
   }
 
   @override
@@ -1004,8 +1120,6 @@ class _$SenderReceiverModelImpl implements _SenderReceiverModel {
             (identical(other.imageBusiness, imageBusiness) ||
                 other.imageBusiness == imageBusiness) &&
             (identical(other.lang, lang) || other.lang == lang) &&
-            (identical(other.visibility, visibility) ||
-                other.visibility == visibility) &&
             (identical(other.sms, sms) || other.sms == sms) &&
             (identical(other.sendEmail, sendEmail) ||
                 other.sendEmail == sendEmail) &&
@@ -1040,7 +1154,6 @@ class _$SenderReceiverModelImpl implements _SenderReceiverModel {
         image,
         imageBusiness,
         lang,
-        visibility,
         sms,
         sendEmail,
         push,
@@ -1082,7 +1195,6 @@ abstract class _SenderReceiverModel implements SenderReceiverModel {
       final String? image,
       @JsonKey(name: 'image_business') final String? imageBusiness,
       final String? lang,
-      final String? visibility,
       final String? sms,
       @JsonKey(name: 'send_email') final String? sendEmail,
       final String? push,
@@ -1119,8 +1231,6 @@ abstract class _SenderReceiverModel implements SenderReceiverModel {
   String? get imageBusiness;
   @override
   String? get lang;
-  @override
-  String? get visibility;
   @override
   String? get sms;
   @override

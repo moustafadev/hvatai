@@ -2,18 +2,26 @@ part of '../chat.dart';
 
 class ChatDetailsScreen extends StatelessWidget {
   final UserChatModel user;
-  final int chatId;
+  final int? chatId; // Make nullable for new chats
 
-  ChatDetailsScreen({
+  const ChatDetailsScreen({
     super.key,
     required this.user,
-    required this.chatId,
+    this.chatId, // Make nullable
   });
-
-  final TextEditingController _contentController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final contentController = TextEditingController();
+
+    // Load messages if chatId exists
+    if (chatId != null && chatId! > 0) {
+      final cubit = ChatsCubit.get(context);
+      if (cubit.state.currentChatId != chatId) {
+        cubit.getMessages(chatId!);
+      }
+    }
+
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(
@@ -25,6 +33,14 @@ class ChatDetailsScreen extends StatelessWidget {
             Expanded(
               child: BlocBuilder<ChatsCubit, ChatsState>(
                 builder: (context, state) {
+                  // For new chats (no chatId), show messages from state
+                  // (will be empty initially, but will have messages after sending)
+                  final effectiveChatId = chatId ?? state.currentChatId;
+
+                  if (effectiveChatId == null || effectiveChatId == 0) {
+                    return ChatMessagesList(messages: state.messages);
+                  }
+
                   if (state.isLoadingMessages) {
                     return const Center(child: CircularProgressIndicator());
                   }
@@ -40,7 +56,7 @@ class ChatDetailsScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12.0),
               child: ChatInputField(
-                controller: _contentController,
+                controller: contentController,
                 onSend: (content, images) {
                   if (content.isNotEmpty || images.isNotEmpty) {
                     final receiverId = user.id ?? 0;

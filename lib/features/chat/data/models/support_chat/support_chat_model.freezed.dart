@@ -39,10 +39,25 @@ mixin _$SupportChatModel {
   String? get assignedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'resolved_at')
   String? get resolvedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'first_admin_response_at')
+  String? get firstAdminResponseAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_interaction_count')
+  int? get botInteractionCount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_escalated')
+  bool? get isEscalated => throw _privateConstructorUsedError;
+  @JsonKey(name: 'escalated_at')
+  String? get escalatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'escalation_reason')
+  String? get escalationReason => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_last_response_at')
+  String? get botLastResponseAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'unread_count')
   int? get unreadCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_message')
   LastMessageModel? get lastMessage => throw _privateConstructorUsedError;
+  SupportModel? get support => throw _privateConstructorUsedError;
+  @JsonKey(name: 'support_agent')
+  SenderModel? get supportAgent => throw _privateConstructorUsedError;
 
   /// Serializes this SupportChatModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -71,10 +86,20 @@ abstract class $SupportChatModelCopyWith<$Res> {
       @JsonKey(name: 'support_status') String? supportStatus,
       @JsonKey(name: 'assigned_at') String? assignedAt,
       @JsonKey(name: 'resolved_at') String? resolvedAt,
+      @JsonKey(name: 'first_admin_response_at') String? firstAdminResponseAt,
+      @JsonKey(name: 'bot_interaction_count') int? botInteractionCount,
+      @JsonKey(name: 'is_escalated') bool? isEscalated,
+      @JsonKey(name: 'escalated_at') String? escalatedAt,
+      @JsonKey(name: 'escalation_reason') String? escalationReason,
+      @JsonKey(name: 'bot_last_response_at') String? botLastResponseAt,
       @JsonKey(name: 'unread_count') int? unreadCount,
-      @JsonKey(name: 'last_message') LastMessageModel? lastMessage});
+      @JsonKey(name: 'last_message') LastMessageModel? lastMessage,
+      SupportModel? support,
+      @JsonKey(name: 'support_agent') SenderModel? supportAgent});
 
   $LastMessageModelCopyWith<$Res>? get lastMessage;
+  $SupportModelCopyWith<$Res>? get support;
+  $SenderModelCopyWith<$Res>? get supportAgent;
 }
 
 /// @nodoc
@@ -102,8 +127,16 @@ class _$SupportChatModelCopyWithImpl<$Res, $Val extends SupportChatModel>
     Object? supportStatus = freezed,
     Object? assignedAt = freezed,
     Object? resolvedAt = freezed,
+    Object? firstAdminResponseAt = freezed,
+    Object? botInteractionCount = freezed,
+    Object? isEscalated = freezed,
+    Object? escalatedAt = freezed,
+    Object? escalationReason = freezed,
+    Object? botLastResponseAt = freezed,
     Object? unreadCount = freezed,
     Object? lastMessage = freezed,
+    Object? support = freezed,
+    Object? supportAgent = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -146,6 +179,30 @@ class _$SupportChatModelCopyWithImpl<$Res, $Val extends SupportChatModel>
           ? _value.resolvedAt
           : resolvedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      firstAdminResponseAt: freezed == firstAdminResponseAt
+          ? _value.firstAdminResponseAt
+          : firstAdminResponseAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botInteractionCount: freezed == botInteractionCount
+          ? _value.botInteractionCount
+          : botInteractionCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isEscalated: freezed == isEscalated
+          ? _value.isEscalated
+          : isEscalated // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      escalatedAt: freezed == escalatedAt
+          ? _value.escalatedAt
+          : escalatedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      escalationReason: freezed == escalationReason
+          ? _value.escalationReason
+          : escalationReason // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botLastResponseAt: freezed == botLastResponseAt
+          ? _value.botLastResponseAt
+          : botLastResponseAt // ignore: cast_nullable_to_non_nullable
+              as String?,
       unreadCount: freezed == unreadCount
           ? _value.unreadCount
           : unreadCount // ignore: cast_nullable_to_non_nullable
@@ -154,6 +211,14 @@ class _$SupportChatModelCopyWithImpl<$Res, $Val extends SupportChatModel>
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
               as LastMessageModel?,
+      support: freezed == support
+          ? _value.support
+          : support // ignore: cast_nullable_to_non_nullable
+              as SupportModel?,
+      supportAgent: freezed == supportAgent
+          ? _value.supportAgent
+          : supportAgent // ignore: cast_nullable_to_non_nullable
+              as SenderModel?,
     ) as $Val);
   }
 
@@ -168,6 +233,34 @@ class _$SupportChatModelCopyWithImpl<$Res, $Val extends SupportChatModel>
 
     return $LastMessageModelCopyWith<$Res>(_value.lastMessage!, (value) {
       return _then(_value.copyWith(lastMessage: value) as $Val);
+    });
+  }
+
+  /// Create a copy of SupportChatModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SupportModelCopyWith<$Res>? get support {
+    if (_value.support == null) {
+      return null;
+    }
+
+    return $SupportModelCopyWith<$Res>(_value.support!, (value) {
+      return _then(_value.copyWith(support: value) as $Val);
+    });
+  }
+
+  /// Create a copy of SupportChatModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SenderModelCopyWith<$Res>? get supportAgent {
+    if (_value.supportAgent == null) {
+      return null;
+    }
+
+    return $SenderModelCopyWith<$Res>(_value.supportAgent!, (value) {
+      return _then(_value.copyWith(supportAgent: value) as $Val);
     });
   }
 }
@@ -191,11 +284,23 @@ abstract class _$$SupportChatModelImplCopyWith<$Res>
       @JsonKey(name: 'support_status') String? supportStatus,
       @JsonKey(name: 'assigned_at') String? assignedAt,
       @JsonKey(name: 'resolved_at') String? resolvedAt,
+      @JsonKey(name: 'first_admin_response_at') String? firstAdminResponseAt,
+      @JsonKey(name: 'bot_interaction_count') int? botInteractionCount,
+      @JsonKey(name: 'is_escalated') bool? isEscalated,
+      @JsonKey(name: 'escalated_at') String? escalatedAt,
+      @JsonKey(name: 'escalation_reason') String? escalationReason,
+      @JsonKey(name: 'bot_last_response_at') String? botLastResponseAt,
       @JsonKey(name: 'unread_count') int? unreadCount,
-      @JsonKey(name: 'last_message') LastMessageModel? lastMessage});
+      @JsonKey(name: 'last_message') LastMessageModel? lastMessage,
+      SupportModel? support,
+      @JsonKey(name: 'support_agent') SenderModel? supportAgent});
 
   @override
   $LastMessageModelCopyWith<$Res>? get lastMessage;
+  @override
+  $SupportModelCopyWith<$Res>? get support;
+  @override
+  $SenderModelCopyWith<$Res>? get supportAgent;
 }
 
 /// @nodoc
@@ -221,8 +326,16 @@ class __$$SupportChatModelImplCopyWithImpl<$Res>
     Object? supportStatus = freezed,
     Object? assignedAt = freezed,
     Object? resolvedAt = freezed,
+    Object? firstAdminResponseAt = freezed,
+    Object? botInteractionCount = freezed,
+    Object? isEscalated = freezed,
+    Object? escalatedAt = freezed,
+    Object? escalationReason = freezed,
+    Object? botLastResponseAt = freezed,
     Object? unreadCount = freezed,
     Object? lastMessage = freezed,
+    Object? support = freezed,
+    Object? supportAgent = freezed,
   }) {
     return _then(_$SupportChatModelImpl(
       id: freezed == id
@@ -265,6 +378,30 @@ class __$$SupportChatModelImplCopyWithImpl<$Res>
           ? _value.resolvedAt
           : resolvedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      firstAdminResponseAt: freezed == firstAdminResponseAt
+          ? _value.firstAdminResponseAt
+          : firstAdminResponseAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botInteractionCount: freezed == botInteractionCount
+          ? _value.botInteractionCount
+          : botInteractionCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      isEscalated: freezed == isEscalated
+          ? _value.isEscalated
+          : isEscalated // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      escalatedAt: freezed == escalatedAt
+          ? _value.escalatedAt
+          : escalatedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
+      escalationReason: freezed == escalationReason
+          ? _value.escalationReason
+          : escalationReason // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botLastResponseAt: freezed == botLastResponseAt
+          ? _value.botLastResponseAt
+          : botLastResponseAt // ignore: cast_nullable_to_non_nullable
+              as String?,
       unreadCount: freezed == unreadCount
           ? _value.unreadCount
           : unreadCount // ignore: cast_nullable_to_non_nullable
@@ -273,6 +410,14 @@ class __$$SupportChatModelImplCopyWithImpl<$Res>
           ? _value.lastMessage
           : lastMessage // ignore: cast_nullable_to_non_nullable
               as LastMessageModel?,
+      support: freezed == support
+          ? _value.support
+          : support // ignore: cast_nullable_to_non_nullable
+              as SupportModel?,
+      supportAgent: freezed == supportAgent
+          ? _value.supportAgent
+          : supportAgent // ignore: cast_nullable_to_non_nullable
+              as SenderModel?,
     ));
   }
 }
@@ -291,8 +436,16 @@ class _$SupportChatModelImpl implements _SupportChatModel {
       @JsonKey(name: 'support_status') this.supportStatus,
       @JsonKey(name: 'assigned_at') this.assignedAt,
       @JsonKey(name: 'resolved_at') this.resolvedAt,
+      @JsonKey(name: 'first_admin_response_at') this.firstAdminResponseAt,
+      @JsonKey(name: 'bot_interaction_count') this.botInteractionCount,
+      @JsonKey(name: 'is_escalated') this.isEscalated,
+      @JsonKey(name: 'escalated_at') this.escalatedAt,
+      @JsonKey(name: 'escalation_reason') this.escalationReason,
+      @JsonKey(name: 'bot_last_response_at') this.botLastResponseAt,
       @JsonKey(name: 'unread_count') this.unreadCount,
-      @JsonKey(name: 'last_message') this.lastMessage});
+      @JsonKey(name: 'last_message') this.lastMessage,
+      this.support,
+      @JsonKey(name: 'support_agent') this.supportAgent});
 
   factory _$SupportChatModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$SupportChatModelImplFromJson(json);
@@ -327,15 +480,38 @@ class _$SupportChatModelImpl implements _SupportChatModel {
   @JsonKey(name: 'resolved_at')
   final String? resolvedAt;
   @override
+  @JsonKey(name: 'first_admin_response_at')
+  final String? firstAdminResponseAt;
+  @override
+  @JsonKey(name: 'bot_interaction_count')
+  final int? botInteractionCount;
+  @override
+  @JsonKey(name: 'is_escalated')
+  final bool? isEscalated;
+  @override
+  @JsonKey(name: 'escalated_at')
+  final String? escalatedAt;
+  @override
+  @JsonKey(name: 'escalation_reason')
+  final String? escalationReason;
+  @override
+  @JsonKey(name: 'bot_last_response_at')
+  final String? botLastResponseAt;
+  @override
   @JsonKey(name: 'unread_count')
   final int? unreadCount;
   @override
   @JsonKey(name: 'last_message')
   final LastMessageModel? lastMessage;
+  @override
+  final SupportModel? support;
+  @override
+  @JsonKey(name: 'support_agent')
+  final SenderModel? supportAgent;
 
   @override
   String toString() {
-    return 'SupportChatModel(id: $id, userId: $userId, participantId: $participantId, chatType: $chatType, createdAt: $createdAt, updatedAt: $updatedAt, supportAgentId: $supportAgentId, supportStatus: $supportStatus, assignedAt: $assignedAt, resolvedAt: $resolvedAt, unreadCount: $unreadCount, lastMessage: $lastMessage)';
+    return 'SupportChatModel(id: $id, userId: $userId, participantId: $participantId, chatType: $chatType, createdAt: $createdAt, updatedAt: $updatedAt, supportAgentId: $supportAgentId, supportStatus: $supportStatus, assignedAt: $assignedAt, resolvedAt: $resolvedAt, firstAdminResponseAt: $firstAdminResponseAt, botInteractionCount: $botInteractionCount, isEscalated: $isEscalated, escalatedAt: $escalatedAt, escalationReason: $escalationReason, botLastResponseAt: $botLastResponseAt, unreadCount: $unreadCount, lastMessage: $lastMessage, support: $support, supportAgent: $supportAgent)';
   }
 
   @override
@@ -361,28 +537,52 @@ class _$SupportChatModelImpl implements _SupportChatModel {
                 other.assignedAt == assignedAt) &&
             (identical(other.resolvedAt, resolvedAt) ||
                 other.resolvedAt == resolvedAt) &&
+            (identical(other.firstAdminResponseAt, firstAdminResponseAt) ||
+                other.firstAdminResponseAt == firstAdminResponseAt) &&
+            (identical(other.botInteractionCount, botInteractionCount) ||
+                other.botInteractionCount == botInteractionCount) &&
+            (identical(other.isEscalated, isEscalated) ||
+                other.isEscalated == isEscalated) &&
+            (identical(other.escalatedAt, escalatedAt) ||
+                other.escalatedAt == escalatedAt) &&
+            (identical(other.escalationReason, escalationReason) ||
+                other.escalationReason == escalationReason) &&
+            (identical(other.botLastResponseAt, botLastResponseAt) ||
+                other.botLastResponseAt == botLastResponseAt) &&
             (identical(other.unreadCount, unreadCount) ||
                 other.unreadCount == unreadCount) &&
             (identical(other.lastMessage, lastMessage) ||
-                other.lastMessage == lastMessage));
+                other.lastMessage == lastMessage) &&
+            (identical(other.support, support) || other.support == support) &&
+            (identical(other.supportAgent, supportAgent) ||
+                other.supportAgent == supportAgent));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      userId,
-      participantId,
-      chatType,
-      createdAt,
-      updatedAt,
-      supportAgentId,
-      supportStatus,
-      assignedAt,
-      resolvedAt,
-      unreadCount,
-      lastMessage);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        userId,
+        participantId,
+        chatType,
+        createdAt,
+        updatedAt,
+        supportAgentId,
+        supportStatus,
+        assignedAt,
+        resolvedAt,
+        firstAdminResponseAt,
+        botInteractionCount,
+        isEscalated,
+        escalatedAt,
+        escalationReason,
+        botLastResponseAt,
+        unreadCount,
+        lastMessage,
+        support,
+        supportAgent
+      ]);
 
   /// Create a copy of SupportChatModel
   /// with the given fields replaced by the non-null parameter values.
@@ -403,19 +603,28 @@ class _$SupportChatModelImpl implements _SupportChatModel {
 
 abstract class _SupportChatModel implements SupportChatModel {
   const factory _SupportChatModel(
-          {final int? id,
-          @JsonKey(name: 'user_id') final int? userId,
-          @JsonKey(name: 'participant_id') final int? participantId,
-          @JsonKey(name: 'chat_type') final String? chatType,
-          @JsonKey(name: 'created_at') final String? createdAt,
-          @JsonKey(name: 'updated_at') final String? updatedAt,
-          @JsonKey(name: 'support_agent_id') final int? supportAgentId,
-          @JsonKey(name: 'support_status') final String? supportStatus,
-          @JsonKey(name: 'assigned_at') final String? assignedAt,
-          @JsonKey(name: 'resolved_at') final String? resolvedAt,
-          @JsonKey(name: 'unread_count') final int? unreadCount,
-          @JsonKey(name: 'last_message') final LastMessageModel? lastMessage}) =
-      _$SupportChatModelImpl;
+      {final int? id,
+      @JsonKey(name: 'user_id') final int? userId,
+      @JsonKey(name: 'participant_id') final int? participantId,
+      @JsonKey(name: 'chat_type') final String? chatType,
+      @JsonKey(name: 'created_at') final String? createdAt,
+      @JsonKey(name: 'updated_at') final String? updatedAt,
+      @JsonKey(name: 'support_agent_id') final int? supportAgentId,
+      @JsonKey(name: 'support_status') final String? supportStatus,
+      @JsonKey(name: 'assigned_at') final String? assignedAt,
+      @JsonKey(name: 'resolved_at') final String? resolvedAt,
+      @JsonKey(name: 'first_admin_response_at')
+      final String? firstAdminResponseAt,
+      @JsonKey(name: 'bot_interaction_count') final int? botInteractionCount,
+      @JsonKey(name: 'is_escalated') final bool? isEscalated,
+      @JsonKey(name: 'escalated_at') final String? escalatedAt,
+      @JsonKey(name: 'escalation_reason') final String? escalationReason,
+      @JsonKey(name: 'bot_last_response_at') final String? botLastResponseAt,
+      @JsonKey(name: 'unread_count') final int? unreadCount,
+      @JsonKey(name: 'last_message') final LastMessageModel? lastMessage,
+      final SupportModel? support,
+      @JsonKey(name: 'support_agent')
+      final SenderModel? supportAgent}) = _$SupportChatModelImpl;
 
   factory _SupportChatModel.fromJson(Map<String, dynamic> json) =
       _$SupportChatModelImpl.fromJson;
@@ -450,16 +659,206 @@ abstract class _SupportChatModel implements SupportChatModel {
   @JsonKey(name: 'resolved_at')
   String? get resolvedAt;
   @override
+  @JsonKey(name: 'first_admin_response_at')
+  String? get firstAdminResponseAt;
+  @override
+  @JsonKey(name: 'bot_interaction_count')
+  int? get botInteractionCount;
+  @override
+  @JsonKey(name: 'is_escalated')
+  bool? get isEscalated;
+  @override
+  @JsonKey(name: 'escalated_at')
+  String? get escalatedAt;
+  @override
+  @JsonKey(name: 'escalation_reason')
+  String? get escalationReason;
+  @override
+  @JsonKey(name: 'bot_last_response_at')
+  String? get botLastResponseAt;
+  @override
   @JsonKey(name: 'unread_count')
   int? get unreadCount;
   @override
   @JsonKey(name: 'last_message')
   LastMessageModel? get lastMessage;
+  @override
+  SupportModel? get support;
+  @override
+  @JsonKey(name: 'support_agent')
+  SenderModel? get supportAgent;
 
   /// Create a copy of SupportChatModel
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SupportChatModelImplCopyWith<_$SupportChatModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+SupportModel _$SupportModelFromJson(Map<String, dynamic> json) {
+  return _SupportModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$SupportModel {
+  String? get name => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
+
+  /// Serializes this SupportModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of SupportModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $SupportModelCopyWith<SupportModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $SupportModelCopyWith<$Res> {
+  factory $SupportModelCopyWith(
+          SupportModel value, $Res Function(SupportModel) then) =
+      _$SupportModelCopyWithImpl<$Res, SupportModel>;
+  @useResult
+  $Res call({String? name, String? image});
+}
+
+/// @nodoc
+class _$SupportModelCopyWithImpl<$Res, $Val extends SupportModel>
+    implements $SupportModelCopyWith<$Res> {
+  _$SupportModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of SupportModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? image = freezed,
+  }) {
+    return _then(_value.copyWith(
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$SupportModelImplCopyWith<$Res>
+    implements $SupportModelCopyWith<$Res> {
+  factory _$$SupportModelImplCopyWith(
+          _$SupportModelImpl value, $Res Function(_$SupportModelImpl) then) =
+      __$$SupportModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String? name, String? image});
+}
+
+/// @nodoc
+class __$$SupportModelImplCopyWithImpl<$Res>
+    extends _$SupportModelCopyWithImpl<$Res, _$SupportModelImpl>
+    implements _$$SupportModelImplCopyWith<$Res> {
+  __$$SupportModelImplCopyWithImpl(
+      _$SupportModelImpl _value, $Res Function(_$SupportModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of SupportModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? name = freezed,
+    Object? image = freezed,
+  }) {
+    return _then(_$SupportModelImpl(
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      image: freezed == image
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$SupportModelImpl extends _SupportModel {
+  const _$SupportModelImpl({this.name, this.image}) : super._();
+
+  factory _$SupportModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SupportModelImplFromJson(json);
+
+  @override
+  final String? name;
+  @override
+  final String? image;
+
+  @override
+  String toString() {
+    return 'SupportModel(name: $name, image: $image)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SupportModelImpl &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.image, image) || other.image == image));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, name, image);
+
+  /// Create a copy of SupportModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SupportModelImplCopyWith<_$SupportModelImpl> get copyWith =>
+      __$$SupportModelImplCopyWithImpl<_$SupportModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$SupportModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _SupportModel extends SupportModel {
+  const factory _SupportModel({final String? name, final String? image}) =
+      _$SupportModelImpl;
+  const _SupportModel._() : super._();
+
+  factory _SupportModel.fromJson(Map<String, dynamic> json) =
+      _$SupportModelImpl.fromJson;
+
+  @override
+  String? get name;
+  @override
+  String? get image;
+
+  /// Create a copy of SupportModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SupportModelImplCopyWith<_$SupportModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

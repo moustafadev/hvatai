@@ -7,24 +7,48 @@ class ChatDetailsSupportHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(left: 16, top: 16),
-      child: Row(
-        children: [
-          // CircleAvatar(
-          //   radius: 32,
-          //   backgroundColor:
-          //       Colors.transparent, // optional for PNG with transparency
-          //   backgroundImage: AssetImage(Assets.assetsImagesSupportChat),
-          // ),
-          SizedBox(width: 20),
-          // CommonTextWidget(
-          //   text: 'Поддержка', // Display user's name
-          //   size: 18,
-          //   fontWeight: FontWeight.w700,
-          // ),
-        ],
-      ),
+    return BlocBuilder<ChatsCubit, ChatsState>(
+      builder: (context, state) {
+        final supportChat = state.supportChat;
+        final support = supportChat?.support;
+
+        return Container(
+          color: AppColors.background,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 16, top: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                GestureDetector(
+                  onTap: () {
+                    context.pop();
+                  },
+                  child: const Icon(Icons.arrow_back_ios),
+                ),
+                Row(
+                  children: [
+                    CircleAvatar(
+                        radius: 16,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(32),
+                            child: CustomImage(
+                                imageSource: support?.fullImageUrl ?? '',
+                                width: 32,
+                                height: 32))),
+                    SizedBox(width: 10.w),
+                    CustomText(
+                      text: support?.name ?? 'Поддержка', // Display user's name
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ],
+                ),
+                SizedBox(width: 30.w),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

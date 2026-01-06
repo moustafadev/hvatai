@@ -36,6 +36,13 @@ _$SocketMessageImpl _$$SocketMessageImplFromJson(Map<String, dynamic> json) =>
           .toList(),
       replyTo: json['reply_to'],
       chatId: (json['chat_id'] as num?)?.toInt(),
+      suggestions: (json['suggestions'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList(),
+      botIntent: json['bot_intent'] as String?,
+      botConfidence: json['bot_confidence'] as String?,
+      botReplySource: json['bot_reply_source'] as String?,
+      botMetadata: json['bot_metadata'],
     );
 
 Map<String, dynamic> _$$SocketMessageImplToJson(_$SocketMessageImpl instance) =>
@@ -48,6 +55,11 @@ Map<String, dynamic> _$$SocketMessageImplToJson(_$SocketMessageImpl instance) =>
       'images': instance.images,
       'reply_to': instance.replyTo,
       'chat_id': instance.chatId,
+      'suggestions': instance.suggestions,
+      'bot_intent': instance.botIntent,
+      'bot_confidence': instance.botConfidence,
+      'bot_reply_source': instance.botReplySource,
+      'bot_metadata': instance.botMetadata,
     };
 
 _$SenderReceiverModelImpl _$$SenderReceiverModelImplFromJson(
@@ -62,7 +74,6 @@ _$SenderReceiverModelImpl _$$SenderReceiverModelImplFromJson(
       image: json['image'] as String?,
       imageBusiness: json['image_business'] as String?,
       lang: json['lang'] as String?,
-      visibility: json['visibility'] as String?,
       sms: json['sms'] as String?,
       sendEmail: json['send_email'] as String?,
       push: json['push'] as String?,
@@ -88,7 +99,6 @@ Map<String, dynamic> _$$SenderReceiverModelImplToJson(
       'image': instance.image,
       'image_business': instance.imageBusiness,
       'lang': instance.lang,
-      'visibility': instance.visibility,
       'sms': instance.sms,
       'send_email': instance.sendEmail,
       'push': instance.push,

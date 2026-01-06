@@ -2,7 +2,7 @@ abstract class ServerConfig {
   static const String domen = "https://khvatai.ru/"; //prod
   static const baseUrl = "${domen}api/v1/";
   static String token = "";
-
+  static const String domenStorage = "https://khvatai.ru/storage/";
   // =============================== Auth endpoints ===============================
   static const String auth = "auth";
   static const String verifyAuthOtp = "verify-auth-otp";
@@ -63,6 +63,7 @@ abstract class ServerConfig {
       "streams/$streamId/current-bid-session";
   static String toggleBidding(int streamId, int streamProductId) =>
       "streams/$streamId/products/$streamProductId/toggle-bidding";
+  static String updateStreamMedia(int streamId) => "streams/$streamId/media";
   static const String subscribedUsers = "me/subscribed-users";
   static String toggleSubscription(int userId) =>
       "users/$userId/toggle-subscription";

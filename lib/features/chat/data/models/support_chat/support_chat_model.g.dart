@@ -19,11 +19,23 @@ _$SupportChatModelImpl _$$SupportChatModelImplFromJson(
       supportStatus: json['support_status'] as String?,
       assignedAt: json['assigned_at'] as String?,
       resolvedAt: json['resolved_at'] as String?,
+      firstAdminResponseAt: json['first_admin_response_at'] as String?,
+      botInteractionCount: (json['bot_interaction_count'] as num?)?.toInt(),
+      isEscalated: json['is_escalated'] as bool?,
+      escalatedAt: json['escalated_at'] as String?,
+      escalationReason: json['escalation_reason'] as String?,
+      botLastResponseAt: json['bot_last_response_at'] as String?,
       unreadCount: (json['unread_count'] as num?)?.toInt(),
       lastMessage: json['last_message'] == null
           ? null
           : LastMessageModel.fromJson(
               json['last_message'] as Map<String, dynamic>),
+      support: json['support'] == null
+          ? null
+          : SupportModel.fromJson(json['support'] as Map<String, dynamic>),
+      supportAgent: json['support_agent'] == null
+          ? null
+          : SenderModel.fromJson(json['support_agent'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$SupportChatModelImplToJson(
@@ -39,6 +51,26 @@ Map<String, dynamic> _$$SupportChatModelImplToJson(
       'support_status': instance.supportStatus,
       'assigned_at': instance.assignedAt,
       'resolved_at': instance.resolvedAt,
+      'first_admin_response_at': instance.firstAdminResponseAt,
+      'bot_interaction_count': instance.botInteractionCount,
+      'is_escalated': instance.isEscalated,
+      'escalated_at': instance.escalatedAt,
+      'escalation_reason': instance.escalationReason,
+      'bot_last_response_at': instance.botLastResponseAt,
       'unread_count': instance.unreadCount,
       'last_message': instance.lastMessage,
+      'support': instance.support,
+      'support_agent': instance.supportAgent,
+    };
+
+_$SupportModelImpl _$$SupportModelImplFromJson(Map<String, dynamic> json) =>
+    _$SupportModelImpl(
+      name: json['name'] as String?,
+      image: json['image'] as String?,
+    );
+
+Map<String, dynamic> _$$SupportModelImplToJson(_$SupportModelImpl instance) =>
+    <String, dynamic>{
+      'name': instance.name,
+      'image': instance.image,
     };

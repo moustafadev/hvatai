@@ -473,7 +473,6 @@ mixin _$UserChatModel {
   @JsonKey(name: 'image_business')
   String? get imageBusiness => throw _privateConstructorUsedError;
   String? get lang => throw _privateConstructorUsedError;
-  String? get visibility => throw _privateConstructorUsedError;
   String? get sms => throw _privateConstructorUsedError;
   @JsonKey(name: 'send_email')
   String? get sendEmail => throw _privateConstructorUsedError;
@@ -520,7 +519,6 @@ abstract class $UserChatModelCopyWith<$Res> {
       String? image,
       @JsonKey(name: 'image_business') String? imageBusiness,
       String? lang,
-      String? visibility,
       String? sms,
       @JsonKey(name: 'send_email') String? sendEmail,
       String? push,
@@ -558,7 +556,6 @@ class _$UserChatModelCopyWithImpl<$Res, $Val extends UserChatModel>
     Object? image = freezed,
     Object? imageBusiness = freezed,
     Object? lang = freezed,
-    Object? visibility = freezed,
     Object? sms = freezed,
     Object? sendEmail = freezed,
     Object? push = freezed,
@@ -607,10 +604,6 @@ class _$UserChatModelCopyWithImpl<$Res, $Val extends UserChatModel>
       lang: freezed == lang
           ? _value.lang
           : lang // ignore: cast_nullable_to_non_nullable
-              as String?,
-      visibility: freezed == visibility
-          ? _value.visibility
-          : visibility // ignore: cast_nullable_to_non_nullable
               as String?,
       sms: freezed == sms
           ? _value.sms
@@ -678,7 +671,6 @@ abstract class _$$UserChatModelImplCopyWith<$Res>
       String? image,
       @JsonKey(name: 'image_business') String? imageBusiness,
       String? lang,
-      String? visibility,
       String? sms,
       @JsonKey(name: 'send_email') String? sendEmail,
       String? push,
@@ -714,7 +706,6 @@ class __$$UserChatModelImplCopyWithImpl<$Res>
     Object? image = freezed,
     Object? imageBusiness = freezed,
     Object? lang = freezed,
-    Object? visibility = freezed,
     Object? sms = freezed,
     Object? sendEmail = freezed,
     Object? push = freezed,
@@ -763,10 +754,6 @@ class __$$UserChatModelImplCopyWithImpl<$Res>
       lang: freezed == lang
           ? _value.lang
           : lang // ignore: cast_nullable_to_non_nullable
-              as String?,
-      visibility: freezed == visibility
-          ? _value.visibility
-          : visibility // ignore: cast_nullable_to_non_nullable
               as String?,
       sms: freezed == sms
           ? _value.sms
@@ -829,7 +816,6 @@ class _$UserChatModelImpl extends _UserChatModel {
       this.image,
       @JsonKey(name: 'image_business') this.imageBusiness,
       this.lang,
-      this.visibility,
       this.sms,
       @JsonKey(name: 'send_email') this.sendEmail,
       this.push,
@@ -867,8 +853,6 @@ class _$UserChatModelImpl extends _UserChatModel {
   @override
   final String? lang;
   @override
-  final String? visibility;
-  @override
   final String? sms;
   @override
   @JsonKey(name: 'send_email')
@@ -901,7 +885,7 @@ class _$UserChatModelImpl extends _UserChatModel {
 
   @override
   String toString() {
-    return 'UserChatModel(id: $id, businessId: $businessId, email: $email, name: $name, role: $role, phone: $phone, image: $image, imageBusiness: $imageBusiness, lang: $lang, visibility: $visibility, sms: $sms, sendEmail: $sendEmail, push: $push, status: $status, emailVerifiedAt: $emailVerifiedAt, createdAt: $createdAt, updatedAt: $updatedAt, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount)';
+    return 'UserChatModel(id: $id, businessId: $businessId, email: $email, name: $name, role: $role, phone: $phone, image: $image, imageBusiness: $imageBusiness, lang: $lang, sms: $sms, sendEmail: $sendEmail, push: $push, status: $status, emailVerifiedAt: $emailVerifiedAt, createdAt: $createdAt, updatedAt: $updatedAt, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount)';
   }
 
   @override
@@ -920,8 +904,6 @@ class _$UserChatModelImpl extends _UserChatModel {
             (identical(other.imageBusiness, imageBusiness) ||
                 other.imageBusiness == imageBusiness) &&
             (identical(other.lang, lang) || other.lang == lang) &&
-            (identical(other.visibility, visibility) ||
-                other.visibility == visibility) &&
             (identical(other.sms, sms) || other.sms == sms) &&
             (identical(other.sendEmail, sendEmail) ||
                 other.sendEmail == sendEmail) &&
@@ -956,7 +938,6 @@ class _$UserChatModelImpl extends _UserChatModel {
         image,
         imageBusiness,
         lang,
-        visibility,
         sms,
         sendEmail,
         push,
@@ -997,7 +978,6 @@ abstract class _UserChatModel extends UserChatModel {
       final String? image,
       @JsonKey(name: 'image_business') final String? imageBusiness,
       final String? lang,
-      final String? visibility,
       final String? sms,
       @JsonKey(name: 'send_email') final String? sendEmail,
       final String? push,
@@ -1035,8 +1015,6 @@ abstract class _UserChatModel extends UserChatModel {
   String? get imageBusiness;
   @override
   String? get lang;
-  @override
-  String? get visibility;
   @override
   String? get sms;
   @override
@@ -1093,7 +1071,6 @@ mixin _$ParticipantModel {
   @JsonKey(name: 'image_business')
   String? get imageBusiness => throw _privateConstructorUsedError;
   String? get lang => throw _privateConstructorUsedError;
-  String? get visibility => throw _privateConstructorUsedError;
   String? get sms => throw _privateConstructorUsedError;
   @JsonKey(name: 'send_email')
   String? get sendEmail => throw _privateConstructorUsedError;
@@ -1140,7 +1117,6 @@ abstract class $ParticipantModelCopyWith<$Res> {
       String? image,
       @JsonKey(name: 'image_business') String? imageBusiness,
       String? lang,
-      String? visibility,
       String? sms,
       @JsonKey(name: 'send_email') String? sendEmail,
       String? push,
@@ -1178,7 +1154,6 @@ class _$ParticipantModelCopyWithImpl<$Res, $Val extends ParticipantModel>
     Object? image = freezed,
     Object? imageBusiness = freezed,
     Object? lang = freezed,
-    Object? visibility = freezed,
     Object? sms = freezed,
     Object? sendEmail = freezed,
     Object? push = freezed,
@@ -1227,10 +1202,6 @@ class _$ParticipantModelCopyWithImpl<$Res, $Val extends ParticipantModel>
       lang: freezed == lang
           ? _value.lang
           : lang // ignore: cast_nullable_to_non_nullable
-              as String?,
-      visibility: freezed == visibility
-          ? _value.visibility
-          : visibility // ignore: cast_nullable_to_non_nullable
               as String?,
       sms: freezed == sms
           ? _value.sms
@@ -1298,7 +1269,6 @@ abstract class _$$ParticipantModelImplCopyWith<$Res>
       String? image,
       @JsonKey(name: 'image_business') String? imageBusiness,
       String? lang,
-      String? visibility,
       String? sms,
       @JsonKey(name: 'send_email') String? sendEmail,
       String? push,
@@ -1334,7 +1304,6 @@ class __$$ParticipantModelImplCopyWithImpl<$Res>
     Object? image = freezed,
     Object? imageBusiness = freezed,
     Object? lang = freezed,
-    Object? visibility = freezed,
     Object? sms = freezed,
     Object? sendEmail = freezed,
     Object? push = freezed,
@@ -1383,10 +1352,6 @@ class __$$ParticipantModelImplCopyWithImpl<$Res>
       lang: freezed == lang
           ? _value.lang
           : lang // ignore: cast_nullable_to_non_nullable
-              as String?,
-      visibility: freezed == visibility
-          ? _value.visibility
-          : visibility // ignore: cast_nullable_to_non_nullable
               as String?,
       sms: freezed == sms
           ? _value.sms
@@ -1449,7 +1414,6 @@ class _$ParticipantModelImpl extends _ParticipantModel {
       this.image,
       @JsonKey(name: 'image_business') this.imageBusiness,
       this.lang,
-      this.visibility,
       this.sms,
       @JsonKey(name: 'send_email') this.sendEmail,
       this.push,
@@ -1487,8 +1451,6 @@ class _$ParticipantModelImpl extends _ParticipantModel {
   @override
   final String? lang;
   @override
-  final String? visibility;
-  @override
   final String? sms;
   @override
   @JsonKey(name: 'send_email')
@@ -1521,7 +1483,7 @@ class _$ParticipantModelImpl extends _ParticipantModel {
 
   @override
   String toString() {
-    return 'ParticipantModel(id: $id, businessId: $businessId, email: $email, name: $name, role: $role, phone: $phone, image: $image, imageBusiness: $imageBusiness, lang: $lang, visibility: $visibility, sms: $sms, sendEmail: $sendEmail, push: $push, status: $status, emailVerifiedAt: $emailVerifiedAt, createdAt: $createdAt, updatedAt: $updatedAt, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount)';
+    return 'ParticipantModel(id: $id, businessId: $businessId, email: $email, name: $name, role: $role, phone: $phone, image: $image, imageBusiness: $imageBusiness, lang: $lang, sms: $sms, sendEmail: $sendEmail, push: $push, status: $status, emailVerifiedAt: $emailVerifiedAt, createdAt: $createdAt, updatedAt: $updatedAt, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount)';
   }
 
   @override
@@ -1540,8 +1502,6 @@ class _$ParticipantModelImpl extends _ParticipantModel {
             (identical(other.imageBusiness, imageBusiness) ||
                 other.imageBusiness == imageBusiness) &&
             (identical(other.lang, lang) || other.lang == lang) &&
-            (identical(other.visibility, visibility) ||
-                other.visibility == visibility) &&
             (identical(other.sms, sms) || other.sms == sms) &&
             (identical(other.sendEmail, sendEmail) ||
                 other.sendEmail == sendEmail) &&
@@ -1576,7 +1536,6 @@ class _$ParticipantModelImpl extends _ParticipantModel {
         image,
         imageBusiness,
         lang,
-        visibility,
         sms,
         sendEmail,
         push,
@@ -1618,7 +1577,6 @@ abstract class _ParticipantModel extends ParticipantModel {
       final String? image,
       @JsonKey(name: 'image_business') final String? imageBusiness,
       final String? lang,
-      final String? visibility,
       final String? sms,
       @JsonKey(name: 'send_email') final String? sendEmail,
       final String? push,
@@ -1656,8 +1614,6 @@ abstract class _ParticipantModel extends ParticipantModel {
   String? get imageBusiness;
   @override
   String? get lang;
-  @override
-  String? get visibility;
   @override
   String? get sms;
   @override
@@ -1706,10 +1662,26 @@ mixin _$LastMessageModel {
   int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'chat_id')
   int? get chatId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'chat_type')
+  String? get chatType => throw _privateConstructorUsedError;
   @JsonKey(name: 'sender_id')
   int? get senderId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'sender_type')
+  String? get senderType => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_bot')
+  bool? get isBot => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_intent')
+  String? get botIntent => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_confidence')
+  String? get botConfidence => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_reply_source')
+  String? get botReplySource => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bot_metadata')
+  dynamic get botMetadata => throw _privateConstructorUsedError;
   @JsonKey(name: 'receiver_id')
   int? get receiverId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'reply_to')
+  dynamic get replyTo => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
   @JsonKey(name: 'read_at')
   String? get readAt => throw _privateConstructorUsedError;
@@ -1717,6 +1689,7 @@ mixin _$LastMessageModel {
   String? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
   String? get updatedAt => throw _privateConstructorUsedError;
+  List<String>? get suggestions => throw _privateConstructorUsedError;
 
   /// Serializes this LastMessageModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1737,12 +1710,21 @@ abstract class $LastMessageModelCopyWith<$Res> {
   $Res call(
       {int? id,
       @JsonKey(name: 'chat_id') int? chatId,
+      @JsonKey(name: 'chat_type') String? chatType,
       @JsonKey(name: 'sender_id') int? senderId,
+      @JsonKey(name: 'sender_type') String? senderType,
+      @JsonKey(name: 'is_bot') bool? isBot,
+      @JsonKey(name: 'bot_intent') String? botIntent,
+      @JsonKey(name: 'bot_confidence') String? botConfidence,
+      @JsonKey(name: 'bot_reply_source') String? botReplySource,
+      @JsonKey(name: 'bot_metadata') dynamic botMetadata,
       @JsonKey(name: 'receiver_id') int? receiverId,
+      @JsonKey(name: 'reply_to') dynamic replyTo,
       String? content,
       @JsonKey(name: 'read_at') String? readAt,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'updated_at') String? updatedAt});
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      List<String>? suggestions});
 }
 
 /// @nodoc
@@ -1762,12 +1744,21 @@ class _$LastMessageModelCopyWithImpl<$Res, $Val extends LastMessageModel>
   $Res call({
     Object? id = freezed,
     Object? chatId = freezed,
+    Object? chatType = freezed,
     Object? senderId = freezed,
+    Object? senderType = freezed,
+    Object? isBot = freezed,
+    Object? botIntent = freezed,
+    Object? botConfidence = freezed,
+    Object? botReplySource = freezed,
+    Object? botMetadata = freezed,
     Object? receiverId = freezed,
+    Object? replyTo = freezed,
     Object? content = freezed,
     Object? readAt = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? suggestions = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -1778,14 +1769,46 @@ class _$LastMessageModelCopyWithImpl<$Res, $Val extends LastMessageModel>
           ? _value.chatId
           : chatId // ignore: cast_nullable_to_non_nullable
               as int?,
+      chatType: freezed == chatType
+          ? _value.chatType
+          : chatType // ignore: cast_nullable_to_non_nullable
+              as String?,
       senderId: freezed == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as int?,
+      senderType: freezed == senderType
+          ? _value.senderType
+          : senderType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isBot: freezed == isBot
+          ? _value.isBot
+          : isBot // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      botIntent: freezed == botIntent
+          ? _value.botIntent
+          : botIntent // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botConfidence: freezed == botConfidence
+          ? _value.botConfidence
+          : botConfidence // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botReplySource: freezed == botReplySource
+          ? _value.botReplySource
+          : botReplySource // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botMetadata: freezed == botMetadata
+          ? _value.botMetadata
+          : botMetadata // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       receiverId: freezed == receiverId
           ? _value.receiverId
           : receiverId // ignore: cast_nullable_to_non_nullable
               as int?,
+      replyTo: freezed == replyTo
+          ? _value.replyTo
+          : replyTo // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -1802,6 +1825,10 @@ class _$LastMessageModelCopyWithImpl<$Res, $Val extends LastMessageModel>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      suggestions: freezed == suggestions
+          ? _value.suggestions
+          : suggestions // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ) as $Val);
   }
 }
@@ -1817,12 +1844,21 @@ abstract class _$$LastMessageModelImplCopyWith<$Res>
   $Res call(
       {int? id,
       @JsonKey(name: 'chat_id') int? chatId,
+      @JsonKey(name: 'chat_type') String? chatType,
       @JsonKey(name: 'sender_id') int? senderId,
+      @JsonKey(name: 'sender_type') String? senderType,
+      @JsonKey(name: 'is_bot') bool? isBot,
+      @JsonKey(name: 'bot_intent') String? botIntent,
+      @JsonKey(name: 'bot_confidence') String? botConfidence,
+      @JsonKey(name: 'bot_reply_source') String? botReplySource,
+      @JsonKey(name: 'bot_metadata') dynamic botMetadata,
       @JsonKey(name: 'receiver_id') int? receiverId,
+      @JsonKey(name: 'reply_to') dynamic replyTo,
       String? content,
       @JsonKey(name: 'read_at') String? readAt,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'updated_at') String? updatedAt});
+      @JsonKey(name: 'updated_at') String? updatedAt,
+      List<String>? suggestions});
 }
 
 /// @nodoc
@@ -1840,12 +1876,21 @@ class __$$LastMessageModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? chatId = freezed,
+    Object? chatType = freezed,
     Object? senderId = freezed,
+    Object? senderType = freezed,
+    Object? isBot = freezed,
+    Object? botIntent = freezed,
+    Object? botConfidence = freezed,
+    Object? botReplySource = freezed,
+    Object? botMetadata = freezed,
     Object? receiverId = freezed,
+    Object? replyTo = freezed,
     Object? content = freezed,
     Object? readAt = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? suggestions = freezed,
   }) {
     return _then(_$LastMessageModelImpl(
       id: freezed == id
@@ -1856,14 +1901,46 @@ class __$$LastMessageModelImplCopyWithImpl<$Res>
           ? _value.chatId
           : chatId // ignore: cast_nullable_to_non_nullable
               as int?,
+      chatType: freezed == chatType
+          ? _value.chatType
+          : chatType // ignore: cast_nullable_to_non_nullable
+              as String?,
       senderId: freezed == senderId
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as int?,
+      senderType: freezed == senderType
+          ? _value.senderType
+          : senderType // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isBot: freezed == isBot
+          ? _value.isBot
+          : isBot // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      botIntent: freezed == botIntent
+          ? _value.botIntent
+          : botIntent // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botConfidence: freezed == botConfidence
+          ? _value.botConfidence
+          : botConfidence // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botReplySource: freezed == botReplySource
+          ? _value.botReplySource
+          : botReplySource // ignore: cast_nullable_to_non_nullable
+              as String?,
+      botMetadata: freezed == botMetadata
+          ? _value.botMetadata
+          : botMetadata // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       receiverId: freezed == receiverId
           ? _value.receiverId
           : receiverId // ignore: cast_nullable_to_non_nullable
               as int?,
+      replyTo: freezed == replyTo
+          ? _value.replyTo
+          : replyTo // ignore: cast_nullable_to_non_nullable
+              as dynamic,
       content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -1880,6 +1957,10 @@ class __$$LastMessageModelImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as String?,
+      suggestions: freezed == suggestions
+          ? _value._suggestions
+          : suggestions // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -1890,12 +1971,22 @@ class _$LastMessageModelImpl implements _LastMessageModel {
   const _$LastMessageModelImpl(
       {this.id,
       @JsonKey(name: 'chat_id') this.chatId,
+      @JsonKey(name: 'chat_type') this.chatType,
       @JsonKey(name: 'sender_id') this.senderId,
+      @JsonKey(name: 'sender_type') this.senderType,
+      @JsonKey(name: 'is_bot') this.isBot,
+      @JsonKey(name: 'bot_intent') this.botIntent,
+      @JsonKey(name: 'bot_confidence') this.botConfidence,
+      @JsonKey(name: 'bot_reply_source') this.botReplySource,
+      @JsonKey(name: 'bot_metadata') this.botMetadata,
       @JsonKey(name: 'receiver_id') this.receiverId,
+      @JsonKey(name: 'reply_to') this.replyTo,
       this.content,
       @JsonKey(name: 'read_at') this.readAt,
       @JsonKey(name: 'created_at') this.createdAt,
-      @JsonKey(name: 'updated_at') this.updatedAt});
+      @JsonKey(name: 'updated_at') this.updatedAt,
+      final List<String>? suggestions})
+      : _suggestions = suggestions;
 
   factory _$LastMessageModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$LastMessageModelImplFromJson(json);
@@ -1906,11 +1997,35 @@ class _$LastMessageModelImpl implements _LastMessageModel {
   @JsonKey(name: 'chat_id')
   final int? chatId;
   @override
+  @JsonKey(name: 'chat_type')
+  final String? chatType;
+  @override
   @JsonKey(name: 'sender_id')
   final int? senderId;
   @override
+  @JsonKey(name: 'sender_type')
+  final String? senderType;
+  @override
+  @JsonKey(name: 'is_bot')
+  final bool? isBot;
+  @override
+  @JsonKey(name: 'bot_intent')
+  final String? botIntent;
+  @override
+  @JsonKey(name: 'bot_confidence')
+  final String? botConfidence;
+  @override
+  @JsonKey(name: 'bot_reply_source')
+  final String? botReplySource;
+  @override
+  @JsonKey(name: 'bot_metadata')
+  final dynamic botMetadata;
+  @override
   @JsonKey(name: 'receiver_id')
   final int? receiverId;
+  @override
+  @JsonKey(name: 'reply_to')
+  final dynamic replyTo;
   @override
   final String? content;
   @override
@@ -1922,10 +2037,19 @@ class _$LastMessageModelImpl implements _LastMessageModel {
   @override
   @JsonKey(name: 'updated_at')
   final String? updatedAt;
+  final List<String>? _suggestions;
+  @override
+  List<String>? get suggestions {
+    final value = _suggestions;
+    if (value == null) return null;
+    if (_suggestions is EqualUnmodifiableListView) return _suggestions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString() {
-    return 'LastMessageModel(id: $id, chatId: $chatId, senderId: $senderId, receiverId: $receiverId, content: $content, readAt: $readAt, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'LastMessageModel(id: $id, chatId: $chatId, chatType: $chatType, senderId: $senderId, senderType: $senderType, isBot: $isBot, botIntent: $botIntent, botConfidence: $botConfidence, botReplySource: $botReplySource, botMetadata: $botMetadata, receiverId: $receiverId, replyTo: $replyTo, content: $content, readAt: $readAt, createdAt: $createdAt, updatedAt: $updatedAt, suggestions: $suggestions)';
   }
 
   @override
@@ -1935,22 +2059,55 @@ class _$LastMessageModelImpl implements _LastMessageModel {
             other is _$LastMessageModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.chatId, chatId) || other.chatId == chatId) &&
+            (identical(other.chatType, chatType) ||
+                other.chatType == chatType) &&
             (identical(other.senderId, senderId) ||
                 other.senderId == senderId) &&
+            (identical(other.senderType, senderType) ||
+                other.senderType == senderType) &&
+            (identical(other.isBot, isBot) || other.isBot == isBot) &&
+            (identical(other.botIntent, botIntent) ||
+                other.botIntent == botIntent) &&
+            (identical(other.botConfidence, botConfidence) ||
+                other.botConfidence == botConfidence) &&
+            (identical(other.botReplySource, botReplySource) ||
+                other.botReplySource == botReplySource) &&
+            const DeepCollectionEquality()
+                .equals(other.botMetadata, botMetadata) &&
             (identical(other.receiverId, receiverId) ||
                 other.receiverId == receiverId) &&
+            const DeepCollectionEquality().equals(other.replyTo, replyTo) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.readAt, readAt) || other.readAt == readAt) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            const DeepCollectionEquality()
+                .equals(other._suggestions, _suggestions));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, chatId, senderId, receiverId,
-      content, readAt, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      chatId,
+      chatType,
+      senderId,
+      senderType,
+      isBot,
+      botIntent,
+      botConfidence,
+      botReplySource,
+      const DeepCollectionEquality().hash(botMetadata),
+      receiverId,
+      const DeepCollectionEquality().hash(replyTo),
+      content,
+      readAt,
+      createdAt,
+      updatedAt,
+      const DeepCollectionEquality().hash(_suggestions));
 
   /// Create a copy of LastMessageModel
   /// with the given fields replaced by the non-null parameter values.
@@ -1971,15 +2128,23 @@ class _$LastMessageModelImpl implements _LastMessageModel {
 
 abstract class _LastMessageModel implements LastMessageModel {
   const factory _LastMessageModel(
-          {final int? id,
-          @JsonKey(name: 'chat_id') final int? chatId,
-          @JsonKey(name: 'sender_id') final int? senderId,
-          @JsonKey(name: 'receiver_id') final int? receiverId,
-          final String? content,
-          @JsonKey(name: 'read_at') final String? readAt,
-          @JsonKey(name: 'created_at') final String? createdAt,
-          @JsonKey(name: 'updated_at') final String? updatedAt}) =
-      _$LastMessageModelImpl;
+      {final int? id,
+      @JsonKey(name: 'chat_id') final int? chatId,
+      @JsonKey(name: 'chat_type') final String? chatType,
+      @JsonKey(name: 'sender_id') final int? senderId,
+      @JsonKey(name: 'sender_type') final String? senderType,
+      @JsonKey(name: 'is_bot') final bool? isBot,
+      @JsonKey(name: 'bot_intent') final String? botIntent,
+      @JsonKey(name: 'bot_confidence') final String? botConfidence,
+      @JsonKey(name: 'bot_reply_source') final String? botReplySource,
+      @JsonKey(name: 'bot_metadata') final dynamic botMetadata,
+      @JsonKey(name: 'receiver_id') final int? receiverId,
+      @JsonKey(name: 'reply_to') final dynamic replyTo,
+      final String? content,
+      @JsonKey(name: 'read_at') final String? readAt,
+      @JsonKey(name: 'created_at') final String? createdAt,
+      @JsonKey(name: 'updated_at') final String? updatedAt,
+      final List<String>? suggestions}) = _$LastMessageModelImpl;
 
   factory _LastMessageModel.fromJson(Map<String, dynamic> json) =
       _$LastMessageModelImpl.fromJson;
@@ -1990,11 +2155,35 @@ abstract class _LastMessageModel implements LastMessageModel {
   @JsonKey(name: 'chat_id')
   int? get chatId;
   @override
+  @JsonKey(name: 'chat_type')
+  String? get chatType;
+  @override
   @JsonKey(name: 'sender_id')
   int? get senderId;
   @override
+  @JsonKey(name: 'sender_type')
+  String? get senderType;
+  @override
+  @JsonKey(name: 'is_bot')
+  bool? get isBot;
+  @override
+  @JsonKey(name: 'bot_intent')
+  String? get botIntent;
+  @override
+  @JsonKey(name: 'bot_confidence')
+  String? get botConfidence;
+  @override
+  @JsonKey(name: 'bot_reply_source')
+  String? get botReplySource;
+  @override
+  @JsonKey(name: 'bot_metadata')
+  dynamic get botMetadata;
+  @override
   @JsonKey(name: 'receiver_id')
   int? get receiverId;
+  @override
+  @JsonKey(name: 'reply_to')
+  dynamic get replyTo;
   @override
   String? get content;
   @override
@@ -2006,6 +2195,8 @@ abstract class _LastMessageModel implements LastMessageModel {
   @override
   @JsonKey(name: 'updated_at')
   String? get updatedAt;
+  @override
+  List<String>? get suggestions;
 
   /// Create a copy of LastMessageModel
   /// with the given fields replaced by the non-null parameter values.

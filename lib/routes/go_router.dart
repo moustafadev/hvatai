@@ -121,7 +121,7 @@ final GoRouter router = GoRouter(
           builder: (context, state) {
             final args = state.extra as Map<String, dynamic>?;
 
-            final int chatId = args?['chatId'] as int;
+            final int? chatId = args?['chatId'] as int?;
             final UserChatModel user = args?['user'] as UserChatModel;
 
             return ChatDetailsScreen(
@@ -249,7 +249,7 @@ final GoRouter router = GoRouter(
           if (mode is String && mode == 'edit') {
             isEdit = true;
           }
-        } 
+        }
 
         return AddNewProductsScreen(
           product: product,
