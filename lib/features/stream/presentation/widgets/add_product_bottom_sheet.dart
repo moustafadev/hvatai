@@ -272,14 +272,7 @@ class AddProductBottomSheet extends StatelessWidget {
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    final currentQty =
-                                        state.product.variants.isNotEmpty
-                                            ? state.product.variants.first.stock
-                                            : 1;
-                                    if (currentQty > 1) {
-                                      cubit.updateField(
-                                          'stock', (currentQty - 1).toString());
-                                    }
+                                    cubit.decreaseQuantity();
                                   },
                                   child: SvgPicture.asset(
                                     Assets.assetsIconsMinusCircle,
@@ -306,12 +299,7 @@ class AddProductBottomSheet extends StatelessWidget {
                                 SizedBox(width: 16.w),
                                 GestureDetector(
                                   onTap: () {
-                                    final currentQty =
-                                        state.product.variants.isNotEmpty
-                                            ? state.product.variants.first.stock
-                                            : 1;
-                                    cubit.updateField(
-                                        'stock', (currentQty + 1).toString());
+                                    cubit.increaseQuantity();
                                   },
                                   child: SvgPicture.asset(
                                     Assets.assetsIconsAddCircle,
@@ -346,8 +334,8 @@ class AddProductBottomSheet extends StatelessWidget {
                           ? null
                           : () async {
                               // Add the product and get the created product
-                              final createdProduct =
-                                  await cubit.addProduct(context);
+                              final createdProduct = await cubit
+                                  .addProduct(context, isStream: true);
                               // If product was created successfully, add it to stream
                               if (createdProduct != null &&
                                   createdProduct.id != null &&

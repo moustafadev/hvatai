@@ -69,7 +69,7 @@ class LastUsedCategoriesWidget extends StatelessWidget {
                             ),
                             Expanded(
                               child: CustomImage(
-                                imageSource: _getIconUrl(category.icon),
+                                imageSource: category.icon ?? '',
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -85,17 +85,5 @@ class LastUsedCategoriesWidget extends StatelessWidget {
         );
       },
     );
-  }
-
-  String _getIconUrl(String? icon) {
-    if (icon == null || icon.isEmpty) return '';
-    if (icon.startsWith('http://') || icon.startsWith('https://')) {
-      return icon;
-    }
-    // Add storage prefix if not already present
-    if (!icon.startsWith('storage/')) {
-      return 'storage/$icon';
-    }
-    return icon;
   }
 }

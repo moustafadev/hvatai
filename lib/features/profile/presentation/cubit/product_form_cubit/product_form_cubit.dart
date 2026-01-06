@@ -350,9 +350,10 @@ class ProductFormCubit extends Cubit<ProductFormState> {
     return formData;
   }
 
-  Future<ProductModel?> addProduct(BuildContext context) async {
+  Future<ProductModel?> addProduct(BuildContext context , {bool isStream = false}) async {
     // Validate before submitting and show specific error messages
-    final validationError = _validateProduct();
+   
+    final validationError = isStream ? null : _validateProduct();
     if (validationError != null) {
       showFloatingMessageError(validationError);
       return null;
