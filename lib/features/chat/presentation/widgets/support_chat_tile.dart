@@ -70,7 +70,7 @@ class SupportChatTile extends StatelessWidget {
                             ? Container(
                                 padding: const EdgeInsets.all(8),
                                 decoration: const BoxDecoration(
-                                  color: AppColors.primary,
+                                  color: AppColors.purple2,
                                   shape: BoxShape.circle,
                                 ),
                                 child: CustomText(text: '${chat.unreadCount}'),
