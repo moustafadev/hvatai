@@ -14,6 +14,13 @@ class ProductDetailsImageCarousel extends StatelessWidget {
   final int currentImageIndex;
   final ValueChanged<int> onPageChanged;
 
+  /// Check if a file path is a video
+  bool _isVideoFile(String path) {
+    final extension = path.toLowerCase().split('.').last;
+    final videoExtensions = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
+    return videoExtensions.contains(extension);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,13 +32,27 @@ class ProductDetailsImageCarousel extends StatelessWidget {
             itemCount: images.isEmpty ? 1 : images.length,
             onPageChanged: onPageChanged,
             itemBuilder: (context, index) {
-              return images.isEmpty
-                  ? _ProductDetailsPlaceholder()
-                  : CustomImage(
-                      height: 300.h,
-                      imageSource: images[index],
-                      fit: BoxFit.cover,
-                    );
+              if (images.isEmpty) {
+                return _ProductDetailsPlaceholder();
+              }
+
+              final mediaPath = images[index];
+              final isVideo = _isVideoFile(mediaPath);
+
+              if (isVideo) {
+                // Show video player widget
+                return VideoThumbnailPlayer(
+                  videoPath: mediaPath,
+                  height: 300.h,
+                );
+              } else {
+                // Show image
+                return CustomImage(
+                  height: 300.h,
+                  imageSource: mediaPath,
+                  fit: BoxFit.cover,
+                );
+              }
             },
           ),
         ),

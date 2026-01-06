@@ -16,6 +16,7 @@ import 'package:hvatai/features/profile/data/model/product_model/product_model.d
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
+import 'package:hvatai/core/widgets/video_thumbnail_player.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 

@@ -30,6 +30,7 @@ import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/features/stream/presentation/cubit/my_streams_cubit/my_streams_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
+import 'package:hvatai/core/widgets/video_thumbnail_player.dart';
 
 part 'screens/add_new_products_screen.dart';
 part 'screens/add_stream_screen.dart';

@@ -1,7 +1,19 @@
 part of '../profile.dart';
 
-class MyProductDetailsScreen extends StatelessWidget {
+class MyProductDetailsScreen extends StatefulWidget {
   const MyProductDetailsScreen({super.key});
+
+  @override
+  State<MyProductDetailsScreen> createState() => _MyProductDetailsScreenState();
+}
+
+class _MyProductDetailsScreenState extends State<MyProductDetailsScreen> {
+  @override
+  void dispose() {
+    // Clear video cache when leaving the screen
+    VideoThumbnailPlayer.clearCache();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +50,27 @@ class MyProductDetailsScreen extends StatelessWidget {
                                   .changeImageIndex(index);
                             },
                             itemBuilder: (context, index) {
-                              return images.isEmpty
-                                  ? _buildPlaceholder()
-                                  : CustomImage(
-                                      height: 300.h,
-                                      imageSource: images[index],
-                                      fit: BoxFit.cover,
-                                    );
+                              if (images.isEmpty) {
+                                return _buildPlaceholder();
+                              }
+
+                              final mediaPath = images[index];
+                              final isVideo = _isVideoFile(mediaPath);
+
+                              if (isVideo) {
+                                // Show video player widget
+                                return VideoThumbnailPlayer(
+                                  videoPath: mediaPath,
+                                  height: 300.h,
+                                );
+                              } else {
+                                // Show image
+                                return CustomImage(
+                                  height: 300.h,
+                                  imageSource: mediaPath,
+                                  fit: BoxFit.cover,
+                                );
+                              }
                             },
                           ),
                         ),
@@ -253,6 +279,13 @@ class MyProductDetailsScreen extends StatelessWidget {
         ),
       );
     });
+  }
+
+  /// Check if a file path is a video
+  bool _isVideoFile(String path) {
+    final extension = path.toLowerCase().split('.').last;
+    final videoExtensions = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
+    return videoExtensions.contains(extension);
   }
 
   Widget _buildPlaceholder() {

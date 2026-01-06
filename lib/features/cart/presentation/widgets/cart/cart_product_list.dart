@@ -8,14 +8,31 @@ class CartProductList extends StatelessWidget {
 
   final List<CartItem> cartItems;
 
+  /// Get the first image (excluding videos) from the product images list
+  String? _getFirstImage(List<String>? images) {
+    if (images == null || images.isEmpty) return null;
+
+    for (final imagePath in images) {
+      if (_isImageFile(imagePath)) {
+        return imagePath;
+      }
+    }
+    return null;
+  }
+
+  /// Check if a file path is an image (not a video)
+  bool _isImageFile(String path) {
+    final extension = path.toLowerCase().split('.').last;
+    final videoExtensions = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
+    return !videoExtensions.contains(extension);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: cartItems.map((item) {
         final product = item.item?.product;
-        final image = (product?.images?.isNotEmpty == true)
-            ? product!.images!.first
-            : null;
+        final image = _getFirstImage(product?.images);
         return Padding(
           padding: const EdgeInsets.only(bottom: 12),
           child: Row(

@@ -166,9 +166,6 @@ class NewProductWidgetBody extends StatelessWidget {
                         await cubit.updateProduct(context);
                       } else {
                         await cubit.addProduct(context);
-                        if (context.mounted) {
-                          context.pop(true);
-                        }
                       }
                     },
                   ),
