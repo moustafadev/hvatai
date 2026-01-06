@@ -12,6 +12,7 @@ import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/chat/presentation/cubit/chats_cubit.dart';
+import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/sign_out_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
@@ -97,6 +98,20 @@ class ProfileCubit extends Cubit<ProfileState> {
       {
         "icon": Assets.assetsIconsLetterOpened,
         "title": "contactUs".tr(),
+        "screen": (BuildContext context) async {
+          final cubit = ChatsCubit.get(context);
+
+          // Navigate immediately with existing chat ID or 0 as placeholder
+          final existingChatId = cubit.state.supportChat?.id ?? 0;
+          inChat = true;
+
+          context.push(
+            '${AppRoutes.chatRoot}/${AppRoutes.chatSupportDetails}',
+            extra: {
+              'chatId': existingChatId,
+            },
+          );
+        },
       },
       {
         "icon": Assets.assetsIconsDangerTriangle,

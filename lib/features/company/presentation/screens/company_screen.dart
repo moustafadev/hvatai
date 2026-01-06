@@ -166,7 +166,7 @@ class _CompanyView extends StatelessWidget {
                         onTap: () {
                           final user = state.user;
                           if (user != null) {
-                            showChatBottomSheet(context, user);
+                            navigateToChatDetails(context, user);
                           }
                         },
                       ),

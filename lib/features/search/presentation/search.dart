@@ -32,6 +32,5 @@ part 'widgets/my_category_search.dart';
 part 'widgets/products_search_widget.dart';
 part 'widgets/users_search_widget.dart';
 part 'widgets/review_item.dart';
-part 'widgets/chat_bottom_sheet.dart';
 part 'widgets/reusable_category_widget.dart';
 part 'widgets/search_suggestions_widget.dart';

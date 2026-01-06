@@ -15,6 +15,7 @@ import 'package:hvatai/features/company/presentation/cubit/company_products/comp
 import 'package:hvatai/features/company/presentation/cubit/company_streams/company_streams_cubit.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
+import 'package:hvatai/features/chat/presentation/chat.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 

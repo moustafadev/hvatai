@@ -100,7 +100,11 @@ class _AwardsClubBottomSheetActions extends StatelessWidget {
           CustomRowAwardsGift(
             title: 'write'.tr(),
             imagePath: Assets.assetsIconsMessage,
-            onTap: () => showChatBottomSheet(context, user),
+            onTap: () {
+              if (user != null) {
+                navigateToChatDetails(context, user!);
+              }
+            },
           ),
           12.ph,
           CustomRowAwardsGift(
