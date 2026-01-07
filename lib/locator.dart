@@ -57,8 +57,11 @@ import 'package:hvatai/features/profile/data/datasources/api_service_profile.dar
 import 'package:hvatai/features/profile/data/repositories/profile_impl_repository.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
 import 'package:hvatai/features/profile/presentation/cubit/add_stream/add_stream_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/analytics_cubit/analytics_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
+import 'package:hvatai/features/analytics/presentation/cubit/analytics/analytics_cubit.dart';
+import 'package:hvatai/features/analytics/data/datasources/api_service_analytics.dart';
+import 'package:hvatai/features/analytics/data/repositories/analytics_repository_impl.dart';
+import 'package:hvatai/features/analytics/domain/repositories/analytics_repository.dart';
 import 'package:hvatai/features/profile/presentation/cubit/product_form_cubit/product_form_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_products_cubit/my_products_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_product_details_cubit/my_product_details_cubit.dart';
@@ -171,8 +174,9 @@ Future<void> setupLocator() async {
       ));
   locator.registerFactory(() => MyProductsCubit(locator()));
   locator.registerFactory(() => MyProductDetailsCubit());
-  locator.registerFactory(() => AnalyticsCubit());
   locator.registerFactory(() => ProductImageCubit());
+  // Analytics
+  locator.registerFactory(() => AnalyticsCubit(locator()));
   locator.registerFactory(() => NotificationsCubit(locator(), locator()));
   locator.registerFactory(() => ReportViolationCubit());
 
@@ -226,6 +230,8 @@ Future<void> setupLocator() async {
       () => AddressImplRepository(locator()));
   locator.registerLazySingleton<PaymentMethodRepository>(
       () => PaymentMethodImplRepository(locator()));
+  locator.registerLazySingleton<AnalyticsRepository>(
+      () => AnalyticsRepositoryImpl(locator()));
   // //DATASOURSE
   locator.registerLazySingleton(() => ApiServiceAuth());
   locator.registerLazySingleton(() => ApiServiceAddress());
@@ -243,6 +249,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ApiServiceStream());
   locator.registerLazySingleton(() => ApiServiceWallet());
   locator.registerLazySingleton(() => ApiServiceOrders());
+  locator.registerLazySingleton(() => ApiServiceAnalytics());
 
   // //EXTRNAL
   locator.registerLazySingleton(() => SharedPreferences.getInstance());

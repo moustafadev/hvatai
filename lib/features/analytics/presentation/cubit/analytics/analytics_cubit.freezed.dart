@@ -16,8 +16,13 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AnalyticsState {
-  int get selectedTabIndex => throw _privateConstructorUsedError;
-  int get selectedCategoryIndex => throw _privateConstructorUsedError;
+  int get selectedTabIndex =>
+      throw _privateConstructorUsedError; // 0 = all, 1 = streams
+  int get selectedPeriodIndex =>
+      throw _privateConstructorUsedError; // 0 = week, 1 = month, 2 = quarter, 3 = year
+  bool get isLoading => throw _privateConstructorUsedError;
+  String get errorMessage => throw _privateConstructorUsedError;
+  StatisticsModel? get statistics => throw _privateConstructorUsedError;
 
   /// Create a copy of AnalyticsState
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +37,14 @@ abstract class $AnalyticsStateCopyWith<$Res> {
           AnalyticsState value, $Res Function(AnalyticsState) then) =
       _$AnalyticsStateCopyWithImpl<$Res, AnalyticsState>;
   @useResult
-  $Res call({int selectedTabIndex, int selectedCategoryIndex});
+  $Res call(
+      {int selectedTabIndex,
+      int selectedPeriodIndex,
+      bool isLoading,
+      String errorMessage,
+      StatisticsModel? statistics});
+
+  $StatisticsModelCopyWith<$Res>? get statistics;
 }
 
 /// @nodoc
@@ -51,18 +63,47 @@ class _$AnalyticsStateCopyWithImpl<$Res, $Val extends AnalyticsState>
   @override
   $Res call({
     Object? selectedTabIndex = null,
-    Object? selectedCategoryIndex = null,
+    Object? selectedPeriodIndex = null,
+    Object? isLoading = null,
+    Object? errorMessage = null,
+    Object? statistics = freezed,
   }) {
     return _then(_value.copyWith(
       selectedTabIndex: null == selectedTabIndex
           ? _value.selectedTabIndex
           : selectedTabIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      selectedCategoryIndex: null == selectedCategoryIndex
-          ? _value.selectedCategoryIndex
-          : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
+      selectedPeriodIndex: null == selectedPeriodIndex
+          ? _value.selectedPeriodIndex
+          : selectedPeriodIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      statistics: freezed == statistics
+          ? _value.statistics
+          : statistics // ignore: cast_nullable_to_non_nullable
+              as StatisticsModel?,
     ) as $Val);
+  }
+
+  /// Create a copy of AnalyticsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $StatisticsModelCopyWith<$Res>? get statistics {
+    if (_value.statistics == null) {
+      return null;
+    }
+
+    return $StatisticsModelCopyWith<$Res>(_value.statistics!, (value) {
+      return _then(_value.copyWith(statistics: value) as $Val);
+    });
   }
 }
 
@@ -74,7 +115,15 @@ abstract class _$$AnalyticsStateImplCopyWith<$Res>
       __$$AnalyticsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int selectedTabIndex, int selectedCategoryIndex});
+  $Res call(
+      {int selectedTabIndex,
+      int selectedPeriodIndex,
+      bool isLoading,
+      String errorMessage,
+      StatisticsModel? statistics});
+
+  @override
+  $StatisticsModelCopyWith<$Res>? get statistics;
 }
 
 /// @nodoc
@@ -91,17 +140,32 @@ class __$$AnalyticsStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? selectedTabIndex = null,
-    Object? selectedCategoryIndex = null,
+    Object? selectedPeriodIndex = null,
+    Object? isLoading = null,
+    Object? errorMessage = null,
+    Object? statistics = freezed,
   }) {
     return _then(_$AnalyticsStateImpl(
       selectedTabIndex: null == selectedTabIndex
           ? _value.selectedTabIndex
           : selectedTabIndex // ignore: cast_nullable_to_non_nullable
               as int,
-      selectedCategoryIndex: null == selectedCategoryIndex
-          ? _value.selectedCategoryIndex
-          : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
+      selectedPeriodIndex: null == selectedPeriodIndex
+          ? _value.selectedPeriodIndex
+          : selectedPeriodIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      errorMessage: null == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
+              as String,
+      statistics: freezed == statistics
+          ? _value.statistics
+          : statistics // ignore: cast_nullable_to_non_nullable
+              as StatisticsModel?,
     ));
   }
 }
@@ -110,18 +174,32 @@ class __$$AnalyticsStateImplCopyWithImpl<$Res>
 
 class _$AnalyticsStateImpl implements _AnalyticsState {
   const _$AnalyticsStateImpl(
-      {this.selectedTabIndex = 0, this.selectedCategoryIndex = 0});
+      {this.selectedTabIndex = 0,
+      this.selectedPeriodIndex = 0,
+      this.isLoading = false,
+      this.errorMessage = '',
+      this.statistics});
 
   @override
   @JsonKey()
   final int selectedTabIndex;
+// 0 = all, 1 = streams
   @override
   @JsonKey()
-  final int selectedCategoryIndex;
+  final int selectedPeriodIndex;
+// 0 = week, 1 = month, 2 = quarter, 3 = year
+  @override
+  @JsonKey()
+  final bool isLoading;
+  @override
+  @JsonKey()
+  final String errorMessage;
+  @override
+  final StatisticsModel? statistics;
 
   @override
   String toString() {
-    return 'AnalyticsState(selectedTabIndex: $selectedTabIndex, selectedCategoryIndex: $selectedCategoryIndex)';
+    return 'AnalyticsState(selectedTabIndex: $selectedTabIndex, selectedPeriodIndex: $selectedPeriodIndex, isLoading: $isLoading, errorMessage: $errorMessage, statistics: $statistics)';
   }
 
   @override
@@ -131,13 +209,19 @@ class _$AnalyticsStateImpl implements _AnalyticsState {
             other is _$AnalyticsStateImpl &&
             (identical(other.selectedTabIndex, selectedTabIndex) ||
                 other.selectedTabIndex == selectedTabIndex) &&
-            (identical(other.selectedCategoryIndex, selectedCategoryIndex) ||
-                other.selectedCategoryIndex == selectedCategoryIndex));
+            (identical(other.selectedPeriodIndex, selectedPeriodIndex) ||
+                other.selectedPeriodIndex == selectedPeriodIndex) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage) &&
+            (identical(other.statistics, statistics) ||
+                other.statistics == statistics));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, selectedTabIndex, selectedCategoryIndex);
+  int get hashCode => Object.hash(runtimeType, selectedTabIndex,
+      selectedPeriodIndex, isLoading, errorMessage, statistics);
 
   /// Create a copy of AnalyticsState
   /// with the given fields replaced by the non-null parameter values.
@@ -152,12 +236,21 @@ class _$AnalyticsStateImpl implements _AnalyticsState {
 abstract class _AnalyticsState implements AnalyticsState {
   const factory _AnalyticsState(
       {final int selectedTabIndex,
-      final int selectedCategoryIndex}) = _$AnalyticsStateImpl;
+      final int selectedPeriodIndex,
+      final bool isLoading,
+      final String errorMessage,
+      final StatisticsModel? statistics}) = _$AnalyticsStateImpl;
 
   @override
-  int get selectedTabIndex;
+  int get selectedTabIndex; // 0 = all, 1 = streams
   @override
-  int get selectedCategoryIndex;
+  int get selectedPeriodIndex; // 0 = week, 1 = month, 2 = quarter, 3 = year
+  @override
+  bool get isLoading;
+  @override
+  String get errorMessage;
+  @override
+  StatisticsModel? get statistics;
 
   /// Create a copy of AnalyticsState
   /// with the given fields replaced by the non-null parameter values.

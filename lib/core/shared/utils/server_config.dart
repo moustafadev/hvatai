@@ -87,4 +87,7 @@ abstract class ServerConfig {
   static const String orderFromCart = "orders/from-cart";
   static const String userOrders = "orders/user";
   static String userData(int userId) => "user-data/$userId";
+
+  // Analytics endpoint
+  static const String statistics = "statistics";
 }

@@ -69,6 +69,7 @@ import 'package:hvatai/features/stream/domain/usecases/update_stream_media_useca
 import 'package:hvatai/features/wallet/domain/usecases/get_wallet_transactions_usecase.dart';
 import 'package:hvatai/features/wallet/domain/usecases/get_wallet_usecase.dart';
 import 'package:hvatai/features/wallet/domain/usecases/withdraw_to_card_usecase.dart';
+import 'package:hvatai/features/analytics/domain/usecases/get_statistics_usecase.dart';
 import 'package:hvatai/locator.dart';
 
 void locatorUseCase() {
@@ -144,4 +145,5 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => CreateOrderUsecase(locator()));
   locator.registerLazySingleton(() => GetUserOrdersUsecase(locator()));
   locator.registerLazySingleton(() => GetCompanyStreamsUsecase(locator()));
+  locator.registerLazySingleton(() => GetStatisticsUsecase(locator()));
 }
