@@ -34,3 +34,4 @@ part 'widgets/users_search_widget.dart';
 part 'widgets/review_item.dart';
 part 'widgets/reusable_category_widget.dart';
 part 'widgets/search_suggestions_widget.dart';
+part 'widgets/search_suggestions_overlay.dart';

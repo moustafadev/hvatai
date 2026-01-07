@@ -79,13 +79,13 @@ class _ProductsCompanyView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           50.ph,
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-            child: TopBarSearchWidget(
-              isSearch: true,
-              image: Assets.assetsIconsTune,
-            ),
-          ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+          //   child: TopBarSearchWidget(
+          //     isSearch: true,
+          //     image: Assets.assetsIconsTune,
+          //   ),
+          // ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: CustomText(

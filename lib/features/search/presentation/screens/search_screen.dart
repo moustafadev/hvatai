@@ -1,7 +1,15 @@
 part of '../search.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  final GlobalKey _searchFieldKey = GlobalKey();
+  final LayerLink _searchFieldLink = LayerLink();
 
   @override
   Widget build(BuildContext context) {
@@ -22,143 +30,126 @@ class SearchScreen extends StatelessWidget {
             );
           }
 
-          return GestureDetector(
-            onTap: () {
-              // Hide suggestions when tapping outside
-              if (state.showSuggestions) {
-                cubit.hideSuggestions();
-              }
-            },
-            child: Scaffold(
+          return Scaffold(
             backgroundColor: AppColors.lightGreyBackground,
-              body: Stack(
-                children: [
-                  Column(
+            body: Stack(
               children: [
-                59.ph,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: TopBarSearchWidget(
-                    isSearch: true,
-                    image: Assets.assetsIconsShare,
-                    onChanged: cubit.onQueryChanged,
-                          onFocus: cubit.onSearchFieldFocused,
-                          initialValue: state.query,
-                  ),
-                ),
-                if (state.errorMessage.isNotEmpty)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: CustomText(
-                      text: state.errorMessage,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.red,
+                Column(
+                  children: [
+                    59.ph,
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: TopBarSearchWidget(
+                        searchFieldKey: _searchFieldKey,
+                        searchFieldLink: _searchFieldLink,
+                        isSearch: true,
+                        image: Assets.assetsIconsShare,
+                        onChanged: cubit.onQueryChanged,
+                        onFocus: cubit.onSearchFieldFocused,
+                        initialValue: state.query,
+                      ),
                     ),
-                  )
-                else if (state.hasNoResults)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: CustomText(
-                      text: 'No results found',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
-                16.ph,
-                Expanded(
-                        child: NotificationListener<ScrollNotification>(
-                          onNotification: (notification) {
-                            if (notification is ScrollUpdateNotification ||
-                                notification is ScrollStartNotification) {
-                              cubit.onScroll();
-                            }
-                            return false;
-                          },
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                                ButtonTabBarSearch(
-                                    onCategorySelected: (category) {
-                          if (category != null) {
-                            cubit.selectCategory(category);
-                          }
-                        }),
-                        10.ph,
-                        // CustomText(
-                        //   text: 'recentlySearched'.tr(),
-                        //   fontWeight: FontWeight.w800,
-                        //   fontSize: 20.sp,
-                        // ),
-                        // 12.ph,
-                        // SearchRecently(),
-                        // 24.ph,
-                        Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0),
-                          child: CustomText(
-                            text: 'category'.tr(),
-                            fontWeight: FontWeight.w800,
-                            fontSize: 20.sp,
-                          ),
+                    if (state.errorMessage.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: CustomText(
+                          text: state.errorMessage,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.red,
                         ),
-                        12.ph,
-                        MyCategorySearch(),
-                        24.ph,
-                        Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0),
+                      )
+                    else if (state.hasNoResults)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                        child: CustomText(
+                          text: 'No results found',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    16.ph,
+                    Expanded(
+                      child: NotificationListener<ScrollNotification>(
+                        onNotification: (notification) {
+                          if (notification is ScrollUpdateNotification ||
+                              notification is ScrollStartNotification) {
+                            cubit.onScroll();
+                          }
+                          return false;
+                        },
+                        child: SingleChildScrollView(
                           child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              CustomText(
-                                text: 'goods'.tr(),
-                                fontWeight: FontWeight.w800,
-                                fontSize: 20.sp,
-                              ),
-                              12.ph,
-                              ProductsSearchWidget(),
-                              24.ph,
-                              CustomText(
-                                text: 'streams'.tr(),
-                                fontWeight: FontWeight.w800,
-                                fontSize: 20.sp,
+                              ButtonTabBarSearch(
+                                onCategorySelected: (category) {
+                                  if (category != null) {
+                                    cubit.selectCategory(category);
+                                  }
+                                },
                               ),
                               10.ph,
-                              SearchLiveVideoWidget(
-                                liveStreams: state.liveStreams,
-                                currentUserId: '',
-                                searchQuery: state.query,
-                                        selectedCategory:
-                                            cubit.selectedCategory,
-                              ),
-                              24.ph,
-                              CustomText(
-                                text: 'users'.tr(),
-                                fontWeight: FontWeight.w800,
-                                fontSize: 20.sp,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                                child: CustomText(
+                                  text: 'category'.tr(),
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 20.sp,
+                                ),
                               ),
                               12.ph,
-                              UsersSearchWidget(),
+                              MyCategorySearch(),
+                              24.ph,
+                              Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    CustomText(
+                                      text: 'goods'.tr(),
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 20.sp,
+                                    ),
+                                    12.ph,
+                                    ProductsSearchWidget(),
+                                    24.ph,
+                                    CustomText(
+                                      text: 'streams'.tr(),
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 20.sp,
+                                    ),
+                                    10.ph,
+                                    SearchLiveVideoWidget(
+                                      liveStreams: state.liveStreams,
+                                      currentUserId: '',
+                                      searchQuery: state.query,
+                                      selectedCategory: cubit.selectedCategory,
+                                    ),
+                                    24.ph,
+                                    CustomText(
+                                      text: 'users'.tr(),
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 20.sp,
+                                    ),
+                                    12.ph,
+                                    UsersSearchWidget(),
+                                  ],
+                                ),
+                              ),
+                              100.ph
                             ],
                           ),
                         ),
-                        100.ph
-                      ],
-                    ),
-                  ),
-                ),
                       ),
-                    ],
-                  ),
-                  // Suggestions overlay - positioned above all content
-                  Positioned(
-                    top: 80.h,
-                    left: 32.w,
-                    child: const SearchSuggestionsWidget(),
-                  ),
+                    ),
+                  ],
+                ),
+                _SearchSuggestionsOverlay(
+                  searchFieldKey: _searchFieldKey,
+                  searchFieldLink: _searchFieldLink,
+                ),
               ],
-              ),
             ),
           );
         },

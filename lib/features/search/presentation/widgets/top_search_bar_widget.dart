@@ -1,10 +1,12 @@
 part of '../search.dart';
 
-class TopBarSearchWidget extends StatelessWidget {
+class TopBarSearchWidget extends StatefulWidget {
   const TopBarSearchWidget({
     super.key,
     required this.image,
     required this.isSearch,
+    required this.searchFieldLink,
+    required this.searchFieldKey,
     this.onChanged,
     this.onFocus,
     this.initialValue,
@@ -12,9 +14,39 @@ class TopBarSearchWidget extends StatelessWidget {
 
   final String image;
   final bool isSearch;
+  final LayerLink searchFieldLink;
+  final GlobalKey searchFieldKey;
   final ValueChanged<String>? onChanged;
   final VoidCallback? onFocus;
   final String? initialValue;
+
+  @override
+  State<TopBarSearchWidget> createState() => _TopBarSearchWidgetState();
+}
+
+class _TopBarSearchWidgetState extends State<TopBarSearchWidget> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.initialValue ?? '');
+  }
+
+  @override
+  void didUpdateWidget(TopBarSearchWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialValue != widget.initialValue &&
+        _controller.text != widget.initialValue) {
+      _controller.text = widget.initialValue ?? '';
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,28 +59,34 @@ class TopBarSearchWidget extends StatelessWidget {
               context.pop();
             },
             child: Icon(Icons.arrow_back_ios)),
-        isSearch ? 2.ph : const Spacer(),
-        isSearch
+        widget.isSearch ? 2.ph : const Spacer(),
+        widget.isSearch
             ? Expanded(
-                child: CustomTextField(
-                  key: ValueKey(initialValue ?? ''),
-                  fillColor: AppColors.white,
-                  height: 40,
-                  borderRadius: BorderRadius.circular(10.r),
-                  onChanged: onChanged,
-                  onTap: onFocus,
-                  initialValue: initialValue,
-                  hintText: 'find'.tr(),
-                  prefixIcon: Image.asset(
-                    Assets.assetsIconsSearch,
-                    color: AppColors.blackDark,
-                    height: 22.h,
-                    width: 22.w,
+                child: CompositedTransformTarget(
+                  link: widget.searchFieldLink,
+                  child: SizedBox(
+                    key: widget.searchFieldKey,
+                    height: 40,
+                    child: CustomTextField(
+                      controller: _controller,
+                      fillColor: AppColors.white,
+                      height: 40,
+                      borderRadius: BorderRadius.circular(10.r),
+                      onChanged: widget.onChanged,
+                      onTap: widget.onFocus,
+                      hintText: 'find'.tr(),
+                      prefixIcon: Image.asset(
+                        Assets.assetsIconsSearch,
+                        color: AppColors.blackDark,
+                        height: 22.h,
+                        width: 22.w,
+                      ),
+                    ),
                   ),
                 ),
               )
             : Container(),
-        isSearch ? 8.pw : 0.ph,
+        widget.isSearch ? 8.pw : 0.ph,
         // Padding(
         //   padding: const EdgeInsets.only(bottom: 8.0),
         //   child: GestureDetector(

@@ -14,10 +14,10 @@ class ReviewsCompanyScreen extends StatelessWidget {
             sliver: SliverList(
               delegate: SliverChildListDelegate([
                 50.ph,
-                TopBarSearchWidget(
-                  isSearch: false,
-                  image: Assets.assetsIconsTune,
-                ),
+                // TopBarSearchWidget(
+                //   isSearch: false,
+                //   image: Assets.assetsIconsTune,
+                // ),
                 24.ph,
                 CustomText(
                   text: 'reviews'.tr(),
