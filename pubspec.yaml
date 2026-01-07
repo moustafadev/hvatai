@@ -67,11 +67,7 @@ dependencies:
   flutter_webrtc: ^0.12.12+hotfix.1
   wakelock_plus: ^1.4.0
   flutter_html: ^3.0.0
-  video_player: ^2.8.2
-  video_thumbnail: ^0.5.6
-
-  # camera_with_rtmp:
-  #   path: packages/flutter_rtmppublisher-main/
+  video_player: ^2.10.1
 
 dev_dependencies:
   flutter_test:
