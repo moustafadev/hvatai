@@ -44,13 +44,17 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
   }
 
   void changeImageIndex(int index) {
+    print('index: $index');
     emit(state.copyWith(currentImageIndex: index));
   }
 
   void initProductModel(ProductModel product) {
+    // Reset image index when product changes
     emit(state.copyWith(
       product: product,
       isFavourites: product.isFavorited,
+      currentImageIndex: 0,
+      pageController: null, // Will be recreated with new initial page
     ));
   }
 

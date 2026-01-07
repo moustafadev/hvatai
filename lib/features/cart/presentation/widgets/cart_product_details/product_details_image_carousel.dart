@@ -23,6 +23,7 @@ class ProductDetailsImageCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print('currentImageIndex: $currentImageIndex');
     return Column(
       children: [
         SizedBox(

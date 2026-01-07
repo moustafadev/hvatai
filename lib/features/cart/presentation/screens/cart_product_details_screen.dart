@@ -14,9 +14,6 @@ class CartProductDetailsScreen extends StatelessWidget {
     return BlocConsumer<CartProductDetailsCubit, CartProductDetailsState>(
       listener: (context, state) {},
       builder: (context, state) {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          context.read<CartProductDetailsCubit>().resetImageIndex();
-        });
         final cubit = context.read<CartProductDetailsCubit>();
 
         final variant = product.variants.isNotEmpty
