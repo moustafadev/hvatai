@@ -578,6 +578,88 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     emit(state.copyWith(commentText: text));
   }
 
+  void updateFirstBidInput(String text) {
+    final trimmed = text.trim();
+    String? errorMessage;
+    bool isButtonEnabled = false;
+
+    if (trimmed.isEmpty) {
+      errorMessage = null;
+      isButtonEnabled = false;
+    } else {
+      final amount = double.tryParse(trimmed);
+      if (amount == null) {
+        errorMessage = 'Неверный формат суммы';
+        isButtonEnabled = false;
+      } else {
+        // Get minimum price from active product
+        final activeProduct = state.activeStreamProduct;
+        final minimumPrice = double.tryParse(
+              activeProduct?.startingPrice ?? '',
+            ) ??
+            0.0;
+
+        if (amount < minimumPrice) {
+          errorMessage =
+              'Ставка должна быть не менее ${minimumPrice.toStringAsFixed(0)} ₽';
+          isButtonEnabled = false;
+        } else {
+          errorMessage = null;
+          isButtonEnabled = true;
+        }
+      }
+    }
+
+    emit(state.copyWith(
+      firstBidInputText: text,
+      firstBidErrorMessage: errorMessage,
+      isFirstBidButtonEnabled: isButtonEnabled,
+    ));
+  }
+
+  void placeBidFromFirstBidSheet({
+    required int streamId,
+    required int streamProductId,
+  }) {
+    final text = state.firstBidInputText.trim();
+    if (text.isEmpty) {
+      emit(state.copyWith(
+        firstBidErrorMessage: 'Пожалуйста, введите ставку',
+      ));
+      return;
+    }
+
+    final amount = double.tryParse(text);
+    if (amount == null) {
+      emit(state.copyWith(
+        firstBidErrorMessage: 'Неверный формат суммы',
+      ));
+      return;
+    }
+
+    // Get minimum price from active product
+    final activeProduct = state.activeStreamProduct;
+    final minimumPrice = double.tryParse(
+          activeProduct?.startingPrice ?? '',
+        ) ??
+        0.0;
+
+    if (amount < minimumPrice) {
+      emit(state.copyWith(
+        firstBidErrorMessage:
+            'Ставка должна быть не менее ${minimumPrice.toStringAsFixed(0)} ₽',
+      ));
+      return;
+    }
+
+    // Place the bid
+    placeBid(
+      streamId: streamId,
+      streamProductId: streamProductId,
+      bidAmount: amount.toStringAsFixed(2),
+    );
+  }
+
   Future<void> sendCommentToServer({
     required int streamId,
     String type = 'comment',
@@ -713,9 +795,12 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
       (createdBid) {
         final updated = List<BidStreamItem>.from(state.bids)
           ..insert(0, createdBid);
+        final amount = double.tryParse(bidAmount) ?? 0.0;
         emit(state.copyWith(
           isPlacingBid: false,
           bids: updated,
+          showBidSuccess: true,
+          successfulBidAmount: amount,
         ));
         _loadActiveBidSession();
       },
@@ -885,6 +970,16 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
         _loadSubscriptionStatus();
       },
     );
+  }
+
+  void hideBidSuccess() {
+    emit(state.copyWith(
+      showBidSuccess: false,
+      successfulBidAmount: null,
+      firstBidInputText: '',
+      firstBidErrorMessage: null,
+      isFirstBidButtonEnabled: false,
+    ));
   }
 
   // ================== Audio ==================

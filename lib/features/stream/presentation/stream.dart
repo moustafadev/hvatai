@@ -38,6 +38,7 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 import 'package:hvatai/features/address/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/payment_method/data/model/card_model/card_model.dart';
+import 'package:hvatai/core/datasources/local/app_local.dart';
 
 part 'screens/broadcaster_stream_screen.dart';
 part 'screens/viewer_stream_screen.dart';
@@ -65,3 +66,6 @@ part 'widgets/viewer_count_widget.dart';
 part 'widgets/slide_to_bid_button.dart';
 part 'widgets/custom_bid_price_bottom_sheet.dart';
 part 'widgets/winner_banner.dart';
+part 'widgets/stream_terms_bottom_sheet.dart';
+part 'widgets/first_bid_bottom_sheet.dart';
+part 'widgets/bid_success_bottom_sheet.dart';

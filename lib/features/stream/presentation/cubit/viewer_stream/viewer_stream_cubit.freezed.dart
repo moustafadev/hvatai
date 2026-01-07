@@ -65,7 +65,14 @@ mixin _$ViewerStreamState {
   bool get isAudioMuted => throw _privateConstructorUsedError; // Subscriptions
   bool get isSubscribed => throw _privateConstructorUsedError;
   bool get isLoadingSubscription => throw _privateConstructorUsedError;
-  bool get isTogglingSubscription => throw _privateConstructorUsedError;
+  bool get isTogglingSubscription =>
+      throw _privateConstructorUsedError; // Bid success
+  bool get showBidSuccess => throw _privateConstructorUsedError;
+  double? get successfulBidAmount =>
+      throw _privateConstructorUsedError; // First bid bottom sheet
+  String get firstBidInputText => throw _privateConstructorUsedError;
+  String? get firstBidErrorMessage => throw _privateConstructorUsedError;
+  bool get isFirstBidButtonEnabled => throw _privateConstructorUsedError;
 
   /// Create a copy of ViewerStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -122,7 +129,12 @@ abstract class $ViewerStreamStateCopyWith<$Res> {
       bool isAudioMuted,
       bool isSubscribed,
       bool isLoadingSubscription,
-      bool isTogglingSubscription});
+      bool isTogglingSubscription,
+      bool showBidSuccess,
+      double? successfulBidAmount,
+      String firstBidInputText,
+      String? firstBidErrorMessage,
+      bool isFirstBidButtonEnabled});
 
   $StreamDataModelCopyWith<$Res> get stream;
   $JoinStreamDataCopyWith<$Res>? get joinData;
@@ -187,6 +199,11 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
     Object? isSubscribed = null,
     Object? isLoadingSubscription = null,
     Object? isTogglingSubscription = null,
+    Object? showBidSuccess = null,
+    Object? successfulBidAmount = freezed,
+    Object? firstBidInputText = null,
+    Object? firstBidErrorMessage = freezed,
+    Object? isFirstBidButtonEnabled = null,
   }) {
     return _then(_value.copyWith(
       isConnected: null == isConnected
@@ -357,6 +374,26 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
           ? _value.isTogglingSubscription
           : isTogglingSubscription // ignore: cast_nullable_to_non_nullable
               as bool,
+      showBidSuccess: null == showBidSuccess
+          ? _value.showBidSuccess
+          : showBidSuccess // ignore: cast_nullable_to_non_nullable
+              as bool,
+      successfulBidAmount: freezed == successfulBidAmount
+          ? _value.successfulBidAmount
+          : successfulBidAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      firstBidInputText: null == firstBidInputText
+          ? _value.firstBidInputText
+          : firstBidInputText // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstBidErrorMessage: freezed == firstBidErrorMessage
+          ? _value.firstBidErrorMessage
+          : firstBidErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isFirstBidButtonEnabled: null == isFirstBidButtonEnabled
+          ? _value.isFirstBidButtonEnabled
+          : isFirstBidButtonEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -464,7 +501,12 @@ abstract class _$$ViewerStreamStateImplCopyWith<$Res>
       bool isAudioMuted,
       bool isSubscribed,
       bool isLoadingSubscription,
-      bool isTogglingSubscription});
+      bool isTogglingSubscription,
+      bool showBidSuccess,
+      double? successfulBidAmount,
+      String firstBidInputText,
+      String? firstBidErrorMessage,
+      bool isFirstBidButtonEnabled});
 
   @override
   $StreamDataModelCopyWith<$Res> get stream;
@@ -531,6 +573,11 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
     Object? isSubscribed = null,
     Object? isLoadingSubscription = null,
     Object? isTogglingSubscription = null,
+    Object? showBidSuccess = null,
+    Object? successfulBidAmount = freezed,
+    Object? firstBidInputText = null,
+    Object? firstBidErrorMessage = freezed,
+    Object? isFirstBidButtonEnabled = null,
   }) {
     return _then(_$ViewerStreamStateImpl(
       isConnected: null == isConnected
@@ -701,6 +748,26 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
           ? _value.isTogglingSubscription
           : isTogglingSubscription // ignore: cast_nullable_to_non_nullable
               as bool,
+      showBidSuccess: null == showBidSuccess
+          ? _value.showBidSuccess
+          : showBidSuccess // ignore: cast_nullable_to_non_nullable
+              as bool,
+      successfulBidAmount: freezed == successfulBidAmount
+          ? _value.successfulBidAmount
+          : successfulBidAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+      firstBidInputText: null == firstBidInputText
+          ? _value.firstBidInputText
+          : firstBidInputText // ignore: cast_nullable_to_non_nullable
+              as String,
+      firstBidErrorMessage: freezed == firstBidErrorMessage
+          ? _value.firstBidErrorMessage
+          : firstBidErrorMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isFirstBidButtonEnabled: null == isFirstBidButtonEnabled
+          ? _value.isFirstBidButtonEnabled
+          : isFirstBidButtonEnabled // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -752,7 +819,12 @@ class _$ViewerStreamStateImpl
       this.isAudioMuted = false,
       this.isSubscribed = false,
       this.isLoadingSubscription = false,
-      this.isTogglingSubscription = false})
+      this.isTogglingSubscription = false,
+      this.showBidSuccess = false,
+      this.successfulBidAmount,
+      this.firstBidInputText = '',
+      this.firstBidErrorMessage,
+      this.isFirstBidButtonEnabled = false})
       : _comments = comments,
         _bids = bids;
 
@@ -895,10 +967,25 @@ class _$ViewerStreamStateImpl
   @override
   @JsonKey()
   final bool isTogglingSubscription;
+// Bid success
+  @override
+  @JsonKey()
+  final bool showBidSuccess;
+  @override
+  final double? successfulBidAmount;
+// First bid bottom sheet
+  @override
+  @JsonKey()
+  final String firstBidInputText;
+  @override
+  final String? firstBidErrorMessage;
+  @override
+  @JsonKey()
+  final bool isFirstBidButtonEnabled;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ViewerStreamState(isConnected: $isConnected, remoteVideoTrack: $remoteVideoTrack, remoteAudioTrack: $remoteAudioTrack, room: $room, remoteParticipant: $remoteParticipant, isPusherConnected: $isPusherConnected, stream: $stream, joinData: $joinData, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentStreamProductId: $currentStreamProductId, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentBidTotalBids: $currentBidTotalBids, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, currentUserId: $currentUserId, isInitializing: $isInitializing, isStreamEnded: $isStreamEnded, isAudioMuted: $isAudioMuted, isSubscribed: $isSubscribed, isLoadingSubscription: $isLoadingSubscription, isTogglingSubscription: $isTogglingSubscription)';
+    return 'ViewerStreamState(isConnected: $isConnected, remoteVideoTrack: $remoteVideoTrack, remoteAudioTrack: $remoteAudioTrack, room: $room, remoteParticipant: $remoteParticipant, isPusherConnected: $isPusherConnected, stream: $stream, joinData: $joinData, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentStreamProductId: $currentStreamProductId, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentBidTotalBids: $currentBidTotalBids, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, currentUserId: $currentUserId, isInitializing: $isInitializing, isStreamEnded: $isStreamEnded, isAudioMuted: $isAudioMuted, isSubscribed: $isSubscribed, isLoadingSubscription: $isLoadingSubscription, isTogglingSubscription: $isTogglingSubscription, showBidSuccess: $showBidSuccess, successfulBidAmount: $successfulBidAmount, firstBidInputText: $firstBidInputText, firstBidErrorMessage: $firstBidErrorMessage, isFirstBidButtonEnabled: $isFirstBidButtonEnabled)';
   }
 
   @override
@@ -949,8 +1036,14 @@ class _$ViewerStreamStateImpl
       ..add(DiagnosticsProperty('isAudioMuted', isAudioMuted))
       ..add(DiagnosticsProperty('isSubscribed', isSubscribed))
       ..add(DiagnosticsProperty('isLoadingSubscription', isLoadingSubscription))
+      ..add(
+          DiagnosticsProperty('isTogglingSubscription', isTogglingSubscription))
+      ..add(DiagnosticsProperty('showBidSuccess', showBidSuccess))
+      ..add(DiagnosticsProperty('successfulBidAmount', successfulBidAmount))
+      ..add(DiagnosticsProperty('firstBidInputText', firstBidInputText))
+      ..add(DiagnosticsProperty('firstBidErrorMessage', firstBidErrorMessage))
       ..add(DiagnosticsProperty(
-          'isTogglingSubscription', isTogglingSubscription));
+          'isFirstBidButtonEnabled', isFirstBidButtonEnabled));
   }
 
   @override
@@ -1016,8 +1109,7 @@ class _$ViewerStreamStateImpl
                 other.currentStreamProductId == currentStreamProductId) &&
             (identical(other.currentBidEndTime, currentBidEndTime) ||
                 other.currentBidEndTime == currentBidEndTime) &&
-            (identical(other.currentBidRemainingSeconds,
-                    currentBidRemainingSeconds) ||
+            (identical(other.currentBidRemainingSeconds, currentBidRemainingSeconds) ||
                 other.currentBidRemainingSeconds ==
                     currentBidRemainingSeconds) &&
             (identical(other.currentBidTotalBids, currentBidTotalBids) ||
@@ -1039,7 +1131,15 @@ class _$ViewerStreamStateImpl
             (identical(other.isLoadingSubscription, isLoadingSubscription) ||
                 other.isLoadingSubscription == isLoadingSubscription) &&
             (identical(other.isTogglingSubscription, isTogglingSubscription) ||
-                other.isTogglingSubscription == isTogglingSubscription));
+                other.isTogglingSubscription == isTogglingSubscription) &&
+            (identical(other.showBidSuccess, showBidSuccess) ||
+                other.showBidSuccess == showBidSuccess) &&
+            (identical(other.successfulBidAmount, successfulBidAmount) ||
+                other.successfulBidAmount == successfulBidAmount) &&
+            (identical(other.firstBidInputText, firstBidInputText) ||
+                other.firstBidInputText == firstBidInputText) &&
+            (identical(other.firstBidErrorMessage, firstBidErrorMessage) || other.firstBidErrorMessage == firstBidErrorMessage) &&
+            (identical(other.isFirstBidButtonEnabled, isFirstBidButtonEnabled) || other.isFirstBidButtonEnabled == isFirstBidButtonEnabled));
   }
 
   @override
@@ -1086,7 +1186,12 @@ class _$ViewerStreamStateImpl
         isAudioMuted,
         isSubscribed,
         isLoadingSubscription,
-        isTogglingSubscription
+        isTogglingSubscription,
+        showBidSuccess,
+        successfulBidAmount,
+        firstBidInputText,
+        firstBidErrorMessage,
+        isFirstBidButtonEnabled
       ]);
 
   /// Create a copy of ViewerStreamState
@@ -1142,7 +1247,12 @@ abstract class _ViewerStreamState implements ViewerStreamState {
       final bool isAudioMuted,
       final bool isSubscribed,
       final bool isLoadingSubscription,
-      final bool isTogglingSubscription}) = _$ViewerStreamStateImpl;
+      final bool isTogglingSubscription,
+      final bool showBidSuccess,
+      final double? successfulBidAmount,
+      final String firstBidInputText,
+      final String? firstBidErrorMessage,
+      final bool isFirstBidButtonEnabled}) = _$ViewerStreamStateImpl;
 
 // LiveKit
   @override
@@ -1228,7 +1338,17 @@ abstract class _ViewerStreamState implements ViewerStreamState {
   @override
   bool get isLoadingSubscription;
   @override
-  bool get isTogglingSubscription;
+  bool get isTogglingSubscription; // Bid success
+  @override
+  bool get showBidSuccess;
+  @override
+  double? get successfulBidAmount; // First bid bottom sheet
+  @override
+  String get firstBidInputText;
+  @override
+  String? get firstBidErrorMessage;
+  @override
+  bool get isFirstBidButtonEnabled;
 
   /// Create a copy of ViewerStreamState
   /// with the given fields replaced by the non-null parameter values.

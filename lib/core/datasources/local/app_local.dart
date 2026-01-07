@@ -6,6 +6,7 @@ class AppLocal extends CacheHelper {
   final String _onboarding = 'onboarding';
   final String _isSetup = 'is_setup';
   final String _user = 'user';
+  final String _streamTermsAccepted = 'stream_terms_accepted';
   Future<bool> saveToken(String? token) async {
     if (token == null) return false;
     return await saveData(key: _token, value: token);
@@ -36,7 +37,7 @@ class AppLocal extends CacheHelper {
     }
   }
 
-   Future<bool> saveUserId(int? userId) async {
+  Future<bool> saveUserId(int? userId) async {
     if (userId == null) return false;
     return await saveData(key: _currentUserId, value: userId);
   }
@@ -68,6 +69,19 @@ class AppLocal extends CacheHelper {
 
   Future<bool> removeToken() async {
     return await removeData(key: _token);
+  }
+
+  Future<bool> saveStreamTermsAccepted(bool? accepted) async {
+    if (accepted == null) return false;
+    return await saveData(key: _streamTermsAccepted, value: accepted);
+  }
+
+  bool getStreamTermsAccepted() {
+    try {
+      return getData(_streamTermsAccepted) ?? false;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future clearCache() async {

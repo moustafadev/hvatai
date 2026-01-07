@@ -68,5 +68,14 @@ class ViewerStreamState with _$ViewerStreamState {
     @Default(false) bool isSubscribed,
     @Default(false) bool isLoadingSubscription,
     @Default(false) bool isTogglingSubscription,
+
+    // Bid success
+    @Default(false) bool showBidSuccess,
+    double? successfulBidAmount,
+
+    // First bid bottom sheet
+    @Default('') String firstBidInputText,
+    String? firstBidErrorMessage,
+    @Default(false) bool isFirstBidButtonEnabled,
   }) = _ViewerStreamState;
 }

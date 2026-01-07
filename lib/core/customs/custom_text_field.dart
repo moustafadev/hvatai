@@ -20,6 +20,7 @@ class CustomTextField extends StatelessWidget {
   final BorderRadius? borderRadius;
   final BorderSide? borderSide;
   final double? height;
+  final TextStyle? hintStyle;
   final List<TextInputFormatter>? inputFormatters;
   final Color? textColor;
   final Color? hintColor;
@@ -35,6 +36,7 @@ class CustomTextField extends StatelessWidget {
     this.isPassword = false,
     this.obscureText = false,
     this.validator,
+    this.hintStyle,
     this.suffixIcon,
     this.prefixIcon,
     this.keyboardType,
@@ -76,11 +78,12 @@ class CustomTextField extends StatelessWidget {
         maxLength: maxLength,
         style: TextStyle(color: textColor ?? Colors.black),
         decoration: InputDecoration(
+          
           hintText: isRequired ? '$hintText *' : hintText,
           hintStyle: TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: hintStyle?.fontWeight ?? FontWeight.bold,
             color: hintColor ?? Colors.grey,
-            fontSize: 16,
+            fontSize: hintStyle?.fontSize ?? 16,
           ),
           filled: true,
           fillColor: fillColor ?? Colors.white,

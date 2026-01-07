@@ -120,6 +120,8 @@ class Assets {
   /// info circle icon
   static const String assetsIconsInfoCircle2 = "assets/icons/info_circle.svg";
 
+  /// check correct image 
+  static const String assetsImagesCheckCorrect = "assets/images/check_correct.png";
   /// Assets for assetsIconsCheck
   /// assets/icons/check.png
   static const String assetsIconsCheck = "assets/icons/check.png";
