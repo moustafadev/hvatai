@@ -91,12 +91,22 @@ class SearchCubit extends Cubit<SearchState> {
       query: query,
       showSuggestions: state.isSearchFocused && query.isNotEmpty,
     ));
-    
+
+    final trimmed = query.trim();
+
+    // If query is cleared, search with default to show default results
+    if (trimmed.isEmpty) {
+      _debounce?.cancel();
+      _debounce = Timer(const Duration(milliseconds: 300), () {
+        search(_defaultQuery);
+      });
+    }
+
     // Fetch suggestions with shorter debounce
     _suggestionsDebounce?.cancel();
     _suggestionsDebounce = Timer(const Duration(milliseconds: 200), () {
-      if (state.isSearchFocused && query.trim().isNotEmpty) {
-        fetchSuggestions(query.trim());
+      if (state.isSearchFocused && trimmed.isNotEmpty) {
+        fetchSuggestions(trimmed);
       } else {
         emit(state.copyWith(
           suggestions: [],
@@ -104,13 +114,15 @@ class SearchCubit extends Cubit<SearchState> {
         ));
       }
     });
-    
-    // Full search with longer debounce
-    _debounce?.cancel();
-    _debounce = Timer(const Duration(milliseconds: 350), () {
-      final trimmed = query.trim().isEmpty ? _defaultQuery : query.trim();
-      search(trimmed);
-    });
+  }
+
+  void onSearchSubmitted(String query) {
+    final trimmed = query.trim().isEmpty ? _defaultQuery : query.trim();
+    emit(state.copyWith(
+      showSuggestions: false,
+      isSearchFocused: false,
+    ));
+    search(trimmed);
   }
 
   void onSearchFieldFocused() {

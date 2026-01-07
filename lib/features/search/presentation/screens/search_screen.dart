@@ -30,6 +30,8 @@ class _SearchScreenState extends State<SearchScreen> {
             );
           }
 
+          final isSearching = state.isLoading && state.hasLoadedInitial;
+
           return Scaffold(
             backgroundColor: AppColors.lightGreyBackground,
             body: Stack(
@@ -46,6 +48,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         image: Assets.assetsIconsShare,
                         onChanged: cubit.onQueryChanged,
                         onFocus: cubit.onSearchFieldFocused,
+                        onSubmitted: cubit.onSearchSubmitted,
                         initialValue: state.query,
                       ),
                     ),
@@ -68,80 +71,88 @@ class _SearchScreenState extends State<SearchScreen> {
                       ),
                     16.ph,
                     Expanded(
-                      child: NotificationListener<ScrollNotification>(
-                        onNotification: (notification) {
-                          if (notification is ScrollUpdateNotification ||
-                              notification is ScrollStartNotification) {
-                            cubit.onScroll();
-                          }
-                          return false;
-                        },
-                        child: SingleChildScrollView(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ButtonTabBarSearch(
-                                onCategorySelected: (category) {
-                                  if (category != null) {
-                                    cubit.selectCategory(category);
-                                  }
-                                },
+                      child: isSearching
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.grey,
                               ),
-                              10.ph,
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0),
-                                child: CustomText(
-                                  text: 'category'.tr(),
-                                  fontWeight: FontWeight.w800,
-                                  fontSize: 20.sp,
-                                ),
-                              ),
-                              12.ph,
-                              MyCategorySearch(),
-                              24.ph,
-                              Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 16.0),
+                            )
+                          : NotificationListener<ScrollNotification>(
+                              onNotification: (notification) {
+                                if (notification is ScrollUpdateNotification ||
+                                    notification is ScrollStartNotification) {
+                                  cubit.onScroll();
+                                }
+                                return false;
+                              },
+                              child: SingleChildScrollView(
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    CustomText(
-                                      text: 'goods'.tr(),
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 20.sp,
-                                    ),
-                                    12.ph,
-                                    ProductsSearchWidget(),
-                                    24.ph,
-                                    CustomText(
-                                      text: 'streams'.tr(),
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 20.sp,
+                                    ButtonTabBarSearch(
+                                      onCategorySelected: (category) {
+                                        if (category != null) {
+                                          cubit.selectCategory(category);
+                                        }
+                                      },
                                     ),
                                     10.ph,
-                                    SearchLiveVideoWidget(
-                                      liveStreams: state.liveStreams,
-                                      currentUserId: '',
-                                      searchQuery: state.query,
-                                      selectedCategory: cubit.selectedCategory,
-                                    ),
-                                    24.ph,
-                                    CustomText(
-                                      text: 'users'.tr(),
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 20.sp,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0),
+                                      child: CustomText(
+                                        text: 'category'.tr(),
+                                        fontWeight: FontWeight.w800,
+                                        fontSize: 20.sp,
+                                      ),
                                     ),
                                     12.ph,
-                                    UsersSearchWidget(),
+                                    MyCategorySearch(),
+                                    24.ph,
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          CustomText(
+                                            text: 'goods'.tr(),
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 20.sp,
+                                          ),
+                                          12.ph,
+                                          ProductsSearchWidget(),
+                                          24.ph,
+                                          CustomText(
+                                            text: 'streams'.tr(),
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 20.sp,
+                                          ),
+                                          10.ph,
+                                          SearchLiveVideoWidget(
+                                            liveStreams: state.liveStreams,
+                                            currentUserId: '',
+                                            searchQuery: state.query,
+                                            selectedCategory:
+                                                cubit.selectedCategory,
+                                          ),
+                                          24.ph,
+                                          CustomText(
+                                            text: 'users'.tr(),
+                                            fontWeight: FontWeight.w800,
+                                            fontSize: 20.sp,
+                                          ),
+                                          12.ph,
+                                          UsersSearchWidget(),
+                                        ],
+                                      ),
+                                    ),
+                                    100.ph
                                   ],
                                 ),
                               ),
-                              100.ph
-                            ],
-                          ),
-                        ),
-                      ),
+                            ),
                     ),
                   ],
                 ),

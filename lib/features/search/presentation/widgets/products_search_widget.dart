@@ -7,14 +7,6 @@ class ProductsSearchWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
-        if (state.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: AppColors.grey,
-            ),
-          );
-        }
-
         if (state.products.isEmpty) {
           return const CustomText(
             text: 'No products found',

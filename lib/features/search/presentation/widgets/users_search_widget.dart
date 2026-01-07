@@ -7,14 +7,6 @@ class UsersSearchWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
-        if (state.isLoading) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: AppColors.grey,
-            ),
-          );
-        }
-
         if (state.users.isEmpty) {
           return const CustomText(
             text: 'No users found',

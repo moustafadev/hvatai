@@ -9,6 +9,7 @@ class TopBarSearchWidget extends StatefulWidget {
     required this.searchFieldKey,
     this.onChanged,
     this.onFocus,
+    this.onSubmitted,
     this.initialValue,
   });
 
@@ -18,6 +19,7 @@ class TopBarSearchWidget extends StatefulWidget {
   final GlobalKey searchFieldKey;
   final ValueChanged<String>? onChanged;
   final VoidCallback? onFocus;
+  final ValueChanged<String>? onSubmitted;
   final String? initialValue;
 
   @override
@@ -74,6 +76,8 @@ class _TopBarSearchWidgetState extends State<TopBarSearchWidget> {
                       borderRadius: BorderRadius.circular(10.r),
                       onChanged: widget.onChanged,
                       onTap: widget.onFocus,
+                      onSubmitted: widget.onSubmitted,
+                      textInputAction: TextInputAction.search,
                       hintText: 'find'.tr(),
                       prefixIcon: Image.asset(
                         Assets.assetsIconsSearch,
