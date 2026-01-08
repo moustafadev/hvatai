@@ -1,4 +1,4 @@
-part of '../profile.dart';
+part of '../add_new_product.dart';
 
 class CategoryDropdown extends StatelessWidget {
   const CategoryDropdown({

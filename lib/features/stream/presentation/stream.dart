@@ -21,7 +21,7 @@ import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_mo
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
-import 'package:hvatai/features/profile/presentation/cubit/product_form_cubit/product_form_cubit.dart';
+import 'package:hvatai/features/add_new_product/presentation/add_new_product.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
 import 'package:hvatai/features/stream/data/models/bid_winner/bid_winner_event.dart';

@@ -56,13 +56,16 @@ import 'package:hvatai/features/orders/presentation/cubit/my_orders_cubit.dart';
 import 'package:hvatai/features/profile/data/datasources/api_service_profile.dart';
 import 'package:hvatai/features/profile/data/repositories/profile_impl_repository.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
+import 'package:hvatai/features/add_new_product/data/repositories/add_new_product_impl_repository.dart';
+import 'package:hvatai/features/add_new_product/domain/repositories/add_new_product_repository.dart';
+import 'package:hvatai/features/add_new_product/data/datasources/api_service_add_new_product.dart';
 import 'package:hvatai/features/profile/presentation/cubit/add_stream/add_stream_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/analytics/presentation/cubit/analytics/analytics_cubit.dart';
 import 'package:hvatai/features/analytics/data/datasources/api_service_analytics.dart';
 import 'package:hvatai/features/analytics/data/repositories/analytics_repository_impl.dart';
 import 'package:hvatai/features/analytics/domain/repositories/analytics_repository.dart';
-import 'package:hvatai/features/profile/presentation/cubit/product_form_cubit/product_form_cubit.dart';
+import 'package:hvatai/features/add_new_product/presentation/add_new_product.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_products_cubit/my_products_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_product_details_cubit/my_product_details_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
@@ -214,6 +217,8 @@ Future<void> setupLocator() async {
       () => StreamImplRepository(locator()));
   locator.registerLazySingleton<ProfileRepository>(
       () => ProfileImplRepository(locator(), locator()));
+  locator.registerLazySingleton<AddNewProductRepository>(
+      () => AddNewProductImplRepository(locator()));
   locator.registerLazySingleton<OrdersRepository>(
       () => OrdersImplRepository(locator()));
   locator.registerLazySingleton<SearchRepository>(

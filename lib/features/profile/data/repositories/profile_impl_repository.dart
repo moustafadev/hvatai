@@ -7,8 +7,6 @@ import 'package:hvatai/features/profile/data/model/product_model/product_model.d
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
 import 'package:dartz/dartz.dart';
-import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/update_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
 
 class ProfileImplRepository implements ProfileRepository {
@@ -42,14 +40,6 @@ class ProfileImplRepository implements ProfileRepository {
     });
   }
 
-  @override
-  Future<Either<String, ProductModel>> addNewProduct(
-      AddNewProductParams params) {
-    return executeAndHandleError<ProductModel>(() async {
-      final res = await _apiServiceProfile.addNewProduct(params.formData);
-      return res;
-    });
-  }
 
   @override
   Future<Either<String, Unit>> deleteAccount() {
@@ -105,16 +95,5 @@ class ProfileImplRepository implements ProfileRepository {
       return res;
     });
   }
-
-  @override
-  Future<Either<String, ProductModel>> updateProduct(
-      UpdateProductParams params) {
-    return executeAndHandleError<ProductModel>(() async {
-      final res = await _apiServiceProfile.updateProduct(
-        productId: params.productId,
-        formData: params.formData,
-      );
-      return res;
-    });
-  }
+  
 }

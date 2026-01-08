@@ -3,9 +3,7 @@ import 'package:hvatai/features/auth/data/models/registration_model/user_registr
 import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
-import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/update_product_usecase.dart';
 
 abstract class ProfileRepository {
   Future<Either<String, UserRegistrationData>> getProfileData();
@@ -23,13 +21,6 @@ abstract class ProfileRepository {
   });
   Future<Either<String, List<MainCategoryModel>>> getProductCategory();
   Future<Either<String, List<MainCategoryModel>>> getLastUsedCategories();
-
-  Future<Either<String, ProductModel>> addNewProduct(
-      AddNewProductParams params);
-
-  Future<Either<String, ProductModel>> updateProduct(
-      UpdateProductParams params);
-
   Future<Either<String, StreamResponseModel>> createStream(
       CreateStreamModel model);
 }

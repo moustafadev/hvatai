@@ -1,4 +1,4 @@
-part of '../profile.dart';
+part of '../../../profile/presentation/profile.dart';
 
 class SaleTypeButton extends StatelessWidget {
   final String selectedSaleType;

@@ -6,6 +6,10 @@ import 'package:hvatai/features/cart/domain/usecases/get_all_products_usecase.da
 import 'package:hvatai/features/cart/domain/usecases/get_cart_usecase.dart';
 import 'package:hvatai/features/favorites/domain/usecases/get_fav_products_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/update_cart_usecase.dart';
+import 'package:hvatai/features/add_new_product/domain/usecases/add_new_product_usecase.dart';
+import 'package:hvatai/features/add_new_product/domain/usecases/update_product_usecase.dart';
+import 'package:hvatai/features/add_new_product/domain/usecases/get_product_category_usecase.dart';
+import 'package:hvatai/features/add_new_product/domain/usecases/get_last_used_categories_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/add_fav_category_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/get_category_usecase.dart';
@@ -35,13 +39,9 @@ import 'package:hvatai/features/address/domain/usecases/get_delivery_address_use
 import 'package:hvatai/features/payment_method/domain/usecases/add_new_card_usecase.dart';
 import 'package:hvatai/features/payment_method/domain/usecases/delete_card_usecase.dart';
 import 'package:hvatai/features/payment_method/domain/usecases/get_card_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/update_product_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/create_stream_uscecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_account_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/get_product_category_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/get_last_used_categories_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/sign_out_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';

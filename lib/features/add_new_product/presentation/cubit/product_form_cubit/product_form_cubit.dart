@@ -12,10 +12,10 @@ import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
 import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
-import 'package:hvatai/features/profile/domain/usecases/add_new_product_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/get_product_category_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/get_last_used_categories_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/update_product_usecase.dart';
+import 'package:hvatai/features/add_new_product/domain/usecases/add_new_product_usecase.dart';
+import 'package:hvatai/features/add_new_product/domain/usecases/get_product_category_usecase.dart';
+import 'package:hvatai/features/add_new_product/domain/usecases/get_last_used_categories_usecase.dart';
+import 'package:hvatai/features/add_new_product/domain/usecases/update_product_usecase.dart';
 
 part 'product_form_cubit.freezed.dart';
 part 'product_form_state.dart';

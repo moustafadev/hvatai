@@ -24,7 +24,7 @@ import 'package:hvatai/features/orders/presentation/screens/my_orders_screen.dar
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/product_form_cubit/product_form_cubit.dart';
+import 'package:hvatai/features/add_new_product/presentation/add_new_product.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_product_details_cubit/my_product_details_cubit.dart';
 import 'package:hvatai/features/payment_method/presentation/payment_method.dart';
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
