@@ -82,6 +82,7 @@ import 'package:hvatai/features/favorites/data/datasources/api_service_favorites
 import 'package:hvatai/features/favorites/data/repositories/favorites_repository_impl.dart';
 import 'package:hvatai/features/favorites/domain/repositories/favorites_repository.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_cubit/search_cubit.dart';
+import 'package:hvatai/features/schedule_stream/presentation/cubit/schedule_stream_cubit/schedule_stream_cubit.dart';
 import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart';
 import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
 import 'package:hvatai/features/stream/domain/repositories/stream_impl_repository.dart';
@@ -150,6 +151,7 @@ Future<void> setupLocator() async {
         locator(),
         locator(),
       ));
+  locator.registerFactory(() => ScheduleStreamCubit(locator()));
 
   locator.registerFactory(() => CategoriesCubit(
         locator(),

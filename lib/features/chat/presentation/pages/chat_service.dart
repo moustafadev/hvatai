@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/locator.dart';
@@ -40,7 +41,20 @@ class PusherManager {
 
   /// Disconnect and clean up
   void dispose() {
-    _pusher?.disconnect();
-    _pusher = null;
+    try {
+      if (_pusher != null) {
+        // Check if the socket is initialized before disconnecting
+        // Accessing _socket will throw if channel is not initialized
+        try {
+          _pusher!.disconnect();
+        } catch (e) {
+          debugPrint('Error disconnecting Pusher (channel may not be initialized): $e');
+        }
+      }
+    } catch (e) {
+      debugPrint('Error in PusherManager.dispose: $e');
+    } finally {
+      _pusher = null;
+    }
   }
 }

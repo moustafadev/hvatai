@@ -34,6 +34,7 @@ import 'package:hvatai/features/analytics/presentation/analytics.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
 import 'package:hvatai/features/company/presentation/company.dart';
 import 'package:hvatai/features/company/presentation/cubit/company/company_cubit.dart';
+import 'package:hvatai/features/schedule_stream/presentation/schedule_stream.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/features/stream/presentation/stream.dart';
 import 'package:hvatai/features/wallet/presentation/wallet.dart';
@@ -63,6 +64,16 @@ final GoRouter router = GoRouter(
       path: AppRoutes.addStream, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const AddStreamScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.scheduledStreamsList,
+      builder: (BuildContext context, GoRouterState state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final streams = extra?['streams'] as List<StreamDataModel>? ?? [];
+        return ScheduledStreamsListScreen(
+          streams: streams,
+        );
       },
     ),
     GoRoute(

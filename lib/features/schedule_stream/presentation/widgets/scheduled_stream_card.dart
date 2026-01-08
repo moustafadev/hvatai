@@ -1,6 +1,6 @@
-part of 'customs.dart';
+part of '../schedule_stream.dart';
 
-class CustomLiveVideoCard extends StatefulWidget {
+class ScheduledStreamCard extends StatefulWidget {
   final String adminName;
   final String adminImage;
   final int viewsCount;
@@ -10,11 +10,12 @@ class CustomLiveVideoCard extends StatefulWidget {
   final String? latestThumbnailUrl;
   final String? latestGifUrl;
   final String price;
+  final DateTime? scheduledAt;
 
   final bool? isFavorite;
   final VoidCallback? onFavoriteToggle;
 
-  const CustomLiveVideoCard({
+  const ScheduledStreamCard({
     super.key,
     required this.adminName,
     required this.price,
@@ -25,16 +26,27 @@ class CustomLiveVideoCard extends StatefulWidget {
     required this.liveImage,
     this.latestThumbnailUrl,
     this.latestGifUrl,
+    this.scheduledAt,
     this.isFavorite,
     this.onFavoriteToggle,
   });
 
   @override
-  State<CustomLiveVideoCard> createState() => _CustomLiveVideoCardState();
+  State<ScheduledStreamCard> createState() => _ScheduledStreamCardState();
 }
 
-class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
+class _ScheduledStreamCardState extends State<ScheduledStreamCard> {
   bool _showGif = false;
+
+  String _formatDateTime(DateTime? dateTime) {
+    if (dateTime == null) return '';
+    final day = dateTime.day.toString().padLeft(2, '0');
+    final month = dateTime.month.toString().padLeft(2, '0');
+    final year = dateTime.year.toString().substring(2);
+    final hour = dateTime.hour.toString().padLeft(2, '0');
+    final minute = dateTime.minute.toString().padLeft(2, '0');
+    return '$day.$month.$year • $hour:$minute';
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,30 +137,31 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                               fit: BoxFit.fill,
                             ),
                 ),
-                // Overlay content
-                Positioned.fill(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Align(
-                      alignment: Alignment.topLeft,
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 6, vertical: 3),
-                        decoration: BoxDecoration(
-                          color: AppColors.primaryPink,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: CustomText(
-                          text: "Live • ${widget.viewsCount}",
-                          textAlign: TextAlign.center,
-                          color: AppColors.white,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
+                // Scheduled date/time overlay
+                if (widget.scheduledAt != null)
+                  Positioned.fill(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 6, vertical: 6),
+                          decoration: BoxDecoration(
+                            color: AppColors.primaryPink,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: CustomText(
+                            text: _formatDateTime(widget.scheduledAt),
+                            textAlign: TextAlign.center,
+                            color: AppColors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
                 // if (isFavorite != null && onFavoriteToggle != null)
                 Positioned(
                   top: 10,
@@ -177,86 +190,40 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                     ],
                   ),
                 ),
+                // Company icon and name at bottom
                 Positioned(
                   bottom: 8,
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 10),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 2,
-                    ),
-                    height: 20.h,
-                    decoration: BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    child: CustomText(
-                      text: 'Free shipping',
-                      fontSize: 10.sp,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.green,
-                      textAlign: TextAlign.center,
-                      fontFamily: 'Manrope',
-                    ),
+                  left: 8,
+                  right: 8,
+                  child: Row(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12.r),
+                        child: CustomImage(
+                          imageSource: widget.adminImage,
+                          width: 24.w,
+                          height: 24.h,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      5.pw,
+                      Flexible(
+                        child: CustomText(
+                          text: widget.adminName,
+                          color: AppColors.white,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.bold,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
             ),
           ),
         ),
-        8.ph,
-        CustomText(
-          text: widget.price,
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-          color: AppColors.primaryPink,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-
-        CustomText(
-          text: widget.title,
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: AppColors.blackDark,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-        4.ph,
-        CustomText(
-          text: widget.description,
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          color: AppColors.grey,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        6.ph,
-
-        // Admin Info
-        Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12.r),
-              child: CustomImage(
-                imageSource: widget.adminImage,
-                width: 24.w,
-                height: 24.h,
-                fit: BoxFit.cover,
-              ),
-            ),
-            5.pw,
-            Flexible(
-              child: CustomText(
-                text: widget.adminName,
-                color: AppColors.blackDark,
-                fontSize: 14.sp,
-                fontWeight: FontWeight.bold,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-          ],
-        ),
+        12.ph,
       ],
     );
   }

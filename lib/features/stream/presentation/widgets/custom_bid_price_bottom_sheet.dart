@@ -2,10 +2,16 @@ part of '../stream.dart';
 
 class CustomBidPriceBottomSheet extends StatefulWidget {
   final double minimumPrice;
+  final double currentPrice;
+  final double step;
+  final int? remainingSeconds;
 
   const CustomBidPriceBottomSheet({
     super.key,
     required this.minimumPrice,
+    required this.currentPrice,
+    this.step = 1000.0,
+    this.remainingSeconds,
   });
 
   @override
@@ -14,43 +20,67 @@ class CustomBidPriceBottomSheet extends StatefulWidget {
 }
 
 class _CustomBidPriceBottomSheetState extends State<CustomBidPriceBottomSheet> {
-  final TextEditingController _priceController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  String? _errorMessage;
+  late double _currentBidPrice;
+  Timer? _timer;
+  int? _remainingSeconds;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentBidPrice = widget.currentPrice;
+    _remainingSeconds = widget.remainingSeconds;
+    if (_remainingSeconds != null && _remainingSeconds! > 0) {
+      _startTimer();
+    }
+  }
 
   @override
   void dispose() {
-    _priceController.dispose();
+    _timer?.cancel();
     super.dispose();
   }
 
-  void _validateAndSubmit() {
-    final priceText = _priceController.text.trim();
-    if (priceText.isEmpty) {
+  void _startTimer() {
+    _timer?.cancel();
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (mounted) {
+        setState(() {
+          if (_remainingSeconds != null && _remainingSeconds! > 0) {
+            _remainingSeconds = _remainingSeconds! - 1;
+          } else {
+            _timer?.cancel();
+          }
+        });
+      }
+    });
+  }
+
+  String _formatTime(int seconds) {
+    final minutes = seconds ~/ 60;
+    final secs = seconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:${secs.toString().padLeft(2, '0')}';
+  }
+
+  void _decreasePrice() {
+    final newPrice = _currentBidPrice - widget.step;
+    if (newPrice >= widget.minimumPrice) {
       setState(() {
-        _errorMessage = 'Пожалуйста, введите цену';
+        _currentBidPrice = newPrice;
       });
+    }
+  }
+
+  void _increasePrice() {
+    setState(() {
+      _currentBidPrice = _currentBidPrice + widget.step;
+    });
+  }
+
+  void _applyBid() {
+    if (_currentBidPrice < widget.minimumPrice) {
       return;
     }
-
-    final price = double.tryParse(priceText);
-    if (price == null) {
-      setState(() {
-        _errorMessage = 'Неверный формат цены';
-      });
-      return;
-    }
-
-    if (price < widget.minimumPrice) {
-      setState(() {
-        _errorMessage =
-            'Цена должна быть не менее ${widget.minimumPrice.toStringAsFixed(2)} ₽';
-      });
-      return;
-    }
-
-    // Valid price - return it
-    Navigator.pop(context, price);
+    Navigator.pop(context, _currentBidPrice);
   }
 
   @override
@@ -65,147 +95,119 @@ class _CustomBidPriceBottomSheetState extends State<CustomBidPriceBottomSheet> {
           top: Radius.circular(20.r),
         ),
       ),
-      child: SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            // Drag handle
-            Center(
-              child: Container(
-                width: 40.w,
-                height: 4.h,
-                margin: EdgeInsets.only(top: 12.h, bottom: 8.h),
-                decoration: BoxDecoration(
-                  color: AppColors.grey,
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Drag handle
+          Center(
+            child: Container(
+              width: 40.w,
+              height: 4.h,
+              margin: EdgeInsets.only(top: 8.h, bottom: 12.h),
+              decoration: BoxDecoration(
+                color: AppColors.greyButton,
+                borderRadius: BorderRadius.circular(100.r),
               ),
             ),
-            // Header
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CustomText(
-                    text: 'Введите цену ставки',
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w800,
-                    color: AppColors.blackDark,
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.pop(context),
+          ),
+          CustomText(
+            text: 'Изменить ставку',
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w800,
+            color: AppColors.blackDark,
+          ),
+          43.ph,
+          CustomText(
+            text: _formatTime(_remainingSeconds!),
+            fontSize: 10.sp,
+            fontWeight: FontWeight.w600,
+            color: AppColors.blackDark,
+          ),
+          8.ph,
+
+          // Large price display with +/- buttons
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Minus button
+                GestureDetector(
+                  onTap: _decreasePrice,
+                  child: CircleAvatar(
+                    radius: 24.r,
+                    backgroundColor:
+                        _currentBidPrice - widget.step >= widget.minimumPrice
+                            ? AppColors.greyButton
+                            : AppColors.greyTransparent,
                     child: Icon(
-                      Icons.close,
+                      Icons.remove,
+                      color: AppColors.blackDark,
                       size: 24.sp,
+                    ),
+                  ),
+                ),
+                SizedBox(width: 24.w),
+                // Large price display
+                Expanded(
+                  child: Center(
+                    child: CustomText(
+                      text:
+                          '${_currentBidPrice.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]} ')} ₽',
+                      fontSize: 32.sp,
+                      fontWeight: FontWeight.w700,
                       color: AppColors.blackDark,
                     ),
                   ),
-                ],
-              ),
-            ),
-            SizedBox(height: 8.h),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: CustomText(
-                text: 'Минимальная цена: ${widget.minimumPrice.toStringAsFixed(2)} ₽',
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w600,
-                color: AppColors.grey,
-              ),
-            ),
-            SizedBox(height: 24.h),
-            // Price input
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: Form(
-                key: _formKey,
-                child: CustomTextField(
-                  controller: _priceController,
-                  hintText: 'Введите цену',
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp(r'[\d.]'),
+                ),
+                SizedBox(width: 24.w),
+                // Plus button
+                GestureDetector(
+                  onTap: _increasePrice,
+                  child: CircleAvatar(
+                    radius: 24.r,
+                    backgroundColor: AppColors.greyButton,
+                    child: Icon(
+                      Icons.add,
+                      color: AppColors.blackDark,
+                      size: 24.sp,
                     ),
-                    TextInputFormatter.withFunction((oldValue, newValue) {
-                      final text = newValue.text;
-                      // Allow empty
-                      if (text.isEmpty) return newValue;
-                      // Check if it's a valid decimal number
-                      if (RegExp(r'^\d+\.?\d{0,2}$').hasMatch(text)) {
-                        return newValue;
-                      }
-                      return oldValue;
-                    }),
-                  ],
-                  textColor: AppColors.blackDark,
-                  hintColor: AppColors.grey,
-                  fillColor: AppColors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: _errorMessage != null
-                        ? Colors.red
-                        : AppColors.grey.withOpacity(0.3),
-                    width: 1,
                   ),
-                  onChanged: (value) {
-                    if (_errorMessage != null) {
-                      setState(() {
-                        _errorMessage = null;
-                      });
-                    }
-                  },
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return 'Пожалуйста, введите цену';
-                    }
-                    final price = double.tryParse(value.trim());
-                    if (price == null) {
-                      return 'Неверный формат цены';
-                    }
-                    if (price < widget.minimumPrice) {
-                      return 'Цена должна быть не менее ${widget.minimumPrice.toStringAsFixed(2)} ₽';
-                    }
-                    return null;
-                  },
                 ),
-              ),
+              ],
             ),
-            if (_errorMessage != null) ...[
-              SizedBox(height: 8.h),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                child: CustomText(
-                  text: _errorMessage!,
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.red,
-                ),
-              ),
-            ],
-            SizedBox(height: 24.h),
-            // Submit button
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
-              child: CustomButton(
-                title: 'Подтвердить',
-                onPressed: _validateAndSubmit,
-                color: AppColors.primaryColor,
-                textColor: Colors.white,
-                radius: 24,
-                height: 48,
-                fontWeight: FontWeight.w700,
-                fontSize: 16,
-              ),
+          ),
+          8.ph,
+          // Step indicator
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: CustomText(
+              text:
+                  'Шаг: ${widget.step.toStringAsFixed(0).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]} ')} ₽',
+              fontSize: 10.sp,
+              fontWeight: FontWeight.w600,
+              color: AppColors.grey,
             ),
-            SizedBox(height: 24.h),
-          ],
-        ),
+          ),
+          SizedBox(height: 32.h),
+          // Apply button (light blue)
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.w),
+            child: CustomButton(
+              title: 'Применить',
+              onPressed:
+                  _currentBidPrice >= widget.minimumPrice ? _applyBid : null,
+              color: AppColors.primaryColor,
+              textColor: Colors.white,
+              radius: 10,
+              height: 54,
+              fontWeight: FontWeight.w800,
+              fontSize: 16,
+            ),
+          ),
+          SizedBox(height: 24.h),
+        ],
       ),
     );
   }
 }
-

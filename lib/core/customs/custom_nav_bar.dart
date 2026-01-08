@@ -53,11 +53,7 @@ class CustomNavBar extends StatelessWidget {
 
             return GestureDetector(
               onTap: () {
-                if (index == 2) {
-                  _showSellBottomSheet(context);
-                } else {
-                  navBarConfig.onItemSelected(index);
-                }
+                navBarConfig.onItemSelected(index);
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
@@ -72,7 +68,7 @@ class CustomNavBar extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       isSelected ? item.icon : item.inactiveIcon,
-                      if (isSelected) ...[
+                      if (isSelected && item.title != "") ...[
                         SizedBox(width: 8.w),
                         CustomText(
                           text: item.title ?? "",
@@ -91,53 +87,4 @@ class CustomNavBar extends StatelessWidget {
       ),
     );
   }
-}
-
-void _showSellBottomSheet(
-  BuildContext context,
-) {
-  showModalBottomSheet(
-    context: context,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20.r)),
-    ),
-    builder: (ctx) => Padding(
-      padding: EdgeInsets.all(16.r),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(children: [
-            const Spacer(),
-            CustomText(
-              text: "sell".tr(),
-              fontWeight: FontWeight.bold,
-              fontSize: 20.sp,
-            ),
-            const Spacer(),
-            GestureDetector(
-              onTap: () => Navigator.pop(ctx),
-              child: Icon(Icons.close, size: 24.sp),
-            ),
-          ]),
-          SizedBox(height: 10.h),
-          ListTile(
-            leading: Icon(Icons.local_offer, size: 24.sp),
-            title: CustomText(text: "create_product".tr(), fontSize: 16.sp),
-            onTap: () {
-              Navigator.pop(ctx);
-              ctx.push(AppRoutes.addProduct);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.play_circle_fill, size: 24.sp),
-            title: CustomText(text: "schedule_show".tr(), fontSize: 16.sp),
-            onTap: () {
-              Navigator.pop(ctx);
-              ctx.push(AppRoutes.addStream);
-            },
-          ),
-        ],
-      ),
-    ),
-  );
 }

@@ -83,9 +83,9 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     ));
 
     Future.wait([
-        _loadActiveBidSession(),
-        _loadSubscriptionStatus(),
-        loadInitialComments(streamId: state.stream.id ?? 0),
+      _loadActiveBidSession(),
+      _loadSubscriptionStatus(),
+      loadInitialComments(streamId: state.stream.id ?? 0),
     ]);
 
     // Initialize Pusher
@@ -191,7 +191,7 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     try {
       final dataMap = _normalizeSocketPayload(raw);
       final event = BidPlacedEvent.fromJson(dataMap);
-      
+
       // Update timer from the new bid session when a bid is placed
       if (event.bidSession != null) {
         final session = event.bidSession!;
@@ -199,28 +199,33 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
         int? timerRemainingSeconds = session.remainingSeconds;
 
         // Calculate end time if we have remaining seconds but no end time
-        if (timerEndTime == null && timerRemainingSeconds != null && timerRemainingSeconds > 0) {
-          timerEndTime = DateTime.now().add(Duration(seconds: timerRemainingSeconds));
+        if (timerEndTime == null &&
+            timerRemainingSeconds != null &&
+            timerRemainingSeconds > 0) {
+          timerEndTime =
+              DateTime.now().add(Duration(seconds: timerRemainingSeconds));
         }
 
         // Calculate remaining seconds if we have end time but no remaining seconds
         if (timerRemainingSeconds == null && timerEndTime != null) {
-          timerRemainingSeconds = timerEndTime.difference(DateTime.now()).inSeconds;
+          timerRemainingSeconds =
+              timerEndTime.difference(DateTime.now()).inSeconds;
           if (timerRemainingSeconds < 0) {
             timerRemainingSeconds = 0;
           }
         }
 
         if (timerEndTime != null || timerRemainingSeconds != null) {
-          debugPrint('⏰ Updating bid session timer (new bid placed) - Remaining: ${timerRemainingSeconds}s, EndTime: $timerEndTime');
-          
+          debugPrint(
+              '⏰ Updating bid session timer (new bid placed) - Remaining: ${timerRemainingSeconds}s, EndTime: $timerEndTime');
+
           emit(state.copyWith(
             currentBidEndTime: timerEndTime,
             currentBidRemainingSeconds: timerRemainingSeconds,
           ));
         }
       }
-      
+
       // Also reload the active bid session to get updated product and bid count
       _loadActiveBidSession();
     } catch (e, st) {
@@ -263,8 +268,9 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
 
       emit(state.copyWith(
         activeStreamProduct: toggledProduct,
-        currentStreamProductId:
-            toggledProduct.id ?? toggledProduct.productId ?? state.currentStreamProductId,
+        currentStreamProductId: toggledProduct.id ??
+            toggledProduct.productId ??
+            state.currentStreamProductId,
         isSelectingWinner: false,
         currentWinner: null,
       ));
@@ -845,16 +851,18 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
           session: data,
         );
 
-        final isSessionActive =
-            data.bidSession?.status == 'active' && (data.remainingSeconds ?? 0) > 0;
+        final isSessionActive = data.bidSession?.status == 'active' &&
+            (data.remainingSeconds ?? 0) > 0;
 
         emit(state.copyWith(
           activeStreamProduct: product ?? state.activeStreamProduct,
-          currentStreamProductId:
-              product?.id ?? data.streamProductId ?? state.currentStreamProductId,
+          currentStreamProductId: product?.id ??
+              data.streamProductId ??
+              state.currentStreamProductId,
           currentBidEndTime: timing.endTime,
           currentBidRemainingSeconds: timing.remainingSeconds,
-          currentBidTotalBids: data.bidSession?.totalBids ?? state.currentBidTotalBids,
+          currentBidTotalBids:
+              data.bidSession?.totalBids ?? state.currentBidTotalBids,
           currentWinner: isSessionActive ? null : state.currentWinner,
           isSelectingWinner: isSessionActive ? false : state.isSelectingWinner,
         ));
@@ -872,7 +880,8 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
       return null;
     }
 
-    final currentHighestBid = data.bidSession?.currentHighestBid ?? data.startingBid;
+    final currentHighestBid =
+        data.bidSession?.currentHighestBid ?? data.startingBid;
     final minimumBidIncrement = data.minimumBidIncrement ?? 0;
     final bidPrice = currentHighestBid == null
         ? null
@@ -914,7 +923,8 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     BidSessionData? session,
   }) {
     DateTime? endTime = session?.bidSession?.endsAt;
-    int? remainingSeconds = session?.remainingSeconds ?? product?.remainingSeconds;
+    int? remainingSeconds =
+        session?.remainingSeconds ?? product?.remainingSeconds;
 
     if (endTime != null) {
       remainingSeconds = endTime.difference(DateTime.now()).inSeconds;
@@ -944,8 +954,8 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     result.fold(
       (_) => emit(state.copyWith(isLoadingSubscription: false)),
       (response) {
-        final isSubscribed = response.data
-            .any((user) => user.id == broadcasterId);
+        final isSubscribed =
+            response.data.any((user) => user.id == broadcasterId);
         emit(state.copyWith(
           isLoadingSubscription: false,
           isSubscribed: isSubscribed,
@@ -986,7 +996,7 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
   Future<void> toggleAudio() async {
     final newMutedState = !state.isAudioMuted;
     emit(state.copyWith(isAudioMuted: newMutedState));
-    
+
     // Apply mute state to remote audio track
     final audioTrack = state.remoteAudioTrack;
     if (audioTrack != null) {
@@ -1093,9 +1103,23 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     }
 
     // Cleanup Pusher
-    _pusher?.disconnect();
-    _pusherManager.dispose();
-    _streamChannel?.unsubscribe();
+    try {
+      _streamChannel?.unsubscribe();
+    } catch (e) {
+      debugPrint('Error unsubscribing from channel: $e');
+    }
+
+    try {
+      _pusher?.disconnect();
+    } catch (e) {
+      debugPrint('Error disconnecting Pusher: $e');
+    }
+
+    try {
+      _pusherManager.dispose();
+    } catch (e) {
+      debugPrint('Error disposing PusherManager: $e');
+    }
   }
 
   @override

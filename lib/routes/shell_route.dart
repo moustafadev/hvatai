@@ -10,6 +10,7 @@ import 'package:hvatai/features/favorites/presentation/cubit/favorite/favorite_c
 import 'package:hvatai/features/favorites/presentation/favorites.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
+import 'package:hvatai/features/schedule_stream/presentation/schedule_stream.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -53,7 +54,7 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
                   Assets.assetsIconsMenu,
                   color: AppColors.white,
                 ),
-                title: "menu".tr()),
+                title: ""),
           ),
           PersistentRouterTabConfig(
             item: ItemConfig(
@@ -118,11 +119,14 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
         ]),
         StatefulShellBranch(routes: <RouteBase>[
           GoRoute(
-            path: AppRoutes.menu,
+            path: AppRoutes.scheduleStream,
             pageBuilder: (context, state) => buildCupertinoTransitionPage(
               context: context,
               state: state,
-              child: const SizedBox(),
+              child: BlocProvider(
+                create: (_) => locator<ScheduleStreamCubit>()..loadScheduledStreams(),
+                child: const ScheduleStreamScreen(),
+              ),
             ),
           ),
         ]),

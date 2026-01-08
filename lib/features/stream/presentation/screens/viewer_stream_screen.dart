@@ -126,8 +126,9 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
               previous.showBidSuccess != current.showBidSuccess,
           listener: (context, state) {
             if (state.showBidSuccess && state.successfulBidAmount != null) {
-              // Close first bid bottom sheet if it's open
-              if (Navigator.of(context).canPop()) {
+              // Only close bottom sheet if it's the first bid (FirstBidBottomSheet is open)
+              final isFirstBid = (state.currentBidTotalBids ?? 0) == 0;
+              if (isFirstBid && Navigator.of(context).canPop()) {
                 Navigator.of(context).pop();
               }
               // Show success bottom sheet
@@ -318,6 +319,15 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                                     currentProduct != null &&
                                     canInteractWithBids)
                                 ? () async {
+                                    // Get minimum bid increment from stream
+                                    final minimumBidIncrementString = widget
+                                            .stream.minimumBidIncrement
+                                            ?.toString() ??
+                                        '1000';
+                                    final minimumBidIncrement = double.tryParse(
+                                            minimumBidIncrementString) ??
+                                        1000.0;
+
                                     final customPrice =
                                         await showModalBottomSheet<double>(
                                       context: context,
@@ -326,6 +336,10 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                                       builder: (ctx) =>
                                           CustomBidPriceBottomSheet(
                                         minimumPrice: displayPrice,
+                                        currentPrice: displayPrice,
+                                        step: minimumBidIncrement,
+                                        remainingSeconds:
+                                            state.currentBidRemainingSeconds,
                                       ),
                                     );
 

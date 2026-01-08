@@ -25,6 +25,8 @@ class AppRoutes {
   static const String search = '/search';
   static const String activity = '/activity';
   static const String menu = '/menu';
+  static const String scheduleStream = '/schedule_stream';
+  static const String scheduledStreamsList = '/scheduled_streams_list';
   static const String favorite = '/favorite';
   static const String addStream = '/add_stream';
   static const String inviteFriends = '/invite_friends';

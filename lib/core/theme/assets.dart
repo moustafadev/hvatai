@@ -20,7 +20,7 @@ class Assets {
   /// Assets for assetsFontsGilroyLight
   /// assets/fonts/Gilroy-Light.otf
   static const String assetsFontsGilroyLight = "assets/fonts/Gilroy-Light.otf";
-  
+
   /// Assets for assetsFontsSFProRoundedRegular
   /// assets/fonts/SF-Pro-Rounded-Regular.ttf
   static const String assetsFontsSFProRoundedRegular =
@@ -120,11 +120,18 @@ class Assets {
   /// info circle icon
   static const String assetsIconsInfoCircle2 = "assets/icons/info_circle.svg";
 
-  /// check correct image 
-  static const String assetsImagesCheckCorrect = "assets/images/check_correct.png";
+  /// check correct image
+  static const String assetsImagesCheckCorrect =
+      "assets/images/check_correct.png";
+
   /// Assets for assetsIconsCheck
   /// assets/icons/check.png
   static const String assetsIconsCheck = "assets/icons/check.png";
+
+  /// Assets for assetsIconsDouble_alt_arrow_right
+  /// assets/icons/double_alt_arrow_right.svg
+  static const String assetsIconsDoubleAltArrowRight =
+      "assets/icons/Double_Alt_Arrow_Right.png";
 
   /// Assets for assetsIconsCheckWithCircle
   /// assets/icons/checkWithCircle.png
@@ -498,6 +505,9 @@ class Assets {
   static const String assetsIconsSoundwaveCircle =
       "assets/icons/Soundwave_Circle.png";
 
+  static const String assetsIconsSoundwaveCircle2 =
+      "assets/icons/soundwave_circle2.png";
+
   /// Assets for assetsIconsStar
   /// assets/icons/Star.png
   static const String assetsIconsStar = "assets/icons/Star.png";
@@ -598,6 +608,7 @@ class Assets {
 
   // minus svg icons
   static const String assetsIconsMinusCircle = "assets/icons/minus_circle.svg";
+
   /// Assets for assetsImagesAppleGblack
   /// assets/images/appleGblack.png
   static const String assetsImagesAppleGblack = "assets/images/appleGblack.png";
