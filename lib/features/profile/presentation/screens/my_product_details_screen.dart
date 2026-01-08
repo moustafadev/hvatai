@@ -305,11 +305,11 @@ class _MyProductDetailsScreenState extends State<MyProductDetailsScreen> {
   Widget _buildDot(bool isActive) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 4),
-      width: isActive ? 12.w : 8.w,
-      height: 8.h,
+      width: 10.w,
+      height: 10.h,
       decoration: BoxDecoration(
         color: isActive ? AppColors.blackDark : AppColors.greyBorder,
-        borderRadius: BorderRadius.circular(4),
+        shape: BoxShape.circle,
       ),
     );
   }
