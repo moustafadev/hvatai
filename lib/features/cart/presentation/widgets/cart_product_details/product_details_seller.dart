@@ -21,22 +21,15 @@ class ProductDetailsSeller extends StatelessWidget {
           fontWeight: FontWeight.w800,
         ),
         const Spacer(),
-        if (ownerImage != null && ownerImage!.isNotEmpty)
-          ClipRRect(
-            borderRadius: BorderRadius.circular(100.r),
-            child: CustomImage(
-              height: 20.h,
-              width: 20.h,
-              imageSource: ownerImage!,
-              fit: BoxFit.cover,
-            ),
-          )
-        else
-          Icon(
-            Icons.person_2_outlined,
-            size: 20.h,
-            color: AppColors.graniteGray,
+        ClipRRect(
+          borderRadius: BorderRadius.circular(100.r),
+          child: CustomImage(
+            height: 20.h,
+            width: 20.h,
+            imageSource: ownerImage ?? "",
+            fit: BoxFit.cover,
           ),
+        ),
         6.pw,
         CustomText(
           text: ownerName ?? '',

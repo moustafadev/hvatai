@@ -66,6 +66,19 @@ class CartProductDetailsScreen extends StatelessWidget {
                   onPageChanged: (index) {
                     cubit.changeImageIndex(index);
                   },
+                  isFavorited: state.isFavourites ?? product.isFavorited,
+                  onFavoriteTap: () {
+                    cubit.addFavProduct(product.id!);
+                    cubit.toggleFav(product.isFavorited);
+                  },
+                  onShareTap: () {
+                    // TODO: Implement share functionality
+                  },
+                  onParticipateTap: () {
+                    cubit.addProductToCart(context, product);
+                  },
+                  ownerName: product.owner?.name,
+                  ownerImage: product.owner?.image,
                 ),
                 12.ph,
                 ProductDetailsContent(

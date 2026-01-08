@@ -49,29 +49,22 @@ class ProductDetailsContent extends StatelessWidget {
             saleType: product.saleType,
           ),
           8.ph,
-          ProductDetailsActions(
-            isFavorited: isFavorited,
-            onFavoriteTap: onFavoriteTap,
-            onParticipateTap: onParticipateTap,
-          ),
-          8.ph,
           if (product.productDescription?.isNotEmpty ?? false)
             CustomText(
               text: product.productDescription ?? '',
               fontSize: 14.sp,
               fontWeight: FontWeight.w600,
             ),
-          17.ph,
-         
           12.ph,
           ProductDetailsSeller(
-            ownerName: product.owner?.name,
-            ownerImage: product.owner?.image,
+            ownerName: product.user?.name,
+            ownerImage: product.user?.image,
           ),
           12.ph,
           ProductDetailsOtherProducts(
             ownerProducts: ownerProducts,
             products: products,
+            productDetailsCubit: context.read<CartProductDetailsCubit>(),
           ),
           30.ph,
         ],
@@ -79,4 +72,3 @@ class ProductDetailsContent extends StatelessWidget {
     );
   }
 }
-

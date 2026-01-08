@@ -54,7 +54,7 @@ class PusherManager {
     } catch (e) {
       debugPrint('Error in PusherManager.dispose: $e');
     } finally {
-      _pusher = null;
+    _pusher = null;
     }
   }
 }

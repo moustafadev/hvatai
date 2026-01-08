@@ -5,10 +5,12 @@ class ProductDetailsOtherProducts extends StatelessWidget {
     super.key,
     required this.ownerProducts,
     required this.products,
+    this.productDetailsCubit,
   });
 
   final List<ProductModel> ownerProducts;
   final List<ProductModel> products;
+  final CartProductDetailsCubit? productDetailsCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +39,7 @@ class ProductDetailsOtherProducts extends StatelessWidget {
               products: products,
               isProductCompany: true,
               selectedCategoryIndex: index,
+              productDetailsCubit: productDetailsCubit,
             );
           },
         ),

@@ -8,6 +8,7 @@ import 'package:hvatai/features/cart/data/model/cart_model.dart';
 import 'package:hvatai/features/cart/domain/usecases/add_fav_product_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/add_product_to_cart_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/delete_cart_usecase.dart';
+import 'package:hvatai/features/cart/domain/usecases/update_cart_usecase.dart';
 import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
 import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
@@ -20,6 +21,7 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
     this.addFavProductUsecase,
     this.addProductToCartUsecase,
     this.deleteCartUsecase,
+    this.updateCartUsecase,
   ) : super(CartProductDetailsState(
           categories: [],
           selectedIndex: 0,
@@ -30,6 +32,7 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
   AddProductToCartUsecase addProductToCartUsecase;
   AddFavProductUsecase addFavProductUsecase;
   DeleteCartUsecase deleteCartUsecase;
+  UpdateCartUsecase updateCartUsecase;
   Timer? _refreshTimer;
 
   void createPageController() {
@@ -110,10 +113,247 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
           errorMessage: '',
           isLoading: false,
         ));
-
-        showFloatingMessageSuccess('addressDeletedSuccessfully'.tr());
       },
     );
+  }
+
+  /// Check if a product variant is in the cart
+  bool isProductInCart(ProductModel product) {
+    final variantId = product.variants.firstOrNull?.id;
+    if (variantId == null) return false;
+
+    for (final cart in state.carts) {
+      for (final item in cart.items ?? []) {
+        if (item.item?.id == variantId) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  /// Get the cart item ID for a product variant
+  int? getCartItemId(ProductModel product) {
+    final variantId = product.variants.firstOrNull?.id;
+    if (variantId == null) return null;
+
+    for (final cart in state.carts) {
+      for (final item in cart.items ?? []) {
+        if (item.item?.id == variantId) {
+          return item.id;
+        }
+      }
+    }
+    return null;
+  }
+
+  /// Toggle product in cart (add if not in cart, remove if in cart)
+  Future<void> toggleProductInCart(
+      BuildContext context, ProductModel product) async {
+    final variantId = product.variants.firstOrNull?.id;
+    if (variantId == null) return;
+
+    final isInCart = isProductInCart(product);
+    final cartItemId = getCartItemId(product);
+
+    // Optimistic update: immediately update UI
+    if (isInCart && cartItemId != null) {
+      // Store current state for revert
+      final previousCarts = state.carts;
+      final previousTotalPrice = state.totalCartPrice;
+
+      // Optimistically remove from cart
+      final updatedCarts = state.carts.map((cart) {
+        final itemToRemove = (cart.items ?? []).firstWhere(
+          (item) => item.id == cartItemId,
+          orElse: () => CartItem(),
+        );
+
+        if (itemToRemove.id == null) {
+          return cart; // Item not found in this cart
+        }
+
+        final updatedItems =
+            (cart.items ?? []).where((item) => item.id != cartItemId).toList();
+
+        // Calculate new total by subtracting the removed item's price
+        final itemPrice =
+            (itemToRemove.price ?? 0.0) * (itemToRemove.quantity ?? 1);
+        final newTotal = (cart.total ?? 0.0) - itemPrice;
+
+        return cart.copyWith(
+          items: updatedItems,
+          total: newTotal > 0 ? newTotal : 0.0,
+        );
+      }).toList();
+
+      double newTotalPrice = 0.0;
+      for (final cart in updatedCarts) {
+        newTotalPrice += cart.total ?? 0.0;
+      }
+
+      emit(state.copyWith(
+        carts: updatedCarts,
+        totalCartPrice: newTotalPrice,
+      ));
+
+      // Make API call to remove from cart
+      final result = await updateCartUsecase.call(
+        UpdateCartParams(cartId: cartItemId, quantity: 0),
+      );
+
+      result.fold(
+        (failure) {
+          // Revert on error
+          emit(state.copyWith(
+            carts: previousCarts,
+            totalCartPrice: previousTotalPrice,
+          ));
+          showFloatingMessageError('failedToRemoveFromCart'.tr());
+        },
+        (updatedCart) {
+          // Success - update with server response
+          final finalCarts = state.carts.map((cart) {
+            if (cart.id == updatedCart.id) {
+              return updatedCart;
+            }
+            return cart;
+          }).toList();
+
+          double finalTotalPrice = 0.0;
+          for (final cart in finalCarts) {
+            finalTotalPrice += cart.total ?? 0.0;
+          }
+
+          emit(state.copyWith(
+            carts: finalCarts,
+            totalCartPrice: finalTotalPrice,
+          ));
+        },
+      );
+    } else {
+      // Store current state for revert
+      final previousCarts = List<CartModel>.from(state.carts);
+      final previousTotalPrice = state.totalCartPrice;
+
+      // Optimistically add to cart - create a temporary cart item
+      final variant = product.variants.firstOrNull;
+      if (variant == null) return;
+
+      final itemPrice = variant.price ?? 0.0;
+      final optimisticCartItem = CartItem(
+        id: -1, // Temporary ID
+        quantity: 1,
+        price: itemPrice,
+        item: MainVariantModel(
+          id: variantId,
+          price: itemPrice,
+          product: MainProductModel(
+            id: product.id,
+            name: product.productName,
+          ),
+        ),
+      );
+
+      // Find or create a cart to add the item to
+      final updatedCarts = List<CartModel>.from(state.carts);
+      CartModel? targetCart;
+      int targetCartIndex = -1;
+
+      // Try to find an existing cart (usually there's one main cart)
+      for (int i = 0; i < updatedCarts.length; i++) {
+        if (updatedCarts[i].id != null) {
+          targetCart = updatedCarts[i];
+          targetCartIndex = i;
+          break;
+        }
+      }
+
+      if (targetCart != null && targetCartIndex >= 0) {
+        // Add to existing cart
+        final updatedItems = List<CartItem>.from(targetCart.items ?? [])
+          ..add(optimisticCartItem);
+        final newTotal = (targetCart.total ?? 0.0) + itemPrice;
+        updatedCarts[targetCartIndex] = targetCart.copyWith(
+          items: updatedItems,
+          total: newTotal,
+        );
+      } else {
+        // Create new cart
+        final newCart = CartModel(
+          id: -1, // Temporary ID
+          items: [optimisticCartItem],
+          total: itemPrice,
+        );
+        updatedCarts.add(newCart);
+      }
+
+      double newTotalPrice = 0.0;
+      for (final cart in updatedCarts) {
+        newTotalPrice += cart.total ?? 0.0;
+      }
+
+      // Optimistically update UI immediately - emit synchronously
+      // Create a new state to ensure proper change detection
+      final optimisticState = state.copyWith(
+        carts: updatedCarts,
+        totalCartPrice: newTotalPrice,
+      );
+
+      // Emit the optimistic state immediately - this triggers UI rebuild
+      emit(optimisticState);
+
+      // Make API call (don't await immediately to allow UI to update first)
+      // The UI will update from the emit above, then we'll update again with server response
+      addProductToCartUsecase
+          .call(
+        AddProductToCartParams(
+          itemId: variantId,
+          quantity: 1,
+          itemType: product.variants[0],
+        ),
+      )
+          .then((result) {
+        result.fold(
+          (failure) {
+            // Revert on error
+            emit(state.copyWith(
+              carts: previousCarts,
+              totalCartPrice: previousTotalPrice,
+              errorMessage: failure,
+              success: false,
+            ));
+            showFloatingMessageError('insufficientStock'.tr());
+          },
+          (newCart) {
+            // Success - update with server response
+            final finalCarts = List<CartModel>.from(state.carts);
+            final existingCartIndex =
+                finalCarts.indexWhere((cart) => cart.id == newCart.id);
+
+            if (existingCartIndex >= 0) {
+              finalCarts[existingCartIndex] = newCart;
+            } else {
+              // Remove optimistic cart and add real one
+              finalCarts.removeWhere((cart) => cart.id == -1);
+              finalCarts.add(newCart);
+            }
+
+            double finalTotalPrice = 0.0;
+            for (final cart in finalCarts) {
+              finalTotalPrice += cart.total ?? 0.0;
+            }
+
+            emit(state.copyWith(
+              carts: finalCarts,
+              cartResponse: newCart,
+              success: true,
+              totalCartPrice: finalTotalPrice,
+            ));
+          },
+        );
+      });
+    }
   }
 
   Future<void> addProductToCart(
@@ -135,14 +375,29 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
           isLoading: false, errorMessage: failure, success: false));
       showFloatingMessageError('insufficientStock'.tr());
     }, (newCart) {
-      emit(state.copyWith(
-          isLoading: false, cartResponse: newCart, success: true));
+      // Update carts list with new cart
+      final updatedCarts = List<CartModel>.from(state.carts);
+      final existingCartIndex =
+          updatedCarts.indexWhere((cart) => cart.id == newCart.id);
 
-      if (newCart.total != null && newCart.total != 0) {
-        updateTotalPrice(newCart.total!);
+      if (existingCartIndex >= 0) {
+        updatedCarts[existingCartIndex] = newCart;
+      } else {
+        updatedCarts.add(newCart);
       }
 
-      showFloatingMessageSuccess('productAddedToCart'.tr());
+      double newTotalPrice = 0.0;
+      for (final cart in updatedCarts) {
+        newTotalPrice += cart.total ?? 0.0;
+      }
+
+      emit(state.copyWith(
+        isLoading: false,
+        carts: updatedCarts,
+        cartResponse: newCart,
+        success: true,
+        totalCartPrice: newTotalPrice,
+      ));
     });
   }
 

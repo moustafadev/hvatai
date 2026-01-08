@@ -5,10 +5,16 @@ class ProductCardPriceSection extends StatelessWidget {
     super.key,
     required this.price,
     required this.showStoreIcon,
+    this.onCartTap,
+    this.product,
+    this.isInCart = false,
   });
 
   final double? price;
   final bool showStoreIcon;
+  final VoidCallback? onCartTap;
+  final ProductModel? product;
+  final bool isInCart;
 
   @override
   Widget build(BuildContext context) {
@@ -16,26 +22,32 @@ class ProductCardPriceSection extends StatelessWidget {
       children: [
         CustomText(
           text: price != null
-              ? (price! % 1 == 0
-                  ? "${price!.toInt()} ₽"
-                  : "$price ₽")
+              ? (price! % 1 == 0 ? "${price!.toInt()} ₽" : "$price ₽")
               : "",
           fontSize: 20.sp,
           fontWeight: FontWeight.w700,
         ),
         if (showStoreIcon) const Spacer(),
         if (showStoreIcon)
-          CircleAvatar(
-            radius: 17.r,
-            backgroundColor: AppColors.graniteGray,
-            child: Image.asset(
-              height: 20.h,
-              width: 20.h,
-              Assets.assetsIconsStore,
+          GestureDetector(
+            onTap: () {
+              if (onCartTap != null) {
+                onCartTap!();
+              }
+            },
+            behavior: HitTestBehavior.opaque,
+            child: CircleAvatar(
+              radius: 17.r,
+              backgroundColor: AppColors.graniteGray,
+              child: Image.asset(
+                height: 20.h,
+                width: 20.h,
+                Assets.assetsIconsStore,
+                color: isInCart ? AppColors.primaryPink : AppColors.white,
+              ),
             ),
           ),
       ],
     );
   }
 }
-

@@ -101,6 +101,11 @@ class CustomProductCard extends StatelessWidget {
                           child: ProductCardPriceSection(
                             price: variant.price,
                             showStoreIcon: isProductCompany,
+                            product: product,
+                            isInCart: cubit.isProductInCart(product),
+                            onCartTap: () {
+                              cubit.toggleProductInCart(context, product);
+                            },
                           ),
                         ),
                       ],
