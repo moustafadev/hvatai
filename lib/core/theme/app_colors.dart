@@ -56,7 +56,7 @@ class AppColors {
   static Color button = const Color(0xFF007AFF).withOpacity(0.2);
   static Color text = const Color(0xFF2A2A2A);
   static const Color violetPink = Color(0xFFE26ADC); // New color added
-
+  static const Color greyLine = Color(0xFFF3F3F3);
   // ✅ Gradients
   static LinearGradient primaryGradient = LinearGradient(
     colors: [blueLite, purpleLite, deepPurple],

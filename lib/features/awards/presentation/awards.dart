@@ -14,8 +14,6 @@ import 'package:hvatai/features/payment_method/presentation/cubit/payment_method
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
-import 'package:hvatai/features/search/presentation/search.dart';
-import 'package:hvatai/features/chat/presentation/chat.dart';
 import 'package:hvatai/core/customs/payment_methods_section.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -26,8 +24,6 @@ part 'screens/send_reward_screen.dart';
 part 'widgets/awards_club/awards_club_header_widget.dart';
 part 'widgets/awards_club/awards_club_header_content.dart';
 part 'widgets/awards_club/awards_club_list_and_shared_widgets.dart';
-part 'widgets/awards_club/awards_club_bottom_sheet.dart';
-part 'widgets/awards_club/awards_club_bottom_sheet_header_and_actions.dart';
 part 'widgets/select_away_rewards/reward_loading_and_success_screens.dart';
 part 'widgets/select_away_rewards/reward_payment_and_error_widgets.dart';
 part 'widgets/select_away_rewards/reward_header_and_summary_widgets.dart';

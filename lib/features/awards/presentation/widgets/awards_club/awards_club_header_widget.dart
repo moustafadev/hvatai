@@ -3,28 +3,12 @@ part of '../../awards.dart';
 class AwardsClubHeaderWidget extends StatelessWidget {
   const AwardsClubHeaderWidget({super.key});
 
-  void _showBottomSheet(BuildContext context, AwardsClubCubit cubit) {
-    showModalBottomSheet(
-      constraints: BoxConstraints(
-        maxWidth: MediaQuery.of(context).size.width,
-      ),
-      context: context,
-      isScrollControlled: true,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20.r),
-        ),
-      ),
-      backgroundColor: Colors.white,
-      builder: (context) => AwardsClubBottomSheet(cubit: cubit),
-    );
-  }
+
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AwardsClubCubit, AwardsClubState>(
       builder: (context, state) {
-        final cubit = context.read<AwardsClubCubit>();
         final user = state.company;
         final companyName =
             (user?.name ?? '').isNotEmpty ? user!.name! : 'companyName'.tr();
@@ -38,7 +22,6 @@ class AwardsClubHeaderWidget extends StatelessWidget {
               companyName: companyName,
               description: description,
               avatar: avatar,
-              onAvatarTap: () => _showBottomSheet(context, cubit),
             ),
             _AwardsClubHeaderBackButton(isSubscribed: state.isSubscribed),
           ],

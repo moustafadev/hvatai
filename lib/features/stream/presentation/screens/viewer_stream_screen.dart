@@ -259,9 +259,7 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                                 isSubscriptionLoading:
                                     state.isLoadingSubscription ||
                                         state.isTogglingSubscription,
-                                onSubscribeTap: () => context
-                                    .read<ViewerStreamCubit>()
-                                    .toggleSubscription(),
+                                cubit: context.read<ViewerStreamCubit>(),
                               ),
                               ViewerCountWidget(
                                 count: state.viewerCount,

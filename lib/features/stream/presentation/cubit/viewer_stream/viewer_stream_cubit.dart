@@ -968,16 +968,28 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     final broadcasterId = state.stream.user?.id;
     if (broadcasterId == null || state.isTogglingSubscription) return;
 
-    emit(state.copyWith(isTogglingSubscription: true));
+    // Optimistically update the subscription state
+    final currentSubscriptionState = state.isSubscribed;
+    emit(state.copyWith(
+      isTogglingSubscription: true,
+      isSubscribed: !currentSubscriptionState, // Optimistically toggle
+    ));
+
     final result = await _toggleSubscriptionUsecase(
       ToggleSubscriptionParams(userId: broadcasterId),
     );
 
     result.fold(
-      (_) => emit(state.copyWith(isTogglingSubscription: false)),
       (_) {
+        // Revert on error
+        emit(state.copyWith(
+          isTogglingSubscription: false,
+          isSubscribed: currentSubscriptionState,
+        ));
+      },
+      (_) {
+        // Success - keep the optimistic update
         emit(state.copyWith(isTogglingSubscription: false));
-        _loadSubscriptionStatus();
       },
     );
   }

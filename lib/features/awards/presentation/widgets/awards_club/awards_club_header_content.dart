@@ -5,13 +5,11 @@ class _AwardsClubHeaderContent extends StatelessWidget {
     required this.companyName,
     required this.description,
     required this.avatar,
-    required this.onAvatarTap,
   });
 
   final String companyName;
   final String description;
   final String? avatar;
-  final VoidCallback onAvatarTap;
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +32,9 @@ class _AwardsClubHeaderContent extends StatelessWidget {
               fontWeight: FontWeight.w800,
             ),
             12.ph,
-            GestureDetector(
-              onTap: onAvatarTap,
-              child: CompanyAvatarWidget(
-                size: 48.r,
-                imageUrl: avatar,
-              ),
+            CompanyAvatarWidget(
+              size: 48.r,
+              imageUrl: avatar,
             ),
             4.ph,
             CustomText(
