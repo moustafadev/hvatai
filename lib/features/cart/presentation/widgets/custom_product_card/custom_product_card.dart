@@ -11,6 +11,7 @@ class CustomProductCard extends StatelessWidget {
     this.productDetailsCubit,
     this.showSaleTypeChip = false,
     this.showFixed = true,
+    this.color,
   });
 
   final ProductModel product;
@@ -21,6 +22,7 @@ class CustomProductCard extends StatelessWidget {
   final CartProductDetailsCubit? productDetailsCubit;
   final bool showSaleTypeChip;
   final bool showFixed;
+  final Color? color;
 
   /// Get the first image (excluding videos) from the product images list
   String? _getFirstImage(List<String>? images) {
@@ -66,7 +68,7 @@ class CustomProductCard extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 6.h),
             decoration: BoxDecoration(
-              color: AppColors.lightGreyBackground,
+              color: color ?? AppColors.lightGreyBackground,
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Row(
@@ -84,6 +86,7 @@ class CustomProductCard extends StatelessWidget {
                 10.pw,
                 Expanded(
                   child: SizedBox(
+                    height: isNameCompany ? 150.h : 140.h,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,

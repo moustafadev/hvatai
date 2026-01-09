@@ -619,5 +619,14 @@
   "chatWithSeller": "Chat with seller",
   "messageSent": "Message sent",
   "enterMessage": "Enter a message",
-  "allChats": "All chats"
+  "allChats": "All chats",
+  "bids": "Bids",
+  "activeBids": "Active Bids",
+  "bidHistory": "Bid History",
+  "noBidsYet": "No bids yet",
+  "goToStream": "Go to Stream",
+  "viewAuctionProgress": "View Auction Progress",
+  "orderStatus": "Order Status",
+  "youDidNotWin": "😥 You did not win",
+  "myBid": "My bid"
 }

@@ -204,35 +204,41 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
             ),
           ),
         ),
+        if (widget.price.isNotEmpty) ...[
+          8.ph,
+          CustomText(
+            text: widget.price,
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
+            color: AppColors.primaryPink,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
         8.ph,
-        CustomText(
-          text: widget.price,
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
-          color: AppColors.primaryPink,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-
-        CustomText(
-          text: widget.title,
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-          color: AppColors.blackDark,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
+        if (widget.title.isNotEmpty) ...[
+          CustomText(
+            text: widget.title,
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+            color: AppColors.blackDark,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+          ),
+          4.ph,
+        ],
+        if (widget.description.isNotEmpty) ...[
+          CustomText(
+            text: widget.description,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+            color: AppColors.grey,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          6.ph,
+        ],
         4.ph,
-        CustomText(
-          text: widget.description,
-          fontSize: 12,
-          fontWeight: FontWeight.w600,
-          color: AppColors.grey,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        6.ph,
-
         // Admin Info
         Row(
           children: [

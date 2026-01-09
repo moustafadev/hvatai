@@ -90,4 +90,8 @@ abstract class ServerConfig {
 
   // Analytics endpoint
   static const String statistics = "statistics";
+
+  // Activity endpoints
+  static const String favorites = "favorites";
+  static const String userBids = "streams/bids/my";
 }

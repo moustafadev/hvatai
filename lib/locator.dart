@@ -3,9 +3,11 @@ import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/core/datasources/local/cache_helper.dart';
 import 'package:hvatai/core/shared/utils/network_info.dart';
+import 'package:hvatai/features/activity/data/datasources/api_service_activity.dart';
+import 'package:hvatai/features/activity/data/repositories/activity_impl_repository.dart';
+import 'package:hvatai/features/activity/domain/repositories/activity_repository.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
-import 'package:hvatai/features/activity/presentation/cubit/featured_activity/featured_activity_cubit.dart';
-import 'package:hvatai/features/activity/presentation/cubit/rates_activity/rates_activity_cubit.dart';
+import 'package:hvatai/features/stream/domain/usecases/get_my_streams_usecase.dart';
 import 'package:hvatai/features/favorites/presentation/cubit/favorite/favorite_cubit.dart';
 import 'package:hvatai/features/cart/data/datasources/api_service_cart.dart';
 import 'package:hvatai/features/cart/data/repositories/cart_repository_impl.dart';
@@ -117,7 +119,13 @@ Future<void> setupLocator() async {
   locator.registerFactory(
       () => InterestsDetailCubit(locator(), locator(), locator()));
   locator.registerFactory(() => ProfileCubit(locator(), locator(), locator()));
-  locator.registerFactory(() => ActivityCubit());
+  locator.registerFactory(
+    () => ActivityCubit(
+      locator(),
+      locator<GetMyStreamsUsecase>(),
+      locator(),
+    ),
+  );
   locator.registerFactory(() => FavoriteCubit(locator()));
   locator.registerFactory(() => NotificationCubit());
   locator.registerFactory(() => ChangePasswordCubit(
@@ -133,8 +141,8 @@ Future<void> setupLocator() async {
       locator(),
     ),
   );
-  locator.registerFactory(
-      () => CartProductDetailsCubit(locator(), locator(), locator(), locator()));
+  locator.registerFactory(() =>
+      CartProductDetailsCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => AddStreamCubit(
         locator(),
         locator(),
@@ -188,8 +196,6 @@ Future<void> setupLocator() async {
   locator.registerFactory(
       () => DeliveryAddressCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => OtpCubit(locator()));
-  locator.registerFactory(() => RatesActivityCubit());
-  locator.registerFactory(() => FeaturedActivityCubit());
   locator.registerFactory(() => LiveListingsShopCubit(
       locator(), locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => WalletCubit(locator(), locator(), locator()));
@@ -239,6 +245,8 @@ Future<void> setupLocator() async {
       () => PaymentMethodImplRepository(locator()));
   locator.registerLazySingleton<AnalyticsRepository>(
       () => AnalyticsRepositoryImpl(locator()));
+  locator.registerLazySingleton<ActivityRepository>(
+      () => ActivityImplRepository(locator()));
   // //DATASOURSE
   locator.registerLazySingleton(() => ApiServiceAuth());
   locator.registerLazySingleton(() => ApiServiceAddress());
@@ -258,6 +266,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ApiServiceOrders());
   locator.registerLazySingleton(() => ApiServiceAnalytics());
   locator.registerLazySingleton(() => ApiServiceAddNewProduct());
+  locator.registerLazySingleton(() => ApiServiceActivity());
   // //EXTRNAL
   locator.registerLazySingleton(() => SharedPreferences.getInstance());
   locator.registerLazySingleton(() => InternetConnectionChecker());

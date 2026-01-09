@@ -616,5 +616,14 @@
   "chatWithSeller": "Чат с продавцом",
   "messageSent": "Сообщение отправлено",
   "enterMessage": "Введите сообщение",
-  "allChats": "Все чаты"
+  "allChats": "Все чаты",
+  "bids": "Ставки",
+  "activeBids": "Активные ставки",
+  "bidHistory": "История ставок",
+  "noBidsYet": "Ставок пока нет",
+  "goToStream": "Перейти в стрим",
+  "viewAuctionProgress": "Смотреть ход аукциона",
+  "orderStatus": "Статус заказа",
+  "youDidNotWin": "😥 Вы не выиграли",
+  "myBid": "Моя ставка"
 }
