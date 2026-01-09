@@ -57,8 +57,8 @@ class CustomNavBar extends StatelessWidget {
               },
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
-                padding: EdgeInsets.all(12),
-                height: 45.h,
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                height: 45,
                 decoration: BoxDecoration(
                   color: isSelected ? Colors.white : AppColors.blackColorIcon,
                   borderRadius: BorderRadius.circular(100.r),
