@@ -4,12 +4,14 @@ class MyCustomProductCard extends StatelessWidget {
   final ProductModel product;
   final int selectedCategoryIndex;
   final VoidCallback? onTap;
+  final Color? color;
 
   const MyCustomProductCard({
     super.key,
     required this.product,
     required this.selectedCategoryIndex,
     this.onTap,
+    this.color,
   });
 
   /// Get the first image (excluding videos) from the product images list
@@ -55,7 +57,7 @@ class MyCustomProductCard extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 6.h),
             decoration: BoxDecoration(
-              color: AppColors.lightGreyBackground,
+              color: color ?? AppColors.lightGreyBackground,
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Row(

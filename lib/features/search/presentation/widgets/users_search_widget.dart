@@ -69,7 +69,7 @@ class UserTile extends StatelessWidget {
               text: user.personalRating.toString(),
               fontSize: 12.sp,
               fontWeight: FontWeight.w700,
-              fontFamily: 'GManrope',
+              fontFamily: 'Manrope',
               color: AppColors.blackDark,
             ),
           ],

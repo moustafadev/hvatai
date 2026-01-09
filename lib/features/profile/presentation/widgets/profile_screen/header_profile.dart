@@ -98,7 +98,7 @@ class HeaderProfile extends StatelessWidget {
                         fontSize: 14.sp,
                         height: 1,
                         letterSpacing: 0,
-                        color: AppColors.blackTransparent40,
+                        color: AppColors.text,
                       ),
                     ),
                     TextSpan(
@@ -120,7 +120,7 @@ class HeaderProfile extends StatelessWidget {
                         fontSize: 14.sp,
                         height: 1,
                         letterSpacing: 0,
-                        color: AppColors.blackTransparent40,
+                        color: AppColors.text,
                       ),
                     ),
                   ],

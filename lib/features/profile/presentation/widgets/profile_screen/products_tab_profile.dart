@@ -62,11 +62,11 @@ class ProductsTabProfile extends StatelessWidget {
                         ),
                       ],
                     ),
-                    12.ph,
-                    MyGoodsTabs(
-                      selectedIndex: state.selectedCategoryIndex,
-                      onSelect: productsCubit.changeCategory,
-                    ),
+                    // 12.ph,
+                    // MyGoodsTabs(
+                    //   selectedIndex: state.selectedCategoryIndex,
+                    //   onSelect: productsCubit.changeCategory,
+                    // ),
                     20.ph,
                     CustomTextField(
                       height: 40,
@@ -106,6 +106,7 @@ class ProductsTabProfile extends StatelessWidget {
                       final product = products[index];
                       return MyCustomProductCard(
                         product: product,
+                        color: AppColors.background,
                         selectedCategoryIndex: state.selectedCategoryIndex,
                       );
                     },

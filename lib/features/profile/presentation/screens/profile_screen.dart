@@ -68,12 +68,14 @@ class ProfileScreen extends StatelessWidget {
                             indicatorWeight: 2,
                             labelStyle: TextStyle(
                               fontSize: 14.sp,
+                              fontFamily: 'Manrope',
                               fontWeight: FontWeight.w800,
                               color: AppColors.blackColorIcon,
                             ),
                             unselectedLabelStyle: TextStyle(
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w600,
+                              fontFamily: 'Manrope',
                               color: AppColors.greyTransparent,
                             ),
                             indicatorSize: TabBarIndicatorSize.tab,

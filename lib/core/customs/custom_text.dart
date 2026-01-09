@@ -19,7 +19,7 @@ class CustomText extends StatelessWidget {
     required this.text,
     this.fontWeight = FontWeight.w500,
     this.fontSize = 14,
-    this.color,
+    this.color = const Color(0xFF2A2A2A),
     this.textAlign,
     this.letterSpacing,
     this.maxLines,
@@ -37,7 +37,7 @@ class CustomText extends StatelessWidget {
     // Use the specified font family
     switch (fontFamily) {
       case 'Manrope':
-        textStyle = sfProRoundedTextStyle(
+        textStyle = manropeTextStyle(
           fontSize: fontSize,
           fontWeight: fontWeight,
           color: color,
@@ -56,18 +56,8 @@ class CustomText extends StatelessWidget {
           wordSpacing: wordSpacing,
         );
         break;
-      case 'Gilroy':
-        textStyle = gilroyTextStyle(
-          fontSize: fontSize,
-          fontWeight: fontWeight,
-          color: color,
-          letterSpacing: letterSpacing,
-          height: height,
-          wordSpacing: wordSpacing,
-        );
-        break;
       default:
-        textStyle = TextStyle(
+        textStyle = manropeTextStyle(
           fontSize: fontSize,
           fontWeight: fontWeight,
           color: color,
@@ -87,8 +77,8 @@ class CustomText extends StatelessWidget {
     );
   }
 
-  // Helper method for SFProRounded text style
-  static TextStyle sfProRoundedTextStyle({
+  // Helper method for Manrope text style
+  static TextStyle manropeTextStyle({
     double? fontSize,
     FontWeight? fontWeight,
     Color? color,
@@ -117,26 +107,6 @@ class CustomText extends StatelessWidget {
     double? wordSpacing,
   }) {
     return GoogleFonts.montserratAlternates(
-      fontSize: fontSize,
-      fontWeight: fontWeight,
-      color: color,
-      letterSpacing: letterSpacing,
-      height: height,
-      wordSpacing: wordSpacing,
-    );
-  }
-
-  // Helper method for Gilroy text style
-  static TextStyle gilroyTextStyle({
-    double? fontSize,
-    FontWeight? fontWeight,
-    Color? color,
-    double? letterSpacing,
-    double? height,
-    double? wordSpacing,
-  }) {
-    return TextStyle(
-      fontFamily: 'Gilroy',
       fontSize: fontSize,
       fontWeight: fontWeight,
       color: color,

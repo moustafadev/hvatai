@@ -119,14 +119,14 @@ class NotificationScreen extends StatelessWidget {
                                                 fontSize: 17.sp,
                                                 fontWeight: FontWeight.w600,
                                                 textAlign: TextAlign.center,
-                                                fontFamily: 'SFProRounded',
+                                                fontFamily: 'Manrope',
                                               ),
                                               CustomText(
                                                 text: 'wantContactsDescription'
                                                     .tr(),
                                                 fontSize: 14.sp,
                                                 textAlign: TextAlign.center,
-                                                fontFamily: 'SFProRounded',
+                                                fontFamily: 'Manrope',
                                               ),
                                             ],
                                           ),

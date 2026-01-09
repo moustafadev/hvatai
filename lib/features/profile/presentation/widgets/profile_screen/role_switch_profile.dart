@@ -71,7 +71,8 @@ class RoleSwitchProfile extends StatelessWidget {
                         children: [
                           Expanded(
                             child: GestureDetector(
-                              onTap: () => context.read<ProfileCubit>().updateRole(true),
+                              onTap: () =>
+                                  context.read<ProfileCubit>().updateRole(true),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 12, horizontal: 8),
@@ -96,7 +97,9 @@ class RoleSwitchProfile extends StatelessWidget {
                           ),
                           Expanded(
                             child: GestureDetector(
-                              onTap: () => context.read<ProfileCubit>().updateRole(false),
+                              onTap: () => context
+                                  .read<ProfileCubit>()
+                                  .updateRole(false),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(
                                     vertical: 12, horizontal: 8),

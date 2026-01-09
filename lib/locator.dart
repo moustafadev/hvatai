@@ -257,7 +257,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ApiServiceWallet());
   locator.registerLazySingleton(() => ApiServiceOrders());
   locator.registerLazySingleton(() => ApiServiceAnalytics());
-
+  locator.registerLazySingleton(() => ApiServiceAddNewProduct());
   // //EXTRNAL
   locator.registerLazySingleton(() => SharedPreferences.getInstance());
   locator.registerLazySingleton(() => InternetConnectionChecker());

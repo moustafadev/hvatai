@@ -44,7 +44,7 @@ class CategoriesTabsSearchWidget extends StatelessWidget {
                 hintText: 'Search by category',
                 hintStyle: const TextStyle(
                   fontWeight: FontWeight.w500,
-                  fontFamily: 'Gilroy-Medium',
+                  fontFamily: 'Manrope',
                   color: Colors.grey,
                 ),
                 prefixIcon: const Icon(Icons.search, color: Colors.grey),

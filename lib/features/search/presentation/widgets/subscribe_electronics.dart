@@ -16,7 +16,7 @@ class SubscribeElectronics extends StatelessWidget {
               text: 'Everyday Electronics'.tr(),
               fontSize: 18.sp,
               fontWeight: FontWeight.bold,
-              fontFamily: 'SFProRounded',
+              fontFamily: 'Manrope',
             ),
             const Spacer(),
             GestureDetector(
