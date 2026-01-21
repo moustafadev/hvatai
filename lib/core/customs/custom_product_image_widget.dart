@@ -32,8 +32,9 @@ class ProductImageState {
 // --- Cubit ---
 class ProductImageCubit extends Cubit<ProductImageState> {
   final ImagePicker picker = ImagePicker();
+  final bool imagesOnly;
 
-  ProductImageCubit([List<String>? initialImages])
+  ProductImageCubit([List<String>? initialImages, this.imagesOnly = false])
       : super(ProductImageState(
           mediaItems: (initialImages ?? [])
               .map((path) => MediaItem(
@@ -58,90 +59,140 @@ class ProductImageCubit extends Cubit<ProductImageState> {
   }
 
   Future<void> addMedia(BuildContext context) async {
-    showMediaOptionsDialog(
-      context: context,
-      onTakePhoto: () async {
-        final pickedFile = await picker.pickImage(source: ImageSource.camera);
-        if (pickedFile != null) {
-          final updated = List<MediaItem>.from(state.mediaItems)
-            ..add(MediaItem(path: pickedFile.path, type: MediaType.image));
-          await updateMediaList(updated);
-        }
-      },
-      onChoosePhoto: () async {
-        final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-        if (pickedFile != null) {
-          final updated = List<MediaItem>.from(state.mediaItems)
-            ..add(MediaItem(path: pickedFile.path, type: MediaType.image));
-          await updateMediaList(updated);
-        }
-      },
-      onTakeVideo: () async {
-        final pickedFile = await picker.pickVideo(source: ImageSource.camera);
-        if (pickedFile != null) {
-          final updated = List<MediaItem>.from(state.mediaItems)
-            ..add(MediaItem(path: pickedFile.path, type: MediaType.video));
-          await updateMediaList(updated);
-        }
-      },
-      onChooseVideo: () async {
-        final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
-        if (pickedFile != null) {
-          final updated = List<MediaItem>.from(state.mediaItems)
-            ..add(MediaItem(path: pickedFile.path, type: MediaType.video));
-          await updateMediaList(updated);
-        }
-      },
-    );
-  }
-
-  Future<void> _showMediaOptionsDialogForIndex(
-      BuildContext context, int index) async {
-    if (index >= 0 && index < state.mediaItems.length) {
+    if (imagesOnly) {
+      showPhotoOptionsDialog(
+        context: context,
+        onTakePhoto: () async {
+          final pickedFile = await picker.pickImage(source: ImageSource.camera);
+          if (pickedFile != null) {
+            final updated = List<MediaItem>.from(state.mediaItems)
+              ..add(MediaItem(path: pickedFile.path, type: MediaType.image));
+            await updateMediaList(updated);
+          }
+        },
+        onChoosePhoto: () async {
+          final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+          if (pickedFile != null) {
+            final updated = List<MediaItem>.from(state.mediaItems)
+              ..add(MediaItem(path: pickedFile.path, type: MediaType.image));
+            await updateMediaList(updated);
+          }
+        },
+      );
+    } else {
       showMediaOptionsDialog(
         context: context,
         onTakePhoto: () async {
           final pickedFile = await picker.pickImage(source: ImageSource.camera);
           if (pickedFile != null) {
-            final updated = List<MediaItem>.from(state.mediaItems);
-            updated[index] =
-                MediaItem(path: pickedFile.path, type: MediaType.image);
+            final updated = List<MediaItem>.from(state.mediaItems)
+              ..add(MediaItem(path: pickedFile.path, type: MediaType.image));
             await updateMediaList(updated);
           }
         },
         onChoosePhoto: () async {
-          final pickedFile =
-              await picker.pickImage(source: ImageSource.gallery);
+          final pickedFile = await picker.pickImage(source: ImageSource.gallery);
           if (pickedFile != null) {
-            final updated = List<MediaItem>.from(state.mediaItems);
-            updated[index] =
-                MediaItem(path: pickedFile.path, type: MediaType.image);
+            final updated = List<MediaItem>.from(state.mediaItems)
+              ..add(MediaItem(path: pickedFile.path, type: MediaType.image));
             await updateMediaList(updated);
           }
         },
         onTakeVideo: () async {
           final pickedFile = await picker.pickVideo(source: ImageSource.camera);
           if (pickedFile != null) {
-            final updated = List<MediaItem>.from(state.mediaItems);
-            updated[index] =
-                MediaItem(path: pickedFile.path, type: MediaType.video);
+            final updated = List<MediaItem>.from(state.mediaItems)
+              ..add(MediaItem(path: pickedFile.path, type: MediaType.video));
             await updateMediaList(updated);
           }
         },
         onChooseVideo: () async {
-          final pickedFile =
-              await picker.pickVideo(source: ImageSource.gallery);
+          final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
           if (pickedFile != null) {
-            final updated = List<MediaItem>.from(state.mediaItems);
-            updated[index] =
-                MediaItem(path: pickedFile.path, type: MediaType.video);
+            final updated = List<MediaItem>.from(state.mediaItems)
+              ..add(MediaItem(path: pickedFile.path, type: MediaType.video));
             await updateMediaList(updated);
           }
         },
-        onDelete: () async {
-          await deleteMedia(index);
-        },
       );
+    }
+  }
+
+  Future<void> _showMediaOptionsDialogForIndex(
+      BuildContext context, int index) async {
+    if (index >= 0 && index < state.mediaItems.length) {
+      if (imagesOnly) {
+        showPhotoOptionsDialog(
+          context: context,
+          onTakePhoto: () async {
+            final pickedFile = await picker.pickImage(source: ImageSource.camera);
+            if (pickedFile != null) {
+              final updated = List<MediaItem>.from(state.mediaItems);
+              updated[index] =
+                  MediaItem(path: pickedFile.path, type: MediaType.image);
+              await updateMediaList(updated);
+            }
+          },
+          onChoosePhoto: () async {
+            final pickedFile =
+                await picker.pickImage(source: ImageSource.gallery);
+            if (pickedFile != null) {
+              final updated = List<MediaItem>.from(state.mediaItems);
+              updated[index] =
+                  MediaItem(path: pickedFile.path, type: MediaType.image);
+              await updateMediaList(updated);
+            }
+          },
+          onDelete: () async {
+            await deleteMedia(index);
+          },
+        );
+      } else {
+        showMediaOptionsDialog(
+          context: context,
+          onTakePhoto: () async {
+            final pickedFile = await picker.pickImage(source: ImageSource.camera);
+            if (pickedFile != null) {
+              final updated = List<MediaItem>.from(state.mediaItems);
+              updated[index] =
+                  MediaItem(path: pickedFile.path, type: MediaType.image);
+              await updateMediaList(updated);
+            }
+          },
+          onChoosePhoto: () async {
+            final pickedFile =
+                await picker.pickImage(source: ImageSource.gallery);
+            if (pickedFile != null) {
+              final updated = List<MediaItem>.from(state.mediaItems);
+              updated[index] =
+                  MediaItem(path: pickedFile.path, type: MediaType.image);
+              await updateMediaList(updated);
+            }
+          },
+          onTakeVideo: () async {
+            final pickedFile = await picker.pickVideo(source: ImageSource.camera);
+            if (pickedFile != null) {
+              final updated = List<MediaItem>.from(state.mediaItems);
+              updated[index] =
+                  MediaItem(path: pickedFile.path, type: MediaType.video);
+              await updateMediaList(updated);
+            }
+          },
+          onChooseVideo: () async {
+            final pickedFile =
+                await picker.pickVideo(source: ImageSource.gallery);
+            if (pickedFile != null) {
+              final updated = List<MediaItem>.from(state.mediaItems);
+              updated[index] =
+                  MediaItem(path: pickedFile.path, type: MediaType.video);
+              await updateMediaList(updated);
+            }
+          },
+          onDelete: () async {
+            await deleteMedia(index);
+          },
+        );
+      }
     }
   }
 
@@ -160,6 +211,7 @@ class PlaceHolder extends StatelessWidget {
   final void Function()? onTap;
   final double? padding;
   final String? subTitle;
+  final bool imagesOnly;
 
   const PlaceHolder({
     super.key,
@@ -168,6 +220,7 @@ class PlaceHolder extends StatelessWidget {
     this.isLoading = false,
     this.padding,
     this.subTitle,
+    this.imagesOnly = false,
   });
 
   @override
@@ -203,7 +256,7 @@ class PlaceHolder extends StatelessWidget {
                 ),
                 5.ph,
                 CustomText(
-                  text: 'uploadPhotoOrVideo'.tr(),
+                  text: imagesOnly ? 'uploadPhotos'.tr() : 'uploadPhotoOrVideo'.tr(),
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.blackDark,
@@ -246,18 +299,20 @@ class CustomProductImageWidget extends StatelessWidget {
   final Function(List<String> imageUpdate) updateImage;
   final String title;
   final List<String>? initialImages;
+  final bool imagesOnly;
 
   const CustomProductImageWidget({
     super.key,
     required this.updateImage,
     required this.title,
     this.initialImages,
+    this.imagesOnly = false,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ProductImageCubit(initialImages),
+      create: (_) => ProductImageCubit(initialImages, imagesOnly),
       child: BlocConsumer<ProductImageCubit, ProductImageState>(
         listener: (context, state) {
           if (!state.isLoading) updateImage(state.paths);
@@ -304,6 +359,7 @@ class CustomProductImageWidget extends StatelessWidget {
                           return PlaceHolder(
                             isLoading: state.isLoading,
                             isShowMinimum: false,
+                            imagesOnly: imagesOnly,
                             onTap: () => context
                                 .read<ProductImageCubit>()
                                 .addMedia(context),

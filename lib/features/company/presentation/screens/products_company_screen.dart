@@ -21,7 +21,7 @@ class ProductsCompanyScreen extends StatelessWidget {
           create: (_) => locator<CartProductDetailsCubit>(),
         ),
       ],
-      child: _ProductsCompanyView(
+      child: ProductsCompanyTab(
         userId: userId,
         userName: userName,
       ),
@@ -29,10 +29,11 @@ class ProductsCompanyScreen extends StatelessWidget {
   }
 }
 
-class _ProductsCompanyView extends StatelessWidget {
-  const _ProductsCompanyView({
+class ProductsCompanyTab extends StatelessWidget {
+  const ProductsCompanyTab({
     required this.userId,
     this.userName,
+    super.key,
   });
 
   final int userId;
@@ -40,126 +41,268 @@ class _ProductsCompanyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.lightGreyBackground,
-      floatingActionButton:
-          BlocBuilder<CartProductDetailsCubit, CartProductDetailsState>(
-        builder: (context, state) {
-          return Container(
-            decoration: BoxDecoration(
-              color: AppColors.primaryPink,
-              borderRadius: BorderRadius.circular(10.r),
-            ),
-            child: FloatingActionButton.extended(
-              backgroundColor: AppColors.primaryPink,
-              onPressed: () async {
-                final result = await context.push<double>(AppRoutes.cart);
-                if (!context.mounted) return;
-                if (result != null) {
-                  context.read<CartProductDetailsCubit>().updateTotalPrice(result);
-                }
-              },
-              icon: Image.asset(
-                Assets.assetsIconsStore,
-                height: 22.h,
-                width: 22.w,
-              ),
-              label: CustomText(
-                text: state.totalCartPrice % 1 == 0
-                    ? "${state.totalCartPrice.toInt()} ₽"
-                    : "${state.totalCartPrice} ₽",
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w800,
-              ),
-            ),
-          );
-        },
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          50.ph,
-          // Padding(
-          //   padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-          //   child: TopBarSearchWidget(
-          //     isSearch: true,
-          //     image: Assets.assetsIconsTune,
-          //   ),
-          // ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: CustomText(
-              text: 'goods'.tr(),
-              fontSize: 20.sp,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          12.ph,
-          Expanded(
-            child: BlocBuilder<CompanyProductsCubit, CompanyProductsState>(
-              builder: (context, state) {
-                if (state.isLoading && state.products.isEmpty) {
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.grey,
-                    ),
-                  );
-                }
+    return Stack(
+      children: [
+        BlocBuilder<CompanyProductsCubit, CompanyProductsState>(
+          builder: (context, state) {
+            if (state.isLoading && state.products.isEmpty) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.grey,
+                ),
+              );
+            }
 
-                if (state.errorMessage.isNotEmpty) {
-                  return _CompanyProductsError(
-                    message: state.errorMessage,
-                    onRetry: () => context
-                        .read<CompanyProductsCubit>()
-                        .fetchProducts(userId),
-                  );
-                }
+            if (state.errorMessage.isNotEmpty) {
+              return _CompanyProductsError(
+                message: state.errorMessage,
+                onRetry: () =>
+                    context.read<CompanyProductsCubit>().fetchProducts(userId),
+              );
+            }
 
-                if (state.products.isEmpty) {
-                  return Center(
-                    child: CustomText(
-                      text: 'No products found',
-                      fontWeight: FontWeight.w600,
-                    ),
-                  );
-                }
+            if (state.products.isEmpty) {
+              return Center(
+                child: CustomText(
+                  text: 'No products found',
+                  fontWeight: FontWeight.w600,
+                ),
+              );
+            }
 
-                final cartCubit = context.read<CartProductDetailsCubit>();
+            final cartCubit = context.read<CartProductDetailsCubit>();
 
-                return RefreshIndicator(
-                  onRefresh: () => context
-                      .read<CompanyProductsCubit>()
-                      .fetchProducts(userId),
-                  child: SingleChildScrollView(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ...state.products.asMap().entries.map(
-                                (entry) => CustomProductCard(
-                                  product: entry.value,
-                                  products: state.products,
-                                  selectedCategoryIndex: entry.key,
-                                  isProductCompany: true,
-                                  showFixed: false,
-                                  isNameCompany: false,
-                                  showSaleTypeChip: true,
-                                  productDetailsCubit: cartCubit,
+            return CustomScrollView(
+              physics: ClampingScrollPhysics(),
+              slivers: [
+                SliverPadding(
+                  padding: EdgeInsets.only(
+                    left: 16.w,
+                    right: 16.w,
+                    top: 12.h,
+                  ),
+                  sliver: SliverToBoxAdapter(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: 'goods'.tr(),
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w800,
+                        ),
+                        12.ph,
+                        ProductsFilterChips(
+                          selectedIndex: 0, // TODO: Get from state
+                          onSelect: (index) {
+                            // TODO: Handle filter selection
+                            debugPrint('Selected filter index: $index');
+                          },
+                        ),
+                        20.ph,
+                        Row(
+                          children: [
+                            Expanded(
+                              child: CustomTextField(
+                                height: 40,
+                                fillColor: AppColors.white,
+                                borderRadius: BorderRadius.circular(10.r),
+                                hintText: 'find'.tr(),
+                                prefixIcon: Image.asset(
+                                  Assets.assetsIconsSearch,
+                                  color: AppColors.blackDark,
+                                  height: 22.h,
+                                  width: 22.w,
                                 ),
+                                onChanged: (_) {},
                               ),
-                          100.ph,
-                        ],
+                            ),
+                            12.pw,
+                            GestureDetector(
+                              onTap: () {
+                                ProductsFilterBottomSheet.show(
+                                  context,
+                                  onApply: (sortOption) {
+                                    // TODO: Apply filter to products
+                                    debugPrint(
+                                        'Selected sort option: $sortOption');
+                                  },
+                                );
+                              },
+                              child: SvgPicture.asset(
+                                Assets.assetsIconsFilter,
+                                width: 24.w,
+                                height: 24.h,
+                              ),
+                            ),
+                          ],
+                        ),
+                        20.ph,
+                      ],
+                    ),
+                  ),
+                ),
+                if (state.products.isEmpty)
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Center(
+                      child: CustomText(
+                        text: 'No products found',
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.blackTransparent40,
+                      ),
+                    ),
+                  )
+                else
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final product = state.products[index];
+                          return Padding(
+                            padding: EdgeInsets.only(
+                              bottom: index < state.products.length - 1
+                                  ? 12.h
+                                  : 20.h,
+                            ),
+                            child: CustomProductCard(
+                              product: product,
+                              products: state.products,
+                              selectedCategoryIndex: index,
+                              color: AppColors.background,
+                              isProductCompany: true,
+                              showFixed: false,
+                              isNameCompany: false,
+                              showSaleTypeChip: true,
+                              productDetailsCubit: cartCubit,
+                            ),
+                          );
+                        },
+                        childCount: state.products.length,
                       ),
                     ),
                   ),
-                );
-              },
-            ),
+              ],
+            );
+          },
+        ),
+        // Fixed bottom buttons
+        BlocBuilder<CompanyCubit, CompanyState>(
+          builder: (context, companyState) {
+            final user = companyState.user;
+            final isSubscribed = companyState.isSubscribed;
+            final isToggleLoading = companyState.isToggleLoading;
+            final companyCubit = context.read<CompanyCubit>();
+
+            if (user == null) {
+              return const SizedBox.shrink();
+            }
+
+            return Positioned(
+              left: 16.w,
+              right: 16.w,
+              bottom: 0,
+              child: SafeArea(
+                top: false,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Subscribe button
+                    CustomButton(
+                      title:
+                          isSubscribed ? 'unsubscribe'.tr() : 'subscribe'.tr(),
+                      color:
+                          isSubscribed ? AppColors.white : AppColors.blackDark,
+                      textColor:
+                          isSubscribed ? AppColors.blackDark : AppColors.white,
+                      colorBorderSide:
+                          isSubscribed ? AppColors.blackDark : null,
+                      isLoading: isToggleLoading,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w800,
+                      height: 54,
+                      radius: 10.r,
+                      onPressed: user.id == null || user.id == 0
+                          ? null
+                          : () => companyCubit.toggleSubscription(user.id!),
+                    ),
+                    8.ph,
+                    // Send reward button
+                    CustomButton(
+                      title: 'sendReward'.tr(),
+                      color: AppColors.blackDark,
+                      textColor: AppColors.white,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w800,
+                      height: 54,
+                      radius: 10.r,
+                      onPressed: () {
+                        context.push<bool>(
+                          AppRoutes.awardsGift,
+                          extra: {
+                            'user': user,
+                            'isSubscribed': isSubscribed,
+                            'companyCubit': companyCubit,
+                          },
+                        ).then((value) {
+                          if (value != null && context.mounted) {
+                            companyCubit.syncSubscriptionStatus(value);
+                          }
+                        });
+                      },
+                      widget: Image.asset(
+                        Assets.assetsIconsTips,
+                        height: 20,
+                        width: 20,
+                        color: AppColors.white,
+                      ),
+                    ),
+                    16.ph,
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+        // Cart FAB
+        Positioned(
+          right: 16.w,
+          bottom: 140.h, // Above the fixed buttons
+          child: BlocBuilder<CartProductDetailsCubit, CartProductDetailsState>(
+            builder: (context, state) {
+              return FloatingActionButton.extended(
+                backgroundColor: AppColors.primaryPink,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                onPressed: () async {
+                  final result = await context.push<double>(AppRoutes.cart);
+                  if (!context.mounted) return;
+                  if (result != null) {
+                    context
+                        .read<CartProductDetailsCubit>()
+                        .updateTotalPrice(result);
+                  }
+                },
+                icon: Image.asset(
+                  Assets.assetsIconsStore,
+                  height: 22.h,
+                  width: 22.w,
+                ),
+                label: CustomText(
+                  text: state.totalCartPrice % 1 == 0
+                      ? "${state.totalCartPrice.toInt()} ₽"
+                      : "${state.totalCartPrice} ₽",
+                  fontSize: 16.sp,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.background,
+                ),
+              );
+            },
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

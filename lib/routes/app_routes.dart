@@ -37,6 +37,7 @@ class AppRoutes {
   static const String clipsCompany = '/clips_company';
   static const String productsCompany = '/products_company';
   static const String reviewCompany = '/review_company';
+  static const String leaveReview = '/leave_review';
   static const String companyName = '/company_name';
   static const String sendReward = '/send_reward';
   static const String awardsGift = '/awards_gift';

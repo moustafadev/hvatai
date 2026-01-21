@@ -62,24 +62,58 @@ class ProductsTabProfile extends StatelessWidget {
                         ),
                       ],
                     ),
-                    // 12.ph,
-                    // MyGoodsTabs(
-                    //   selectedIndex: state.selectedCategoryIndex,
-                    //   onSelect: productsCubit.changeCategory,
-                    // ),
                     20.ph,
-                    CustomTextField(
-                      height: 40,
-                      fillColor: AppColors.white,
-                      borderRadius: BorderRadius.circular(10.r),
-                      hintText: 'find'.tr(),
-                      prefixIcon: Image.asset(
-                        Assets.assetsIconsSearch,
-                        color: AppColors.blackDark,
-                        height: 22.h,
-                        width: 22.w,
-                      ),
-                      onChanged: (_) {},
+                    ProductsFilterChips(
+                      selectedIndex: state.selectedCategoryIndex,
+                      onSelect: (index) {
+                        productsCubit.changeCategory(index);
+                      },
+                    ),
+                    12.ph,
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomTextField(
+                            height: 40,
+                            fillColor: AppColors.white,
+                            borderRadius: BorderRadius.circular(10.r),
+                            hintText: 'find'.tr(),
+                            prefixIcon: Image.asset(
+                              Assets.assetsIconsSearch,
+                              color: AppColors.blackDark,
+                              height: 22.h,
+                              width: 22.w,
+                            ),
+                            onChanged: (_) {},
+                          ),
+                        ),
+                        12.pw,
+                        GestureDetector(
+                          onTap: () {
+                            ProductsFilterBottomSheet.show(
+                              context,
+                              onApply: (sortOption) {
+                                // TODO: Apply filter to products
+                                debugPrint('Selected sort option: $sortOption');
+                              },
+                            );
+                          },
+                          child: Container(
+                            width: 40.w,
+                            height: 40.h,
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(10.r),
+                            ),
+                            child: SvgPicture.asset(
+                              Assets.assetsIconsFilter,
+                              width: 20.w,
+                              height: 20.h,
+                              color: AppColors.blackDark,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     20.ph,
                   ],

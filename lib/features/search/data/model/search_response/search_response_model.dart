@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 
 part 'search_response_model.freezed.dart';
@@ -101,6 +102,7 @@ class SearchProductUserDto with _$SearchProductUserDto {
     String? image,
     String? description,
   }) = _SearchProductUserDto;
+
 
   factory SearchProductUserDto.fromJson(Map<String, dynamic> json) =>
       _$SearchProductUserDtoFromJson(json);

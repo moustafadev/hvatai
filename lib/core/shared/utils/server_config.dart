@@ -94,4 +94,8 @@ abstract class ServerConfig {
   // Activity endpoints
   static const String favorites = "favorites";
   static const String userBids = "streams/bids/my";
+
+  // Review endpoints
+  static String submitBusinessReview(int businessId) =>
+      "business/$businessId/rate";
 }

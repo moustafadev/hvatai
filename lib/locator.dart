@@ -7,6 +7,10 @@ import 'package:hvatai/features/activity/data/datasources/api_service_activity.d
 import 'package:hvatai/features/activity/data/repositories/activity_impl_repository.dart';
 import 'package:hvatai/features/activity/domain/repositories/activity_repository.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
+import 'package:hvatai/features/review/data/datasources/api_service_review.dart';
+import 'package:hvatai/features/review/data/repositories/review_repository_impl.dart';
+import 'package:hvatai/features/review/domain/repositories/review_repository.dart';
+import 'package:hvatai/features/review/presentation/cubit/review_cubit/review_cubit.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_my_streams_usecase.dart';
 import 'package:hvatai/features/favorites/presentation/cubit/favorite/favorite_cubit.dart';
 import 'package:hvatai/features/cart/data/datasources/api_service_cart.dart';
@@ -141,6 +145,7 @@ Future<void> setupLocator() async {
       locator(),
     ),
   );
+  locator.registerFactory(() => ReviewCubit(locator()));
   locator.registerFactory(() =>
       CartProductDetailsCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => AddStreamCubit(
@@ -247,6 +252,8 @@ Future<void> setupLocator() async {
       () => AnalyticsRepositoryImpl(locator()));
   locator.registerLazySingleton<ActivityRepository>(
       () => ActivityImplRepository(locator()));
+  locator.registerLazySingleton<ReviewRepository>(
+      () => ReviewRepositoryImpl(locator()));
   // //DATASOURSE
   locator.registerLazySingleton(() => ApiServiceAuth());
   locator.registerLazySingleton(() => ApiServiceAddress());
@@ -267,6 +274,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ApiServiceAnalytics());
   locator.registerLazySingleton(() => ApiServiceAddNewProduct());
   locator.registerLazySingleton(() => ApiServiceActivity());
+  locator.registerLazySingleton(() => ApiServiceReview());
   // //EXTRNAL
   locator.registerLazySingleton(() => SharedPreferences.getInstance());
   locator.registerLazySingleton(() => InternetConnectionChecker());

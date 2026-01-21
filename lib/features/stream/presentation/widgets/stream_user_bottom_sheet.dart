@@ -199,7 +199,18 @@ class _StreamUserBottomSheetActions extends StatelessWidget {
             imagePath: Assets.assetsIconsDangerTriangle,
             color: AppColors.red,
             onTap: () {
-              // TODO: Implement block functionality
+              final cubit = ChatsCubit.get(context);
+
+              // Navigate immediately with existing chat ID or 0 as placeholder
+              final existingChatId = cubit.state.supportChat?.id ?? 0;
+              inChat = true;
+
+              context.push(
+                '${AppRoutes.chatRoot}/${AppRoutes.chatSupportDetails}',
+                extra: {
+                  'chatId': existingChatId,
+                },
+              );
             },
           ),
           16.ph,

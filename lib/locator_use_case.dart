@@ -6,6 +6,7 @@ import 'package:hvatai/features/cart/domain/usecases/get_all_products_usecase.da
 import 'package:hvatai/features/cart/domain/usecases/get_cart_usecase.dart';
 import 'package:hvatai/features/activity/domain/usecases/get_favorites_usecase.dart';
 import 'package:hvatai/features/activity/domain/usecases/get_user_bids_usecase.dart';
+import 'package:hvatai/features/review/domain/usecases/submit_review_usecase.dart';
 import 'package:hvatai/features/favorites/domain/usecases/get_fav_products_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/update_cart_usecase.dart';
 import 'package:hvatai/features/add_new_product/domain/usecases/add_new_product_usecase.dart';
@@ -110,6 +111,7 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => GetFavProductsUsecase(locator()));
   locator.registerLazySingleton(() => GetFavoritesUsecase(locator()));
   locator.registerLazySingleton(() => GetUserBidsUsecase(locator()));
+  locator.registerLazySingleton(() => SubmitReviewUsecase(locator()));
   locator.registerLazySingleton(() => AddProductToCartUsecase(locator()));
   locator.registerLazySingleton(() => GetCartUsecase(locator()));
   locator.registerLazySingleton(() => UpdateCartUsecase(locator()));

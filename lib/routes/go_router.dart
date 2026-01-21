@@ -34,6 +34,7 @@ import 'package:hvatai/features/analytics/presentation/analytics.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
 import 'package:hvatai/features/company/presentation/company.dart';
 import 'package:hvatai/features/company/presentation/cubit/company/company_cubit.dart';
+import 'package:hvatai/features/review/presentation/review.dart';
 import 'package:hvatai/features/schedule_stream/presentation/schedule_stream.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/features/stream/presentation/stream.dart';
@@ -443,7 +444,10 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: AppRoutes.reviewCompany,
-      builder: (context, state) => const ReviewsCompanyScreen(),
+      builder: (context, state) {
+        final userId = (state.extra as int?) ?? 0;
+        return ReviewsCompanyScreen(userId: userId);
+      },
     ),
     GoRoute(
       path: AppRoutes.clipsCompany,
@@ -453,23 +457,31 @@ final GoRouter router = GoRouter(
         return ClipsCompanyScreen(userId: userId);
       },
     ),
-    GoRoute(
-      path: AppRoutes.productsCompany,
-      builder: (context, state) {
-        final extra = state.extra as Map<String, dynamic>?;
-        final userId = extra?['userId'] as int? ?? 0;
-        final userName = extra?['userName'] as String?;
-        return ProductsCompanyScreen(
-          userId: userId,
-          userName: userName,
-        );
-      },
-    ),
+    // GoRoute(
+    //   path: AppRoutes.productsCompany,
+    //   builder: (context, state) {
+    //     final extra = state.extra as Map<String, dynamic>?;
+    //     final userId = extra?['userId'] as int? ?? 0;
+    //     final userName = extra?['userName'] as String?;
+    //     return ProductsCompanyScreen(
+    //       userId: userId,
+    //       userName: userName,
+    //     );
+    //   },
+    // ),
     GoRoute(
       path: AppRoutes.companyName,
       builder: (context, state) {
         final userId = (state.extra as int?) ?? 0;
         return CompanyScreen(userId: userId);
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.leaveReview,
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final userId = extra?['userId'] as int? ?? 0;
+        return LeaveReviewScreen(userId: userId);
       },
     ),
     GoRoute(

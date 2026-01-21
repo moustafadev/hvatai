@@ -31,16 +31,12 @@ mixin _$SearchState {
   List<CategoryData> get parentCategories => throw _privateConstructorUsedError;
   List<CategoryData> get childCategories => throw _privateConstructorUsedError;
   bool get hasNoResults => throw _privateConstructorUsedError;
-  List<CartModel> get carts => throw _privateConstructorUsedError;
   List<String> get selectedInterests => throw _privateConstructorUsedError;
   Set<int> get selectedIndices => throw _privateConstructorUsedError;
   List<String> get searchedItems => throw _privateConstructorUsedError;
   int get selectedCategoryIndex => throw _privateConstructorUsedError;
   int get currentImageIndex => throw _privateConstructorUsedError;
   PageController? get pageController => throw _privateConstructorUsedError;
-  ProductModel get product => throw _privateConstructorUsedError;
-  cart.CartModel get cartResponse => throw _privateConstructorUsedError;
-  double get totalCartPrice => throw _privateConstructorUsedError;
   List<String> get suggestions => throw _privateConstructorUsedError;
   bool get isLoadingSuggestions => throw _privateConstructorUsedError;
   bool get showSuggestions => throw _privateConstructorUsedError;
@@ -74,23 +70,16 @@ abstract class $SearchStateCopyWith<$Res> {
       List<CategoryData> parentCategories,
       List<CategoryData> childCategories,
       bool hasNoResults,
-      List<CartModel> carts,
       List<String> selectedInterests,
       Set<int> selectedIndices,
       List<String> searchedItems,
       int selectedCategoryIndex,
       int currentImageIndex,
       PageController? pageController,
-      ProductModel product,
-      cart.CartModel cartResponse,
-      double totalCartPrice,
       List<String> suggestions,
       bool isLoadingSuggestions,
       bool showSuggestions,
       bool isSearchFocused});
-
-  $ProductModelCopyWith<$Res> get product;
-  $CartModelCopyWith<$Res> get cartResponse;
 }
 
 /// @nodoc
@@ -122,16 +111,12 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     Object? parentCategories = null,
     Object? childCategories = null,
     Object? hasNoResults = null,
-    Object? carts = null,
     Object? selectedInterests = null,
     Object? selectedIndices = null,
     Object? searchedItems = null,
     Object? selectedCategoryIndex = null,
     Object? currentImageIndex = null,
     Object? pageController = freezed,
-    Object? product = null,
-    Object? cartResponse = null,
-    Object? totalCartPrice = null,
     Object? suggestions = null,
     Object? isLoadingSuggestions = null,
     Object? showSuggestions = null,
@@ -194,10 +179,6 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           ? _value.hasNoResults
           : hasNoResults // ignore: cast_nullable_to_non_nullable
               as bool,
-      carts: null == carts
-          ? _value.carts
-          : carts // ignore: cast_nullable_to_non_nullable
-              as List<CartModel>,
       selectedInterests: null == selectedInterests
           ? _value.selectedInterests
           : selectedInterests // ignore: cast_nullable_to_non_nullable
@@ -222,18 +203,6 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           ? _value.pageController
           : pageController // ignore: cast_nullable_to_non_nullable
               as PageController?,
-      product: null == product
-          ? _value.product
-          : product // ignore: cast_nullable_to_non_nullable
-              as ProductModel,
-      cartResponse: null == cartResponse
-          ? _value.cartResponse
-          : cartResponse // ignore: cast_nullable_to_non_nullable
-              as cart.CartModel,
-      totalCartPrice: null == totalCartPrice
-          ? _value.totalCartPrice
-          : totalCartPrice // ignore: cast_nullable_to_non_nullable
-              as double,
       suggestions: null == suggestions
           ? _value.suggestions
           : suggestions // ignore: cast_nullable_to_non_nullable
@@ -251,26 +220,6 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           : isSearchFocused // ignore: cast_nullable_to_non_nullable
               as bool,
     ) as $Val);
-  }
-
-  /// Create a copy of SearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ProductModelCopyWith<$Res> get product {
-    return $ProductModelCopyWith<$Res>(_value.product, (value) {
-      return _then(_value.copyWith(product: value) as $Val);
-    });
-  }
-
-  /// Create a copy of SearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CartModelCopyWith<$Res> get cartResponse {
-    return $CartModelCopyWith<$Res>(_value.cartResponse, (value) {
-      return _then(_value.copyWith(cartResponse: value) as $Val);
-    });
   }
 }
 
@@ -297,25 +246,16 @@ abstract class _$$SearchStateImplCopyWith<$Res>
       List<CategoryData> parentCategories,
       List<CategoryData> childCategories,
       bool hasNoResults,
-      List<CartModel> carts,
       List<String> selectedInterests,
       Set<int> selectedIndices,
       List<String> searchedItems,
       int selectedCategoryIndex,
       int currentImageIndex,
       PageController? pageController,
-      ProductModel product,
-      cart.CartModel cartResponse,
-      double totalCartPrice,
       List<String> suggestions,
       bool isLoadingSuggestions,
       bool showSuggestions,
       bool isSearchFocused});
-
-  @override
-  $ProductModelCopyWith<$Res> get product;
-  @override
-  $CartModelCopyWith<$Res> get cartResponse;
 }
 
 /// @nodoc
@@ -345,16 +285,12 @@ class __$$SearchStateImplCopyWithImpl<$Res>
     Object? parentCategories = null,
     Object? childCategories = null,
     Object? hasNoResults = null,
-    Object? carts = null,
     Object? selectedInterests = null,
     Object? selectedIndices = null,
     Object? searchedItems = null,
     Object? selectedCategoryIndex = null,
     Object? currentImageIndex = null,
     Object? pageController = freezed,
-    Object? product = null,
-    Object? cartResponse = null,
-    Object? totalCartPrice = null,
     Object? suggestions = null,
     Object? isLoadingSuggestions = null,
     Object? showSuggestions = null,
@@ -417,10 +353,6 @@ class __$$SearchStateImplCopyWithImpl<$Res>
           ? _value.hasNoResults
           : hasNoResults // ignore: cast_nullable_to_non_nullable
               as bool,
-      carts: null == carts
-          ? _value._carts
-          : carts // ignore: cast_nullable_to_non_nullable
-              as List<CartModel>,
       selectedInterests: null == selectedInterests
           ? _value._selectedInterests
           : selectedInterests // ignore: cast_nullable_to_non_nullable
@@ -445,18 +377,6 @@ class __$$SearchStateImplCopyWithImpl<$Res>
           ? _value.pageController
           : pageController // ignore: cast_nullable_to_non_nullable
               as PageController?,
-      product: null == product
-          ? _value.product
-          : product // ignore: cast_nullable_to_non_nullable
-              as ProductModel,
-      cartResponse: null == cartResponse
-          ? _value.cartResponse
-          : cartResponse // ignore: cast_nullable_to_non_nullable
-              as cart.CartModel,
-      totalCartPrice: null == totalCartPrice
-          ? _value.totalCartPrice
-          : totalCartPrice // ignore: cast_nullable_to_non_nullable
-              as double,
       suggestions: null == suggestions
           ? _value._suggestions
           : suggestions // ignore: cast_nullable_to_non_nullable
@@ -495,16 +415,12 @@ class _$SearchStateImpl implements _SearchState {
       final List<CategoryData> parentCategories = const [],
       final List<CategoryData> childCategories = const [],
       this.hasNoResults = false,
-      final List<CartModel> carts = const [],
       final List<String> selectedInterests = const [],
       final Set<int> selectedIndices = const {},
       final List<String> searchedItems = const [],
       this.selectedCategoryIndex = 0,
       this.currentImageIndex = 0,
       this.pageController,
-      required this.product,
-      required this.cartResponse,
-      this.totalCartPrice = 0.0,
       final List<String> suggestions = const [],
       this.isLoadingSuggestions = false,
       this.showSuggestions = false,
@@ -515,7 +431,6 @@ class _$SearchStateImpl implements _SearchState {
         _users = users,
         _parentCategories = parentCategories,
         _childCategories = childCategories,
-        _carts = carts,
         _selectedInterests = selectedInterests,
         _selectedIndices = selectedIndices,
         _searchedItems = searchedItems,
@@ -598,15 +513,6 @@ class _$SearchStateImpl implements _SearchState {
   @override
   @JsonKey()
   final bool hasNoResults;
-  final List<CartModel> _carts;
-  @override
-  @JsonKey()
-  List<CartModel> get carts {
-    if (_carts is EqualUnmodifiableListView) return _carts;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_carts);
-  }
-
   final List<String> _selectedInterests;
   @override
   @JsonKey()
@@ -643,13 +549,6 @@ class _$SearchStateImpl implements _SearchState {
   final int currentImageIndex;
   @override
   final PageController? pageController;
-  @override
-  final ProductModel product;
-  @override
-  final cart.CartModel cartResponse;
-  @override
-  @JsonKey()
-  final double totalCartPrice;
   final List<String> _suggestions;
   @override
   @JsonKey()
@@ -671,7 +570,7 @@ class _$SearchStateImpl implements _SearchState {
 
   @override
   String toString() {
-    return 'SearchState(categories: $categories, selectedIndex: $selectedIndex, query: $query, isLoading: $isLoading, hasLoadedInitial: $hasLoadedInitial, isFavourites: $isFavourites, isCart: $isCart, errorMessage: $errorMessage, products: $products, liveStreams: $liveStreams, users: $users, parentCategories: $parentCategories, childCategories: $childCategories, hasNoResults: $hasNoResults, carts: $carts, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, searchedItems: $searchedItems, selectedCategoryIndex: $selectedCategoryIndex, currentImageIndex: $currentImageIndex, pageController: $pageController, product: $product, cartResponse: $cartResponse, totalCartPrice: $totalCartPrice, suggestions: $suggestions, isLoadingSuggestions: $isLoadingSuggestions, showSuggestions: $showSuggestions, isSearchFocused: $isSearchFocused)';
+    return 'SearchState(categories: $categories, selectedIndex: $selectedIndex, query: $query, isLoading: $isLoading, hasLoadedInitial: $hasLoadedInitial, isFavourites: $isFavourites, isCart: $isCart, errorMessage: $errorMessage, products: $products, liveStreams: $liveStreams, users: $users, parentCategories: $parentCategories, childCategories: $childCategories, hasNoResults: $hasNoResults, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, searchedItems: $searchedItems, selectedCategoryIndex: $selectedCategoryIndex, currentImageIndex: $currentImageIndex, pageController: $pageController, suggestions: $suggestions, isLoadingSuggestions: $isLoadingSuggestions, showSuggestions: $showSuggestions, isSearchFocused: $isSearchFocused)';
   }
 
   @override
@@ -703,7 +602,6 @@ class _$SearchStateImpl implements _SearchState {
                 .equals(other._childCategories, _childCategories) &&
             (identical(other.hasNoResults, hasNoResults) ||
                 other.hasNoResults == hasNoResults) &&
-            const DeepCollectionEquality().equals(other._carts, _carts) &&
             const DeepCollectionEquality()
                 .equals(other._selectedInterests, _selectedInterests) &&
             const DeepCollectionEquality()
@@ -716,11 +614,6 @@ class _$SearchStateImpl implements _SearchState {
                 other.currentImageIndex == currentImageIndex) &&
             (identical(other.pageController, pageController) ||
                 other.pageController == pageController) &&
-            (identical(other.product, product) || other.product == product) &&
-            (identical(other.cartResponse, cartResponse) ||
-                other.cartResponse == cartResponse) &&
-            (identical(other.totalCartPrice, totalCartPrice) ||
-                other.totalCartPrice == totalCartPrice) &&
             const DeepCollectionEquality()
                 .equals(other._suggestions, _suggestions) &&
             (identical(other.isLoadingSuggestions, isLoadingSuggestions) ||
@@ -748,16 +641,12 @@ class _$SearchStateImpl implements _SearchState {
         const DeepCollectionEquality().hash(_parentCategories),
         const DeepCollectionEquality().hash(_childCategories),
         hasNoResults,
-        const DeepCollectionEquality().hash(_carts),
         const DeepCollectionEquality().hash(_selectedInterests),
         const DeepCollectionEquality().hash(_selectedIndices),
         const DeepCollectionEquality().hash(_searchedItems),
         selectedCategoryIndex,
         currentImageIndex,
         pageController,
-        product,
-        cartResponse,
-        totalCartPrice,
         const DeepCollectionEquality().hash(_suggestions),
         isLoadingSuggestions,
         showSuggestions,
@@ -789,16 +678,12 @@ abstract class _SearchState implements SearchState {
       final List<CategoryData> parentCategories,
       final List<CategoryData> childCategories,
       final bool hasNoResults,
-      final List<CartModel> carts,
       final List<String> selectedInterests,
       final Set<int> selectedIndices,
       final List<String> searchedItems,
       final int selectedCategoryIndex,
       final int currentImageIndex,
       final PageController? pageController,
-      required final ProductModel product,
-      required final cart.CartModel cartResponse,
-      final double totalCartPrice,
       final List<String> suggestions,
       final bool isLoadingSuggestions,
       final bool showSuggestions,
@@ -833,8 +718,6 @@ abstract class _SearchState implements SearchState {
   @override
   bool get hasNoResults;
   @override
-  List<CartModel> get carts;
-  @override
   List<String> get selectedInterests;
   @override
   Set<int> get selectedIndices;
@@ -846,12 +729,6 @@ abstract class _SearchState implements SearchState {
   int get currentImageIndex;
   @override
   PageController? get pageController;
-  @override
-  ProductModel get product;
-  @override
-  cart.CartModel get cartResponse;
-  @override
-  double get totalCartPrice;
   @override
   List<String> get suggestions;
   @override

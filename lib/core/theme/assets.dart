@@ -12,6 +12,12 @@ class Assets {
   static const String assetsFlutterLauncherIconLogo =
       "assets/flutter_launcher_icon/Logo.png";
 
+  /// assets star border svg
+  static const String assetsIconsStarBorder = "assets/icons/star_border.svg";
+
+  /// assets icons filter
+  static const String assetsIconsFilter = "assets/icons/filter.svg";
+
   /// Assets for assetsFontsGilroyExtraBold
   /// assets/fonts/Gilroy-ExtraBold.otf
   static const String assetsFontsGilroyExtraBold =
@@ -512,6 +518,8 @@ class Assets {
   /// assets/icons/Star.png
   static const String assetsIconsStar = "assets/icons/Star.png";
 
+  /// assets star filled svg
+  static const String assetsIconsStarFilled = "assets/icons/star_filled.svg";
   /// Assets for assetsIconsStar2
   /// assets/icons/star2.png
   static const String assetsIconsStar2 = "assets/icons/star2.png";

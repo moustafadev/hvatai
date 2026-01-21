@@ -57,6 +57,8 @@ part 'widgets/profile_screen/header_profile.dart';
 part 'widgets/profile_screen/role_switch_profile.dart';
 part 'widgets/profile_screen/stats_row_profile.dart';
 part 'widgets/profile_screen/products_tab_profile.dart';
+part 'widgets/profile_screen/products_filter_bottom_sheet.dart';
+part 'widgets/profile_screen/products_filter_chips.dart';
 part 'widgets/profile_screen/reviews_tab_profile.dart';
 part 'widgets/profile_screen/streams_tab_profile.dart';
 part 'widgets/profile_screen/clips_tab_profile.dart';

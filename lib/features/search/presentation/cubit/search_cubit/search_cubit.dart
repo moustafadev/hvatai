@@ -22,8 +22,6 @@ class SearchCubit extends Cubit<SearchState> {
       : super(SearchState(
           categories: const [],
           selectedIndex: 0,
-          product: ProductModel(variants: [VariantModel()]),
-          cartResponse: cart.CartModel(),
         )) {
     EventBus().subscribe<ProductAddedEvent>((event) {
       _handleProductAdded(event);
@@ -71,11 +69,6 @@ class SearchCubit extends Cubit<SearchState> {
     return super.close();
   }
 
-  void initProductModel(ProductModel product) {
-    emit(state.copyWith(
-      product: product,
-    ));
-  }
 
   void removeItem(String item) {
     final updatedList = List<String>.from(state.searchedItems)..remove(item);
@@ -86,35 +79,35 @@ class SearchCubit extends Cubit<SearchState> {
     search(_defaultQuery);
   }
 
-  void onQueryChanged(String query) {
-    emit(state.copyWith(
-      query: query,
-      showSuggestions: state.isSearchFocused && query.isNotEmpty,
-    ));
+  // void onQueryChanged(String query) {
+  //   emit(state.copyWith(
+  //     query: query,
+  //     showSuggestions: state.isSearchFocused && query.isNotEmpty,
+  //   ));
 
-    final trimmed = query.trim();
+  //   final trimmed = query.trim();
 
-    // If query is cleared, search with default to show default results
-    if (trimmed.isEmpty) {
-      _debounce?.cancel();
-      _debounce = Timer(const Duration(milliseconds: 300), () {
-        search(_defaultQuery);
-      });
-    }
+  //   // If query is cleared, search with default to show default results
+  //   if (trimmed.isEmpty) {
+  //     _debounce?.cancel();
+  //     _debounce = Timer(const Duration(milliseconds: 300), () {
+  //       search(_defaultQuery);
+  //     });
+  //   }
 
-    // Fetch suggestions with shorter debounce
-    _suggestionsDebounce?.cancel();
-    _suggestionsDebounce = Timer(const Duration(milliseconds: 200), () {
-      if (state.isSearchFocused && trimmed.isNotEmpty) {
-        fetchSuggestions(trimmed);
-      } else {
-        emit(state.copyWith(
-          suggestions: [],
-          showSuggestions: false,
-        ));
-      }
-    });
-  }
+  //   // Fetch suggestions with shorter debounce
+  //   _suggestionsDebounce?.cancel();
+  //   _suggestionsDebounce = Timer(const Duration(milliseconds: 200), () {
+  //     if (state.isSearchFocused && trimmed.isNotEmpty) {
+  //       fetchSuggestions(trimmed);
+  //     } else {
+  //       emit(state.copyWith(
+  //         suggestions: [],
+  //         showSuggestions: false,
+  //       ));
+  //     }
+  //   });
+  // }
 
   void onSearchSubmitted(String query) {
     final trimmed = query.trim().isEmpty ? _defaultQuery : query.trim();
@@ -134,10 +127,6 @@ class SearchCubit extends Cubit<SearchState> {
     if (state.query.trim().isNotEmpty) {
       fetchSuggestions(state.query.trim());
     }
-  }
-
-  void onSearchFieldUnfocused() {
-    // Don't hide immediately, let user click outside handle it
   }
 
   Future<void> fetchSuggestions(String query) async {
@@ -261,8 +250,6 @@ class SearchCubit extends Cubit<SearchState> {
     ));
   }
 
-  void fetchCategories() => emit(state);
-
   void selectCategory(dynamic index) {
     if (state.categories.isEmpty) return;
     final safeIndex = (index is int) ? index : 0;
@@ -374,8 +361,4 @@ class SearchCubit extends Cubit<SearchState> {
         .toList();
   }
 
-  double? _parseDouble(String? value) {
-    if (value == null) return null;
-    return double.tryParse(value);
-  }
 }
