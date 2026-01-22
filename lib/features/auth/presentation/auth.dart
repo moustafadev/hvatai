@@ -13,6 +13,7 @@ import 'package:hvatai/features/auth/presentation/cubit/interests_detail/interes
 import 'package:hvatai/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/otp_cubit/otp_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/name_cubit/name_cubit.dart';
+import 'package:hvatai/features/cart/presentation/cubit/cart_cubit/cart_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

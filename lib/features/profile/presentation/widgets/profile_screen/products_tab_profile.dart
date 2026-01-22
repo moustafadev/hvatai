@@ -98,19 +98,10 @@ class ProductsTabProfile extends StatelessWidget {
                               },
                             );
                           },
-                          child: Container(
-                            width: 40.w,
-                            height: 40.h,
-                            decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(10.r),
-                            ),
-                            child: SvgPicture.asset(
-                              Assets.assetsIconsFilter,
-                              width: 20.w,
-                              height: 20.h,
-                              color: AppColors.blackDark,
-                            ),
+                          child: SvgPicture.asset(
+                            Assets.assetsIconsFilter,
+                            width: 20.w,
+                            height: 20.h,
                           ),
                         ),
                       ],

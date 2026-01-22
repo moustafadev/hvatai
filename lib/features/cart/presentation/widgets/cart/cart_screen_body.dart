@@ -51,7 +51,7 @@ class CartScreenBody extends StatelessWidget {
                 state.carts.every((cart) => cart.items?.isEmpty ?? true)) {
               return CartEmptyState(
                 onBack: () {
-                  basketCubit.pop(context);
+                  context.pop();
                 },
               );
             }

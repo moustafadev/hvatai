@@ -47,6 +47,7 @@ part 'widgets/cart/cart_loading_state.dart';
 part 'widgets/cart/cart_error_state.dart';
 part 'widgets/cart/cart_screen_body.dart';
 part 'widgets/cart/cart_main_content.dart';
+part 'widgets/cart_floating_action_button.dart';
 
 // Custom Product Card Widgets
 part 'widgets/custom_product_card/custom_product_card.dart';

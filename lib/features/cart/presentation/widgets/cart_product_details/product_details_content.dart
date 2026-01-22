@@ -6,7 +6,6 @@ class ProductDetailsContent extends StatelessWidget {
     required this.product,
     required this.variant,
     required this.ownerProducts,
-    required this.products,
     required this.isFavorited,
     required this.onFavoriteTap,
     required this.onParticipateTap,
@@ -15,7 +14,6 @@ class ProductDetailsContent extends StatelessWidget {
   final ProductModel product;
   final VariantModel variant;
   final List<ProductModel> ownerProducts;
-  final List<ProductModel> products;
   final bool isFavorited;
   final VoidCallback onFavoriteTap;
   final VoidCallback onParticipateTap;
@@ -63,7 +61,6 @@ class ProductDetailsContent extends StatelessWidget {
           12.ph,
           ProductDetailsOtherProducts(
             ownerProducts: ownerProducts,
-            products: products,
             productDetailsCubit: context.read<CartProductDetailsCubit>(),
           ),
           30.ph,

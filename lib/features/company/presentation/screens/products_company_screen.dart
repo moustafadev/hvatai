@@ -167,7 +167,6 @@ class ProductsCompanyTab extends StatelessWidget {
                             ),
                             child: CustomProductCard(
                               product: product,
-                              products: state.products,
                               selectedCategoryIndex: index,
                               color: AppColors.background,
                               isProductCompany: true,
@@ -268,39 +267,7 @@ class ProductsCompanyTab extends StatelessWidget {
         Positioned(
           right: 16.w,
           bottom: 140.h, // Above the fixed buttons
-          child: BlocBuilder<CartProductDetailsCubit, CartProductDetailsState>(
-            builder: (context, state) {
-              return FloatingActionButton.extended(
-                backgroundColor: AppColors.primaryPink,
-                elevation: 0,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.r),
-                ),
-                onPressed: () async {
-                  final result = await context.push<double>(AppRoutes.cart);
-                  if (!context.mounted) return;
-                  if (result != null) {
-                    context
-                        .read<CartProductDetailsCubit>()
-                        .updateTotalPrice(result);
-                  }
-                },
-                icon: Image.asset(
-                  Assets.assetsIconsStore,
-                  height: 22.h,
-                  width: 22.w,
-                ),
-                label: CustomText(
-                  text: state.totalCartPrice % 1 == 0
-                      ? "${state.totalCartPrice.toInt()} ₽"
-                      : "${state.totalCartPrice} ₽",
-                  fontSize: 16.sp,
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.background,
-                ),
-              );
-            },
-          ),
+          child: const CartFloatingActionButton(),
         ),
       ],
     );

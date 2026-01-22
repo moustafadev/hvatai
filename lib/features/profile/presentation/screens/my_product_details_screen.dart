@@ -330,7 +330,7 @@ class _CircleButton extends StatelessWidget {
       onTap: onTap,
       child: Icon(
         icon,
-        size: 18,
+        size: 28,
       ),
     );
   }

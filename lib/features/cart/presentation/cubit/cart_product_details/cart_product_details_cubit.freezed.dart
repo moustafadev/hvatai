@@ -24,6 +24,7 @@ mixin _$CartProductDetailsState {
   bool get isCart => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   List<ProductModel> get products => throw _privateConstructorUsedError;
+  List<ProductModel> get ownerProducts => throw _privateConstructorUsedError;
   List<CartModel> get carts => throw _privateConstructorUsedError;
   Set<int> get selectedIndices => throw _privateConstructorUsedError;
   List<String> get searchedItems => throw _privateConstructorUsedError;
@@ -56,6 +57,7 @@ abstract class $CartProductDetailsStateCopyWith<$Res> {
       bool isCart,
       String errorMessage,
       List<ProductModel> products,
+      List<ProductModel> ownerProducts,
       List<CartModel> carts,
       Set<int> selectedIndices,
       List<String> searchedItems,
@@ -94,6 +96,7 @@ class _$CartProductDetailsStateCopyWithImpl<$Res,
     Object? isCart = null,
     Object? errorMessage = null,
     Object? products = null,
+    Object? ownerProducts = null,
     Object? carts = null,
     Object? selectedIndices = null,
     Object? searchedItems = null,
@@ -136,6 +139,10 @@ class _$CartProductDetailsStateCopyWithImpl<$Res,
       products: null == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>,
+      ownerProducts: null == ownerProducts
+          ? _value.ownerProducts
+          : ownerProducts // ignore: cast_nullable_to_non_nullable
               as List<ProductModel>,
       carts: null == carts
           ? _value.carts
@@ -215,6 +222,7 @@ abstract class _$$CartProductDetailsStateImplCopyWith<$Res>
       bool isCart,
       String errorMessage,
       List<ProductModel> products,
+      List<ProductModel> ownerProducts,
       List<CartModel> carts,
       Set<int> selectedIndices,
       List<String> searchedItems,
@@ -254,6 +262,7 @@ class __$$CartProductDetailsStateImplCopyWithImpl<$Res>
     Object? isCart = null,
     Object? errorMessage = null,
     Object? products = null,
+    Object? ownerProducts = null,
     Object? carts = null,
     Object? selectedIndices = null,
     Object? searchedItems = null,
@@ -296,6 +305,10 @@ class __$$CartProductDetailsStateImplCopyWithImpl<$Res>
       products: null == products
           ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>,
+      ownerProducts: null == ownerProducts
+          ? _value._ownerProducts
+          : ownerProducts // ignore: cast_nullable_to_non_nullable
               as List<ProductModel>,
       carts: null == carts
           ? _value._carts
@@ -349,6 +362,7 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
       this.isCart = false,
       this.errorMessage = '',
       final List<ProductModel> products = const [],
+      final List<ProductModel> ownerProducts = const [],
       final List<CartModel> carts = const [],
       final Set<int> selectedIndices = const {},
       final List<String> searchedItems = const [],
@@ -360,6 +374,7 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
       this.totalCartPrice = 0.0})
       : _categories = categories,
         _products = products,
+        _ownerProducts = ownerProducts,
         _carts = carts,
         _selectedIndices = selectedIndices,
         _searchedItems = searchedItems;
@@ -395,6 +410,15 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
     if (_products is EqualUnmodifiableListView) return _products;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_products);
+  }
+
+  final List<ProductModel> _ownerProducts;
+  @override
+  @JsonKey()
+  List<ProductModel> get ownerProducts {
+    if (_ownerProducts is EqualUnmodifiableListView) return _ownerProducts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_ownerProducts);
   }
 
   final List<CartModel> _carts;
@@ -442,7 +466,7 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
 
   @override
   String toString() {
-    return 'CartProductDetailsState(categories: $categories, selectedIndex: $selectedIndex, isLoading: $isLoading, success: $success, isFavourites: $isFavourites, isCart: $isCart, errorMessage: $errorMessage, products: $products, carts: $carts, selectedIndices: $selectedIndices, searchedItems: $searchedItems, selectedCategoryIndex: $selectedCategoryIndex, currentImageIndex: $currentImageIndex, pageController: $pageController, product: $product, cartResponse: $cartResponse, totalCartPrice: $totalCartPrice)';
+    return 'CartProductDetailsState(categories: $categories, selectedIndex: $selectedIndex, isLoading: $isLoading, success: $success, isFavourites: $isFavourites, isCart: $isCart, errorMessage: $errorMessage, products: $products, ownerProducts: $ownerProducts, carts: $carts, selectedIndices: $selectedIndices, searchedItems: $searchedItems, selectedCategoryIndex: $selectedCategoryIndex, currentImageIndex: $currentImageIndex, pageController: $pageController, product: $product, cartResponse: $cartResponse, totalCartPrice: $totalCartPrice)';
   }
 
   @override
@@ -463,6 +487,8 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             const DeepCollectionEquality().equals(other._products, _products) &&
+            const DeepCollectionEquality()
+                .equals(other._ownerProducts, _ownerProducts) &&
             const DeepCollectionEquality().equals(other._carts, _carts) &&
             const DeepCollectionEquality()
                 .equals(other._selectedIndices, _selectedIndices) &&
@@ -492,6 +518,7 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
       isCart,
       errorMessage,
       const DeepCollectionEquality().hash(_products),
+      const DeepCollectionEquality().hash(_ownerProducts),
       const DeepCollectionEquality().hash(_carts),
       const DeepCollectionEquality().hash(_selectedIndices),
       const DeepCollectionEquality().hash(_searchedItems),
@@ -522,6 +549,7 @@ abstract class _CartProductDetailsState implements CartProductDetailsState {
       final bool isCart,
       final String errorMessage,
       final List<ProductModel> products,
+      final List<ProductModel> ownerProducts,
       final List<CartModel> carts,
       final Set<int> selectedIndices,
       final List<String> searchedItems,
@@ -548,6 +576,8 @@ abstract class _CartProductDetailsState implements CartProductDetailsState {
   String get errorMessage;
   @override
   List<ProductModel> get products;
+  @override
+  List<ProductModel> get ownerProducts;
   @override
   List<CartModel> get carts;
   @override

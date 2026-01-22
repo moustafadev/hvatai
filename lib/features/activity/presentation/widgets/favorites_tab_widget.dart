@@ -44,7 +44,6 @@ class FavoritesTabWidget extends StatelessWidget {
                 color: AppColors.background,
                 selectedCategoryIndex: index,
                 isNameCompany: true,
-                products: state.favorites,
                 showSaleTypeChip: false,
                 showFixed: true,
               ),

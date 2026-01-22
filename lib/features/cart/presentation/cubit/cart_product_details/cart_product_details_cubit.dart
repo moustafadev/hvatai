@@ -11,6 +11,7 @@ import 'package:hvatai/features/cart/domain/usecases/delete_cart_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/update_cart_usecase.dart';
 import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
 import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
+import 'package:hvatai/features/company/domain/usecases/get_company_products_usecase.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 
 part 'cart_product_details_cubit.freezed.dart';
@@ -22,6 +23,7 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
     this.addProductToCartUsecase,
     this.deleteCartUsecase,
     this.updateCartUsecase,
+    this.getCompanyProductsUsecase,
   ) : super(CartProductDetailsState(
           categories: [],
           selectedIndex: 0,
@@ -33,6 +35,7 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
   AddFavProductUsecase addFavProductUsecase;
   DeleteCartUsecase deleteCartUsecase;
   UpdateCartUsecase updateCartUsecase;
+  GetCompanyProductsUsecase getCompanyProductsUsecase;
   Timer? _refreshTimer;
 
   void createPageController() {
@@ -52,13 +55,28 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
   }
 
   void initProductModel(ProductModel product) {
+    // Check if this is the same product - if so, don't refetch
+    final isSameProduct = state.product.id == product.id;
+
     // Reset image index when product changes
     emit(state.copyWith(
       product: product,
       isFavourites: product.isFavorited,
       currentImageIndex: 0,
       pageController: null, // Will be recreated with new initial page
+      ownerProducts: isSameProduct
+          ? state.ownerProducts
+          : [], // Keep products if same product
     ));
+
+    // Only fetch owner products if:
+    // 1. It's a different product, OR
+    // 2. Owner products are empty (first time loading)
+    if (product.user?.id != null) {
+      if (!isSameProduct || state.ownerProducts.isEmpty) {
+        fetchOwnerProducts(product.user!.id!);
+      }
+    }
   }
 
   void initCartResponseModel(List<CartModel> cartResponse) {
@@ -437,6 +455,43 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
   void removeItem(String item) {
     final updatedList = List<String>.from(state.searchedItems)..remove(item);
     emit(state.copyWith(searchedItems: updatedList));
+  }
+
+  Future<void> fetchOwnerProducts(int userId) async {
+    if (userId == 0) {
+      emit(state.copyWith(
+        ownerProducts: [],
+        errorMessage: 'User id is missing',
+      ));
+      return;
+    }
+
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
+
+    final result = await getCompanyProductsUsecase(
+      GetCompanyProductsParams(userId: userId),
+    );
+
+    result.fold(
+      (failure) => emit(
+        state.copyWith(
+          isLoading: false,
+          errorMessage: failure,
+          ownerProducts: [],
+        ),
+      ),
+      (products) {
+        // Filter out the current product from the owner's products
+        final ownerProducts =
+            products.where((p) => p.id != state.product.id).toList();
+        emit(
+          state.copyWith(
+            isLoading: false,
+            ownerProducts: ownerProducts,
+          ),
+        );
+      },
+    );
   }
 
   @override

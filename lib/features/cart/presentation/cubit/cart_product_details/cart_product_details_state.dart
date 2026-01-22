@@ -11,6 +11,7 @@ class CartProductDetailsState with _$CartProductDetailsState {
     @Default(false) bool isCart,
     @Default('') String errorMessage,
     @Default([]) List<ProductModel> products,
+    @Default([]) List<ProductModel> ownerProducts,
     @Default([]) List<CartModel> carts,
     @Default({}) Set<int> selectedIndices,
     @Default([]) List<String> searchedItems,

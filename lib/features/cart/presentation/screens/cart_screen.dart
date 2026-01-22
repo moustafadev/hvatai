@@ -10,11 +10,6 @@ class CartScreen extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => locator<CartCubit>()
-            ..getCartProducts()
-            ..getDeliveryAddress(),
-        ),
-        BlocProvider(
           create: (_) => locator<PaymentMethodCubit>()..getPaymentMethods(),
         ),
         BlocProvider(create: (_) => locator<ProfileCubit>()..getProfile()),

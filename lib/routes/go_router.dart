@@ -314,7 +314,6 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, Object>;
         final model = extra['model'] as ProductModel;
-        final products = extra['products'] as List<ProductModel>;
         final cubit = extra['cubit'] as CartProductDetailsCubit
           ..initProductModel(model);
 
@@ -322,7 +321,6 @@ final GoRouter router = GoRouter(
           value: cubit,
           child: CartProductDetailsScreen(
             product: model,
-            products: products,
             // cart: cart,
           ),
         );

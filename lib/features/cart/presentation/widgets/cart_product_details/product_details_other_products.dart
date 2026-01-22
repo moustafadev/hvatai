@@ -4,12 +4,10 @@ class ProductDetailsOtherProducts extends StatelessWidget {
   const ProductDetailsOtherProducts({
     super.key,
     required this.ownerProducts,
-    required this.products,
     this.productDetailsCubit,
   });
 
   final List<ProductModel> ownerProducts;
-  final List<ProductModel> products;
   final CartProductDetailsCubit? productDetailsCubit;
 
   @override
@@ -36,7 +34,6 @@ class ProductDetailsOtherProducts extends StatelessWidget {
             final ownerproduct = ownerProducts[index];
             return CustomProductCard(
               product: ownerproduct,
-              products: products,
               isProductCompany: true,
               selectedCategoryIndex: index,
               productDetailsCubit: productDetailsCubit,
@@ -47,4 +44,3 @@ class ProductDetailsOtherProducts extends StatelessWidget {
     );
   }
 }
-

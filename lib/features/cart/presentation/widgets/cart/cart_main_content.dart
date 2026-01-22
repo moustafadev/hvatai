@@ -18,7 +18,7 @@ class CartMainContent extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios, color: AppColors.blackDark),
             onPressed: () {
-              context.read<CartCubit>().pop(context);
+              context.pop();
             },
           ),
         ),

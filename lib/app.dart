@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/core/theme/themes.dart';
+import 'package:hvatai/features/cart/presentation/cubit/cart_cubit/cart_cubit.dart';
 import 'package:hvatai/features/chat/presentation/cubit/chats_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/go_router.dart';
@@ -13,8 +15,25 @@ class Hvatai extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => locator<ChatsCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) {
+            final cartCubit = locator<CartCubit>();
+            // Fetch cart if user is logged in
+            final appLocal = locator<AppLocal>();
+            final token = appLocal.getToken();
+            if (token != null && token.isNotEmpty) {
+              cartCubit.getCartProducts();
+              cartCubit.getDeliveryAddress();
+            }
+            return cartCubit;
+          },
+        ),
+        BlocProvider(
+          create: (context) => locator<ChatsCubit>(),
+        ),
+      ],
       child: ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,

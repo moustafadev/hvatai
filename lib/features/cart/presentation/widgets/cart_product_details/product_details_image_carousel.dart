@@ -11,8 +11,6 @@ class ProductDetailsImageCarousel extends StatelessWidget {
     required this.onFavoriteTap,
     required this.onShareTap,
     required this.onParticipateTap,
-    required this.ownerName,
-    required this.ownerImage,
   });
 
   final List<String> images;
@@ -23,8 +21,6 @@ class ProductDetailsImageCarousel extends StatelessWidget {
   final VoidCallback onFavoriteTap;
   final VoidCallback onShareTap;
   final VoidCallback onParticipateTap;
-  final String? ownerName;
-  final String? ownerImage;
 
   /// Check if a file path is a video
   bool _isVideoFile(String path) {
@@ -35,7 +31,6 @@ class ProductDetailsImageCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('currentImageIndex: $currentImageIndex');
     return Column(
       children: [
         SizedBox(
@@ -70,55 +65,7 @@ class ProductDetailsImageCarousel extends StatelessWidget {
                   }
                 },
               ),
-              // Overlay company info at top
-              if (ownerName != null || ownerImage != null)
-                Positioned(
-                  top: 16.h,
-                  left: 16.w,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 12.w,
-                      vertical: 8.h,
-                    ),
-                    decoration: BoxDecoration(
-                      color: AppColors.white.withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(20.r),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (ownerImage != null && ownerImage!.isNotEmpty)
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(12.r),
-                            child: CustomImage(
-                              imageSource: ownerImage!,
-                              width: 24.w,
-                              height: 24.h,
-                              fit: BoxFit.cover,
-                            ),
-                          )
-                        else
-                          Icon(
-                            Icons.person_2_outlined,
-                            size: 24.w,
-                            color: AppColors.graniteGray,
-                          ),
-                        if (ownerName != null) ...[
-                          8.pw,
-                          Flexible(
-                            child: CustomText(
-                              text: ownerName!,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.blackDark,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
-                      ],
-                    ),
-                  ),
-                ),
+
               // Bottom row: Save, Share, and Participate buttons
               Positioned(
                 bottom: 16.h,

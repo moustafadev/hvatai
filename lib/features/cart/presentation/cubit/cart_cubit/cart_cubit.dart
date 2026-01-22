@@ -58,13 +58,9 @@ class CartCubit extends Cubit<CartState> {
     return total;
   }
 
-  Future<void> pop(BuildContext context) async {
-    final result = totalCartPrice;
-    emit(state.copyWith(totalCartPrice: result));
-    context.pop(result);
-  }
 
   Future<void> getDeliveryAddress() async {
+    if (state.deliveryModel.isNotEmpty) return;
     emit(state.copyWith(isLoading: true, errorMessage: ''));
     final result = await getDeliveryAddressUsecase.call(unit);
     result.fold(
@@ -169,9 +165,13 @@ class CartCubit extends Cubit<CartState> {
       final updatedTempQuantities = Map<int, int>.from(state.tempQuantities);
       updatedTempQuantities.remove(itemId);
 
+      // Calculate total price from updated carts
+      final totalPrice = _calculateTotalPrice(updatedCarts);
+
       emit(state.copyWith(
         carts: updatedCarts,
         tempQuantities: updatedTempQuantities,
+        totalCartPrice: totalPrice,
       ));
     });
   }
@@ -187,6 +187,17 @@ class CartCubit extends Cubit<CartState> {
     return 0;
   }
 
+  double _calculateTotalPrice(List<CartModel> carts) {
+    double total = 0.0;
+    for (final cart in carts) {
+      for (final item in cart.items ?? <CartItem>[]) {
+        final itemPrice = (item.price ?? 0.0) * (item.quantity ?? 0);
+        total += itemPrice;
+      }
+    }
+    return total;
+  }
+
   Future<void> getCartProducts() async {
     emit(state.copyWith(
       isLoading: true,
@@ -198,11 +209,17 @@ class CartCubit extends Cubit<CartState> {
     result.fold(
       (failure) =>
           emit(state.copyWith(isLoading: false, errorMessage: failure)),
-      (cartList) => emit(state.copyWith(
-        isLoading: false,
-        carts: cartList,
-        tempQuantities: {},
-      )),
+      (cartList) {
+        // Calculate total price from the fetched carts
+        final totalPrice = _calculateTotalPrice(cartList);
+
+        emit(state.copyWith(
+          isLoading: false,
+          carts: cartList,
+          tempQuantities: {},
+          totalCartPrice: totalPrice,
+        ));
+      },
     );
   }
 

@@ -7,7 +7,6 @@ class CustomProductCard extends StatelessWidget {
     required this.selectedCategoryIndex,
     this.isProductCompany = false,
     this.isNameCompany = false,
-    required this.products,
     this.productDetailsCubit,
     this.showSaleTypeChip = false,
     this.showFixed = true,
@@ -18,7 +17,6 @@ class CustomProductCard extends StatelessWidget {
   final int selectedCategoryIndex;
   final bool isProductCompany;
   final bool isNameCompany;
-  final List<ProductModel> products;
   final CartProductDetailsCubit? productDetailsCubit;
   final bool showSaleTypeChip;
   final bool showFixed;
@@ -62,7 +60,7 @@ class CustomProductCard extends StatelessWidget {
           onTap: () {
             context.push(
               AppRoutes.cartProductDetails,
-              extra: {'model': product, 'products': products, 'cubit': cubit},
+              extra: {'model': product, 'cubit': cubit},
             );
           },
           child: Container(

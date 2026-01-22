@@ -22,9 +22,12 @@ class ImageDelayScreen extends StatelessWidget {
                 text: "Continue",
                 isDisabled: false,
                 isLoading: false,
-                onPressed: () => context.go(
-                  AppRoutes.home,
-                ),
+                onPressed: () {
+                  final cartCubit = context.read<CartCubit>();
+                  cartCubit.getCartProducts();
+                  cartCubit.getDeliveryAddress();
+                  context.go(AppRoutes.home);
+                },
               ),
             ),
           ),

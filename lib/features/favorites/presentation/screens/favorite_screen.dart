@@ -88,7 +88,6 @@ class FavoriteScreen extends StatelessWidget {
                             padding: const EdgeInsets.only(bottom: 12),
                             child: CustomProductCard(
                               isNameCompany: true,
-                              products: state.products,
                               product: product,
                               selectedCategoryIndex: index,
                             ),
