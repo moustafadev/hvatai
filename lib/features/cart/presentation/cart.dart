@@ -42,6 +42,7 @@ part 'widgets/cart_product_details/product_details_floating_button.dart';
 part 'widgets/cart/cart_product_list.dart';
 part 'widgets/cart/cart_pay_button.dart';
 part 'widgets/cart/cart_content.dart';
+part 'widgets/cart/cart_tips_section.dart';
 part 'widgets/cart/cart_empty_state.dart';
 part 'widgets/cart/cart_loading_state.dart';
 part 'widgets/cart/cart_error_state.dart';

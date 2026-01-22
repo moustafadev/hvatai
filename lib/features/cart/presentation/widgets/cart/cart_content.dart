@@ -52,39 +52,28 @@ class CartContent extends StatelessWidget {
                   CustomText(
                     text:
                         '$totalItemsCount ${totalItemsCount == 1 ? 'item'.tr() : 'items'.tr()}',
-                    fontSize: 14.sp,
+                    fontSize: 10.sp,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.blackTransparent40,
+                    color: AppColors.greyTransparent,
                   ),
                   16.ph,
                   CartProductList(cartItems: cartItems),
                   16.ph,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomText(
-                        text: 'total'.tr(),
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w800,
-                      ),
-                      CustomText(
-                        text: (totalCartPrice % 1 == 0
-                            ? "${totalCartPrice.toInt()} ₽"
-                            : "$totalCartPrice ₽"),
-                        fontSize: 20.sp,
-                        fontWeight: FontWeight.w800,
-                      ),
-                    ],
-                  ),
-                  24.ph,
                   CustomText(
                     text: 'paymentMethod'.tr(),
                     fontSize: 16.sp,
                     fontWeight: FontWeight.w700,
                   ),
-                  12.ph,
+                  8.ph,
                   PaymentMethodsSection(
-                    walletSelected: true,
+                    walletSelected: state.selectedPaymentMethod == 'wallet',
+                    sbpSelected: state.selectedPaymentMethod == 'sbp',
+                    onWalletTap: () {
+                      basketCubit.setPaymentMethod('wallet');
+                    },
+                    onSbpTap: () {
+                      basketCubit.setPaymentMethod('sbp');
+                    },
                     onAddPaymentTap: () async {
                       PaymentMethodCubit paymentCubit;
                       try {
@@ -140,7 +129,29 @@ class CartContent extends StatelessWidget {
                         }
                       },
                     ),
-                  40.ph,
+                  24.ph,
+                  CartTipsSection(),
+                  16.ph,
+                  // Total with tip
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomText(
+                        text: 'total'.tr(),
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w800,
+                      ),
+                      CustomText(
+                        text: ((totalCartPrice + state.selectedTipAmount) % 1 ==
+                                0
+                            ? "${(totalCartPrice + state.selectedTipAmount).toInt()} ₽"
+                            : "${totalCartPrice + state.selectedTipAmount} ₽"),
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w800,
+                      ),
+                    ],
+                  ),
+                  32.ph,
                   CartPayButton(
                     hasDeliveryAddress: deliveryAddress != null,
                     onPay: () {
@@ -155,6 +166,7 @@ class CartContent extends StatelessWidget {
                           intercomCode: deliveryAddress.intercomCode,
                           apartment: deliveryAddress.apartment,
                           confirmationCall: true,
+                          tipAmount: state.selectedTipAmount,
                         );
                       }
                     },

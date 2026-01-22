@@ -1,10 +1,8 @@
 import 'dart:async';
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/cart/data/model/cart_model.dart';
 import 'package:hvatai/features/cart/domain/usecases/create_order_usecase.dart';
@@ -233,6 +231,7 @@ class CartCubit extends Cubit<CartState> {
     String? intercomCode,
     String? apartment,
     required bool confirmationCall,
+    int? tipAmount,
   }) async {
     emit(state.copyWith(
       isCreatingOrder: true,
@@ -243,7 +242,7 @@ class CartCubit extends Cubit<CartState> {
 
     final result = await createOrderUsecase.call(CreateOrderParams(
       cartId: cartId,
-      paymentMethod: 'wallet',
+      paymentMethod: state.selectedPaymentMethod,
       walletId: walletId,
       street: street,
       city: city,
@@ -252,6 +251,7 @@ class CartCubit extends Cubit<CartState> {
       intercomCode: intercomCode,
       apartment: apartment,
       confirmationCall: confirmationCall,
+      tipAmount: tipAmount ?? state.selectedTipAmount,
     ));
 
     result.fold(
@@ -279,6 +279,14 @@ class CartCubit extends Cubit<CartState> {
 
   void hideOrderErrorScreen() {
     emit(state.copyWith(showOrderErrorScreen: false));
+  }
+
+  void setTipAmount(int tipAmount) {
+    emit(state.copyWith(selectedTipAmount: tipAmount));
+  }
+
+  void setPaymentMethod(String paymentMethod) {
+    emit(state.copyWith(selectedPaymentMethod: paymentMethod));
   }
 
   @override

@@ -10,6 +10,8 @@ class CartState with _$CartState {
     @Default({}) Map<int, int> tempQuantities,
     @Default([]) List<UserRegistrationData> deliveryModel,
     @Default(0.0) double totalCartPrice,
+    @Default(0) int selectedTipAmount,
+    @Default('wallet') String selectedPaymentMethod,
     @Default(false) bool isCreatingOrder,
     @Default(false) bool showOrderLoadingScreen,
     @Default(false) bool showOrderSuccessScreen,

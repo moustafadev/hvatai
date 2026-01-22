@@ -22,7 +22,7 @@ class CartPayButton extends StatelessWidget {
         onPay();
       },
       width: double.infinity,
-      height: 52,
+      height: 54,
       borderRadius: 10,
     );
   }

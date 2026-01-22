@@ -1,21 +1,20 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
-import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 
 class PaymentMethodsSection extends StatelessWidget {
   const PaymentMethodsSection({
     super.key,
     this.onAddPaymentTap,
     this.onWalletTap,
+    this.onSbpTap,
     this.walletSelected = false,
+    this.sbpSelected = false,
     this.primaryMethodLabel = 'СБП',
     this.primaryMethodIconPath = Assets.assetsIconsPaymentMethod,
     this.walletBalanceOverride,
@@ -23,77 +22,17 @@ class PaymentMethodsSection extends StatelessWidget {
 
   final VoidCallback? onAddPaymentTap;
   final VoidCallback? onWalletTap;
+  final VoidCallback? onSbpTap;
   final bool walletSelected;
+  final bool sbpSelected;
   final String primaryMethodLabel;
   final String primaryMethodIconPath;
   final String? walletBalanceOverride;
 
   @override
   Widget build(BuildContext context) {
-    final profileState = context.watch<ProfileCubit>().state;
-    final walletBalance = walletBalanceOverride ??
-        profileState.userProfileModel.walletBalance ??
-        '0.00';
-
     return Column(
       children: [
-        _PrimaryMethodRow(
-          label: primaryMethodLabel,
-          iconPath: primaryMethodIconPath,
-        ),
-        8.ph,
-        BlocBuilder<PaymentMethodCubit, PaymentMethodState>(
-          builder: (context, paymentState) {
-            if (paymentState.isLoading || paymentState.cards.isEmpty) {
-              return const SizedBox.shrink();
-            }
-
-            return Column(
-              children: paymentState.cards.map((card) {
-                return Padding(
-                  padding: EdgeInsets.only(bottom: 8.h),
-                  child: Opacity(
-                    opacity: 0.5,
-                    child: Row(
-                      children: [
-                        Container(
-                          width: 48.w,
-                          height: 48.h,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFF2F2F2),
-                            shape: BoxShape.circle,
-                          ),
-                          child: Center(
-                            child: SvgPicture.asset(
-                              card.brand == 'visa'
-                                  ? Assets.assetsIconsVisa
-                                  : Assets.assetsIconsMasterCard,
-                              width: 24.w,
-                            ),
-                          ),
-                        ),
-                        12.pw,
-                        Expanded(
-                          child: CustomText(
-                            text: '**** ${card.lastFour ?? ''}',
-                            fontSize: 14.sp,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        Icon(
-                          Icons.radio_button_unchecked,
-                          color: AppColors.gray,
-                          size: 20.sp,
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              }).toList(),
-            );
-          },
-        ),
-        8.ph,
         GestureDetector(
           onTap: onWalletTap,
           child: Row(
@@ -101,13 +40,13 @@ class PaymentMethodsSection extends StatelessWidget {
               Container(
                 width: 48.w,
                 height: 48.h,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFF2F2F2),
+                decoration: BoxDecoration(
+                  color: AppColors.greyButton,
                   shape: BoxShape.circle,
                 ),
                 child: Center(
                   child: Image.asset(
-                    Assets.assetsIconsCard,
+                    Assets.assetsImagesWalletIcon,
                     width: 24.w,
                     height: 24.h,
                   ),
@@ -116,28 +55,34 @@ class PaymentMethodsSection extends StatelessWidget {
               12.pw,
               Expanded(
                 child: CustomText(
-                  text: '$walletBalance ₽',
+                  text: 'Кошелёк',
                   fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-              Icon(
-                walletSelected
-                    ? Icons.radio_button_checked
-                    : Icons.radio_button_unchecked,
-                color: walletSelected ? AppColors.primaryColor : AppColors.gray,
-                size: 20.sp,
-              ),
+              _CustomRadioButton(isSelected: walletSelected),
             ],
           ),
         ),
+        8.ph,
+
+        // СБП option
+        GestureDetector(
+          onTap: onSbpTap,
+          child: _PrimaryMethodRow(
+            label: primaryMethodLabel,
+            iconPath: primaryMethodIconPath,
+            isSelected: sbpSelected,
+          ),
+        ),
+        // Кошелёк option
         8.ph,
         Divider(
           height: 1,
           color: AppColors.gray,
           thickness: 1,
         ),
-        8.ph,
+        12.ph,
         if (onAddPaymentTap != null)
           GestureDetector(
             onTap: onAddPaymentTap,
@@ -173,10 +118,12 @@ class _PrimaryMethodRow extends StatelessWidget {
   const _PrimaryMethodRow({
     required this.label,
     required this.iconPath,
+    this.isSelected = false,
   });
 
   final String label;
   final String iconPath;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -185,8 +132,8 @@ class _PrimaryMethodRow extends StatelessWidget {
         Container(
           width: 48.w,
           height: 48.h,
-          decoration: const BoxDecoration(
-            color: Color(0xFFF2F2F2),
+          decoration: BoxDecoration(
+            color: AppColors.greyButton,
             shape: BoxShape.circle,
           ),
           child: Center(
@@ -202,15 +149,46 @@ class _PrimaryMethodRow extends StatelessWidget {
           child: CustomText(
             text: label,
             fontSize: 14.sp,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
         ),
-        Icon(
-          Icons.radio_button_unchecked,
-          color: AppColors.gray,
-          size: 20.sp,
-        ),
+        _CustomRadioButton(isSelected: isSelected),
       ],
+    );
+  }
+}
+
+class _CustomRadioButton extends StatelessWidget {
+  const _CustomRadioButton({
+    required this.isSelected,
+  });
+
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 24.w,
+      height: 24.h,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: AppColors.text,
+          width: 1,
+        ),
+      ),
+      child: isSelected
+          ? Center(
+              child: Container(
+                width: 12.w,
+                height: 12.h,
+                decoration: const BoxDecoration(
+                  color: AppColors.primaryColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            )
+          : null,
     );
   }
 }

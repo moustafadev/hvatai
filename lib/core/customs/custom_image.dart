@@ -70,7 +70,8 @@ class CustomImage extends StatelessWidget {
       } else {
         // If file doesn't exist, try to construct a network URL
         try {
-          final networkUrl = Uri.parse('https://khvatai.ru/$normalizedPath');
+          final networkUrl =
+              Uri.parse('${ServerConfig.domenStorage}$normalizedPath');
           return CachedNetworkImage(
             imageUrl: networkUrl.toString(),
             width: width,

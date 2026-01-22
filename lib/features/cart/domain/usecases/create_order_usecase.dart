@@ -14,6 +14,7 @@ class CreateOrderParams {
   final String? intercomCode;
   final String? apartment;
   final bool confirmationCall;
+  final int? tipAmount;
 
   CreateOrderParams({
     required this.cartId,
@@ -26,6 +27,7 @@ class CreateOrderParams {
     this.intercomCode,
     this.apartment,
     required this.confirmationCall,
+    this.tipAmount,
   });
 
   Map<String, dynamic> toJson() => {
@@ -39,6 +41,7 @@ class CreateOrderParams {
         if (intercomCode != null) 'intercom_code': intercomCode,
         if (apartment != null) 'apartment': apartment,
         'confirmation_call': confirmationCall,
+        if (tipAmount != null && tipAmount! > 0) 'tip_amount': tipAmount,
       };
 }
 

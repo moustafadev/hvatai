@@ -24,6 +24,8 @@ mixin _$CartState {
   List<UserRegistrationData> get deliveryModel =>
       throw _privateConstructorUsedError;
   double get totalCartPrice => throw _privateConstructorUsedError;
+  int get selectedTipAmount => throw _privateConstructorUsedError;
+  String get selectedPaymentMethod => throw _privateConstructorUsedError;
   bool get isCreatingOrder => throw _privateConstructorUsedError;
   bool get showOrderLoadingScreen => throw _privateConstructorUsedError;
   bool get showOrderSuccessScreen => throw _privateConstructorUsedError;
@@ -49,6 +51,8 @@ abstract class $CartStateCopyWith<$Res> {
       Map<int, int> tempQuantities,
       List<UserRegistrationData> deliveryModel,
       double totalCartPrice,
+      int selectedTipAmount,
+      String selectedPaymentMethod,
       bool isCreatingOrder,
       bool showOrderLoadingScreen,
       bool showOrderSuccessScreen,
@@ -79,6 +83,8 @@ class _$CartStateCopyWithImpl<$Res, $Val extends CartState>
     Object? tempQuantities = null,
     Object? deliveryModel = null,
     Object? totalCartPrice = null,
+    Object? selectedTipAmount = null,
+    Object? selectedPaymentMethod = null,
     Object? isCreatingOrder = null,
     Object? showOrderLoadingScreen = null,
     Object? showOrderSuccessScreen = null,
@@ -113,6 +119,14 @@ class _$CartStateCopyWithImpl<$Res, $Val extends CartState>
           ? _value.totalCartPrice
           : totalCartPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      selectedTipAmount: null == selectedTipAmount
+          ? _value.selectedTipAmount
+          : selectedTipAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      selectedPaymentMethod: null == selectedPaymentMethod
+          ? _value.selectedPaymentMethod
+          : selectedPaymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
       isCreatingOrder: null == isCreatingOrder
           ? _value.isCreatingOrder
           : isCreatingOrder // ignore: cast_nullable_to_non_nullable
@@ -159,6 +173,8 @@ abstract class _$$CartStateImplCopyWith<$Res>
       Map<int, int> tempQuantities,
       List<UserRegistrationData> deliveryModel,
       double totalCartPrice,
+      int selectedTipAmount,
+      String selectedPaymentMethod,
       bool isCreatingOrder,
       bool showOrderLoadingScreen,
       bool showOrderSuccessScreen,
@@ -188,6 +204,8 @@ class __$$CartStateImplCopyWithImpl<$Res>
     Object? tempQuantities = null,
     Object? deliveryModel = null,
     Object? totalCartPrice = null,
+    Object? selectedTipAmount = null,
+    Object? selectedPaymentMethod = null,
     Object? isCreatingOrder = null,
     Object? showOrderLoadingScreen = null,
     Object? showOrderSuccessScreen = null,
@@ -222,6 +240,14 @@ class __$$CartStateImplCopyWithImpl<$Res>
           ? _value.totalCartPrice
           : totalCartPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      selectedTipAmount: null == selectedTipAmount
+          ? _value.selectedTipAmount
+          : selectedTipAmount // ignore: cast_nullable_to_non_nullable
+              as int,
+      selectedPaymentMethod: null == selectedPaymentMethod
+          ? _value.selectedPaymentMethod
+          : selectedPaymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
       isCreatingOrder: null == isCreatingOrder
           ? _value.isCreatingOrder
           : isCreatingOrder // ignore: cast_nullable_to_non_nullable
@@ -253,6 +279,8 @@ class _$CartStateImpl implements _CartState {
       final Map<int, int> tempQuantities = const {},
       final List<UserRegistrationData> deliveryModel = const [],
       this.totalCartPrice = 0.0,
+      this.selectedTipAmount = 0,
+      this.selectedPaymentMethod = 'wallet',
       this.isCreatingOrder = false,
       this.showOrderLoadingScreen = false,
       this.showOrderSuccessScreen = false,
@@ -301,6 +329,12 @@ class _$CartStateImpl implements _CartState {
   final double totalCartPrice;
   @override
   @JsonKey()
+  final int selectedTipAmount;
+  @override
+  @JsonKey()
+  final String selectedPaymentMethod;
+  @override
+  @JsonKey()
   final bool isCreatingOrder;
   @override
   @JsonKey()
@@ -314,7 +348,7 @@ class _$CartStateImpl implements _CartState {
 
   @override
   String toString() {
-    return 'CartState(isLoading: $isLoading, errorMessage: $errorMessage, carts: $carts, cart: $cart, tempQuantities: $tempQuantities, deliveryModel: $deliveryModel, totalCartPrice: $totalCartPrice, isCreatingOrder: $isCreatingOrder, showOrderLoadingScreen: $showOrderLoadingScreen, showOrderSuccessScreen: $showOrderSuccessScreen, showOrderErrorScreen: $showOrderErrorScreen)';
+    return 'CartState(isLoading: $isLoading, errorMessage: $errorMessage, carts: $carts, cart: $cart, tempQuantities: $tempQuantities, deliveryModel: $deliveryModel, totalCartPrice: $totalCartPrice, selectedTipAmount: $selectedTipAmount, selectedPaymentMethod: $selectedPaymentMethod, isCreatingOrder: $isCreatingOrder, showOrderLoadingScreen: $showOrderLoadingScreen, showOrderSuccessScreen: $showOrderSuccessScreen, showOrderErrorScreen: $showOrderErrorScreen)';
   }
 
   @override
@@ -334,6 +368,10 @@ class _$CartStateImpl implements _CartState {
                 .equals(other._deliveryModel, _deliveryModel) &&
             (identical(other.totalCartPrice, totalCartPrice) ||
                 other.totalCartPrice == totalCartPrice) &&
+            (identical(other.selectedTipAmount, selectedTipAmount) ||
+                other.selectedTipAmount == selectedTipAmount) &&
+            (identical(other.selectedPaymentMethod, selectedPaymentMethod) ||
+                other.selectedPaymentMethod == selectedPaymentMethod) &&
             (identical(other.isCreatingOrder, isCreatingOrder) ||
                 other.isCreatingOrder == isCreatingOrder) &&
             (identical(other.showOrderLoadingScreen, showOrderLoadingScreen) ||
@@ -354,6 +392,8 @@ class _$CartStateImpl implements _CartState {
       const DeepCollectionEquality().hash(_tempQuantities),
       const DeepCollectionEquality().hash(_deliveryModel),
       totalCartPrice,
+      selectedTipAmount,
+      selectedPaymentMethod,
       isCreatingOrder,
       showOrderLoadingScreen,
       showOrderSuccessScreen,
@@ -377,6 +417,8 @@ abstract class _CartState implements CartState {
       final Map<int, int> tempQuantities,
       final List<UserRegistrationData> deliveryModel,
       final double totalCartPrice,
+      final int selectedTipAmount,
+      final String selectedPaymentMethod,
       final bool isCreatingOrder,
       final bool showOrderLoadingScreen,
       final bool showOrderSuccessScreen,
@@ -396,6 +438,10 @@ abstract class _CartState implements CartState {
   List<UserRegistrationData> get deliveryModel;
   @override
   double get totalCartPrice;
+  @override
+  int get selectedTipAmount;
+  @override
+  String get selectedPaymentMethod;
   @override
   bool get isCreatingOrder;
   @override

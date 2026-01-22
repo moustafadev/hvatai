@@ -29,70 +29,79 @@ class CartProductList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cartCubit = context.read<CartCubit>();
+
     return Column(
       children: cartItems.map((item) {
         final product = item.item?.product;
         final image = _getFirstImage(product?.images);
+        final itemId = item.id ?? 0;
+
         return Padding(
-          padding: const EdgeInsets.only(bottom: 12),
-          child: Row(
-            children: [
-              (image == null || image.isEmpty)
-                  ? _CartPlaceholder()
-                  : ClipRRect(
-                      borderRadius: BorderRadius.circular(8.r),
-                      child: CustomImage(
-                        height: 60.h,
-                        width: 60.w,
-                        imageSource: image,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-              12.pw,
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                      text: product?.name ?? '',
-                      fontSize: 16.sp,
-                      maxLines: 2,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    4.ph,
-                    CustomText(
-                      text: '${item.price?.toInt() ?? 0} ₽',
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ],
+          padding: EdgeInsets.only(bottom: 8.h),
+          child: Container(
+            padding: EdgeInsets.all(4.r),
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(10.r),
+            ),
+            child: Row(
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.r),
+                  child: CustomImage(
+                    height: 56.h,
+                    width: 56.w,
+                    imageSource: image ?? "",
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-            ],
+                12.pw,
+                // Product Name and Price
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                        text: product?.name ?? '',
+                        fontSize: 16.sp,
+                        maxLines: 2,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      4.ph,
+                      CustomText(
+                        text: '${item.price?.toInt() ?? 0} ₽',
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ],
+                  ),
+                ),
+                // Delete Button
+                GestureDetector(
+                  onTap: () {
+                    cartCubit.updateProductCart(itemId, 0);
+                  },
+                  child: Container(
+                    width: 32.w,
+                    height: 32.h,
+                    margin: EdgeInsets.only(right: 8),
+                    decoration: const BoxDecoration(
+                      color: AppColors.greyButton,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.close,
+                      size: 24.sp,
+                      color: AppColors.greyTransparent,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       }).toList(),
-    );
-  }
-}
-
-class _CartPlaceholder extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 60.h,
-      width: 60.w,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.r),
-        color: AppColors.gray,
-      ),
-      child: Center(
-        child: Icon(
-          Icons.image,
-          size: 30.sp,
-          color: AppColors.lightGray,
-        ),
-      ),
     );
   }
 }
