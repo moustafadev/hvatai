@@ -93,7 +93,7 @@ class InviteFriendScreen extends StatelessWidget {
             CustomButton(
               padding: EdgeInsets.zero,
               radius: 10.r,
-              height: 54.h,
+              height: 54,
               color: AppColors.primaryColor,
               title: 'continue'.tr(),
               fontSize: 16.sp,

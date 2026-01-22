@@ -110,10 +110,20 @@ class CartContent extends StatelessWidget {
                         fontSize: 14.sp,
                         fontWeight: FontWeight.w600,
                       ),
-                      trailing: Icon(
-                        Icons.chevron_right,
-                        color: AppColors.blackDark,
-                        size: 28,
+                      trailing: Container(
+                        height: 34,
+                        width: 34,
+                        decoration: BoxDecoration(
+                          color: AppColors.greyButton,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            Assets.assetsIconsPen2,
+                            height: 18,
+                            width: 18,
+                          ),
+                        ),
                       ),
                       onTap: () async {
                         final updatedAddress =

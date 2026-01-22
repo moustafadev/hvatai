@@ -517,7 +517,8 @@ class Assets {
   /// Assets for assetsIconsStar
   /// assets/icons/Star.png
   static const String assetsIconsStar = "assets/icons/Star.png";
-
+  /// assets icons edit
+  static const String assetsIconsPen2 = "assets/icons/pen.svg";
   /// assets star filled svg
   static const String assetsIconsStarFilled = "assets/icons/star_filled.svg";
   /// Assets for assetsIconsStar2

@@ -50,17 +50,14 @@ class TopBarWidget extends StatelessWidget {
               onTap: () {
                 context.push(AppRoutes.mainNotification, extra: cubit);
               },
-              child: isCircle
-                  ? CircleAvatar(
-                      backgroundColor: AppColors.white,
-                      radius: 20.r,
-                      child: NotificationIconWidget(count: count),
-                    )
-                  : NotificationIconWidget(count: count),
+              child: NotificationIconWidget(count: count),
             ),
             isGift ? 10.pw : const SizedBox.shrink(),
             GestureDetector(
-              onTap: onGiftTap,
+              onTap: onGiftTap ??
+                  () {
+                    context.push(AppRoutes.inviteFriends);
+                  },
               child: isGift
                   ? CircleAvatar(
                       backgroundColor: AppColors.purple,

@@ -25,6 +25,7 @@ import 'package:hvatai/routes/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
+
 part 'custom_app_bar.dart';
 part 'custom_button.dart';
 part 'custom_category_tabs.dart';

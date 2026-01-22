@@ -6,6 +6,7 @@ class NotificationIconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
+      clipBehavior: Clip.none,
       children: [
         Image.asset(
           Assets.assetsIconsBell,
@@ -14,19 +15,27 @@ class NotificationIconWidget extends StatelessWidget {
         ),
         if (count > 0)
           Positioned(
-            right: -1,
-            top: -3,
+            right: -2,
+            top: -2,
             child: Container(
-              padding: const EdgeInsets.all(4),
+              alignment: Alignment.center,
+              constraints: const BoxConstraints(
+                minWidth: 16,
+                minHeight: 16,
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
               decoration: const BoxDecoration(
                 color: AppColors.purple,
                 shape: BoxShape.circle,
               ),
-              child: CustomText(
-                text: '$count',
-                color: AppColors.white,
-                fontSize: 8.sp,
-                fontWeight: FontWeight.bold,
+              child: Text(
+                '$count',
+                style: TextStyle(
+                  color: AppColors.white,
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w600,
+                  height: 1,
+                ),
               ),
             ),
           ),

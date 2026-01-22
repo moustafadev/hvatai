@@ -66,13 +66,23 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             8.pw,
             if (showNotification)
               GestureDetector(
-                onTap: onNotificationTap,
+                onTap: onNotificationTap ??
+                    () {
+                      context.push(
+                        AppRoutes.notification,
+                      );
+                    },
                 child: NotificationIconWidget(count: notificationCount),
               ),
             if (showNotification) 10.pw,
             if (showGift)
               GestureDetector(
-                onTap: onGiftTap,
+                onTap: onGiftTap ??
+                    () {
+                      context.push(
+                        AppRoutes.inviteFriends,
+                      );
+                    },
                 child: CircleAvatar(
                   backgroundColor: AppColors.purple,
                   radius: 16.r,
