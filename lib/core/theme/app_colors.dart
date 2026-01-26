@@ -38,6 +38,7 @@ class AppColors {
   static const Color conLine = Color(0xFFE9E9E9);
   static const Color greyButton = Color(0xFFF2F2F2);
   static const Color red = Color(0xFFFA0330);
+  static const Color redLite = Color(0xFFFF3B30);
   static const Color greyBorder = Color(0xFFE6E6E6);
   static const Color lightGreyBackground = Color(0xFFF6F6F6);
   static const Color blackTransparent40 = Color(0x662A2A2A);

@@ -26,7 +26,7 @@ class ImageDelayScreen extends StatelessWidget {
                   final cartCubit = context.read<CartCubit>();
                   cartCubit.getCartProducts();
                   cartCubit.getDeliveryAddress();
-                  context.go(AppRoutes.home);
+                  context.go(AppRoutes.acceptInvite);
                 },
               ),
             ),

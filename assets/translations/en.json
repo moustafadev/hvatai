@@ -243,7 +243,6 @@
   "ordersMoreItems": "+{count} more items",
   "inviteFriendTitle": "Invite a friend and get up to 10,000 ₽",
   "balanceAmount": "Balance: ",
-  
   "tips": "Tips",
   "analytics": "Analytics",
   "editProfile": "Edit Profile",
@@ -631,6 +630,7 @@
   "items": "items",
   "processingPayment": "Processing payment...",
   "operationCompletedSuccessfully": "Operation completed successfully",
+  "codeActivated": "Code activated",
   "anErrorOccurred": "An error occurred",
   "retry": "Retry",
   "pleaseAddDeliveryAddress": "Please add a delivery address",

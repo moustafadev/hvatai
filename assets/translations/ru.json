@@ -628,6 +628,7 @@
   "items": "товаров",
   "processingPayment": "Обрабатываем платёж...",
   "operationCompletedSuccessfully": "Операция завершена успешно",
+  "codeActivated": "Код активирован",
   "anErrorOccurred": "Произошла какая-то ошибка",
   "retry": "Повторить",
   "pleaseAddDeliveryAddress": "Пожалуйста, добавьте адрес доставки",

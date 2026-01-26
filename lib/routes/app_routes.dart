@@ -30,6 +30,8 @@ class AppRoutes {
   static const String addStream = '/add_stream';
   static const String inviteFriends = '/invite_friends';
   static const String referralReward = '/referral_reward';
+  static const String acceptInvite = '/accept_invite';
+  static const String acceptInviteSuccess = '/accept_invite_success';
   static const String myProductDetails = '/my_product_details';
   static const String cartProductDetails = '/cart_product_details';
   static const String cart = '/cart';

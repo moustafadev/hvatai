@@ -129,6 +129,18 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
+      path: AppRoutes.acceptInvite,
+      builder: (BuildContext context, GoRouterState state) {
+        return const AcceptInviteScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.acceptInviteSuccess,
+      builder: (BuildContext context, GoRouterState state) {
+        return const AcceptInviteSuccessScreen();
+      },
+    ),
+    GoRoute(
       path: AppRoutes.chatRoot,
       builder: (context, state) => const ChatScreen(),
       routes: [
