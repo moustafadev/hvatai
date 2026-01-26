@@ -28,10 +28,25 @@ class ReviewsCompanyScreen extends StatelessWidget {
                     top: 12.h,
                   ),
                   sliver: SliverToBoxAdapter(
-                    child: CustomText(
-                      text: 'reviews'.tr(),
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w800,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomText(
+                          text: 'reviews'.tr(),
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w800,
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            CompanyFilterDialog.showReviewsFilter(context);
+                          },
+                          child: SvgPicture.asset(
+                            Assets.assetsIconsFilter,
+                            width: 24.w,
+                            height: 24.h,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -81,8 +96,8 @@ class ReviewsCompanyScreen extends StatelessWidget {
                 height: 54,
                 radius: 10.r,
                 onPressed: () {
-                  context
-                      .push(AppRoutes.leaveReview, extra: {'userId': userId});
+                  context.push(
+                      AppRoutes.leaveReview, extra: {'userId': userId});
                 },
               ),
             ),

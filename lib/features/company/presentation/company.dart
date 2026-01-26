@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,3 +34,4 @@ part 'widgets/custom_row_company.dart';
 part 'widgets/four_container_company.dart';
 part 'widgets/products_filter_bottom_sheet.dart';
 part 'widgets/products_filter_chips.dart';
+part 'widgets/company_filter_dialog.dart';

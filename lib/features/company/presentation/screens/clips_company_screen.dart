@@ -22,7 +22,8 @@ class ClipsCompanyScreen extends StatelessWidget {
     }
 
     return BlocProvider(
-      create: (_) => locator<CompanyStreamsCubit>()..loadCompanyStreams(userId!),
+      create: (_) =>
+          locator<CompanyStreamsCubit>()..loadCompanyStreams(userId!),
       child: BlocBuilder<CompanyStreamsCubit, CompanyStreamsState>(
         builder: (context, state) {
           if (state.isLoading) {
@@ -64,10 +65,25 @@ class ClipsCompanyScreen extends StatelessWidget {
               SliverPadding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                 sliver: SliverToBoxAdapter(
-                  child: CustomText(
-                    text: 'clips'.tr(),
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.w800,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      CustomText(
+                        text: 'clips'.tr(),
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.w800,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          CompanyFilterDialog.showClipsFilter(context);
+                        },
+                        child: SvgPicture.asset(
+                          Assets.assetsIconsFilter,
+                          width: 24.w,
+                          height: 24.h,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -142,4 +158,3 @@ class ClipsCompanyScreen extends StatelessWidget {
     );
   }
 }
-

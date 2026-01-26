@@ -445,7 +445,11 @@ class Assets {
   /// Assets for assetsIconsPen
   /// assets/icons/pen.png
   static const String assetsIconsPen = "assets/icons/pen.png";
-
+  /// Assets for assetsImagesGift
+  /// assets/images/gift.png
+  static const String assetsImagesGift = "assets/images/gift.png";
+  /// Assets for money icon
+  static const String assetsIconsMoney2 = "assets/icons/money.svg";
   /// Assets for assetsIconsPr
   /// assets/icons/pr.png
   static const String assetsIconsPr = "assets/icons/pr.png";

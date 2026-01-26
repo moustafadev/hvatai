@@ -30,6 +30,7 @@ import 'package:hvatai/features/payment_method/presentation/payment_method.dart'
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
+import 'package:hvatai/features/invite_friend/presentation/invite_friend.dart';
 import 'package:hvatai/features/analytics/presentation/analytics.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
 import 'package:hvatai/features/company/presentation/company.dart';
@@ -119,6 +120,12 @@ final GoRouter router = GoRouter(
       path: AppRoutes.inviteFriends, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const InviteFriendScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.referralReward,
+      builder: (BuildContext context, GoRouterState state) {
+        return const ReferralRewardScreen();
       },
     ),
     GoRoute(

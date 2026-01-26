@@ -1,4 +1,4 @@
-part of '../profile.dart';
+part of '../invite_friend.dart';
 
 class CustomRowInviteFriend extends StatelessWidget {
   const CustomRowInviteFriend(
@@ -11,12 +11,14 @@ class CustomRowInviteFriend extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 26.r,
-          backgroundColor: AppColors.gray,
-          child: Image.asset(
-            Assets.assetsIconsBoost,
-            color: AppColors.blackDark,
-            height: 32.h,
-            width: 32.w,
+          backgroundColor: AppColors.greyButton,
+          child: Center(
+            child: SvgPicture.asset(
+              Assets.assetsIconsMoney2,
+              height: 32,
+              width: 32,
+              fit: BoxFit.contain,
+            ),
           ),
         ),
         12.pw,

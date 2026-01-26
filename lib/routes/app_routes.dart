@@ -13,14 +13,13 @@ class AppRoutes {
 
   static const String home = '/home';
   static const String categoriesForYou = '/categories_for_you';
- 
+
   // =============================== Profile routes ===============================
   static const String profile = '/profile';
   static const String profileSettings = '/profile_settings';
   static const String settings = '/settings';
   static const String termsAndConditions = '/terms_and_conditions';
   static const String privacyPolicyProfile = '/privacy_policy_profile';
-
 
   static const String search = '/search';
   static const String activity = '/activity';
@@ -30,6 +29,7 @@ class AppRoutes {
   static const String favorite = '/favorite';
   static const String addStream = '/add_stream';
   static const String inviteFriends = '/invite_friends';
+  static const String referralReward = '/referral_reward';
   static const String myProductDetails = '/my_product_details';
   static const String cartProductDetails = '/cart_product_details';
   static const String cart = '/cart';

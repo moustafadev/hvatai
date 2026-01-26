@@ -1,4 +1,4 @@
-part of '../profile.dart';
+part of '../invite_friend.dart';
 
 class InviteFriendScreen extends StatelessWidget {
   const InviteFriendScreen({super.key});
@@ -99,7 +99,9 @@ class InviteFriendScreen extends StatelessWidget {
               fontSize: 16.sp,
               fontWeight: FontWeight.w800,
               textColor: AppColors.white,
-              onPressed: () {},
+              onPressed: () {
+                context.push(AppRoutes.referralReward);
+              },
             ),
             8.ph,
             Row(
@@ -111,11 +113,14 @@ class InviteFriendScreen extends StatelessWidget {
                   color: AppColors.blackDark,
                 ),
                 Spacer(),
-                CustomText(
-                  text: 'viewRules'.tr(),
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.primaryPink,
+                GestureDetector(
+                  onTap: () => ReferralRulesBottomSheet.show(context),
+                  child: CustomText(
+                    text: 'viewRules'.tr(),
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.primaryPink,
+                  ),
                 ),
               ],
             ),

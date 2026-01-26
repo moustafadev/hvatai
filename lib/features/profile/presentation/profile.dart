@@ -31,7 +31,6 @@ import 'package:hvatai/core/widgets/video_thumbnail_player.dart';
 
 part 'screens/add_stream_screen.dart';
 part 'screens/change_email_user_screen.dart';
-part 'screens/invite_friend_screen.dart';
 part 'screens/my_awards_screen.dart';
 part 'screens/privacy_policy_profile_screen.dart';
 part 'screens/terms_and_conditions_screen.dart';
@@ -46,7 +45,6 @@ part '../../cart/presentation/widgets/cart_item_actions_button.dart';
 part 'widgets/settings_screen/change_info_profile.dart';
 part 'widgets/custom_awards_card.dart';
 part 'widgets/custom_product_card.dart';
-part 'widgets/custom_row_invite_friend.dart';
 part 'widgets/profile_settings_screen/help_contacts.dart';
 part 'widgets/my_goods_tabs.dart';
 part 'widgets/settings_screen/payment_and_delivery.dart';

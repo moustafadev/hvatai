@@ -120,4 +120,12 @@ class CompanyCubit extends Cubit<CompanyState> {
   void clearUser() {
     emit(const CompanyState());
   }
+
+  void setReviewFilter(ReviewFilterType filter) {
+    emit(state.copyWith(reviewFilter: filter));
+  }
+
+  void setClipsFilter(ClipsFilterType filter) {
+    emit(state.copyWith(clipsFilter: filter));
+  }
 }

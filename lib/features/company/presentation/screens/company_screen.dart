@@ -28,7 +28,6 @@ class _CompanyView extends StatelessWidget {
       backgroundColor: AppColors.background,
       body: BlocBuilder<CompanyCubit, CompanyState>(
         builder: (context, state) {
-
           if (state.isLoading) {
             return const Center(
               child: CircularProgressIndicator(color: AppColors.primaryColor),
