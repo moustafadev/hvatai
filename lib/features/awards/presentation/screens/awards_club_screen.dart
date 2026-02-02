@@ -50,12 +50,46 @@ class _AwardsClubView extends StatelessWidget {
             companyCubit?.syncSubscriptionStatus(state.isSubscribed);
           },
           builder: (context, state) {
-            return CustomScrollView(
-              slivers: [
-                SliverToBoxAdapter(
-                  child: AwardsClubHeaderWidget(),
+            return Stack(
+              children: [
+                CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                      child: AwardsClubHeaderWidget(),
+                    ),
+                    AwardsClubListWidget(),
+                  ],
                 ),
-                AwardsClubListWidget(),
+                // Fixed bottom subscribe button
+                Positioned(
+                  left: 16.w,
+                  right: 16.w,
+                  bottom: 0,
+                  child: SafeArea(
+                    top: false,
+                    child: CustomButton(
+                      title: state.isSubscribed
+                          ? 'unsubscribe'.tr()
+                          : 'subscribe'.tr(),
+                      color: state.isSubscribed
+                          ? AppColors.white
+                          : AppColors.blackDark,
+                      textColor: state.isSubscribed
+                          ? AppColors.blackDark
+                          : AppColors.white,
+                      colorBorderSide:
+                          state.isSubscribed ? AppColors.blackDark : null,
+                      isLoading: state.isToggleLoading,
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w800,
+                      height: 54,
+                      radius: 10.r,
+                      onPressed: () {
+                        context.read<AwardsClubCubit>().toggleSubscription();
+                      },
+                    ),
+                  ),
+                ),
               ],
             );
           },

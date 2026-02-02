@@ -13,6 +13,11 @@ PODS:
     - FlutterMacOS
   - device_info_plus (0.0.1):
     - FlutterMacOS
+  - ffmpeg_kit_flutter_new (1.0.0):
+    - ffmpeg_kit_flutter_new/full-gpl (= 1.0.0)
+    - FlutterMacOS
+  - ffmpeg_kit_flutter_new/full-gpl (1.0.0):
+    - FlutterMacOS
   - file_selector_macos (0.0.1):
     - FlutterMacOS
   - Firebase/Auth (11.15.0):
@@ -160,6 +165,7 @@ PODS:
 DEPENDENCIES:
   - connectivity_plus (from `Flutter/ephemeral/.symlinks/plugins/connectivity_plus/macos`)
   - device_info_plus (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos`)
+  - ffmpeg_kit_flutter_new (from `Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_new/macos`)
   - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
   - firebase_auth (from `Flutter/ephemeral/.symlinks/plugins/firebase_auth/macos`)
   - firebase_core (from `Flutter/ephemeral/.symlinks/plugins/firebase_core/macos`)
@@ -207,6 +213,8 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/connectivity_plus/macos
   device_info_plus:
     :path: Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos
+  ffmpeg_kit_flutter_new:
+    :path: Flutter/ephemeral/.symlinks/plugins/ffmpeg_kit_flutter_new/macos
   file_selector_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos
   firebase_auth:
@@ -251,6 +259,7 @@ SPEC CHECKSUMS:
   AppCheckCore: cc8fd0a3a230ddd401f326489c99990b013f0c4f
   connectivity_plus: 4adf20a405e25b42b9c9f87feff8f4b6fde18a4e
   device_info_plus: b0fafc687fb901e2af612763340f1b0d4352f8e5
+  ffmpeg_kit_flutter_new: 4eb1908463948e877ff5c4f2c7bb28f2a5dfd11b
   file_selector_macos: 6280b52b459ae6c590af5d78fc35c7267a3c4b31
   Firebase: d99ac19b909cd2c548339c2241ecd0d1599ab02e
   firebase_auth: 693f1e1ef2bb11a241d4478e63f1f47676af0538

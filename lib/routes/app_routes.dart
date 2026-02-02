@@ -79,4 +79,8 @@ class AppRoutes {
   static const String myStreams = '/my_streams';
   static const String myOrders = '/my_orders';
   static const String reportViolation = '/report_violation';
+
+  // =============================== Clips routes ===============================
+  static const String editVideo = '/edit_video';
+  static const String previewVideo = '/preview_video';
 }

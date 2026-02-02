@@ -35,22 +35,34 @@ class _SelectAwayRewardsScreenState extends State<SelectAwayRewardsScreen> {
     await _paymentMethodCubit.getPaymentMethods();
   }
 
-  Future<void> _handlePay(BuildContext context, AwardsClubCubit cubit) async {
+  Future<void> _handlePay(BuildContext context) async {
+    final cubit = context.read<SendRewardFlowCubit>();
     await cubit.sendReward();
   }
 
   @override
   Widget build(BuildContext context) {
+    // Try to get cubit from parent context, otherwise create new one
+    SendRewardFlowCubit sendRewardFlowCubit;
+    try {
+      sendRewardFlowCubit = context.read<SendRewardFlowCubit>();
+    } catch (_) {
+      // If cubit doesn't exist in context, create a new one
+      // This shouldn't happen in normal flow, but handle gracefully
+      sendRewardFlowCubit = locator<SendRewardFlowCubit>();
+    }
+
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: _paymentMethodCubit),
         BlocProvider.value(value: _profileCubit),
+        BlocProvider.value(value: sendRewardFlowCubit),
       ],
       child: BlocBuilder<PaymentMethodCubit, PaymentMethodState>(
         builder: (context, paymentMethodState) {
           return BlocBuilder<ProfileCubit, ProfileState>(
             builder: (context, profileState) {
-              return BlocBuilder<AwardsClubCubit, AwardsClubState>(
+              return BlocBuilder<SendRewardFlowCubit, SendRewardFlowState>(
                 builder: (context, state) {
                   if (profileState.isLoading || paymentMethodState.isLoading) {
                     return const RewardLoadingScreen();
@@ -70,8 +82,7 @@ class _SelectAwayRewardsScreenState extends State<SelectAwayRewardsScreen> {
 
                   return _SelectAwayRewardsContent(
                     onAddPayment: () => _handleAddPaymentMethod(context),
-                    onPay: () =>
-                        _handlePay(context, context.read<AwardsClubCubit>()),
+                    onPay: () => _handlePay(context),
                   );
                 },
               );

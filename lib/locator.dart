@@ -52,6 +52,7 @@ import 'package:hvatai/features/notifications/data/datasources/api_service_notif
 import 'package:hvatai/features/notifications/data/repositories/notifications_impl_repository.dart';
 import 'package:hvatai/features/notifications/domain/repositories/notifications_repository.dart';
 import 'package:hvatai/features/awards/presentation/cubit/awards_club_cubit.dart';
+import 'package:hvatai/features/awards/presentation/cubit/send_reward_flow/send_reward_flow_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/categories/categories_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/live_streams/live_streams_cubit.dart';
 import 'package:hvatai/features/notifications/presentation/cubit/notifications_cubit/notifications_cubit.dart';
@@ -136,6 +137,7 @@ Future<void> setupLocator() async {
         locator(),
       ));
   locator.registerFactory(() => AwardsClubCubit(locator(), locator()));
+  locator.registerFactory(() => SendRewardFlowCubit(locator()));
   locator.registerFactory(() => CompanyProductsCubit(locator()));
   locator.registerFactory(() => CompanyStreamsCubit(locator()));
   locator.registerFactory(
@@ -146,8 +148,8 @@ Future<void> setupLocator() async {
     ),
   );
   locator.registerFactory(() => ReviewCubit(locator()));
-  locator.registerFactory(() =>
-      CartProductDetailsCubit(locator(), locator(), locator(), locator(), locator()));
+  locator.registerFactory(() => CartProductDetailsCubit(
+      locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => AddStreamCubit(
         locator(),
         locator(),

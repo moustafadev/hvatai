@@ -24,7 +24,7 @@ class ProductsFilterChips extends StatelessWidget {
       child: Row(
         children: List.generate(categories.length, (index) {
           return Padding(
-            padding: EdgeInsets.only(right: 10.w),
+            padding: EdgeInsets.only(right: 8.w),
             child: CustomGradiantTabButton(
               text: categories[index],
               isSelected: selectedIndex == index,

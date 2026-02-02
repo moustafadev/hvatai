@@ -3,18 +3,6 @@ part of '../../awards.dart';
 class SendRewardHeaderWidget extends StatelessWidget {
   const SendRewardHeaderWidget({super.key});
 
-  void _showRewardInfoSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(20.r),
-        ),
-      ),
-      builder: (_) => const SendRewardInfoBottomSheet(),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -26,7 +14,7 @@ class SendRewardHeaderWidget extends StatelessWidget {
         ),
         const Spacer(),
         GestureDetector(
-          onTap: () => _showRewardInfoSheet(context),
+          // onTap: () => _showRewardInfoSheet(context),
           child: Icon(
             Icons.info_outline_rounded,
             color: AppColors.graniteGray,
@@ -52,9 +40,9 @@ class SendRewardSelectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AwardsClubCubit, AwardsClubState>(
+    return BlocBuilder<SendRewardFlowCubit, SendRewardFlowState>(
       builder: (context, state) {
-        final cubit = context.read<AwardsClubCubit>();
+        final cubit = context.read<SendRewardFlowCubit>();
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,11 +2,9 @@ part of '../../awards.dart';
 
 class _SendRewardContent extends StatelessWidget {
   const _SendRewardContent({
-    required this.controller,
     required this.onContinue,
   });
 
-  final TextEditingController controller;
   final VoidCallback onContinue;
 
   @override
@@ -33,7 +31,7 @@ class _SendRewardContent extends StatelessWidget {
                 12.ph,
                 SendRewardSelectionWidget(),
                 32.ph,
-                SendRewardThankYouWidget(controller: controller),
+                SendRewardThankYouWidget(),
                 32.ph,
               ]),
             ),
@@ -60,8 +58,6 @@ class _SendRewardContent extends StatelessWidget {
   }
 }
 
-
-
 class SendRewardContinueButtonWidget extends StatelessWidget {
   const SendRewardContinueButtonWidget({
     super.key,
@@ -72,16 +68,14 @@ class SendRewardContinueButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AwardsClubCubit, AwardsClubState>(
+    return BlocBuilder<SendRewardFlowCubit, SendRewardFlowState>(
       builder: (context, state) {
-        final isDisabled =
-            state.selectedIndex == null || state.isRewardSubmitting;
+        final isDisabled = state.selectedIndex == null;
 
         return CustomGradientButton(
           text: 'continue'.tr(),
-          isLoading: state.isRewardSubmitting,
           isDisabled: isDisabled,
-          onPressed: state.isRewardSubmitting ? null : onContinue,
+          onPressed: isDisabled ? null : onContinue,
         );
       },
     );

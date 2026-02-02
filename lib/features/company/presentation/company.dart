@@ -9,6 +9,7 @@ import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
+import 'package:hvatai/features/awards/presentation/awards.dart';
 import 'package:hvatai/features/cart/presentation/cart.dart';
 import 'package:hvatai/features/cart/presentation/cubit/cart_product_details/cart_product_details_cubit.dart';
 import 'package:hvatai/features/company/presentation/cubit/company/company_cubit.dart';

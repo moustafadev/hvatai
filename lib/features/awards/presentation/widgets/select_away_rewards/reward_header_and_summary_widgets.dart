@@ -5,7 +5,7 @@ class RewardHeaderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AwardsClubCubit, AwardsClubState>(
+    return BlocBuilder<SendRewardFlowCubit, SendRewardFlowState>(
       builder: (context, state) {
         final thankYouText = state.rewardMessage.isNotEmpty
             ? state.rewardMessage
@@ -51,9 +51,9 @@ class RewardPaymentSummaryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AwardsClubCubit, AwardsClubState>(
+    return BlocBuilder<SendRewardFlowCubit, SendRewardFlowState>(
       builder: (context, state) {
-        final cubit = context.read<AwardsClubCubit>();
+        final cubit = context.read<SendRewardFlowCubit>();
         final selectedAmount = cubit.selectedAmount;
         final processingFee = cubit.selectedAmountFee;
         final total =

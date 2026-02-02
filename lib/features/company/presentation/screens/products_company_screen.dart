@@ -39,6 +39,18 @@ class ProductsCompanyTab extends StatelessWidget {
   final int userId;
   final String? userName;
 
+  void _showRewardInfoSheet(BuildContext context, int userId) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20.r),
+        ),
+      ),
+      builder: (_) => SendRewardInfoBottomSheet(userId: userId),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -208,23 +220,36 @@ class ProductsCompanyTab extends StatelessWidget {
                   children: [
                     // Subscribe button
                     CustomButton(
-                      title:
-                          isSubscribed ? 'unsubscribe'.tr() : 'subscribe'.tr(),
-                      color:
-                          isSubscribed ? AppColors.white : AppColors.blackDark,
-                      textColor:
-                          isSubscribed ? AppColors.blackDark : AppColors.white,
-                      colorBorderSide:
-                          isSubscribed ? AppColors.blackDark : null,
-                      isLoading: isToggleLoading,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w800,
-                      height: 54,
-                      radius: 10.r,
-                      onPressed: user.id == null || user.id == 0
-                          ? null
-                          : () => companyCubit.toggleSubscription(user.id!),
-                    ),
+                        title: isSubscribed
+                            ? 'unsubscribe'.tr()
+                            : 'subscribe'.tr(),
+                        color: isSubscribed
+                            ? AppColors.white
+                            : AppColors.blackDark,
+                        textColor: isSubscribed
+                            ? AppColors.blackDark
+                            : AppColors.white,
+                        colorBorderSide:
+                            isSubscribed ? AppColors.blackDark : null,
+                        isLoading: isToggleLoading,
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.w800,
+                        height: 54,
+                        radius: 10.r,
+                        onPressed: () {
+                          context.push<bool>(
+                            AppRoutes.awardsGift,
+                            extra: {
+                              'user': user,
+                              'isSubscribed': isSubscribed,
+                              'companyCubit': companyCubit,
+                            },
+                          ).then((value) {
+                            if (value != null && context.mounted) {
+                              companyCubit.syncSubscriptionStatus(value);
+                            }
+                          });
+                        }),
                     8.ph,
                     // Send reward button
                     CustomButton(
@@ -235,20 +260,7 @@ class ProductsCompanyTab extends StatelessWidget {
                       fontWeight: FontWeight.w800,
                       height: 54,
                       radius: 10.r,
-                      onPressed: () {
-                        context.push<bool>(
-                          AppRoutes.awardsGift,
-                          extra: {
-                            'user': user,
-                            'isSubscribed': isSubscribed,
-                            'companyCubit': companyCubit,
-                          },
-                        ).then((value) {
-                          if (value != null && context.mounted) {
-                            companyCubit.syncSubscriptionStatus(value);
-                          }
-                        });
-                      },
+                      onPressed: () => _showRewardInfoSheet(context, userId),
                       widget: Image.asset(
                         Assets.assetsIconsTips,
                         height: 20,

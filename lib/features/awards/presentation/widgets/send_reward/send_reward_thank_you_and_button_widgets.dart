@@ -1,18 +1,42 @@
 part of '../../awards.dart';
 
-class SendRewardThankYouWidget extends StatelessWidget {
-  const SendRewardThankYouWidget({
-    super.key,
-    required this.controller,
-  });
+class SendRewardThankYouWidget extends StatefulWidget {
+  const SendRewardThankYouWidget({super.key});
 
-  final TextEditingController controller;
+  @override
+  State<SendRewardThankYouWidget> createState() =>
+      _SendRewardThankYouWidgetState();
+}
+
+class _SendRewardThankYouWidgetState extends State<SendRewardThankYouWidget> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    final cubit = context.read<SendRewardFlowCubit>();
+    _controller = TextEditingController(text: cubit.state.rewardMessage);
+    _controller.addListener(() {
+      cubit.updateRewardMessage(_controller.text);
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AwardsClubCubit, AwardsClubState>(
+    return BlocBuilder<SendRewardFlowCubit, SendRewardFlowState>(
       builder: (context, state) {
-        final cubit = context.read<AwardsClubCubit>();
+        final cubit = context.read<SendRewardFlowCubit>();
+
+        // Sync controller with state when state changes externally
+        if (_controller.text != state.rewardMessage) {
+          _controller.text = state.rewardMessage;
+        }
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -20,18 +44,12 @@ class SendRewardThankYouWidget extends StatelessWidget {
             CustomSwitchWidget(
               title: 'addThanks'.tr(),
               value: state.addThankYouNote,
-              onChanged: (val) {
-                cubit.setAddThankYou(val);
-                if (!val) {
-                  controller.clear();
-                  cubit.updateRewardMessage('');
-                }
-              },
+              onChanged: cubit.setAddThankYou,
             ),
             12.ph,
             CustomTextField(
               hintText: 'writeSomething'.tr(),
-              controller: controller,
+              controller: _controller,
               fillColor:
                   !state.addThankYouNote ? AppColors.gray : AppColors.white,
               readOnly: !state.addThankYouNote,

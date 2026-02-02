@@ -1,7 +1,11 @@
 part of '../../awards.dart';
 
 class SendRewardInfoBottomSheet extends StatelessWidget {
-  const SendRewardInfoBottomSheet({super.key});
+  final int userId;
+  const SendRewardInfoBottomSheet({
+    super.key,
+    required this.userId,
+  });
 
   static const List<_RewardInfoItem> _items = [
     _RewardInfoItem(
@@ -25,11 +29,11 @@ class SendRewardInfoBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+      padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          4.ph,
           _RewardInfoBottomSheetHandle(),
           CustomText(
             text: 'rewardInfoTitle'.tr(),
@@ -48,10 +52,6 @@ class SendRewardInfoBottomSheet extends StatelessWidget {
                     padding: EdgeInsets.all(8.r),
                     child: SvgPicture.asset(
                       item.iconPath,
-                      colorFilter: ColorFilter.mode(
-                        AppColors.blackDark,
-                        BlendMode.srcIn,
-                      ),
                     ),
                   ),
                   12.pw,
@@ -68,6 +68,17 @@ class SendRewardInfoBottomSheet extends StatelessWidget {
             ),
           ),
           8.ph,
+          CustomButton(
+            title: 'sendReward'.tr(),
+            onPressed: () {
+              context.push(AppRoutes.selectAwaySend, extra: {'userId': userId});
+            },
+            color: AppColors.primaryColor,
+            textColor: AppColors.white,
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w800,
+          ),
+          10.ph,
         ],
       ),
     );

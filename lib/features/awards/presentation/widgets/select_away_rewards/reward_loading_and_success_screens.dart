@@ -38,7 +38,7 @@ class RewardSuccessScreen extends StatelessWidget {
   const RewardSuccessScreen({super.key});
 
   void _handleContinue(BuildContext context) {
-    final cubit = context.read<AwardsClubCubit>();
+    final cubit = context.read<SendRewardFlowCubit>();
     cubit.resetRewardScreens();
     context.pop(true);
   }

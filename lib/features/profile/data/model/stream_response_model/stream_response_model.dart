@@ -74,7 +74,8 @@ class StreamDataModel with _$StreamDataModel {
       toJson: _nullOrStringList,
     )
     List<String>? gifHistory,
-    @JsonKey(name: 'last_thumbnail_generated_at') DateTime? lastThumbnailGeneratedAt,
+    @JsonKey(name: 'last_thumbnail_generated_at')
+    DateTime? lastThumbnailGeneratedAt,
     @JsonKey(name: 'last_gif_generated_at') DateTime? lastGifGeneratedAt,
     @JsonKey(name: 'latest_thumbnail') String? latestThumbnail,
     @JsonKey(name: 'latest_gif') String? latestGif,
@@ -95,7 +96,7 @@ class StreamDataModel with _$StreamDataModel {
     )
     double? minimumBidIncrement,
     @JsonKey(name: 'bid_duration_seconds') int? bidDurationSeconds,
-    @JsonKey(name: 'stream_settings') Map<String, dynamic>? streamSettings,
+    @JsonKey(name: 'stream_settings') StreamSettingsModel? streamSettings,
     @JsonKey(name: 'is_mine') bool? isMine,
     StreamUserModel? user,
     @JsonKey(name: 'stream_products') List<StreamProductModel>? streamProducts,
@@ -184,7 +185,8 @@ class StreamEmbeddedProductModel with _$StreamEmbeddedProductModel {
     @JsonKey(name: 'category_id') int? categoryId,
     @JsonKey(name: 'self_pickup') int? selfPickup,
     String? location,
-    @JsonKey(name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
+    @JsonKey(
+        name: 'latitude', fromJson: _stringToDouble, toJson: _doubleToString)
     double? latitude,
     @JsonKey(
         name: 'longitude', fromJson: _stringToDouble, toJson: _doubleToString)
@@ -246,6 +248,132 @@ class PaginationModel with _$PaginationModel {
 
   factory PaginationModel.fromJson(Map<String, dynamic> json) =>
       _$PaginationModelFromJson(json);
+}
+
+/// ========= Stream Settings =========
+@freezed
+class StreamSettingsModel with _$StreamSettingsModel {
+  const factory StreamSettingsModel({
+    LivekitSettingsModel? livekit,
+  }) = _StreamSettingsModel;
+
+  factory StreamSettingsModel.fromJson(Map<String, dynamic> json) =>
+      _$StreamSettingsModelFromJson(json);
+}
+
+/// ========= LiveKit Settings =========
+@freezed
+class LivekitSettingsModel with _$LivekitSettingsModel {
+  const factory LivekitSettingsModel({
+    String? room,
+    EgressModel? egress,
+  }) = _LivekitSettingsModel;
+
+  factory LivekitSettingsModel.fromJson(Map<String, dynamic> json) =>
+      _$LivekitSettingsModelFromJson(json);
+}
+
+/// ========= Egress =========
+@freezed
+class EgressModel with _$EgressModel {
+  const factory EgressModel({
+    EgressFileModel? file,
+    String? error,
+    String? status,
+    String? details,
+    @JsonKey(name: 'room_id') String? roomId,
+    @JsonKey(name: 'ended_at') String? endedAt,
+    @JsonKey(name: 'egress_id') String? egressId,
+    @JsonKey(name: 'room_name') String? roomName,
+    @JsonKey(name: 'error_code') int? errorCode,
+    @JsonKey(name: 'started_at') String? startedAt,
+    @JsonKey(name: 'updated_at') String? updatedAt,
+    @JsonKey(name: 'source_type') String? sourceType,
+    @JsonKey(name: 'file_results') List<EgressFileModel>? fileResults,
+    @JsonKey(name: 'image_results') List<dynamic>? imageResults,
+    @JsonKey(name: 'room_composite') RoomCompositeModel? roomComposite,
+    @JsonKey(name: 'stream_results') List<dynamic>? streamResults,
+    @JsonKey(name: 'segment_results') List<dynamic>? segmentResults,
+    @JsonKey(name: 'manifest_location') String? manifestLocation,
+    @JsonKey(name: 'backup_storage_used') bool? backupStorageUsed,
+  }) = _EgressModel;
+
+  factory EgressModel.fromJson(Map<String, dynamic> json) =>
+      _$EgressModelFromJson(json);
+}
+
+/// ========= Egress File =========
+@freezed
+class EgressFileModel with _$EgressFileModel {
+  const factory EgressFileModel({
+    String? size,
+    String? duration,
+    @JsonKey(name: 'ended_at') String? endedAt,
+    String? filename,
+    String? location,
+    @JsonKey(name: 'started_at') String? startedAt,
+  }) = _EgressFileModel;
+
+  factory EgressFileModel.fromJson(Map<String, dynamic> json) =>
+      _$EgressFileModelFromJson(json);
+}
+
+/// ========= Room Composite =========
+@freezed
+class RoomCompositeModel with _$RoomCompositeModel {
+  const factory RoomCompositeModel({
+    RoomCompositeFileModel? file,
+    String? layout,
+    RoomCompositeAdvancedModel? advanced,
+    List<dynamic>? webhooks,
+    @JsonKey(name: 'room_name') String? roomName,
+    @JsonKey(name: 'audio_only') bool? audioOnly,
+    @JsonKey(name: 'video_only') bool? videoOnly,
+    @JsonKey(name: 'audio_mixing') String? audioMixing,
+    @JsonKey(name: 'file_outputs') List<dynamic>? fileOutputs,
+    @JsonKey(name: 'image_outputs') List<dynamic>? imageOutputs,
+    @JsonKey(name: 'stream_outputs') List<dynamic>? streamOutputs,
+    @JsonKey(name: 'custom_base_url') String? customBaseUrl,
+    @JsonKey(name: 'segment_outputs') List<dynamic>? segmentOutputs,
+  }) = _RoomCompositeModel;
+
+  factory RoomCompositeModel.fromJson(Map<String, dynamic> json) =>
+      _$RoomCompositeModelFromJson(json);
+}
+
+/// ========= Room Composite File =========
+@freezed
+class RoomCompositeFileModel with _$RoomCompositeFileModel {
+  const factory RoomCompositeFileModel({
+    String? filepath,
+    @JsonKey(name: 'file_type') String? fileType,
+    @JsonKey(name: 'disable_manifest') bool? disableManifest,
+  }) = _RoomCompositeFileModel;
+
+  factory RoomCompositeFileModel.fromJson(Map<String, dynamic> json) =>
+      _$RoomCompositeFileModelFromJson(json);
+}
+
+/// ========= Room Composite Advanced =========
+@freezed
+class RoomCompositeAdvancedModel with _$RoomCompositeAdvancedModel {
+  const factory RoomCompositeAdvancedModel({
+    int? depth,
+    int? width,
+    int? height,
+    int? framerate,
+    @JsonKey(name: 'audio_codec') String? audioCodec,
+    @JsonKey(name: 'video_codec') String? videoCodec,
+    @JsonKey(name: 'audio_bitrate') int? audioBitrate,
+    @JsonKey(name: 'audio_quality') int? audioQuality,
+    @JsonKey(name: 'video_bitrate') int? videoBitrate,
+    @JsonKey(name: 'video_quality') int? videoQuality,
+    @JsonKey(name: 'audio_frequency') int? audioFrequency,
+    @JsonKey(name: 'key_frame_interval') int? keyFrameInterval,
+  }) = _RoomCompositeAdvancedModel;
+
+  factory RoomCompositeAdvancedModel.fromJson(Map<String, dynamic> json) =>
+      _$RoomCompositeAdvancedModelFromJson(json);
 }
 
 // ===== Helpers =====

@@ -30,7 +30,11 @@ import 'package:hvatai/features/payment_method/presentation/payment_method.dart'
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
+import 'dart:io';
+
 import 'package:hvatai/features/invite_friend/presentation/invite_friend.dart';
+import 'package:hvatai/features/clips/presentation/clips.dart';
+import 'package:hvatai/features/clips/presentation/cubit/clips_cubit/clips_cubit.dart';
 import 'package:hvatai/features/analytics/presentation/analytics.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
 import 'package:hvatai/features/company/presentation/company.dart';
@@ -208,18 +212,16 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.sendReward, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        final cubit = state.extra as AwardsClubCubit;
+        final extra = state.extra as Map<String, dynamic>?;
+        final userId = extra?['userId'] as int? ?? 0;
 
-        return BlocProvider.value(value: cubit, child: SendRewardScreen());
+        return SendRewardScreen(userId: userId);
       },
     ),
     GoRoute(
       path: AppRoutes.selectAwaySend, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        final cubit = state.extra as AwardsClubCubit;
-
-        return BlocProvider.value(
-            value: cubit, child: SelectAwayRewardsScreen());
+        return SelectAwayRewardsScreen();
       },
     ),
     GoRoute(
@@ -519,6 +521,30 @@ final GoRouter router = GoRouter(
       path: AppRoutes.name,
       builder: (context, state) {
         return const NameScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.editVideo,
+      builder: (BuildContext context, GoRouterState state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final videoUrl = extra?['videoUrl'] as String? ??
+            'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
+        final videoFile = extra?['videoFile'] as File?;
+        return BlocProvider(
+          create: (context) => ClipsCubit(),
+          child: EditVideoScreen(
+            videoUrl: videoUrl,
+            videoFile: videoFile,
+          ),
+        );
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.previewVideo,
+      builder: (BuildContext context, GoRouterState state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final videoPath = extra?['videoPath'] as String? ?? '';
+        return PreviewVideoScreen(videoPath: videoPath);
       },
     ),
     statefulShellRoute,

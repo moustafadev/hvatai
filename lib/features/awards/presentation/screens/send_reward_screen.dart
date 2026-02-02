@@ -1,43 +1,36 @@
 part of '../awards.dart';
 
-class SendRewardScreen extends StatefulWidget {
-  const SendRewardScreen({super.key});
+class SendRewardScreen extends StatelessWidget {
+  const SendRewardScreen({
+    super.key,
+    required this.userId,
+  });
+
+  final int userId;
 
   @override
-  State<SendRewardScreen> createState() => _SendRewardScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) =>
+          locator<SendRewardFlowCubit>()..setInitialData(userId: userId),
+      child: const _SendRewardView(),
+    );
+  }
 }
 
-class _SendRewardScreenState extends State<SendRewardScreen> {
-  late final TextEditingController _noteController;
-
-  @override
-  void initState() {
-    super.initState();
-    final initialMessage = context.read<AwardsClubCubit>().state.rewardMessage;
-    _noteController = TextEditingController(text: initialMessage);
-  }
-
-  @override
-  void dispose() {
-    _noteController.dispose();
-    super.dispose();
-  }
+class _SendRewardView extends StatelessWidget {
+  const _SendRewardView();
 
   Future<void> _handleContinue(BuildContext context) async {
-    final cubit = context.read<AwardsClubCubit>();
+    final cubit = context.read<SendRewardFlowCubit>();
 
     if (cubit.state.selectedIndex == null) {
       showFloatingMessageError('rewardAmountRequired'.tr());
       return;
     }
 
-    final message =
-        cubit.state.addThankYouNote ? _noteController.text.trim() : '';
-    cubit.updateRewardMessage(message);
-
     final result = await context.push<bool>(
       AppRoutes.selectAwaySend,
-      extra: cubit,
     );
 
     if (!context.mounted) return;
@@ -48,10 +41,9 @@ class _SendRewardScreenState extends State<SendRewardScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AwardsClubCubit, AwardsClubState>(
+    return BlocBuilder<SendRewardFlowCubit, SendRewardFlowState>(
       builder: (context, state) {
         return _SendRewardContent(
-          controller: _noteController,
           onContinue: () => _handleContinue(context),
         );
       },

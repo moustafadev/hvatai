@@ -35,9 +35,9 @@ class RewardPayButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AwardsClubCubit, AwardsClubState>(
+    return BlocBuilder<SendRewardFlowCubit, SendRewardFlowState>(
       builder: (context, state) {
-        final cubit = context.read<AwardsClubCubit>();
+        final cubit = context.read<SendRewardFlowCubit>();
         final selectedAmount = cubit.selectedAmount;
         final isDisabled = selectedAmount == null || state.isRewardSubmitting;
 
@@ -56,11 +56,11 @@ class RewardErrorScreen extends StatelessWidget {
   const RewardErrorScreen({super.key});
 
   void _handleRetry(BuildContext context) {
-    context.read<AwardsClubCubit>().sendReward();
+    context.read<SendRewardFlowCubit>().sendReward();
   }
 
   void _handleClose(BuildContext context) {
-    context.read<AwardsClubCubit>().resetRewardScreens();
+    context.read<SendRewardFlowCubit>().resetRewardScreens();
     context.pop();
   }
 
