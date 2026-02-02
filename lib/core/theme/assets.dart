@@ -441,7 +441,18 @@ class Assets {
   /// Assets for assetsIconsPayIcon5
   /// assets/icons/payIcon5.png
   static const String assetsIconsPayIcon5 = "assets/icons/payIcon5.png";
+  /// arrow right stream svg
+  static const String assetsIconsArrowRightStream = "assets/icons/arrow_right_stream.svg";
+  /// arrow left stream svg
+  static const String assetsIconsArrowLeftStream = "assets/icons/arrow_left_stream.svg";
+  /// assets icons play
+  static const String assetsIconsPlay = "assets/icons/play.svg";
+  /// assets icons pause
+  static const String assetsIconsPause = "assets/icons/pause.svg";
 
+  
+  
+  
   /// Assets for assetsIconsPen
   /// assets/icons/pen.png
   static const String assetsIconsPen = "assets/icons/pen.png";

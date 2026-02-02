@@ -51,7 +51,7 @@ import 'package:hvatai/routes/shell_route.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter router = GoRouter(
   // observers: [MyNavigatorObserver()],
-  initialLocation: AppRoutes.splash,
+  initialLocation: AppRoutes.editVideo,
   navigatorKey: navigatorKey,
   routes: <RouteBase>[
     GoRoute(
@@ -528,13 +528,11 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, dynamic>?;
         final videoUrl = extra?['videoUrl'] as String? ??
-            'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4';
-        final videoFile = extra?['videoFile'] as File?;
+            'https://www.exit109.com/~dnn/clips/RW20seconds_1.mp4';
         return BlocProvider(
-          create: (context) => ClipsCubit(),
+          create: (context) => locator<ClipsCubit>()..downloadVideoFromUrl(videoUrl),
           child: EditVideoScreen(
             videoUrl: videoUrl,
-            videoFile: videoFile,
           ),
         );
       },
