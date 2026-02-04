@@ -15,6 +15,7 @@ import 'package:hvatai/features/cart/presentation/cubit/cart_product_details/car
 import 'package:hvatai/features/company/presentation/cubit/company/company_cubit.dart';
 import 'package:hvatai/features/company/presentation/cubit/company/company_state.dart';
 import 'package:hvatai/features/company/presentation/cubit/company_products/company_products_cubit.dart';
+import 'package:hvatai/features/company/presentation/cubit/company_reviews/company_reviews_cubit.dart';
 import 'package:hvatai/features/company/presentation/cubit/company_streams/company_streams_cubit.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';

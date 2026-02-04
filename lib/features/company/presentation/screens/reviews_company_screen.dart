@@ -10,14 +10,75 @@ class ReviewsCompanyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return BlocProvider<CompanyReviewsCubit>(
+      create: (_) => locator<CompanyReviewsCubit>()..fetchReviews(userId),
+      child: _ReviewsCompanyView(userId: userId),
+    );
+  }
+}
+
+class _ReviewsCompanyView extends StatelessWidget {
+  const _ReviewsCompanyView({required this.userId});
+
+  final int userId;
+
+  @override
+  Widget build(BuildContext context) {
     return Stack(
       children: [
-        BlocBuilder<CompanyCubit, CompanyState>(
-          builder: (context, companyState) {
-            final reviewsCount = companyState.user?.personalRatingCount ?? 0;
-            final formattedCount = reviewsCount >= 1000
-                ? '${(reviewsCount / 1000).toStringAsFixed(1)}К'
-                : reviewsCount.toString();
+        BlocBuilder<CompanyReviewsCubit, CompanyReviewsState>(
+          builder: (context, state) {
+            if (state.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(color: AppColors.primaryColor),
+              );
+            }
+
+            if (state.errorMessage.isNotEmpty) {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: CustomText(
+                    text: state.errorMessage,
+                    fontSize: 14.sp,
+                    fontWeight: FontWeight.w600,
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              );
+            }
+
+            final userRatings = state.userRatings;
+            if (userRatings == null) {
+              return const Center(
+                child: CircularProgressIndicator(color: AppColors.primaryColor),
+              );
+            }
+
+            // Combine product ratings and user personal ratings
+            final allReviews = <_ReviewItemData>[];
+
+            // Add product ratings
+            for (var rating in userRatings.productRatings) {
+              allReviews.add(_ReviewItemData(
+                username: rating.user?.name ?? 'Unknown',
+                rating: rating.score.toDouble(),
+                date: _formatDate(rating.createdAt),
+                reviewText: rating.comment ?? '',
+                userImage: rating.user?.image,
+              ));
+            }
+
+            // Add user personal ratings
+            for (var rating in userRatings.userPersonalRatings) {
+              allReviews.add(_ReviewItemData(
+                username: rating.reviewer?.name ?? 'Unknown',
+                rating: rating.score.toDouble(),
+                date: _formatDate(rating.createdAt),
+                reviewText: rating.comment ?? '',
+                userImage: rating.reviewer?.image,
+              ));
+            }
 
             return CustomScrollView(
               slivers: [
@@ -50,59 +111,101 @@ class ReviewsCompanyScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SliverPadding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                      (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.only(
-                            top: 12,
-                            bottom: index < 5 ? 12.h : 0,
-                          ),
-                          child: ReviewItem(
-                            username: 'nickname25',
-                            rating: '4.5',
-                            date: '21.01.2025',
-                            reviewText:
-                                'We are an official store operating since 2021. Our mission is to offer you original products from leading global brands at affordable prices with a guarantee of authenticity',
-                          ),
-                        );
-                      },
-                      childCount: 6,
+                if (allReviews.isEmpty)
+                  SliverFillRemaining(
+                    hasScrollBody: false,
+                    child: Center(
+                      child: CustomText(
+                        text: 'Пока нет отзывов',
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.blackTransparent40,
+                      ),
+                    ),
+                  )
+                else
+                  SliverPadding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        (context, index) {
+                          final review = allReviews[index];
+                          return Padding(
+                            padding: EdgeInsets.only(
+                              top: 12,
+                              bottom: index < allReviews.length - 1 ? 12.h : 0,
+                            ),
+                            child: ReviewItem(
+                              username: review.username,
+                              rating: review.rating.toStringAsFixed(1),
+                              date: review.date,
+                              reviewText: review.reviewText,
+                              userImage: review.userImage,
+                            ),
+                          );
+                        },
+                        childCount: allReviews.length,
+                      ),
                     ),
                   ),
-                ),
               ],
             );
           },
         ),
         // Fixed bottom button
-        Positioned(
-          left: 16.w,
-          right: 16.w,
-          bottom: 0,
-          child: SafeArea(
-            top: false,
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 16.h),
-              child: CustomButton(
-                title: 'leaveReview'.tr(),
-                color: AppColors.blackDark,
-                textColor: AppColors.white,
-                fontSize: 16.sp,
-                fontWeight: FontWeight.w800,
-                height: 54,
-                radius: 10.r,
-                onPressed: () {
-                  context.push(
-                      AppRoutes.leaveReview, extra: {'userId': userId});
-                },
+        BlocBuilder<CompanyCubit, CompanyState>(
+          builder: (context, companyState) {
+            return Positioned(
+              left: 16.w,
+              right: 16.w,
+              bottom: 0,
+              child: SafeArea(
+                top: false,
+                child: Padding(
+                  padding: EdgeInsets.only(bottom: 16.h),
+                  child: CustomButton(
+                    title: 'leaveReview'.tr(),
+                    color: AppColors.blackDark,
+                    textColor: AppColors.white,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w800,
+                    height: 54,
+                    radius: 10.r,
+                    onPressed: () {
+                      context.push(AppRoutes.leaveReview,
+                          extra: {'userId': userId});
+                    },
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          },
         ),
       ],
     );
+  }
+}
+
+class _ReviewItemData {
+  final String username;
+  final double rating;
+  final String date;
+  final String reviewText;
+  final String? userImage;
+
+  _ReviewItemData({
+    required this.username,
+    required this.rating,
+    required this.date,
+    required this.reviewText,
+    this.userImage,
+  });
+}
+
+String _formatDate(String dateString) {
+  try {
+    final date = DateTime.parse(dateString);
+    return '${date.day.toString().padLeft(2, '0')}.${date.month.toString().padLeft(2, '0')}.${date.year}';
+  } catch (e) {
+    return dateString;
   }
 }

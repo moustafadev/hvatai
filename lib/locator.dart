@@ -8,6 +8,7 @@ import 'package:hvatai/features/activity/data/repositories/activity_impl_reposit
 import 'package:hvatai/features/activity/domain/repositories/activity_repository.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
 import 'package:hvatai/features/clips/presentation/cubit/clips_cubit/clips_cubit.dart';
+import 'package:hvatai/features/company/presentation/cubit/company_reviews/company_reviews_cubit.dart';
 import 'package:hvatai/features/review/data/datasources/api_service_review.dart';
 import 'package:hvatai/features/review/data/repositories/review_repository_impl.dart';
 import 'package:hvatai/features/review/domain/repositories/review_repository.dart';
@@ -141,6 +142,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AwardsClubCubit(locator(), locator()));
   locator.registerFactory(() => SendRewardFlowCubit(locator()));
   locator.registerFactory(() => CompanyProductsCubit(locator()));
+  locator.registerFactory(() => CompanyReviewsCubit(locator()));
   locator.registerFactory(() => CompanyStreamsCubit(locator()));
   locator.registerFactory(
     () => CompanyCubit(
