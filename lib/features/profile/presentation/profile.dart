@@ -16,6 +16,7 @@ import 'package:hvatai/features/address/presentation/cubit/delivery_address/deli
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
+import 'package:hvatai/features/profile/data/model/ratings_model/ratings_model.dart';
 import 'package:hvatai/features/profile/presentation/cubit/add_stream/add_stream_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/my_products_cubit/my_products_cubit.dart';
@@ -23,8 +24,10 @@ import 'package:hvatai/features/profile/presentation/cubit/my_product_details_cu
 import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/report_violation_cubit/report_violation_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/reviews_cubit/reviews_cubit.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/features/stream/presentation/cubit/my_streams_cubit/my_streams_cubit.dart';
+import 'package:hvatai/features/favorites/presentation/cubit/favorite/favorite_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:hvatai/core/widgets/video_thumbnail_player.dart';
@@ -53,6 +56,7 @@ part 'widgets/profile_settings_screen/top_profile_info.dart';
 part 'widgets/settings_screen/update_country_dropdown.dart';
 part 'widgets/profile_screen/header_profile.dart';
 part 'widgets/profile_screen/role_switch_profile.dart';
+part 'widgets/profile_screen/tab_switch_widget.dart';
 part 'widgets/profile_screen/stats_row_profile.dart';
 part 'widgets/profile_screen/products_tab_profile.dart';
 part 'widgets/profile_screen/products_filter_bottom_sheet.dart';

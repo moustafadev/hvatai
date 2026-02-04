@@ -4,6 +4,7 @@ import 'package:hvatai/features/auth/data/models/registration_model/user_registr
 import 'package:hvatai/features/profile/data/datasources/api_service_profile.dart';
 import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
+import 'package:hvatai/features/profile/data/model/ratings_model/ratings_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
 import 'package:dartz/dartz.dart';
@@ -95,5 +96,20 @@ class ProfileImplRepository implements ProfileRepository {
       return res;
     });
   }
-  
+
+  @override
+  Future<Either<String, UserRatingsResponse>> getUserRatings(int userId) {
+    return executeAndHandleError<UserRatingsResponse>(() async {
+      final res = await _apiServiceProfile.getUserRatings(userId);
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, MyRatingsResponse>> getMyRatings() {
+    return executeAndHandleError<MyRatingsResponse>(() async {
+      final res = await _apiServiceProfile.getMyRatings();
+      return res;
+    });
+  }
 }

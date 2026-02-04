@@ -16,6 +16,12 @@ class ProfileScreen extends StatelessWidget {
         BlocProvider(
           create: (_) => locator<MyStreamsCubit>()..loadMyStreams(),
         ),
+        BlocProvider(
+          create: (_) => locator<FavoriteCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => locator<ReviewsCubit>(),
+        ),
       ],
       child: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
@@ -53,7 +59,6 @@ class ProfileScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             const HeaderProfile(),
-                            RoleSwitchProfile(),
                             16.ph,
                             StatsRowProfile(user: user),
                           ],

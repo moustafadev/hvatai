@@ -1,13 +1,11 @@
 part of '../search.dart';
 
-// will chnage with the actual review item
 class ReviewItem extends StatelessWidget {
   final String username;
   final String rating;
   final String date;
   final String reviewText;
-  final VoidCallback onViewAllTap;
-  final String userImage;
+  final String? userImage;
   final String moreIcon;
   final String starIcon;
 
@@ -17,8 +15,7 @@ class ReviewItem extends StatelessWidget {
     required this.rating,
     required this.date,
     required this.reviewText,
-    required this.onViewAllTap,
-    this.userImage = Assets.assetsImagesGirl,
+    this.userImage,
     this.moreIcon = Assets.assetsIconsMore,
     this.starIcon = Assets.assetsIconsStar,
   });
@@ -32,10 +29,18 @@ class ReviewItem extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
-              Image.asset(userImage, height: 32.h, width: 32.w),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16.r),
+                child: CircleAvatar(
+                  radius: 16.r,
+                  child: CustomImage(
+                      imageSource: userImage ?? '', width: 32.w, height: 32.h),
+                ),
+              ),
               8.pw,
               CustomText(
                 text: username,
@@ -71,28 +76,27 @@ class ReviewItem extends StatelessWidget {
             ],
           ),
           8.ph,
-          CustomText(
-            text: reviewText,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w400,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          6.ph,
-          GestureDetector(
-            onTap: onViewAllTap,
-            child: Row(
-              children: [
-                CustomText(
-                  text: 'viewAll'.tr(),
-                  fontSize: 12.sp,
-                  fontWeight: FontWeight.w500,
-                  color: AppColors.primaryPink,
-                ),
-                8.pw,
-                Icon(Icons.keyboard_arrow_down,
-                    size: 14.sp, color: AppColors.primaryPink),
-              ],
+          ReadMoreText(
+            reviewText,
+            trimMode: TrimMode.Line,
+            trimLines: 2,
+            colorClickableText: AppColors.primaryPink,
+            trimCollapsedText: 'viewAll'.tr(),
+            trimExpandedText: 'showLess'.tr(),
+            moreStyle: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w500,
+              color: AppColors.primaryPink,
+            ),
+            lessStyle: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w500,
+              color: AppColors.primaryPink,
+            ),
+            style: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w400,
+              color: AppColors.blackDark,
             ),
           ),
         ],

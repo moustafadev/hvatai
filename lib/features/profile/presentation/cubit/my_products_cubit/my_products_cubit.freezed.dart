@@ -20,6 +20,7 @@ mixin _$MyProductsState {
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   int get selectedCategoryIndex => throw _privateConstructorUsedError;
+  bool get isShowingMyProducts => throw _privateConstructorUsedError;
 
   /// Create a copy of MyProductsState
   /// with the given fields replaced by the non-null parameter values.
@@ -38,7 +39,8 @@ abstract class $MyProductsStateCopyWith<$Res> {
       {List<ProductModel> products,
       bool isLoading,
       String errorMessage,
-      int selectedCategoryIndex});
+      int selectedCategoryIndex,
+      bool isShowingMyProducts});
 }
 
 /// @nodoc
@@ -60,6 +62,7 @@ class _$MyProductsStateCopyWithImpl<$Res, $Val extends MyProductsState>
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? selectedCategoryIndex = null,
+    Object? isShowingMyProducts = null,
   }) {
     return _then(_value.copyWith(
       products: null == products
@@ -78,6 +81,10 @@ class _$MyProductsStateCopyWithImpl<$Res, $Val extends MyProductsState>
           ? _value.selectedCategoryIndex
           : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      isShowingMyProducts: null == isShowingMyProducts
+          ? _value.isShowingMyProducts
+          : isShowingMyProducts // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -94,7 +101,8 @@ abstract class _$$MyProductsStateImplCopyWith<$Res>
       {List<ProductModel> products,
       bool isLoading,
       String errorMessage,
-      int selectedCategoryIndex});
+      int selectedCategoryIndex,
+      bool isShowingMyProducts});
 }
 
 /// @nodoc
@@ -114,6 +122,7 @@ class __$$MyProductsStateImplCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? selectedCategoryIndex = null,
+    Object? isShowingMyProducts = null,
   }) {
     return _then(_$MyProductsStateImpl(
       products: null == products
@@ -132,6 +141,10 @@ class __$$MyProductsStateImplCopyWithImpl<$Res>
           ? _value.selectedCategoryIndex
           : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
               as int,
+      isShowingMyProducts: null == isShowingMyProducts
+          ? _value.isShowingMyProducts
+          : isShowingMyProducts // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -143,7 +156,8 @@ class _$MyProductsStateImpl implements _MyProductsState {
       {final List<ProductModel> products = const [],
       this.isLoading = false,
       this.errorMessage = '',
-      this.selectedCategoryIndex = 0})
+      this.selectedCategoryIndex = 0,
+      this.isShowingMyProducts = true})
       : _products = products;
 
   final List<ProductModel> _products;
@@ -164,10 +178,13 @@ class _$MyProductsStateImpl implements _MyProductsState {
   @override
   @JsonKey()
   final int selectedCategoryIndex;
+  @override
+  @JsonKey()
+  final bool isShowingMyProducts;
 
   @override
   String toString() {
-    return 'MyProductsState(products: $products, isLoading: $isLoading, errorMessage: $errorMessage, selectedCategoryIndex: $selectedCategoryIndex)';
+    return 'MyProductsState(products: $products, isLoading: $isLoading, errorMessage: $errorMessage, selectedCategoryIndex: $selectedCategoryIndex, isShowingMyProducts: $isShowingMyProducts)';
   }
 
   @override
@@ -181,7 +198,9 @@ class _$MyProductsStateImpl implements _MyProductsState {
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.selectedCategoryIndex, selectedCategoryIndex) ||
-                other.selectedCategoryIndex == selectedCategoryIndex));
+                other.selectedCategoryIndex == selectedCategoryIndex) &&
+            (identical(other.isShowingMyProducts, isShowingMyProducts) ||
+                other.isShowingMyProducts == isShowingMyProducts));
   }
 
   @override
@@ -190,7 +209,8 @@ class _$MyProductsStateImpl implements _MyProductsState {
       const DeepCollectionEquality().hash(_products),
       isLoading,
       errorMessage,
-      selectedCategoryIndex);
+      selectedCategoryIndex,
+      isShowingMyProducts);
 
   /// Create a copy of MyProductsState
   /// with the given fields replaced by the non-null parameter values.
@@ -207,7 +227,8 @@ abstract class _MyProductsState implements MyProductsState {
       {final List<ProductModel> products,
       final bool isLoading,
       final String errorMessage,
-      final int selectedCategoryIndex}) = _$MyProductsStateImpl;
+      final int selectedCategoryIndex,
+      final bool isShowingMyProducts}) = _$MyProductsStateImpl;
 
   @override
   List<ProductModel> get products;
@@ -217,6 +238,8 @@ abstract class _MyProductsState implements MyProductsState {
   String get errorMessage;
   @override
   int get selectedCategoryIndex;
+  @override
+  bool get isShowingMyProducts;
 
   /// Create a copy of MyProductsState
   /// with the given fields replaced by the non-null parameter values.

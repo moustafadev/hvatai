@@ -6,6 +6,7 @@ import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/create_stream/create_stream_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
+import 'package:hvatai/features/profile/data/model/ratings_model/ratings_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 
 class ApiServiceProfile extends ApiBase {
@@ -157,6 +158,26 @@ class ApiServiceProfile extends ApiBase {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return ProductModel.fromJson(response.json);
+      }
+      throw Exception;
+    });
+  }
+
+  Future<UserRatingsResponse> getUserRatings(int userId) async {
+    return executeAndHandleErrorServer<UserRatingsResponse>(() async {
+      final response = await get(ServerConfig.userRatings(userId));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return UserRatingsResponse.fromJson(response.json['data']);
+      }
+      throw Exception;
+    });
+  }
+
+  Future<MyRatingsResponse> getMyRatings() async {
+    return executeAndHandleErrorServer<MyRatingsResponse>(() async {
+      final response = await get(ServerConfig.myRatings);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return MyRatingsResponse.fromJson(response.json);
       }
       throw Exception;
     });

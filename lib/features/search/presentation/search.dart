@@ -18,6 +18,7 @@ import 'package:hvatai/features/chat/presentation/chat.dart';
 import 'package:hvatai/features/chat/presentation/cubit/chats_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
+import 'package:readmore/readmore.dart';
 
 part 'widgets/top_search_bar_widget.dart';
 part 'widgets/search_recently.dart';

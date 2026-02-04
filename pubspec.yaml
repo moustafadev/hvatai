@@ -72,6 +72,7 @@ dependencies:
   # ffmpeg_kit_flutter_new: ^4.1.0
   path_provider: ^2.1.1
   http: ^1.2.0
+  readmore: ^3.0.0
 
 dev_dependencies:
   flutter_test:

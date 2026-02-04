@@ -7,5 +7,6 @@ class MyProductsState with _$MyProductsState {
     @Default(false) bool isLoading,
     @Default('') String errorMessage,
     @Default(0) int selectedCategoryIndex,
+    @Default(true) bool isShowingMyProducts, // true = Мои товары, false = Избранное
   }) = _MyProductsState;
 }

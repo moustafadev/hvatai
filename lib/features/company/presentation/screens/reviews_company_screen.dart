@@ -66,7 +66,6 @@ class ReviewsCompanyScreen extends StatelessWidget {
                             date: '21.01.2025',
                             reviewText:
                                 'We are an official store operating since 2021. Our mission is to offer you original products from leading global brands at affordable prices with a guarantee of authenticity',
-                            onViewAllTap: () {},
                           ),
                         );
                       },

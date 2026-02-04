@@ -16,6 +16,10 @@ class MyProductsCubit extends Cubit<MyProductsState> {
     emit(state.copyWith(selectedCategoryIndex: index));
   }
 
+  void toggleProductsView(bool isMyProducts) {
+    emit(state.copyWith(isShowingMyProducts: isMyProducts));
+  }
+
 
   Future<void> getMyProducts() async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));

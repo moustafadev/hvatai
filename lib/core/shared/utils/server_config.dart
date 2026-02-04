@@ -100,4 +100,6 @@ abstract class ServerConfig {
   // Review endpoints
   static String submitBusinessReview(int businessId) =>
       "business/$businessId/rate";
+  static String userRatings(int userId) => "users/$userId/ratings";
+  static const String myRatings = "me/ratings";
 }

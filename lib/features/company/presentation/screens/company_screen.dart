@@ -154,7 +154,7 @@ class _CompanyView extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     CustomText(
-                                      text: 'viewAll'.tr(),
+                                      text: "viewAll".tr(),
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w600,
                                       color: AppColors.primaryPink,

@@ -80,6 +80,7 @@ import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/no
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/report_violation_cubit/report_violation_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/reviews_cubit/reviews_cubit.dart';
 import 'package:hvatai/features/search/data/datasources/api_service_search.dart';
 import 'package:hvatai/features/search/data/repositories/search_repository_impl.dart';
 import 'package:hvatai/features/search/domain/repositories/search_repository.dart';
@@ -194,6 +195,7 @@ Future<void> setupLocator() async {
         locator(),
       ));
   locator.registerFactory(() => MyProductsCubit(locator()));
+  locator.registerFactory(() => ReviewsCubit(locator(), locator()));
   locator.registerFactory(() => MyProductDetailsCubit());
   locator.registerFactory(() => ProductImageCubit());
   locator.registerFactory(() => ClipsCubit());
