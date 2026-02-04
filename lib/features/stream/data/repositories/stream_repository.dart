@@ -17,6 +17,7 @@ import 'package:hvatai/features/stream/domain/usecases/get_stream_products_useca
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/toggle_bidding_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/toggle_subscription_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/create_clip_from_stream_usecase.dart';
 
 abstract class StreamRepository {
   Future<Either<String, StreamCommentResponse>> getComments({
@@ -86,5 +87,11 @@ abstract class StreamRepository {
     required String description,
     List<int>? thumbnailBytes,
     bool isPublic = true,
+  });
+
+  /// POST streams/{streamId}/clips/livekit
+  /// body: { duration: 30, name: "my_30s_clip" }
+  Future<Either<String, bool>> createClipFromStream({
+    required CreateClipFromStreamParams params,
   });
 }

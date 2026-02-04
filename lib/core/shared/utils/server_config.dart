@@ -64,6 +64,8 @@ abstract class ServerConfig {
   static String toggleBidding(int streamId, int streamProductId) =>
       "streams/$streamId/products/$streamProductId/toggle-bidding";
   static String updateStreamMedia(int streamId) => "streams/$streamId/media";
+  static String createClipFromStream(int streamId) =>
+      "streams/$streamId/clips/livekit";
   static const String subscribedUsers = "me/subscribed-users";
   static String toggleSubscription(int userId) =>
       "users/$userId/toggle-subscription";

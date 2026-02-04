@@ -20,6 +20,7 @@ import 'package:hvatai/features/stream/domain/usecases/get_stream_products_useca
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/toggle_bidding_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/toggle_subscription_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/create_clip_from_stream_usecase.dart';
 
 class StreamImplRepository implements StreamRepository {
   final ApiServiceStream _apiServiceStream;
@@ -181,6 +182,20 @@ class StreamImplRepository implements StreamRepository {
         description: description,
         thumbnailBytes: thumbnailBytes,
         isPublic: isPublic,
+      );
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, bool>> createClipFromStream({
+    required CreateClipFromStreamParams params,
+  }) {
+    return executeAndHandleError<bool>(() async {
+      final res = await _apiServiceStream.createClipFromStream(
+        streamId: params.streamId,
+        duration: params.duration,
+        name: params.name,
       );
       return res;
     });

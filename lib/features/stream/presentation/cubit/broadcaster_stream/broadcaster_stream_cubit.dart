@@ -22,6 +22,7 @@ import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/start_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/update_stream_media_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/create_clip_from_stream_usecase.dart';
 import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
 import 'package:livekit_client/livekit_client.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -40,7 +41,8 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
     this._addBidUsecase,
     this._endUsecase,
     this._startStreamUsecase,
-    this._updateStreamMediaUsecase, {
+    this._updateStreamMediaUsecase,
+    this._createClipFromStreamUsecase, {
     required StreamDataModel stream,
   }) : super(BroadcasterStreamState(stream: stream)) {
     _initialize();
@@ -54,6 +56,7 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
   final AddStreamBidUsecase _addBidUsecase;
   final StartStreamUsecase _startStreamUsecase;
   final UpdateStreamMediaUsecase _updateStreamMediaUsecase;
+  final CreateClipFromStreamUsecase _createClipFromStreamUsecase;
 
   Timer? _timer;
   TextEditingController controller = TextEditingController();
@@ -81,6 +84,9 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
 
     // Initialize LiveKit
     await _initLiveKit();
+
+    // Start tracking user time after stream is initialized
+    _startUserTimeTracking();
   }
 
   ({DateTime? endTime, int? remainingSeconds}) _resolveBidTiming(
@@ -997,8 +1003,15 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         }
       }
 
+      // Calculate user time if tracking has started
+      int nextUserTime = currentState.userTime;
+      if (_userTimeStart != null) {
+        nextUserTime = DateTime.now().difference(_userTimeStart!).inSeconds;
+      }
+
       emit(currentState.copyWith(
         streamSeconds: nextStreamSeconds,
+        userTime: nextUserTime,
         currentBidRemainingSeconds: remaining,
         currentBidEndTime: endTime,
         isSelectingWinner: _resolveSelectingWinner(
@@ -1007,6 +1020,12 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         ),
       ));
     });
+  }
+
+  DateTime? _userTimeStart;
+  void _startUserTimeTracking() {
+    _userTimeStart = DateTime.now();
+    // User time is updated in the timer
   }
 
   bool _resolveSelectingWinner({
@@ -1142,5 +1161,45 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
       debugPrint('Error capturing thumbnail: $e');
       return null;
     }
+  }
+
+  // ================== Clip Creation ==================
+  Future<void> createClip({required String name}) async {
+    final streamId = state.stream.id;
+    if (streamId == null) {
+      emit(state.copyWith(
+        errorMessage: 'Stream ID is not available',
+      ));
+      return;
+    }
+
+    // Calculate duration: min(userTime, 120)
+    final duration = state.userTime > 120 ? 120 : state.userTime;
+    if (duration <= 0) {
+      emit(state.copyWith(
+        errorMessage: 'Cannot create clip: user time is 0',
+      ));
+      return;
+    }
+
+    final result = await _createClipFromStreamUsecase(
+      CreateClipFromStreamParams(
+        streamId: streamId,
+        duration: duration,
+        name: name,
+      ),
+    );
+
+    result.fold(
+      (error) {
+        emit(state.copyWith(
+          errorMessage: 'Failed to create clip: $error',
+        ));
+      },
+      (success) {
+        debugPrint('✅ Clip created successfully');
+        // Optionally show success message
+      },
+    );
   }
 }

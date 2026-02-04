@@ -35,6 +35,7 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
       locator(),
       locator(),
       locator(),
+      locator<AppLocal>(),
       stream: widget.stream,
       joinData: widget.joinData,
     );
@@ -276,6 +277,18 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                               : null,
                           child: RightSideIcons(
                             onShopTap: () => _openViewerShop(context),
+                            onClipTap: (name) async {
+                              await _cubit.createClip(name: name);
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Клип создан успешно'),
+                                    backgroundColor: Colors.green,
+                                  ),
+                                );
+                              }
+                            },
+                            userTime: state.userTime,
                           ),
                         ),
                         Positioned(

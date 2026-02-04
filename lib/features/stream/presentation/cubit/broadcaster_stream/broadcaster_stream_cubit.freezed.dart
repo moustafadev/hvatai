@@ -29,7 +29,8 @@ mixin _$BroadcasterStreamState {
       throw _privateConstructorUsedError; // Stream data
   StreamDataModel get stream => throw _privateConstructorUsedError;
   int get viewerCount => throw _privateConstructorUsedError;
-  int get streamSeconds =>
+  int get streamSeconds => throw _privateConstructorUsedError;
+  int get userTime =>
       throw _privateConstructorUsedError; // Comments (RAW API MODELS)
   List<StreamCommentModel> get comments => throw _privateConstructorUsedError;
   String get commentText => throw _privateConstructorUsedError;
@@ -90,6 +91,7 @@ abstract class $BroadcasterStreamStateCopyWith<$Res> {
       StreamDataModel stream,
       int viewerCount,
       int streamSeconds,
+      int userTime,
       List<StreamCommentModel> comments,
       String commentText,
       bool isLoadingComments,
@@ -151,6 +153,7 @@ class _$BroadcasterStreamStateCopyWithImpl<$Res,
     Object? stream = null,
     Object? viewerCount = null,
     Object? streamSeconds = null,
+    Object? userTime = null,
     Object? comments = null,
     Object? commentText = null,
     Object? isLoadingComments = null,
@@ -220,6 +223,10 @@ class _$BroadcasterStreamStateCopyWithImpl<$Res,
       streamSeconds: null == streamSeconds
           ? _value.streamSeconds
           : streamSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      userTime: null == userTime
+          ? _value.userTime
+          : userTime // ignore: cast_nullable_to_non_nullable
               as int,
       comments: null == comments
           ? _value.comments
@@ -411,6 +418,7 @@ abstract class _$$BroadcasterStreamStateImplCopyWith<$Res>
       StreamDataModel stream,
       int viewerCount,
       int streamSeconds,
+      int userTime,
       List<StreamCommentModel> comments,
       String commentText,
       bool isLoadingComments,
@@ -475,6 +483,7 @@ class __$$BroadcasterStreamStateImplCopyWithImpl<$Res>
     Object? stream = null,
     Object? viewerCount = null,
     Object? streamSeconds = null,
+    Object? userTime = null,
     Object? comments = null,
     Object? commentText = null,
     Object? isLoadingComments = null,
@@ -544,6 +553,10 @@ class __$$BroadcasterStreamStateImplCopyWithImpl<$Res>
       streamSeconds: null == streamSeconds
           ? _value.streamSeconds
           : streamSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      userTime: null == userTime
+          ? _value.userTime
+          : userTime // ignore: cast_nullable_to_non_nullable
               as int,
       comments: null == comments
           ? _value._comments
@@ -677,6 +690,7 @@ class _$BroadcasterStreamStateImpl
       required this.stream,
       this.viewerCount = 0,
       this.streamSeconds = 0,
+      this.userTime = 0,
       final List<StreamCommentModel> comments = const <StreamCommentModel>[],
       this.commentText = '',
       this.isLoadingComments = false,
@@ -737,6 +751,9 @@ class _$BroadcasterStreamStateImpl
   @override
   @JsonKey()
   final int streamSeconds;
+  @override
+  @JsonKey()
+  final int userTime;
 // Comments (RAW API MODELS)
   final List<StreamCommentModel> _comments;
 // Comments (RAW API MODELS)
@@ -837,7 +854,7 @@ class _$BroadcasterStreamStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'BroadcasterStreamState(isConnected: $isConnected, isPublishing: $isPublishing, videoTrack: $videoTrack, audioTrack: $audioTrack, room: $room, localParticipant: $localParticipant, isPusherConnected: $isPusherConnected, stream: $stream, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentStreamProductId: $currentStreamProductId, currentProductStreamBid: $currentProductStreamBid, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, isInitializing: $isInitializing, isMicrophoneMuted: $isMicrophoneMuted, thumbnailKey: $thumbnailKey)';
+    return 'BroadcasterStreamState(isConnected: $isConnected, isPublishing: $isPublishing, videoTrack: $videoTrack, audioTrack: $audioTrack, room: $room, localParticipant: $localParticipant, isPusherConnected: $isPusherConnected, stream: $stream, viewerCount: $viewerCount, streamSeconds: $streamSeconds, userTime: $userTime, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentStreamProductId: $currentStreamProductId, currentProductStreamBid: $currentProductStreamBid, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, isInitializing: $isInitializing, isMicrophoneMuted: $isMicrophoneMuted, thumbnailKey: $thumbnailKey)';
   }
 
   @override
@@ -855,6 +872,7 @@ class _$BroadcasterStreamStateImpl
       ..add(DiagnosticsProperty('stream', stream))
       ..add(DiagnosticsProperty('viewerCount', viewerCount))
       ..add(DiagnosticsProperty('streamSeconds', streamSeconds))
+      ..add(DiagnosticsProperty('userTime', userTime))
       ..add(DiagnosticsProperty('comments', comments))
       ..add(DiagnosticsProperty('commentText', commentText))
       ..add(DiagnosticsProperty('isLoadingComments', isLoadingComments))
@@ -911,6 +929,8 @@ class _$BroadcasterStreamStateImpl
                 other.viewerCount == viewerCount) &&
             (identical(other.streamSeconds, streamSeconds) ||
                 other.streamSeconds == streamSeconds) &&
+            (identical(other.userTime, userTime) ||
+                other.userTime == userTime) &&
             const DeepCollectionEquality().equals(other._comments, _comments) &&
             (identical(other.commentText, commentText) ||
                 other.commentText == commentText) &&
@@ -983,6 +1003,7 @@ class _$BroadcasterStreamStateImpl
         stream,
         viewerCount,
         streamSeconds,
+        userTime,
         const DeepCollectionEquality().hash(_comments),
         commentText,
         isLoadingComments,
@@ -1035,6 +1056,7 @@ abstract class _BroadcasterStreamState implements BroadcasterStreamState {
           required final StreamDataModel stream,
           final int viewerCount,
           final int streamSeconds,
+          final int userTime,
           final List<StreamCommentModel> comments,
           final String commentText,
           final bool isLoadingComments,
@@ -1085,7 +1107,9 @@ abstract class _BroadcasterStreamState implements BroadcasterStreamState {
   @override
   int get viewerCount;
   @override
-  int get streamSeconds; // Comments (RAW API MODELS)
+  int get streamSeconds;
+  @override
+  int get userTime; // Comments (RAW API MODELS)
   @override
   List<StreamCommentModel> get comments;
   @override

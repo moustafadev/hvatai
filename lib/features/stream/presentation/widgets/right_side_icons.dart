@@ -4,19 +4,80 @@ class RightSideIcons extends StatelessWidget {
   const RightSideIcons({
     super.key,
     this.onShopTap,
+    this.onClipTap,
+    this.userTime,
   });
 
   final Future<void> Function()? onShopTap;
+  final Future<void> Function(String name)? onClipTap;
+  final int? userTime;
+
+  String _formatTime(int seconds) {
+    final minutes = seconds ~/ 60;
+    final secs = seconds % 60;
+    return '${minutes.toString().padLeft(2, '0')}:${secs.toString().padLeft(2, '0')}';
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // RightIcon(
-        //     icon: Assets.assetsImagesShare, label: 'Share', counter: '10'),
-        // const SizedBox(height: 24),
-        // RightIcon(icon: Assets.assetsIconsWallet, label: 'Кошелёк'),
-        // const SizedBox(height: 24),
+        RightIcon(
+          icon: Assets.assetsImagesFilm,
+          label: 'Клип',
+          counter:
+              userTime != null && userTime! > 0 ? _formatTime(userTime!) : null,
+          onTap: () async {
+            if (onClipTap == null) return;
+
+            if (userTime == null || userTime! <= 0) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  content: Text(
+                      'Пожалуйста, подождите, пока стрим инициализируется'),
+                  backgroundColor: Colors.red,
+                ),
+              );
+              return;
+            }
+
+            // Show dialog to enter clip name
+            final nameController = TextEditingController();
+            final result = await showDialog<String>(
+              context: context,
+              builder: (dialogContext) => AlertDialog(
+                title: const Text('Создать клип'),
+                content: TextField(
+                  controller: nameController,
+                  decoration: const InputDecoration(
+                    hintText: 'Название клипа',
+                    border: OutlineInputBorder(),
+                  ),
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(dialogContext).pop(),
+                    child: const Text('Отмена'),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      if (nameController.text.trim().isNotEmpty) {
+                        Navigator.of(dialogContext)
+                            .pop(nameController.text.trim());
+                      }
+                    },
+                    child: const Text('Создать'),
+                  ),
+                ],
+              ),
+            );
+
+            if (result != null && result.isNotEmpty) {
+              await onClipTap!(result);
+            }
+          },
+        ),
+        const SizedBox(height: 24),
         RightIcon(
           onTap: () async {
             if (onShopTap != null) {
@@ -48,8 +109,7 @@ class RightSideIcons extends StatelessWidget {
             );
 
             if (selectedProduct != null) {
-              broadcasterCubit
-                  .setActiveStreamProduct(selectedProduct);
+              broadcasterCubit.setActiveStreamProduct(selectedProduct);
             }
           },
           icon: Assets.assetsIconsShop,

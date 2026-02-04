@@ -32,6 +32,7 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
       locator(),
       locator(),
       locator(),
+      locator(),
       stream: widget.stream,
     );
   }
@@ -144,7 +145,20 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
                     top: hasProduct
                         ? MediaQuery.of(context).size.height * 0.55
                         : null,
-                    child: const RightSideIcons(),
+                    child: RightSideIcons(
+                      onClipTap: (name) async {
+                        await _cubit.createClip(name: name);
+                        if (context.mounted) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Клип создан успешно'),
+                              backgroundColor: Colors.green,
+                            ),
+                          );
+                        }
+                      },
+                      userTime: state.userTime,
+                    ),
                   ),
                   Positioned(
                     left: 16,

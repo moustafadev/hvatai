@@ -26,6 +26,7 @@ import 'package:hvatai/features/stream/domain/usecases/leave_stream_usecase.dart
 import 'package:hvatai/features/stream/domain/usecases/send_stream_comment_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_subscribed_users_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/toggle_subscription_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/create_clip_from_stream_usecase.dart';
 import 'package:livekit_client/livekit_client.dart';
 import 'package:pusher_client_socket/pusher_client_socket.dart';
 
@@ -42,6 +43,7 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     this._getBidSessionUsecase,
     this._getSubscribedUsersUsecase,
     this._toggleSubscriptionUsecase,
+    this._createClipFromStreamUsecase,
     AppLocal appLocal, {
     required StreamDataModel stream,
     JoinStreamData? joinData,
@@ -62,6 +64,7 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
   final GetBidSessionUsecase _getBidSessionUsecase;
   final GetSubscribedUsersUsecase _getSubscribedUsersUsecase;
   final ToggleSubscriptionUsecase _toggleSubscriptionUsecase;
+  final CreateClipFromStreamUsecase _createClipFromStreamUsecase;
 
   Timer? _timer;
   TextEditingController controller = TextEditingController();
@@ -93,6 +96,9 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
 
     // Initialize LiveKit
     await _initLiveKit();
+
+    // Start tracking user time after stream is initialized
+    _startUserTimeTracking();
   }
 
   // ================== Pusher ==================
@@ -1004,6 +1010,46 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     ));
   }
 
+  // ================== Clip Creation ==================
+  Future<void> createClip({required String name}) async {
+    final streamId = state.stream.id;
+    if (streamId == null) {
+      emit(state.copyWith(
+        errorMessage: 'Stream ID is not available',
+      ));
+      return;
+    }
+
+    // Calculate duration: min(userTime, 120)
+    final duration = state.userTime > 120 ? 120 : state.userTime;
+    if (duration <= 0) {
+      emit(state.copyWith(
+        errorMessage: 'Cannot create clip: user time is 0',
+      ));
+      return;
+    }
+
+    final result = await _createClipFromStreamUsecase(
+      CreateClipFromStreamParams(
+        streamId: streamId,
+        duration: duration,
+        name: name,
+      ),
+    );
+
+    result.fold(
+      (error) {
+        emit(state.copyWith(
+          errorMessage: 'Failed to create clip: $error',
+        ));
+      },
+      (success) {
+        debugPrint('✅ Clip created successfully');
+        // Optionally show success message
+      },
+    );
+  }
+
   // ================== Audio ==================
   Future<void> toggleAudio() async {
     final newMutedState = !state.isAudioMuted;
@@ -1044,8 +1090,15 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
         }
       }
 
+      // Calculate user time if tracking has started
+      int nextUserTime = currentState.userTime;
+      if (_userTimeStart != null) {
+        nextUserTime = DateTime.now().difference(_userTimeStart!).inSeconds;
+      }
+
       emit(currentState.copyWith(
         streamSeconds: nextStreamSeconds,
+        userTime: nextUserTime,
         currentBidRemainingSeconds: remaining,
         currentBidEndTime: endTime,
         isSelectingWinner: _resolveSelectingWinner(
@@ -1054,6 +1107,12 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
         ),
       ));
     });
+  }
+
+  DateTime? _userTimeStart;
+  void _startUserTimeTracking() {
+    _userTimeStart = DateTime.now();
+    // User time is updated in the timer
   }
 
   bool _resolveSelectingWinner({

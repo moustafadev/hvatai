@@ -441,26 +441,35 @@ class Assets {
   /// Assets for assetsIconsPayIcon5
   /// assets/icons/payIcon5.png
   static const String assetsIconsPayIcon5 = "assets/icons/payIcon5.png";
+
   /// arrow right stream svg
-  static const String assetsIconsArrowRightStream = "assets/icons/arrow_right_stream.svg";
+  static const String assetsIconsArrowRightStream =
+      "assets/icons/arrow_right_stream.svg";
+
   /// arrow left stream svg
-  static const String assetsIconsArrowLeftStream = "assets/icons/arrow_left_stream.svg";
+  static const String assetsIconsArrowLeftStream =
+      "assets/icons/arrow_left_stream.svg";
+
   /// assets icons play
   static const String assetsIconsPlay = "assets/icons/play.svg";
+
   /// assets icons pause
   static const String assetsIconsPause = "assets/icons/pause.svg";
 
-  
-  
-  
+  /// assets icons film
+  static const String assetsImagesFilm = "assets/images/film.png";
+
   /// Assets for assetsIconsPen
   /// assets/icons/pen.png
   static const String assetsIconsPen = "assets/icons/pen.png";
+
   /// Assets for assetsImagesGift
   /// assets/images/gift.png
   static const String assetsImagesGift = "assets/images/gift.png";
+
   /// Assets for money icon
   static const String assetsIconsMoney2 = "assets/icons/money.svg";
+
   /// Assets for assetsIconsPr
   /// assets/icons/pr.png
   static const String assetsIconsPr = "assets/icons/pr.png";
@@ -532,10 +541,13 @@ class Assets {
   /// Assets for assetsIconsStar
   /// assets/icons/Star.png
   static const String assetsIconsStar = "assets/icons/Star.png";
+
   /// assets icons edit
   static const String assetsIconsPen2 = "assets/icons/pen.svg";
+
   /// assets star filled svg
   static const String assetsIconsStarFilled = "assets/icons/star_filled.svg";
+
   /// Assets for assetsIconsStar2
   /// assets/icons/star2.png
   static const String assetsIconsStar2 = "assets/icons/star2.png";

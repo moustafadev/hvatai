@@ -367,4 +367,30 @@ class ApiServiceStream extends ApiBase {
       );
     });
   }
+
+  /// POST: streams/{streamId}/clips/livekit
+  /// body: { duration: 30, name: "my_30s_clip" }
+  Future<bool> createClipFromStream({
+    required int streamId,
+    required int duration,
+    required String name,
+  }) async {
+    return executeAndHandleErrorServer<bool>(() async {
+      final path = ServerConfig.createClipFromStream(streamId);
+
+      final res = await post(
+        path,
+        body: {
+          'duration': duration,
+          'name': name,
+        },
+      );
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        return true;
+      }
+
+      return false;
+    });
+  }
 }

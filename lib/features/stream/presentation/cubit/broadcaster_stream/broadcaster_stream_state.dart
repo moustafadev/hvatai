@@ -21,6 +21,7 @@ class BroadcasterStreamState with _$BroadcasterStreamState {
     required StreamDataModel stream,
     @Default(0) int viewerCount,
     @Default(0) int streamSeconds,
+    @Default(0) int userTime,
 
     // Comments (RAW API MODELS)
     @Default(<StreamCommentModel>[]) List<StreamCommentModel> comments,

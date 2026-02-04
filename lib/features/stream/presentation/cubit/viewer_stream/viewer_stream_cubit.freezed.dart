@@ -29,7 +29,8 @@ mixin _$ViewerStreamState {
   StreamDataModel get stream => throw _privateConstructorUsedError;
   JoinStreamData? get joinData => throw _privateConstructorUsedError;
   int get viewerCount => throw _privateConstructorUsedError;
-  int get streamSeconds =>
+  int get streamSeconds => throw _privateConstructorUsedError;
+  int get userTime =>
       throw _privateConstructorUsedError; // Comments (RAW API MODELS)
   List<StreamCommentModel> get comments => throw _privateConstructorUsedError;
   String get commentText => throw _privateConstructorUsedError;
@@ -98,6 +99,7 @@ abstract class $ViewerStreamStateCopyWith<$Res> {
       JoinStreamData? joinData,
       int viewerCount,
       int streamSeconds,
+      int userTime,
       List<StreamCommentModel> comments,
       String commentText,
       bool isLoadingComments,
@@ -167,6 +169,7 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
     Object? joinData = freezed,
     Object? viewerCount = null,
     Object? streamSeconds = null,
+    Object? userTime = null,
     Object? comments = null,
     Object? commentText = null,
     Object? isLoadingComments = null,
@@ -245,6 +248,10 @@ class _$ViewerStreamStateCopyWithImpl<$Res, $Val extends ViewerStreamState>
       streamSeconds: null == streamSeconds
           ? _value.streamSeconds
           : streamSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      userTime: null == userTime
+          ? _value.userTime
+          : userTime // ignore: cast_nullable_to_non_nullable
               as int,
       comments: null == comments
           ? _value.comments
@@ -470,6 +477,7 @@ abstract class _$$ViewerStreamStateImplCopyWith<$Res>
       JoinStreamData? joinData,
       int viewerCount,
       int streamSeconds,
+      int userTime,
       List<StreamCommentModel> comments,
       String commentText,
       bool isLoadingComments,
@@ -541,6 +549,7 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
     Object? joinData = freezed,
     Object? viewerCount = null,
     Object? streamSeconds = null,
+    Object? userTime = null,
     Object? comments = null,
     Object? commentText = null,
     Object? isLoadingComments = null,
@@ -619,6 +628,10 @@ class __$$ViewerStreamStateImplCopyWithImpl<$Res>
       streamSeconds: null == streamSeconds
           ? _value.streamSeconds
           : streamSeconds // ignore: cast_nullable_to_non_nullable
+              as int,
+      userTime: null == userTime
+          ? _value.userTime
+          : userTime // ignore: cast_nullable_to_non_nullable
               as int,
       comments: null == comments
           ? _value._comments
@@ -788,6 +801,7 @@ class _$ViewerStreamStateImpl
       this.joinData,
       this.viewerCount = 0,
       this.streamSeconds = 0,
+      this.userTime = 0,
       final List<StreamCommentModel> comments = const <StreamCommentModel>[],
       this.commentText = '',
       this.isLoadingComments = false,
@@ -856,6 +870,9 @@ class _$ViewerStreamStateImpl
   @override
   @JsonKey()
   final int streamSeconds;
+  @override
+  @JsonKey()
+  final int userTime;
 // Comments (RAW API MODELS)
   final List<StreamCommentModel> _comments;
 // Comments (RAW API MODELS)
@@ -985,7 +1002,7 @@ class _$ViewerStreamStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ViewerStreamState(isConnected: $isConnected, remoteVideoTrack: $remoteVideoTrack, remoteAudioTrack: $remoteAudioTrack, room: $room, remoteParticipant: $remoteParticipant, isPusherConnected: $isPusherConnected, stream: $stream, joinData: $joinData, viewerCount: $viewerCount, streamSeconds: $streamSeconds, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentStreamProductId: $currentStreamProductId, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentBidTotalBids: $currentBidTotalBids, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, currentUserId: $currentUserId, isInitializing: $isInitializing, isStreamEnded: $isStreamEnded, isAudioMuted: $isAudioMuted, isSubscribed: $isSubscribed, isLoadingSubscription: $isLoadingSubscription, isTogglingSubscription: $isTogglingSubscription, showBidSuccess: $showBidSuccess, successfulBidAmount: $successfulBidAmount, firstBidInputText: $firstBidInputText, firstBidErrorMessage: $firstBidErrorMessage, isFirstBidButtonEnabled: $isFirstBidButtonEnabled)';
+    return 'ViewerStreamState(isConnected: $isConnected, remoteVideoTrack: $remoteVideoTrack, remoteAudioTrack: $remoteAudioTrack, room: $room, remoteParticipant: $remoteParticipant, isPusherConnected: $isPusherConnected, stream: $stream, joinData: $joinData, viewerCount: $viewerCount, streamSeconds: $streamSeconds, userTime: $userTime, comments: $comments, commentText: $commentText, isLoadingComments: $isLoadingComments, isSendingComment: $isSendingComment, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, bids: $bids, isLoadingBids: $isLoadingBids, isPlacingBid: $isPlacingBid, bidsPage: $bidsPage, bidsPerPage: $bidsPerPage, bidsHasMore: $bidsHasMore, errorMessage: $errorMessage, commentsError: $commentsError, sendCommentError: $sendCommentError, bidsError: $bidsError, addBidError: $addBidError, activeStreamProduct: $activeStreamProduct, currentStreamProductId: $currentStreamProductId, currentBidEndTime: $currentBidEndTime, currentBidRemainingSeconds: $currentBidRemainingSeconds, currentBidTotalBids: $currentBidTotalBids, currentWinner: $currentWinner, isSelectingWinner: $isSelectingWinner, currentUserId: $currentUserId, isInitializing: $isInitializing, isStreamEnded: $isStreamEnded, isAudioMuted: $isAudioMuted, isSubscribed: $isSubscribed, isLoadingSubscription: $isLoadingSubscription, isTogglingSubscription: $isTogglingSubscription, showBidSuccess: $showBidSuccess, successfulBidAmount: $successfulBidAmount, firstBidInputText: $firstBidInputText, firstBidErrorMessage: $firstBidErrorMessage, isFirstBidButtonEnabled: $isFirstBidButtonEnabled)';
   }
 
   @override
@@ -1003,6 +1020,7 @@ class _$ViewerStreamStateImpl
       ..add(DiagnosticsProperty('joinData', joinData))
       ..add(DiagnosticsProperty('viewerCount', viewerCount))
       ..add(DiagnosticsProperty('streamSeconds', streamSeconds))
+      ..add(DiagnosticsProperty('userTime', userTime))
       ..add(DiagnosticsProperty('comments', comments))
       ..add(DiagnosticsProperty('commentText', commentText))
       ..add(DiagnosticsProperty('isLoadingComments', isLoadingComments))
@@ -1069,6 +1087,8 @@ class _$ViewerStreamStateImpl
                 other.viewerCount == viewerCount) &&
             (identical(other.streamSeconds, streamSeconds) ||
                 other.streamSeconds == streamSeconds) &&
+            (identical(other.userTime, userTime) ||
+                other.userTime == userTime) &&
             const DeepCollectionEquality().equals(other._comments, _comments) &&
             (identical(other.commentText, commentText) ||
                 other.commentText == commentText) &&
@@ -1136,8 +1156,7 @@ class _$ViewerStreamStateImpl
                 other.showBidSuccess == showBidSuccess) &&
             (identical(other.successfulBidAmount, successfulBidAmount) ||
                 other.successfulBidAmount == successfulBidAmount) &&
-            (identical(other.firstBidInputText, firstBidInputText) ||
-                other.firstBidInputText == firstBidInputText) &&
+            (identical(other.firstBidInputText, firstBidInputText) || other.firstBidInputText == firstBidInputText) &&
             (identical(other.firstBidErrorMessage, firstBidErrorMessage) || other.firstBidErrorMessage == firstBidErrorMessage) &&
             (identical(other.isFirstBidButtonEnabled, isFirstBidButtonEnabled) || other.isFirstBidButtonEnabled == isFirstBidButtonEnabled));
   }
@@ -1155,6 +1174,7 @@ class _$ViewerStreamStateImpl
         joinData,
         viewerCount,
         streamSeconds,
+        userTime,
         const DeepCollectionEquality().hash(_comments),
         commentText,
         isLoadingComments,
@@ -1216,6 +1236,7 @@ abstract class _ViewerStreamState implements ViewerStreamState {
       final JoinStreamData? joinData,
       final int viewerCount,
       final int streamSeconds,
+      final int userTime,
       final List<StreamCommentModel> comments,
       final String commentText,
       final bool isLoadingComments,
@@ -1274,7 +1295,9 @@ abstract class _ViewerStreamState implements ViewerStreamState {
   @override
   int get viewerCount;
   @override
-  int get streamSeconds; // Comments (RAW API MODELS)
+  int get streamSeconds;
+  @override
+  int get userTime; // Comments (RAW API MODELS)
   @override
   List<StreamCommentModel> get comments;
   @override
