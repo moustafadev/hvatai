@@ -402,6 +402,7 @@ _$LivekitSettingsModelImpl _$$LivekitSettingsModelImplFromJson(
       egress: json['egress'] == null
           ? null
           : EgressModel.fromJson(json['egress'] as Map<String, dynamic>),
+      recordingPlaylist: _stringFromJson(json['recording_playlist'] as String?),
     );
 
 Map<String, dynamic> _$$LivekitSettingsModelImplToJson(
@@ -409,6 +410,7 @@ Map<String, dynamic> _$$LivekitSettingsModelImplToJson(
     <String, dynamic>{
       'room': instance.room,
       'egress': instance.egress,
+      'recording_playlist': instance.recordingPlaylist,
     };
 
 _$EgressModelImpl _$$EgressModelImplFromJson(Map<String, dynamic> json) =>

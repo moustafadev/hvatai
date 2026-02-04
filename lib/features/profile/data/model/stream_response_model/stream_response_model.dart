@@ -1,5 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
 part 'stream_response_model.freezed.dart';
 part 'stream_response_model.g.dart';
@@ -267,6 +268,8 @@ class LivekitSettingsModel with _$LivekitSettingsModel {
   const factory LivekitSettingsModel({
     String? room,
     EgressModel? egress,
+    @JsonKey(name: 'recording_playlist', fromJson: _stringFromJson)
+    String? recordingPlaylist,
   }) = _LivekitSettingsModel;
 
   factory LivekitSettingsModel.fromJson(Map<String, dynamic> json) =>
@@ -396,3 +399,7 @@ List<String>? _stringListOrNull(dynamic v) {
 }
 
 dynamic _nullOrStringList(List<String>? v) => v;
+
+String? _stringFromJson(String? value) {
+  return "${ServerConfig.domen}$value";
+}

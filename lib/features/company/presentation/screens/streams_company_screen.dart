@@ -37,7 +37,9 @@ class StreamsCompanyTab extends StatelessWidget {
                     CustomButton(
                       title: 'retry'.tr(),
                       onPressed: () {
-                        context.read<CompanyStreamsCubit>().loadCompanyStreams(userId);
+                        context
+                            .read<CompanyStreamsCubit>()
+                            .loadCompanyStreams(userId);
                       },
                     ),
                   ],
@@ -74,45 +76,77 @@ class StreamsCompanyTab extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 16.w),
                   sliver: SliverToBoxAdapter(
                     child: ReusableLiveVideosGrid<StreamDataModel>(
-              items: state.streams,
-              filter: (stream) => true,
-              isBlocked: (stream) => false,
-              isOwner: (stream) => false,
-              liveCardBuilder: (context, stream) {
-                final firstProduct =
-                    stream.streamProducts?.isNotEmpty == true
-                        ? stream.streamProducts!.first
-                        : null;
-                final product = firstProduct?.product;
-                final categoryName = stream.categories?.isNotEmpty == true
-                    ? stream.categories!.first.name ?? ''
-                    : '';
+                      items: state.streams,
+                      filter: (stream) => true,
+                      isBlocked: (stream) => false,
+                      isOwner: (stream) => false,
+                      liveCardBuilder: (context, stream) {
+                        final firstProduct =
+                            stream.streamProducts?.isNotEmpty == true
+                                ? stream.streamProducts!.first
+                                : null;
+                        final product = firstProduct?.product;
+                        final categoryName =
+                            stream.categories?.isNotEmpty == true
+                                ? stream.categories!.first.name ?? ''
+                                : '';
 
-                return GestureDetector(
-                  onTap: () {
-                    if (stream.status == 'live' && stream.id != null) {
-                      context.push(
-                        AppRoutes.liveStreamViewer,
-                        extra: {
-                          'streamId': stream.id!,
-                          'stream': stream,
-                        },
-                      );
-                    }
-                  },
-                  child: CustomLiveVideoCard(
-                    price: "",
-                    title: product?.name ?? stream.title ?? '',
-                    adminName: stream.user?.name ?? 'company_name',
-                    adminImage: stream.user?.image ?? '',
-                    viewsCount: stream.viewerCount ?? 0,
-                    description: categoryName,
-                    liveImage: stream.thumbnailUrl ?? stream.recordUrl ?? '',
-                    latestThumbnailUrl: stream.latestThumbnailUrl,
-                    latestGifUrl: stream.latestGifUrl,
-                  ),
-                );
-              },
+                        return GestureDetector(
+                          onTap: () async {
+                            final streamId = stream.id;
+                            if (streamId == null) return;
+
+                            if (stream.status == 'live') {
+                              // Call join_stream_usecase first
+                              final joinStreamUsecase =
+                                  locator<JoinStreamUsecase>();
+                              final result = await joinStreamUsecase(streamId);
+
+                              result.fold(
+                                (error) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content:
+                                          Text('Ошибка подключения: $error'),
+                                      backgroundColor: Colors.red,
+                                    ),
+                                  );
+                                },
+                                (joinResponse) {
+                                  // Navigate to viewer stream screen with joinData
+                                  context.push(
+                                    AppRoutes.liveStreamViewer,
+                                    extra: {
+                                      'streamDataModel': stream,
+                                      'joinData': joinResponse.data,
+                                    },
+                                  );
+                                },
+                              );
+                            } else if (stream.status == 'ended') {
+                              // Navigate to ended stream screen
+                              context.push(
+                                AppRoutes.endedStreamViewer,
+                                extra: {
+                                  'stream': stream,
+                                },
+                              );
+                            }
+                          },
+                          child: CustomLiveVideoCard(
+                            price: "",
+                            title: product?.name ?? stream.title ?? '',
+                            adminName: stream.user?.name ?? 'company_name',
+                            adminImage: stream.user?.image ?? '',
+                            viewsCount: stream.viewerCount ?? 0,
+                            description: categoryName,
+                            liveImage:
+                                stream.thumbnailUrl ?? stream.recordUrl ?? '',
+                            latestThumbnailUrl: stream.latestThumbnailUrl,
+                            latestGifUrl: stream.latestGifUrl,
+                          ),
+                        );
+                      },
                     ),
                   ),
                 ),
@@ -123,4 +157,3 @@ class StreamsCompanyTab extends StatelessWidget {
     );
   }
 }
-

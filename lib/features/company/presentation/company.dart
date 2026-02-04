@@ -17,6 +17,7 @@ import 'package:hvatai/features/company/presentation/cubit/company/company_state
 import 'package:hvatai/features/company/presentation/cubit/company_products/company_products_cubit.dart';
 import 'package:hvatai/features/company/presentation/cubit/company_reviews/company_reviews_cubit.dart';
 import 'package:hvatai/features/company/presentation/cubit/company_streams/company_streams_cubit.dart';
+import 'package:hvatai/features/home/domain/usecases/join_stream_usecase.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';

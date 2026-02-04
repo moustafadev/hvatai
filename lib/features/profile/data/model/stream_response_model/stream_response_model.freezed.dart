@@ -4519,6 +4519,8 @@ LivekitSettingsModel _$LivekitSettingsModelFromJson(Map<String, dynamic> json) {
 mixin _$LivekitSettingsModel {
   String? get room => throw _privateConstructorUsedError;
   EgressModel? get egress => throw _privateConstructorUsedError;
+  @JsonKey(name: 'recording_playlist', fromJson: _stringFromJson)
+  String? get recordingPlaylist => throw _privateConstructorUsedError;
 
   /// Serializes this LivekitSettingsModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -4536,7 +4538,11 @@ abstract class $LivekitSettingsModelCopyWith<$Res> {
           $Res Function(LivekitSettingsModel) then) =
       _$LivekitSettingsModelCopyWithImpl<$Res, LivekitSettingsModel>;
   @useResult
-  $Res call({String? room, EgressModel? egress});
+  $Res call(
+      {String? room,
+      EgressModel? egress,
+      @JsonKey(name: 'recording_playlist', fromJson: _stringFromJson)
+      String? recordingPlaylist});
 
   $EgressModelCopyWith<$Res>? get egress;
 }
@@ -4559,6 +4565,7 @@ class _$LivekitSettingsModelCopyWithImpl<$Res,
   $Res call({
     Object? room = freezed,
     Object? egress = freezed,
+    Object? recordingPlaylist = freezed,
   }) {
     return _then(_value.copyWith(
       room: freezed == room
@@ -4569,6 +4576,10 @@ class _$LivekitSettingsModelCopyWithImpl<$Res,
           ? _value.egress
           : egress // ignore: cast_nullable_to_non_nullable
               as EgressModel?,
+      recordingPlaylist: freezed == recordingPlaylist
+          ? _value.recordingPlaylist
+          : recordingPlaylist // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -4595,7 +4606,11 @@ abstract class _$$LivekitSettingsModelImplCopyWith<$Res>
       __$$LivekitSettingsModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String? room, EgressModel? egress});
+  $Res call(
+      {String? room,
+      EgressModel? egress,
+      @JsonKey(name: 'recording_playlist', fromJson: _stringFromJson)
+      String? recordingPlaylist});
 
   @override
   $EgressModelCopyWith<$Res>? get egress;
@@ -4616,6 +4631,7 @@ class __$$LivekitSettingsModelImplCopyWithImpl<$Res>
   $Res call({
     Object? room = freezed,
     Object? egress = freezed,
+    Object? recordingPlaylist = freezed,
   }) {
     return _then(_$LivekitSettingsModelImpl(
       room: freezed == room
@@ -4626,6 +4642,10 @@ class __$$LivekitSettingsModelImplCopyWithImpl<$Res>
           ? _value.egress
           : egress // ignore: cast_nullable_to_non_nullable
               as EgressModel?,
+      recordingPlaylist: freezed == recordingPlaylist
+          ? _value.recordingPlaylist
+          : recordingPlaylist // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -4633,7 +4653,11 @@ class __$$LivekitSettingsModelImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$LivekitSettingsModelImpl implements _LivekitSettingsModel {
-  const _$LivekitSettingsModelImpl({this.room, this.egress});
+  const _$LivekitSettingsModelImpl(
+      {this.room,
+      this.egress,
+      @JsonKey(name: 'recording_playlist', fromJson: _stringFromJson)
+      this.recordingPlaylist});
 
   factory _$LivekitSettingsModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$LivekitSettingsModelImplFromJson(json);
@@ -4642,10 +4666,13 @@ class _$LivekitSettingsModelImpl implements _LivekitSettingsModel {
   final String? room;
   @override
   final EgressModel? egress;
+  @override
+  @JsonKey(name: 'recording_playlist', fromJson: _stringFromJson)
+  final String? recordingPlaylist;
 
   @override
   String toString() {
-    return 'LivekitSettingsModel(room: $room, egress: $egress)';
+    return 'LivekitSettingsModel(room: $room, egress: $egress, recordingPlaylist: $recordingPlaylist)';
   }
 
   @override
@@ -4654,12 +4681,14 @@ class _$LivekitSettingsModelImpl implements _LivekitSettingsModel {
         (other.runtimeType == runtimeType &&
             other is _$LivekitSettingsModelImpl &&
             (identical(other.room, room) || other.room == room) &&
-            (identical(other.egress, egress) || other.egress == egress));
+            (identical(other.egress, egress) || other.egress == egress) &&
+            (identical(other.recordingPlaylist, recordingPlaylist) ||
+                other.recordingPlaylist == recordingPlaylist));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, room, egress);
+  int get hashCode => Object.hash(runtimeType, room, egress, recordingPlaylist);
 
   /// Create a copy of LivekitSettingsModel
   /// with the given fields replaced by the non-null parameter values.
@@ -4682,7 +4711,9 @@ class _$LivekitSettingsModelImpl implements _LivekitSettingsModel {
 abstract class _LivekitSettingsModel implements LivekitSettingsModel {
   const factory _LivekitSettingsModel(
       {final String? room,
-      final EgressModel? egress}) = _$LivekitSettingsModelImpl;
+      final EgressModel? egress,
+      @JsonKey(name: 'recording_playlist', fromJson: _stringFromJson)
+      final String? recordingPlaylist}) = _$LivekitSettingsModelImpl;
 
   factory _LivekitSettingsModel.fromJson(Map<String, dynamic> json) =
       _$LivekitSettingsModelImpl.fromJson;
@@ -4691,6 +4722,9 @@ abstract class _LivekitSettingsModel implements LivekitSettingsModel {
   String? get room;
   @override
   EgressModel? get egress;
+  @override
+  @JsonKey(name: 'recording_playlist', fromJson: _stringFromJson)
+  String? get recordingPlaylist;
 
   /// Create a copy of LivekitSettingsModel
   /// with the given fields replaced by the non-null parameter values.

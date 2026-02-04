@@ -121,6 +121,23 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
+      path: AppRoutes.endedStreamViewer,
+      builder: (BuildContext context, GoRouterState state) {
+        final extra = state.extra as Map<String, dynamic>?;
+        final stream = extra?['stream'] as StreamDataModel?;
+
+        if (stream == null) {
+          return Scaffold(
+            body: Center(
+              child: Text('Stream data not found'),
+            ),
+          );
+        }
+
+        return EndedStreamScreen(stream: stream);
+      },
+    ),
+    GoRoute(
       path: AppRoutes.inviteFriends, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         return const InviteFriendScreen();
@@ -530,7 +547,8 @@ final GoRouter router = GoRouter(
         final videoUrl = extra?['videoUrl'] as String? ??
             'https://www.exit109.com/~dnn/clips/RW20seconds_1.mp4';
         return BlocProvider(
-          create: (context) => locator<ClipsCubit>()..downloadVideoFromUrl(videoUrl),
+          create: (context) =>
+              locator<ClipsCubit>()..downloadVideoFromUrl(videoUrl),
           child: EditVideoScreen(
             videoUrl: videoUrl,
           ),

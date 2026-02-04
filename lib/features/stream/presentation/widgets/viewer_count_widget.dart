@@ -3,7 +3,7 @@ part of '../stream.dart';
 class ViewerCountWidget extends StatefulWidget {
   final int count;
   final bool isViewerMode;
-  
+
   const ViewerCountWidget({
     super.key,
     required this.count,
@@ -60,7 +60,9 @@ class _ViewerCountWidgetState extends State<ViewerCountWidget> {
                   borderRadius: BorderRadius.circular(100),
                 ),
                 child: Icon(
-                  _isExpanded ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down,
+                  _isExpanded
+                      ? Icons.keyboard_arrow_up
+                      : Icons.keyboard_arrow_down,
                   color: Colors.white,
                   size: 26,
                 ),
@@ -105,31 +107,71 @@ class ViewerCountMenu extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (isViewerMode)
-            BlocBuilder<ViewerStreamCubit, ViewerStreamState>(
-              builder: (context, state) {
-                return ViewerCountMenuItem(
-                  icon: state.isAudioMuted
-                      ? const Icon(
-                          Icons.volume_off,
-                          color: Colors.white,
-                          size: 20,
-                        )
-                      : SvgPicture.asset(
-                          Assets.assetsIconsVolumeLoud,
-                          width: 20,
-                          height: 20,
-                          colorFilter: const ColorFilter.mode(
-                            Colors.white,
-                            BlendMode.srcIn,
-                          ),
-                        ),
-                  label: 'Звук',
-                  isMuted: state.isAudioMuted,
-                  onTap: () {
-                    context.read<ViewerStreamCubit>().toggleAudio();
-                    onItemTapped();
-                  },
-                );
+            Builder(
+              builder: (context) {
+                // Try ViewerStreamCubit first (for live streams)
+                try {
+                  return BlocBuilder<ViewerStreamCubit, ViewerStreamState>(
+                    builder: (context, state) {
+                      return ViewerCountMenuItem(
+                        icon: state.isAudioMuted
+                            ? const Icon(
+                                Icons.volume_off,
+                                color: Colors.white,
+                                size: 20,
+                              )
+                            : SvgPicture.asset(
+                                Assets.assetsIconsVolumeLoud,
+                                width: 20,
+                                height: 20,
+                                colorFilter: const ColorFilter.mode(
+                                  Colors.white,
+                                  BlendMode.srcIn,
+                                ),
+                              ),
+                        label: 'Звук',
+                        isMuted: state.isAudioMuted,
+                        onTap: () {
+                          context.read<ViewerStreamCubit>().toggleAudio();
+                          onItemTapped();
+                        },
+                      );
+                    },
+                  );
+                } catch (_) {
+                  // If ViewerStreamCubit not found, try EndedStreamCubit (for ended streams)
+                  try {
+                    return BlocBuilder<EndedStreamCubit, EndedStreamState>(
+                      builder: (context, state) {
+                        return ViewerCountMenuItem(
+                          icon: state.isAudioMuted
+                              ? const Icon(
+                                  Icons.volume_off,
+                                  color: Colors.white,
+                                  size: 20,
+                                )
+                              : SvgPicture.asset(
+                                  Assets.assetsIconsVolumeLoud,
+                                  width: 20,
+                                  height: 20,
+                                  colorFilter: const ColorFilter.mode(
+                                    Colors.white,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                          label: 'Звук',
+                          isMuted: state.isAudioMuted,
+                          onTap: () {
+                            context.read<EndedStreamCubit>().toggleAudio();
+                            onItemTapped();
+                          },
+                        );
+                      },
+                    );
+                  } catch (_) {
+                    return const SizedBox.shrink();
+                  }
+                }
               },
             )
           else

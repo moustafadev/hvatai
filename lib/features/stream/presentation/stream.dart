@@ -31,6 +31,7 @@ import 'package:hvatai/features/stream/presentation/cubit/broadcaster_stream/bro
 import 'package:hvatai/features/stream/presentation/cubit/live_listings_shop/live_listings_shop_cubit.dart';
 import 'package:hvatai/features/stream/presentation/cubit/viewer_stream/viewer_stream_cubit.dart';
 import 'package:hvatai/features/stream/presentation/cubit/my_streams_cubit/my_streams_cubit.dart';
+import 'package:hvatai/features/stream/presentation/cubit/ended_stream/ended_stream_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:livekit_client/livekit_client.dart';
@@ -39,9 +40,13 @@ import 'package:hvatai/features/address/presentation/cubit/delivery_address/deli
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/payment_method/data/model/card_model/card_model.dart';
 import 'package:hvatai/core/datasources/local/app_local.dart';
+import 'package:hvatai/core/widgets/video_thumbnail_player.dart';
+import 'package:video_player/video_player.dart';
+import 'package:hvatai/core/shared/utils/server_config.dart';
 
 part 'screens/broadcaster_stream_screen.dart';
 part 'screens/viewer_stream_screen.dart';
+part 'screens/ended_stream_screen.dart';
 part 'screens/my_streams_screen.dart';
 part 'widgets/comments_compact_list.dart';
 part 'widgets/company_details_widget.dart';
