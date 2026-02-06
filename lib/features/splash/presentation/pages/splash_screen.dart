@@ -34,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
       return;
     }
 
-    if (!isSetup) {
+    if (false) {
       await appLocal.removeToken();
       print('token removed because isSetup = false');
       // ignore: use_build_context_synchronously

@@ -56,18 +56,18 @@ class _AboutMeReviewsWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ReviewsCubit, ReviewsState>(
       builder: (context, state) {
-        return CustomScrollView(
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-              sliver: SliverToBoxAdapter(
+    return CustomScrollView(
+      slivers: [
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          sliver: SliverToBoxAdapter(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     CustomText(
                       text: 'Отзывы',
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w800,
+              fontSize: 20.sp,
+              fontWeight: FontWeight.w800,
                     ),
                     20.ph,
                     BlocBuilder<ReviewsCubit, ReviewsState>(
@@ -164,23 +164,23 @@ class _AboutMeReviewsWidget extends StatelessWidget {
     }
 
     return SliverPadding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      sliver: SliverList(
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          sliver: SliverList(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) {
             final review = allReviews[index];
-            return Padding(
+                return Padding(
               padding: EdgeInsets.only(
                   bottom: index < allReviews.length - 1 ? 12 : 0),
-              child: ReviewItem(
+                  child: ReviewItem(
                 username: review.username,
                 rating: review.rating.toStringAsFixed(1),
                 date: review.date,
                 reviewText: review.reviewText,
                 userImage: review.userImage,
-              ),
-            );
-          },
+                  ),
+                );
+              },
           childCount: allReviews.length,
         ),
       ),

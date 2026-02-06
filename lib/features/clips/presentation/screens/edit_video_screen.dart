@@ -66,8 +66,7 @@ class _EditVideoContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ClipsCubit, ClipsState>(
-      builder: (context, state) {       
-
+      builder: (context, state) {
         if (!state.isVideoLoaded) {
           return const Center(
             child: CircularProgressIndicator(color: Colors.white),
@@ -103,7 +102,6 @@ class _EditVideoEditor extends StatelessWidget {
 
         return Column(
           children: [
-
             32.ph,
             // Video container with padding and border radius
             Expanded(

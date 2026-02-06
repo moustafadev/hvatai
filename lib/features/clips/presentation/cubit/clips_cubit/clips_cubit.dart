@@ -10,8 +10,8 @@ import 'package:hvatai/routes/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
-// import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
-// import 'package:ffmpeg_kit_flutter_new/return_code.dart';
+import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
+import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 
 class ClipsCubit extends Cubit<ClipsState> {
   ClipsCubit() : super(const ClipsState());
@@ -35,8 +35,10 @@ class ClipsCubit extends Cubit<ClipsState> {
       final filePath = '${tempDir.path}/$fileName';
       final file = File(filePath);
 
+      debugPrint("Test");
       // Download video
       final response = await http.get(Uri.parse(videoUrl));
+      debugPrint("Test true");
       if (response.statusCode == 200) {
         await file.writeAsBytes(response.bodyBytes);
         debugPrint('✅ Video downloaded to: $filePath');
@@ -67,8 +69,25 @@ class ClipsCubit extends Cubit<ClipsState> {
       debugPrint('📹 Loading video: $videoPath');
 
       _videoFile = File(videoPath);
+
+      // Validate file exists and has content
+      if (!await _videoFile!.exists()) {
+        throw Exception('Video file does not exist: $videoPath');
+      }
+      final fileSize = await _videoFile!.length();
+      if (fileSize == 0) {
+        throw Exception('Video file is empty: $videoPath');
+      }
+      debugPrint('📊 Video file size: $fileSize bytes');
+
+      // Dispose existing controller first
       _videoController?.removeListener(_videoListener);
       _videoController?.dispose();
+      _videoController = null;
+
+      // Small delay to ensure MediaCodec resources are fully released
+      // This prevents conflicts when multiple video players were active
+      await Future.delayed(const Duration(milliseconds: 200));
 
       _videoController = VideoPlayerController.file(_videoFile!);
       _videoController!.addListener(_videoListener);
@@ -120,63 +139,63 @@ class ClipsCubit extends Cubit<ClipsState> {
       return;
     }
 
-    // try {
-    //   emit(state.copyWith(isTrimming: true, errorMessage: ''));
-    //   debugPrint('✂️ Trimming video from ${startValue}ms to ${endValue}ms');
+    try {
+      emit(state.copyWith(isTrimming: true, errorMessage: ''));
+      debugPrint('✂️ Trimming video from ${startValue}ms to ${endValue}ms');
 
-    //   final tempDir = await getTemporaryDirectory();
-    //   final outputPath =
-    //       '${tempDir.path}/trimmed_${DateTime.now().millisecondsSinceEpoch}.mp4';
+      final tempDir = await getTemporaryDirectory();
+      final outputPath =
+          '${tempDir.path}/trimmed_${DateTime.now().millisecondsSinceEpoch}.mp4';
 
-    //   // Calculate duration in seconds
-    //   final duration = (endValue - startValue) / 1000.0;
-    //   final startSeconds = startValue / 1000.0;
+      // Calculate duration in seconds
+      final duration = (endValue - startValue) / 1000.0;
+      final startSeconds = startValue / 1000.0;
 
-    //   // FFmpeg command: -ss start -i input -t duration -c copy output
-    //   final command =
-    //       '-ss $startSeconds -i "${_videoFile!.path}" -t $duration -c copy "$outputPath"';
+      // FFmpeg command: -ss start -i input -t duration -c copy output
+      final command =
+          '-ss $startSeconds -i "${_videoFile!.path}" -t $duration -c copy "$outputPath"';
 
-    //   debugPrint('📝 FFmpeg command: $command');
+      debugPrint('📝 FFmpeg command: $command');
 
-    //   final session = await FFmpegKit.execute(command);
-    //   final returnCode = await session.getReturnCode();
+      final session = await FFmpegKit.execute(command);
+      final returnCode = await session.getReturnCode();
 
-    //   if (ReturnCode.isSuccess(returnCode)) {
-    //     debugPrint('✅ Video trimmed successfully: $outputPath');
-    //     debugPrint('ℹ️ Video is saved temporarily at: $outputPath');
-    //     debugPrint(
-    //         'ℹ️ You can upload this file to your backend and then delete it');
-    //     emit(state.copyWith(
-    //       isTrimming: false,
-    //       trimmedVideoPath: outputPath,
-    //       errorMessage: '',
-    //     ));
-    //     // Navigate to preview screen
-    //     _navigateToPreview(outputPath);
-    //   } else if (ReturnCode.isCancel(returnCode)) {
-    //     debugPrint('❌ Video trimming was cancelled');
-    //     emit(state.copyWith(
-    //       isTrimming: false,
-    //       errorMessage: 'Video trimming was cancelled',
-    //     ));
-    //   } else {
-    //     final failStackTrace = await session.getFailStackTrace();
-    //     final output = await session.getOutput();
-    //     debugPrint('❌ Failed to trim video: $failStackTrace');
-    //     debugPrint('❌ FFmpeg output: $output');
-    //     emit(state.copyWith(
-    //       isTrimming: false,
-    //       errorMessage:
-    //           'Failed to trim video: ${output ?? failStackTrace ?? "Unknown error"}',
-    //     ));
-    //   }
-    // } catch (e) {
-    //   debugPrint('❌ Error trimming video: $e');
-    //   emit(state.copyWith(
-    //     isTrimming: false,
-    //     errorMessage: 'Error trimming video: $e',
-    //   ));
-    // }
+      if (ReturnCode.isSuccess(returnCode)) {
+        debugPrint('✅ Video trimmed successfully: $outputPath');
+        debugPrint('ℹ️ Video is saved temporarily at: $outputPath');
+        debugPrint(
+            'ℹ️ You can upload this file to your backend and then delete it');
+        emit(state.copyWith(
+          isTrimming: false,
+          trimmedVideoPath: outputPath,
+          errorMessage: '',
+        ));
+        // Navigate to preview screen
+        _navigateToPreview(outputPath);
+      } else if (ReturnCode.isCancel(returnCode)) {
+        debugPrint('❌ Video trimming was cancelled');
+        emit(state.copyWith(
+          isTrimming: false,
+          errorMessage: 'Video trimming was cancelled',
+        ));
+      } else {
+        final failStackTrace = await session.getFailStackTrace();
+        final output = await session.getOutput();
+        debugPrint('❌ Failed to trim video: $failStackTrace');
+        debugPrint('❌ FFmpeg output: $output');
+        emit(state.copyWith(
+          isTrimming: false,
+          errorMessage:
+              'Failed to trim video: ${output ?? failStackTrace ?? "Unknown error"}',
+        ));
+      }
+    } catch (e) {
+      debugPrint('❌ Error trimming video: $e');
+      emit(state.copyWith(
+        isTrimming: false,
+        errorMessage: 'Error trimming video: $e',
+      ));
+    }
   }
 
   void _navigateToPreview(String videoPath) {

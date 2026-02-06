@@ -14,7 +14,6 @@ import 'package:hvatai/features/chat/data/models/chat/chat_model.dart';
 import 'package:hvatai/features/chat/presentation/chat.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/awards/presentation/awards.dart';
-import 'package:hvatai/features/awards/presentation/cubit/awards_club_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/live_streams/live_streams_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/categories/categories_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
@@ -30,7 +29,6 @@ import 'package:hvatai/features/payment_method/presentation/payment_method.dart'
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
-import 'dart:io';
 
 import 'package:hvatai/features/invite_friend/presentation/invite_friend.dart';
 import 'package:hvatai/features/clips/presentation/clips.dart';
@@ -545,10 +543,13 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, dynamic>?;
         final videoUrl = extra?['videoUrl'] as String? ??
-            'https://www.exit109.com/~dnn/clips/RW20seconds_1.mp4';
+            'https://www.exit109.com/~dnn/clips/RW20seconds_1.mp4'; // Default URL if not provided
         return BlocProvider(
-          create: (context) =>
-              locator<ClipsCubit>()..downloadVideoFromUrl(videoUrl),
+          create: (context) {
+            final cubit = locator<ClipsCubit>();
+            cubit.downloadVideoFromUrl(videoUrl);
+            return cubit;
+          },
           child: EditVideoScreen(
             videoUrl: videoUrl,
           ),

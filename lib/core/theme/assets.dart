@@ -455,6 +455,11 @@ class Assets {
 
   /// assets icons pause
   static const String assetsIconsPause = "assets/icons/pause.svg";
+  /// assets icons lock2
+  static const String assetsIconsLock2 = "assets/icons/lock2.svg";
+
+  /// assets icons download
+  static const String assetsIconsDownload = "assets/icons/download.svg";
 
   /// assets icons film
   static const String assetsImagesFilm = "assets/images/film.png";

@@ -54,7 +54,7 @@ class _VideoThumbnailPlayerState extends State<VideoThumbnailPlayer>
       return path;
     } else {
       return '${ServerConfig.domenStorage}$path';
-    } 
+    }
   }
 
   double get _height => widget.height ?? 300.h;
@@ -117,6 +117,9 @@ class _VideoThumbnailPlayerState extends State<VideoThumbnailPlayer>
       // Create controller with network URL
       _controller = VideoPlayerController.networkUrl(
         Uri.parse(videoUrl),
+        videoPlayerOptions: VideoPlayerOptions(
+          mixWithOthers: true,
+        ),
         httpHeaders: httpHeaders,
       );
 
@@ -311,6 +314,8 @@ class _VideoThumbnailPlayerState extends State<VideoThumbnailPlayer>
     _controller = null;
     _isPlaying = false;
     _isInitialized = false;
+    _controller?.dispose();
+
     super.dispose();
   }
 

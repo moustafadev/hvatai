@@ -94,8 +94,7 @@ class _ProductsScrollViewContent extends StatelessWidget {
                       builder: (context, profileState) {
                         return BlocBuilder<MyProductsCubit, MyProductsState>(
                           builder: (context, state) {
-                            if (profileState.isSeller &&
-                                state.isShowingMyProducts) {
+                            if (state.isShowingMyProducts) {
                               return GestureDetector(
                                 onTap: () async {
                                   final result = await context.push<bool>(

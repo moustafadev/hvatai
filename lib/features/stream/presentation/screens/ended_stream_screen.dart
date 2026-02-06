@@ -44,14 +44,11 @@ class EndedStreamScreen extends StatelessWidget {
         body: Stack(
           children: [
             // Video Player
-            Positioned.fill(
-              child: BlocBuilder<EndedStreamCubit, EndedStreamState>(
-                builder: (context, state) {
-                  return _EndedStreamVideoPlayer(
-                    videoPath: recordingPlaylist,
-                    isMuted: state.isAudioMuted,
-                  );
-                },
+            _EndedStreamVideoPlayerWrapper(
+              videoPath: recordingPlaylist,
+              onClipTap: () => _showClipPreviewSheet(
+                context: context,
+                videoUrl: recordingPlaylist,
               ),
             ),
             // Top info
@@ -77,22 +74,8 @@ class EndedStreamScreen extends StatelessWidget {
               ),
             ),
             // Right side icons (clips only, no shop) - positioned like in viewer stream
-            Positioned(
-              right: 16,
-              bottom: 100,
-              child: RightIcon(
-                icon: Assets.assetsImagesFilm,
-                label: 'Клип',
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Клип недоступен для завершенных стримов'),
-                      backgroundColor: Colors.red,
-                    ),
-                  );
-                },
-              ),
-            ),
+            // Note: Clip tap is handled in _EndedStreamVideoPlayerWrapper
+            const SizedBox.shrink(),
             // Comments at bottom (without text field)
             Positioned(
               left: 16,
@@ -139,6 +122,198 @@ class EndedStreamScreen extends StatelessWidget {
   }
 }
 
+Future<void> _showClipPreviewSheet({
+  required BuildContext context,
+  required String videoUrl,
+  VideoPlayerController? backgroundController,
+}) async {
+  // Pause background video if provided
+  backgroundController?.pause();
+
+  final result = await showModalBottomSheet<String>(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: AppColors.background,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+    ),
+    builder: (_) => Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: _ClipPreviewSheet(
+        videoUrl: videoUrl,
+        backgroundController: backgroundController,
+      ),
+    ),
+  );
+
+  // If bottom sheet returned a URL (user clicked edit), navigate to edit screen
+  if (result != null && result.isNotEmpty && context.mounted) {
+    context.push(
+      AppRoutes.editVideo,
+      extra: {
+        'videoUrl': result,
+      },
+    );
+  }
+}
+
+class _ClipPreviewSheet extends StatelessWidget {
+  const _ClipPreviewSheet({
+    required this.videoUrl,
+    this.backgroundController,
+  });
+
+  final String videoUrl;
+  final VideoPlayerController? backgroundController;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<ClipPreviewCubit>(
+      create: (_) => ClipPreviewCubit(
+        videoUrl: videoUrl,
+        backgroundController: backgroundController,
+      ),
+      child: BlocBuilder<ClipPreviewCubit, ClipPreviewState>(
+        builder: (context, state) {
+          final cubit = context.read<ClipPreviewCubit>();
+
+          return Padding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).padding.bottom + 16,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // SizedBox 8 at top
+                const SizedBox(height: 8),
+                // Container: height 44, width 4, color greyButton, radius 100
+                Center(
+                  child: Container(
+                    height: 4,
+                    width: 44,
+                    decoration: BoxDecoration(
+                      color: AppColors.greyButton,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                  ),
+                ),
+                // SizedBox 32
+                const SizedBox(height: 32),
+                // Video preview with edit icon outside
+                Stack(
+                  children: [
+                    // Video preview
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 64.0),
+                      child: AspectRatio(
+                        aspectRatio: 9 / 16,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(24),
+                          child: VideoThumbnailPlayer(
+                            videoPath: videoUrl,
+                            key: const ValueKey('clip_preview_bottom_sheet'),
+                          ),
+                        ),
+                      ),
+                    ),
+                    // Edit icon outside video preview, right side, padding 16 from right screen
+                    Positioned(
+                      top: 0,
+                      right: 16,
+                      child: GestureDetector(
+                        onTap: () => cubit.openEditor(context),
+                        child: CircleAvatar(
+                          backgroundColor: AppColors.greyButton,
+                          radius: 16,
+                          child: SvgPicture.asset(
+                            Assets.assetsIconsEdit,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 16),
+                // Container after video: full width (no horizontal padding), height 40, contains SVG lock2 and text
+                Container(
+                  width: double.infinity,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: AppColors.text,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        Assets.assetsIconsLock2,
+                        width: 20,
+                        height: 20,
+                      ),
+                      const SizedBox(width: 8),
+                      CustomText(
+                        text: 'Клип сохранён в вашем профиле как приватный',
+                        color: Colors.white,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ],
+                  ),
+                ),
+                // SizedBox 21
+                const SizedBox(height: 21),
+                // Bottom right: circle 48x48 with AppColors.text, contains download icon, padding 16 from right
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: GestureDetector(
+                      onTap:
+                          state.isSaving ? null : () => cubit.saveToDownloads(),
+                      child: Container(
+                        width: 48,
+                        height: 48,
+                        decoration: BoxDecoration(
+                          color: AppColors.text,
+                          shape: BoxShape.circle,
+                        ),
+                        child: state.isSaving
+                            ? const Center(
+                                child: SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              )
+                            : Center(
+                                child: SvgPicture.asset(
+                                  Assets.assetsIconsDownload,
+                                  width: 24,
+                                  height: 24,
+                                  colorFilter: const ColorFilter.mode(
+                                    Colors.white,
+                                    BlendMode.srcIn,
+                                  ),
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
 class _EndedStreamCommentsList extends StatelessWidget {
   const _EndedStreamCommentsList({
     required this.comments,
@@ -154,7 +329,7 @@ class _EndedStreamCommentsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (comments.isEmpty && !isLoading) {
+    if (comments.isEmpty) {
       return SizedBox.shrink();
     }
 
@@ -213,6 +388,54 @@ class _EndedStreamCommentsList extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _EndedStreamVideoPlayerWrapper extends StatefulWidget {
+  const _EndedStreamVideoPlayerWrapper({
+    required this.videoPath,
+    required this.onClipTap,
+  });
+
+  final String videoPath;
+  final VoidCallback onClipTap;
+
+  @override
+  State<_EndedStreamVideoPlayerWrapper> createState() =>
+      _EndedStreamVideoPlayerWrapperState();
+}
+
+class _EndedStreamVideoPlayerWrapperState
+    extends State<_EndedStreamVideoPlayerWrapper> {
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        // Video Player
+        Positioned.fill(
+          child: BlocBuilder<EndedStreamCubit, EndedStreamState>(
+            builder: (context, state) {
+              return _EndedStreamVideoPlayer(
+                videoPath: widget.videoPath,
+                isMuted: state.isAudioMuted,
+              );
+            },
+          ),
+        ),
+        // Right side icons (clips only, no shop) - positioned like in viewer stream
+        Positioned(
+          right: 16,
+          bottom: 100,
+          child: RightIcon(
+            icon: Assets.assetsImagesFilm,
+            label: 'Клип',
+            onTap: () => widget.onClipTap(),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -281,6 +504,8 @@ class _EndedStreamVideoPlayerState extends State<_EndedStreamVideoPlayer> {
     await _controller!.initialize();
     _controller!.setVolume(widget.isMuted ? 0.0 : 1.0);
     _controller!.play();
+
+
 
     if (mounted) {
       setState(() {});

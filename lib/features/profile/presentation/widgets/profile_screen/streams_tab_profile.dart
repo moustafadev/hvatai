@@ -34,7 +34,6 @@ class StreamsTabProfile extends StatelessWidget {
                     ),
                     BlocBuilder<ProfileCubit, ProfileState>(
                       builder: (context, profileState) {
-                        if (profileState.isSeller) {
                           return GestureDetector(
                             onTap: () {
                               context.push(AppRoutes.addStream);
@@ -45,8 +44,7 @@ class StreamsTabProfile extends StatelessWidget {
                               height: 24,
                             ),
                           );
-                        }
-                        return const SizedBox.shrink();
+                        
                       },
                     ),
                   ],
@@ -86,17 +84,30 @@ class StreamsTabProfile extends StatelessWidget {
                       final categoryName = stream.categories?.isNotEmpty == true
                           ? stream.categories!.first.name ?? ''
                           : '';
-                      return CustomLiveVideoCard(
-                        price: "",
-                        title: product?.name ?? stream.title ?? '',
-                        adminName: stream.user?.name ?? 'company_name',
-                        adminImage: stream.user?.image ?? '',
-                        viewsCount: stream.viewerCount ?? 0,
-                        description: categoryName,
-                        liveImage:
-                            stream.thumbnailUrl ?? stream.recordUrl ?? '',
-                        latestThumbnailUrl: stream.latestThumbnailUrl,
-                        latestGifUrl: stream.latestGifUrl,
+                      return GestureDetector(
+                        onTap: () {
+                          if (stream.status == 'ended') {
+                            // Navigate to ended stream screen
+                            context.push(
+                              AppRoutes.endedStreamViewer,
+                              extra: {
+                                'stream': stream,
+                              },
+                            );
+                          }
+                        },
+                        child: CustomLiveVideoCard(
+                          price: "",
+                          title: product?.name ?? stream.title ?? '',
+                          adminName: stream.user?.name ?? 'company_name',
+                          adminImage: stream.user?.image ?? '',
+                          viewsCount: stream.viewerCount ?? 0,
+                          description: categoryName,
+                          liveImage:
+                              stream.thumbnailUrl ?? stream.recordUrl ?? '',
+                          latestThumbnailUrl: stream.latestThumbnailUrl,
+                          latestGifUrl: stream.latestGifUrl,
+                        ),
                       );
                     },
                     childCount: streams.length,
