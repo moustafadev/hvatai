@@ -9,6 +9,7 @@ class ClipsState with _$ClipsState {
     @Default(false) bool isTrimming,
     @Default(false) bool isVideoLoaded,
     @Default(false) bool isPlaying,
+    @Default(false) bool hasReachedEnd,
     String? videoPath,
     String? trimmedVideoPath,
     @Default('') String errorMessage,

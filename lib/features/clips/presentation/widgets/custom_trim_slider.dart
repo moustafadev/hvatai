@@ -133,7 +133,7 @@ class _CustomTrimSliderState extends State<CustomTrimSlider> {
   @override
   Widget build(BuildContext context) {
     final horizontalPadding = 0.w;
-    final arrowButtonSize = 26.0;
+    final arrowButtonSize = 21.0;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -351,6 +351,14 @@ class _TimelineContainerWidget extends StatelessWidget {
             color: AppColors.primaryColor,
             width: borderWidth,
           ),
+          left: BorderSide(
+            color: AppColors.primaryColor,
+            width: borderWidth,
+          ),
+          right: BorderSide(
+            color: AppColors.primaryColor,
+            width: borderWidth,
+          ),
         ),
         borderRadius: BorderRadius.zero,
       ),
@@ -397,22 +405,16 @@ class _ThumbnailsRowWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRect(
-      clipper: _CustomRectClipper(
-        left: startPosition,
-        right: availableWidth != null ? availableWidth! - endPosition : 0,
-      ),
-      child: SizedBox(
-        width: double.infinity,
-        height: thumbnailHeight,
-        child: Row(
-          children: List.generate(thumbnailCount, (index) {
-            return _ThumbnailItemWidget(
-              thumbnail: thumbnails[index],
-              thumbnailHeight: thumbnailHeight,
-            );
-          }),
-        ),
+    return SizedBox(
+      width: double.infinity,
+      height: thumbnailHeight,
+      child: Row(
+        children: List.generate(thumbnailCount, (index) {
+          return _ThumbnailItemWidget(
+            thumbnail: thumbnails[index],
+            thumbnailHeight: thumbnailHeight,
+          );
+        }),
       ),
     );
   }
@@ -480,6 +482,7 @@ class _ArrowSliderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const borderRadius = 10.0;
+    const borderWidth = 5.0;
 
     return Positioned(
       left: position,
@@ -513,31 +516,5 @@ class _ArrowSliderWidget extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-// Custom clipper to clip thumbnails based on slider positions
-class _CustomRectClipper extends CustomClipper<Rect> {
-  final double left;
-  final double right;
-
-  _CustomRectClipper({
-    required this.left,
-    required this.right,
-  });
-
-  @override
-  Rect getClip(Size size) {
-    return Rect.fromLTRB(
-      left.clamp(0.0, size.width),
-      0.0,
-      (size.width - right).clamp(0.0, size.width),
-      size.height,
-    );
-  }
-
-  @override
-  bool shouldReclip(_CustomRectClipper oldClipper) {
-    return oldClipper.left != left || oldClipper.right != right;
   }
 }

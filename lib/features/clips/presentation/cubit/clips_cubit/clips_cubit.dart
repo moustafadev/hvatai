@@ -14,17 +14,21 @@ import 'package:ffmpeg_kit_flutter_new/ffmpeg_kit.dart';
 import 'package:ffmpeg_kit_flutter_new/return_code.dart';
 
 class ClipsCubit extends Cubit<ClipsState> {
-  ClipsCubit() : super(const ClipsState());
+  ClipsCubit({VideoPlayerController? sharedController})
+      : _videoController = sharedController,
+        super(const ClipsState());
 
   VideoPlayerController? _videoController;
   File? _videoFile;
   Duration? _videoDuration;
+  bool _isSharedController = false;
 
   VideoPlayerController? get videoController => _videoController;
   File? get videoFile => _videoFile;
   Duration? get videoDuration => _videoDuration;
 
-  Future<void> downloadVideoFromUrl(String videoUrl) async {
+  Future<void> downloadVideoFromUrl(String videoUrl,
+      {VideoPlayerController? sharedController}) async {
     try {
       emit(state.copyWith(isLoading: true, errorMessage: ''));
       debugPrint('📥 Downloading video from: $videoUrl');
@@ -46,8 +50,8 @@ class ClipsCubit extends Cubit<ClipsState> {
           isLoading: false,
           videoPath: filePath,
         ));
-        // Auto-load video after download
-        await loadVideo(filePath);
+        // Auto-load video after download (use shared controller if provided)
+        await loadVideo(filePath, sharedController: sharedController);
       } else {
         debugPrint('❌ Failed to download video: ${response.statusCode}');
         emit(state.copyWith(
@@ -64,9 +68,48 @@ class ClipsCubit extends Cubit<ClipsState> {
     }
   }
 
-  Future<void> loadVideo(String videoPath) async {
+  Future<void> loadVideo(String videoPath,
+      {VideoPlayerController? sharedController}) async {
     try {
       debugPrint('📹 Loading video: $videoPath');
+
+      // If shared controller is provided, use it
+      if (sharedController != null && sharedController.value.isInitialized) {
+        debugPrint('✅ Using shared video controller');
+        _videoController = sharedController;
+        _isSharedController = true;
+        _videoController!.addListener(_videoListener);
+
+        _videoDuration = _videoController!.value.duration;
+        final endValueMs = _videoDuration!.inMilliseconds.toDouble();
+
+        // For shared controllers, check if videoPath is a file path
+        // If it's a file path, use it; otherwise we'll need to download for thumbnails
+        try {
+          final file = File(videoPath);
+          if (await file.exists()) {
+            _videoFile = file;
+          } else {
+            // File doesn't exist, but videoPath might be a URL
+            // We'll need the file for thumbnails, but controller is already set
+            debugPrint(
+                '⚠️ File not found at path, but using shared controller');
+          }
+        } catch (e) {
+          // Not a file path, that's okay - we'll download if needed for thumbnails
+          debugPrint('⚠️ Video path is not a file: $videoPath');
+        }
+
+        emit(state.copyWith(
+          isVideoLoaded: true,
+          isLoading: false,
+          videoPath: videoPath,
+          endValue: endValueMs,
+          errorMessage: '',
+          isPlaying: _videoController!.value.isPlaying,
+        ));
+        return;
+      }
 
       _videoFile = File(videoPath);
 
@@ -80,14 +123,15 @@ class ClipsCubit extends Cubit<ClipsState> {
       }
       debugPrint('📊 Video file size: $fileSize bytes');
 
-      // Dispose existing controller first
-      _videoController?.removeListener(_videoListener);
-      _videoController?.dispose();
-      _videoController = null;
+      // Dispose existing controller first (only if not shared)
+      if (!_isSharedController) {
+        _videoController?.removeListener(_videoListener);
+        _videoController?.dispose();
+        _videoController = null;
 
-      // Small delay to ensure MediaCodec resources are fully released
-      // This prevents conflicts when multiple video players were active
-      await Future.delayed(const Duration(milliseconds: 200));
+        // Small delay to ensure MediaCodec resources are fully released
+        await Future.delayed(const Duration(milliseconds: 200));
+      }
 
       _videoController = VideoPlayerController.file(_videoFile!);
       _videoController!.addListener(_videoListener);
@@ -117,10 +161,26 @@ class ClipsCubit extends Cubit<ClipsState> {
   }
 
   void _videoListener() {
+    // Check if cubit is closed before emitting
+    if (isClosed) {
+      return;
+    }
+
     if (_videoController != null && _videoController!.value.isInitialized) {
       final isPlayingNow = _videoController!.value.isPlaying;
+      final position = _videoController!.value.position;
+      final duration = _videoController!.value.duration;
+
+      // Check if video has reached the end (within 100ms tolerance)
+      final hasReachedEnd = duration.inMilliseconds > 0 &&
+          (position.inMilliseconds >= duration.inMilliseconds - 100);
+
       if (state.isPlaying != isPlayingNow) {
         emit(state.copyWith(isPlaying: isPlayingNow));
+      }
+
+      if (state.hasReachedEnd != hasReachedEnd) {
+        emit(state.copyWith(hasReachedEnd: hasReachedEnd));
       }
     }
   }
@@ -223,6 +283,10 @@ class ClipsCubit extends Cubit<ClipsState> {
     if (_videoController != null && _videoController!.value.isInitialized) {
       await _videoController!
           .seekTo(Duration(milliseconds: positionMs.toInt()));
+      // Reset hasReachedEnd when user seeks
+      if (state.hasReachedEnd) {
+        emit(state.copyWith(hasReachedEnd: false));
+      }
     }
   }
 
@@ -234,9 +298,27 @@ class ClipsCubit extends Cubit<ClipsState> {
     await _videoController?.pause();
   }
 
-  void dispose() {
+  Future<void> rewind() async {
+    if (_videoController != null && _videoController!.value.isInitialized) {
+      await _videoController!.seekTo(Duration.zero);
+      await _videoController!.play();
+      emit(state.copyWith(hasReachedEnd: false));
+    }
+  }
+
+  @override
+  Future<void> close() {
+    // Always remove listener first to prevent emitting after close
     _videoController?.removeListener(_videoListener);
-    _videoController?.dispose();
-    _videoController = null;
+
+    // Only dispose if not a shared controller
+    if (!_isSharedController) {
+      _videoController?.dispose();
+    }
+
+    // Note: Temp file cleanup is handled by ClipPreviewCubit when bottom sheet closes
+    // We don't delete it here to allow navigation back and forth
+
+    return super.close();
   }
 }

@@ -109,9 +109,51 @@ class _EditVideoEditor extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 64.0),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(24),
-                  child: AspectRatio(
-                    aspectRatio: videoController.value.aspectRatio,
-                    child: VideoPlayer(videoController),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      AspectRatio(
+                        aspectRatio: videoController.value.aspectRatio,
+                        child: VideoPlayer(videoController),
+                      ),
+                      // Rewatch icon when video reaches end
+                      if (state.hasReachedEnd)
+                        Positioned.fill(
+                          child: GestureDetector(
+                            onTap: () => cubit.rewind(),
+                            child: Container(
+                              color: Colors.black.withOpacity(0.3),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: 60,
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white.withOpacity(0.9),
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: const Icon(
+                                        Icons.replay,
+                                        color: Colors.black,
+                                        size: 32,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 12),
+                                    CustomText(
+                                      text: 'Пересмотреть',
+                                      color: Colors.white,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                    ],
                   ),
                 ),
               ),

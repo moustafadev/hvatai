@@ -32,6 +32,7 @@ import 'package:hvatai/features/profile/presentation/profile.dart';
 
 import 'package:hvatai/features/invite_friend/presentation/invite_friend.dart';
 import 'package:hvatai/features/clips/presentation/clips.dart';
+import 'package:video_player/video_player.dart';
 import 'package:hvatai/features/clips/presentation/cubit/clips_cubit/clips_cubit.dart';
 import 'package:hvatai/features/analytics/presentation/analytics.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
@@ -542,12 +543,30 @@ final GoRouter router = GoRouter(
       path: AppRoutes.editVideo,
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, dynamic>?;
-        final videoUrl = extra?['videoUrl'] as String? ??
-            'https://www.exit109.com/~dnn/clips/RW20seconds_1.mp4'; // Default URL if not provided
+        final videoUrl =
+            extra?['videoUrl'] as String; // Default URL if not provided
+        final sharedController =
+            extra?['sharedController'] as VideoPlayerController?;
+        final tempVideoPath = extra?['tempVideoPath'] as String?;
+
         return BlocProvider(
           create: (context) {
-            final cubit = locator<ClipsCubit>();
-            cubit.downloadVideoFromUrl(videoUrl);
+            final cubit = ClipsCubit(
+              sharedController: sharedController,
+            );
+
+            // If tempVideoPath is provided (local file), use loadVideo directly
+            if (tempVideoPath != null && tempVideoPath.isNotEmpty) {
+              cubit.loadVideo(tempVideoPath,
+                  sharedController: sharedController);
+            } else if (sharedController != null &&
+                sharedController.value.isInitialized) {
+              // Use shared controller - download file for thumbnails but use shared controller for playback
+              cubit.downloadVideoFromUrl(videoUrl,
+                  sharedController: sharedController);
+            } else {
+              cubit.downloadVideoFromUrl(videoUrl);
+            }
             return cubit;
           },
           child: EditVideoScreen(

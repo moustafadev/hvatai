@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hvatai/blocs_observer.dart';
 import 'package:hvatai/core/datasources/local/cache_helper.dart';
+import 'package:hvatai/core/shared/utils/temp_video_cleaner.dart';
 import 'package:hvatai/firebase_options.dart';
 
 import '../locator.dart';
@@ -13,6 +14,9 @@ import '../locator.dart';
 class InitApp {
   static Future<void> initialize() async {
     WidgetsFlutterBinding.ensureInitialized();
+
+    // Clean up temp video files on startup
+    TempVideoCleaner.cleanupAllMatching().catchError((_) {});
 
     await Future.value([
       await setupLocator(),

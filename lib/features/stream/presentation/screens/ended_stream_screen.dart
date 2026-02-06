@@ -46,9 +46,10 @@ class EndedStreamScreen extends StatelessWidget {
             // Video Player
             _EndedStreamVideoPlayerWrapper(
               videoPath: recordingPlaylist,
-              onClipTap: () => _showClipPreviewSheet(
+              onClipTap: (controller) => _showClipPreviewSheet(
                 context: context,
                 videoUrl: recordingPlaylist,
+                sharedController: controller,
               ),
             ),
             // Top info
@@ -125,11 +126,8 @@ class EndedStreamScreen extends StatelessWidget {
 Future<void> _showClipPreviewSheet({
   required BuildContext context,
   required String videoUrl,
-  VideoPlayerController? backgroundController,
+  required VideoPlayerController sharedController,
 }) async {
-  // Pause background video if provided
-  backgroundController?.pause();
-
   final result = await showModalBottomSheet<String>(
     context: context,
     isScrollControlled: true,
@@ -143,7 +141,7 @@ Future<void> _showClipPreviewSheet({
       ),
       child: _ClipPreviewSheet(
         videoUrl: videoUrl,
-        backgroundController: backgroundController,
+        sharedController: sharedController,
       ),
     ),
   );
@@ -154,6 +152,7 @@ Future<void> _showClipPreviewSheet({
       AppRoutes.editVideo,
       extra: {
         'videoUrl': result,
+        'sharedController': sharedController,
       },
     );
   }
@@ -162,18 +161,18 @@ Future<void> _showClipPreviewSheet({
 class _ClipPreviewSheet extends StatelessWidget {
   const _ClipPreviewSheet({
     required this.videoUrl,
-    this.backgroundController,
+    required this.sharedController,
   });
 
   final String videoUrl;
-  final VideoPlayerController? backgroundController;
+  final VideoPlayerController sharedController;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<ClipPreviewCubit>(
       create: (_) => ClipPreviewCubit(
         videoUrl: videoUrl,
-        backgroundController: backgroundController,
+        sharedController: sharedController,
       ),
       child: BlocBuilder<ClipPreviewCubit, ClipPreviewState>(
         builder: (context, state) {
@@ -212,28 +211,54 @@ class _ClipPreviewSheet extends StatelessWidget {
                         aspectRatio: 9 / 16,
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(24),
-                          child: VideoThumbnailPlayer(
-                            videoPath: videoUrl,
-                            key: const ValueKey('clip_preview_bottom_sheet'),
-                          ),
+                          child: state.isDownloading
+                              ? Container(
+                                  color: AppColors.text,
+                                  child: const Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        CircularProgressIndicator(
+                                          color: AppColors.primaryColor,
+                                        ),
+                                        SizedBox(height: 16),
+                                        CustomText(
+                                          text: 'Обработка....',
+                                          color: Colors.white,
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              : _SharedVideoPlayer(
+                                  controller: sharedController,
+                                ),
                         ),
                       ),
                     ),
                     // Edit icon outside video preview, right side, padding 16 from right screen
-                    Positioned(
-                      top: 0,
-                      right: 16,
-                      child: GestureDetector(
-                        onTap: () => cubit.openEditor(context),
-                        child: CircleAvatar(
-                          backgroundColor: AppColors.greyButton,
-                          radius: 16,
-                          child: SvgPicture.asset(
-                            Assets.assetsIconsEdit,
+                    // Only show when video is downloaded
+                    if (state.tempVideoPath != null &&
+                        state.tempVideoPath!.isNotEmpty &&
+                        !state.isDownloading)
+                      Positioned(
+                        top: 0,
+                        right: 16,
+                        child: GestureDetector(
+                          onTap: () =>
+                              cubit.openEditor(context, sharedController),
+                          child: CircleAvatar(
+                            backgroundColor: AppColors.greyButton,
+                            radius: 16,
+                            child: SvgPicture.asset(
+                              Assets.assetsIconsEdit,
+                            ),
                           ),
                         ),
                       ),
-                    ),
                   ],
                 ),
                 SizedBox(height: 16),
@@ -270,8 +295,12 @@ class _ClipPreviewSheet extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.only(right: 16),
                     child: GestureDetector(
-                      onTap:
-                          state.isSaving ? null : () => cubit.saveToDownloads(),
+                      onTap: (state.isSaving || state.isDownloading)
+                          ? null
+                          : () {
+                              // Only save to downloads (editing file is already downloaded)
+                              cubit.saveToDownloads();
+                            },
                       child: Container(
                         width: 48,
                         height: 48,
@@ -279,28 +308,17 @@ class _ClipPreviewSheet extends StatelessWidget {
                           color: AppColors.text,
                           shape: BoxShape.circle,
                         ),
-                        child: state.isSaving
-                            ? const Center(
-                                child: SizedBox(
-                                  width: 24,
-                                  height: 24,
-                                  child: CircularProgressIndicator(
-                                    strokeWidth: 2,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              )
-                            : Center(
-                                child: SvgPicture.asset(
-                                  Assets.assetsIconsDownload,
-                                  width: 24,
-                                  height: 24,
-                                  colorFilter: const ColorFilter.mode(
-                                    Colors.white,
-                                    BlendMode.srcIn,
-                                  ),
-                                ),
-                              ),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            Assets.assetsIconsDownload,
+                            width: 24,
+                            height: 24,
+                            colorFilter: const ColorFilter.mode(
+                              Colors.white,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -309,6 +327,144 @@ class _ClipPreviewSheet extends StatelessWidget {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+/// Widget to display a shared VideoPlayerController
+class _SharedVideoPlayer extends StatefulWidget {
+  const _SharedVideoPlayer({
+    required this.controller,
+  });
+
+  final VideoPlayerController controller;
+
+  @override
+  State<_SharedVideoPlayer> createState() => _SharedVideoPlayerState();
+}
+
+class _SharedVideoPlayerState extends State<_SharedVideoPlayer> {
+  bool _hasReachedEnd = false;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.controller.addListener(_videoListener);
+  }
+
+  @override
+  void dispose() {
+    widget.controller.removeListener(_videoListener);
+    super.dispose();
+  }
+
+  void _videoListener() {
+    if (!mounted) return;
+
+    if (widget.controller.value.isInitialized) {
+      final position = widget.controller.value.position;
+      final duration = widget.controller.value.duration;
+
+      // Check if video has reached the end (within 100ms tolerance)
+      final hasReachedEnd = duration.inMilliseconds > 0 &&
+          (position.inMilliseconds >= duration.inMilliseconds - 100);
+
+      if (_hasReachedEnd != hasReachedEnd) {
+        setState(() {
+          _hasReachedEnd = hasReachedEnd;
+        });
+      }
+    }
+  }
+
+  Future<void> _rewind() async {
+    if (widget.controller.value.isInitialized) {
+      await widget.controller.seekTo(Duration.zero);
+      await widget.controller.play();
+      setState(() {
+        _hasReachedEnd = false;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!widget.controller.value.isInitialized) {
+      return Container(
+        color: Colors.black,
+        child: const Center(
+          child: CircularProgressIndicator(color: Colors.white),
+        ),
+      );
+    }
+
+    return GestureDetector(
+      onTap: _hasReachedEnd
+          ? null
+          : () {
+              if (widget.controller.value.isPlaying) {
+                widget.controller.pause();
+              } else {
+                widget.controller.play();
+              }
+            },
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          AspectRatio(
+            aspectRatio: widget.controller.value.aspectRatio,
+            child: VideoPlayer(widget.controller),
+          ),
+          if (!widget.controller.value.isPlaying && !_hasReachedEnd)
+            Container(
+              color: Colors.black.withOpacity(0.3),
+              child: const Center(
+                child: Icon(
+                  Icons.play_circle_filled,
+                  size: 60,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          // Rewatch icon when video reaches end
+          if (_hasReachedEnd)
+            Positioned.fill(
+              child: GestureDetector(
+                onTap: _rewind,
+                child: Container(
+                  color: Colors.black.withOpacity(0.3),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.9),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.replay,
+                            color: Colors.black,
+                            size: 32,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        const CustomText(
+                          text: 'Пересмотреть',
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
       ),
     );
   }
@@ -399,7 +555,7 @@ class _EndedStreamVideoPlayerWrapper extends StatefulWidget {
   });
 
   final String videoPath;
-  final VoidCallback onClipTap;
+  final void Function(VideoPlayerController) onClipTap;
 
   @override
   State<_EndedStreamVideoPlayerWrapper> createState() =>
@@ -408,7 +564,7 @@ class _EndedStreamVideoPlayerWrapper extends StatefulWidget {
 
 class _EndedStreamVideoPlayerWrapperState
     extends State<_EndedStreamVideoPlayerWrapper> {
-
+  VideoPlayerController? _sharedController;
 
   @override
   Widget build(BuildContext context) {
@@ -421,6 +577,9 @@ class _EndedStreamVideoPlayerWrapperState
               return _EndedStreamVideoPlayer(
                 videoPath: widget.videoPath,
                 isMuted: state.isAudioMuted,
+                onControllerCreated: (controller) {
+                  _sharedController = controller;
+                },
               );
             },
           ),
@@ -432,7 +591,11 @@ class _EndedStreamVideoPlayerWrapperState
           child: RightIcon(
             icon: Assets.assetsImagesFilm,
             label: 'Клип',
-            onTap: () => widget.onClipTap(),
+            onTap: () {
+              if (_sharedController != null) {
+                widget.onClipTap(_sharedController!);
+              }
+            },
           ),
         ),
       ],
@@ -444,10 +607,12 @@ class _EndedStreamVideoPlayer extends StatefulWidget {
   const _EndedStreamVideoPlayer({
     required this.videoPath,
     required this.isMuted,
+    this.onControllerCreated,
   });
 
   final String videoPath;
   final bool isMuted;
+  final void Function(VideoPlayerController)? onControllerCreated;
 
   @override
   State<_EndedStreamVideoPlayer> createState() =>
@@ -456,6 +621,7 @@ class _EndedStreamVideoPlayer extends StatefulWidget {
 
 class _EndedStreamVideoPlayerState extends State<_EndedStreamVideoPlayer> {
   VideoPlayerController? _controller;
+  bool _hasReachedEnd = false;
 
   @override
   void initState() {
@@ -468,6 +634,35 @@ class _EndedStreamVideoPlayerState extends State<_EndedStreamVideoPlayer> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.isMuted != widget.isMuted && _controller != null) {
       _controller!.setVolume(widget.isMuted ? 0.0 : 1.0);
+    }
+  }
+
+  void _videoListener() {
+    if (!mounted || _controller == null) return;
+
+    if (_controller!.value.isInitialized) {
+      final position = _controller!.value.position;
+      final duration = _controller!.value.duration;
+
+      // Check if video has reached the end (within 100ms tolerance)
+      final hasReachedEnd = duration.inMilliseconds > 0 &&
+          (position.inMilliseconds >= duration.inMilliseconds - 100);
+
+      if (_hasReachedEnd != hasReachedEnd) {
+        setState(() {
+          _hasReachedEnd = hasReachedEnd;
+        });
+      }
+    }
+  }
+
+  Future<void> _rewind() async {
+    if (_controller != null && _controller!.value.isInitialized) {
+      await _controller!.seekTo(Duration.zero);
+      await _controller!.play();
+      setState(() {
+        _hasReachedEnd = false;
+      });
     }
   }
 
@@ -502,10 +697,14 @@ class _EndedStreamVideoPlayerState extends State<_EndedStreamVideoPlayer> {
     );
 
     await _controller!.initialize();
+    _controller!.addListener(_videoListener);
     _controller!.setVolume(widget.isMuted ? 0.0 : 1.0);
     _controller!.play();
 
-
+    // Notify parent about controller creation
+    if (widget.onControllerCreated != null) {
+      widget.onControllerCreated!(_controller!);
+    }
 
     if (mounted) {
       setState(() {});
@@ -514,7 +713,8 @@ class _EndedStreamVideoPlayerState extends State<_EndedStreamVideoPlayer> {
 
   @override
   void dispose() {
-    _controller?.dispose();
+    _controller?.removeListener(_videoListener);
+    // Don't dispose here - let EditVideoScreen handle it
     super.dispose();
   }
 
@@ -530,14 +730,16 @@ class _EndedStreamVideoPlayerState extends State<_EndedStreamVideoPlayer> {
     }
 
     return GestureDetector(
-      onTap: () {
-        if (_controller!.value.isPlaying) {
-          _controller!.pause();
-        } else {
-          _controller!.play();
-        }
-        setState(() {});
-      },
+      onTap: _hasReachedEnd
+          ? null
+          : () {
+              if (_controller!.value.isPlaying) {
+                _controller!.pause();
+              } else {
+                _controller!.play();
+              }
+              setState(() {});
+            },
       child: Stack(
         fit: StackFit.expand,
         children: [
@@ -545,7 +747,7 @@ class _EndedStreamVideoPlayerState extends State<_EndedStreamVideoPlayer> {
             aspectRatio: _controller!.value.aspectRatio,
             child: VideoPlayer(_controller!),
           ),
-          if (!_controller!.value.isPlaying)
+          if (!_controller!.value.isPlaying && !_hasReachedEnd)
             Container(
               color: Colors.black.withOpacity(0.3),
               child: const Center(
@@ -553,6 +755,43 @@ class _EndedStreamVideoPlayerState extends State<_EndedStreamVideoPlayer> {
                   Icons.play_circle_filled,
                   size: 60,
                   color: Colors.white,
+                ),
+              ),
+            ),
+          // Rewatch icon when video reaches end
+          if (_hasReachedEnd)
+            Positioned.fill(
+              child: GestureDetector(
+                onTap: _rewind,
+                child: Container(
+                  color: Colors.black.withOpacity(0.3),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 60,
+                          height: 60,
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.9),
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.replay,
+                            color: Colors.black,
+                            size: 32,
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        const CustomText(
+                          text: 'Пересмотреть',
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),

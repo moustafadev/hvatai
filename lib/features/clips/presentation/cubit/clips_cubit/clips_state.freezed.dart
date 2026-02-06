@@ -20,6 +20,7 @@ mixin _$ClipsState {
   bool get isTrimming => throw _privateConstructorUsedError;
   bool get isVideoLoaded => throw _privateConstructorUsedError;
   bool get isPlaying => throw _privateConstructorUsedError;
+  bool get hasReachedEnd => throw _privateConstructorUsedError;
   String? get videoPath => throw _privateConstructorUsedError;
   String? get trimmedVideoPath => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
@@ -45,6 +46,7 @@ abstract class $ClipsStateCopyWith<$Res> {
       bool isTrimming,
       bool isVideoLoaded,
       bool isPlaying,
+      bool hasReachedEnd,
       String? videoPath,
       String? trimmedVideoPath,
       String errorMessage,
@@ -72,6 +74,7 @@ class _$ClipsStateCopyWithImpl<$Res, $Val extends ClipsState>
     Object? isTrimming = null,
     Object? isVideoLoaded = null,
     Object? isPlaying = null,
+    Object? hasReachedEnd = null,
     Object? videoPath = freezed,
     Object? trimmedVideoPath = freezed,
     Object? errorMessage = null,
@@ -95,6 +98,10 @@ class _$ClipsStateCopyWithImpl<$Res, $Val extends ClipsState>
       isPlaying: null == isPlaying
           ? _value.isPlaying
           : isPlaying // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasReachedEnd: null == hasReachedEnd
+          ? _value.hasReachedEnd
+          : hasReachedEnd // ignore: cast_nullable_to_non_nullable
               as bool,
       videoPath: freezed == videoPath
           ? _value.videoPath
@@ -137,6 +144,7 @@ abstract class _$$ClipsStateImplCopyWith<$Res>
       bool isTrimming,
       bool isVideoLoaded,
       bool isPlaying,
+      bool hasReachedEnd,
       String? videoPath,
       String? trimmedVideoPath,
       String errorMessage,
@@ -162,6 +170,7 @@ class __$$ClipsStateImplCopyWithImpl<$Res>
     Object? isTrimming = null,
     Object? isVideoLoaded = null,
     Object? isPlaying = null,
+    Object? hasReachedEnd = null,
     Object? videoPath = freezed,
     Object? trimmedVideoPath = freezed,
     Object? errorMessage = null,
@@ -185,6 +194,10 @@ class __$$ClipsStateImplCopyWithImpl<$Res>
       isPlaying: null == isPlaying
           ? _value.isPlaying
           : isPlaying // ignore: cast_nullable_to_non_nullable
+              as bool,
+      hasReachedEnd: null == hasReachedEnd
+          ? _value.hasReachedEnd
+          : hasReachedEnd // ignore: cast_nullable_to_non_nullable
               as bool,
       videoPath: freezed == videoPath
           ? _value.videoPath
@@ -222,6 +235,7 @@ class _$ClipsStateImpl implements _ClipsState {
       this.isTrimming = false,
       this.isVideoLoaded = false,
       this.isPlaying = false,
+      this.hasReachedEnd = false,
       this.videoPath,
       this.trimmedVideoPath,
       this.errorMessage = '',
@@ -242,6 +256,9 @@ class _$ClipsStateImpl implements _ClipsState {
   @JsonKey()
   final bool isPlaying;
   @override
+  @JsonKey()
+  final bool hasReachedEnd;
+  @override
   final String? videoPath;
   @override
   final String? trimmedVideoPath;
@@ -260,7 +277,7 @@ class _$ClipsStateImpl implements _ClipsState {
 
   @override
   String toString() {
-    return 'ClipsState(isLoading: $isLoading, isTrimming: $isTrimming, isVideoLoaded: $isVideoLoaded, isPlaying: $isPlaying, videoPath: $videoPath, trimmedVideoPath: $trimmedVideoPath, errorMessage: $errorMessage, startValue: $startValue, endValue: $endValue, clipName: $clipName)';
+    return 'ClipsState(isLoading: $isLoading, isTrimming: $isTrimming, isVideoLoaded: $isVideoLoaded, isPlaying: $isPlaying, hasReachedEnd: $hasReachedEnd, videoPath: $videoPath, trimmedVideoPath: $trimmedVideoPath, errorMessage: $errorMessage, startValue: $startValue, endValue: $endValue, clipName: $clipName)';
   }
 
   @override
@@ -276,6 +293,8 @@ class _$ClipsStateImpl implements _ClipsState {
                 other.isVideoLoaded == isVideoLoaded) &&
             (identical(other.isPlaying, isPlaying) ||
                 other.isPlaying == isPlaying) &&
+            (identical(other.hasReachedEnd, hasReachedEnd) ||
+                other.hasReachedEnd == hasReachedEnd) &&
             (identical(other.videoPath, videoPath) ||
                 other.videoPath == videoPath) &&
             (identical(other.trimmedVideoPath, trimmedVideoPath) ||
@@ -297,6 +316,7 @@ class _$ClipsStateImpl implements _ClipsState {
       isTrimming,
       isVideoLoaded,
       isPlaying,
+      hasReachedEnd,
       videoPath,
       trimmedVideoPath,
       errorMessage,
@@ -319,6 +339,7 @@ abstract class _ClipsState implements ClipsState {
       final bool isTrimming,
       final bool isVideoLoaded,
       final bool isPlaying,
+      final bool hasReachedEnd,
       final String? videoPath,
       final String? trimmedVideoPath,
       final String errorMessage,
@@ -334,6 +355,8 @@ abstract class _ClipsState implements ClipsState {
   bool get isVideoLoaded;
   @override
   bool get isPlaying;
+  @override
+  bool get hasReachedEnd;
   @override
   String? get videoPath;
   @override
