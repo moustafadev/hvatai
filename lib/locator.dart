@@ -7,7 +7,8 @@ import 'package:hvatai/features/activity/data/datasources/api_service_activity.d
 import 'package:hvatai/features/activity/data/repositories/activity_impl_repository.dart';
 import 'package:hvatai/features/activity/domain/repositories/activity_repository.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
-import 'package:hvatai/features/clips/presentation/cubit/clips_cubit/clips_cubit.dart';
+import 'package:hvatai/features/create_clip/presentation/cubit/create_clip_cubit/create_clip_cubit.dart';
+import 'package:hvatai/features/create_clip/presentation/cubit/preview_clip_cubit/preview_clip_cubit.dart';
 import 'package:hvatai/features/company/presentation/cubit/company_reviews/company_reviews_cubit.dart';
 import 'package:hvatai/features/review/data/datasources/api_service_review.dart';
 import 'package:hvatai/features/review/data/repositories/review_repository_impl.dart';
@@ -95,13 +96,17 @@ import 'package:hvatai/features/favorites/data/datasources/api_service_favorites
 import 'package:hvatai/features/favorites/data/repositories/favorites_repository_impl.dart';
 import 'package:hvatai/features/favorites/domain/repositories/favorites_repository.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_cubit/search_cubit.dart';
-import 'package:hvatai/features/schedule_stream/presentation/cubit/schedule_stream_cubit/schedule_stream_cubit.dart';
+import 'package:hvatai/features/stream/presentation/cubit/schedule_stream_cubit/schedule_stream_cubit.dart';
 import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart';
 import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
 import 'package:hvatai/features/stream/domain/repositories/stream_impl_repository.dart';
+import 'package:hvatai/features/create_clip/data/datasources/api_service_clip.dart';
+import 'package:hvatai/features/create_clip/data/repositories/clip_impl_repository.dart';
+import 'package:hvatai/features/create_clip/domain/repositories/clip_repository.dart';
 import 'package:hvatai/features/stream/presentation/cubit/live_listings_shop/live_listings_shop_cubit.dart';
 import 'package:hvatai/features/stream/presentation/cubit/my_streams_cubit/my_streams_cubit.dart';
 import 'package:hvatai/features/stream/presentation/cubit/ended_stream/ended_stream_cubit.dart';
+import 'package:hvatai/features/stream/presentation/cubit/clip_preview/clip_bottom_sheet_cubit.dart';
 import 'package:hvatai/features/wallet/data/datasources/api_service_wallet.dart';
 import 'package:hvatai/features/wallet/data/repositories/wallet_impl_repository.dart';
 import 'package:hvatai/features/wallet/domain/repositories/wallet_repository.dart';
@@ -146,6 +151,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => CompanyReviewsCubit(locator()));
   locator.registerFactory(() => CompanyStreamsCubit(locator()));
   locator.registerFactory(() => EndedStreamCubit(locator()));
+  locator.registerFactory(() => ClipBottomSheetCubit(locator()));
   locator.registerFactory(
     () => CompanyCubit(
       locator(),
@@ -202,7 +208,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => ReviewsCubit(locator(), locator()));
   locator.registerFactory(() => MyProductDetailsCubit());
   locator.registerFactory(() => ProductImageCubit());
-  locator.registerFactory(() => ClipsCubit());
+  locator.registerFactory(() => CreateClipCubit());
+  locator.registerFactory(() => PreviewClipCubit(locator()));
   // Analytics
   locator.registerFactory(() => AnalyticsCubit(locator()));
   locator.registerFactory(() => NotificationsCubit(locator(), locator()));
@@ -236,6 +243,8 @@ Future<void> setupLocator() async {
       () => ChatImplRepository(locator()));
   locator.registerLazySingleton<StreamRepository>(
       () => StreamImplRepository(locator()));
+  locator.registerLazySingleton<ClipRepository>(
+      () => ClipImplRepository(locator()));
   locator.registerLazySingleton<ProfileRepository>(
       () => ProfileImplRepository(locator(), locator()));
   locator.registerLazySingleton<AddNewProductRepository>(
@@ -279,6 +288,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ApiServiceFavorites());
   locator.registerLazySingleton(() => ApiServiceChat());
   locator.registerLazySingleton(() => ApiServiceStream());
+  locator.registerLazySingleton(() => ApiServiceClip());
   locator.registerLazySingleton(() => ApiServiceWallet());
   locator.registerLazySingleton(() => ApiServiceOrders());
   locator.registerLazySingleton(() => ApiServiceAnalytics());

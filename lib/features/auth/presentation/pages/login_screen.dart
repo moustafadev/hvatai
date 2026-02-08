@@ -50,16 +50,18 @@ class LoginScreen extends StatelessWidget {
                             20.ph,
                             CustomTextField(
                               hintText: 'Номер телефона',
-                              keyboardType: TextInputType.phone,
-                              isRequired: false,
-                              onChanged: cubit.updatePhone,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Введите номер телефона';
-                                }
-                                return null;
-                              },
+                              keyboardType: TextInputType.number,
+                              controller: cubit.phoneController,
+                              onChanged: cubit.onChangePhone,
                             ),
+                            if (state.errorMessage.isNotEmpty) ...[
+                              10.ph,
+                              CustomText(
+                                text: state.errorMessage,
+                                fontSize: 14.sp,
+                                color: AppColors.red,
+                              ),
+                            ],
                           ],
                         ),
                       ),
@@ -71,7 +73,7 @@ class LoginScreen extends StatelessWidget {
                             CustomGradientButton(
                               text: 'Получить код',
                               isLoading: cubit.state.isLoading,
-                              isDisabled: cubit.state.phone.isEmpty,
+                              isDisabled: cubit.getClearPhone().length != 11,
                               onPressed: () => cubit.login(context),
                             ),
                             20.ph,

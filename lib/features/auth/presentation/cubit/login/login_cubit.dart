@@ -16,8 +16,67 @@ class LoginCubit extends Cubit<LoginState> {
 
   final formKey = GlobalKey<FormState>();
   final SendOtpUseCase sendOtpUseCase;
+  final phoneController = TextEditingController();
 
-  void updatePhone(String value) => emit(state.copyWith(phone: value));
+  void onChangePhone(String phone) {
+    phoneController.text = _formattingPhone(phone);
+    emit(state.copyWith(phone: _formattingPhone(phone)));
+  }
+
+  String _formattingPhone(String text) {
+    text = text.replaceAll(RegExp(r'\D'), '');
+    if (text.isNotEmpty) {
+      String phone = '';
+      if (['7', '8', '9'].contains(text[0])) {
+        if (text[0] == '9') {
+          text = '7$text';
+        }
+        String firstSymbols = (text[0] == '8') ? '8' : '+7';
+        phone = '$firstSymbols ';
+        if (text.length > 1) {
+          phone += '(${text.substring(1, (text.length < 4) ? text.length : 4)}';
+        }
+        if (text.length >= 5) {
+          phone +=
+              ') ${text.substring(4, (text.length < 7) ? text.length : 7)}';
+        }
+        if (text.length >= 8) {
+          phone += '-${text.substring(7, (text.length < 9) ? text.length : 9)}';
+        }
+        if (text.length >= 10) {
+          phone +=
+              '-${text.substring(9, (text.length < 11) ? text.length : 11)}';
+        }
+        return phone;
+      } else {
+        return '+7$text';
+      }
+    }
+    return '';
+  }
+
+  String getClearPhone() {
+    if (phoneController.text.isEmpty) {
+      return '';
+    }
+
+    return '7' +
+        phoneController.text.replaceAll(RegExp(r'\D'), '').substring(
+            1,
+            (phoneController.text.replaceAll(RegExp(r'\D'), '').length >= 11)
+                ? 11
+                : phoneController.text.replaceAll(RegExp(r'\D'), '').length);
+  }
+
+  void updatePhone(String value) {
+    onChangePhone(value);
+  }
+
+  @override
+  Future<void> close() {
+    phoneController.dispose();
+    return super.close();
+  }
 
   void login(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
@@ -27,7 +86,8 @@ class LoginCubit extends Cubit<LoginState> {
 
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
-    final result = await sendOtpUseCase.call(SendOtpParams(phone: state.phone));
+    final clearPhone = getClearPhone();
+    final result = await sendOtpUseCase.call(SendOtpParams(phone: clearPhone));
 
     result.fold(
       (failure) {
@@ -47,7 +107,7 @@ class LoginCubit extends Cubit<LoginState> {
             ? otpResponse.message
             : 'OTP sent successfully');
 
-        context.push(AppRoutes.otp, extra: state.phone);
+        context.push(AppRoutes.otp, extra: clearPhone);
       },
     );
   }

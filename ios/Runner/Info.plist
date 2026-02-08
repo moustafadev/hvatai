@@ -45,6 +45,8 @@
 	<string>We need your location to auto-fill the address</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>We need access to your photo library to select a product image.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to your photo library to save videos.</string>
 	<key>NSUserAuthenticationUsageDescription</key>
 	<string>Sign in with Apple is used to log in securely.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>

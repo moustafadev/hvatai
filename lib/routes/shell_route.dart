@@ -10,8 +10,9 @@ import 'package:hvatai/features/favorites/presentation/cubit/favorite/favorite_c
 import 'package:hvatai/features/favorites/presentation/favorites.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
-import 'package:hvatai/features/schedule_stream/presentation/schedule_stream.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
+import 'package:hvatai/features/stream/presentation/cubit/schedule_stream_cubit/schedule_stream_cubit.dart';
+import 'package:hvatai/features/stream/presentation/stream.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:hvatai/routes/go_router.dart';

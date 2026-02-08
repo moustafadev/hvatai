@@ -10,5 +10,6 @@ class EndedStreamState with _$EndedStreamState {
     @Default(true) bool commentsHasMore,
     @Default('') String commentsError,
     @Default(false) bool isAudioMuted,
+    @Default(false) bool isExpanded,
   }) = _EndedStreamState;
 }

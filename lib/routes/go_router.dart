@@ -31,15 +31,15 @@ import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile
 import 'package:hvatai/features/profile/presentation/profile.dart';
 
 import 'package:hvatai/features/invite_friend/presentation/invite_friend.dart';
-import 'package:hvatai/features/clips/presentation/clips.dart';
+import 'package:hvatai/features/create_clip/presentation/clips.dart';
 import 'package:video_player/video_player.dart';
-import 'package:hvatai/features/clips/presentation/cubit/clips_cubit/clips_cubit.dart';
+import 'package:hvatai/features/create_clip/presentation/cubit/create_clip_cubit/create_clip_cubit.dart';
+import 'package:hvatai/features/create_clip/presentation/cubit/preview_clip_cubit/preview_clip_cubit.dart';
 import 'package:hvatai/features/analytics/presentation/analytics.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
 import 'package:hvatai/features/company/presentation/company.dart';
 import 'package:hvatai/features/company/presentation/cubit/company/company_cubit.dart';
 import 'package:hvatai/features/review/presentation/review.dart';
-import 'package:hvatai/features/schedule_stream/presentation/schedule_stream.dart';
 import 'package:hvatai/features/splash/presentation/pages/splash_screen.dart';
 import 'package:hvatai/features/stream/presentation/stream.dart';
 import 'package:hvatai/features/wallet/presentation/wallet.dart';
@@ -50,7 +50,7 @@ import 'package:hvatai/routes/shell_route.dart';
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter router = GoRouter(
   // observers: [MyNavigatorObserver()],
-  initialLocation: AppRoutes.splash,
+  initialLocation: AppRoutes.login,
   navigatorKey: navigatorKey,
   routes: <RouteBase>[
     GoRoute(
@@ -548,11 +548,14 @@ final GoRouter router = GoRouter(
         final sharedController =
             extra?['sharedController'] as VideoPlayerController?;
         final tempVideoPath = extra?['tempVideoPath'] as String?;
+        final streamId = extra?['streamId'] as int?;
 
         return BlocProvider(
           create: (context) {
-            final cubit = ClipsCubit(
+            final cubit = locator<CreateClipCubit>();
+            cubit.init(
               sharedController: sharedController,
+              streamId: streamId,
             );
 
             // If tempVideoPath is provided (local file), use loadVideo directly
@@ -569,7 +572,7 @@ final GoRouter router = GoRouter(
             }
             return cubit;
           },
-          child: EditVideoScreen(
+          child: CreateClipScreen(
             videoUrl: videoUrl,
           ),
         );
@@ -580,7 +583,24 @@ final GoRouter router = GoRouter(
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, dynamic>?;
         final videoPath = extra?['videoPath'] as String? ?? '';
-        return PreviewVideoScreen(videoPath: videoPath);
+        final streamId = extra?['streamId'] as int?;
+        final clipName = extra?['clipName'] as String? ?? '';
+        return BlocProvider(
+          create: (context) {
+            final cubit = locator<PreviewClipCubit>();
+            cubit.init(
+              videoPath: videoPath,
+              streamId: streamId,
+              clipName: clipName,
+            );
+            return cubit;
+          },
+          child: PreviewClipScreen(
+            videoPath: videoPath,
+            streamId: streamId,
+            clipName: clipName,
+          ),
+        );
       },
     ),
     statefulShellRoute,

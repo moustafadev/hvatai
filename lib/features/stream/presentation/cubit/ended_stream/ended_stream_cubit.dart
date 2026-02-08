@@ -85,4 +85,8 @@ class EndedStreamCubit extends Cubit<EndedStreamState> {
   void toggleAudio() {
     emit(state.copyWith(isAudioMuted: !state.isAudioMuted));
   }
+
+  void toggleExpanded() {
+    emit(state.copyWith(isExpanded: !state.isExpanded));
+  }
 }

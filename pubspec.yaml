@@ -74,6 +74,7 @@ dependencies:
   http: ^1.2.0
   readmore: ^3.0.0
   path: ^1.9.1
+  saver_gallery: ^4.1.0
 
 dev_dependencies:
   flutter_test:

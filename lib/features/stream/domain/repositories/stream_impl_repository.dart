@@ -200,4 +200,19 @@ class StreamImplRepository implements StreamRepository {
       return res;
     });
   }
+
+  @override
+  Future<Either<String, String>> downloadVideo({
+    required String videoUrl,
+    required String targetPath,
+  }) {
+    return executeAndHandleError<String>(() async {
+      final res = await _apiServiceStream.downloadVideo(
+        videoUrl: videoUrl,
+        targetPath: targetPath,
+      );
+      return res;
+    });
+  }
+
 }

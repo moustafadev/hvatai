@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
+import 'package:http/http.dart' as http;
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/stream/data/models/bid_session/bid_session_response.dart';
 import 'package:hvatai/features/stream/data/models/bid_stream/bid_stream_response.dart';
@@ -390,7 +393,36 @@ class ApiServiceStream extends ApiBase {
         return true;
       }
 
-      return false;
+      throw Exception(
+        'Failed to create clip from stream (code: ${res.statusCode})',
+      );
+    });
+  }
+
+  /// Download video from URL to specified file path
+  Future<String> downloadVideo({
+    required String videoUrl,
+    required String targetPath,
+  }) async {
+    return executeAndHandleErrorServer<String>(() async {
+      // Download video using http package
+      final response = await http.get(Uri.parse(videoUrl));
+
+      if (response.statusCode != 200) {
+        throw Exception(
+            'Failed to download video: HTTP ${response.statusCode}');
+      }
+
+      // Validate response has content
+      if (response.bodyBytes.isEmpty) {
+        throw Exception('Downloaded file is empty');
+      }
+
+      // Write to file
+      final file = File(targetPath);
+      await file.writeAsBytes(response.bodyBytes);
+
+      return targetPath;
     });
   }
 }

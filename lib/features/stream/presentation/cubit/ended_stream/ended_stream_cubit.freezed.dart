@@ -23,6 +23,7 @@ mixin _$EndedStreamState {
   bool get commentsHasMore => throw _privateConstructorUsedError;
   String get commentsError => throw _privateConstructorUsedError;
   bool get isAudioMuted => throw _privateConstructorUsedError;
+  bool get isExpanded => throw _privateConstructorUsedError;
 
   /// Create a copy of EndedStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -44,7 +45,8 @@ abstract class $EndedStreamStateCopyWith<$Res> {
       int commentsPerPage,
       bool commentsHasMore,
       String commentsError,
-      bool isAudioMuted});
+      bool isAudioMuted,
+      bool isExpanded});
 }
 
 /// @nodoc
@@ -69,6 +71,7 @@ class _$EndedStreamStateCopyWithImpl<$Res, $Val extends EndedStreamState>
     Object? commentsHasMore = null,
     Object? commentsError = null,
     Object? isAudioMuted = null,
+    Object? isExpanded = null,
   }) {
     return _then(_value.copyWith(
       comments: null == comments
@@ -99,6 +102,10 @@ class _$EndedStreamStateCopyWithImpl<$Res, $Val extends EndedStreamState>
           ? _value.isAudioMuted
           : isAudioMuted // ignore: cast_nullable_to_non_nullable
               as bool,
+      isExpanded: null == isExpanded
+          ? _value.isExpanded
+          : isExpanded // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -118,7 +125,8 @@ abstract class _$$EndedStreamStateImplCopyWith<$Res>
       int commentsPerPage,
       bool commentsHasMore,
       String commentsError,
-      bool isAudioMuted});
+      bool isAudioMuted,
+      bool isExpanded});
 }
 
 /// @nodoc
@@ -141,6 +149,7 @@ class __$$EndedStreamStateImplCopyWithImpl<$Res>
     Object? commentsHasMore = null,
     Object? commentsError = null,
     Object? isAudioMuted = null,
+    Object? isExpanded = null,
   }) {
     return _then(_$EndedStreamStateImpl(
       comments: null == comments
@@ -171,6 +180,10 @@ class __$$EndedStreamStateImplCopyWithImpl<$Res>
           ? _value.isAudioMuted
           : isAudioMuted // ignore: cast_nullable_to_non_nullable
               as bool,
+      isExpanded: null == isExpanded
+          ? _value.isExpanded
+          : isExpanded // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -185,7 +198,8 @@ class _$EndedStreamStateImpl implements _EndedStreamState {
       this.commentsPerPage = 50,
       this.commentsHasMore = true,
       this.commentsError = '',
-      this.isAudioMuted = false})
+      this.isAudioMuted = false,
+      this.isExpanded = false})
       : _comments = comments;
 
   final List<StreamCommentModel> _comments;
@@ -215,10 +229,13 @@ class _$EndedStreamStateImpl implements _EndedStreamState {
   @override
   @JsonKey()
   final bool isAudioMuted;
+  @override
+  @JsonKey()
+  final bool isExpanded;
 
   @override
   String toString() {
-    return 'EndedStreamState(comments: $comments, isLoadingComments: $isLoadingComments, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, commentsError: $commentsError, isAudioMuted: $isAudioMuted)';
+    return 'EndedStreamState(comments: $comments, isLoadingComments: $isLoadingComments, commentsPage: $commentsPage, commentsPerPage: $commentsPerPage, commentsHasMore: $commentsHasMore, commentsError: $commentsError, isAudioMuted: $isAudioMuted, isExpanded: $isExpanded)';
   }
 
   @override
@@ -238,7 +255,9 @@ class _$EndedStreamStateImpl implements _EndedStreamState {
             (identical(other.commentsError, commentsError) ||
                 other.commentsError == commentsError) &&
             (identical(other.isAudioMuted, isAudioMuted) ||
-                other.isAudioMuted == isAudioMuted));
+                other.isAudioMuted == isAudioMuted) &&
+            (identical(other.isExpanded, isExpanded) ||
+                other.isExpanded == isExpanded));
   }
 
   @override
@@ -250,7 +269,8 @@ class _$EndedStreamStateImpl implements _EndedStreamState {
       commentsPerPage,
       commentsHasMore,
       commentsError,
-      isAudioMuted);
+      isAudioMuted,
+      isExpanded);
 
   /// Create a copy of EndedStreamState
   /// with the given fields replaced by the non-null parameter values.
@@ -270,7 +290,8 @@ abstract class _EndedStreamState implements EndedStreamState {
       final int commentsPerPage,
       final bool commentsHasMore,
       final String commentsError,
-      final bool isAudioMuted}) = _$EndedStreamStateImpl;
+      final bool isAudioMuted,
+      final bool isExpanded}) = _$EndedStreamStateImpl;
 
   @override
   List<StreamCommentModel> get comments;
@@ -286,6 +307,8 @@ abstract class _EndedStreamState implements EndedStreamState {
   String get commentsError;
   @override
   bool get isAudioMuted;
+  @override
+  bool get isExpanded;
 
   /// Create a copy of EndedStreamState
   /// with the given fields replaced by the non-null parameter values.

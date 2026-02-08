@@ -94,4 +94,10 @@ abstract class StreamRepository {
   Future<Either<String, bool>> createClipFromStream({
     required CreateClipFromStreamParams params,
   });
+
+  /// Download video from URL to specified file path
+  Future<Either<String, String>> downloadVideo({
+    required String videoUrl,
+    required String targetPath,
+  });
 }
