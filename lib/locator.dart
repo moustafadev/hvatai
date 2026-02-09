@@ -217,7 +217,7 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(
       () => DeliveryAddressCubit(locator(), locator(), locator(), locator()));
-  locator.registerFactory(() => OtpCubit(locator()));
+  locator.registerFactory(() => OtpCubit(locator(), locator()));
   locator.registerFactory(() => LiveListingsShopCubit(
       locator(), locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => WalletCubit(locator(), locator(), locator()));

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/features/auth/domain/usecases/check_otp_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
@@ -13,9 +14,11 @@ part 'otp_cubit.freezed.dart';
 class OtpCubit extends Cubit<OtpState> {
   OtpCubit(
     this.checkOtpUseCase,
+    this.appLocal,
   ) : super(const OtpState());
 
   final CheckOtpUseCase checkOtpUseCase;
+  final AppLocal appLocal;
 
   void initPhone(String phone) {
     emit(state.copyWith(phone: phone));
@@ -56,7 +59,12 @@ class OtpCubit extends Cubit<OtpState> {
         showFloatingMessageSuccess(userData.message.isNotEmpty
             ? userData.message
             : 'emailVerified'.tr());
-        context.push(AppRoutes.name);
+        if (userData.user?.name.isEmpty == true) {
+          context.push(AppRoutes.name);
+        } else {
+          appLocal.saveIsSetup(true);
+          context.go(AppRoutes.home);
+        }
       },
     );
   }
