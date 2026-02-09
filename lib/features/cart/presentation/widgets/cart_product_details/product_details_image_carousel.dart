@@ -11,6 +11,8 @@ class ProductDetailsImageCarousel extends StatelessWidget {
     required this.onFavoriteTap,
     required this.onShareTap,
     required this.onParticipateTap,
+    this.isInLiveAuction = false,
+    this.isJoiningStream = false,
   });
 
   final List<String> images;
@@ -21,6 +23,8 @@ class ProductDetailsImageCarousel extends StatelessWidget {
   final VoidCallback onFavoriteTap;
   final VoidCallback onShareTap;
   final VoidCallback onParticipateTap;
+  final bool isInLiveAuction;
+  final bool isJoiningStream;
 
   /// Check if a file path is a video
   bool _isVideoFile(String path) {
@@ -117,28 +121,24 @@ class ProductDetailsImageCarousel extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const Spacer(),
-                    // Participate button
-                    GestureDetector(
-                      onTap: onParticipateTap,
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.w,
-                          vertical: 12.h,
-                        ),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          color: AppColors.primaryPink,
-                        ),
-                        child: CustomText(
-                          text: 'participate'.tr(),
-                          fontSize: 14.sp,
+                    12.pw,
+
+                    // Participate button - only show if in live auction
+                    if (isInLiveAuction)
+                      Expanded(
+                        child: CustomButton(
+                          title: 'Участвует в аукционе',
+                          onPressed: onParticipateTap,
+                          color: AppColors.text,
+                          textColor: AppColors.white,
+                          fontSize: 16.sp,
+                          radius: 10.r,
+                          isLoading: isJoiningStream,
                           fontWeight: FontWeight.w800,
-                          color: AppColors.white,
-                          textAlign: TextAlign.center,
+                          padding: EdgeInsets.zero,
+                          height: 40.h,
                         ),
-                      ),
-                    ),
+                      )
                   ],
                 ),
               ),

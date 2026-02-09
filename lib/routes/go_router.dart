@@ -350,15 +350,14 @@ final GoRouter router = GoRouter(
       path: AppRoutes.cartProductDetails,
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, Object>;
-        final model = extra['model'] as ProductModel;
+        final productId = extra['productId'] as int;
         final cubit = extra['cubit'] as CartProductDetailsCubit
-          ..initProductModel(model);
+          ..initProductById(productId);
 
         return BlocProvider.value(
           value: cubit,
           child: CartProductDetailsScreen(
-            product: model,
-            // cart: cart,
+            productId: productId,
           ),
         );
       },

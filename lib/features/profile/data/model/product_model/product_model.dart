@@ -33,6 +33,8 @@ class ProductModel with _$ProductModel {
     @JsonKey(name: 'is_favorited') @Default(false) bool isFavorited,
     @JsonKey(name: 'favorites_count') @Default(0) int favoritesCount,
     @Default([]) List<dynamic> ratings,
+    @JsonKey(name: 'is_in_live_auction') @Default(false) bool isInLiveAuction,
+    @JsonKey(name: 'live_auction') LiveAuctionModel? liveAuction,
   }) = _ProductModel;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) =>
@@ -92,7 +94,6 @@ bool _boolFromInt(dynamic value) {
   return false;
 }
 
-
 int? _categoryIdFromJson(dynamic value) {
   if (value == null) return null;
   if (value is int) return value;
@@ -143,4 +144,38 @@ class MainCategoryModel with _$MainCategoryModel {
 
   factory MainCategoryModel.fromJson(Map<String, dynamic> json) =>
       _$MainCategoryModelFromJson(json);
+}
+
+@freezed
+class LiveAuctionModel with _$LiveAuctionModel {
+  const factory LiveAuctionModel({
+    @JsonKey(name: 'stream_id') int? streamId,
+    @JsonKey(name: 'stream_title') String? streamTitle,
+    @JsonKey(name: 'stream_status') String? streamStatus,
+    @JsonKey(name: 'viewer_count') int? viewerCount,
+    @JsonKey(name: 'stream_product_id') int? streamProductId,
+    @JsonKey(name: 'starting_price', fromJson: _parseDouble)
+    double? startingPrice,
+    @JsonKey(name: 'current_bid', fromJson: _parseDouble) double? currentBid,
+    @JsonKey(name: 'bidding_enabled') bool? biddingEnabled,
+    @JsonKey(name: 'bid_session') LiveAuctionBidSessionModel? bidSession,
+  }) = _LiveAuctionModel;
+
+  factory LiveAuctionModel.fromJson(Map<String, dynamic> json) =>
+      _$LiveAuctionModelFromJson(json);
+}
+
+@freezed
+class LiveAuctionBidSessionModel with _$LiveAuctionBidSessionModel {
+  const factory LiveAuctionBidSessionModel({
+    int? id,
+    String? status,
+    @JsonKey(name: 'session_end_time') DateTime? sessionEndTime,
+    @JsonKey(name: 'remaining_seconds') int? remainingSeconds,
+    @JsonKey(name: 'highest_bid_amount', fromJson: _parseDouble)
+    double? highestBidAmount,
+  }) = _LiveAuctionBidSessionModel;
+
+  factory LiveAuctionBidSessionModel.fromJson(Map<String, dynamic> json) =>
+      _$LiveAuctionBidSessionModelFromJson(json);
 }

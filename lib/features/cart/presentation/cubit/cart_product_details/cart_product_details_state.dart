@@ -21,5 +21,6 @@ class CartProductDetailsState with _$CartProductDetailsState {
     required ProductModel product,
     required CartModel cartResponse,
     @Default(0.0) double totalCartPrice,
+    @Default(false) bool isJoiningStream,
   }) = _CartProductDetailsState;
 }

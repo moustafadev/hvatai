@@ -34,6 +34,7 @@ mixin _$CartProductDetailsState {
   ProductModel get product => throw _privateConstructorUsedError;
   CartModel get cartResponse => throw _privateConstructorUsedError;
   double get totalCartPrice => throw _privateConstructorUsedError;
+  bool get isJoiningStream => throw _privateConstructorUsedError;
 
   /// Create a copy of CartProductDetailsState
   /// with the given fields replaced by the non-null parameter values.
@@ -66,7 +67,8 @@ abstract class $CartProductDetailsStateCopyWith<$Res> {
       PageController? pageController,
       ProductModel product,
       CartModel cartResponse,
-      double totalCartPrice});
+      double totalCartPrice,
+      bool isJoiningStream});
 
   $ProductModelCopyWith<$Res> get product;
   $CartModelCopyWith<$Res> get cartResponse;
@@ -106,6 +108,7 @@ class _$CartProductDetailsStateCopyWithImpl<$Res,
     Object? product = null,
     Object? cartResponse = null,
     Object? totalCartPrice = null,
+    Object? isJoiningStream = null,
   }) {
     return _then(_value.copyWith(
       categories: null == categories
@@ -180,6 +183,10 @@ class _$CartProductDetailsStateCopyWithImpl<$Res,
           ? _value.totalCartPrice
           : totalCartPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      isJoiningStream: null == isJoiningStream
+          ? _value.isJoiningStream
+          : isJoiningStream // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -231,7 +238,8 @@ abstract class _$$CartProductDetailsStateImplCopyWith<$Res>
       PageController? pageController,
       ProductModel product,
       CartModel cartResponse,
-      double totalCartPrice});
+      double totalCartPrice,
+      bool isJoiningStream});
 
   @override
   $ProductModelCopyWith<$Res> get product;
@@ -272,6 +280,7 @@ class __$$CartProductDetailsStateImplCopyWithImpl<$Res>
     Object? product = null,
     Object? cartResponse = null,
     Object? totalCartPrice = null,
+    Object? isJoiningStream = null,
   }) {
     return _then(_$CartProductDetailsStateImpl(
       categories: null == categories
@@ -346,6 +355,10 @@ class __$$CartProductDetailsStateImplCopyWithImpl<$Res>
           ? _value.totalCartPrice
           : totalCartPrice // ignore: cast_nullable_to_non_nullable
               as double,
+      isJoiningStream: null == isJoiningStream
+          ? _value.isJoiningStream
+          : isJoiningStream // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -371,7 +384,8 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
       this.pageController,
       required this.product,
       required this.cartResponse,
-      this.totalCartPrice = 0.0})
+      this.totalCartPrice = 0.0,
+      this.isJoiningStream = false})
       : _categories = categories,
         _products = products,
         _ownerProducts = ownerProducts,
@@ -463,10 +477,13 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
   @override
   @JsonKey()
   final double totalCartPrice;
+  @override
+  @JsonKey()
+  final bool isJoiningStream;
 
   @override
   String toString() {
-    return 'CartProductDetailsState(categories: $categories, selectedIndex: $selectedIndex, isLoading: $isLoading, success: $success, isFavourites: $isFavourites, isCart: $isCart, errorMessage: $errorMessage, products: $products, ownerProducts: $ownerProducts, carts: $carts, selectedIndices: $selectedIndices, searchedItems: $searchedItems, selectedCategoryIndex: $selectedCategoryIndex, currentImageIndex: $currentImageIndex, pageController: $pageController, product: $product, cartResponse: $cartResponse, totalCartPrice: $totalCartPrice)';
+    return 'CartProductDetailsState(categories: $categories, selectedIndex: $selectedIndex, isLoading: $isLoading, success: $success, isFavourites: $isFavourites, isCart: $isCart, errorMessage: $errorMessage, products: $products, ownerProducts: $ownerProducts, carts: $carts, selectedIndices: $selectedIndices, searchedItems: $searchedItems, selectedCategoryIndex: $selectedCategoryIndex, currentImageIndex: $currentImageIndex, pageController: $pageController, product: $product, cartResponse: $cartResponse, totalCartPrice: $totalCartPrice, isJoiningStream: $isJoiningStream)';
   }
 
   @override
@@ -504,30 +521,34 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
             (identical(other.cartResponse, cartResponse) ||
                 other.cartResponse == cartResponse) &&
             (identical(other.totalCartPrice, totalCartPrice) ||
-                other.totalCartPrice == totalCartPrice));
+                other.totalCartPrice == totalCartPrice) &&
+            (identical(other.isJoiningStream, isJoiningStream) ||
+                other.isJoiningStream == isJoiningStream));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_categories),
-      selectedIndex,
-      isLoading,
-      success,
-      isFavourites,
-      isCart,
-      errorMessage,
-      const DeepCollectionEquality().hash(_products),
-      const DeepCollectionEquality().hash(_ownerProducts),
-      const DeepCollectionEquality().hash(_carts),
-      const DeepCollectionEquality().hash(_selectedIndices),
-      const DeepCollectionEquality().hash(_searchedItems),
-      selectedCategoryIndex,
-      currentImageIndex,
-      pageController,
-      product,
-      cartResponse,
-      totalCartPrice);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        const DeepCollectionEquality().hash(_categories),
+        selectedIndex,
+        isLoading,
+        success,
+        isFavourites,
+        isCart,
+        errorMessage,
+        const DeepCollectionEquality().hash(_products),
+        const DeepCollectionEquality().hash(_ownerProducts),
+        const DeepCollectionEquality().hash(_carts),
+        const DeepCollectionEquality().hash(_selectedIndices),
+        const DeepCollectionEquality().hash(_searchedItems),
+        selectedCategoryIndex,
+        currentImageIndex,
+        pageController,
+        product,
+        cartResponse,
+        totalCartPrice,
+        isJoiningStream
+      ]);
 
   /// Create a copy of CartProductDetailsState
   /// with the given fields replaced by the non-null parameter values.
@@ -558,7 +579,8 @@ abstract class _CartProductDetailsState implements CartProductDetailsState {
       final PageController? pageController,
       required final ProductModel product,
       required final CartModel cartResponse,
-      final double totalCartPrice}) = _$CartProductDetailsStateImpl;
+      final double totalCartPrice,
+      final bool isJoiningStream}) = _$CartProductDetailsStateImpl;
 
   @override
   List<String> get categories;
@@ -596,6 +618,8 @@ abstract class _CartProductDetailsState implements CartProductDetailsState {
   CartModel get cartResponse;
   @override
   double get totalCartPrice;
+  @override
+  bool get isJoiningStream;
 
   /// Create a copy of CartProductDetailsState
   /// with the given fields replaced by the non-null parameter values.

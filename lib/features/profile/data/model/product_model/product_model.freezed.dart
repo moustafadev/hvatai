@@ -52,6 +52,10 @@ mixin _$ProductModel {
   @JsonKey(name: 'favorites_count')
   int get favoritesCount => throw _privateConstructorUsedError;
   List<dynamic> get ratings => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_in_live_auction')
+  bool get isInLiveAuction => throw _privateConstructorUsedError;
+  @JsonKey(name: 'live_auction')
+  LiveAuctionModel? get liveAuction => throw _privateConstructorUsedError;
 
   /// Serializes this ProductModel to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -91,11 +95,14 @@ abstract class $ProductModelCopyWith<$Res> {
       OwnerModel? owner,
       @JsonKey(name: 'is_favorited') bool isFavorited,
       @JsonKey(name: 'favorites_count') int favoritesCount,
-      List<dynamic> ratings});
+      List<dynamic> ratings,
+      @JsonKey(name: 'is_in_live_auction') bool isInLiveAuction,
+      @JsonKey(name: 'live_auction') LiveAuctionModel? liveAuction});
 
   $MainCategoryModelCopyWith<$Res>? get category;
   $UserModelCopyWith<$Res>? get user;
   $OwnerModelCopyWith<$Res>? get owner;
+  $LiveAuctionModelCopyWith<$Res>? get liveAuction;
 }
 
 /// @nodoc
@@ -132,6 +139,8 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
     Object? isFavorited = null,
     Object? favoritesCount = null,
     Object? ratings = null,
+    Object? isInLiveAuction = null,
+    Object? liveAuction = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -210,6 +219,14 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.ratings
           : ratings // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
+      isInLiveAuction: null == isInLiveAuction
+          ? _value.isInLiveAuction
+          : isInLiveAuction // ignore: cast_nullable_to_non_nullable
+              as bool,
+      liveAuction: freezed == liveAuction
+          ? _value.liveAuction
+          : liveAuction // ignore: cast_nullable_to_non_nullable
+              as LiveAuctionModel?,
     ) as $Val);
   }
 
@@ -254,6 +271,20 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
       return _then(_value.copyWith(owner: value) as $Val);
     });
   }
+
+  /// Create a copy of ProductModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LiveAuctionModelCopyWith<$Res>? get liveAuction {
+    if (_value.liveAuction == null) {
+      return null;
+    }
+
+    return $LiveAuctionModelCopyWith<$Res>(_value.liveAuction!, (value) {
+      return _then(_value.copyWith(liveAuction: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -286,7 +317,9 @@ abstract class _$$ProductModelImplCopyWith<$Res>
       OwnerModel? owner,
       @JsonKey(name: 'is_favorited') bool isFavorited,
       @JsonKey(name: 'favorites_count') int favoritesCount,
-      List<dynamic> ratings});
+      List<dynamic> ratings,
+      @JsonKey(name: 'is_in_live_auction') bool isInLiveAuction,
+      @JsonKey(name: 'live_auction') LiveAuctionModel? liveAuction});
 
   @override
   $MainCategoryModelCopyWith<$Res>? get category;
@@ -294,6 +327,8 @@ abstract class _$$ProductModelImplCopyWith<$Res>
   $UserModelCopyWith<$Res>? get user;
   @override
   $OwnerModelCopyWith<$Res>? get owner;
+  @override
+  $LiveAuctionModelCopyWith<$Res>? get liveAuction;
 }
 
 /// @nodoc
@@ -328,6 +363,8 @@ class __$$ProductModelImplCopyWithImpl<$Res>
     Object? isFavorited = null,
     Object? favoritesCount = null,
     Object? ratings = null,
+    Object? isInLiveAuction = null,
+    Object? liveAuction = freezed,
   }) {
     return _then(_$ProductModelImpl(
       id: freezed == id
@@ -406,6 +443,14 @@ class __$$ProductModelImplCopyWithImpl<$Res>
           ? _value._ratings
           : ratings // ignore: cast_nullable_to_non_nullable
               as List<dynamic>,
+      isInLiveAuction: null == isInLiveAuction
+          ? _value.isInLiveAuction
+          : isInLiveAuction // ignore: cast_nullable_to_non_nullable
+              as bool,
+      liveAuction: freezed == liveAuction
+          ? _value.liveAuction
+          : liveAuction // ignore: cast_nullable_to_non_nullable
+              as LiveAuctionModel?,
     ));
   }
 }
@@ -436,7 +481,9 @@ class _$ProductModelImpl implements _ProductModel {
       this.owner,
       @JsonKey(name: 'is_favorited') this.isFavorited = false,
       @JsonKey(name: 'favorites_count') this.favoritesCount = 0,
-      final List<dynamic> ratings = const []})
+      final List<dynamic> ratings = const [],
+      @JsonKey(name: 'is_in_live_auction') this.isInLiveAuction = false,
+      @JsonKey(name: 'live_auction') this.liveAuction})
       : _images = images,
         _variants = variants,
         _ratings = ratings;
@@ -516,8 +563,15 @@ class _$ProductModelImpl implements _ProductModel {
   }
 
   @override
+  @JsonKey(name: 'is_in_live_auction')
+  final bool isInLiveAuction;
+  @override
+  @JsonKey(name: 'live_auction')
+  final LiveAuctionModel? liveAuction;
+
+  @override
   String toString() {
-    return 'ProductModel(id: $id, productName: $productName, productDescription: $productDescription, saleType: $saleType, deliveryAvailable: $deliveryAvailable, selfPickup: $selfPickup, selfDestruction: $selfDestruction, userId: $userId, categoryId: $categoryId, averageRating: $averageRating, ratingsCount: $ratingsCount, images: $images, variants: $variants, category: $category, user: $user, owner: $owner, isFavorited: $isFavorited, favoritesCount: $favoritesCount, ratings: $ratings)';
+    return 'ProductModel(id: $id, productName: $productName, productDescription: $productDescription, saleType: $saleType, deliveryAvailable: $deliveryAvailable, selfPickup: $selfPickup, selfDestruction: $selfDestruction, userId: $userId, categoryId: $categoryId, averageRating: $averageRating, ratingsCount: $ratingsCount, images: $images, variants: $variants, category: $category, user: $user, owner: $owner, isFavorited: $isFavorited, favoritesCount: $favoritesCount, ratings: $ratings, isInLiveAuction: $isInLiveAuction, liveAuction: $liveAuction)';
   }
 
   @override
@@ -555,7 +609,11 @@ class _$ProductModelImpl implements _ProductModel {
                 other.isFavorited == isFavorited) &&
             (identical(other.favoritesCount, favoritesCount) ||
                 other.favoritesCount == favoritesCount) &&
-            const DeepCollectionEquality().equals(other._ratings, _ratings));
+            const DeepCollectionEquality().equals(other._ratings, _ratings) &&
+            (identical(other.isInLiveAuction, isInLiveAuction) ||
+                other.isInLiveAuction == isInLiveAuction) &&
+            (identical(other.liveAuction, liveAuction) ||
+                other.liveAuction == liveAuction));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -580,7 +638,9 @@ class _$ProductModelImpl implements _ProductModel {
         owner,
         isFavorited,
         favoritesCount,
-        const DeepCollectionEquality().hash(_ratings)
+        const DeepCollectionEquality().hash(_ratings),
+        isInLiveAuction,
+        liveAuction
       ]);
 
   /// Create a copy of ProductModel
@@ -623,7 +683,10 @@ abstract class _ProductModel implements ProductModel {
       final OwnerModel? owner,
       @JsonKey(name: 'is_favorited') final bool isFavorited,
       @JsonKey(name: 'favorites_count') final int favoritesCount,
-      final List<dynamic> ratings}) = _$ProductModelImpl;
+      final List<dynamic> ratings,
+      @JsonKey(name: 'is_in_live_auction') final bool isInLiveAuction,
+      @JsonKey(name: 'live_auction')
+      final LiveAuctionModel? liveAuction}) = _$ProductModelImpl;
 
   factory _ProductModel.fromJson(Map<String, dynamic> json) =
       _$ProductModelImpl.fromJson;
@@ -679,6 +742,12 @@ abstract class _ProductModel implements ProductModel {
   int get favoritesCount;
   @override
   List<dynamic> get ratings;
+  @override
+  @JsonKey(name: 'is_in_live_auction')
+  bool get isInLiveAuction;
+  @override
+  @JsonKey(name: 'live_auction')
+  LiveAuctionModel? get liveAuction;
 
   /// Create a copy of ProductModel
   /// with the given fields replaced by the non-null parameter values.
@@ -1536,4 +1605,650 @@ abstract class _MainCategoryModel implements MainCategoryModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MainCategoryModelImplCopyWith<_$MainCategoryModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+LiveAuctionModel _$LiveAuctionModelFromJson(Map<String, dynamic> json) {
+  return _LiveAuctionModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$LiveAuctionModel {
+  @JsonKey(name: 'stream_id')
+  int? get streamId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'stream_title')
+  String? get streamTitle => throw _privateConstructorUsedError;
+  @JsonKey(name: 'stream_status')
+  String? get streamStatus => throw _privateConstructorUsedError;
+  @JsonKey(name: 'viewer_count')
+  int? get viewerCount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'stream_product_id')
+  int? get streamProductId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'starting_price', fromJson: _parseDouble)
+  double? get startingPrice => throw _privateConstructorUsedError;
+  @JsonKey(name: 'current_bid', fromJson: _parseDouble)
+  double? get currentBid => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bidding_enabled')
+  bool? get biddingEnabled => throw _privateConstructorUsedError;
+  @JsonKey(name: 'bid_session')
+  LiveAuctionBidSessionModel? get bidSession =>
+      throw _privateConstructorUsedError;
+
+  /// Serializes this LiveAuctionModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of LiveAuctionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LiveAuctionModelCopyWith<LiveAuctionModel> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LiveAuctionModelCopyWith<$Res> {
+  factory $LiveAuctionModelCopyWith(
+          LiveAuctionModel value, $Res Function(LiveAuctionModel) then) =
+      _$LiveAuctionModelCopyWithImpl<$Res, LiveAuctionModel>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'stream_id') int? streamId,
+      @JsonKey(name: 'stream_title') String? streamTitle,
+      @JsonKey(name: 'stream_status') String? streamStatus,
+      @JsonKey(name: 'viewer_count') int? viewerCount,
+      @JsonKey(name: 'stream_product_id') int? streamProductId,
+      @JsonKey(name: 'starting_price', fromJson: _parseDouble)
+      double? startingPrice,
+      @JsonKey(name: 'current_bid', fromJson: _parseDouble) double? currentBid,
+      @JsonKey(name: 'bidding_enabled') bool? biddingEnabled,
+      @JsonKey(name: 'bid_session') LiveAuctionBidSessionModel? bidSession});
+
+  $LiveAuctionBidSessionModelCopyWith<$Res>? get bidSession;
+}
+
+/// @nodoc
+class _$LiveAuctionModelCopyWithImpl<$Res, $Val extends LiveAuctionModel>
+    implements $LiveAuctionModelCopyWith<$Res> {
+  _$LiveAuctionModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LiveAuctionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? streamId = freezed,
+    Object? streamTitle = freezed,
+    Object? streamStatus = freezed,
+    Object? viewerCount = freezed,
+    Object? streamProductId = freezed,
+    Object? startingPrice = freezed,
+    Object? currentBid = freezed,
+    Object? biddingEnabled = freezed,
+    Object? bidSession = freezed,
+  }) {
+    return _then(_value.copyWith(
+      streamId: freezed == streamId
+          ? _value.streamId
+          : streamId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      streamTitle: freezed == streamTitle
+          ? _value.streamTitle
+          : streamTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      streamStatus: freezed == streamStatus
+          ? _value.streamStatus
+          : streamStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      viewerCount: freezed == viewerCount
+          ? _value.viewerCount
+          : viewerCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      streamProductId: freezed == streamProductId
+          ? _value.streamProductId
+          : streamProductId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      startingPrice: freezed == startingPrice
+          ? _value.startingPrice
+          : startingPrice // ignore: cast_nullable_to_non_nullable
+              as double?,
+      currentBid: freezed == currentBid
+          ? _value.currentBid
+          : currentBid // ignore: cast_nullable_to_non_nullable
+              as double?,
+      biddingEnabled: freezed == biddingEnabled
+          ? _value.biddingEnabled
+          : biddingEnabled // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      bidSession: freezed == bidSession
+          ? _value.bidSession
+          : bidSession // ignore: cast_nullable_to_non_nullable
+              as LiveAuctionBidSessionModel?,
+    ) as $Val);
+  }
+
+  /// Create a copy of LiveAuctionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LiveAuctionBidSessionModelCopyWith<$Res>? get bidSession {
+    if (_value.bidSession == null) {
+      return null;
+    }
+
+    return $LiveAuctionBidSessionModelCopyWith<$Res>(_value.bidSession!,
+        (value) {
+      return _then(_value.copyWith(bidSession: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$LiveAuctionModelImplCopyWith<$Res>
+    implements $LiveAuctionModelCopyWith<$Res> {
+  factory _$$LiveAuctionModelImplCopyWith(_$LiveAuctionModelImpl value,
+          $Res Function(_$LiveAuctionModelImpl) then) =
+      __$$LiveAuctionModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'stream_id') int? streamId,
+      @JsonKey(name: 'stream_title') String? streamTitle,
+      @JsonKey(name: 'stream_status') String? streamStatus,
+      @JsonKey(name: 'viewer_count') int? viewerCount,
+      @JsonKey(name: 'stream_product_id') int? streamProductId,
+      @JsonKey(name: 'starting_price', fromJson: _parseDouble)
+      double? startingPrice,
+      @JsonKey(name: 'current_bid', fromJson: _parseDouble) double? currentBid,
+      @JsonKey(name: 'bidding_enabled') bool? biddingEnabled,
+      @JsonKey(name: 'bid_session') LiveAuctionBidSessionModel? bidSession});
+
+  @override
+  $LiveAuctionBidSessionModelCopyWith<$Res>? get bidSession;
+}
+
+/// @nodoc
+class __$$LiveAuctionModelImplCopyWithImpl<$Res>
+    extends _$LiveAuctionModelCopyWithImpl<$Res, _$LiveAuctionModelImpl>
+    implements _$$LiveAuctionModelImplCopyWith<$Res> {
+  __$$LiveAuctionModelImplCopyWithImpl(_$LiveAuctionModelImpl _value,
+      $Res Function(_$LiveAuctionModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LiveAuctionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? streamId = freezed,
+    Object? streamTitle = freezed,
+    Object? streamStatus = freezed,
+    Object? viewerCount = freezed,
+    Object? streamProductId = freezed,
+    Object? startingPrice = freezed,
+    Object? currentBid = freezed,
+    Object? biddingEnabled = freezed,
+    Object? bidSession = freezed,
+  }) {
+    return _then(_$LiveAuctionModelImpl(
+      streamId: freezed == streamId
+          ? _value.streamId
+          : streamId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      streamTitle: freezed == streamTitle
+          ? _value.streamTitle
+          : streamTitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      streamStatus: freezed == streamStatus
+          ? _value.streamStatus
+          : streamStatus // ignore: cast_nullable_to_non_nullable
+              as String?,
+      viewerCount: freezed == viewerCount
+          ? _value.viewerCount
+          : viewerCount // ignore: cast_nullable_to_non_nullable
+              as int?,
+      streamProductId: freezed == streamProductId
+          ? _value.streamProductId
+          : streamProductId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      startingPrice: freezed == startingPrice
+          ? _value.startingPrice
+          : startingPrice // ignore: cast_nullable_to_non_nullable
+              as double?,
+      currentBid: freezed == currentBid
+          ? _value.currentBid
+          : currentBid // ignore: cast_nullable_to_non_nullable
+              as double?,
+      biddingEnabled: freezed == biddingEnabled
+          ? _value.biddingEnabled
+          : biddingEnabled // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      bidSession: freezed == bidSession
+          ? _value.bidSession
+          : bidSession // ignore: cast_nullable_to_non_nullable
+              as LiveAuctionBidSessionModel?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LiveAuctionModelImpl implements _LiveAuctionModel {
+  const _$LiveAuctionModelImpl(
+      {@JsonKey(name: 'stream_id') this.streamId,
+      @JsonKey(name: 'stream_title') this.streamTitle,
+      @JsonKey(name: 'stream_status') this.streamStatus,
+      @JsonKey(name: 'viewer_count') this.viewerCount,
+      @JsonKey(name: 'stream_product_id') this.streamProductId,
+      @JsonKey(name: 'starting_price', fromJson: _parseDouble)
+      this.startingPrice,
+      @JsonKey(name: 'current_bid', fromJson: _parseDouble) this.currentBid,
+      @JsonKey(name: 'bidding_enabled') this.biddingEnabled,
+      @JsonKey(name: 'bid_session') this.bidSession});
+
+  factory _$LiveAuctionModelImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LiveAuctionModelImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'stream_id')
+  final int? streamId;
+  @override
+  @JsonKey(name: 'stream_title')
+  final String? streamTitle;
+  @override
+  @JsonKey(name: 'stream_status')
+  final String? streamStatus;
+  @override
+  @JsonKey(name: 'viewer_count')
+  final int? viewerCount;
+  @override
+  @JsonKey(name: 'stream_product_id')
+  final int? streamProductId;
+  @override
+  @JsonKey(name: 'starting_price', fromJson: _parseDouble)
+  final double? startingPrice;
+  @override
+  @JsonKey(name: 'current_bid', fromJson: _parseDouble)
+  final double? currentBid;
+  @override
+  @JsonKey(name: 'bidding_enabled')
+  final bool? biddingEnabled;
+  @override
+  @JsonKey(name: 'bid_session')
+  final LiveAuctionBidSessionModel? bidSession;
+
+  @override
+  String toString() {
+    return 'LiveAuctionModel(streamId: $streamId, streamTitle: $streamTitle, streamStatus: $streamStatus, viewerCount: $viewerCount, streamProductId: $streamProductId, startingPrice: $startingPrice, currentBid: $currentBid, biddingEnabled: $biddingEnabled, bidSession: $bidSession)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LiveAuctionModelImpl &&
+            (identical(other.streamId, streamId) ||
+                other.streamId == streamId) &&
+            (identical(other.streamTitle, streamTitle) ||
+                other.streamTitle == streamTitle) &&
+            (identical(other.streamStatus, streamStatus) ||
+                other.streamStatus == streamStatus) &&
+            (identical(other.viewerCount, viewerCount) ||
+                other.viewerCount == viewerCount) &&
+            (identical(other.streamProductId, streamProductId) ||
+                other.streamProductId == streamProductId) &&
+            (identical(other.startingPrice, startingPrice) ||
+                other.startingPrice == startingPrice) &&
+            (identical(other.currentBid, currentBid) ||
+                other.currentBid == currentBid) &&
+            (identical(other.biddingEnabled, biddingEnabled) ||
+                other.biddingEnabled == biddingEnabled) &&
+            (identical(other.bidSession, bidSession) ||
+                other.bidSession == bidSession));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      streamId,
+      streamTitle,
+      streamStatus,
+      viewerCount,
+      streamProductId,
+      startingPrice,
+      currentBid,
+      biddingEnabled,
+      bidSession);
+
+  /// Create a copy of LiveAuctionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LiveAuctionModelImplCopyWith<_$LiveAuctionModelImpl> get copyWith =>
+      __$$LiveAuctionModelImplCopyWithImpl<_$LiveAuctionModelImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LiveAuctionModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _LiveAuctionModel implements LiveAuctionModel {
+  const factory _LiveAuctionModel(
+      {@JsonKey(name: 'stream_id') final int? streamId,
+      @JsonKey(name: 'stream_title') final String? streamTitle,
+      @JsonKey(name: 'stream_status') final String? streamStatus,
+      @JsonKey(name: 'viewer_count') final int? viewerCount,
+      @JsonKey(name: 'stream_product_id') final int? streamProductId,
+      @JsonKey(name: 'starting_price', fromJson: _parseDouble)
+      final double? startingPrice,
+      @JsonKey(name: 'current_bid', fromJson: _parseDouble)
+      final double? currentBid,
+      @JsonKey(name: 'bidding_enabled') final bool? biddingEnabled,
+      @JsonKey(name: 'bid_session')
+      final LiveAuctionBidSessionModel? bidSession}) = _$LiveAuctionModelImpl;
+
+  factory _LiveAuctionModel.fromJson(Map<String, dynamic> json) =
+      _$LiveAuctionModelImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'stream_id')
+  int? get streamId;
+  @override
+  @JsonKey(name: 'stream_title')
+  String? get streamTitle;
+  @override
+  @JsonKey(name: 'stream_status')
+  String? get streamStatus;
+  @override
+  @JsonKey(name: 'viewer_count')
+  int? get viewerCount;
+  @override
+  @JsonKey(name: 'stream_product_id')
+  int? get streamProductId;
+  @override
+  @JsonKey(name: 'starting_price', fromJson: _parseDouble)
+  double? get startingPrice;
+  @override
+  @JsonKey(name: 'current_bid', fromJson: _parseDouble)
+  double? get currentBid;
+  @override
+  @JsonKey(name: 'bidding_enabled')
+  bool? get biddingEnabled;
+  @override
+  @JsonKey(name: 'bid_session')
+  LiveAuctionBidSessionModel? get bidSession;
+
+  /// Create a copy of LiveAuctionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LiveAuctionModelImplCopyWith<_$LiveAuctionModelImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+LiveAuctionBidSessionModel _$LiveAuctionBidSessionModelFromJson(
+    Map<String, dynamic> json) {
+  return _LiveAuctionBidSessionModel.fromJson(json);
+}
+
+/// @nodoc
+mixin _$LiveAuctionBidSessionModel {
+  int? get id => throw _privateConstructorUsedError;
+  String? get status => throw _privateConstructorUsedError;
+  @JsonKey(name: 'session_end_time')
+  DateTime? get sessionEndTime => throw _privateConstructorUsedError;
+  @JsonKey(name: 'remaining_seconds')
+  int? get remainingSeconds => throw _privateConstructorUsedError;
+  @JsonKey(name: 'highest_bid_amount', fromJson: _parseDouble)
+  double? get highestBidAmount => throw _privateConstructorUsedError;
+
+  /// Serializes this LiveAuctionBidSessionModel to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of LiveAuctionBidSessionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LiveAuctionBidSessionModelCopyWith<LiveAuctionBidSessionModel>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LiveAuctionBidSessionModelCopyWith<$Res> {
+  factory $LiveAuctionBidSessionModelCopyWith(LiveAuctionBidSessionModel value,
+          $Res Function(LiveAuctionBidSessionModel) then) =
+      _$LiveAuctionBidSessionModelCopyWithImpl<$Res,
+          LiveAuctionBidSessionModel>;
+  @useResult
+  $Res call(
+      {int? id,
+      String? status,
+      @JsonKey(name: 'session_end_time') DateTime? sessionEndTime,
+      @JsonKey(name: 'remaining_seconds') int? remainingSeconds,
+      @JsonKey(name: 'highest_bid_amount', fromJson: _parseDouble)
+      double? highestBidAmount});
+}
+
+/// @nodoc
+class _$LiveAuctionBidSessionModelCopyWithImpl<$Res,
+        $Val extends LiveAuctionBidSessionModel>
+    implements $LiveAuctionBidSessionModelCopyWith<$Res> {
+  _$LiveAuctionBidSessionModelCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LiveAuctionBidSessionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? status = freezed,
+    Object? sessionEndTime = freezed,
+    Object? remainingSeconds = freezed,
+    Object? highestBidAmount = freezed,
+  }) {
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sessionEndTime: freezed == sessionEndTime
+          ? _value.sessionEndTime
+          : sessionEndTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      remainingSeconds: freezed == remainingSeconds
+          ? _value.remainingSeconds
+          : remainingSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      highestBidAmount: freezed == highestBidAmount
+          ? _value.highestBidAmount
+          : highestBidAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$LiveAuctionBidSessionModelImplCopyWith<$Res>
+    implements $LiveAuctionBidSessionModelCopyWith<$Res> {
+  factory _$$LiveAuctionBidSessionModelImplCopyWith(
+          _$LiveAuctionBidSessionModelImpl value,
+          $Res Function(_$LiveAuctionBidSessionModelImpl) then) =
+      __$$LiveAuctionBidSessionModelImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int? id,
+      String? status,
+      @JsonKey(name: 'session_end_time') DateTime? sessionEndTime,
+      @JsonKey(name: 'remaining_seconds') int? remainingSeconds,
+      @JsonKey(name: 'highest_bid_amount', fromJson: _parseDouble)
+      double? highestBidAmount});
+}
+
+/// @nodoc
+class __$$LiveAuctionBidSessionModelImplCopyWithImpl<$Res>
+    extends _$LiveAuctionBidSessionModelCopyWithImpl<$Res,
+        _$LiveAuctionBidSessionModelImpl>
+    implements _$$LiveAuctionBidSessionModelImplCopyWith<$Res> {
+  __$$LiveAuctionBidSessionModelImplCopyWithImpl(
+      _$LiveAuctionBidSessionModelImpl _value,
+      $Res Function(_$LiveAuctionBidSessionModelImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LiveAuctionBidSessionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = freezed,
+    Object? status = freezed,
+    Object? sessionEndTime = freezed,
+    Object? remainingSeconds = freezed,
+    Object? highestBidAmount = freezed,
+  }) {
+    return _then(_$LiveAuctionBidSessionModelImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      status: freezed == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sessionEndTime: freezed == sessionEndTime
+          ? _value.sessionEndTime
+          : sessionEndTime // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      remainingSeconds: freezed == remainingSeconds
+          ? _value.remainingSeconds
+          : remainingSeconds // ignore: cast_nullable_to_non_nullable
+              as int?,
+      highestBidAmount: freezed == highestBidAmount
+          ? _value.highestBidAmount
+          : highestBidAmount // ignore: cast_nullable_to_non_nullable
+              as double?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LiveAuctionBidSessionModelImpl implements _LiveAuctionBidSessionModel {
+  const _$LiveAuctionBidSessionModelImpl(
+      {this.id,
+      this.status,
+      @JsonKey(name: 'session_end_time') this.sessionEndTime,
+      @JsonKey(name: 'remaining_seconds') this.remainingSeconds,
+      @JsonKey(name: 'highest_bid_amount', fromJson: _parseDouble)
+      this.highestBidAmount});
+
+  factory _$LiveAuctionBidSessionModelImpl.fromJson(
+          Map<String, dynamic> json) =>
+      _$$LiveAuctionBidSessionModelImplFromJson(json);
+
+  @override
+  final int? id;
+  @override
+  final String? status;
+  @override
+  @JsonKey(name: 'session_end_time')
+  final DateTime? sessionEndTime;
+  @override
+  @JsonKey(name: 'remaining_seconds')
+  final int? remainingSeconds;
+  @override
+  @JsonKey(name: 'highest_bid_amount', fromJson: _parseDouble)
+  final double? highestBidAmount;
+
+  @override
+  String toString() {
+    return 'LiveAuctionBidSessionModel(id: $id, status: $status, sessionEndTime: $sessionEndTime, remainingSeconds: $remainingSeconds, highestBidAmount: $highestBidAmount)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LiveAuctionBidSessionModelImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.sessionEndTime, sessionEndTime) ||
+                other.sessionEndTime == sessionEndTime) &&
+            (identical(other.remainingSeconds, remainingSeconds) ||
+                other.remainingSeconds == remainingSeconds) &&
+            (identical(other.highestBidAmount, highestBidAmount) ||
+                other.highestBidAmount == highestBidAmount));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, id, status, sessionEndTime,
+      remainingSeconds, highestBidAmount);
+
+  /// Create a copy of LiveAuctionBidSessionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LiveAuctionBidSessionModelImplCopyWith<_$LiveAuctionBidSessionModelImpl>
+      get copyWith => __$$LiveAuctionBidSessionModelImplCopyWithImpl<
+          _$LiveAuctionBidSessionModelImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LiveAuctionBidSessionModelImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _LiveAuctionBidSessionModel
+    implements LiveAuctionBidSessionModel {
+  const factory _LiveAuctionBidSessionModel(
+      {final int? id,
+      final String? status,
+      @JsonKey(name: 'session_end_time') final DateTime? sessionEndTime,
+      @JsonKey(name: 'remaining_seconds') final int? remainingSeconds,
+      @JsonKey(name: 'highest_bid_amount', fromJson: _parseDouble)
+      final double? highestBidAmount}) = _$LiveAuctionBidSessionModelImpl;
+
+  factory _LiveAuctionBidSessionModel.fromJson(Map<String, dynamic> json) =
+      _$LiveAuctionBidSessionModelImpl.fromJson;
+
+  @override
+  int? get id;
+  @override
+  String? get status;
+  @override
+  @JsonKey(name: 'session_end_time')
+  DateTime? get sessionEndTime;
+  @override
+  @JsonKey(name: 'remaining_seconds')
+  int? get remainingSeconds;
+  @override
+  @JsonKey(name: 'highest_bid_amount', fromJson: _parseDouble)
+  double? get highestBidAmount;
+
+  /// Create a copy of LiveAuctionBidSessionModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LiveAuctionBidSessionModelImplCopyWith<_$LiveAuctionBidSessionModelImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }

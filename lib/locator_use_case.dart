@@ -4,6 +4,7 @@ import 'package:hvatai/features/cart/domain/usecases/create_order_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/delete_cart_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/get_all_products_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/get_cart_usecase.dart';
+import 'package:hvatai/features/cart/domain/usecases/get_product_by_id_usecase.dart';
 import 'package:hvatai/features/activity/domain/usecases/get_favorites_usecase.dart';
 import 'package:hvatai/features/activity/domain/usecases/get_user_bids_usecase.dart';
 import 'package:hvatai/features/review/domain/usecases/submit_review_usecase.dart';
@@ -128,6 +129,7 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => WatchLiveStreamsUsecase(locator()));
   locator.registerLazySingleton(() => JoinStreamUsecase(locator()));
   locator.registerLazySingleton(() => GetCompanyProductsUsecase(locator()));
+  locator.registerLazySingleton(() => GetProductByIdUsecase(locator()));
   locator.registerLazySingleton(() => SendRewardUsecase(locator()));
   locator.registerLazySingleton(() => GetSupportChatUseCase(locator()));
   locator.registerLazySingleton(() => GetSupportMessagesUseCase(locator()));

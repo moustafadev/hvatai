@@ -3,9 +3,9 @@ part of '../cart.dart';
 class CartProductDetailsScreen extends StatelessWidget {
   const CartProductDetailsScreen({
     super.key,
-    required this.product,
+    required this.productId,
   });
-  final ProductModel product;
+  final int productId;
 
   @override
   Widget build(BuildContext context) {
@@ -19,15 +19,27 @@ class CartProductDetailsScreen extends StatelessWidget {
         if (state.errorMessage.isNotEmpty) {
           return Scaffold(body: Center(child: Text(state.errorMessage)));
         }
+
+        // Safety check: ensure product is loaded
+        if (state.product.id == null) {
+          return Scaffold(
+            body: const Center(child: CircularProgressIndicator()),
+          );
+        }
+
         final cubit = context.read<CartProductDetailsCubit>();
 
-        final variant = product.variants.isNotEmpty
-            ? product.variants.first
+        // Use state.product which is fetched from API
+        final currentProduct = state.product;
+
+        final variant = currentProduct.variants.isNotEmpty
+            ? currentProduct.variants.first
             : VariantModel();
 
-        final images = product.images;
+        final images = currentProduct.images;
 
         final ownerProducts = state.ownerProducts;
+        final isInLiveAuction = currentProduct.isInLiveAuction;
 
         return Scaffold(
           floatingActionButton: const CartFloatingActionButton(),
@@ -45,17 +57,18 @@ class CartProductDetailsScreen extends StatelessWidget {
                       onPageChanged: (index) {
                         cubit.changeImageIndex(index);
                       },
-                      isFavorited: state.isFavourites ?? product.isFavorited,
+                      isFavorited:
+                          state.isFavourites ?? currentProduct.isFavorited,
                       onFavoriteTap: () {
-                        cubit.addFavProduct(product.id!);
-                        cubit.toggleFav(product.isFavorited);
+                        cubit.addFavProduct(currentProduct.id!);
+                        cubit.toggleFav(currentProduct.isFavorited);
                       },
                       onShareTap: () {
                         // TODO: Implement share functionality
                       },
-                      onParticipateTap: () {
-                        cubit.addProductToCart(context, product);
-                      },
+                      onParticipateTap: () => cubit.joinStream(context),
+                      isInLiveAuction: isInLiveAuction,
+                      isJoiningStream: state.isJoiningStream,
                     ),
                     Positioned(
                       top: MediaQuery.of(context).padding.top + 8,
@@ -79,17 +92,17 @@ class CartProductDetailsScreen extends StatelessWidget {
                 ),
                 12.ph,
                 ProductDetailsContent(
-                  product: product,
+                  product: currentProduct,
                   variant: variant,
                   ownerProducts: ownerProducts,
-                  isFavorited: state.isFavourites ?? product.isFavorited,
+                  isFavorited: state.isFavourites ?? currentProduct.isFavorited,
                   onFavoriteTap: () {
-                    cubit.addFavProduct(product.id!);
-                    cubit.toggleFav(product.isFavorited);
+                    cubit.addFavProduct(currentProduct.id!);
+                    cubit.toggleFav(currentProduct.isFavorited);
                   },
-                  onParticipateTap: () {
-                    cubit.addProductToCart(context, product);
-                  },
+                  onParticipateTap: isInLiveAuction
+                      ? () => cubit.joinStream(context)
+                      : () => cubit.addProductToCart(context, currentProduct),
                 ),
               ],
             ),

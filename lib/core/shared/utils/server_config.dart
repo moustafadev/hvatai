@@ -1,12 +1,11 @@
 abstract class ServerConfig {
- 
   static const String domen = "https://khvatai.ru/"; //prod
   static const baseUrl = "${domen}api/v1/";
   static String token = "";
   static const String domenStorage = "https://khvatai.ru/storage/";
- 
+
   // =============================== Auth endpoints ===============================
- 
+
   static const String auth = "auth";
   static const String verifyAuthOtp = "verify-auth-otp";
   static const String interestsCategories = "interestsCategories";
@@ -37,7 +36,7 @@ abstract class ServerConfig {
   static const String myRatings = "me/ratings";
 
   // =============================== Product & Cart & Order endpoints ===============================
-  
+
   static String togglefav(int id) => '$products/$id/toggle-favorite';
   static String cardId(int cardId) => '$cards/$cardId';
   static String cartId(int cartId) => '$cart/$cartId/clear';
@@ -47,18 +46,19 @@ abstract class ServerConfig {
   static const String getProduct = "get-products";
   static const String getFavProduct = "favorites?type=product";
   static String updateProduct(int productId) => "products/$productId";
+  static String getProductById(int productId) => "products/$productId";
   static const String lastUsedCategories = "products/last-used-categories";
   static const String addToCart = "cart/items";
   static const String orderFromCart = "orders/from-cart";
   static const String userOrders = "orders/user";
-  
+
   // =============================== Search endpoints ===============================
 
   static const String search = "search";
   static const String searchSuggestions = "search/suggestions";
 
   // =============================== Chat endpoints ===============================
-  
+
   static String chats = 'chats';
   static String supportChat = 'support/chat';
   static String chatMessages(int id) => 'chats/$id/messages';
@@ -68,7 +68,7 @@ abstract class ServerConfig {
   static String messages = 'messages';
 
   // =============================== Stream & Clip endpoints ===============================
-  
+
   static const String streams = "streams";
   static String streamComments(int id) => "streams/$id/comments";
   static String startStream(int id) => "streams/$id/start";
@@ -99,12 +99,11 @@ abstract class ServerConfig {
   static String submitBusinessReview(int businessId) =>
       "business/$businessId/rate";
   static String userRatings(int userId) => "users/$userId/ratings";
- 
+
   // =============================== Wallet endpoints ===============================
- 
+
   static String getWallet(int walletId) => "wallets/$walletId";
   static String getWalletTransactions(int walletId) =>
       "wallets/$walletId/transactions";
   static String withdrawToCard(int walletId) => "wallets/$walletId/top-up-card";
-
 }

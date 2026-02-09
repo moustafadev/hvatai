@@ -5,14 +5,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/cart/data/model/cart_model.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hvatai/features/cart/domain/usecases/add_fav_product_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/add_product_to_cart_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/delete_cart_usecase.dart';
+import 'package:hvatai/features/cart/domain/usecases/get_product_by_id_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/update_cart_usecase.dart';
 import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
 import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
-import 'package:hvatai/features/company/domain/usecases/get_company_products_usecase.dart';
+import 'package:hvatai/features/home/domain/usecases/join_stream_usecase.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
+import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
+import 'package:hvatai/routes/app_routes.dart';
 
 part 'cart_product_details_cubit.freezed.dart';
 part 'cart_product_details_state.dart';
@@ -23,7 +27,8 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
     this.addProductToCartUsecase,
     this.deleteCartUsecase,
     this.updateCartUsecase,
-    this.getCompanyProductsUsecase,
+    this.getProductByIdUsecase,
+    this.joinStreamUsecase,
   ) : super(CartProductDetailsState(
           categories: [],
           selectedIndex: 0,
@@ -35,7 +40,8 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
   AddFavProductUsecase addFavProductUsecase;
   DeleteCartUsecase deleteCartUsecase;
   UpdateCartUsecase updateCartUsecase;
-  GetCompanyProductsUsecase getCompanyProductsUsecase;
+  GetProductByIdUsecase getProductByIdUsecase;
+  JoinStreamUsecase joinStreamUsecase;
   Timer? _refreshTimer;
 
   void createPageController() {
@@ -54,14 +60,13 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
     emit(state.copyWith(currentImageIndex: index));
   }
 
-  void initProductModel(ProductModel product) {
+  /// Initialize with product ID - fetches product and other products from API
+  void initProductById(int productId) {
     // Check if this is the same product - if so, don't refetch
-    final isSameProduct = state.product.id == product.id;
+    final isSameProduct = state.product.id == productId;
 
     // Reset image index when product changes
     emit(state.copyWith(
-      product: product,
-      isFavourites: product.isFavorited,
       currentImageIndex: 0,
       pageController: null, // Will be recreated with new initial page
       ownerProducts: isSameProduct
@@ -69,13 +74,11 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
           : [], // Keep products if same product
     ));
 
-    // Only fetch owner products if:
+    // Fetch product with other products if:
     // 1. It's a different product, OR
     // 2. Owner products are empty (first time loading)
-    if (product.user?.id != null) {
-      if (!isSameProduct || state.ownerProducts.isEmpty) {
-        fetchOwnerProducts(product.user!.id!);
-      }
+    if (!isSameProduct || state.ownerProducts.isEmpty) {
+      fetchProductWithOthers(productId);
     }
   }
 
@@ -457,19 +460,19 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
     emit(state.copyWith(searchedItems: updatedList));
   }
 
-  Future<void> fetchOwnerProducts(int userId) async {
-    if (userId == 0) {
+  Future<void> fetchProductWithOthers(int productId) async {
+    if (productId == 0) {
       emit(state.copyWith(
         ownerProducts: [],
-        errorMessage: 'User id is missing',
+        errorMessage: 'Product id is missing',
       ));
       return;
     }
 
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
-    final result = await getCompanyProductsUsecase(
-      GetCompanyProductsParams(userId: userId),
+    final result = await getProductByIdUsecase(
+      GetProductByIdParams(productId: productId),
     );
 
     result.fold(
@@ -480,15 +483,69 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
           ownerProducts: [],
         ),
       ),
-      (products) {
-        // Filter out the current product from the owner's products
-        final ownerProducts =
-            products.where((p) => p.id != state.product.id).toList();
+      (response) {
+        // Update product with latest data from server
+        final productData = response.data?.product;
+        final otherProductsData = response.data?.otherProducts ?? [];
+
+        final updatedProduct = productData ?? state.product;
+        // Get other products (excluding current product)
+        final otherProducts =
+            otherProductsData.where((p) => p.id != productId).toList();
+
         emit(
           state.copyWith(
             isLoading: false,
-            ownerProducts: ownerProducts,
+            product: updatedProduct,
+            ownerProducts: otherProducts,
           ),
+        );
+      },
+    );
+  }
+
+  Future<void> joinStream(BuildContext context) async {
+    final product = state.product;
+    final liveAuction = product.liveAuction;
+    final streamId = liveAuction?.streamId;
+
+    if (streamId == null) {
+      showFloatingMessageError('Stream ID is not available');
+      return;
+    }
+
+    emit(state.copyWith(isJoiningStream: true, errorMessage: ''));
+
+    final result = await joinStreamUsecase(streamId);
+
+    result.fold(
+      (error) {
+        emit(state.copyWith(
+          isJoiningStream: false,
+          errorMessage: error,
+        ));
+        showFloatingMessageError(error);
+      },
+      (joinResponse) {
+        emit(state.copyWith(isJoiningStream: false));
+
+        final joinData = joinResponse.data;
+
+        // Create StreamDataModel from live auction data
+        final streamData = StreamDataModel(
+          id: streamId,
+          title: liveAuction?.streamTitle,
+          status: liveAuction?.streamStatus ?? 'live',
+          viewerCount: liveAuction?.viewerCount ?? 0,
+          channelName: joinData.stream.channelName,
+        );
+
+        context.push(
+          AppRoutes.liveStreamViewer,
+          extra: {
+            'streamDataModel': streamData,
+            'joinData': joinData,
+          },
         );
       },
     );

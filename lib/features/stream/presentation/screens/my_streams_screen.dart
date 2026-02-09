@@ -90,7 +90,6 @@ class MyStreamsScreen extends StatelessWidget {
                                 final firstProduct = stream.streamProducts?.isNotEmpty == true
                                     ? stream.streamProducts!.first
                                     : null;
-                                final startingPrice = firstProduct?.startingPrice ?? '0';
                                 final product = firstProduct?.product;
                                 final categoryName = stream.categories?.isNotEmpty == true
                                     ? stream.categories!.first.name ?? ''

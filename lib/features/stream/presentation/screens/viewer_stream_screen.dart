@@ -449,14 +449,16 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
 
   void _openProductDetails(ProductModel product) {
     final cubit = locator<CartProductDetailsCubit>();
-    context.push(
-      AppRoutes.cartProductDetails,
-      extra: {
-        'model': product,
-        'products': [product],
-        'cubit': cubit,
-      },
-    );
+    final productId = product.id;
+    if (productId != null) {
+      context.push(
+        AppRoutes.cartProductDetails,
+        extra: {
+          'productId': productId,
+          'cubit': cubit,
+        },
+      );
+    }
   }
 
   Future<void> _showWinnerCheckoutSheet(BuildContext context) async {

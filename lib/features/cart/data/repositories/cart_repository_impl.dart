@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/features/cart/data/datasources/api_service_cart.dart';
 import 'package:hvatai/features/cart/data/model/cart_model.dart';
+import 'package:hvatai/features/cart/data/model/product_with_others_response.dart';
 import 'package:hvatai/features/cart/domain/repositories/cart_repository.dart';
 import 'package:hvatai/features/cart/domain/usecases/add_fav_product_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/add_product_to_cart_usecase.dart';
@@ -73,6 +74,15 @@ class CartRepositoryImpl implements CartRepository {
       CreateOrderParams params) {
     return executeAndHandleError<OrderResponse>(() async {
       final res = await _apiServiceCart.createOrderFromCart(params);
+      return res;
+    });
+  }
+
+  @override
+  Future<Either<String, ProductWithOthersResponse>> getProductById(
+      int productId) {
+    return executeAndHandleError<ProductWithOthersResponse>(() async {
+      final res = await _apiServiceCart.getProductById(productId);
       return res;
     });
   }

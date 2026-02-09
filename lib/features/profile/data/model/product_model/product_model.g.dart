@@ -40,6 +40,11 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
       isFavorited: json['is_favorited'] as bool? ?? false,
       favoritesCount: (json['favorites_count'] as num?)?.toInt() ?? 0,
       ratings: json['ratings'] as List<dynamic>? ?? const [],
+      isInLiveAuction: json['is_in_live_auction'] as bool? ?? false,
+      liveAuction: json['live_auction'] == null
+          ? null
+          : LiveAuctionModel.fromJson(
+              json['live_auction'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
@@ -63,6 +68,8 @@ Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
       'is_favorited': instance.isFavorited,
       'favorites_count': instance.favoritesCount,
       'ratings': instance.ratings,
+      'is_in_live_auction': instance.isInLiveAuction,
+      'live_auction': instance.liveAuction,
     };
 
 _$OwnerModelImpl _$$OwnerModelImplFromJson(Map<String, dynamic> json) =>
@@ -135,4 +142,57 @@ Map<String, dynamic> _$$MainCategoryModelImplToJson(
       'status': instance.status,
       'created_at': instance.createdAt?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),
+    };
+
+_$LiveAuctionModelImpl _$$LiveAuctionModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$LiveAuctionModelImpl(
+      streamId: (json['stream_id'] as num?)?.toInt(),
+      streamTitle: json['stream_title'] as String?,
+      streamStatus: json['stream_status'] as String?,
+      viewerCount: (json['viewer_count'] as num?)?.toInt(),
+      streamProductId: (json['stream_product_id'] as num?)?.toInt(),
+      startingPrice: _parseDouble(json['starting_price']),
+      currentBid: _parseDouble(json['current_bid']),
+      biddingEnabled: json['bidding_enabled'] as bool?,
+      bidSession: json['bid_session'] == null
+          ? null
+          : LiveAuctionBidSessionModel.fromJson(
+              json['bid_session'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$$LiveAuctionModelImplToJson(
+        _$LiveAuctionModelImpl instance) =>
+    <String, dynamic>{
+      'stream_id': instance.streamId,
+      'stream_title': instance.streamTitle,
+      'stream_status': instance.streamStatus,
+      'viewer_count': instance.viewerCount,
+      'stream_product_id': instance.streamProductId,
+      'starting_price': instance.startingPrice,
+      'current_bid': instance.currentBid,
+      'bidding_enabled': instance.biddingEnabled,
+      'bid_session': instance.bidSession,
+    };
+
+_$LiveAuctionBidSessionModelImpl _$$LiveAuctionBidSessionModelImplFromJson(
+        Map<String, dynamic> json) =>
+    _$LiveAuctionBidSessionModelImpl(
+      id: (json['id'] as num?)?.toInt(),
+      status: json['status'] as String?,
+      sessionEndTime: json['session_end_time'] == null
+          ? null
+          : DateTime.parse(json['session_end_time'] as String),
+      remainingSeconds: (json['remaining_seconds'] as num?)?.toInt(),
+      highestBidAmount: _parseDouble(json['highest_bid_amount']),
+    );
+
+Map<String, dynamic> _$$LiveAuctionBidSessionModelImplToJson(
+        _$LiveAuctionBidSessionModelImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'status': instance.status,
+      'session_end_time': instance.sessionEndTime?.toIso8601String(),
+      'remaining_seconds': instance.remainingSeconds,
+      'highest_bid_amount': instance.highestBidAmount,
     };

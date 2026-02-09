@@ -58,10 +58,13 @@ class CustomProductCard extends StatelessWidget {
 
         return GestureDetector(
           onTap: () {
-            context.push(
-              AppRoutes.cartProductDetails,
-              extra: {'model': product, 'cubit': cubit},
-            );
+            final productId = product.id;
+            if (productId != null) {
+              context.push(
+                AppRoutes.cartProductDetails,
+                extra: {'productId': productId, 'cubit': cubit},
+              );
+            }
           },
           child: Container(
             margin: EdgeInsets.symmetric(vertical: 6.h),
