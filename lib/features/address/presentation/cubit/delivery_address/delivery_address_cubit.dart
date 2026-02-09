@@ -14,19 +14,18 @@ import 'package:hvatai/features/address/domain/usecases/add_new_address_usecase.
 import 'package:hvatai/features/address/domain/usecases/delete_address_usecase.dart';
 import 'package:hvatai/features/address/domain/usecases/edit_delivery_address_usecase.dart';
 import 'package:hvatai/features/address/domain/usecases/get_delivery_address_usecase.dart';
+import 'package:hvatai/features/cart/presentation/cubit/cart_cubit/cart_cubit.dart';
 
 part 'delivery_address_cubit.freezed.dart';
 part 'delivery_address_state.dart';
 
 class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
   DeliveryAddressCubit(
-      this.editDeliveryAddressUsecase,
       this.getDeliveryAddressDataUseCase,
       this.addNewAddressUsecase,
       this.deleteAddressUsecase)
       : super(const DeliveryAddressState());
 
-  final EditDeliveryAddressUsecase editDeliveryAddressUsecase;
   final GetDeliveryAddressUsecase getDeliveryAddressDataUseCase;
   final AddNewAddressUsecase addNewAddressUsecase;
   final DeleteAddressUsecase deleteAddressUsecase;
@@ -198,55 +197,9 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
             isLoading: false,
             deliveryModel: [...state.deliveryModel, addressModel]));
         showFloatingMessageSuccess('addressAdded'.tr());
+        context.read<CartCubit>().getDeliveryAddress();
+
         context.pop();
-      },
-    );
-  }
-
-  Future<void> editNewAddress(BuildContext context) async {
-    if (!formKey.currentState!.validate() || !isFormValid) {
-      emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
-      showFloatingMessageError('fillAllFields'.tr());
-      return;
-    }
-
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
-
-    final position = await determinePosition();
-    final updatedAddress = state.address.copyWith(
-      latitude: position?.latitude.toString() ?? '',
-      longitude: position?.longitude.toString() ?? '',
-      isPrimary: state.address.isPrimary ?? 1,
-    );
-
-    final userData = updatedAddress.toUserRegistrationData();
-
-    final result = await editDeliveryAddressUsecase.call(
-      EditDeliveryAddressParams(userRegistrationData: userData),
-    );
-
-    result.fold(
-      (failure) {
-        emit(state.copyWith(isLoading: false, errorMessage: failure));
-        showFloatingMessageError('somethingWentWrong'.tr());
-      },
-      (userData) {
-        final updatedAddressModel =
-            AddressModelFactory.fromUserRegistrationData(userData);
-        final updatedDeliveryModel = state.deliveryModel.map((address) {
-          if (address.id == updatedAddressModel.id) {
-            return updatedAddressModel;
-          }
-          return address;
-        }).toList();
-
-        emit(state.copyWith(
-          isLoading: false,
-          address: updatedAddressModel,
-          deliveryModel: updatedDeliveryModel,
-        ));
-        showFloatingMessageSuccess('AddressUpdated'.tr());
-        context.pop(userData);
       },
     );
   }
@@ -273,7 +226,7 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
     ));
   }
 
-  Future<void> deleteAddress(int addressId) async {
+  Future<void> deleteAddress(int addressId, BuildContext context) async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
     final result = await deleteAddressUsecase.call(
@@ -298,6 +251,7 @@ class DeliveryAddressCubit extends Cubit<DeliveryAddressState> {
           errorMessage: '',
           isLoading: false,
         ));
+        context.read<CartCubit>().getDeliveryAddress();
 
         showFloatingMessageSuccess('addressDeletedSuccessfully'.tr());
       },

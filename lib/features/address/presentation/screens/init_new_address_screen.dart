@@ -67,7 +67,7 @@ class InitNewAddressScreen extends StatelessWidget {
                               confirmText: 'delete'.tr(),
                               isDestructive: true,
                               onConfirm: () {
-                                cubit.deleteAddress(address.id!);
+                                cubit.deleteAddress(address.id!, context);
                                 context.pop();
                               },
                             );
@@ -103,14 +103,13 @@ class InitNewAddressScreen extends StatelessWidget {
                                 await context.push<UserRegistrationData>(
                               AppRoutes.editDeliveryAddress,
                               extra: {
-                                'model': state.deliveryModel[index],
+                                'model': state.deliveryModel[index].toUserRegistrationData(),
                                 // 'cubit': cubit,
                               },
                             );
                             if (updatedAddress != null) {
-                              // cubit.initDeliveryModel(updatedAddress);
-                              print(
-                                  'dsknxbncv,m.bnc.,vbnkfg;nbfdnbklfxmnb,xcv');
+                              cubit.getDeliveryAddress();
+                             
                             }
                           },
                         );

@@ -56,7 +56,6 @@ class CartCubit extends Cubit<CartState> {
     return total;
   }
 
-
   Future<void> getDeliveryAddress() async {
     if (state.deliveryModel.isNotEmpty) return;
     emit(state.copyWith(isLoading: true, errorMessage: ''));
@@ -194,6 +193,15 @@ class CartCubit extends Cubit<CartState> {
       }
     }
     return total;
+  }
+
+  /// Update cart state immediately without API call (for optimistic updates)
+  void updateCartsImmediately(List<CartModel> carts) {
+    final totalPrice = _calculateTotalPrice(carts);
+    emit(state.copyWith(
+      carts: carts,
+      totalCartPrice: totalPrice,
+    ));
   }
 
   Future<void> getCartProducts() async {

@@ -163,7 +163,7 @@ class _DeliverySettingsBottomSheetState
                                       confirmText: 'delete'.tr(),
                                       isDestructive: true,
                                       onConfirm: () {
-                                        cubit.deleteAddress(address.id!);
+                                        cubit.deleteAddress(address.id!, context);
                                         Navigator.of(context).pop();
                                       },
                                     );

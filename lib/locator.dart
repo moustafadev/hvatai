@@ -215,8 +215,11 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => NotificationsCubit(locator(), locator()));
   locator.registerFactory(() => ReportViolationCubit());
 
-  locator.registerFactory(
-      () => DeliveryAddressCubit(locator(), locator(), locator(), locator()));
+  locator.registerFactory(() => DeliveryAddressCubit(
+        locator(),
+        locator(),
+        locator(),
+      ));
   locator.registerFactory(() => OtpCubit(locator(), locator()));
   locator.registerFactory(() => LiveListingsShopCubit(
       locator(), locator(), locator(), locator(), locator(), locator()));

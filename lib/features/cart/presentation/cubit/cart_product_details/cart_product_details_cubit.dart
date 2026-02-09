@@ -11,6 +11,7 @@ import 'package:hvatai/features/cart/domain/usecases/add_product_to_cart_usecase
 import 'package:hvatai/features/cart/domain/usecases/delete_cart_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/get_product_by_id_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/update_cart_usecase.dart';
+import 'package:hvatai/features/cart/presentation/cubit/cart_cubit/cart_cubit.dart';
 import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
 import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
 import 'package:hvatai/features/home/domain/usecases/join_stream_usecase.dart';
@@ -118,7 +119,6 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
     result.fold(
       (failure) {
         emit(state.copyWith(
-          errorMessage: failure,
           success: false,
           isLoading: false,
         ));
@@ -134,6 +134,10 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
           errorMessage: '',
           isLoading: false,
         ));
+        // Update CartCubit immediately to update floating button
+        context.read<CartCubit>().updateCartsImmediately(updatedCart);
+        // Sync with server in background
+        context.read<CartCubit>().getCartProducts();
       },
     );
   }
@@ -173,10 +177,8 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
       BuildContext context, ProductModel product) async {
     final variantId = product.variants.firstOrNull?.id;
     if (variantId == null) return;
-
     final isInCart = isProductInCart(product);
     final cartItemId = getCartItemId(product);
-
     // Optimistic update: immediately update UI
     if (isInCart && cartItemId != null) {
       // Store current state for revert
@@ -250,6 +252,10 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
             carts: finalCarts,
             totalCartPrice: finalTotalPrice,
           ));
+          // Update CartCubit immediately to update floating button
+          context.read<CartCubit>().updateCartsImmediately(finalCarts);
+          // Sync with server in background
+          context.read<CartCubit>().getCartProducts();
         },
       );
     } else {
@@ -341,7 +347,6 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
             emit(state.copyWith(
               carts: previousCarts,
               totalCartPrice: previousTotalPrice,
-              errorMessage: failure,
               success: false,
             ));
             showFloatingMessageError('insufficientStock'.tr());
@@ -371,6 +376,10 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
               success: true,
               totalCartPrice: finalTotalPrice,
             ));
+            // Update CartCubit immediately to update floating button
+            context.read<CartCubit>().updateCartsImmediately(finalCarts);
+            // Sync with server in background
+            context.read<CartCubit>().getCartProducts();
           },
         );
       });
@@ -392,8 +401,7 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
     );
 
     result.fold((failure) {
-      emit(state.copyWith(
-          isLoading: false, errorMessage: failure, success: false));
+      emit(state.copyWith(isLoading: false, success: false));
       showFloatingMessageError('insufficientStock'.tr());
     }, (newCart) {
       // Update carts list with new cart
@@ -411,7 +419,6 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
       for (final cart in updatedCarts) {
         newTotalPrice += cart.total ?? 0.0;
       }
-
       emit(state.copyWith(
         isLoading: false,
         carts: updatedCarts,
@@ -419,6 +426,10 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
         success: true,
         totalCartPrice: newTotalPrice,
       ));
+      // Update CartCubit immediately to update floating button
+      context.read<CartCubit>().updateCartsImmediately(updatedCarts);
+      // Sync with server in background
+      context.read<CartCubit>().getCartProducts();
     });
   }
 
@@ -430,7 +441,9 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
 
     result.fold(
       (failure) {
-        emit(state.copyWith(isLoading: false, errorMessage: failure));
+        emit(state.copyWith(
+          isLoading: false,
+        ));
         showFloatingMessageError('somethingWentWrong'.tr());
       },
       (response) {
@@ -464,7 +477,6 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
     if (productId == 0) {
       emit(state.copyWith(
         ownerProducts: [],
-        errorMessage: 'Product id is missing',
       ));
       return;
     }
@@ -479,7 +491,6 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
       (failure) => emit(
         state.copyWith(
           isLoading: false,
-          errorMessage: failure,
           ownerProducts: [],
         ),
       ),
