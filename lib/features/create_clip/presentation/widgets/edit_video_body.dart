@@ -1,7 +1,7 @@
 part of '../clips.dart';
 
 class EditVideoBody extends StatelessWidget {
-  const EditVideoBody();
+  const EditVideoBody({super.key});
 
   @override
   Widget build(BuildContext context) {

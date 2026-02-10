@@ -11,6 +11,7 @@ class CreateClipState with _$CreateClipState {
     @Default(false) bool isPlaying,
     @Default(false) bool hasReachedEnd,
     @Default(false) bool isSharedController,
+    @Default(false) bool isThumbnailsLoaded,
     String? videoPath,
     String? trimmedVideoPath,
     Duration? videoDuration,

@@ -7,6 +7,7 @@ class ProductFormState with _$ProductFormState {
     @Default(false) bool selfDestruction,
     required ProductModel product,
     @Default(false) bool isLoading,
+    @Default(false) bool isLoadingRequest,
     @Default('') String errorMessage,
     @Default(0) int currentImageIndex,
     PageController? pageController,

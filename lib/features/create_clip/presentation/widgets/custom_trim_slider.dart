@@ -10,6 +10,7 @@ class CustomTrimSlider extends StatefulWidget {
   final int thumbnailCount;
   final double thumbnailHeight;
   final bool showTimeDisplay;
+  final VoidCallback? onThumbnailsLoaded;
 
   const CustomTrimSlider({
     super.key,
@@ -22,6 +23,7 @@ class CustomTrimSlider extends StatefulWidget {
     this.thumbnailCount = 20, // Fixed number of thumbnails
     this.thumbnailHeight = 60.0,
     this.showTimeDisplay = true,
+    this.onThumbnailsLoaded,
   });
 
   @override
@@ -95,6 +97,8 @@ class _CustomTrimSliderState extends State<CustomTrimSlider> {
         _thumbnails = thumbnails;
         _isLoading = false;
       });
+      // Notify parent that thumbnails are loaded
+      widget.onThumbnailsLoaded?.call();
     }
   }
 
@@ -482,7 +486,6 @@ class _ArrowSliderWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const borderRadius = 10.0;
-    const borderWidth = 5.0;
 
     return Positioned(
       left: position,

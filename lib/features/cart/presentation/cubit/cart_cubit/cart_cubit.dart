@@ -57,8 +57,11 @@ class CartCubit extends Cubit<CartState> {
   }
 
   Future<void> getDeliveryAddress() async {
+    emit(state.copyWith(errorMessage: ''));
     if (state.deliveryModel.isNotEmpty) return;
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
+    emit(state.copyWith(
+      isLoading: true,
+    ));
     final result = await getDeliveryAddressUsecase.call(unit);
     result.fold(
       (failure) =>

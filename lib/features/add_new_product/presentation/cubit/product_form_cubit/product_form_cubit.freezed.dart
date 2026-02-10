@@ -20,6 +20,7 @@ mixin _$ProductFormState {
   bool get selfDestruction => throw _privateConstructorUsedError;
   ProductModel get product => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isLoadingRequest => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   int get currentImageIndex => throw _privateConstructorUsedError;
   PageController? get pageController => throw _privateConstructorUsedError;
@@ -45,6 +46,7 @@ abstract class $ProductFormStateCopyWith<$Res> {
       bool selfDestruction,
       ProductModel product,
       bool isLoading,
+      bool isLoadingRequest,
       String errorMessage,
       int currentImageIndex,
       PageController? pageController,
@@ -73,6 +75,7 @@ class _$ProductFormStateCopyWithImpl<$Res, $Val extends ProductFormState>
     Object? selfDestruction = null,
     Object? product = null,
     Object? isLoading = null,
+    Object? isLoadingRequest = null,
     Object? errorMessage = null,
     Object? currentImageIndex = null,
     Object? pageController = freezed,
@@ -95,6 +98,10 @@ class _$ProductFormStateCopyWithImpl<$Res, $Val extends ProductFormState>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingRequest: null == isLoadingRequest
+          ? _value.isLoadingRequest
+          : isLoadingRequest // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: null == errorMessage
           ? _value.errorMessage
@@ -143,6 +150,7 @@ abstract class _$$ProductFormStateImplCopyWith<$Res>
       bool selfDestruction,
       ProductModel product,
       bool isLoading,
+      bool isLoadingRequest,
       String errorMessage,
       int currentImageIndex,
       PageController? pageController,
@@ -170,6 +178,7 @@ class __$$ProductFormStateImplCopyWithImpl<$Res>
     Object? selfDestruction = null,
     Object? product = null,
     Object? isLoading = null,
+    Object? isLoadingRequest = null,
     Object? errorMessage = null,
     Object? currentImageIndex = null,
     Object? pageController = freezed,
@@ -192,6 +201,10 @@ class __$$ProductFormStateImplCopyWithImpl<$Res>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingRequest: null == isLoadingRequest
+          ? _value.isLoadingRequest
+          : isLoadingRequest // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: null == errorMessage
           ? _value.errorMessage
@@ -225,6 +238,7 @@ class _$ProductFormStateImpl implements _ProductFormState {
       this.selfDestruction = false,
       required this.product,
       this.isLoading = false,
+      this.isLoadingRequest = false,
       this.errorMessage = '',
       this.currentImageIndex = 0,
       this.pageController,
@@ -251,6 +265,9 @@ class _$ProductFormStateImpl implements _ProductFormState {
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final bool isLoadingRequest;
   @override
   @JsonKey()
   final String errorMessage;
@@ -280,7 +297,7 @@ class _$ProductFormStateImpl implements _ProductFormState {
 
   @override
   String toString() {
-    return 'ProductFormState(selectedImages: $selectedImages, selfDestruction: $selfDestruction, product: $product, isLoading: $isLoading, errorMessage: $errorMessage, currentImageIndex: $currentImageIndex, pageController: $pageController, category: $category, lastUsedCategories: $lastUsedCategories)';
+    return 'ProductFormState(selectedImages: $selectedImages, selfDestruction: $selfDestruction, product: $product, isLoading: $isLoading, isLoadingRequest: $isLoadingRequest, errorMessage: $errorMessage, currentImageIndex: $currentImageIndex, pageController: $pageController, category: $category, lastUsedCategories: $lastUsedCategories)';
   }
 
   @override
@@ -295,6 +312,8 @@ class _$ProductFormStateImpl implements _ProductFormState {
             (identical(other.product, product) || other.product == product) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.isLoadingRequest, isLoadingRequest) ||
+                other.isLoadingRequest == isLoadingRequest) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.currentImageIndex, currentImageIndex) ||
@@ -313,6 +332,7 @@ class _$ProductFormStateImpl implements _ProductFormState {
       selfDestruction,
       product,
       isLoading,
+      isLoadingRequest,
       errorMessage,
       currentImageIndex,
       pageController,
@@ -335,6 +355,7 @@ abstract class _ProductFormState implements ProductFormState {
           final bool selfDestruction,
           required final ProductModel product,
           final bool isLoading,
+          final bool isLoadingRequest,
           final String errorMessage,
           final int currentImageIndex,
           final PageController? pageController,
@@ -350,6 +371,8 @@ abstract class _ProductFormState implements ProductFormState {
   ProductModel get product;
   @override
   bool get isLoading;
+  @override
+  bool get isLoadingRequest;
   @override
   String get errorMessage;
   @override

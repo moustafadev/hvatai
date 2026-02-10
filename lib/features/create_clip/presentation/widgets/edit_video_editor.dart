@@ -1,7 +1,7 @@
 part of '../clips.dart';
 
 class EditVideoEditor extends StatelessWidget {
-  const EditVideoEditor();
+  const EditVideoEditor({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -151,6 +151,9 @@ class EditVideoEditor extends StatelessWidget {
                           thumbnailCount: 10, // Fixed number of thumbnails
                           thumbnailHeight: 60.0,
                           showTimeDisplay: false,
+                          onThumbnailsLoaded: () {
+                            cubit.setThumbnailsLoaded(true);
+                          },
                         ),
                       ),
                     ],

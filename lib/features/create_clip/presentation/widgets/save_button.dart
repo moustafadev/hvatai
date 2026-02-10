@@ -1,7 +1,7 @@
 part of '../clips.dart';
 
 class SaveButton extends StatelessWidget {
-  const SaveButton();
+  const SaveButton({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -9,28 +9,28 @@ class SaveButton extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<CreateClipCubit>();
 
+        final isDisabled = state.clipName.trim().isEmpty ||
+            !state.isThumbnailsLoaded ||
+            state.endValue <= state.startValue;
+
         return Align(
           alignment: Alignment.centerRight,
           child: GestureDetector(
-            onTap: state.clipName.trim().isEmpty
+            onTap: isDisabled
                 ? null
                 : () {
                     if (state.endValue > state.startValue) {
                       cubit.trimVideo();
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Please select a valid video segment'),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
+                      showFloatingMessageError(
+                          'Please select a valid video segment');
                     }
                   },
             child: Container(
               width: 75,
               height: 21,
               decoration: BoxDecoration(
-                color: state.clipName.trim().isEmpty
+                color: isDisabled
                     ? AppColors.disabledColor
                     : AppColors.primaryColor,
                 borderRadius: BorderRadius.circular(10),
@@ -40,7 +40,7 @@ class SaveButton extends StatelessWidget {
                   text: 'Сохранить',
                   fontSize: 10,
                   fontWeight: FontWeight.w600,
-                  color: state.clipName.trim().isEmpty
+                  color: isDisabled
                       ? AppColors.disabledBackground
                       : AppColors.blackColorIcon,
                 ),

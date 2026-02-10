@@ -350,16 +350,17 @@ class ProductFormCubit extends Cubit<ProductFormState> {
     return formData;
   }
 
-  Future<ProductModel?> addProduct(BuildContext context , {bool isStream = false}) async {
+  Future<ProductModel?> addProduct(BuildContext context,
+      {bool isStream = false}) async {
     // Validate before submitting and show specific error messages
-   
+
     final validationError = isStream ? null : _validateProduct();
     if (validationError != null) {
       showFloatingMessageError(validationError);
       return null;
     }
 
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
+    emit(state.copyWith(isLoadingRequest: true, errorMessage: ''));
 
     final formData = await _prepareProductFormData(state.product);
 
@@ -370,7 +371,7 @@ class ProductFormCubit extends Cubit<ProductFormState> {
     ProductModel? createdProduct;
 
     result.fold((failure) {
-      emit(state.copyWith(isLoading: false, errorMessage: failure));
+      emit(state.copyWith(isLoadingRequest: false, errorMessage: failure));
       showFloatingMessageError('somethingWentWrong'.tr());
       createdProduct = null;
     }, (newProduct) {
@@ -383,7 +384,7 @@ class ProductFormCubit extends Cubit<ProductFormState> {
 
       EventBus().publish(ProductAddedEvent(completeProduct));
 
-      emit(state.copyWith(isLoading: false));
+      emit(state.copyWith(isLoadingRequest: false));
       showFloatingMessageSuccess('productAdded'.tr());
       createdProduct = completeProduct;
       if (context.mounted) {
@@ -441,7 +442,7 @@ class ProductFormCubit extends Cubit<ProductFormState> {
       return;
     }
 
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
+    emit(state.copyWith(isLoadingRequest: true, errorMessage: ''));
 
     final formData = await _prepareProductFormData(state.product);
     final result = await updateProductUsecase.call(
@@ -449,11 +450,11 @@ class ProductFormCubit extends Cubit<ProductFormState> {
     );
 
     result.fold((failure) {
-      emit(state.copyWith(isLoading: false, errorMessage: failure));
+      emit(state.copyWith(isLoadingRequest: false, errorMessage: failure));
       showFloatingMessageError(failure);
     }, (updatedProduct) {
       emit(state.copyWith(
-        isLoading: false,
+        isLoadingRequest: false,
         errorMessage: '',
         product: updatedProduct,
       ));

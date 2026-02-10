@@ -22,6 +22,7 @@ mixin _$CreateClipState {
   bool get isPlaying => throw _privateConstructorUsedError;
   bool get hasReachedEnd => throw _privateConstructorUsedError;
   bool get isSharedController => throw _privateConstructorUsedError;
+  bool get isThumbnailsLoaded => throw _privateConstructorUsedError;
   String? get videoPath => throw _privateConstructorUsedError;
   String? get trimmedVideoPath => throw _privateConstructorUsedError;
   Duration? get videoDuration => throw _privateConstructorUsedError;
@@ -51,6 +52,7 @@ abstract class $CreateClipStateCopyWith<$Res> {
       bool isPlaying,
       bool hasReachedEnd,
       bool isSharedController,
+      bool isThumbnailsLoaded,
       String? videoPath,
       String? trimmedVideoPath,
       Duration? videoDuration,
@@ -82,6 +84,7 @@ class _$CreateClipStateCopyWithImpl<$Res, $Val extends CreateClipState>
     Object? isPlaying = null,
     Object? hasReachedEnd = null,
     Object? isSharedController = null,
+    Object? isThumbnailsLoaded = null,
     Object? videoPath = freezed,
     Object? trimmedVideoPath = freezed,
     Object? videoDuration = freezed,
@@ -115,6 +118,10 @@ class _$CreateClipStateCopyWithImpl<$Res, $Val extends CreateClipState>
       isSharedController: null == isSharedController
           ? _value.isSharedController
           : isSharedController // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isThumbnailsLoaded: null == isThumbnailsLoaded
+          ? _value.isThumbnailsLoaded
+          : isThumbnailsLoaded // ignore: cast_nullable_to_non_nullable
               as bool,
       videoPath: freezed == videoPath
           ? _value.videoPath
@@ -167,6 +174,7 @@ abstract class _$$CreateClipStateImplCopyWith<$Res>
       bool isPlaying,
       bool hasReachedEnd,
       bool isSharedController,
+      bool isThumbnailsLoaded,
       String? videoPath,
       String? trimmedVideoPath,
       Duration? videoDuration,
@@ -196,6 +204,7 @@ class __$$CreateClipStateImplCopyWithImpl<$Res>
     Object? isPlaying = null,
     Object? hasReachedEnd = null,
     Object? isSharedController = null,
+    Object? isThumbnailsLoaded = null,
     Object? videoPath = freezed,
     Object? trimmedVideoPath = freezed,
     Object? videoDuration = freezed,
@@ -229,6 +238,10 @@ class __$$CreateClipStateImplCopyWithImpl<$Res>
       isSharedController: null == isSharedController
           ? _value.isSharedController
           : isSharedController // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isThumbnailsLoaded: null == isThumbnailsLoaded
+          ? _value.isThumbnailsLoaded
+          : isThumbnailsLoaded // ignore: cast_nullable_to_non_nullable
               as bool,
       videoPath: freezed == videoPath
           ? _value.videoPath
@@ -276,6 +289,7 @@ class _$CreateClipStateImpl implements _CreateClipState {
       this.isPlaying = false,
       this.hasReachedEnd = false,
       this.isSharedController = false,
+      this.isThumbnailsLoaded = false,
       this.videoPath,
       this.trimmedVideoPath,
       this.videoDuration,
@@ -304,6 +318,9 @@ class _$CreateClipStateImpl implements _CreateClipState {
   @JsonKey()
   final bool isSharedController;
   @override
+  @JsonKey()
+  final bool isThumbnailsLoaded;
+  @override
   final String? videoPath;
   @override
   final String? trimmedVideoPath;
@@ -326,7 +343,7 @@ class _$CreateClipStateImpl implements _CreateClipState {
 
   @override
   String toString() {
-    return 'CreateClipState(isLoading: $isLoading, isTrimming: $isTrimming, isVideoLoaded: $isVideoLoaded, isPlaying: $isPlaying, hasReachedEnd: $hasReachedEnd, isSharedController: $isSharedController, videoPath: $videoPath, trimmedVideoPath: $trimmedVideoPath, videoDuration: $videoDuration, errorMessage: $errorMessage, startValue: $startValue, endValue: $endValue, clipName: $clipName, streamId: $streamId)';
+    return 'CreateClipState(isLoading: $isLoading, isTrimming: $isTrimming, isVideoLoaded: $isVideoLoaded, isPlaying: $isPlaying, hasReachedEnd: $hasReachedEnd, isSharedController: $isSharedController, isThumbnailsLoaded: $isThumbnailsLoaded, videoPath: $videoPath, trimmedVideoPath: $trimmedVideoPath, videoDuration: $videoDuration, errorMessage: $errorMessage, startValue: $startValue, endValue: $endValue, clipName: $clipName, streamId: $streamId)';
   }
 
   @override
@@ -346,6 +363,8 @@ class _$CreateClipStateImpl implements _CreateClipState {
                 other.hasReachedEnd == hasReachedEnd) &&
             (identical(other.isSharedController, isSharedController) ||
                 other.isSharedController == isSharedController) &&
+            (identical(other.isThumbnailsLoaded, isThumbnailsLoaded) ||
+                other.isThumbnailsLoaded == isThumbnailsLoaded) &&
             (identical(other.videoPath, videoPath) ||
                 other.videoPath == videoPath) &&
             (identical(other.trimmedVideoPath, trimmedVideoPath) ||
@@ -373,6 +392,7 @@ class _$CreateClipStateImpl implements _CreateClipState {
       isPlaying,
       hasReachedEnd,
       isSharedController,
+      isThumbnailsLoaded,
       videoPath,
       trimmedVideoPath,
       videoDuration,
@@ -400,6 +420,7 @@ abstract class _CreateClipState implements CreateClipState {
       final bool isPlaying,
       final bool hasReachedEnd,
       final bool isSharedController,
+      final bool isThumbnailsLoaded,
       final String? videoPath,
       final String? trimmedVideoPath,
       final Duration? videoDuration,
@@ -421,6 +442,8 @@ abstract class _CreateClipState implements CreateClipState {
   bool get hasReachedEnd;
   @override
   bool get isSharedController;
+  @override
+  bool get isThumbnailsLoaded;
   @override
   String? get videoPath;
   @override

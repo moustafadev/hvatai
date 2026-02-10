@@ -117,6 +117,7 @@ class CreateClipCubit extends Cubit<CreateClipState> {
           errorMessage: '',
           isPlaying: _videoController!.value.isPlaying,
           isSharedController: true,
+          isThumbnailsLoaded: false, // Reset when new video is loaded
         ));
         return;
       }
@@ -161,6 +162,7 @@ class CreateClipCubit extends Cubit<CreateClipState> {
         endValue: endValueMs,
         errorMessage: '',
         isPlaying: _videoController!.value.isPlaying,
+        isThumbnailsLoaded: false, // Reset when new video is loaded
       ));
     } catch (e) {
       debugPrint('❌ Error loading video: $e');
@@ -288,6 +290,10 @@ class CreateClipCubit extends Cubit<CreateClipState> {
 
   void updateClipName(String name) {
     emit(state.copyWith(clipName: name));
+  }
+
+  void setThumbnailsLoaded(bool loaded) {
+    emit(state.copyWith(isThumbnailsLoaded: loaded));
   }
 
   Future<void> seekTo(double positionMs) async {
