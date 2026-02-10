@@ -56,14 +56,26 @@ class OtpCubit extends Cubit<OtpState> {
           success: true,
         ));
 
+        // Save isSetup to AppLocal
+        appLocal.saveIsSetup(userData.isSetup);
+
         showFloatingMessageSuccess(userData.message.isNotEmpty
             ? userData.message
             : 'emailVerified'.tr());
-        if (userData.user?.name.isEmpty == true) {
-          context.push(AppRoutes.name);
-        } else {
-          appLocal.saveIsSetup(true);
+
+        // Navigation logic based on isSetup and name
+        if (userData.isSetup == true) {
+          // User has completed setup (has favorite categories)
           context.go(AppRoutes.home);
+        } else {
+          // User hasn't completed setup
+          if (userData.user?.name != null && userData.user!.name.isNotEmpty) {
+            // User has a name, go to categories
+            context.go(AppRoutes.interests);
+          } else {
+            // User doesn't have a name, go to name screen
+            context.go(AppRoutes.name);
+          }
         }
       },
     );

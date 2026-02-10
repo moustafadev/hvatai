@@ -30,7 +30,8 @@ class NameCubit extends Cubit<NameState> {
       },
       (_) {
         emit(state.copyWith(isLoading: false));
-        context.push(AppRoutes.interests);
+        // Always go to categories after name is set
+        context.go(AppRoutes.interests);
       },
     );
   }

@@ -97,6 +97,7 @@ class NewProductWidgetBody extends StatelessWidget {
                   CustomTextField(
                     key: ValueKey('price_field'),
                     hintText: 'price'.tr(),
+                    keyboardType: TextInputType.number,
                     initialValue: state.product.variants.isNotEmpty &&
                             state.product.variants.first.price != null
                         ? state.product.variants.first.price.toString()

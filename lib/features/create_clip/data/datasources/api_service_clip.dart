@@ -22,6 +22,10 @@ class ApiServiceClip extends ApiBase {
         ),
       });
 
+      print('formData: $formData');
+      print('formData.fields: ${formData.fields}');
+      print('formData.files: ${formData.files}');
+
       final res = await post(
         path,
         body: formData,

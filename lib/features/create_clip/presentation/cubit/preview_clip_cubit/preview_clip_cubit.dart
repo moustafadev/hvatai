@@ -68,6 +68,7 @@ class PreviewClipCubit extends Cubit<PreviewClipState> {
   }
 
   Future<void> uploadClip(BuildContext context) async {
+    emit(state.copyWith(isUploading: true, errorMessage: ''));
 
     final result = await _uploadClipUsecase.call(
       UploadClipParams(
@@ -96,7 +97,7 @@ class PreviewClipCubit extends Cubit<PreviewClipState> {
           context.go(AppRoutes.profile);
         }
       },
-    );
+    ); 
   }
 
   @override

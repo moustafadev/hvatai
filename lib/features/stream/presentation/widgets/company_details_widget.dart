@@ -27,19 +27,20 @@ class CompanyDetailsWidget extends StatelessWidget {
           fontSize: 14,
           color: Colors.white,
         ),
-        Row(
-          children: [
-            const Icon(Icons.star, color: Colors.white, size: 16),
-            SizedBox(width: 4.w),
-            CustomText(
-              text: '${streamUserModel?.personalRating}',
-              fontWeight: FontWeight.w800,
-              fontSize: 14,
-              color: Colors.white,
-            ),
-            // Removed subscription widget as requested
-          ],
-        ),
+        if (streamUserModel?.personalRating != null)
+          Row(
+            children: [
+              const Icon(Icons.star, color: Colors.white, size: 16),
+              SizedBox(width: 4.w),
+              CustomText(
+                text: '${streamUserModel?.personalRating}',
+                fontWeight: FontWeight.w800,
+                fontSize: 14,
+                color: Colors.white,
+              ),
+              // Removed subscription widget as requested
+            ],
+          ),
       ],
     );
   }

@@ -232,6 +232,8 @@ mixin _$AuthVerifyResponse {
   VerifyAuthUser? get user => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
   int get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_setup')
+  bool get isSetup => throw _privateConstructorUsedError;
 
   /// Serializes this AuthVerifyResponse to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -253,7 +255,8 @@ abstract class $AuthVerifyResponseCopyWith<$Res> {
       {String message,
       String token,
       @JsonKey(name: 'user') VerifyAuthUser? user,
-      @JsonKey(name: 'user_id') int userId});
+      @JsonKey(name: 'user_id') int userId,
+      @JsonKey(name: 'is_setup') bool isSetup});
 
   $VerifyAuthUserCopyWith<$Res>? get user;
 }
@@ -277,6 +280,7 @@ class _$AuthVerifyResponseCopyWithImpl<$Res, $Val extends AuthVerifyResponse>
     Object? token = null,
     Object? user = freezed,
     Object? userId = null,
+    Object? isSetup = null,
   }) {
     return _then(_value.copyWith(
       message: null == message
@@ -295,6 +299,10 @@ class _$AuthVerifyResponseCopyWithImpl<$Res, $Val extends AuthVerifyResponse>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int,
+      isSetup: null == isSetup
+          ? _value.isSetup
+          : isSetup // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -325,7 +333,8 @@ abstract class _$$AuthVerifyResponseImplCopyWith<$Res>
       {String message,
       String token,
       @JsonKey(name: 'user') VerifyAuthUser? user,
-      @JsonKey(name: 'user_id') int userId});
+      @JsonKey(name: 'user_id') int userId,
+      @JsonKey(name: 'is_setup') bool isSetup});
 
   @override
   $VerifyAuthUserCopyWith<$Res>? get user;
@@ -348,6 +357,7 @@ class __$$AuthVerifyResponseImplCopyWithImpl<$Res>
     Object? token = null,
     Object? user = freezed,
     Object? userId = null,
+    Object? isSetup = null,
   }) {
     return _then(_$AuthVerifyResponseImpl(
       message: null == message
@@ -366,6 +376,10 @@ class __$$AuthVerifyResponseImplCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as int,
+      isSetup: null == isSetup
+          ? _value.isSetup
+          : isSetup // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -377,7 +391,8 @@ class _$AuthVerifyResponseImpl implements _AuthVerifyResponse {
       {this.message = '',
       this.token = '',
       @JsonKey(name: 'user') this.user,
-      @JsonKey(name: 'user_id') this.userId = 0});
+      @JsonKey(name: 'user_id') this.userId = 0,
+      @JsonKey(name: 'is_setup') this.isSetup = false});
 
   factory _$AuthVerifyResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$AuthVerifyResponseImplFromJson(json);
@@ -394,10 +409,13 @@ class _$AuthVerifyResponseImpl implements _AuthVerifyResponse {
   @override
   @JsonKey(name: 'user_id')
   final int userId;
+  @override
+  @JsonKey(name: 'is_setup')
+  final bool isSetup;
 
   @override
   String toString() {
-    return 'AuthVerifyResponse(message: $message, token: $token, user: $user, userId: $userId)';
+    return 'AuthVerifyResponse(message: $message, token: $token, user: $user, userId: $userId, isSetup: $isSetup)';
   }
 
   @override
@@ -408,12 +426,14 @@ class _$AuthVerifyResponseImpl implements _AuthVerifyResponse {
             (identical(other.message, message) || other.message == message) &&
             (identical(other.token, token) || other.token == token) &&
             (identical(other.user, user) || other.user == user) &&
-            (identical(other.userId, userId) || other.userId == userId));
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.isSetup, isSetup) || other.isSetup == isSetup));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, message, token, user, userId);
+  int get hashCode =>
+      Object.hash(runtimeType, message, token, user, userId, isSetup);
 
   /// Create a copy of AuthVerifyResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -434,10 +454,12 @@ class _$AuthVerifyResponseImpl implements _AuthVerifyResponse {
 
 abstract class _AuthVerifyResponse implements AuthVerifyResponse {
   const factory _AuthVerifyResponse(
-      {final String message,
-      final String token,
-      @JsonKey(name: 'user') final VerifyAuthUser? user,
-      @JsonKey(name: 'user_id') final int userId}) = _$AuthVerifyResponseImpl;
+          {final String message,
+          final String token,
+          @JsonKey(name: 'user') final VerifyAuthUser? user,
+          @JsonKey(name: 'user_id') final int userId,
+          @JsonKey(name: 'is_setup') final bool isSetup}) =
+      _$AuthVerifyResponseImpl;
 
   factory _AuthVerifyResponse.fromJson(Map<String, dynamic> json) =
       _$AuthVerifyResponseImpl.fromJson;
@@ -452,6 +474,9 @@ abstract class _AuthVerifyResponse implements AuthVerifyResponse {
   @override
   @JsonKey(name: 'user_id')
   int get userId;
+  @override
+  @JsonKey(name: 'is_setup')
+  bool get isSetup;
 
   /// Create a copy of AuthVerifyResponse
   /// with the given fields replaced by the non-null parameter values.

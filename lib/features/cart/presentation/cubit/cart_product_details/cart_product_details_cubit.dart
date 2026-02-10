@@ -548,6 +548,16 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
           title: liveAuction?.streamTitle,
           status: liveAuction?.streamStatus ?? 'live',
           viewerCount: liveAuction?.viewerCount ?? 0,
+          user: StreamUserModel(
+            name: state.product.user?.name,
+            email: state.product.user?.email,
+            image: state.product.user?.image,
+            id: state.product.user?.id,
+            personalRating: state.product.user?.personalRating,
+            personalRatingCount: state.product.user?.personalRatingCount,
+            isFavorited: state.product.user?.isFavorited,
+            favoritesCount: state.product.user?.favoritesCount,
+          ),
           channelName: joinData.stream.channelName,
         );
 

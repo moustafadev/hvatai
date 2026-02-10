@@ -32,6 +32,7 @@ _$AuthVerifyResponseImpl _$$AuthVerifyResponseImplFromJson(
           ? null
           : VerifyAuthUser.fromJson(json['user'] as Map<String, dynamic>),
       userId: (json['user_id'] as num?)?.toInt() ?? 0,
+      isSetup: json['is_setup'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$AuthVerifyResponseImplToJson(
@@ -41,4 +42,5 @@ Map<String, dynamic> _$$AuthVerifyResponseImplToJson(
       'token': instance.token,
       'user': instance.user,
       'user_id': instance.userId,
+      'is_setup': instance.isSetup,
     };

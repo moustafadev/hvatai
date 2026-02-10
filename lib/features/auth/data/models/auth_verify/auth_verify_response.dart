@@ -24,6 +24,7 @@ class AuthVerifyResponse with _$AuthVerifyResponse {
     @Default('') String token,
     @JsonKey(name: 'user') VerifyAuthUser? user,
     @JsonKey(name: 'user_id') @Default(0) int userId,
+    @JsonKey(name: 'is_setup') @Default(false) bool isSetup,
   }) = _AuthVerifyResponse;
 
   factory AuthVerifyResponse.fromJson(Map<String, dynamic> json) =>
