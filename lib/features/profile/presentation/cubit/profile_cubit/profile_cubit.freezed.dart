@@ -223,7 +223,7 @@ class __$$ProfileStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ProfileStateImpl implements _ProfileState {
+class _$ProfileStateImpl with DiagnosticableTreeMixin implements _ProfileState {
   const _$ProfileStateImpl(
       {this.isLoading = false,
       this.passwordError = '',
@@ -283,8 +283,24 @@ class _$ProfileStateImpl implements _ProfileState {
   final UserRegistrationData userProfileModel;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'ProfileState(isLoading: $isLoading, passwordError: $passwordError, emailError: $emailError, settingsOptions: $settingsOptions, helpAndContact: $helpAndContact, streamerOptions: $streamerOptions, errorMessage: $errorMessage, isSeller: $isSeller, userProfileModel: $userProfileModel)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ProfileState'))
+      ..add(DiagnosticsProperty('isLoading', isLoading))
+      ..add(DiagnosticsProperty('passwordError', passwordError))
+      ..add(DiagnosticsProperty('emailError', emailError))
+      ..add(DiagnosticsProperty('settingsOptions', settingsOptions))
+      ..add(DiagnosticsProperty('helpAndContact', helpAndContact))
+      ..add(DiagnosticsProperty('streamerOptions', streamerOptions))
+      ..add(DiagnosticsProperty('errorMessage', errorMessage))
+      ..add(DiagnosticsProperty('isSeller', isSeller))
+      ..add(DiagnosticsProperty('userProfileModel', userProfileModel));
   }
 
   @override

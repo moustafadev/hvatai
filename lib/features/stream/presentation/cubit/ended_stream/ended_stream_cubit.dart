@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/core/widgets/video_thumbnail_player.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_comments_usecase.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 
@@ -88,5 +89,11 @@ class EndedStreamCubit extends Cubit<EndedStreamState> {
 
   void toggleExpanded() {
     emit(state.copyWith(isExpanded: !state.isExpanded));
+  }
+
+  @override
+  Future<void> close() async {
+    VideoThumbnailPlayer.clearCache();
+    return super.close();
   }
 }

@@ -89,6 +89,9 @@ abstract class ServerConfig {
   static String createClipFromStream(int streamId) =>
       "streams/$streamId/clips/livekit";
   static String uploadClip(int streamId) => "streams/$streamId/clips";
+  static String getUserClips(int userId) => "users/$userId/clips";
+  static String updateClip(int clipId) => "streams/clips/$clipId";
+  static String deleteClip(int clipId) => "streams/clips/$clipId";
 
   // =============================== Company endpoints ===============================
 

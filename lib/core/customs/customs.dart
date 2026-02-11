@@ -55,4 +55,5 @@ part 'gradient_check_box.dart';
 part 'reusable_live_videos_grid.dart';
 part 'show_dialog_cupertino.dart';
 part 'top_bar_widget.dart';
+part 'custom_confirm_dialog.dart';
 // Include all parts here

@@ -81,6 +81,7 @@ import 'package:hvatai/features/profile/presentation/cubit/my_product_details_cu
 import 'package:hvatai/features/profile/presentation/cubit/notification_cubit/notification_cubit.dart';
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/profile_clips_cubit/profile_clips_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/report_violation_cubit/report_violation_cubit.dart';
 import 'package:hvatai/features/profile/presentation/cubit/reviews_cubit/reviews_cubit.dart';
 import 'package:hvatai/features/search/data/datasources/api_service_search.dart';
@@ -132,7 +133,16 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => NameCubit(locator()));
   locator.registerFactory(
       () => InterestsDetailCubit(locator(), locator(), locator()));
-  locator.registerFactory(() => ProfileCubit(locator(), locator(), locator()));
+  locator.registerFactory(() => ProfileCubit(
+        locator(),
+        locator(),
+        locator(),
+      ));
+  locator.registerFactory(() => ProfileClipsCubit(
+        locator(),
+        locator(),
+        locator(),
+      ));
   locator.registerFactory(
     () => ActivityCubit(
       locator(),
@@ -147,16 +157,17 @@ Future<void> setupLocator() async {
       ));
   locator.registerFactory(() => AwardsClubCubit(locator(), locator()));
   locator.registerFactory(() => SendRewardFlowCubit(locator()));
-  locator.registerFactory(() => CompanyProductsCubit(locator()));
-  locator.registerFactory(() => CompanyReviewsCubit(locator()));
-  locator.registerFactory(() => CompanyStreamsCubit(locator()));
   locator.registerFactory(() => EndedStreamCubit(locator()));
   locator.registerFactory(() => ClipBottomSheetCubit(locator()));
   locator.registerFactory(
     () => CompanyCubit(
-      locator(),
-      locator(),
-      locator(),
+      locator(), // GetUserDataUsecase
+      locator(), // GetSubscribedUsersUsecase
+      locator(), // ToggleSubscriptionUsecase
+      locator(), // GetCompanyProductsUsecase
+      locator(), // GetUserRatingsUsecase
+      locator(), // GetCompanyStreamsUsecase
+      locator(), // GetUserClipsUsecase
     ),
   );
   locator.registerFactory(() => ReviewCubit(locator()));

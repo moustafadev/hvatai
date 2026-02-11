@@ -32,7 +32,8 @@ class StatsRowProfile extends StatelessWidget {
             title: 'Кошелёк',
             asset: Assets.assetsImagesWalletIcon,
             onTap: () {
-              context.push(AppRoutes.wallet);
+              context
+                  .push(AppRoutes.wallet, extra: {'walletId': user.walletId});
             },
           ),
         ],

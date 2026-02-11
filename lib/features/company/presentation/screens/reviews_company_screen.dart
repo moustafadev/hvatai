@@ -1,24 +1,7 @@
 part of '../company.dart';
 
 class ReviewsCompanyScreen extends StatelessWidget {
-  const ReviewsCompanyScreen({
-    super.key,
-    required this.userId,
-  });
-
-  final int userId;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider<CompanyReviewsCubit>(
-      create: (_) => locator<CompanyReviewsCubit>()..fetchReviews(userId),
-      child: _ReviewsCompanyView(userId: userId),
-    );
-  }
-}
-
-class _ReviewsCompanyView extends StatelessWidget {
-  const _ReviewsCompanyView({required this.userId});
+  const ReviewsCompanyScreen({super.key, required this.userId});
 
   final int userId;
 
@@ -26,20 +9,20 @@ class _ReviewsCompanyView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        BlocBuilder<CompanyReviewsCubit, CompanyReviewsState>(
+        BlocBuilder<CompanyCubit, CompanyState>(
           builder: (context, state) {
-            if (state.isLoading) {
+            if (state.isLoadingReviews) {
               return const Center(
                 child: CircularProgressIndicator(color: AppColors.primaryColor),
               );
             }
 
-            if (state.errorMessage.isNotEmpty) {
+            if (state.errorMessageReviews.isNotEmpty) {
               return Center(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: CustomText(
-                    text: state.errorMessage,
+                    text: state.errorMessageReviews,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w600,
                     textAlign: TextAlign.center,

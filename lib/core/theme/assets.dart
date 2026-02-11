@@ -455,6 +455,7 @@ class Assets {
 
   /// assets icons pause
   static const String assetsIconsPause = "assets/icons/pause.svg";
+
   /// assets icons lock2
   static const String assetsIconsLock2 = "assets/icons/lock2.svg";
 
@@ -522,6 +523,9 @@ class Assets {
   /// Assets for assetsIconsSettings
   /// assets/icons/Settings.png
   static const String assetsIconsSettings = "assets/icons/Settings.png";
+
+  static const String assetsIconsSettingsClip =
+      "assets/icons/settings_clips.svg";
 
   /// Assets for assetsIconsShare
   /// assets/icons/share.png

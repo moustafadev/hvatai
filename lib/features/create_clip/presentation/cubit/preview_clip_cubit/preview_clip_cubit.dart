@@ -1,12 +1,10 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/preview_clip_cubit/preview_clip_state.dart';
-import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/create_clip/domain/usecases/upload_clip_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:video_player/video_player.dart';
@@ -97,7 +95,7 @@ class PreviewClipCubit extends Cubit<PreviewClipState> {
           context.go(AppRoutes.profile);
         }
       },
-    ); 
+    );
   }
 
   @override

@@ -22,93 +22,106 @@ class ProfileScreen extends StatelessWidget {
         BlocProvider(
           create: (_) => locator<ReviewsCubit>(),
         ),
+        BlocProvider(
+          create: (_) => locator<ProfileClipsCubit>(),
+        ),
       ],
-      child: BlocBuilder<ProfileCubit, ProfileState>(
-        builder: (context, state) {
-          if (state.isLoading) {
-            return const Scaffold(
-              backgroundColor: AppColors.background,
-              body: Center(
-                child: CircularProgressIndicator(color: AppColors.grey),
-              ),
-            );
+      child: BlocListener<ProfileCubit, ProfileState>(
+        listener: (context, state) {
+          // Load clips when profile is loaded
+          if (!state.isLoading && state.userProfileModel.id != null) {
+            context
+                .read<ProfileClipsCubit>()
+                .loadUserClips(state.userProfileModel.id!);
           }
+        },
+        child: BlocBuilder<ProfileCubit, ProfileState>(
+          builder: (context, state) {
+            if (state.isLoading) {
+              return const Scaffold(
+                backgroundColor: AppColors.background,
+                body: Center(
+                  child: CircularProgressIndicator(color: AppColors.grey),
+                ),
+              );
+            }
 
-          if (state.errorMessage.isNotEmpty) {
-            return Scaffold(
-              backgroundColor: AppColors.background,
-              body: Center(
-                child: CustomText(text: state.errorMessage),
-              ),
-            );
-          }
+            if (state.errorMessage.isNotEmpty) {
+              return Scaffold(
+                backgroundColor: AppColors.background,
+                body: Center(
+                  child: CustomText(text: state.errorMessage),
+                ),
+              );
+            }
 
-          final user = state.userProfileModel;
+            final user = state.userProfileModel;
 
-          return DefaultTabController(
-            length: 4,
-            child: Scaffold(
-              backgroundColor: AppColors.background,
-              body: SafeArea(
-                bottom: false,
-                child: NestedScrollView(
-                  headerSliverBuilder:
-                      (BuildContext context, bool innerBoxIsScrolled) {
-                    return [
-                      SliverToBoxAdapter(
-                        child: Column(
-                          children: [
-                            const HeaderProfile(),
-                            16.ph,
-                            StatsRowProfile(user: user),
-                          ],
-                        ),
-                      ),
-                      SliverPersistentHeader(
-                        pinned: true,
-                        delegate: _SliverTabBarDelegate(
-                          TabBar(
-                            indicatorColor: AppColors.primaryColor,
-                            dividerColor: Colors.transparent,
-                            indicatorWeight: 2,
-                            labelStyle: TextStyle(
-                              fontSize: 14.sp,
-                              fontFamily: 'Manrope',
-                              fontWeight: FontWeight.w800,
-                              color: AppColors.blackColorIcon,
-                            ),
-                            unselectedLabelStyle: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'Manrope',
-                              color: AppColors.greyTransparent,
-                            ),
-                            indicatorSize: TabBarIndicatorSize.tab,
-                            labelPadding: EdgeInsets.zero,
-                            tabs: const [
-                              Tab(text: 'Товары'),
-                              Tab(text: 'Отзывы'),
-                              Tab(text: 'Стримы'),
-                              Tab(text: 'Клипы'),
+            return DefaultTabController(
+              length: 4,
+              child: Scaffold(
+                backgroundColor: AppColors.background,
+                body: SafeArea(
+                  bottom: false,
+                  child: NestedScrollView(
+                    headerSliverBuilder:
+                        (BuildContext context, bool innerBoxIsScrolled) {
+                      return [
+                        SliverToBoxAdapter(
+                          child: Column(
+                            children: [
+                              const HeaderProfile(),
+                              16.ph,
+                              StatsRowProfile(user: user),
                             ],
                           ),
                         ),
-                      ),
-                    ];
-                  },
-                  body: const TabBarView(
-                    children: [
-                      ProductsTabProfile(),
-                      ReviewsTabProfile(),
-                      StreamsTabProfile(),
-                      ClipsTabProfile(),
-                    ],
+                        SliverPersistentHeader(
+                          pinned: true,
+                          delegate: _SliverTabBarDelegate(
+                            TabBar(
+                              indicatorColor: AppColors.primaryColor,
+                              dividerColor: Colors.transparent,
+                              indicatorWeight: 2,
+                              labelStyle: TextStyle(
+                                fontSize: 14.sp,
+                                fontFamily: 'Manrope',
+                                fontWeight: FontWeight.w800,
+                                color: AppColors.blackColorIcon,
+                              ),
+                              unselectedLabelStyle: TextStyle(
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'Manrope',
+                                color: AppColors.greyTransparent,
+                              ),
+                              indicatorSize: TabBarIndicatorSize.tab,
+                              labelPadding: EdgeInsets.zero,
+                              tabs: const [
+                                Tab(text: 'Товары'),
+                                Tab(text: 'Отзывы'),
+                                Tab(text: 'Стримы'),
+                                Tab(text: 'Клипы'),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ];
+                    },
+                    body: const TabBarView(
+                      children: [
+                        ProductsTabProfile(),
+                        ReviewsTabProfile(),
+                        StreamsTabProfile(),
+                        ClipsTabProfile(),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

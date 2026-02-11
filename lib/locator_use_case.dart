@@ -62,6 +62,9 @@ import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.d
 import 'package:hvatai/features/stream/domain/usecases/create_clip_from_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/download_video_usecase.dart';
 import 'package:hvatai/features/create_clip/domain/usecases/upload_clip_usecase.dart';
+import 'package:hvatai/features/create_clip/domain/usecases/get_user_clips_usecase.dart';
+import 'package:hvatai/features/create_clip/domain/usecases/update_clip_usecase.dart';
+import 'package:hvatai/features/create_clip/domain/usecases/delete_clip_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/end_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_bid_session_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.dart';
@@ -160,6 +163,9 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => CreateClipFromStreamUsecase(locator()));
   locator.registerLazySingleton(() => DownloadVideoUsecase(locator()));
   locator.registerLazySingleton(() => UploadClipUsecase(locator()));
+  locator.registerLazySingleton(() => GetUserClipsUsecase(locator()));
+  locator.registerLazySingleton(() => UpdateClipUsecase(locator()));
+  locator.registerLazySingleton(() => DeleteClipUsecase(locator()));
   locator.registerLazySingleton(() => CreateOrderUsecase(locator()));
   locator.registerLazySingleton(() => GetUserOrdersUsecase(locator()));
   locator.registerLazySingleton(() => GetCompanyStreamsUsecase(locator()));

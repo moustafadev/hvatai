@@ -371,7 +371,9 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.wallet,
       builder: (BuildContext context, GoRouterState state) {
-        return const WalletScreen();
+        final extra = state.extra as Map<String, dynamic>?;
+        final walletId = extra?['walletId'] as int? ?? 1;
+        return WalletScreen(walletId: walletId);
       },
     ),
     GoRoute(

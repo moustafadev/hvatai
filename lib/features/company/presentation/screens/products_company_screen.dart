@@ -12,15 +12,8 @@ class ProductsCompanyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => locator<CompanyProductsCubit>()..fetchProducts(userId),
-        ),
-        BlocProvider(
-          create: (_) => locator<CartProductDetailsCubit>(),
-        ),
-      ],
+    return BlocProvider(
+      create: (_) => locator<CartProductDetailsCubit>(),
       child: ProductsCompanyTab(
         userId: userId,
         userName: userName,
@@ -55,9 +48,9 @@ class ProductsCompanyTab extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        BlocBuilder<CompanyProductsCubit, CompanyProductsState>(
+        BlocBuilder<CompanyCubit, CompanyState>(
           builder: (context, state) {
-            if (state.isLoading && state.products.isEmpty) {
+            if (state.isLoadingProducts && state.products.isEmpty) {
               return const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.grey,
@@ -65,11 +58,11 @@ class ProductsCompanyTab extends StatelessWidget {
               );
             }
 
-            if (state.errorMessage.isNotEmpty) {
+            if (state.errorMessageProducts.isNotEmpty) {
               return _CompanyProductsError(
-                message: state.errorMessage,
+                message: state.errorMessageProducts,
                 onRetry: () =>
-                    context.read<CompanyProductsCubit>().fetchProducts(userId),
+                    context.read<CompanyCubit>().fetchProducts(userId),
               );
             }
 

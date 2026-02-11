@@ -1,11 +1,13 @@
-part of '../../profile.dart';
+part of '../company.dart';
 
-class ClipsTabProfile extends StatelessWidget {
-  const ClipsTabProfile({super.key});
+class ClipsCompanyTab extends StatelessWidget {
+  const ClipsCompanyTab({required this.userId, super.key});
+
+  final int userId;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ProfileClipsCubit, ProfileClipsState>(
+    return BlocBuilder<CompanyCubit, CompanyState>(
       builder: (context, state) {
         if (state.isLoadingClips) {
           return const Center(
@@ -25,7 +27,7 @@ class ClipsTabProfile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               sliver: SliverToBoxAdapter(
                 child: CustomText(
-                  text: 'Клипы',
+                  text: 'clips'.tr(),
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w800,
                 ),
@@ -34,9 +36,9 @@ class ClipsTabProfile extends StatelessWidget {
             if (clips.isEmpty)
               SliverFillRemaining(
                 hasScrollBody: false,
-                child: const Center(
+                child: Center(
                   child: CustomText(
-                    text: 'Пока нет клипов',
+                    text: 'noClips'.tr(),
                     fontWeight: FontWeight.w600,
                     color: AppColors.blackTransparent40,
                   ),
@@ -58,13 +60,10 @@ class ClipsTabProfile extends StatelessWidget {
                       final clip = clips[index];
                       return ClipCard(
                         clip: clip,
-                        onSettingsIconTap: () {
-                          ClipSettingsBottomSheet.show(context, clip: clip);
-                        },
-                        showCompanyInfo: true,
-                        showSettingsIcon: true,
+                        showCompanyInfo: false,
+                        showSettingsIcon: false,
                         thumbnailBytes: context
-                            .read<ProfileClipsCubit>()
+                            .read<CompanyCubit>()
                             .getClipThumbnail(clip.id),
                       );
                     },
@@ -73,7 +72,7 @@ class ClipsTabProfile extends StatelessWidget {
                 ),
               ),
             SliverToBoxAdapter(
-              child: 100.ph,
+              child: 40.ph,
             ),
           ],
         );

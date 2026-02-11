@@ -14,6 +14,7 @@ import 'package:hvatai/features/create_clip/presentation/cubit/create_clip_cubit
 import 'package:hvatai/features/create_clip/presentation/cubit/create_clip_cubit/create_clip_state.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/preview_clip_cubit/preview_clip_cubit.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/preview_clip_cubit/preview_clip_state.dart';
+import 'package:hvatai/features/create_clip/data/models/clip_model/clip_model.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
@@ -23,3 +24,4 @@ part 'widgets/custom_trim_slider.dart';
 part 'widgets/edit_video_body.dart';
 part 'widgets/edit_video_editor.dart';
 part 'widgets/save_button.dart';
+part 'widgets/clip_card.dart';
