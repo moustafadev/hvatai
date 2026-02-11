@@ -5,6 +5,16 @@ import 'package:hvatai/features/wallet/data/models/transaction_model/transaction
 import 'package:hvatai/features/wallet/data/models/wallet_model/wallet_model.dart';
 
 class ApiServiceWallet extends ApiBase {
+  Future<WalletsListResponse> getWallets() async {
+    return executeAndHandleErrorServer<WalletsListResponse>(() async {
+      final response = await get(ServerConfig.wallets);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return WalletsListResponse.fromJson(response.json);
+      }
+      throw Exception('Failed to get wallets: ${response.statusCode}');
+    });
+  }
+
   Future<WalletResponse> getWallet(int walletId) async {
     return executeAndHandleErrorServer<WalletResponse>(() async {
       final response = await get(ServerConfig.getWallet(walletId));

@@ -3,6 +3,7 @@ import 'package:hvatai/features/wallet/data/models/transaction_model/transaction
 import 'package:hvatai/features/wallet/data/models/wallet_model/wallet_model.dart';
 
 abstract class WalletRepository {
+  Future<Either<String, WalletsListResponse>> getWallets();
   Future<Either<String, WalletResponse>> getWallet(int walletId);
   Future<Either<String, TransactionResponse>> getWalletTransactions(int walletId);
   Future<Either<String, WithdrawResponse>> withdrawToCard({

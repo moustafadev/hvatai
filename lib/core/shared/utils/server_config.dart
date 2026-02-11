@@ -105,8 +105,14 @@ abstract class ServerConfig {
 
   // =============================== Wallet endpoints ===============================
 
+  static const String wallets = "wallets";
   static String getWallet(int walletId) => "wallets/$walletId";
   static String getWalletTransactions(int walletId) =>
       "wallets/$walletId/transactions";
   static String withdrawToCard(int walletId) => "wallets/$walletId/top-up-card";
+
+  // =============================== Bid Purchase endpoints ===============================
+
+  static String completeBidPurchase(int bidPurchaseId) =>
+      "bid-purchases/$bidPurchaseId/complete";
 }

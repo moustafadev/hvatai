@@ -208,10 +208,6 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         'BidPlaced',
         (raw) => _handleBid(raw, source: channelName),
       );
-      _streamChannel!.bind(
-        'bid.winner.determined',
-        (raw) => _handleWinner(raw, source: channelName),
-      );
     } catch (e) {
       debugPrint('❌ Error initializing Pusher: $e');
       emit(state.copyWith(
@@ -324,20 +320,72 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
     }
   }
 
-  void _handleWinner(dynamic raw, {required String source}) {
-    try {
-      final dataMap = _normalizeSocketPayload(raw);
-      final event = BidWinnerEvent.fromJson(dataMap);
-      emit(state.copyWith(
-        currentWinner: event,
-        isSelectingWinner: false,
-        currentBidRemainingSeconds: 0,
-        currentBidEndTime: null,
-      ));
-    } catch (e, st) {
-      debugPrint('❌ [$source] winner parse error: $e');
-      debugPrintStack(stackTrace: st);
+  BidWinnerEvent? _determineWinnerFromLastBid() {
+    final currentState = state;
+    final currentProductId = currentState.currentStreamProductId;
+
+    debugPrint(
+        '🔍 [BROADCASTER WINNER] Determining winner - Current product ID: $currentProductId');
+
+    if (currentProductId == null) {
+      debugPrint(
+          '❌ [BROADCASTER WINNER] No current product ID, cannot determine winner');
+      return null;
     }
+
+    debugPrint(
+        '📋 [BROADCASTER WINNER] Total bids in list: ${currentState.bids.length}');
+
+    // Find the last bid for the current product (first bid in list since new bids are inserted at index 0)
+    BidStreamItem? lastBid;
+    for (final bid in currentState.bids) {
+      if (bid.streamProductId == currentProductId) {
+        lastBid = bid;
+        debugPrint(
+            '✅ [BROADCASTER WINNER] Found matching bid - Bid ID: ${bid.id}, User ID: ${bid.user?.id}, User Name: ${bid.user?.name}, Amount: ${bid.bidAmount}');
+        break;
+      }
+    }
+
+    if (lastBid == null) {
+      debugPrint(
+          '❌ [BROADCASTER WINNER] No bid found for product ID: $currentProductId');
+      return null;
+    }
+
+    if (lastBid.user == null) {
+      debugPrint('❌ [BROADCASTER WINNER] Last bid has no user information');
+      return null;
+    }
+
+    // Create winner user from the last bid
+    final bidAmount = double.tryParse(lastBid.bidAmount ?? '0') ?? 0.0;
+    final winnerUser = BidWinnerUser(
+      id: lastBid.user?.id,
+      name: lastBid.user?.name,
+      image: lastBid.user?.image,
+      bidAmount: bidAmount,
+      bidId: lastBid.id,
+    );
+
+    // Get session ID from active product
+    final sessionId = currentState.activeStreamProduct?.bidSession?.id;
+    debugPrint(
+        '📝 [BROADCASTER WINNER] Session ID: $sessionId, Stream ID: ${lastBid.streamId}, Stream Product ID: ${lastBid.streamProductId}');
+
+    final winnerEvent = BidWinnerEvent(
+      sessionId: sessionId,
+      streamId: lastBid.streamId,
+      streamProductId: lastBid.streamProductId,
+      winner: winnerUser,
+      sessionStatus: 'ended',
+      wonAt: DateTime.now(),
+    );
+
+    debugPrint(
+        '🎯 [BROADCASTER WINNER] Created winner event - Winner: ${winnerUser.name} (ID: ${winnerUser.id}), Bid Amount: ${winnerUser.bidAmount}');
+
+    return winnerEvent;
   }
 
   List<StreamProductModel> _updateStreamProducts(StreamProductModel product) {
@@ -1009,15 +1057,53 @@ class BroadcasterStreamCubit extends Cubit<BroadcasterStreamState> {
         nextUserTime = DateTime.now().difference(_userTimeStart!).inSeconds;
       }
 
+      // Auto-determine winner from last bid when timer ends
+      BidWinnerEvent? nextWinner = currentState.currentWinner;
+      final previousRemaining = currentState.currentBidRemainingSeconds;
+
+      debugPrint(
+          '⏱️ [BROADCASTER TIMER] Previous remaining: $previousRemaining, Current remaining: $remaining, Current winner: ${nextWinner?.winner?.name ?? "null"}');
+
+      if ((previousRemaining ?? 0) > 0 &&
+          remaining == 0 &&
+          nextWinner == null) {
+        debugPrint(
+            '🔍 [BROADCASTER TIMER] Timer reached 0, attempting to determine winner from last bid...');
+        final winner = _determineWinnerFromLastBid();
+        if (winner != null) {
+          nextWinner = winner;
+          debugPrint(
+              '🏆 [BROADCASTER TIMER] Winner determined automatically from last bid: ${winner.winner?.name} (ID: ${winner.winner?.id}, Bid ID: ${winner.winner?.bidId})');
+        } else {
+          debugPrint(
+              '⚠️ [BROADCASTER TIMER] No winner found - last bid is null or has no user');
+        }
+      }
+
+      // Determine selecting winner state - if we have a winner, always set to false
+      bool nextSelectingWinner = false;
+      if (nextWinner == null) {
+        nextSelectingWinner = _resolveSelectingWinner(
+          currentState: currentState,
+          nextRemaining: remaining,
+        );
+        debugPrint(
+            '🔄 [BROADCASTER TIMER] No winner yet, isSelectingWinner resolved to: $nextSelectingWinner');
+      } else {
+        debugPrint(
+            '✅ [BROADCASTER TIMER] Winner exists, isSelectingWinner set to: false');
+      }
+
+      debugPrint(
+          '📊 [BROADCASTER TIMER] Final state - Winner: ${nextWinner?.winner?.name ?? "null"}, isSelectingWinner: $nextSelectingWinner');
+
       emit(currentState.copyWith(
         streamSeconds: nextStreamSeconds,
         userTime: nextUserTime,
         currentBidRemainingSeconds: remaining,
         currentBidEndTime: endTime,
-        isSelectingWinner: _resolveSelectingWinner(
-          currentState: currentState,
-          nextRemaining: remaining,
-        ),
+        currentWinner: nextWinner,
+        isSelectingWinner: nextSelectingWinner,
       ));
     });
   }

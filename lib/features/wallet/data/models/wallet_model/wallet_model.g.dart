@@ -23,6 +23,25 @@ Map<String, dynamic> _$$WalletResponseImplToJson(
       'data': instance.data,
     };
 
+_$WalletsListResponseImpl _$$WalletsListResponseImplFromJson(
+        Map<String, dynamic> json) =>
+    _$WalletsListResponseImpl(
+      success: json['success'] as bool?,
+      message: json['message'] as String?,
+      data: (json['data'] as List<dynamic>?)
+              ?.map((e) => WalletModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
+    );
+
+Map<String, dynamic> _$$WalletsListResponseImplToJson(
+        _$WalletsListResponseImpl instance) =>
+    <String, dynamic>{
+      'success': instance.success,
+      'message': instance.message,
+      'data': instance.data,
+    };
+
 _$WalletModelImpl _$$WalletModelImplFromJson(Map<String, dynamic> json) =>
     _$WalletModelImpl(
       id: (json['id'] as num?)?.toInt(),

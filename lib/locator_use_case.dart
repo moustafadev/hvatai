@@ -59,6 +59,7 @@ import 'package:hvatai/features/search/domain/usecases/search_usecase.dart';
 import 'package:hvatai/features/search/domain/usecases/search_suggestions_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/complete_bid_purchase_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/create_clip_from_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/download_video_usecase.dart';
 import 'package:hvatai/features/create_clip/domain/usecases/upload_clip_usecase.dart';
@@ -80,6 +81,7 @@ import 'package:hvatai/features/stream/domain/usecases/get_my_streams_usecase.da
 import 'package:hvatai/features/stream/domain/usecases/update_stream_media_usecase.dart';
 import 'package:hvatai/features/wallet/domain/usecases/get_wallet_transactions_usecase.dart';
 import 'package:hvatai/features/wallet/domain/usecases/get_wallet_usecase.dart';
+import 'package:hvatai/features/wallet/domain/usecases/get_wallets_usecase.dart';
 import 'package:hvatai/features/wallet/domain/usecases/withdraw_to_card_usecase.dart';
 import 'package:hvatai/features/analytics/domain/usecases/get_statistics_usecase.dart';
 import 'package:hvatai/locator.dart';
@@ -147,6 +149,7 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => EndStreamUsecase(locator()));
   locator.registerLazySingleton(() => GetStreamBidsUsecase(locator()));
   locator.registerLazySingleton(() => AddStreamBidUsecase(locator()));
+  locator.registerLazySingleton(() => CompleteBidPurchaseUsecase(locator()));
   locator.registerLazySingleton(() => StartStreamUsecase(locator()));
   locator.registerLazySingleton(() => AddProductToStreamUsecase(locator()));
   locator.registerLazySingleton(() => GetStreamProductsUsecase(locator()));
@@ -156,6 +159,7 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => ToggleSubscriptionUsecase(locator()));
   locator.registerLazySingleton(() => GetMyStreamsUsecase(locator()));
   locator.registerLazySingleton(() => ChangePasswordUsecase(locator()));
+  locator.registerLazySingleton(() => GetWalletsUsecase(locator()));
   locator.registerLazySingleton(() => GetWalletUsecase(locator()));
   locator.registerLazySingleton(() => GetWalletTransactionsUsecase(locator()));
   locator.registerLazySingleton(() => WithdrawToCardUsecase(locator()));

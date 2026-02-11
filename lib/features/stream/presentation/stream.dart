@@ -15,6 +15,7 @@ import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/address/data/models/address_model/address_model.dart';
+import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/chat/presentation/chat.dart';
 import 'package:hvatai/features/chat/presentation/cubit/chats_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
@@ -28,6 +29,7 @@ import 'package:hvatai/features/add_new_product/presentation/add_new_product.dar
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
 import 'package:hvatai/features/stream/data/models/bid_winner/bid_winner_event.dart';
+import 'package:hvatai/features/stream/presentation/cubit/bid_purchase/bid_purchase_cubit.dart';
 import 'package:hvatai/features/stream/presentation/cubit/broadcaster_stream/broadcaster_stream_cubit.dart';
 import 'package:hvatai/features/stream/presentation/cubit/live_listings_shop/live_listings_shop_cubit.dart';
 import 'package:hvatai/features/stream/presentation/cubit/schedule_stream_cubit/schedule_stream_cubit.dart';
@@ -43,6 +45,7 @@ import 'package:hvatai/features/address/presentation/cubit/delivery_address/deli
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
 import 'package:hvatai/features/payment_method/data/model/card_model/card_model.dart';
 import 'package:hvatai/core/datasources/local/app_local.dart';
+import 'package:hvatai/core/customs/payment_methods_section.dart';
 import 'package:video_player/video_player.dart';
 
 part 'screens/broadcaster_stream_screen.dart';
@@ -84,3 +87,5 @@ part 'widgets/ended_stream/video_player_wrapper.dart';
 part 'widgets/ended_stream/viewer_count_widget.dart';
 part 'widgets/scheduled_stream_card.dart';
 part 'widgets/ended_stream/shared_video_player.dart';
+part 'widgets/bid_purchase_info_bottom_sheet.dart';
+part 'widgets/bid_purchase_confirmation_bottom_sheet.dart';

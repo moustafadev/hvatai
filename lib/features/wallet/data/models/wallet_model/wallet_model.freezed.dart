@@ -218,6 +218,200 @@ abstract class _WalletResponse implements WalletResponse {
       throw _privateConstructorUsedError;
 }
 
+WalletsListResponse _$WalletsListResponseFromJson(Map<String, dynamic> json) {
+  return _WalletsListResponse.fromJson(json);
+}
+
+/// @nodoc
+mixin _$WalletsListResponse {
+  bool? get success => throw _privateConstructorUsedError;
+  String? get message => throw _privateConstructorUsedError;
+  List<WalletModel> get data => throw _privateConstructorUsedError;
+
+  /// Serializes this WalletsListResponse to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of WalletsListResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $WalletsListResponseCopyWith<WalletsListResponse> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $WalletsListResponseCopyWith<$Res> {
+  factory $WalletsListResponseCopyWith(
+          WalletsListResponse value, $Res Function(WalletsListResponse) then) =
+      _$WalletsListResponseCopyWithImpl<$Res, WalletsListResponse>;
+  @useResult
+  $Res call({bool? success, String? message, List<WalletModel> data});
+}
+
+/// @nodoc
+class _$WalletsListResponseCopyWithImpl<$Res, $Val extends WalletsListResponse>
+    implements $WalletsListResponseCopyWith<$Res> {
+  _$WalletsListResponseCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of WalletsListResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = freezed,
+    Object? message = freezed,
+    Object? data = null,
+  }) {
+    return _then(_value.copyWith(
+      success: freezed == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+      data: null == data
+          ? _value.data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<WalletModel>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$WalletsListResponseImplCopyWith<$Res>
+    implements $WalletsListResponseCopyWith<$Res> {
+  factory _$$WalletsListResponseImplCopyWith(_$WalletsListResponseImpl value,
+          $Res Function(_$WalletsListResponseImpl) then) =
+      __$$WalletsListResponseImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({bool? success, String? message, List<WalletModel> data});
+}
+
+/// @nodoc
+class __$$WalletsListResponseImplCopyWithImpl<$Res>
+    extends _$WalletsListResponseCopyWithImpl<$Res, _$WalletsListResponseImpl>
+    implements _$$WalletsListResponseImplCopyWith<$Res> {
+  __$$WalletsListResponseImplCopyWithImpl(_$WalletsListResponseImpl _value,
+      $Res Function(_$WalletsListResponseImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of WalletsListResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? success = freezed,
+    Object? message = freezed,
+    Object? data = null,
+  }) {
+    return _then(_$WalletsListResponseImpl(
+      success: freezed == success
+          ? _value.success
+          : success // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      message: freezed == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String?,
+      data: null == data
+          ? _value._data
+          : data // ignore: cast_nullable_to_non_nullable
+              as List<WalletModel>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$WalletsListResponseImpl implements _WalletsListResponse {
+  const _$WalletsListResponseImpl(
+      {this.success, this.message, final List<WalletModel> data = const []})
+      : _data = data;
+
+  factory _$WalletsListResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$WalletsListResponseImplFromJson(json);
+
+  @override
+  final bool? success;
+  @override
+  final String? message;
+  final List<WalletModel> _data;
+  @override
+  @JsonKey()
+  List<WalletModel> get data {
+    if (_data is EqualUnmodifiableListView) return _data;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_data);
+  }
+
+  @override
+  String toString() {
+    return 'WalletsListResponse(success: $success, message: $message, data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$WalletsListResponseImpl &&
+            (identical(other.success, success) || other.success == success) &&
+            (identical(other.message, message) || other.message == message) &&
+            const DeepCollectionEquality().equals(other._data, _data));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, success, message,
+      const DeepCollectionEquality().hash(_data));
+
+  /// Create a copy of WalletsListResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$WalletsListResponseImplCopyWith<_$WalletsListResponseImpl> get copyWith =>
+      __$$WalletsListResponseImplCopyWithImpl<_$WalletsListResponseImpl>(
+          this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$WalletsListResponseImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _WalletsListResponse implements WalletsListResponse {
+  const factory _WalletsListResponse(
+      {final bool? success,
+      final String? message,
+      final List<WalletModel> data}) = _$WalletsListResponseImpl;
+
+  factory _WalletsListResponse.fromJson(Map<String, dynamic> json) =
+      _$WalletsListResponseImpl.fromJson;
+
+  @override
+  bool? get success;
+  @override
+  String? get message;
+  @override
+  List<WalletModel> get data;
+
+  /// Create a copy of WalletsListResponse
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$WalletsListResponseImplCopyWith<_$WalletsListResponseImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 WalletModel _$WalletModelFromJson(Map<String, dynamic> json) {
   return _WalletModel.fromJson(json);
 }

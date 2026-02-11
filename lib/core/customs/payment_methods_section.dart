@@ -66,22 +66,22 @@ class PaymentMethodsSection extends StatelessWidget {
         ),
         8.ph,
 
-        // СБП option
-        GestureDetector(
-          onTap: onSbpTap,
-          child: _PrimaryMethodRow(
-            label: primaryMethodLabel,
-            iconPath: primaryMethodIconPath,
-            isSelected: sbpSelected,
-          ),
-        ),
-        // Кошелёк option
-        8.ph,
-        Divider(
-          height: 1,
-          color: AppColors.gray,
-          thickness: 1,
-        ),
+        // // СБП option
+        // GestureDetector(
+        //   onTap: onSbpTap,
+        //   child: _PrimaryMethodRow(
+        //     label: primaryMethodLabel,
+        //     iconPath: primaryMethodIconPath,
+        //     isSelected: sbpSelected,
+        //   ),
+        // ),
+        // // Кошелёк option
+        // 8.ph,
+        // Divider(
+        //   height: 1,
+        //   color: AppColors.gray,
+        //   thickness: 1,
+        // ),
         12.ph,
         if (onAddPaymentTap != null)
           GestureDetector(

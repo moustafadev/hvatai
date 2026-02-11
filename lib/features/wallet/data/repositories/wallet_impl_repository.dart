@@ -11,6 +11,14 @@ class WalletImplRepository implements WalletRepository {
   WalletImplRepository(this._apiServiceWallet);
 
   @override
+  Future<Either<String, WalletsListResponse>> getWallets() {
+    return executeAndHandleError<WalletsListResponse>(() async {
+      final res = await _apiServiceWallet.getWallets();
+      return res;
+    });
+  }
+
+  @override
   Future<Either<String, WalletResponse>> getWallet(int walletId) {
     return executeAndHandleError<WalletResponse>(() async {
       final res = await _apiServiceWallet.getWallet(walletId);

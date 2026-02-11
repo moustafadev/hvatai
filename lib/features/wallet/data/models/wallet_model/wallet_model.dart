@@ -17,6 +17,18 @@ class WalletResponse with _$WalletResponse {
 }
 
 @freezed
+class WalletsListResponse with _$WalletsListResponse {
+  const factory WalletsListResponse({
+    bool? success,
+    String? message,
+    @Default([]) List<WalletModel> data,
+  }) = _WalletsListResponse;
+
+  factory WalletsListResponse.fromJson(Map<String, dynamic> json) =>
+      _$WalletsListResponseFromJson(json);
+}
+
+@freezed
 class WalletModel with _$WalletModel {
   const factory WalletModel({
     int? id,
@@ -52,4 +64,3 @@ class CurrencyModel with _$CurrencyModel {
   factory CurrencyModel.fromJson(Map<String, dynamic> json) =>
       _$CurrencyModelFromJson(json);
 }
-

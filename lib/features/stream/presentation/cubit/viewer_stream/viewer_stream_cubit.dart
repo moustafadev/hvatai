@@ -160,10 +160,6 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
         'BidPlaced',
         (raw) => _handleBid(raw, source: channelName),
       );
-      _streamChannel!.bind(
-        'bid.winner.determined',
-        (raw) => _handleWinner(raw, source: channelName),
-      );
 
       _streamChannel!.bind(
         'stream.updated',
@@ -198,11 +194,24 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
       final dataMap = _normalizeSocketPayload(raw);
       final event = BidPlacedEvent.fromJson(dataMap);
 
+      debugPrint(
+          '💰 [VIEWER BID] Bid placed event received - Bid ID: ${event.bid.id}, User ID: ${event.bid.userId}, Amount: ${event.bid.bidAmount}, Product ID: ${event.bid.streamProductId}');
+
+      // Add the bid to the bids list (insert at index 0 since new bids come first)
+      final updatedBids = List<BidStreamItem>.from(state.bids)
+        ..insert(0, event.bid);
+
+      debugPrint(
+          '📋 [VIEWER BID] Updated bids list - Total bids: ${updatedBids.length}');
+
       // Update timer from the new bid session when a bid is placed
+      DateTime? timerEndTime;
+      int? timerRemainingSeconds;
+
       if (event.bidSession != null) {
         final session = event.bidSession!;
-        DateTime? timerEndTime = session.sessionEndsAt;
-        int? timerRemainingSeconds = session.remainingSeconds;
+        timerEndTime = session.sessionEndsAt;
+        timerRemainingSeconds = session.remainingSeconds;
 
         // Calculate end time if we have remaining seconds but no end time
         if (timerEndTime == null &&
@@ -223,14 +232,16 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
 
         if (timerEndTime != null || timerRemainingSeconds != null) {
           debugPrint(
-              '⏰ Updating bid session timer (new bid placed) - Remaining: ${timerRemainingSeconds}s, EndTime: $timerEndTime');
-
-          emit(state.copyWith(
-            currentBidEndTime: timerEndTime,
-            currentBidRemainingSeconds: timerRemainingSeconds,
-          ));
+              '⏰ [VIEWER BID] Updating bid session timer - Remaining: ${timerRemainingSeconds}s, EndTime: $timerEndTime');
         }
       }
+
+      // Update state with bid and timer
+      emit(state.copyWith(
+        bids: updatedBids,
+        currentBidEndTime: timerEndTime,
+        currentBidRemainingSeconds: timerRemainingSeconds,
+      ));
 
       // Also reload the active bid session to get updated product and bid count
       _loadActiveBidSession();
@@ -240,20 +251,72 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
     }
   }
 
-  void _handleWinner(dynamic raw, {required String source}) {
-    try {
-      final dataMap = _normalizeSocketPayload(raw);
-      final event = BidWinnerEvent.fromJson(dataMap);
-      emit(state.copyWith(
-        currentWinner: event,
-        isSelectingWinner: false,
-        currentBidRemainingSeconds: 0,
-        currentBidEndTime: null,
-      ));
-    } catch (e, st) {
-      debugPrint('❌ [$source] winner parse error: $e');
-      debugPrintStack(stackTrace: st);
+  BidWinnerEvent? _determineWinnerFromLastBid() {
+    final currentState = state;
+    final currentProductId = currentState.currentStreamProductId;
+
+    debugPrint(
+        '🔍 [VIEWER WINNER] Determining winner - Current product ID: $currentProductId');
+
+    if (currentProductId == null) {
+      debugPrint(
+          '❌ [VIEWER WINNER] No current product ID, cannot determine winner');
+      return null;
     }
+
+    debugPrint(
+        '📋 [VIEWER WINNER] Total bids in list: ${currentState.bids.length}');
+
+    // Find the last bid for the current product (first bid in list since new bids are inserted at index 0)
+    BidStreamItem? lastBid;
+    for (final bid in currentState.bids) {
+      if (bid.streamProductId == currentProductId) {
+        lastBid = bid;
+        debugPrint(
+            '✅ [VIEWER WINNER] Found matching bid - Bid ID: ${bid.id}, User ID: ${bid.user?.id}, User Name: ${bid.user?.name}, Amount: ${bid.bidAmount}');
+        break;
+      }
+    }
+
+    if (lastBid == null) {
+      debugPrint(
+          '❌ [VIEWER WINNER] No bid found for product ID: $currentProductId');
+      return null;
+    }
+
+    if (lastBid.user == null) {
+      debugPrint('❌ [VIEWER WINNER] Last bid has no user information');
+      return null;
+    }
+
+    // Create winner user from the last bid
+    final bidAmount = double.tryParse(lastBid.bidAmount ?? '0') ?? 0.0;
+    final winnerUser = BidWinnerUser(
+      id: lastBid.user?.id,
+      name: lastBid.user?.name,
+      image: lastBid.user?.image,
+      bidAmount: bidAmount,
+      bidId: lastBid.id,
+    );
+
+    // Get session ID from active product
+    final sessionId = currentState.activeStreamProduct?.bidSession?.id;
+    debugPrint(
+        '📝 [VIEWER WINNER] Session ID: $sessionId, Stream ID: ${lastBid.streamId}, Stream Product ID: ${lastBid.streamProductId}');
+
+    final winnerEvent = BidWinnerEvent(
+      sessionId: sessionId,
+      streamId: lastBid.streamId,
+      streamProductId: lastBid.streamProductId,
+      winner: winnerUser,
+      sessionStatus: 'ended',
+      wonAt: DateTime.now(),
+    );
+
+    debugPrint(
+        '🎯 [VIEWER WINNER] Created winner event - Winner: ${winnerUser.name} (ID: ${winnerUser.id}), Bid Amount: ${winnerUser.bidAmount}');
+
+    return winnerEvent;
   }
 
   void _handleProductToggle(dynamic raw, {required String source}) {
@@ -1096,15 +1159,37 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
         nextUserTime = DateTime.now().difference(_userTimeStart!).inSeconds;
       }
 
+      // Auto-determine winner from last bid when timer ends
+      BidWinnerEvent? nextWinner = currentState.currentWinner;
+      final previousRemaining = currentState.currentBidRemainingSeconds;
+
+      if ((previousRemaining ?? 0) > 0 &&
+          remaining == 0 &&
+          nextWinner == null) {
+        final winner = _determineWinnerFromLastBid();
+        if (winner != null) {
+          nextWinner = winner;
+          debugPrint(
+              '🏆 Winner determined automatically from last bid: ${winner.winner?.name}');
+        }
+      }
+
+      // Determine selecting winner state - if we have a winner, always set to false
+      bool nextSelectingWinner = false;
+      if (nextWinner == null) {
+        nextSelectingWinner = _resolveSelectingWinner(
+          currentState: currentState,
+          nextRemaining: remaining,
+        );
+      }
+
       emit(currentState.copyWith(
         streamSeconds: nextStreamSeconds,
         userTime: nextUserTime,
         currentBidRemainingSeconds: remaining,
         currentBidEndTime: endTime,
-        isSelectingWinner: _resolveSelectingWinner(
-          currentState: currentState,
-          nextRemaining: remaining,
-        ),
+        currentWinner: nextWinner,
+        isSelectingWinner: nextSelectingWinner,
       ));
     });
   }

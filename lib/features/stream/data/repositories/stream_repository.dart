@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:hvatai/features/address/data/models/address_model/address_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/stream/data/models/bid_session/bid_session_response.dart';
 import 'package:hvatai/features/stream/data/models/bid_stream/bid_stream_response.dart';
@@ -99,5 +100,14 @@ abstract class StreamRepository {
   Future<Either<String, String>> downloadVideo({
     required String videoUrl,
     required String targetPath,
+  });
+
+  /// PUT bid-purchases/{id}/complete
+  /// body: { payment_method: "wallet", wallet_id: 1, shipping_address: {...} }
+  Future<Either<String, bool>> completeBidPurchase({
+    required int bidPurchaseId,
+    required String paymentMethod,
+    int? walletId,
+    required AddressModel shippingAddress,
   });
 }

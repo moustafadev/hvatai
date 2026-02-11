@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/core/widgets/video_thumbnail_player.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/preview_clip_cubit/preview_clip_state.dart';
 import 'package:hvatai/features/create_clip/domain/usecases/upload_clip_usecase.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -102,6 +103,7 @@ class PreviewClipCubit extends Cubit<PreviewClipState> {
   Future<void> close() {
     _controller?.removeListener(_videoListener);
     _controller?.dispose();
+    VideoThumbnailPlayer.clearCache();
     return super.close();
   }
 }

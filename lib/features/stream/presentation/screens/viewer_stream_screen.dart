@@ -210,10 +210,9 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
               if (hasWinner) {
                 postAuctionAction = PostAuctionButton(
                   label: viewerIsWinner ? 'Забрать' : 'Ждём следующий лот',
-                  backgroundColor: viewerIsWinner
-                      ? AppColors.primaryColor
-                      : const Color(0x99000000),
-                  textColor: viewerIsWinner ? Colors.black : Colors.white,
+                  backgroundColor:
+                      viewerIsWinner ? AppColors.primaryColor : Colors.white,
+                  textColor: Colors.white,
                   onPressed: viewerIsWinner
                       ? () => _showWinnerCheckoutSheet(context)
                       : null,
@@ -462,11 +461,25 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
   }
 
   Future<void> _showWinnerCheckoutSheet(BuildContext context) async {
-    await showModalBottomSheet(
-      context: context,
-      backgroundColor: Colors.transparent,
-      isScrollControlled: true,
-      builder: (_) => const WinnerCheckoutSheet(),
+    final state = _cubit.state;
+    final winnerData = state.currentWinner;
+    final bidId = winnerData?.winner?.bidId;
+
+    if (bidId == null) {
+      showFloatingMessageError('Не удалось определить ставку');
+      return;
+    }
+
+    // Show first bottom sheet (info sheet)
+    BidPurchaseInfoBottomSheet.show(
+      context,
+      onAddInfoPressed: () {
+        // Show second sheet after first is closed
+        BidPurchaseConfirmationBottomSheet.show(
+          context,
+          bidPurchaseId: bidId, // Using bidId as bidPurchaseId for now
+        );
+      },
     );
   }
 

@@ -10,11 +10,14 @@ import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
+import 'package:hvatai/routes/app_routes.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/create_clip_cubit/create_clip_cubit.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/create_clip_cubit/create_clip_state.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/preview_clip_cubit/preview_clip_cubit.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/preview_clip_cubit/preview_clip_state.dart';
 import 'package:hvatai/features/create_clip/data/models/clip_model/clip_model.dart';
+import 'package:hvatai/core/widgets/video_thumbnail_player.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:video_player/video_player.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 

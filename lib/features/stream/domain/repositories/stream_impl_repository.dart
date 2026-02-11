@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
+import 'package:hvatai/features/address/data/models/address_model/address_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart';
 import 'package:hvatai/features/stream/data/models/bid_session/bid_session_response.dart';
@@ -215,4 +216,21 @@ class StreamImplRepository implements StreamRepository {
     });
   }
 
+  @override
+  Future<Either<String, bool>> completeBidPurchase({
+    required int bidPurchaseId,
+    required String paymentMethod,
+    int? walletId,
+    required AddressModel shippingAddress,
+  }) {
+    return executeAndHandleError<bool>(() async {
+      final res = await _apiServiceStream.completeBidPurchase(
+        bidPurchaseId: bidPurchaseId,
+        paymentMethod: paymentMethod,
+        walletId: walletId,
+        shippingAddress: shippingAddress,
+      );
+      return res;
+    });
+  }
 }

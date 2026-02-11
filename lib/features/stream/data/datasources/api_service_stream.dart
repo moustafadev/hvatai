@@ -14,6 +14,7 @@ import 'package:hvatai/features/stream/data/models/stream_products/stream_produc
 import 'package:hvatai/features/stream/data/models/toggle_bidding/toggle_bidding_response.dart';
 import 'package:hvatai/features/stream/data/models/subscribed_users/subscribed_users_response.dart';
 import 'package:hvatai/features/stream/data/models/my_streams/my_streams_response.dart';
+import 'package:hvatai/features/address/data/models/address_model/address_model.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_stream_bids_usecase.dart';
@@ -424,5 +425,65 @@ class ApiServiceStream extends ApiBase {
 
       return targetPath;
     });
+  }
+
+  /// PUT: bid-purchases/{id}/complete
+  /// body: { payment_method: "wallet", wallet_id: 1, shipping_address: {...} }
+  Future<bool> completeBidPurchase({
+    required int bidPurchaseId,
+    required String paymentMethod,
+    int? walletId,
+    required AddressModel shippingAddress,
+  }) async {
+    return executeAndHandleErrorServer<bool>(() async {
+      final path = ServerConfig.completeBidPurchase(bidPurchaseId);
+
+      // Convert AddressModel to the required format
+      final shippingAddressMap = <String, dynamic>{
+        'street': shippingAddress.street ?? '',
+        'city': shippingAddress.city ?? '',
+        'state': shippingAddress.city ?? '', // Using city as state
+        'postal_code': shippingAddress.intercomCode ?? '',
+        'country': shippingAddress.country ?? 'RU',
+        'delivery_address': _formatDeliveryAddress(shippingAddress),
+        'apartment': shippingAddress.apartment ?? '',
+        'floor': shippingAddress.floor ?? '',
+        'front_door': shippingAddress.frontDoor ?? '',
+        'intercom_code': shippingAddress.intercomCode ?? '',
+      };
+
+      final body = <String, dynamic>{
+        'payment_method': paymentMethod,
+        'shipping_address': shippingAddressMap,
+      };
+
+      if (walletId != null) {
+        body['wallet_id'] = walletId;
+      }
+
+      final res = await post(path, body: body);
+
+      if (res.statusCode == 200 || res.statusCode == 201) {
+        return true;
+      }
+
+      throw Exception(
+        'Failed to complete bid purchase (code: ${res.statusCode})',
+      );
+    });
+  }
+
+  String _formatDeliveryAddress(AddressModel address) {
+    final parts = <String>[];
+    for (final value in [
+      address.street,
+      address.city,
+      address.country,
+    ]) {
+      if (value != null && value.isNotEmpty) {
+        parts.add(value);
+      }
+    }
+    return parts.isEmpty ? '' : parts.join(', ');
   }
 }

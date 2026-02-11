@@ -254,7 +254,7 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.editDeliveryAddress,
       builder: (BuildContext context, GoRouterState state) {
-        final extra = state.extra as Map<String, Object>;
+        final extra = state.extra as Map<String, dynamic>;
 
         final model = extra['model'] as UserRegistrationData;
         // final cubit = extra['cubit'] as DeliveryAddressCubit
