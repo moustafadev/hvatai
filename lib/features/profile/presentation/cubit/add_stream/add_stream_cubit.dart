@@ -18,8 +18,7 @@ class AddStreamCubit extends Cubit<AddStreamState> {
   final GetCategoryUsecase _getCategoryUsecase;
   final CreateStreamUsecase _createStreamUsecase;
 
-  AddStreamCubit( this._getCategoryUsecase,
-      this._createStreamUsecase)
+  AddStreamCubit(this._getCategoryUsecase, this._createStreamUsecase)
       : super(
           AddStreamState(
             createStreamModel: CreateStreamModel(
@@ -39,8 +38,6 @@ class AddStreamCubit extends Cubit<AddStreamState> {
             ),
           ),
         );
-
- 
 
   Future<void> loadCategories() async {
     emit(state.copyWith(isCategoriesLoading: true, error: null));
@@ -210,7 +207,8 @@ class AddStreamCubit extends Cubit<AddStreamState> {
     for (final productId in productIds) {
       final product = _findProductById(productId);
       final productCategoryId = product?.categoryId;
-      if (productCategoryId != null && categoryIds.contains(productCategoryId)) {
+      if (productCategoryId != null &&
+          categoryIds.contains(productCategoryId)) {
         filtered.add(productId);
       }
     }
@@ -238,6 +236,10 @@ class AddStreamCubit extends Cubit<AddStreamState> {
       },
       (streamResponse) {
         showFloatingMessageSuccess('Stream created successfully');
+        if (state.createStreamModel.scheduledAt != null) {
+          context.pop();
+          return;
+        }
         context.push(
           AppRoutes.liveStreamBroadcaster,
           extra: {

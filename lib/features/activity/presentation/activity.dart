@@ -13,6 +13,7 @@ import 'package:hvatai/features/cart/presentation/cart.dart';
 import 'package:hvatai/features/orders/presentation/cubit/my_orders_cubit.dart';
 import 'package:hvatai/features/orders/presentation/widgets/orders_content.dart';
 import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
+import 'package:hvatai/features/stream/presentation/stream.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 

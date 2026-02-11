@@ -219,8 +219,17 @@ class ActivityBidItemCard extends StatelessWidget {
                 //   extra: {'streamId': bid.stream!.id},
                 // );
               } else if (bid.status == 'WON') {
-                // Navigate to payment
-                // TODO: Implement payment navigation
+                // Show payment bottom sheet
+                if (bid.id != null) {
+                  BidPurchaseConfirmationBottomSheet.show(
+                    context,
+                    bidPurchaseId: bid.id!,
+                    onPaymentSuccess: () {
+                      // Refresh bids to update status to PAID
+                      context.read<ActivityCubit>().getUserBids();
+                    },
+                  );
+                }
               } else if (bid.status == 'PAID') {
                 // Navigate to order status
                 // TODO: Implement order status navigation

@@ -1,7 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/features/home/domain/usecases/get_streams_usecases.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
+import 'package:hvatai/locator.dart';
 
 part 'schedule_stream_cubit.freezed.dart';
 part 'schedule_stream_state.dart';
@@ -9,7 +11,8 @@ part 'schedule_stream_state.dart';
 class ScheduleStreamCubit extends Cubit<ScheduleStreamState> {
   final GetStreamsUsecase _getStreamsUsecase;
 
-  ScheduleStreamCubit(this._getStreamsUsecase) : super(const ScheduleStreamState());
+  ScheduleStreamCubit(this._getStreamsUsecase)
+      : super(const ScheduleStreamState());
 
   Future<void> loadScheduledStreams({bool refresh = false}) async {
     if (refresh) {
@@ -48,12 +51,17 @@ class ScheduleStreamCubit extends Cubit<ScheduleStreamState> {
         final currentPageStr = pagination?.currentPage ?? '1';
         final currentPageInt = int.tryParse(currentPageStr) ?? 1;
 
+        final userId = locator<AppLocal>().getUserId();
+
+        final filteredStreams =
+            streams.where((s) => s.userId != userId).toList();
+
         emit(
           state.copyWith(
             isLoading: false,
             scheduledStreams: refresh
-                ? streams
-                : [...state.scheduledStreams, ...streams],
+                ? filteredStreams
+                : [...state.scheduledStreams, ...filteredStreams],
             page: currentPageInt + 1,
             lastPage: lastPage,
             hasMore: currentPageInt < lastPage,
@@ -68,4 +76,3 @@ class ScheduleStreamCubit extends Cubit<ScheduleStreamState> {
     loadScheduledStreams(refresh: true);
   }
 }
-

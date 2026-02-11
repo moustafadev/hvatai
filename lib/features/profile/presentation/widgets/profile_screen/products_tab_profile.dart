@@ -94,26 +94,23 @@ class _ProductsScrollViewContent extends StatelessWidget {
                       builder: (context, profileState) {
                         return BlocBuilder<MyProductsCubit, MyProductsState>(
                           builder: (context, state) {
-                            if (state.isShowingMyProducts) {
-                              return GestureDetector(
-                                onTap: () async {
-                                  final result = await context.push<bool>(
-                                    AppRoutes.addProduct,
-                                  );
-                                  if (result == true && context.mounted) {
-                                    context
-                                        .read<MyProductsCubit>()
-                                        .getMyProducts();
-                                  }
-                                },
-                                child: SvgPicture.asset(
-                                  Assets.assetsIconsAddCircle,
-                                  width: 24,
-                                  height: 24,
-                                ),
-                              );
-                            }
-                            return const SizedBox.shrink();
+                            return GestureDetector(
+                              onTap: () async {
+                                final result = await context.push<bool>(
+                                  AppRoutes.addProduct,
+                                );
+                                if (result == true && context.mounted) {
+                                  context
+                                      .read<MyProductsCubit>()
+                                      .getMyProducts();
+                                }
+                              },
+                              child: SvgPicture.asset(
+                                Assets.assetsIconsAddCircle,
+                                width: 24,
+                                height: 24,
+                              ),
+                            );
                           },
                         );
                       },
@@ -139,55 +136,57 @@ class _ProductsScrollViewContent extends StatelessWidget {
                     );
                   },
                 ),
-                20.ph,
-                BlocBuilder<MyProductsCubit, MyProductsState>(
-                  builder: (context, state) {
-                    return ProductsFilterChips(
-                      selectedIndex: state.selectedCategoryIndex,
-                      onSelect: (index) {
-                        context.read<MyProductsCubit>().changeCategory(index);
-                      },
-                    );
-                  },
-                ),
-                12.ph,
-                Row(
-                  children: [
-                    Expanded(
-                      child: CustomTextField(
-                        height: 40,
-                        fillColor: AppColors.white,
-                        borderRadius: BorderRadius.circular(10.r),
-                        hintText: 'find'.tr(),
-                        prefixIcon: Image.asset(
-                          Assets.assetsIconsSearch,
-                          color: AppColors.blackDark,
-                          height: 22.h,
-                          width: 22.w,
+                if (isShowingMyProducts) ...[
+                  20.ph,
+                  BlocBuilder<MyProductsCubit, MyProductsState>(
+                    builder: (context, state) {
+                      return ProductsFilterChips(
+                        selectedIndex: state.selectedCategoryIndex,
+                        onSelect: (index) {
+                          context.read<MyProductsCubit>().changeCategory(index);
+                        },
+                      );
+                    },
+                  ),
+                  12.ph,
+                  Row(
+                    children: [
+                      Expanded(
+                        child: CustomTextField(
+                          height: 40,
+                          fillColor: AppColors.white,
+                          borderRadius: BorderRadius.circular(10.r),
+                          hintText: 'find'.tr(),
+                          prefixIcon: Image.asset(
+                            Assets.assetsIconsSearch,
+                            color: AppColors.blackDark,
+                            height: 22.h,
+                            width: 22.w,
+                          ),
+                          onChanged: (_) {},
                         ),
-                        onChanged: (_) {},
                       ),
-                    ),
-                    12.pw,
-                    GestureDetector(
-                      onTap: () {
-                        ProductsFilterBottomSheet.show(
-                          context,
-                          onApply: (sortOption) {
-                            // TODO: Apply filter to products
-                            debugPrint('Selected sort option: $sortOption');
-                          },
-                        );
-                      },
-                      child: SvgPicture.asset(
-                        Assets.assetsIconsFilter,
-                        width: 20.w,
-                        height: 20.h,
+                      12.pw,
+                      GestureDetector(
+                        onTap: () {
+                          ProductsFilterBottomSheet.show(
+                            context,
+                            onApply: (sortOption) {
+                              // TODO: Apply filter to products
+                              debugPrint('Selected sort option: $sortOption');
+                            },
+                          );
+                        },
+                        child: SvgPicture.asset(
+                          Assets.assetsIconsFilter,
+                          width: 20.w,
+                          height: 20.h,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                20.ph,
+                    ],
+                  ),
+                  20.ph,
+                ]
               ],
             ),
           ),

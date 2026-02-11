@@ -2,20 +2,24 @@ part of '../stream.dart';
 
 class BidPurchaseConfirmationBottomSheet extends StatelessWidget {
   final int bidPurchaseId;
+  final VoidCallback? onPaymentSuccess;
 
   const BidPurchaseConfirmationBottomSheet({
     super.key,
     required this.bidPurchaseId,
+    this.onPaymentSuccess,
   });
 
   static void show(
     BuildContext context, {
     required int bidPurchaseId,
+    VoidCallback? onPaymentSuccess,
   }) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
+      useRootNavigator: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
       ),
@@ -25,6 +29,7 @@ class BidPurchaseConfirmationBottomSheet extends StatelessWidget {
           ..loadWallet(),
         child: BidPurchaseConfirmationBottomSheet(
           bidPurchaseId: bidPurchaseId,
+          onPaymentSuccess: onPaymentSuccess,
         ),
       ),
     );
@@ -130,6 +135,7 @@ class BidPurchaseConfirmationBottomSheet extends StatelessWidget {
                         current.errorMessage.isEmpty,
                     listener: (context, state) {
                       Navigator.of(context).pop();
+                      onPaymentSuccess?.call();
                     },
                     child: CustomGradientButton(
                       text: 'Ок',
