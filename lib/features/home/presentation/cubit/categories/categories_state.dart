@@ -6,25 +6,20 @@ part 'categories_state.freezed.dart';
 @freezed
 class CategoriesState with _$CategoriesState {
   const factory CategoriesState({
-    CategoryModel? categories,
-    @Default([]) List<int> selectedDetailIds,
-    CategoryModel? filteredCategories,
-    required int selectedIndex,
-    @Default([]) List<String> selectedInterests,
-    @Default({}) Set<int> selectedIndices,
-    @Default([]) List<int> selectedCategoryIds,
-    @Default({}) Set<int> selectedIndicesDetails,
-    DateTime? lastRequestTime,
+    CategoryModel? allCategories, // all categories
+    CategoryModel? favoriteCategories, // fav categories list (from API)
+    CategoryModel? availableSubcategories, // union subcats for selected favorites
+
+    @Default(<int>[]) List<int> selectedFavoriteCategoryIds,
+
+    @Default(<int>[]) List<int> selectedSubcategoryIds,
+
     @Default(false) bool isLoading,
-    String? error,
-    int? selectedFavCategoryId,
-    CategoryModel? filteredSubCategories,
+    String? errorMessage,
   }) = _CategoriesState;
 
   factory CategoriesState.initial() => const CategoriesState(
-        selectedIndex: 0,
         isLoading: false,
-        error: null,
-        lastRequestTime: null,
+        errorMessage: null,
       );
 }

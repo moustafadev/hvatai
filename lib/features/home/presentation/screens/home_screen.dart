@@ -72,8 +72,8 @@ class _HomeScreenState extends State<HomeScreen> {
         providers: [
           BlocProvider(
             create: (_) => locator<CategoriesCubit>()
-              ..getCategories()
-              ..getFavCategories(),
+              ..loadAllCategories()
+              ..loadFavoriteCategories(),
           ),
           BlocProvider(
             create: (_) => locator<LiveStreamsCubit>()
@@ -88,8 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 context
                     .read<LiveStreamsCubit>()
                     .fetchLiveStreams(isRefresh: true);
-                context.read<CategoriesCubit>().getCategories();
-                context.read<CategoriesCubit>().getFavCategories();
+                context.read<CategoriesCubit>().loadAllCategories();
+                context.read<CategoriesCubit>().loadFavoriteCategories();
               },
               child: CustomScrollView(
                 physics: const ClampingScrollPhysics(
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: BlocBuilder<CategoriesCubit, CategoriesState>(
                       builder: (context, categoriesState) {
                         final hasSelectedFavCategory =
-                            categoriesState.selectedFavCategoryId != null;
+                            categoriesState.selectedFavoriteCategoryIds.isNotEmpty;
 
                         return Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

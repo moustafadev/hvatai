@@ -5,20 +5,13 @@ class MyCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CategoriesCubit, CategoriesState>(
-      listener: (context, state) {
-        if (state.error?.isNotEmpty == true) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.error!)),
-          );
-        }
-      },
+    return BlocBuilder<CategoriesCubit, CategoriesState>(
       builder: (context, state) {
-        final interests = state.categories;
+        final favoriteCategories = state.favoriteCategories;
 
-        if (interests == null ||
-            interests.data == null ||
-            interests.data!.isEmpty) {
+        if (favoriteCategories == null ||
+            favoriteCategories.data == null ||
+            favoriteCategories.data!.isEmpty) {
           return SizedBox();
         }
 
@@ -31,9 +24,14 @@ class MyCategory extends StatelessWidget {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: List.generate(interests.data!.length, (index) {
-                    final category = interests.data![index];
-                    final isSelected = state.selectedIndices.contains(index);
+                  children:
+                      List.generate(favoriteCategories.data!.length, (index) {
+                    final category = favoriteCategories.data![index];
+                    final catId = category.id ?? 0;
+
+                    final isSelected =
+                        state.selectedFavoriteCategoryIds.contains(catId);
+
                     final cubit = context.read<CategoriesCubit>();
                     return Padding(
                       padding: EdgeInsets.only(left: index == 0 ? 16 : 12),
@@ -44,17 +42,17 @@ class MyCategory extends StatelessWidget {
                           category: category,
                           isSelected: isSelected,
                           onTap: () {
-                            // If clicking on a favorite category, filter by it
-                            if (!isSelected) {
-                              cubit.selectFavCategory(category.id);
-                            } else {
-                              cubit.clearFavCategoryFilter();
-                            }
-                            cubit.toggleInterest(index, category.id ?? 0);
-                            context.read<LiveStreamsCubit>().fetchLiveStreams(
-                                  isRefresh: true,
-                                  categoryIds: cubit.state.selectedCategoryIds,
-                                );
+                            cubit.toggleFavoriteCategory(
+                                categoryId: category.id ?? 0);
+                            final liveStreamsCubit =
+                                context.read<LiveStreamsCubit>();
+                            liveStreamsCubit.fetchLiveStreams(
+                              isRefresh: true,
+                              categoryIds: [
+                                ...cubit.state.selectedFavoriteCategoryIds,
+                                ...cubit.state.selectedSubcategoryIds
+                              ],
+                            );
                           },
                         ),
                       ),

@@ -317,13 +317,12 @@ final GoRouter router = GoRouter(
       path: AppRoutes.categoriesForYou,
       builder: (context, state) {
         final extra = state.extra as Map<String, Object>;
-        final liveStreamsCubit = extra['liveStreamsCubit'] as LiveStreamsCubit;
-        final categoriesCubit = extra['categoriesCubit'] as CategoriesCubit;
-        final categories = extra['categories'] as List<CategoryData>;
+        final favorites = extra['favorites'] as List<CategoryData>;
+        final List<int> initialSelectedIds = extra['initialSelectedIds'] as List<int>;
+
         return CategoriesForYouScreen(
-          liveStreamsCubit: liveStreamsCubit,
-          categoriesCubit: categoriesCubit,
-          categories: categories,
+          favorites: favorites,
+          initialSelectedIds: initialSelectedIds,
         );
       },
     ),

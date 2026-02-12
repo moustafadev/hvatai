@@ -16,20 +16,17 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CategoriesState {
-  CategoryModel? get categories => throw _privateConstructorUsedError;
-  List<int> get selectedDetailIds => throw _privateConstructorUsedError;
-  CategoryModel? get filteredCategories => throw _privateConstructorUsedError;
-  int get selectedIndex => throw _privateConstructorUsedError;
-  List<String> get selectedInterests => throw _privateConstructorUsedError;
-  Set<int> get selectedIndices => throw _privateConstructorUsedError;
-  List<int> get selectedCategoryIds => throw _privateConstructorUsedError;
-  Set<int> get selectedIndicesDetails => throw _privateConstructorUsedError;
-  DateTime? get lastRequestTime => throw _privateConstructorUsedError;
-  bool get isLoading => throw _privateConstructorUsedError;
-  String? get error => throw _privateConstructorUsedError;
-  int? get selectedFavCategoryId => throw _privateConstructorUsedError;
-  CategoryModel? get filteredSubCategories =>
+  CategoryModel? get allCategories =>
+      throw _privateConstructorUsedError; // all categories
+  CategoryModel? get favoriteCategories =>
+      throw _privateConstructorUsedError; // fav categories list (from API)
+  CategoryModel? get availableSubcategories =>
+      throw _privateConstructorUsedError; // union subcats for selected favorites
+  List<int> get selectedFavoriteCategoryIds =>
       throw _privateConstructorUsedError;
+  List<int> get selectedSubcategoryIds => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
+  String? get errorMessage => throw _privateConstructorUsedError;
 
   /// Create a copy of CategoriesState
   /// with the given fields replaced by the non-null parameter values.
@@ -45,23 +42,17 @@ abstract class $CategoriesStateCopyWith<$Res> {
       _$CategoriesStateCopyWithImpl<$Res, CategoriesState>;
   @useResult
   $Res call(
-      {CategoryModel? categories,
-      List<int> selectedDetailIds,
-      CategoryModel? filteredCategories,
-      int selectedIndex,
-      List<String> selectedInterests,
-      Set<int> selectedIndices,
-      List<int> selectedCategoryIds,
-      Set<int> selectedIndicesDetails,
-      DateTime? lastRequestTime,
+      {CategoryModel? allCategories,
+      CategoryModel? favoriteCategories,
+      CategoryModel? availableSubcategories,
+      List<int> selectedFavoriteCategoryIds,
+      List<int> selectedSubcategoryIds,
       bool isLoading,
-      String? error,
-      int? selectedFavCategoryId,
-      CategoryModel? filteredSubCategories});
+      String? errorMessage});
 
-  $CategoryModelCopyWith<$Res>? get categories;
-  $CategoryModelCopyWith<$Res>? get filteredCategories;
-  $CategoryModelCopyWith<$Res>? get filteredSubCategories;
+  $CategoryModelCopyWith<$Res>? get allCategories;
+  $CategoryModelCopyWith<$Res>? get favoriteCategories;
+  $CategoryModelCopyWith<$Res>? get availableSubcategories;
 }
 
 /// @nodoc
@@ -79,73 +70,43 @@ class _$CategoriesStateCopyWithImpl<$Res, $Val extends CategoriesState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? categories = freezed,
-    Object? selectedDetailIds = null,
-    Object? filteredCategories = freezed,
-    Object? selectedIndex = null,
-    Object? selectedInterests = null,
-    Object? selectedIndices = null,
-    Object? selectedCategoryIds = null,
-    Object? selectedIndicesDetails = null,
-    Object? lastRequestTime = freezed,
+    Object? allCategories = freezed,
+    Object? favoriteCategories = freezed,
+    Object? availableSubcategories = freezed,
+    Object? selectedFavoriteCategoryIds = null,
+    Object? selectedSubcategoryIds = null,
     Object? isLoading = null,
-    Object? error = freezed,
-    Object? selectedFavCategoryId = freezed,
-    Object? filteredSubCategories = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
-      categories: freezed == categories
-          ? _value.categories
-          : categories // ignore: cast_nullable_to_non_nullable
+      allCategories: freezed == allCategories
+          ? _value.allCategories
+          : allCategories // ignore: cast_nullable_to_non_nullable
               as CategoryModel?,
-      selectedDetailIds: null == selectedDetailIds
-          ? _value.selectedDetailIds
-          : selectedDetailIds // ignore: cast_nullable_to_non_nullable
-              as List<int>,
-      filteredCategories: freezed == filteredCategories
-          ? _value.filteredCategories
-          : filteredCategories // ignore: cast_nullable_to_non_nullable
+      favoriteCategories: freezed == favoriteCategories
+          ? _value.favoriteCategories
+          : favoriteCategories // ignore: cast_nullable_to_non_nullable
               as CategoryModel?,
-      selectedIndex: null == selectedIndex
-          ? _value.selectedIndex
-          : selectedIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      selectedInterests: null == selectedInterests
-          ? _value.selectedInterests
-          : selectedInterests // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedIndices: null == selectedIndices
-          ? _value.selectedIndices
-          : selectedIndices // ignore: cast_nullable_to_non_nullable
-              as Set<int>,
-      selectedCategoryIds: null == selectedCategoryIds
-          ? _value.selectedCategoryIds
-          : selectedCategoryIds // ignore: cast_nullable_to_non_nullable
+      availableSubcategories: freezed == availableSubcategories
+          ? _value.availableSubcategories
+          : availableSubcategories // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
+      selectedFavoriteCategoryIds: null == selectedFavoriteCategoryIds
+          ? _value.selectedFavoriteCategoryIds
+          : selectedFavoriteCategoryIds // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      selectedIndicesDetails: null == selectedIndicesDetails
-          ? _value.selectedIndicesDetails
-          : selectedIndicesDetails // ignore: cast_nullable_to_non_nullable
-              as Set<int>,
-      lastRequestTime: freezed == lastRequestTime
-          ? _value.lastRequestTime
-          : lastRequestTime // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      selectedSubcategoryIds: null == selectedSubcategoryIds
+          ? _value.selectedSubcategoryIds
+          : selectedSubcategoryIds // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      selectedFavCategoryId: freezed == selectedFavCategoryId
-          ? _value.selectedFavCategoryId
-          : selectedFavCategoryId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      filteredSubCategories: freezed == filteredSubCategories
-          ? _value.filteredSubCategories
-          : filteredSubCategories // ignore: cast_nullable_to_non_nullable
-              as CategoryModel?,
     ) as $Val);
   }
 
@@ -153,13 +114,13 @@ class _$CategoriesStateCopyWithImpl<$Res, $Val extends CategoriesState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CategoryModelCopyWith<$Res>? get categories {
-    if (_value.categories == null) {
+  $CategoryModelCopyWith<$Res>? get allCategories {
+    if (_value.allCategories == null) {
       return null;
     }
 
-    return $CategoryModelCopyWith<$Res>(_value.categories!, (value) {
-      return _then(_value.copyWith(categories: value) as $Val);
+    return $CategoryModelCopyWith<$Res>(_value.allCategories!, (value) {
+      return _then(_value.copyWith(allCategories: value) as $Val);
     });
   }
 
@@ -167,13 +128,13 @@ class _$CategoriesStateCopyWithImpl<$Res, $Val extends CategoriesState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CategoryModelCopyWith<$Res>? get filteredCategories {
-    if (_value.filteredCategories == null) {
+  $CategoryModelCopyWith<$Res>? get favoriteCategories {
+    if (_value.favoriteCategories == null) {
       return null;
     }
 
-    return $CategoryModelCopyWith<$Res>(_value.filteredCategories!, (value) {
-      return _then(_value.copyWith(filteredCategories: value) as $Val);
+    return $CategoryModelCopyWith<$Res>(_value.favoriteCategories!, (value) {
+      return _then(_value.copyWith(favoriteCategories: value) as $Val);
     });
   }
 
@@ -181,13 +142,14 @@ class _$CategoriesStateCopyWithImpl<$Res, $Val extends CategoriesState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $CategoryModelCopyWith<$Res>? get filteredSubCategories {
-    if (_value.filteredSubCategories == null) {
+  $CategoryModelCopyWith<$Res>? get availableSubcategories {
+    if (_value.availableSubcategories == null) {
       return null;
     }
 
-    return $CategoryModelCopyWith<$Res>(_value.filteredSubCategories!, (value) {
-      return _then(_value.copyWith(filteredSubCategories: value) as $Val);
+    return $CategoryModelCopyWith<$Res>(_value.availableSubcategories!,
+        (value) {
+      return _then(_value.copyWith(availableSubcategories: value) as $Val);
     });
   }
 }
@@ -201,26 +163,20 @@ abstract class _$$CategoriesStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {CategoryModel? categories,
-      List<int> selectedDetailIds,
-      CategoryModel? filteredCategories,
-      int selectedIndex,
-      List<String> selectedInterests,
-      Set<int> selectedIndices,
-      List<int> selectedCategoryIds,
-      Set<int> selectedIndicesDetails,
-      DateTime? lastRequestTime,
+      {CategoryModel? allCategories,
+      CategoryModel? favoriteCategories,
+      CategoryModel? availableSubcategories,
+      List<int> selectedFavoriteCategoryIds,
+      List<int> selectedSubcategoryIds,
       bool isLoading,
-      String? error,
-      int? selectedFavCategoryId,
-      CategoryModel? filteredSubCategories});
+      String? errorMessage});
 
   @override
-  $CategoryModelCopyWith<$Res>? get categories;
+  $CategoryModelCopyWith<$Res>? get allCategories;
   @override
-  $CategoryModelCopyWith<$Res>? get filteredCategories;
+  $CategoryModelCopyWith<$Res>? get favoriteCategories;
   @override
-  $CategoryModelCopyWith<$Res>? get filteredSubCategories;
+  $CategoryModelCopyWith<$Res>? get availableSubcategories;
 }
 
 /// @nodoc
@@ -236,73 +192,43 @@ class __$$CategoriesStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? categories = freezed,
-    Object? selectedDetailIds = null,
-    Object? filteredCategories = freezed,
-    Object? selectedIndex = null,
-    Object? selectedInterests = null,
-    Object? selectedIndices = null,
-    Object? selectedCategoryIds = null,
-    Object? selectedIndicesDetails = null,
-    Object? lastRequestTime = freezed,
+    Object? allCategories = freezed,
+    Object? favoriteCategories = freezed,
+    Object? availableSubcategories = freezed,
+    Object? selectedFavoriteCategoryIds = null,
+    Object? selectedSubcategoryIds = null,
     Object? isLoading = null,
-    Object? error = freezed,
-    Object? selectedFavCategoryId = freezed,
-    Object? filteredSubCategories = freezed,
+    Object? errorMessage = freezed,
   }) {
     return _then(_$CategoriesStateImpl(
-      categories: freezed == categories
-          ? _value.categories
-          : categories // ignore: cast_nullable_to_non_nullable
+      allCategories: freezed == allCategories
+          ? _value.allCategories
+          : allCategories // ignore: cast_nullable_to_non_nullable
               as CategoryModel?,
-      selectedDetailIds: null == selectedDetailIds
-          ? _value._selectedDetailIds
-          : selectedDetailIds // ignore: cast_nullable_to_non_nullable
-              as List<int>,
-      filteredCategories: freezed == filteredCategories
-          ? _value.filteredCategories
-          : filteredCategories // ignore: cast_nullable_to_non_nullable
+      favoriteCategories: freezed == favoriteCategories
+          ? _value.favoriteCategories
+          : favoriteCategories // ignore: cast_nullable_to_non_nullable
               as CategoryModel?,
-      selectedIndex: null == selectedIndex
-          ? _value.selectedIndex
-          : selectedIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      selectedInterests: null == selectedInterests
-          ? _value._selectedInterests
-          : selectedInterests // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedIndices: null == selectedIndices
-          ? _value._selectedIndices
-          : selectedIndices // ignore: cast_nullable_to_non_nullable
-              as Set<int>,
-      selectedCategoryIds: null == selectedCategoryIds
-          ? _value._selectedCategoryIds
-          : selectedCategoryIds // ignore: cast_nullable_to_non_nullable
+      availableSubcategories: freezed == availableSubcategories
+          ? _value.availableSubcategories
+          : availableSubcategories // ignore: cast_nullable_to_non_nullable
+              as CategoryModel?,
+      selectedFavoriteCategoryIds: null == selectedFavoriteCategoryIds
+          ? _value._selectedFavoriteCategoryIds
+          : selectedFavoriteCategoryIds // ignore: cast_nullable_to_non_nullable
               as List<int>,
-      selectedIndicesDetails: null == selectedIndicesDetails
-          ? _value._selectedIndicesDetails
-          : selectedIndicesDetails // ignore: cast_nullable_to_non_nullable
-              as Set<int>,
-      lastRequestTime: freezed == lastRequestTime
-          ? _value.lastRequestTime
-          : lastRequestTime // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
+      selectedSubcategoryIds: null == selectedSubcategoryIds
+          ? _value._selectedSubcategoryIds
+          : selectedSubcategoryIds // ignore: cast_nullable_to_non_nullable
+              as List<int>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
+      errorMessage: freezed == errorMessage
+          ? _value.errorMessage
+          : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
-      selectedFavCategoryId: freezed == selectedFavCategoryId
-          ? _value.selectedFavCategoryId
-          : selectedFavCategoryId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      filteredSubCategories: freezed == filteredSubCategories
-          ? _value.filteredSubCategories
-          : filteredSubCategories // ignore: cast_nullable_to_non_nullable
-              as CategoryModel?,
     ));
   }
 }
@@ -311,95 +237,55 @@ class __$$CategoriesStateImplCopyWithImpl<$Res>
 
 class _$CategoriesStateImpl implements _CategoriesState {
   const _$CategoriesStateImpl(
-      {this.categories,
-      final List<int> selectedDetailIds = const [],
-      this.filteredCategories,
-      required this.selectedIndex,
-      final List<String> selectedInterests = const [],
-      final Set<int> selectedIndices = const {},
-      final List<int> selectedCategoryIds = const [],
-      final Set<int> selectedIndicesDetails = const {},
-      this.lastRequestTime,
+      {this.allCategories,
+      this.favoriteCategories,
+      this.availableSubcategories,
+      final List<int> selectedFavoriteCategoryIds = const <int>[],
+      final List<int> selectedSubcategoryIds = const <int>[],
       this.isLoading = false,
-      this.error,
-      this.selectedFavCategoryId,
-      this.filteredSubCategories})
-      : _selectedDetailIds = selectedDetailIds,
-        _selectedInterests = selectedInterests,
-        _selectedIndices = selectedIndices,
-        _selectedCategoryIds = selectedCategoryIds,
-        _selectedIndicesDetails = selectedIndicesDetails;
+      this.errorMessage})
+      : _selectedFavoriteCategoryIds = selectedFavoriteCategoryIds,
+        _selectedSubcategoryIds = selectedSubcategoryIds;
 
   @override
-  final CategoryModel? categories;
-  final List<int> _selectedDetailIds;
+  final CategoryModel? allCategories;
+// all categories
+  @override
+  final CategoryModel? favoriteCategories;
+// fav categories list (from API)
+  @override
+  final CategoryModel? availableSubcategories;
+// union subcats for selected favorites
+  final List<int> _selectedFavoriteCategoryIds;
+// union subcats for selected favorites
   @override
   @JsonKey()
-  List<int> get selectedDetailIds {
-    if (_selectedDetailIds is EqualUnmodifiableListView)
-      return _selectedDetailIds;
+  List<int> get selectedFavoriteCategoryIds {
+    if (_selectedFavoriteCategoryIds is EqualUnmodifiableListView)
+      return _selectedFavoriteCategoryIds;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_selectedDetailIds);
+    return EqualUnmodifiableListView(_selectedFavoriteCategoryIds);
   }
 
-  @override
-  final CategoryModel? filteredCategories;
-  @override
-  final int selectedIndex;
-  final List<String> _selectedInterests;
+  final List<int> _selectedSubcategoryIds;
   @override
   @JsonKey()
-  List<String> get selectedInterests {
-    if (_selectedInterests is EqualUnmodifiableListView)
-      return _selectedInterests;
+  List<int> get selectedSubcategoryIds {
+    if (_selectedSubcategoryIds is EqualUnmodifiableListView)
+      return _selectedSubcategoryIds;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_selectedInterests);
+    return EqualUnmodifiableListView(_selectedSubcategoryIds);
   }
 
-  final Set<int> _selectedIndices;
-  @override
-  @JsonKey()
-  Set<int> get selectedIndices {
-    if (_selectedIndices is EqualUnmodifiableSetView) return _selectedIndices;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableSetView(_selectedIndices);
-  }
-
-  final List<int> _selectedCategoryIds;
-  @override
-  @JsonKey()
-  List<int> get selectedCategoryIds {
-    if (_selectedCategoryIds is EqualUnmodifiableListView)
-      return _selectedCategoryIds;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_selectedCategoryIds);
-  }
-
-  final Set<int> _selectedIndicesDetails;
-  @override
-  @JsonKey()
-  Set<int> get selectedIndicesDetails {
-    if (_selectedIndicesDetails is EqualUnmodifiableSetView)
-      return _selectedIndicesDetails;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableSetView(_selectedIndicesDetails);
-  }
-
-  @override
-  final DateTime? lastRequestTime;
   @override
   @JsonKey()
   final bool isLoading;
   @override
-  final String? error;
-  @override
-  final int? selectedFavCategoryId;
-  @override
-  final CategoryModel? filteredSubCategories;
+  final String? errorMessage;
 
   @override
   String toString() {
-    return 'CategoriesState(categories: $categories, selectedDetailIds: $selectedDetailIds, filteredCategories: $filteredCategories, selectedIndex: $selectedIndex, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, selectedCategoryIds: $selectedCategoryIds, selectedIndicesDetails: $selectedIndicesDetails, lastRequestTime: $lastRequestTime, isLoading: $isLoading, error: $error, selectedFavCategoryId: $selectedFavCategoryId, filteredSubCategories: $filteredSubCategories)';
+    return 'CategoriesState(allCategories: $allCategories, favoriteCategories: $favoriteCategories, availableSubcategories: $availableSubcategories, selectedFavoriteCategoryIds: $selectedFavoriteCategoryIds, selectedSubcategoryIds: $selectedSubcategoryIds, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -407,49 +293,33 @@ class _$CategoriesStateImpl implements _CategoriesState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CategoriesStateImpl &&
-            (identical(other.categories, categories) ||
-                other.categories == categories) &&
-            const DeepCollectionEquality()
-                .equals(other._selectedDetailIds, _selectedDetailIds) &&
-            (identical(other.filteredCategories, filteredCategories) ||
-                other.filteredCategories == filteredCategories) &&
-            (identical(other.selectedIndex, selectedIndex) ||
-                other.selectedIndex == selectedIndex) &&
-            const DeepCollectionEquality()
-                .equals(other._selectedInterests, _selectedInterests) &&
-            const DeepCollectionEquality()
-                .equals(other._selectedIndices, _selectedIndices) &&
-            const DeepCollectionEquality()
-                .equals(other._selectedCategoryIds, _selectedCategoryIds) &&
+            (identical(other.allCategories, allCategories) ||
+                other.allCategories == allCategories) &&
+            (identical(other.favoriteCategories, favoriteCategories) ||
+                other.favoriteCategories == favoriteCategories) &&
+            (identical(other.availableSubcategories, availableSubcategories) ||
+                other.availableSubcategories == availableSubcategories) &&
             const DeepCollectionEquality().equals(
-                other._selectedIndicesDetails, _selectedIndicesDetails) &&
-            (identical(other.lastRequestTime, lastRequestTime) ||
-                other.lastRequestTime == lastRequestTime) &&
+                other._selectedFavoriteCategoryIds,
+                _selectedFavoriteCategoryIds) &&
+            const DeepCollectionEquality().equals(
+                other._selectedSubcategoryIds, _selectedSubcategoryIds) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            (identical(other.error, error) || other.error == error) &&
-            (identical(other.selectedFavCategoryId, selectedFavCategoryId) ||
-                other.selectedFavCategoryId == selectedFavCategoryId) &&
-            (identical(other.filteredSubCategories, filteredSubCategories) ||
-                other.filteredSubCategories == filteredSubCategories));
+            (identical(other.errorMessage, errorMessage) ||
+                other.errorMessage == errorMessage));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      categories,
-      const DeepCollectionEquality().hash(_selectedDetailIds),
-      filteredCategories,
-      selectedIndex,
-      const DeepCollectionEquality().hash(_selectedInterests),
-      const DeepCollectionEquality().hash(_selectedIndices),
-      const DeepCollectionEquality().hash(_selectedCategoryIds),
-      const DeepCollectionEquality().hash(_selectedIndicesDetails),
-      lastRequestTime,
+      allCategories,
+      favoriteCategories,
+      availableSubcategories,
+      const DeepCollectionEquality().hash(_selectedFavoriteCategoryIds),
+      const DeepCollectionEquality().hash(_selectedSubcategoryIds),
       isLoading,
-      error,
-      selectedFavCategoryId,
-      filteredSubCategories);
+      errorMessage);
 
   /// Create a copy of CategoriesState
   /// with the given fields replaced by the non-null parameter values.
@@ -463,46 +333,29 @@ class _$CategoriesStateImpl implements _CategoriesState {
 
 abstract class _CategoriesState implements CategoriesState {
   const factory _CategoriesState(
-      {final CategoryModel? categories,
-      final List<int> selectedDetailIds,
-      final CategoryModel? filteredCategories,
-      required final int selectedIndex,
-      final List<String> selectedInterests,
-      final Set<int> selectedIndices,
-      final List<int> selectedCategoryIds,
-      final Set<int> selectedIndicesDetails,
-      final DateTime? lastRequestTime,
+      {final CategoryModel? allCategories,
+      final CategoryModel? favoriteCategories,
+      final CategoryModel? availableSubcategories,
+      final List<int> selectedFavoriteCategoryIds,
+      final List<int> selectedSubcategoryIds,
       final bool isLoading,
-      final String? error,
-      final int? selectedFavCategoryId,
-      final CategoryModel? filteredSubCategories}) = _$CategoriesStateImpl;
+      final String? errorMessage}) = _$CategoriesStateImpl;
 
   @override
-  CategoryModel? get categories;
+  CategoryModel? get allCategories; // all categories
   @override
-  List<int> get selectedDetailIds;
+  CategoryModel? get favoriteCategories; // fav categories list (from API)
   @override
-  CategoryModel? get filteredCategories;
+  CategoryModel?
+      get availableSubcategories; // union subcats for selected favorites
   @override
-  int get selectedIndex;
+  List<int> get selectedFavoriteCategoryIds;
   @override
-  List<String> get selectedInterests;
-  @override
-  Set<int> get selectedIndices;
-  @override
-  List<int> get selectedCategoryIds;
-  @override
-  Set<int> get selectedIndicesDetails;
-  @override
-  DateTime? get lastRequestTime;
+  List<int> get selectedSubcategoryIds;
   @override
   bool get isLoading;
   @override
-  String? get error;
-  @override
-  int? get selectedFavCategoryId;
-  @override
-  CategoryModel? get filteredSubCategories;
+  String? get errorMessage;
 
   /// Create a copy of CategoriesState
   /// with the given fields replaced by the non-null parameter values.

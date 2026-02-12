@@ -9,7 +9,7 @@ import 'package:hvatai/features/activity/domain/repositories/activity_repository
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/create_clip_cubit/create_clip_cubit.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/preview_clip_cubit/preview_clip_cubit.dart';
-import 'package:hvatai/features/company/presentation/cubit/company_reviews/company_reviews_cubit.dart';
+import 'package:hvatai/features/home/presentation/cubit/categories_for_you/categories_for_you_cubit.dart';
 import 'package:hvatai/features/review/data/datasources/api_service_review.dart';
 import 'package:hvatai/features/review/data/repositories/review_repository_impl.dart';
 import 'package:hvatai/features/review/domain/repositories/review_repository.dart';
@@ -97,8 +97,6 @@ import 'package:hvatai/features/company/data/datasources/api_service_company.dar
 import 'package:hvatai/features/company/data/repositories/company_repository_impl.dart';
 import 'package:hvatai/features/company/domain/repositories/company_repository.dart';
 import 'package:hvatai/features/company/presentation/cubit/company/company_cubit.dart';
-import 'package:hvatai/features/company/presentation/cubit/company_products/company_products_cubit.dart';
-import 'package:hvatai/features/company/presentation/cubit/company_streams/company_streams_cubit.dart';
 import 'package:hvatai/features/favorites/data/datasources/api_service_favorites.dart';
 import 'package:hvatai/features/favorites/data/repositories/favorites_repository_impl.dart';
 import 'package:hvatai/features/favorites/domain/repositories/favorites_repository.dart';
@@ -187,6 +185,8 @@ Future<void> setupLocator() async {
         locator(),
         locator(),
       ));
+
+  locator.registerFactory(() => CategoriesForYouCubit());
   locator.registerFactory(() => ChatsCubit(
         locator(),
         locator(),
@@ -209,7 +209,6 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => AcceptInviteCubit(locator()));
 
   locator.registerFactory(() => CategoriesCubit(
-        locator(),
         locator(),
         locator(),
       ));

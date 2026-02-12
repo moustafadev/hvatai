@@ -17,14 +17,7 @@ class TitleCategoriesForYou extends StatelessWidget {
         const Spacer(),
         GestureDetector(
           onTap: () {
-            final liveStreamsCubit = context.read<LiveStreamsCubit>();
-            final categoriesCubit = context.read<CategoriesCubit>();
-            final categories = categoriesCubit.state.categories?.data ?? [];
-            context.push(AppRoutes.categoriesForYou, extra: {
-              'liveStreamsCubit': liveStreamsCubit,
-              'categoriesCubit': categoriesCubit,
-              'categories': categories,
-            });
+            openCategoriesForYou(context);
           },
           child: SvgPicture.asset(
             Assets.assetsIconsDoubleAltArrow,
@@ -35,4 +28,31 @@ class TitleCategoriesForYou extends StatelessWidget {
       ],
     );
   }
+}
+
+Future<void> openCategoriesForYou(BuildContext context) async {
+  final categoriesCubit = context.read<CategoriesCubit>();
+  final liveStreamsCubit = context.read<LiveStreamsCubit>();
+
+  final favorites = categoriesCubit.state.favoriteCategories?.data ?? [];
+
+  final result = await context.push<List<int>>(
+    AppRoutes.categoriesForYou,
+    extra: {
+      'favorites': favorites,
+      'initialSelectedIds': categoriesCubit.state.selectedFavoriteCategoryIds,
+    },
+  );
+
+  if (result == null) return; // ✅ back pressed, ignore
+
+  // ✅ Apply ONLY after pop result
+  categoriesCubit.applyFavSelection(
+    ids: result,
+  );
+
+  liveStreamsCubit.fetchLiveStreams(
+    isRefresh: true,
+    categoryIds: result,
+  );
 }
