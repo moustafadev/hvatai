@@ -31,10 +31,7 @@ class InterestsDetailScreen extends StatelessWidget {
               actions: [
                 TextButton.icon(
                   iconAlignment: IconAlignment.end,
-                  icon: const Icon(
-                    Icons.double_arrow,
-                    color: AppColors.blackColorIcon,
-                  ),
+                  icon: SvgPicture.asset(Assets.assetsIconsDoubleAltArrow),
                   label: CustomText(
                     text: 'skip'.tr(),
                     fontSize: 14.sp,

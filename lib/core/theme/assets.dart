@@ -15,6 +15,8 @@ class Assets {
   /// assets for point up png
   static const String assetsImagesPointUp = "assets/images/point_up.png";
 
+  /// assests for double alt arrow svg
+  static const String assetsIconsDoubleAltArrow = "assets/icons/double_alt_arrow.svg";
   /// assets star border svg
   static const String assetsIconsStarBorder = "assets/icons/star_border.svg";
 

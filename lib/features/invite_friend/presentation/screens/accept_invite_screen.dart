@@ -23,10 +23,7 @@ class AcceptInviteScreen extends StatelessWidget {
               actions: [
                 TextButton.icon(
                   iconAlignment: IconAlignment.end,
-                  icon: const Icon(
-                    Icons.double_arrow,
-                    color: AppColors.blackColorIcon,
-                  ),
+                  icon: SvgPicture.asset(Assets.assetsIconsDoubleAltArrow),
                   label: CustomText(
                     text: 'skip'.tr(),
                     fontSize: 14.sp,
@@ -40,6 +37,7 @@ class AcceptInviteScreen extends StatelessWidget {
             body: SafeArea(
               bottom: false,
               child: CustomScrollView(
+                physics: BouncingScrollPhysics(),
                 slivers: [
                   SliverToBoxAdapter(
                     child: Padding(
@@ -47,17 +45,16 @@ class AcceptInviteScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          24.ph,
+                          16.ph,
                           CustomText(
-                            text: 'Введите реферальный код',
+                            text: 'enterInviteCode'.tr(),
                             fontWeight: FontWeight.w800,
                             fontSize: 20.sp,
                             textAlign: TextAlign.center,
                           ),
-                          16.ph,
+                          4.ph,
                           CustomText(
-                            text:
-                                'Введите код пригласившего вас друга, и вы оба получите подарок',
+                            text: 'enterInviteCodeDescription'.tr(),
                             fontWeight: FontWeight.w400,
                             fontSize: 14.sp,
                             textAlign: TextAlign.center,
@@ -77,16 +74,22 @@ class AcceptInviteScreen extends StatelessWidget {
                             8.ph,
                           ],
                           // Text field
-                          CustomTextField(
-                            hintText: 'Введите код',
-                            keyboardType: TextInputType.text,
-                            isRequired: false,
-                            onChanged: cubit.updateCode,
-                            borderSide: state.hasError
-                                ? BorderSide(color: AppColors.redLite, width: 1)
-                                : null,
-                            textColor:
-                                state.hasError ? AppColors.redLite : null,
+                          Container(
+                            decoration: BoxDecoration(
+                              boxShadow: AppColors.boxShadowTextField,
+                            ),
+                            child: CustomTextField(
+                              hintText: 'enterCode'.tr(),
+                              keyboardType: TextInputType.text,
+                              isRequired: false,
+                              onChanged: cubit.updateCode,
+                              borderSide: state.hasError
+                                  ? BorderSide(
+                                      color: AppColors.redLite, width: 1)
+                                  : null,
+                              textColor:
+                                  state.hasError ? AppColors.redLite : null,
+                            ),
                           ),
                           12.ph,
                           Align(
@@ -94,7 +97,7 @@ class AcceptInviteScreen extends StatelessWidget {
                             child: GestureDetector(
                               onTap: () => HowItWorksBottomSheet.show(context),
                               child: CustomText(
-                                text: 'Как это работает?',
+                                text: 'howItWorks'.tr(),
                                 color: AppColors.primaryColor,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 14.sp,
@@ -116,13 +119,11 @@ class AcceptInviteScreen extends StatelessWidget {
                         child: CustomGradientButton(
                           isLoading: state.isLoading,
                           isDisabled: state.code.isEmpty,
-                          text: 'continue'.tr(),
-                          onPressed: state.code.isEmpty || state.isLoading
-                              ? null
-                              : () => cubit.submitCode(
-                                    onSuccess: () => context
-                                        .push(AppRoutes.acceptInviteSuccess),
-                                  ),
+                          text: 'activateCode'.tr(),
+                          onPressed: () => cubit.submitCode(
+                            onSuccess: () =>
+                                context.push(AppRoutes.acceptInviteSuccess),
+                          ),
                         ),
                       ),
                     ),

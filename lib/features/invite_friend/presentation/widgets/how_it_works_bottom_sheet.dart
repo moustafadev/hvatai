@@ -39,7 +39,7 @@ class HowItWorksBottomSheet extends StatelessWidget {
             ),
             // Title
             CustomText(
-              text: 'Как это работает?',
+              text: 'howItWorks'.tr(),
               fontSize: 18.sp,
               fontWeight: FontWeight.w800,
               color: AppColors.blackDark,
@@ -47,25 +47,26 @@ class HowItWorksBottomSheet extends StatelessWidget {
             16.ph,
             // Terms list
             _HowItWorksItem(
-              text: 'Друг даёт вам свой реферальный код.',
+              text: 'friendGivesReferralCode'.tr(),
             ),
             12.ph,
             _HowItWorksItem(
-              text: 'Вы вводите его здесь.',
+              text: 'enterCodeHere'.tr(),
             ),
             12.ph,
             _HowItWorksItem(
-              text: 'Вы оба получаете бонусы после вашей первой покупки.',
+              text: 'bothReceiveBonuses'.tr(),
             ),
             24.ph,
             // OK button
             CustomButton(
-              title: 'Ок',
+              title: 'ok'.tr(),
               onPressed: () => Navigator.pop(context),
               color: AppColors.primaryColor,
               textColor: AppColors.white,
               fontSize: 16.sp,
               fontWeight: FontWeight.w800,
+              height: 42,
             ),
             32.ph,
           ],
@@ -97,9 +98,8 @@ class _HowItWorksItem extends StatelessWidget {
         Expanded(
           child: CustomText(
             text: text,
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w400,
-            color: AppColors.blackDark,
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ],
