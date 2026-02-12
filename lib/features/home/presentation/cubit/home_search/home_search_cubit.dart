@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
 import 'package:hvatai/features/search/data/model/search_response/search_response_model.dart';
-import 'package:hvatai/features/search/domain/usecases/delete_recent_search_usecase.dart';
-import 'package:hvatai/features/search/domain/usecases/get_recent_searches_usecase.dart';
 import 'package:hvatai/features/search/domain/usecases/search_suggestions_usecase.dart';
 import 'package:hvatai/features/search/domain/usecases/search_usecase.dart';
 
@@ -14,14 +12,10 @@ class HomeSearchCubit extends Cubit<HomeSearchState> {
   HomeSearchCubit(
     this._searchUsecase,
     this._suggestionsUsecase,
-    this._recentUsecase,
-    this._deleteRecentUsecase,
   ) : super(const HomeSearchState());
 
   final SearchUsecase _searchUsecase;
   final SearchSuggestionsUsecase _suggestionsUsecase;
-  final GetRecentSearchesUsecase _recentUsecase;
-  final DeleteRecentSearchUsecase _deleteRecentUsecase;
 
   Timer? _suggestionsDebounce;
 

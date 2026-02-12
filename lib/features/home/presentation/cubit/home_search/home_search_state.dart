@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hvatai/features/search/data/model/recent_search_response.dart';
 import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
 
 part 'home_search_state.freezed.dart';
