@@ -26,7 +26,6 @@ class CustomImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('imageSource: $imageSource');
     bool isNetworkImage = imageSource.isNetworkImage;
     bool isAssetImage = imageSource.isAssetImage;
 
@@ -77,6 +76,7 @@ class CustomImage extends StatelessWidget {
             width: width,
             height: height,
             fit: fit,
+            placeholder: (context, url) => _buildPlaceholder(), 
             errorWidget: (context, url, error) => _buildPlaceholder(),
           );
         } catch (e) {

@@ -15,6 +15,7 @@ class CustomContainer extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final BoxConstraints? constraints;
+  final Color? backgroundColor;
 
   const CustomContainer({super.key,
     this.height,
@@ -27,6 +28,7 @@ class CustomContainer extends StatelessWidget {
     this.shape = BoxShape.rectangle,
     this.alignment,
     this.boxShadow, this.gradient, this.margin,this.padding, this.constraints,
+    this.backgroundColor,
   });
 
   @override

@@ -59,10 +59,6 @@ class OtpCubit extends Cubit<OtpState> {
         // Save isSetup to AppLocal
         appLocal.saveIsSetup(userData.isSetup);
 
-        showFloatingMessageSuccess(userData.message.isNotEmpty
-            ? userData.message
-            : 'emailVerified'.tr());
-
         // Navigation logic based on isSetup and name
         if (userData.isSetup == true) {
           // User has completed setup (has favorite categories)

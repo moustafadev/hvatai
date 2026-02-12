@@ -10,6 +10,7 @@ class AppColors {
   static const Color graniteGray = Color(0xFF707070);
   static const Color eerieBlack = Color(0xFF1B1B1B);
   static const Color whiteGrey = Color(0xffBEBEBE);
+  static const Color grey2 = Color(0xff383838);
   static const Color gray = Color(0xFFECECEC);
   static const Color gray2 = Color(0xffEBEBEB);
   static const Color primary = Color(0xFFA1F4A8);
@@ -31,6 +32,7 @@ class AppColors {
   static const Color grey = Color(0xFFB3B3B3);
   static const Color blackLite = Color(0xFF3D3D3D);
   static const Color blackDark = Color(0xFF181818);
+  static const Color blackColor = Color(0xFF000000);
   static const Color pink = Color(0xFFE569DB);
   static const Color blueLite = Color(0xFF3392FF);
   static const Color purpleLite = Color(0xFF7F5BFF);
@@ -52,9 +54,10 @@ class AppColors {
   static const Color background = Color(0xFFFBFBFB);
   static const Color disabledBackground = Color(0xffE8E8E8);
   // ✅ Colors with Opacity
-  static Color greyLiteLine = const Color(0xFF808080).withOpacity(0.5);
-  static Color view = const Color(0xFF000000).withOpacity(0.5);
-  static Color button = const Color(0xFF007AFF).withOpacity(0.2);
+  static Color greyLiteLine = const Color(0xFF808080).withValues(alpha: 0.5);
+  static Color view = const Color(0xFF000000).withValues(alpha: 0.5);
+  static Color button = const Color(0xFF007AFF).withValues(alpha: 0.2);
+  static Color blue = const Color(0xFF007AFF);
   static Color text = const Color(0xFF2A2A2A);
   static const Color violetPink = Color(0xFFE26ADC); // New color added
   static const Color greyLine = Color(0xFFF3F3F3);
@@ -66,4 +69,22 @@ class AppColors {
   static LinearGradient secondaryGradient = LinearGradient(
     colors: [white, white, white],
   );
+
+  static List<BoxShadow> boxShadowTextField = [
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.02),
+      offset: const Offset(0, 3),
+      blurRadius: 7,
+    ),
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.02),
+      offset: const Offset(0, 13),
+      blurRadius: 13,
+    ),
+    BoxShadow(
+      color: Colors.black.withValues(alpha: 0.01),
+      offset: const Offset(0, 30),
+      blurRadius: 18,
+    ),
+  ];
 }

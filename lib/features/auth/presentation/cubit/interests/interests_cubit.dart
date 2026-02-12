@@ -22,13 +22,13 @@ class InterestsCubit extends Cubit<InterestsState> {
   AddFavCategoryUsecase addFavCategoryUsecase;
 
   Future<void> getCategories() async {
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
+    emit(state.copyWith(isLoadingCategories: true, errorMessage: ''));
     final result = await getCategoryUsecase.call(unit);
     result.fold(
-      (failure) =>
-          emit(state.copyWith(isLoading: false, errorMessage: failure)),
+      (failure) => emit(
+          state.copyWith(isLoadingCategories: false, errorMessage: failure)),
       (categories) => emit(state.copyWith(
-        isLoading: false,
+        isLoadingCategories: false,
         categories: categories,
       )),
     );
@@ -48,8 +48,11 @@ class InterestsCubit extends Cubit<InterestsState> {
       },
       (_) {
         emit(state.copyWith(isLoading: false));
-        showFloatingMessageSuccess('interestsAdded'.tr());
-        context.push(AppRoutes.interestsDetail);
+        if (_allSelectedHaveNoChildren()) {
+          context.push(AppRoutes.notification);
+        } else {
+          context.push(AppRoutes.interestsDetail);
+        }
       },
     );
   }
@@ -71,5 +74,20 @@ class InterestsCubit extends Cubit<InterestsState> {
       selectedIndices: updatedIndices,
       selectedCategoryIds: updatedIds,
     ));
+  }
+
+  bool _allSelectedHaveNoChildren() {
+    final selectedIds = state.selectedCategoryIds.toSet();
+    final all = state.categories?.data ?? [];
+
+    final selectedCategories =
+        all.where((c) => selectedIds.contains(c.id)).toList();
+
+    // if nothing selected, treat as false (or true if you want)
+    if (selectedCategories.isEmpty) return false;
+
+    return selectedCategories.every(
+      (c) => (c.children == null || c.children!.isEmpty),
+    );
   }
 }

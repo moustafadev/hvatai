@@ -13,13 +13,9 @@ class NameCubit extends Cubit<NameState> {
 
   final UpdateNameUseCase updateNameUseCase;
 
-  final formKey = GlobalKey<FormState>();
-
   void updateName(String value) => emit(state.copyWith(name: value));
 
   Future<void> submit(BuildContext context) async {
-    if (!formKey.currentState!.validate()) return;
-
     emit(state.copyWith(isLoading: true, errorMessage: ''));
     final result =
         await updateNameUseCase.call(UpdateNameParams(name: state.name));
@@ -31,7 +27,7 @@ class NameCubit extends Cubit<NameState> {
       (_) {
         emit(state.copyWith(isLoading: false));
         // Always go to categories after name is set
-        context.go(AppRoutes.interests);
+        context.push(AppRoutes.interests);
       },
     );
   }

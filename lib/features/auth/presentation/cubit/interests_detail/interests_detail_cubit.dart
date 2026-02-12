@@ -10,7 +10,6 @@ import 'package:hvatai/features/auth/data/models/category_model/category_model.d
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/domain/usecases/add_fav_category_usecase.dart';
 import 'package:hvatai/features/auth/domain/usecases/get_fav_category_usecase.dart';
-import 'package:hvatai/features/cart/presentation/cubit/cart_cubit/cart_cubit.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
 part 'interests_detail_state.dart';
@@ -25,13 +24,13 @@ class InterestsDetailCubit extends Cubit<InterestsDetailState> {
   final AppLocal appLocal;
 
   Future<void> getFavCategories() async {
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
+    emit(state.copyWith(isLoadingCategories: true, errorMessage: ''));
     final result = await getFavCategoryUsecase.call(unit);
     result.fold(
       (failure) =>
-          emit(state.copyWith(isLoading: false, errorMessage: failure)),
+          emit(state.copyWith(isLoadingCategories: false, errorMessage: failure)),
       (categories) => emit(state.copyWith(
-        isLoading: false,
+        isLoadingCategories: false,
         categories: categories,
       )),
     );
@@ -55,21 +54,6 @@ class InterestsDetailCubit extends Cubit<InterestsDetailState> {
     ));
   }
 
-  Future<void> saveIsSetupTrue(BuildContext context) async {
-    // Fetch cart when login completes
-    try {
-      final cartCubit = context.read<CartCubit>();
-      cartCubit.getCartProducts();
-    } catch (_) {
-      // CartCubit might not be available yet, it will be fetched in app.dart
-    }
-    final cartCubit = context.read<CartCubit>();
-    cartCubit.getCartProducts();
-    cartCubit.getDeliveryAddress();
-    context.push(AppRoutes.notification);
-    await appLocal.saveIsSetup(true);
-  }
-
   Future<void> addFavCategories(BuildContext context) async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
@@ -88,18 +72,9 @@ class InterestsDetailCubit extends Cubit<InterestsDetailState> {
         emit(state.copyWith(isLoading: false, errorMessage: failure));
         showFloatingMessageError('alreadyInFavorites'.tr());
       },
-      (_) async {
+      (_) {
         emit(state.copyWith(isLoading: false));
-        showFloatingMessageSuccess('interestsAdded'.tr());
-        await appLocal.saveIsSetup(true);
-        // Fetch cart when login completes
-        try {
-          final cartCubit = context.read<CartCubit>();
-          cartCubit.getCartProducts();
-        } catch (_) {
-          // CartCubit might not be available yet, it will be fetched in app.dart
-        }
-        // ignore: use_build_context_synchronously
+
         context.push(AppRoutes.notification);
       },
     );

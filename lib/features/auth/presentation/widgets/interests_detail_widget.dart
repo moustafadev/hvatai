@@ -24,7 +24,7 @@ class InterestsDetailWidget extends StatelessWidget {
               CustomText(
                 text: 'chooseInterests'.tr(),
                 fontSize: 16,
-                color: Colors.grey,
+                color: AppColors.blackColor.withValues(alpha: 0.2),
                 fontWeight: FontWeight.w600,
               ),
               24.ph,

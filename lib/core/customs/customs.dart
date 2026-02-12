@@ -27,7 +27,6 @@ import 'package:hvatai/routes/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart';
 
-
 part 'custom_app_bar.dart';
 part 'custom_button.dart';
 part 'custom_category_tabs.dart';
@@ -58,4 +57,5 @@ part 'reusable_live_videos_grid.dart';
 part 'show_dialog_cupertino.dart';
 part 'top_bar_widget.dart';
 part 'custom_confirm_dialog.dart';
+part 'custom_circular_progress_indicator.dart';
 // Include all parts here

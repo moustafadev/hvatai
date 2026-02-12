@@ -59,7 +59,9 @@ class CustomGradientButton extends StatelessWidget {
                 : CustomText(
                     textAlign: TextAlign.center,
                     text: text,
-                    color: textColor ?? AppColors.white,
+                    color: isDisabled
+                        ? AppColors.disabledBackground
+                        : textColor ?? AppColors.white,
                     fontSize: fontSize,
                     fontFamily: fontFamily,
                     fontWeight: fontWeight ?? FontWeight.bold,

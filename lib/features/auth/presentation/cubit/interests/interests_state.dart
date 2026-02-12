@@ -7,6 +7,7 @@ class InterestsState with _$InterestsState {
     @Default([]) List<int> selectedCategoryIds,
     @Default({}) Set<int> selectedIndices,
     @Default(false) bool isLoading,
+    @Default(false) bool isLoadingCategories,
     @Default('') String errorMessage,
     CategoryModel? categories,
   }) = _InterestsState;

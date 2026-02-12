@@ -6,11 +6,13 @@ class CategoryCard extends StatelessWidget {
     required this.category,
     required this.isSelected,
     required this.onTap,
+    this.showEye = true, // ✅ new
   });
 
   final CategoryData category;
   final bool isSelected;
   final VoidCallback onTap;
+  final bool showEye;
 
   String _formatViews(String? raw) {
     if (raw == null || raw.isEmpty) return '';
@@ -34,12 +36,12 @@ class CategoryCard extends StatelessWidget {
           color: AppColors.greyButton,
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: isSelected ? AppColors.primaryColor : AppColors.greyBorder,
+            color: isSelected ? AppColors.primaryColor : AppColors.transparent,
             width: 2,
           ),
         ),
         child: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(12),
           child: Column(
             children: [
               Padding(
@@ -54,7 +56,9 @@ class CategoryCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              if (category.views?.isNotEmpty == true && category.views != "0")
+              if (showEye &&
+                  category.views?.isNotEmpty == true &&
+                  category.views != "0")
                 Container(
                   margin:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 4),

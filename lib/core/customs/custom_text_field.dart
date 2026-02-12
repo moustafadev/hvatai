@@ -81,18 +81,21 @@ class CustomTextField extends StatelessWidget {
         textInputAction: textInputAction,
         inputFormatters: inputFormatters,
         maxLength: maxLength,
-        style: TextStyle(color: textColor ?? Colors.black),
+        style: TextStyle(
+            color: textColor ?? AppColors.text,
+            fontWeight: FontWeight.w600,
+            fontSize: 14),
         decoration: InputDecoration(
           hintText: isRequired ? '$hintText*' : hintText,
           hintStyle: TextStyle(
-            fontWeight: hintStyle?.fontWeight ?? FontWeight.bold,
-            color: hintColor ?? Colors.grey,
-            fontSize: hintStyle?.fontSize ?? 16,
+            fontWeight: hintStyle?.fontWeight ?? FontWeight.w600,
+            color: hintColor ?? AppColors.blackColor.withValues(alpha: 0.2),
+            fontSize: hintStyle?.fontSize ?? 14,
           ),
           filled: true,
           fillColor: fillColor ?? Colors.white,
-          contentPadding:
-              contentPadding ?? const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+          contentPadding: contentPadding ??
+              const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           border: OutlineInputBorder(
             borderRadius: borderRadius ?? BorderRadius.circular(10),
             borderSide: borderSide ?? BorderSide.none,

@@ -14,76 +14,21 @@ part 'login_cubit.freezed.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(this.sendOtpUseCase) : super(const LoginState());
 
-  final formKey = GlobalKey<FormState>();
   final SendOtpUseCase sendOtpUseCase;
-  final phoneController = TextEditingController();
 
   void onChangePhone(String phone) {
-    phoneController.text = _formattingPhone(phone);
-    emit(state.copyWith(phone: _formattingPhone(phone)));
-  }
-
-  String _formattingPhone(String text) {
-    text = text.replaceAll(RegExp(r'\D'), '');
-    if (text.isNotEmpty) {
-      String phone = '';
-      if (['7', '8', '9'].contains(text[0])) {
-        if (text[0] == '9') {
-          text = '7$text';
-        }
-        String firstSymbols = (text[0] == '8') ? '8' : '+7';
-        phone = '$firstSymbols ';
-        if (text.length > 1) {
-          phone += '(${text.substring(1, (text.length < 4) ? text.length : 4)}';
-        }
-        if (text.length >= 5) {
-          phone +=
-              ') ${text.substring(4, (text.length < 7) ? text.length : 7)}';
-        }
-        if (text.length >= 8) {
-          phone += '-${text.substring(7, (text.length < 9) ? text.length : 9)}';
-        }
-        if (text.length >= 10) {
-          phone +=
-              '-${text.substring(9, (text.length < 11) ? text.length : 11)}';
-        }
-        return phone;
-      } else {
-        return '+7$text';
-      }
-    }
-    return '';
+    emit(state.copyWith(phone: phone));
   }
 
   String getClearPhone() {
-    if (phoneController.text.isEmpty) {
+    if (state.phone.isEmpty) {
       return '';
     }
 
-    return '7' +
-        phoneController.text.replaceAll(RegExp(r'\D'), '').substring(
-            1,
-            (phoneController.text.replaceAll(RegExp(r'\D'), '').length >= 11)
-                ? 11
-                : phoneController.text.replaceAll(RegExp(r'\D'), '').length);
-  }
-
-  void updatePhone(String value) {
-    onChangePhone(value);
-  }
-
-  @override
-  Future<void> close() {
-    phoneController.dispose();
-    return super.close();
+    return '7${state.phone.replaceAll(RegExp(r'\D'), '').substring(1, (state.phone.replaceAll(RegExp(r'\D'), '').length >= 11) ? 11 : state.phone.replaceAll(RegExp(r'\D'), '').length)}';
   }
 
   void login(BuildContext context) async {
-    if (!formKey.currentState!.validate()) {
-      emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
-      return;
-    }
-
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
     final clearPhone = getClearPhone();
@@ -102,10 +47,6 @@ class LoginCubit extends Cubit<LoginState> {
           isLoading: false,
           successLogin: true,
         ));
-
-        showFloatingMessageSuccess(otpResponse.message.isNotEmpty
-            ? otpResponse.message
-            : 'OTP sent successfully');
 
         context.push(AppRoutes.otp, extra: clearPhone);
       },

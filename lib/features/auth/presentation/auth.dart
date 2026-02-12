@@ -1,10 +1,13 @@
 import 'dart:ui';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
+import 'package:hvatai/core/shared/utils/ru_phone_formater.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
@@ -14,11 +17,11 @@ import 'package:hvatai/features/auth/presentation/cubit/login/login_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/otp_cubit/otp_cubit.dart';
 import 'package:hvatai/features/auth/presentation/cubit/name_cubit/name_cubit.dart';
 import 'package:hvatai/features/cart/presentation/cubit/cart_cubit/cart_cubit.dart';
+import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/locator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hvatai/routes/app_routes.dart';
-import 'package:pinput/pinput.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 
 // Include all parts here
@@ -32,9 +35,7 @@ part 'pages/terms_and_condition.dart';
 part 'pages/interests_detail_screen.dart';
 part 'pages/image_delay_screen.dart';
 part 'pages/notification_screen.dart';
-part 'widgets/custom_pinput_widget.dart';
 part 'widgets/interests_detail_widget.dart';
 part 'widgets/category_options_section.dart';
-part 'widgets/terms_and_policy_text.dart';
-part 'widgets/custom_background_scaffold.dart';
-part 'widgets/social_circle_button.dart';
+part 'widgets/auth_header.dart';
+part 'widgets/contacts_dialog.dart';

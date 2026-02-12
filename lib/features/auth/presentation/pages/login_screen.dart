@@ -8,7 +8,7 @@ class LoginScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => locator<LoginCubit>(),
       child: Scaffold(
-        backgroundColor: AppColors.lightGreyBackground,
+        backgroundColor: AppColors.background,
         body: SafeArea(
           bottom: false,
           child: Padding(
@@ -16,43 +16,30 @@ class LoginScreen extends StatelessWidget {
             child: BlocBuilder<LoginCubit, LoginState>(
               builder: (context, state) {
                 final cubit = context.read<LoginCubit>();
-                return Form(
-                  key: cubit.formKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                return AbsorbPointer(
+                  absorbing: state.isLoading,
                   child: CustomScrollView(
+                    physics: BouncingScrollPhysics(),
                     slivers: [
                       SliverToBoxAdapter(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  SizedBox(width: 16.w),
-                                  CustomText(
-                                    text: 'Войти',
-                                    color: AppColors.blackDark,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 18.sp,
-                                  ),
-                                  IconButton(
-                                    onPressed: () => context.pop(context),
-                                    icon: const Icon(Icons.close),
-                                    tooltip: 'close'.tr(),
-                                  )
+                            AuthHeader(title: 'login'.tr()),
+                            20.ph,
+                            Container(
+                              decoration: BoxDecoration(
+                                boxShadow: AppColors.boxShadowTextField,
+                              ),
+                              child: CustomTextField(
+                                hintText: 'phoneNumber'.tr(),
+                                keyboardType: TextInputType.number,
+                                onChanged: cubit.onChangePhone,
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.digitsOnly,
+                                  RuPhoneFormatter(),
                                 ],
                               ),
-                            ),
-                            20.ph,
-                            CustomTextField(
-                              hintText: 'Номер телефона',
-                              keyboardType: TextInputType.number,
-                              controller: cubit.phoneController,
-                              onChanged: cubit.onChangePhone,
                             ),
                             if (state.errorMessage.isNotEmpty) ...[
                               10.ph,
@@ -71,10 +58,13 @@ class LoginScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             CustomGradientButton(
-                              text: 'Получить код',
+                              text: 'getCode'.tr(),
                               isLoading: cubit.state.isLoading,
                               isDisabled: cubit.getClearPhone().length != 11,
-                              onPressed: () => cubit.login(context),
+                              onPressed: () {
+                                FocusScope.of(context).unfocus();
+                                cubit.login(context);
+                              },
                             ),
                             20.ph,
                           ],

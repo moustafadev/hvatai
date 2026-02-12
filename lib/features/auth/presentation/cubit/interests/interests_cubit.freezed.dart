@@ -20,6 +20,7 @@ mixin _$InterestsState {
   List<int> get selectedCategoryIds => throw _privateConstructorUsedError;
   Set<int> get selectedIndices => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isLoadingCategories => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   CategoryModel? get categories => throw _privateConstructorUsedError;
 
@@ -41,6 +42,7 @@ abstract class $InterestsStateCopyWith<$Res> {
       List<int> selectedCategoryIds,
       Set<int> selectedIndices,
       bool isLoading,
+      bool isLoadingCategories,
       String errorMessage,
       CategoryModel? categories});
 
@@ -67,6 +69,7 @@ class _$InterestsStateCopyWithImpl<$Res, $Val extends InterestsState>
     Object? selectedCategoryIds = null,
     Object? selectedIndices = null,
     Object? isLoading = null,
+    Object? isLoadingCategories = null,
     Object? errorMessage = null,
     Object? categories = freezed,
   }) {
@@ -86,6 +89,10 @@ class _$InterestsStateCopyWithImpl<$Res, $Val extends InterestsState>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingCategories: null == isLoadingCategories
+          ? _value.isLoadingCategories
+          : isLoadingCategories // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: null == errorMessage
           ? _value.errorMessage
@@ -136,6 +143,7 @@ abstract class _$$InterestsStateImplCopyWith<$Res>
       List<int> selectedCategoryIds,
       Set<int> selectedIndices,
       bool isLoading,
+      bool isLoadingCategories,
       String errorMessage,
       CategoryModel? categories});
 
@@ -162,6 +170,7 @@ class __$$InterestsStateImplCopyWithImpl<$Res>
     Object? selectedCategoryIds = null,
     Object? selectedIndices = null,
     Object? isLoading = null,
+    Object? isLoadingCategories = null,
     Object? errorMessage = null,
     Object? categories = freezed,
   }) {
@@ -181,6 +190,10 @@ class __$$InterestsStateImplCopyWithImpl<$Res>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoadingCategories: null == isLoadingCategories
+          ? _value.isLoadingCategories
+          : isLoadingCategories // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: null == errorMessage
           ? _value.errorMessage
@@ -202,6 +215,7 @@ class _$InterestsStateImpl implements _InterestsState {
       final List<int> selectedCategoryIds = const [],
       final Set<int> selectedIndices = const {},
       this.isLoading = false,
+      this.isLoadingCategories = false,
       this.errorMessage = '',
       this.categories})
       : _selectedCategoryIds = selectedCategoryIds,
@@ -233,13 +247,16 @@ class _$InterestsStateImpl implements _InterestsState {
   final bool isLoading;
   @override
   @JsonKey()
+  final bool isLoadingCategories;
+  @override
+  @JsonKey()
   final String errorMessage;
   @override
   final CategoryModel? categories;
 
   @override
   String toString() {
-    return 'InterestsState(user: $user, selectedCategoryIds: $selectedCategoryIds, selectedIndices: $selectedIndices, isLoading: $isLoading, errorMessage: $errorMessage, categories: $categories)';
+    return 'InterestsState(user: $user, selectedCategoryIds: $selectedCategoryIds, selectedIndices: $selectedIndices, isLoading: $isLoading, isLoadingCategories: $isLoadingCategories, errorMessage: $errorMessage, categories: $categories)';
   }
 
   @override
@@ -254,6 +271,8 @@ class _$InterestsStateImpl implements _InterestsState {
                 .equals(other._selectedIndices, _selectedIndices) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.isLoadingCategories, isLoadingCategories) ||
+                other.isLoadingCategories == isLoadingCategories) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.categories, categories) ||
@@ -267,6 +286,7 @@ class _$InterestsStateImpl implements _InterestsState {
       const DeepCollectionEquality().hash(_selectedCategoryIds),
       const DeepCollectionEquality().hash(_selectedIndices),
       isLoading,
+      isLoadingCategories,
       errorMessage,
       categories);
 
@@ -286,6 +306,7 @@ abstract class _InterestsState implements InterestsState {
       final List<int> selectedCategoryIds,
       final Set<int> selectedIndices,
       final bool isLoading,
+      final bool isLoadingCategories,
       final String errorMessage,
       final CategoryModel? categories}) = _$InterestsStateImpl;
 
@@ -297,6 +318,8 @@ abstract class _InterestsState implements InterestsState {
   Set<int> get selectedIndices;
   @override
   bool get isLoading;
+  @override
+  bool get isLoadingCategories;
   @override
   String get errorMessage;
   @override

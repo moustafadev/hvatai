@@ -12,6 +12,9 @@ class Assets {
   static const String assetsFlutterLauncherIconLogo =
       "assets/flutter_launcher_icon/Logo.png";
 
+  /// assets for point up png
+  static const String assetsImagesPointUp = "assets/images/point_up.png";
+
   /// assets star border svg
   static const String assetsIconsStarBorder = "assets/icons/star_border.svg";
 
