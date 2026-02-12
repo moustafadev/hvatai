@@ -9,6 +9,7 @@ import 'package:hvatai/features/activity/domain/usecases/get_favorites_usecase.d
 import 'package:hvatai/features/activity/domain/usecases/get_user_bids_usecase.dart';
 import 'package:hvatai/features/review/domain/usecases/submit_review_usecase.dart';
 import 'package:hvatai/features/favorites/domain/usecases/get_fav_products_usecase.dart';
+import 'package:hvatai/features/favorites/domain/usecases/toggle_favorite_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/update_cart_usecase.dart';
 import 'package:hvatai/features/add_new_product/domain/usecases/add_new_product_usecase.dart';
 import 'package:hvatai/features/add_new_product/domain/usecases/update_product_usecase.dart';
@@ -48,6 +49,8 @@ import 'package:hvatai/features/profile/domain/usecases/delete_account_usecase.d
 import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_my_ratings_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_user_ratings_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/delete_rating_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/reply_to_rating_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/sign_out_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
@@ -55,8 +58,12 @@ import 'package:hvatai/features/profile/domain/usecases/update_profile_type_usec
 import 'package:hvatai/features/company/domain/usecases/get_company_products_usecase.dart';
 import 'package:hvatai/features/company/domain/usecases/get_company_streams_usecase.dart';
 import 'package:hvatai/features/company/domain/usecases/get_user_data_usecase.dart';
+import 'package:hvatai/features/invite_friend/domain/usecases/get_invite_code_usecase.dart';
+import 'package:hvatai/features/invite_friend/domain/usecases/apply_invite_code_usecase.dart';
+import 'package:hvatai/features/search/domain/usecases/get_recent_searches_usecase.dart';
 import 'package:hvatai/features/search/domain/usecases/search_usecase.dart';
 import 'package:hvatai/features/search/domain/usecases/search_suggestions_usecase.dart';
+import 'package:hvatai/features/search/domain/usecases/delete_recent_search_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/complete_bid_purchase_usecase.dart';
@@ -111,6 +118,8 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => GetMyProductsUsecase(locator()));
   locator.registerLazySingleton(() => GetUserRatingsUsecase(locator()));
   locator.registerLazySingleton(() => GetMyRatingsUsecase(locator()));
+  locator.registerLazySingleton(() => DeleteRatingUsecase(locator()));
+  locator.registerLazySingleton(() => ReplyToRatingUsecase(locator()));
   locator.registerLazySingleton(() => GetAllProductsUsecase(locator()));
   locator.registerLazySingleton(() => GetProductCategoryUsecase(locator()));
   locator.registerLazySingleton(() => GetLastUsedCategoriesUsecase(locator()));
@@ -118,10 +127,13 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => UpdateProductUsecase(locator()));
   locator.registerLazySingleton(() => SearchUsecase(locator()));
   locator.registerLazySingleton(() => SearchSuggestionsUsecase(locator()));
+  locator.registerLazySingleton(() => GetRecentSearchesUsecase(locator()));
+  locator.registerLazySingleton(() => DeleteRecentSearchUsecase(locator()));
   locator.registerLazySingleton(() => GetUserDataUsecase(locator()));
   locator.registerLazySingleton(() => CreateStreamUsecase(locator()));
   locator.registerLazySingleton(() => AddFavProductUsecase(locator()));
   locator.registerLazySingleton(() => GetFavProductsUsecase(locator()));
+  locator.registerLazySingleton(() => ToggleFavoriteUsecase(locator()));
   locator.registerLazySingleton(() => GetFavoritesUsecase(locator()));
   locator.registerLazySingleton(() => GetUserBidsUsecase(locator()));
   locator.registerLazySingleton(() => SubmitReviewUsecase(locator()));
@@ -174,4 +186,6 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => GetUserOrdersUsecase(locator()));
   locator.registerLazySingleton(() => GetCompanyStreamsUsecase(locator()));
   locator.registerLazySingleton(() => GetStatisticsUsecase(locator()));
+  locator.registerLazySingleton(() => GetInviteCodeUsecase(locator()));
+  locator.registerLazySingleton(() => ApplyInviteCodeUsecase(locator()));
 }

@@ -1,3 +1,5 @@
+import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
+
 class SearchLiveStreamModel {
   final String channelId;
   final String adminName;
@@ -53,6 +55,44 @@ class SearchLiveStreamModel {
       adminId: json['adminId'] ?? '',
       unblockRequested: json['unblockRequested'] ?? false,
       unblockRequestReason: json['unblockRequestReason'] ?? '',
+    );
+  }
+
+  StreamDataModel toStreamDataModel() {
+    return StreamDataModel(
+      id: int.tryParse(channelId),
+      channelName: channelId,
+      title: title.isNotEmpty ? title : null,
+      description: description.isNotEmpty ? description : null,
+      viewerCount: viewsCount,
+      latestThumbnailUrl:
+          latestThumbnailUrl.isNotEmpty ? latestThumbnailUrl : null,
+      latestGifUrl: latestGifUrl.isNotEmpty ? latestGifUrl : null,
+      thumbnailUrl: liveImage.isNotEmpty ? liveImage : null,
+      status: 'live',
+      user: StreamUserModel(
+        id: int.tryParse(adminId),
+        name: adminName.isNotEmpty ? adminName : null,
+        image: adminPhoto.isNotEmpty ? adminPhoto : null,
+      ),
+      streamProducts: price.isNotEmpty && price != '0'
+          ? [
+              StreamProductModel(
+                startingPrice: price,
+                product: StreamEmbeddedProductModel(
+                  name: title.isNotEmpty ? title : null,
+                  description: description.isNotEmpty ? description : null,
+                ),
+              )
+            ]
+          : null,
+      categories: category.isNotEmpty
+          ? [
+              StreamCategoryModel(
+                name: category,
+              )
+            ]
+          : null,
     );
   }
 }

@@ -25,6 +25,7 @@ import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_mo
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
+import 'package:hvatai/features/favorites/presentation/cubit/toggle_favorite_cubit/toggle_favorite_cubit.dart';
 import 'package:hvatai/features/add_new_product/presentation/add_new_product.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
@@ -51,7 +52,6 @@ import 'package:video_player/video_player.dart';
 part 'screens/broadcaster_stream_screen.dart';
 part 'screens/viewer_stream_screen.dart';
 part 'screens/ended_stream_screen.dart';
-part 'screens/my_streams_screen.dart';
 part 'screens/schedule_stream_screen.dart';
 part 'screens/scheduled_streams_list_screen.dart';
 part 'widgets/comments_compact_list.dart';

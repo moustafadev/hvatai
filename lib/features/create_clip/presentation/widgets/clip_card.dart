@@ -7,6 +7,7 @@ class ClipCard extends StatefulWidget {
   final Uint8List? thumbnailBytes;
   final VoidCallback? onSettingsIconTap;
   final VoidCallback? onSaveIconTap;
+  final bool isFavorited;
 
   const ClipCard({
     super.key,
@@ -16,6 +17,7 @@ class ClipCard extends StatefulWidget {
     this.thumbnailBytes,
     this.onSettingsIconTap,
     this.onSaveIconTap,
+    this.isFavorited = false,
   });
 
   @override
@@ -180,7 +182,9 @@ class _ClipCardState extends State<ClipCard> {
                       child: Container(
                         padding: EdgeInsets.all(6.r),
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.5),
+                          color: widget.isFavorited
+                              ? AppColors.primaryPink
+                              : Colors.black.withOpacity(0.5),
                           shape: BoxShape.circle,
                         ),
                         child: Image.asset(

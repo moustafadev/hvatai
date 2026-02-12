@@ -37,6 +37,7 @@ class _SearchScreenState extends State<SearchScreen> {
             body: Stack(
               children: [
                 Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     59.ph,
                     Padding(
@@ -46,30 +47,13 @@ class _SearchScreenState extends State<SearchScreen> {
                         searchFieldLink: _searchFieldLink,
                         isSearch: true,
                         image: Assets.assetsIconsShare,
-                        // onChanged: cubit.onQueryChanged,
+                        onChanged: cubit.onQueryChanged,
                         onFocus: cubit.onSearchFieldFocused,
                         onSubmitted: cubit.onSearchSubmitted,
                         initialValue: state.query,
                       ),
                     ),
-                    if (state.errorMessage.isNotEmpty)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: CustomText(
-                          text: state.errorMessage,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.red,
-                        ),
-                      )
-                    else if (state.hasNoResults)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: CustomText(
-                          text: 'No results found',
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    16.ph,
+                    // Recent searches section
                     Expanded(
                       child: isSearching
                           ? const Center(
@@ -89,18 +73,77 @@ class _SearchScreenState extends State<SearchScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 16.0),
-                                      child: CustomText(
-                                        text: 'category'.tr(),
-                                        fontWeight: FontWeight.w800,
-                                        fontSize: 20.sp,
+                                    if (state.recentSearches.isNotEmpty &&
+                                        state.query.isEmpty &&
+                                        state.selectedCategoryId == null)
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            16.ph,
+                                            CustomText(
+                                              text: 'Недавно искали',
+                                              fontSize: 20.sp,
+                                              fontWeight: FontWeight.w800,
+                                            ),
+                                            12.ph,
+                                            Wrap(
+                                              spacing: 8,
+                                              runSpacing: 8,
+                                              children: state.recentSearches
+                                                  .map((item) {
+                                                return InputChip(
+                                                  side: const BorderSide(
+                                                    color:
+                                                        AppColors.transparent,
+                                                  ),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10),
+                                                  ),
+                                                  backgroundColor:
+                                                      AppColors.greyButton,
+                                                  deleteIconColor:
+                                                      AppColors.text,
+                                                  label: CustomText(
+                                                    text: item.query,
+                                                    fontSize: 12.sp,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                  onDeleted: () {
+                                                    cubit.removeRecentSearch(
+                                                        item);
+                                                  },
+                                                  onPressed: () {
+                                                    cubit.selectSuggestion(
+                                                        item.query);
+                                                  },
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    12.ph,
-                                    MyCategorySearch(),
-                                    24.ph,
+                                    16.ph,
+                                    // Hide category section if one is selected
+                                    if (state.selectedCategoryId == null) ...[
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16.0),
+                                        child: CustomText(
+                                          text: 'category'.tr(),
+                                          fontWeight: FontWeight.w800,
+                                          fontSize: 20.sp,
+                                        ),
+                                      ),
+                                      12.ph,
+                                      MyCategorySearch(),
+                                      24.ph,
+                                    ],
                                     Padding(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 16.0),
@@ -148,10 +191,11 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ],
                 ),
-                _SearchSuggestionsOverlay(
-                  searchFieldKey: _searchFieldKey,
-                  searchFieldLink: _searchFieldLink,
-                ),
+                if (state.query.isNotEmpty)
+                  _SearchSuggestionsOverlay(
+                    searchFieldKey: _searchFieldKey,
+                    searchFieldLink: _searchFieldLink,
+                  ),
               ],
             ),
           );

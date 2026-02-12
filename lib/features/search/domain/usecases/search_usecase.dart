@@ -5,8 +5,8 @@ import 'package:hvatai/features/search/domain/repositories/search_repository.dar
 
 class SearchParams {
   final String query;
-
-  const SearchParams({required this.query});
+  final List<int> categoryIds;
+  const SearchParams({required this.query, required this.categoryIds});
 }
 
 class SearchUsecase
@@ -17,7 +17,7 @@ class SearchUsecase
 
   @override
   Future<Either<String, SearchResponseModel>> call(SearchParams params) {
-    return _repository.search(params.query);
+    return _repository.search(params);
   }
 }
 

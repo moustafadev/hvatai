@@ -33,7 +33,10 @@ abstract class ServerConfig {
   static const String subscribedUsers = "me/subscribed-users";
   static const String statistics = "statistics";
   static const String favorites = "favorites";
+  static const String toggleFavorite = "favorites/toggle";
   static const String myRatings = "me/ratings";
+  static const String inviteCode = "me/invite-code";
+  static const String applyInviteCode = "me/apply-invite-code";
 
   // =============================== Product & Cart & Order endpoints ===============================
 
@@ -56,6 +59,8 @@ abstract class ServerConfig {
 
   static const String search = "search";
   static const String searchSuggestions = "search/suggestions";
+  static const String searchRecent = "search/recent";
+  static String deleteRecentSearch(int id) => "search/recent/$id";
 
   // =============================== Chat endpoints ===============================
 
@@ -102,6 +107,8 @@ abstract class ServerConfig {
   static String submitBusinessReview(int businessId) =>
       "business/$businessId/rate";
   static String userRatings(int userId) => "users/$userId/ratings";
+  static String deleteRating(int ratingId) => "ratings/$ratingId";
+  static String replyToRating(int ratingId) => "ratings/$ratingId/reply";
 
   // =============================== Wallet endpoints ===============================
 

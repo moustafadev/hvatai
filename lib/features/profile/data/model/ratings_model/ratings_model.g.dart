@@ -113,6 +113,8 @@ _$UserPersonalRatingImpl _$$UserPersonalRatingImplFromJson(
       reviewer: json['reviewer'] == null
           ? null
           : RatingUser.fromJson(json['reviewer'] as Map<String, dynamic>),
+      reply: json['reply'] as String?,
+      repliedAt: json['replied_at'] as String?,
     );
 
 Map<String, dynamic> _$$UserPersonalRatingImplToJson(
@@ -128,6 +130,8 @@ Map<String, dynamic> _$$UserPersonalRatingImplToJson(
       'updated_at': instance.updatedAt,
       'attributes': instance.attributes,
       'reviewer': instance.reviewer,
+      'reply': instance.reply,
+      'replied_at': instance.repliedAt,
     };
 
 _$MyRatingsResponseImpl _$$MyRatingsResponseImplFromJson(

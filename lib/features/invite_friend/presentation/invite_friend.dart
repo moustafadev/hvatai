@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,6 +11,8 @@ import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/invite_friend/presentation/cubit/accept_invite/accept_invite_cubit.dart';
 import 'package:hvatai/features/invite_friend/presentation/cubit/accept_invite/accept_invite_state.dart';
+import 'package:hvatai/features/invite_friend/presentation/cubit/invite_friend_cubit/invite_friend_cubit.dart';
+import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
 part 'screens/invite_friend_screen.dart';

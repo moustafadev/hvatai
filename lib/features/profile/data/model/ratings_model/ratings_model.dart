@@ -7,9 +7,12 @@ part 'ratings_model.g.dart';
 @freezed
 class UserRatingsResponse with _$UserRatingsResponse {
   const factory UserRatingsResponse({
-    @JsonKey(name: 'product_ratings') required List<ProductRating> productRatings,
-    @JsonKey(name: 'order_product_ratings') required List<dynamic> orderProductRatings,
-    @JsonKey(name: 'user_personal_ratings') required List<UserPersonalRating> userPersonalRatings,
+    @JsonKey(name: 'product_ratings')
+    required List<ProductRating> productRatings,
+    @JsonKey(name: 'order_product_ratings')
+    required List<dynamic> orderProductRatings,
+    @JsonKey(name: 'user_personal_ratings')
+    required List<UserPersonalRating> userPersonalRatings,
   }) = _UserRatingsResponse;
 
   factory UserRatingsResponse.fromJson(Map<String, dynamic> json) =>
@@ -78,6 +81,8 @@ class UserPersonalRating with _$UserPersonalRating {
     @JsonKey(name: 'updated_at') required String updatedAt,
     required List<dynamic> attributes,
     required RatingUser? reviewer,
+    required String? reply,
+    @JsonKey(name: 'replied_at') required String? repliedAt,
   }) = _UserPersonalRating;
 
   factory UserPersonalRating.fromJson(Map<String, dynamic> json) =>

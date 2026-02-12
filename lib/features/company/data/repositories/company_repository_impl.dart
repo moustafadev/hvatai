@@ -28,9 +28,15 @@ class CompanyRepositoryImpl implements CompanyRepository {
   }
 
   @override
-  Future<Either<String, MyStreamsResponse>> getCompanyStreams(int userId) {
+  Future<Either<String, MyStreamsResponse>> getCompanyStreams(
+    int userId, {
+    String? sortBy,
+  }) {
     return executeAndHandleError<MyStreamsResponse>(() async {
-      final response = await _apiService.getCompanyStreams(userId);
+      final response = await _apiService.getCompanyStreams(
+        userId,
+        sortBy: sortBy,
+      );
       return response;
     });
   }

@@ -24,6 +24,12 @@ abstract class ProfileRepository {
   Future<Either<String, List<MainCategoryModel>>> getLastUsedCategories();
   Future<Either<String, StreamResponseModel>> createStream(
       CreateStreamModel model);
-  Future<Either<String, UserRatingsResponse>> getUserRatings(int userId);
+  Future<Either<String, UserRatingsResponse>> getUserRatings(
+    int userId, {
+    String? sortBy,
+    String? sortOrder,
+  });
   Future<Either<String, MyRatingsResponse>> getMyRatings();
+  Future<Either<String, void>> deleteRating(int ratingId);
+  Future<Either<String, void>> replyToRating(int ratingId, String comment);
 }

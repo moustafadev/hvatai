@@ -6,5 +6,8 @@ import 'package:hvatai/features/stream/data/models/my_streams/my_streams_respons
 abstract class CompanyRepository {
   Future<Either<String, UserDataModel>> getUserData(int userId);
   Future<Either<String, List<ProductModel>>> getCompanyProducts(int userId);
-  Future<Either<String, MyStreamsResponse>> getCompanyStreams(int userId);
+  Future<Either<String, MyStreamsResponse>> getCompanyStreams(
+    int userId, {
+    String? sortBy,
+  });
 }

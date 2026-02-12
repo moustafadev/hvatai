@@ -389,12 +389,6 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
-      path: AppRoutes.myStreams,
-      builder: (BuildContext context, GoRouterState state) {
-        return const MyStreamsScreen();
-      },
-    ),
-    GoRoute(
       path: AppRoutes.termsAndConditions,
       builder: (BuildContext context, GoRouterState state) {
         return const TermsAndConditionsScreen();
@@ -483,14 +477,6 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final userId = (state.extra as int?) ?? 0;
         return ReviewsCompanyScreen(userId: userId);
-      },
-    ),
-    GoRoute(
-      path: AppRoutes.clipsCompany,
-      builder: (context, state) {
-        final extra = state.extra as Map<String, dynamic>?;
-        final userId = extra?['userId'] as int?;
-        return ClipsCompanyScreen(userId: userId);
       },
     ),
     // GoRoute(

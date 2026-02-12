@@ -146,11 +146,14 @@ class LeaveReviewScreen extends StatelessWidget {
                     CustomGradientButton(
                       text: 'send'.tr(),
                       height: 54,
+                      isLoading: state.isLoading,
                       isDisabled: state.rating == 0 ||
                           state.comment.trim().isEmpty ||
                           state.isLoading,
                       onPressed: () {
-                        context.read<ReviewCubit>().submitReview(userId);
+                        context
+                            .read<ReviewCubit>()
+                            .submitReview(userId, context);
                       },
                     ),
                     24.ph,

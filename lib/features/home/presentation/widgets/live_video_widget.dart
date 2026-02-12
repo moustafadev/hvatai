@@ -130,17 +130,7 @@ class LiveVideosWidget extends StatelessWidget {
                     child: CircularProgressIndicator(),
                   ),
                 CustomLiveVideoCard(
-                  // price: stream.streamProducts?.first.startingPrice ?? "",
-                  price: "test",
-                  title: stream.title ?? "",
-                  adminName: '${stream.user?.name}',
-                  adminImage: '',
-                  viewsCount: stream.viewerCount ?? 0,
-                  // description: stream.streamProducts?.first.product?.description ?? "",
-                  description: "",
-                  liveImage: '',
-                  latestThumbnailUrl: stream.latestThumbnailUrl,
-                  latestGifUrl: stream.latestGifUrl,
+                  stream: stream,
                 ),
               ],
             );

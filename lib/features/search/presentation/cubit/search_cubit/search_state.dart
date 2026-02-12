@@ -27,5 +27,9 @@ class SearchState with _$SearchState {
     @Default(false) bool isLoadingSuggestions,
     @Default(false) bool showSuggestions,
     @Default(false) bool isSearchFocused,
+    @Default([]) List<RecentSearchItem> recentSearches,
+    @Default(false) bool isLoadingRecentSearches,
+    int? selectedCategoryId,
+    String? selectedCategoryName,
   }) = _SearchState;
 }

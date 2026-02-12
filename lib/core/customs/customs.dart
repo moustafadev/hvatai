@@ -19,6 +19,8 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/notifications/presentation/cubit/notifications_cubit/notifications_cubit.dart';
 import 'package:hvatai/features/notifications/presentation/notifications.dart';
+import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
+import 'package:hvatai/features/favorites/presentation/cubit/toggle_favorite_cubit/toggle_favorite_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:hvatai/routes/go_router.dart';

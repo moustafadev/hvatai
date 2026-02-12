@@ -66,7 +66,7 @@ class InterestsDetailCubit extends Cubit<InterestsDetailState> {
     final cartCubit = context.read<CartCubit>();
     cartCubit.getCartProducts();
     cartCubit.getDeliveryAddress();
-    context.go(AppRoutes.home);
+    context.push(AppRoutes.notification);
     await appLocal.saveIsSetup(true);
   }
 

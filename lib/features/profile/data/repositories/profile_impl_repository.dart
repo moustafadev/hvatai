@@ -98,9 +98,17 @@ class ProfileImplRepository implements ProfileRepository {
   }
 
   @override
-  Future<Either<String, UserRatingsResponse>> getUserRatings(int userId) {
+  Future<Either<String, UserRatingsResponse>> getUserRatings(
+    int userId, {
+    String? sortBy,
+    String? sortOrder,
+  }) {
     return executeAndHandleError<UserRatingsResponse>(() async {
-      final res = await _apiServiceProfile.getUserRatings(userId);
+      final res = await _apiServiceProfile.getUserRatings(
+        userId,
+        sortBy: sortBy,
+        sortOrder: sortOrder,
+      );
       return res;
     });
   }
@@ -110,6 +118,20 @@ class ProfileImplRepository implements ProfileRepository {
     return executeAndHandleError<MyRatingsResponse>(() async {
       final res = await _apiServiceProfile.getMyRatings();
       return res;
+    });
+  }
+
+  @override
+  Future<Either<String, void>> deleteRating(int ratingId) {
+    return executeAndHandleError<void>(() async {
+      await _apiServiceProfile.deleteRating(ratingId);
+    });
+  }
+
+  @override
+  Future<Either<String, void>> replyToRating(int ratingId, String comment) {
+    return executeAndHandleError<void>(() async {
+      await _apiServiceProfile.replyToRating(ratingId, comment);
     });
   }
 }

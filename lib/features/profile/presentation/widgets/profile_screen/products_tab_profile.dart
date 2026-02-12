@@ -171,9 +171,14 @@ class _ProductsScrollViewContent extends StatelessWidget {
                         onTap: () {
                           ProductsFilterBottomSheet.show(
                             context,
+                            initialSortOption: context
+                                .read<MyProductsCubit>()
+                                .state
+                                .selectedSortOption,
                             onApply: (sortOption) {
-                              // TODO: Apply filter to products
-                              debugPrint('Selected sort option: $sortOption');
+                              context
+                                  .read<MyProductsCubit>()
+                                  .sortProducts(sortOption);
                             },
                           );
                         },

@@ -17,11 +17,13 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ReviewsState {
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isReplying => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   bool get isShowingAboutMe =>
       throw _privateConstructorUsedError; // true = Обо мне, false = Оставленные мной
   UserRatingsResponse? get userRatings => throw _privateConstructorUsedError;
   MyRatingsResponse? get myRatings => throw _privateConstructorUsedError;
+  GivenRating? get deletedRating => throw _privateConstructorUsedError;
 
   /// Create a copy of ReviewsState
   /// with the given fields replaced by the non-null parameter values.
@@ -38,13 +40,16 @@ abstract class $ReviewsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {bool isLoading,
+      bool isReplying,
       String errorMessage,
       bool isShowingAboutMe,
       UserRatingsResponse? userRatings,
-      MyRatingsResponse? myRatings});
+      MyRatingsResponse? myRatings,
+      GivenRating? deletedRating});
 
   $UserRatingsResponseCopyWith<$Res>? get userRatings;
   $MyRatingsResponseCopyWith<$Res>? get myRatings;
+  $GivenRatingCopyWith<$Res>? get deletedRating;
 }
 
 /// @nodoc
@@ -63,15 +68,21 @@ class _$ReviewsStateCopyWithImpl<$Res, $Val extends ReviewsState>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? isReplying = null,
     Object? errorMessage = null,
     Object? isShowingAboutMe = null,
     Object? userRatings = freezed,
     Object? myRatings = freezed,
+    Object? deletedRating = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isReplying: null == isReplying
+          ? _value.isReplying
+          : isReplying // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: null == errorMessage
           ? _value.errorMessage
@@ -89,6 +100,10 @@ class _$ReviewsStateCopyWithImpl<$Res, $Val extends ReviewsState>
           ? _value.myRatings
           : myRatings // ignore: cast_nullable_to_non_nullable
               as MyRatingsResponse?,
+      deletedRating: freezed == deletedRating
+          ? _value.deletedRating
+          : deletedRating // ignore: cast_nullable_to_non_nullable
+              as GivenRating?,
     ) as $Val);
   }
 
@@ -119,6 +134,20 @@ class _$ReviewsStateCopyWithImpl<$Res, $Val extends ReviewsState>
       return _then(_value.copyWith(myRatings: value) as $Val);
     });
   }
+
+  /// Create a copy of ReviewsState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $GivenRatingCopyWith<$Res>? get deletedRating {
+    if (_value.deletedRating == null) {
+      return null;
+    }
+
+    return $GivenRatingCopyWith<$Res>(_value.deletedRating!, (value) {
+      return _then(_value.copyWith(deletedRating: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -131,15 +160,19 @@ abstract class _$$ReviewsStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {bool isLoading,
+      bool isReplying,
       String errorMessage,
       bool isShowingAboutMe,
       UserRatingsResponse? userRatings,
-      MyRatingsResponse? myRatings});
+      MyRatingsResponse? myRatings,
+      GivenRating? deletedRating});
 
   @override
   $UserRatingsResponseCopyWith<$Res>? get userRatings;
   @override
   $MyRatingsResponseCopyWith<$Res>? get myRatings;
+  @override
+  $GivenRatingCopyWith<$Res>? get deletedRating;
 }
 
 /// @nodoc
@@ -156,15 +189,21 @@ class __$$ReviewsStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? isLoading = null,
+    Object? isReplying = null,
     Object? errorMessage = null,
     Object? isShowingAboutMe = null,
     Object? userRatings = freezed,
     Object? myRatings = freezed,
+    Object? deletedRating = freezed,
   }) {
     return _then(_$ReviewsStateImpl(
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isReplying: null == isReplying
+          ? _value.isReplying
+          : isReplying // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: null == errorMessage
           ? _value.errorMessage
@@ -182,6 +221,10 @@ class __$$ReviewsStateImplCopyWithImpl<$Res>
           ? _value.myRatings
           : myRatings // ignore: cast_nullable_to_non_nullable
               as MyRatingsResponse?,
+      deletedRating: freezed == deletedRating
+          ? _value.deletedRating
+          : deletedRating // ignore: cast_nullable_to_non_nullable
+              as GivenRating?,
     ));
   }
 }
@@ -191,14 +234,19 @@ class __$$ReviewsStateImplCopyWithImpl<$Res>
 class _$ReviewsStateImpl implements _ReviewsState {
   const _$ReviewsStateImpl(
       {this.isLoading = false,
+      this.isReplying = false,
       this.errorMessage = '',
       this.isShowingAboutMe = true,
       this.userRatings,
-      this.myRatings});
+      this.myRatings,
+      this.deletedRating});
 
   @override
   @JsonKey()
   final bool isLoading;
+  @override
+  @JsonKey()
+  final bool isReplying;
   @override
   @JsonKey()
   final String errorMessage;
@@ -210,10 +258,12 @@ class _$ReviewsStateImpl implements _ReviewsState {
   final UserRatingsResponse? userRatings;
   @override
   final MyRatingsResponse? myRatings;
+  @override
+  final GivenRating? deletedRating;
 
   @override
   String toString() {
-    return 'ReviewsState(isLoading: $isLoading, errorMessage: $errorMessage, isShowingAboutMe: $isShowingAboutMe, userRatings: $userRatings, myRatings: $myRatings)';
+    return 'ReviewsState(isLoading: $isLoading, isReplying: $isReplying, errorMessage: $errorMessage, isShowingAboutMe: $isShowingAboutMe, userRatings: $userRatings, myRatings: $myRatings, deletedRating: $deletedRating)';
   }
 
   @override
@@ -223,6 +273,8 @@ class _$ReviewsStateImpl implements _ReviewsState {
             other is _$ReviewsStateImpl &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.isReplying, isReplying) ||
+                other.isReplying == isReplying) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             (identical(other.isShowingAboutMe, isShowingAboutMe) ||
@@ -230,12 +282,14 @@ class _$ReviewsStateImpl implements _ReviewsState {
             (identical(other.userRatings, userRatings) ||
                 other.userRatings == userRatings) &&
             (identical(other.myRatings, myRatings) ||
-                other.myRatings == myRatings));
+                other.myRatings == myRatings) &&
+            (identical(other.deletedRating, deletedRating) ||
+                other.deletedRating == deletedRating));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, errorMessage,
-      isShowingAboutMe, userRatings, myRatings);
+  int get hashCode => Object.hash(runtimeType, isLoading, isReplying,
+      errorMessage, isShowingAboutMe, userRatings, myRatings, deletedRating);
 
   /// Create a copy of ReviewsState
   /// with the given fields replaced by the non-null parameter values.
@@ -249,13 +303,17 @@ class _$ReviewsStateImpl implements _ReviewsState {
 abstract class _ReviewsState implements ReviewsState {
   const factory _ReviewsState(
       {final bool isLoading,
+      final bool isReplying,
       final String errorMessage,
       final bool isShowingAboutMe,
       final UserRatingsResponse? userRatings,
-      final MyRatingsResponse? myRatings}) = _$ReviewsStateImpl;
+      final MyRatingsResponse? myRatings,
+      final GivenRating? deletedRating}) = _$ReviewsStateImpl;
 
   @override
   bool get isLoading;
+  @override
+  bool get isReplying;
   @override
   String get errorMessage;
   @override
@@ -264,6 +322,8 @@ abstract class _ReviewsState implements ReviewsState {
   UserRatingsResponse? get userRatings;
   @override
   MyRatingsResponse? get myRatings;
+  @override
+  GivenRating? get deletedRating;
 
   /// Create a copy of ReviewsState
   /// with the given fields replaced by the non-null parameter values.

@@ -16,6 +16,7 @@ import 'package:hvatai/features/review/domain/repositories/review_repository.dar
 import 'package:hvatai/features/review/presentation/cubit/review_cubit/review_cubit.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_my_streams_usecase.dart';
 import 'package:hvatai/features/favorites/presentation/cubit/favorite/favorite_cubit.dart';
+import 'package:hvatai/features/favorites/presentation/cubit/toggle_favorite_cubit/toggle_favorite_cubit.dart';
 import 'package:hvatai/features/cart/data/datasources/api_service_cart.dart';
 import 'package:hvatai/features/cart/data/repositories/cart_repository_impl.dart';
 import 'package:hvatai/features/cart/domain/repositories/cart_repository.dart';
@@ -58,6 +59,11 @@ import 'package:hvatai/features/awards/presentation/cubit/awards_club_cubit.dart
 import 'package:hvatai/features/awards/presentation/cubit/send_reward_flow/send_reward_flow_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/categories/categories_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/live_streams/live_streams_cubit.dart';
+import 'package:hvatai/features/invite_friend/data/datasources/api_service_invite_friend.dart';
+import 'package:hvatai/features/invite_friend/data/repositories/invite_friend_repository_impl.dart';
+import 'package:hvatai/features/invite_friend/domain/repositories/invite_friend_repository.dart';
+import 'package:hvatai/features/invite_friend/presentation/cubit/invite_friend_cubit/invite_friend_cubit.dart';
+import 'package:hvatai/features/invite_friend/presentation/cubit/accept_invite/accept_invite_cubit.dart';
 import 'package:hvatai/features/notifications/presentation/cubit/notifications_cubit/notifications_cubit.dart';
 import 'package:hvatai/features/orders/data/datasources/api_service_orders.dart';
 import 'package:hvatai/features/orders/data/repositories/orders_impl_repository.dart';
@@ -152,6 +158,7 @@ Future<void> setupLocator() async {
     ),
   );
   locator.registerFactory(() => FavoriteCubit(locator()));
+  locator.registerFactory(() => ToggleFavoriteCubit(locator()));
   locator.registerFactory(() => NotificationCubit());
   locator.registerFactory(() => ChangePasswordCubit(
         locator(),
@@ -169,6 +176,7 @@ Future<void> setupLocator() async {
       locator(), // GetUserRatingsUsecase
       locator(), // GetCompanyStreamsUsecase
       locator(), // GetUserClipsUsecase
+      locator(), // ToggleFavoriteUsecase
     ),
   );
   locator.registerFactory(() => ReviewCubit(locator()));
@@ -192,8 +200,12 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => SearchCubit(
         locator(),
         locator(),
+        locator(),
+        locator(),
       ));
   locator.registerFactory(() => ScheduleStreamCubit(locator()));
+  locator.registerFactory(() => InviteFriendCubit(locator()));
+  locator.registerFactory(() => AcceptInviteCubit(locator()));
 
   locator.registerFactory(() => CategoriesCubit(
         locator(),
@@ -217,7 +229,8 @@ Future<void> setupLocator() async {
         locator(),
       ));
   locator.registerFactory(() => MyProductsCubit(locator()));
-  locator.registerFactory(() => ReviewsCubit(locator(), locator()));
+  locator.registerFactory(
+      () => ReviewsCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => MyProductDetailsCubit());
   locator.registerFactory(() => ProductImageCubit());
   locator.registerFactory(() => CreateClipCubit());
@@ -290,6 +303,8 @@ Future<void> setupLocator() async {
       () => ActivityImplRepository(locator()));
   locator.registerLazySingleton<ReviewRepository>(
       () => ReviewRepositoryImpl(locator()));
+  locator.registerLazySingleton<InviteFriendRepository>(
+      () => InviteFriendRepositoryImpl(locator()));
   // //DATASOURSE
   locator.registerLazySingleton(() => ApiServiceAuth());
   locator.registerLazySingleton(() => ApiServiceAddress());
@@ -312,6 +327,7 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ApiServiceAddNewProduct());
   locator.registerLazySingleton(() => ApiServiceActivity());
   locator.registerLazySingleton(() => ApiServiceReview());
+  locator.registerLazySingleton(() => ApiServiceInviteFriend());
   // //EXTRNAL
   locator.registerLazySingleton(() => SharedPreferences.getInstance());
   locator.registerLazySingleton(() => InternetConnectionChecker());

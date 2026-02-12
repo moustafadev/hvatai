@@ -20,7 +20,10 @@ mixin _$MyProductsState {
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   int get selectedCategoryIndex => throw _privateConstructorUsedError;
-  bool get isShowingMyProducts => throw _privateConstructorUsedError;
+  bool get isShowingMyProducts =>
+      throw _privateConstructorUsedError; // true = Мои товары, false = Избранное
+  ProductSortOption? get selectedSortOption =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of MyProductsState
   /// with the given fields replaced by the non-null parameter values.
@@ -40,7 +43,8 @@ abstract class $MyProductsStateCopyWith<$Res> {
       bool isLoading,
       String errorMessage,
       int selectedCategoryIndex,
-      bool isShowingMyProducts});
+      bool isShowingMyProducts,
+      ProductSortOption? selectedSortOption});
 }
 
 /// @nodoc
@@ -63,6 +67,7 @@ class _$MyProductsStateCopyWithImpl<$Res, $Val extends MyProductsState>
     Object? errorMessage = null,
     Object? selectedCategoryIndex = null,
     Object? isShowingMyProducts = null,
+    Object? selectedSortOption = freezed,
   }) {
     return _then(_value.copyWith(
       products: null == products
@@ -85,6 +90,10 @@ class _$MyProductsStateCopyWithImpl<$Res, $Val extends MyProductsState>
           ? _value.isShowingMyProducts
           : isShowingMyProducts // ignore: cast_nullable_to_non_nullable
               as bool,
+      selectedSortOption: freezed == selectedSortOption
+          ? _value.selectedSortOption
+          : selectedSortOption // ignore: cast_nullable_to_non_nullable
+              as ProductSortOption?,
     ) as $Val);
   }
 }
@@ -102,7 +111,8 @@ abstract class _$$MyProductsStateImplCopyWith<$Res>
       bool isLoading,
       String errorMessage,
       int selectedCategoryIndex,
-      bool isShowingMyProducts});
+      bool isShowingMyProducts,
+      ProductSortOption? selectedSortOption});
 }
 
 /// @nodoc
@@ -123,6 +133,7 @@ class __$$MyProductsStateImplCopyWithImpl<$Res>
     Object? errorMessage = null,
     Object? selectedCategoryIndex = null,
     Object? isShowingMyProducts = null,
+    Object? selectedSortOption = freezed,
   }) {
     return _then(_$MyProductsStateImpl(
       products: null == products
@@ -145,6 +156,10 @@ class __$$MyProductsStateImplCopyWithImpl<$Res>
           ? _value.isShowingMyProducts
           : isShowingMyProducts // ignore: cast_nullable_to_non_nullable
               as bool,
+      selectedSortOption: freezed == selectedSortOption
+          ? _value.selectedSortOption
+          : selectedSortOption // ignore: cast_nullable_to_non_nullable
+              as ProductSortOption?,
     ));
   }
 }
@@ -157,7 +172,8 @@ class _$MyProductsStateImpl implements _MyProductsState {
       this.isLoading = false,
       this.errorMessage = '',
       this.selectedCategoryIndex = 0,
-      this.isShowingMyProducts = true})
+      this.isShowingMyProducts = true,
+      this.selectedSortOption})
       : _products = products;
 
   final List<ProductModel> _products;
@@ -181,10 +197,13 @@ class _$MyProductsStateImpl implements _MyProductsState {
   @override
   @JsonKey()
   final bool isShowingMyProducts;
+// true = Мои товары, false = Избранное
+  @override
+  final ProductSortOption? selectedSortOption;
 
   @override
   String toString() {
-    return 'MyProductsState(products: $products, isLoading: $isLoading, errorMessage: $errorMessage, selectedCategoryIndex: $selectedCategoryIndex, isShowingMyProducts: $isShowingMyProducts)';
+    return 'MyProductsState(products: $products, isLoading: $isLoading, errorMessage: $errorMessage, selectedCategoryIndex: $selectedCategoryIndex, isShowingMyProducts: $isShowingMyProducts, selectedSortOption: $selectedSortOption)';
   }
 
   @override
@@ -200,7 +219,9 @@ class _$MyProductsStateImpl implements _MyProductsState {
             (identical(other.selectedCategoryIndex, selectedCategoryIndex) ||
                 other.selectedCategoryIndex == selectedCategoryIndex) &&
             (identical(other.isShowingMyProducts, isShowingMyProducts) ||
-                other.isShowingMyProducts == isShowingMyProducts));
+                other.isShowingMyProducts == isShowingMyProducts) &&
+            (identical(other.selectedSortOption, selectedSortOption) ||
+                other.selectedSortOption == selectedSortOption));
   }
 
   @override
@@ -210,7 +231,8 @@ class _$MyProductsStateImpl implements _MyProductsState {
       isLoading,
       errorMessage,
       selectedCategoryIndex,
-      isShowingMyProducts);
+      isShowingMyProducts,
+      selectedSortOption);
 
   /// Create a copy of MyProductsState
   /// with the given fields replaced by the non-null parameter values.
@@ -228,7 +250,8 @@ abstract class _MyProductsState implements MyProductsState {
       final bool isLoading,
       final String errorMessage,
       final int selectedCategoryIndex,
-      final bool isShowingMyProducts}) = _$MyProductsStateImpl;
+      final bool isShowingMyProducts,
+      final ProductSortOption? selectedSortOption}) = _$MyProductsStateImpl;
 
   @override
   List<ProductModel> get products;
@@ -239,7 +262,9 @@ abstract class _MyProductsState implements MyProductsState {
   @override
   int get selectedCategoryIndex;
   @override
-  bool get isShowingMyProducts;
+  bool get isShowingMyProducts; // true = Мои товары, false = Избранное
+  @override
+  ProductSortOption? get selectedSortOption;
 
   /// Create a copy of MyProductsState
   /// with the given fields replaced by the non-null parameter values.

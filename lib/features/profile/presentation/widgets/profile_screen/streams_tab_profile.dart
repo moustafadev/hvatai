@@ -34,17 +34,16 @@ class StreamsTabProfile extends StatelessWidget {
                     ),
                     BlocBuilder<ProfileCubit, ProfileState>(
                       builder: (context, profileState) {
-                          return GestureDetector(
-                            onTap: () {
-                              context.push(AppRoutes.addStream);
-                            },
-                            child: SvgPicture.asset(
-                              Assets.assetsIconsAddCircle,
-                              width: 24,
-                              height: 24,
-                            ),
-                          );
-                        
+                        return GestureDetector(
+                          onTap: () {
+                            context.push(AppRoutes.addStream);
+                          },
+                          child: SvgPicture.asset(
+                            Assets.assetsIconsAddCircle,
+                            width: 24,
+                            height: 24,
+                          ),
+                        );
                       },
                     ),
                   ],
@@ -97,16 +96,8 @@ class StreamsTabProfile extends StatelessWidget {
                           }
                         },
                         child: CustomLiveVideoCard(
-                          price: "",
-                          title: product?.name ?? stream.title ?? '',
-                          adminName: stream.user?.name ?? 'company_name',
-                          adminImage: stream.user?.image ?? '',
-                          viewsCount: stream.viewerCount ?? 0,
-                          description: categoryName,
-                          liveImage:
-                              stream.thumbnailUrl ?? stream.recordUrl ?? '',
-                          latestThumbnailUrl: stream.latestThumbnailUrl,
-                          latestGifUrl: stream.latestGifUrl,
+                          stream: stream,
+                          categoryName: categoryName,
                         ),
                       );
                     },

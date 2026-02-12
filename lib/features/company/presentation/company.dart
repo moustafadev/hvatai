@@ -23,7 +23,6 @@ import 'package:hvatai/features/create_clip/presentation/clips.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
-part 'screens/clips_company_screen.dart';
 part 'screens/company_screen.dart';
 part 'screens/products_company_screen.dart';
 part 'screens/reviews_company_screen.dart';
@@ -31,7 +30,6 @@ part 'screens/streams_company_screen.dart';
 part 'widgets/info_company_detail.dart';
 part 'widgets/info_company_bottom.dart';
 part 'widgets/custom_row_company.dart';
-part 'widgets/four_container_company.dart';
 part 'widgets/products_filter_bottom_sheet.dart';
 part 'widgets/products_filter_chips.dart';
 part 'widgets/company_filter_dialog.dart';

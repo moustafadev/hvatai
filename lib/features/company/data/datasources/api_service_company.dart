@@ -40,9 +40,19 @@ class ApiServiceCompany extends ApiBase {
     });
   }
 
-  Future<MyStreamsResponse> getCompanyStreams(int userId) async {
+  Future<MyStreamsResponse> getCompanyStreams(
+    int userId, {
+    String? sortBy,
+  }) async {
     return executeAndHandleErrorServer<MyStreamsResponse>(() async {
-      final response = await get(ServerConfig.userStreams(userId));
+      final queryParams = <String, dynamic>{};
+      if (sortBy != null) {
+        queryParams['sort_by'] = sortBy;
+      }
+      final response = await get(
+        ServerConfig.userStreams(userId),
+        queryParameters: queryParams.isNotEmpty ? queryParams : null,
+      );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         return MyStreamsResponse.fromJson(response.json);

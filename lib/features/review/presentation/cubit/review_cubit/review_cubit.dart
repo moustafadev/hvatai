@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hvatai/features/review/domain/usecases/submit_review_usecase.dart';
 
 part 'review_cubit.freezed.dart';
@@ -38,7 +40,7 @@ class ReviewCubit extends Cubit<ReviewState> {
     emit(state.copyWith(images: images));
   }
 
-  Future<void> submitReview(int businessId) async {
+  Future<void> submitReview(int businessId, BuildContext context) async {
     if (state.rating == 0) {
       emit(state.copyWith(errorMessage: 'Please select a rating'));
       return;
@@ -72,6 +74,7 @@ class ReviewCubit extends Cubit<ReviewState> {
           isLoading: false,
           errorMessage: '',
         ));
+        context.pop(true);
       },
     );
   }

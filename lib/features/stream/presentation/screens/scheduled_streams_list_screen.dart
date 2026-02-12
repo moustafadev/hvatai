@@ -95,19 +95,11 @@ class ScheduledStreamsListScreen extends StatelessWidget {
                           }
                         },
                         child: ScheduledStreamCard(
+                          stream: stream,
                           price: startingPrice != '0'
                               ? 'Стартовая цена $startingPrice Р'
-                              : '',
-                          title: product?.name ?? stream.title ?? '',
-                          adminName: stream.user?.name ?? 'company_name',
-                          adminImage: stream.user?.image ?? '',
-                          viewsCount: stream.viewerCount ?? 0,
-                          description: categoryName,
-                          liveImage:
-                              stream.thumbnailUrl ?? stream.recordUrl ?? '',
-                          latestThumbnailUrl: stream.latestThumbnailUrl,
-                          latestGifUrl: stream.latestGifUrl,
-                          scheduledAt: stream.scheduledAt,
+                              : null,
+                          categoryName: categoryName,
                         ),
                       );
                     },

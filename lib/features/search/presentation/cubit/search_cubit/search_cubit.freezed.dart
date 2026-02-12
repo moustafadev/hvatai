@@ -41,6 +41,11 @@ mixin _$SearchState {
   bool get isLoadingSuggestions => throw _privateConstructorUsedError;
   bool get showSuggestions => throw _privateConstructorUsedError;
   bool get isSearchFocused => throw _privateConstructorUsedError;
+  List<RecentSearchItem> get recentSearches =>
+      throw _privateConstructorUsedError;
+  bool get isLoadingRecentSearches => throw _privateConstructorUsedError;
+  int? get selectedCategoryId => throw _privateConstructorUsedError;
+  String? get selectedCategoryName => throw _privateConstructorUsedError;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -79,7 +84,11 @@ abstract class $SearchStateCopyWith<$Res> {
       List<String> suggestions,
       bool isLoadingSuggestions,
       bool showSuggestions,
-      bool isSearchFocused});
+      bool isSearchFocused,
+      List<RecentSearchItem> recentSearches,
+      bool isLoadingRecentSearches,
+      int? selectedCategoryId,
+      String? selectedCategoryName});
 }
 
 /// @nodoc
@@ -121,6 +130,10 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     Object? isLoadingSuggestions = null,
     Object? showSuggestions = null,
     Object? isSearchFocused = null,
+    Object? recentSearches = null,
+    Object? isLoadingRecentSearches = null,
+    Object? selectedCategoryId = freezed,
+    Object? selectedCategoryName = freezed,
   }) {
     return _then(_value.copyWith(
       categories: null == categories
@@ -219,6 +232,22 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           ? _value.isSearchFocused
           : isSearchFocused // ignore: cast_nullable_to_non_nullable
               as bool,
+      recentSearches: null == recentSearches
+          ? _value.recentSearches
+          : recentSearches // ignore: cast_nullable_to_non_nullable
+              as List<RecentSearchItem>,
+      isLoadingRecentSearches: null == isLoadingRecentSearches
+          ? _value.isLoadingRecentSearches
+          : isLoadingRecentSearches // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedCategoryId: freezed == selectedCategoryId
+          ? _value.selectedCategoryId
+          : selectedCategoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      selectedCategoryName: freezed == selectedCategoryName
+          ? _value.selectedCategoryName
+          : selectedCategoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -255,7 +284,11 @@ abstract class _$$SearchStateImplCopyWith<$Res>
       List<String> suggestions,
       bool isLoadingSuggestions,
       bool showSuggestions,
-      bool isSearchFocused});
+      bool isSearchFocused,
+      List<RecentSearchItem> recentSearches,
+      bool isLoadingRecentSearches,
+      int? selectedCategoryId,
+      String? selectedCategoryName});
 }
 
 /// @nodoc
@@ -295,6 +328,10 @@ class __$$SearchStateImplCopyWithImpl<$Res>
     Object? isLoadingSuggestions = null,
     Object? showSuggestions = null,
     Object? isSearchFocused = null,
+    Object? recentSearches = null,
+    Object? isLoadingRecentSearches = null,
+    Object? selectedCategoryId = freezed,
+    Object? selectedCategoryName = freezed,
   }) {
     return _then(_$SearchStateImpl(
       categories: null == categories
@@ -393,6 +430,22 @@ class __$$SearchStateImplCopyWithImpl<$Res>
           ? _value.isSearchFocused
           : isSearchFocused // ignore: cast_nullable_to_non_nullable
               as bool,
+      recentSearches: null == recentSearches
+          ? _value._recentSearches
+          : recentSearches // ignore: cast_nullable_to_non_nullable
+              as List<RecentSearchItem>,
+      isLoadingRecentSearches: null == isLoadingRecentSearches
+          ? _value.isLoadingRecentSearches
+          : isLoadingRecentSearches // ignore: cast_nullable_to_non_nullable
+              as bool,
+      selectedCategoryId: freezed == selectedCategoryId
+          ? _value.selectedCategoryId
+          : selectedCategoryId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      selectedCategoryName: freezed == selectedCategoryName
+          ? _value.selectedCategoryName
+          : selectedCategoryName // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -424,7 +477,11 @@ class _$SearchStateImpl implements _SearchState {
       final List<String> suggestions = const [],
       this.isLoadingSuggestions = false,
       this.showSuggestions = false,
-      this.isSearchFocused = false})
+      this.isSearchFocused = false,
+      final List<RecentSearchItem> recentSearches = const [],
+      this.isLoadingRecentSearches = false,
+      this.selectedCategoryId,
+      this.selectedCategoryName})
       : _categories = categories,
         _products = products,
         _liveStreams = liveStreams,
@@ -434,7 +491,8 @@ class _$SearchStateImpl implements _SearchState {
         _selectedInterests = selectedInterests,
         _selectedIndices = selectedIndices,
         _searchedItems = searchedItems,
-        _suggestions = suggestions;
+        _suggestions = suggestions,
+        _recentSearches = recentSearches;
 
   final List<String> _categories;
   @override
@@ -567,10 +625,26 @@ class _$SearchStateImpl implements _SearchState {
   @override
   @JsonKey()
   final bool isSearchFocused;
+  final List<RecentSearchItem> _recentSearches;
+  @override
+  @JsonKey()
+  List<RecentSearchItem> get recentSearches {
+    if (_recentSearches is EqualUnmodifiableListView) return _recentSearches;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_recentSearches);
+  }
+
+  @override
+  @JsonKey()
+  final bool isLoadingRecentSearches;
+  @override
+  final int? selectedCategoryId;
+  @override
+  final String? selectedCategoryName;
 
   @override
   String toString() {
-    return 'SearchState(categories: $categories, selectedIndex: $selectedIndex, query: $query, isLoading: $isLoading, hasLoadedInitial: $hasLoadedInitial, isFavourites: $isFavourites, isCart: $isCart, errorMessage: $errorMessage, products: $products, liveStreams: $liveStreams, users: $users, parentCategories: $parentCategories, childCategories: $childCategories, hasNoResults: $hasNoResults, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, searchedItems: $searchedItems, selectedCategoryIndex: $selectedCategoryIndex, currentImageIndex: $currentImageIndex, pageController: $pageController, suggestions: $suggestions, isLoadingSuggestions: $isLoadingSuggestions, showSuggestions: $showSuggestions, isSearchFocused: $isSearchFocused)';
+    return 'SearchState(categories: $categories, selectedIndex: $selectedIndex, query: $query, isLoading: $isLoading, hasLoadedInitial: $hasLoadedInitial, isFavourites: $isFavourites, isCart: $isCart, errorMessage: $errorMessage, products: $products, liveStreams: $liveStreams, users: $users, parentCategories: $parentCategories, childCategories: $childCategories, hasNoResults: $hasNoResults, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, searchedItems: $searchedItems, selectedCategoryIndex: $selectedCategoryIndex, currentImageIndex: $currentImageIndex, pageController: $pageController, suggestions: $suggestions, isLoadingSuggestions: $isLoadingSuggestions, showSuggestions: $showSuggestions, isSearchFocused: $isSearchFocused, recentSearches: $recentSearches, isLoadingRecentSearches: $isLoadingRecentSearches, selectedCategoryId: $selectedCategoryId, selectedCategoryName: $selectedCategoryName)';
   }
 
   @override
@@ -621,7 +695,16 @@ class _$SearchStateImpl implements _SearchState {
             (identical(other.showSuggestions, showSuggestions) ||
                 other.showSuggestions == showSuggestions) &&
             (identical(other.isSearchFocused, isSearchFocused) ||
-                other.isSearchFocused == isSearchFocused));
+                other.isSearchFocused == isSearchFocused) &&
+            const DeepCollectionEquality()
+                .equals(other._recentSearches, _recentSearches) &&
+            (identical(
+                    other.isLoadingRecentSearches, isLoadingRecentSearches) ||
+                other.isLoadingRecentSearches == isLoadingRecentSearches) &&
+            (identical(other.selectedCategoryId, selectedCategoryId) ||
+                other.selectedCategoryId == selectedCategoryId) &&
+            (identical(other.selectedCategoryName, selectedCategoryName) ||
+                other.selectedCategoryName == selectedCategoryName));
   }
 
   @override
@@ -650,7 +733,11 @@ class _$SearchStateImpl implements _SearchState {
         const DeepCollectionEquality().hash(_suggestions),
         isLoadingSuggestions,
         showSuggestions,
-        isSearchFocused
+        isSearchFocused,
+        const DeepCollectionEquality().hash(_recentSearches),
+        isLoadingRecentSearches,
+        selectedCategoryId,
+        selectedCategoryName
       ]);
 
   /// Create a copy of SearchState
@@ -687,7 +774,11 @@ abstract class _SearchState implements SearchState {
       final List<String> suggestions,
       final bool isLoadingSuggestions,
       final bool showSuggestions,
-      final bool isSearchFocused}) = _$SearchStateImpl;
+      final bool isSearchFocused,
+      final List<RecentSearchItem> recentSearches,
+      final bool isLoadingRecentSearches,
+      final int? selectedCategoryId,
+      final String? selectedCategoryName}) = _$SearchStateImpl;
 
   @override
   List<String> get categories;
@@ -737,6 +828,14 @@ abstract class _SearchState implements SearchState {
   bool get showSuggestions;
   @override
   bool get isSearchFocused;
+  @override
+  List<RecentSearchItem> get recentSearches;
+  @override
+  bool get isLoadingRecentSearches;
+  @override
+  int? get selectedCategoryId;
+  @override
+  String? get selectedCategoryName;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.

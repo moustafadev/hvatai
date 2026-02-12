@@ -1,34 +1,15 @@
 part of '../stream.dart';
 
 class ScheduledStreamCard extends StatefulWidget {
-  final String adminName;
-  final String adminImage;
-  final int viewsCount;
-  final String title;
-  final String description;
-  final String liveImage;
-  final String? latestThumbnailUrl;
-  final String? latestGifUrl;
-  final String price;
-  final DateTime? scheduledAt;
-
-  final bool? isFavorite;
-  final VoidCallback? onFavoriteToggle;
+  final StreamDataModel stream;
+  final String? price;
+  final String? categoryName;
 
   const ScheduledStreamCard({
     super.key,
-    required this.adminName,
-    required this.price,
-    required this.adminImage,
-    required this.viewsCount,
-    required this.title,
-    required this.description,
-    required this.liveImage,
-    this.latestThumbnailUrl,
-    this.latestGifUrl,
-    this.scheduledAt,
-    this.isFavorite,
-    this.onFavoriteToggle,
+    required this.stream,
+    this.price,
+    this.categoryName,
   });
 
   @override
@@ -64,36 +45,36 @@ class _ScheduledStreamCardState extends State<ScheduledStreamCard> {
         Expanded(
           flex: 3,
           child: GestureDetector(
-            onLongPress:
-                (widget.latestGifUrl != null && widget.latestGifUrl!.isNotEmpty)
-                    ? () {
-                        // Toggle GIF display on long press
-                        setState(() {
-                          _showGif = !_showGif;
-                        });
+            onLongPress: (widget.stream.latestGifUrl != null &&
+                    widget.stream.latestGifUrl!.isNotEmpty)
+                ? () {
+                    // Toggle GIF display on long press
+                    setState(() {
+                      _showGif = !_showGif;
+                    });
 
-                        // Auto-hide GIF after 5 seconds
-                        if (_showGif) {
-                          Future.delayed(const Duration(seconds: 5), () {
-                            if (mounted) {
-                              setState(() {
-                                _showGif = false;
-                              });
-                            }
+                    // Auto-hide GIF after 5 seconds
+                    if (_showGif) {
+                      Future.delayed(const Duration(seconds: 5), () {
+                        if (mounted) {
+                          setState(() {
+                            _showGif = false;
                           });
                         }
-                      }
-                    : null,
+                      });
+                    }
+                  }
+                : null,
             child: Stack(
               children: [
                 // Background image - GIF or latest thumbnail or placeholder
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10.r),
                   child: (_showGif &&
-                          widget.latestGifUrl != null &&
-                          widget.latestGifUrl!.isNotEmpty)
+                          widget.stream.latestGifUrl != null &&
+                          widget.stream.latestGifUrl!.isNotEmpty)
                       ? CachedNetworkImage(
-                          imageUrl: widget.latestGifUrl!,
+                          imageUrl: widget.stream.latestGifUrl!,
                           width: double.infinity,
                           height: double.infinity,
                           fit: BoxFit.cover,
@@ -110,10 +91,10 @@ class _ScheduledStreamCardState extends State<ScheduledStreamCard> {
                             fit: BoxFit.fill,
                           ),
                         )
-                      : (widget.latestThumbnailUrl != null &&
-                              widget.latestThumbnailUrl!.isNotEmpty)
+                      : (widget.stream.latestThumbnailUrl != null &&
+                              widget.stream.latestThumbnailUrl!.isNotEmpty)
                           ? CachedNetworkImage(
-                              imageUrl: widget.latestThumbnailUrl!,
+                              imageUrl: widget.stream.latestThumbnailUrl!,
                               width: double.infinity,
                               height: double.infinity,
                               fit: BoxFit.cover,
@@ -138,7 +119,7 @@ class _ScheduledStreamCardState extends State<ScheduledStreamCard> {
                             ),
                 ),
                 // Scheduled date/time overlay
-                if (widget.scheduledAt != null)
+                if (widget.stream.scheduledAt != null)
                   Positioned.fill(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -152,7 +133,7 @@ class _ScheduledStreamCardState extends State<ScheduledStreamCard> {
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: CustomText(
-                            text: _formatDateTime(widget.scheduledAt),
+                            text: _formatDateTime(widget.stream.scheduledAt),
                             textAlign: TextAlign.center,
                             color: AppColors.white,
                             fontSize: 12.sp,
@@ -162,28 +143,48 @@ class _ScheduledStreamCardState extends State<ScheduledStreamCard> {
                       ),
                     ),
                   ),
-                // if (isFavorite != null && onFavoriteToggle != null)
                 Positioned(
                   top: 10,
                   right: 10,
                   child: Column(
                     children: [
-                      GestureDetector(
-                          onTap: widget.onFavoriteToggle,
-                          child: CircleAvatar(
-                            radius: 12.r,
-                            backgroundColor: AppColors.blackDark,
-                            child: Image.asset(
-                              Assets.assetsIconsSave,
-                              height: 14.h,
-                              width: 14.w,
-                              fit: BoxFit.cover,
-                              color: AppColors.white,
+                      BlocBuilder<ToggleFavoriteCubit, ToggleFavoriteState>(
+                        builder: (context, state) {
+                          final streamId = widget.stream.id;
+                          final isFavorited = streamId != null &&
+                              (context
+                                      .read<ToggleFavoriteCubit>()
+                                      .state
+                                      .favoritedByType['stream']
+                                      ?.contains(streamId) ??
+                                  widget.stream.user?.isFavorited ??
+                                  false);
+
+                          return GestureDetector(
+                            onTap: (streamId != null
+                                ? () => context
+                                    .read<ToggleFavoriteCubit>()
+                                    .toggleFavorite('stream', streamId)
+                                : null),
+                            child: CircleAvatar(
+                              radius: 12.r,
+                              backgroundColor: isFavorited
+                                  ? AppColors.primaryPink
+                                  : AppColors.blackDark,
+                              child: Image.asset(
+                                Assets.assetsIconsSave,
+                                height: 14.h,
+                                width: 14.w,
+                                fit: BoxFit.cover,
+                                color: AppColors.white,
+                              ),
                             ),
-                          )),
+                          );
+                        },
+                      ),
                       4.ph,
                       CustomText(
-                          text: widget.viewsCount.toString(),
+                          text: (widget.stream.viewerCount ?? 0).toString(),
                           color: AppColors.white,
                           fontSize: 12.sp,
                           fontWeight: FontWeight.bold),
@@ -200,7 +201,7 @@ class _ScheduledStreamCardState extends State<ScheduledStreamCard> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12.r),
                         child: CustomImage(
-                          imageSource: widget.adminImage,
+                          imageSource: widget.stream.user?.image ?? '',
                           width: 24.w,
                           height: 24.h,
                           fit: BoxFit.cover,
@@ -209,7 +210,7 @@ class _ScheduledStreamCardState extends State<ScheduledStreamCard> {
                       5.pw,
                       Flexible(
                         child: CustomText(
-                          text: widget.adminName,
+                          text: widget.stream.user?.name ?? 'company_name',
                           color: AppColors.white,
                           fontSize: 12.sp,
                           fontWeight: FontWeight.bold,

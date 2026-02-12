@@ -5,8 +5,12 @@ import 'package:hvatai/features/stream/data/models/my_streams/my_streams_respons
 
 class GetCompanyStreamsParams {
   final int userId;
+  final String? sortBy; // 'live_first', 'popular', 'free_delivery'
 
-  const GetCompanyStreamsParams({required this.userId});
+  const GetCompanyStreamsParams({
+    required this.userId,
+    this.sortBy,
+  });
 }
 
 class GetCompanyStreamsUsecase
@@ -18,6 +22,9 @@ class GetCompanyStreamsUsecase
   @override
   Future<Either<String, MyStreamsResponse>> call(
       GetCompanyStreamsParams params) {
-    return _repository.getCompanyStreams(params.userId);
+    return _repository.getCompanyStreams(
+      params.userId,
+      sortBy: params.sortBy,
+    );
   }
 }

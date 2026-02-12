@@ -16,4 +16,14 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
       return response;
     });
   }
+
+  @override
+  Future<Either<String, void>> toggleFavorite({
+    required String type,
+    required int id,
+  }) {
+    return executeAndHandleError<void>(() async {
+      await _apiServiceFavorites.toggleFavorite(type: type, id: id);
+    });
+  }
 }

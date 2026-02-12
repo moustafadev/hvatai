@@ -68,14 +68,7 @@ class OtpCubit extends Cubit<OtpState> {
           // User has completed setup (has favorite categories)
           context.go(AppRoutes.home);
         } else {
-          // User hasn't completed setup
-          if (userData.user?.name != null && userData.user!.name.isNotEmpty) {
-            // User has a name, go to categories
-            context.go(AppRoutes.interests);
-          } else {
-            // User doesn't have a name, go to name screen
-            context.go(AppRoutes.name);
-          }
+          context.go(AppRoutes.name);
         }
       },
     );

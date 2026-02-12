@@ -58,10 +58,22 @@ class ClipsCompanyTab extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       final clip = clips[index];
+                      final isFavorited = context
+                          .read<CompanyCubit>()
+                          .state
+                          .favoritedClipIds
+                          .contains(clip.id);
+
                       return ClipCard(
                         clip: clip,
                         showCompanyInfo: false,
                         showSettingsIcon: false,
+                        isFavorited: isFavorited,
+                        onSaveIconTap: () {
+                          context
+                              .read<CompanyCubit>()
+                              .toggleClipFavorite(clip.id);
+                        },
                         thumbnailBytes: context
                             .read<CompanyCubit>()
                             .getClipThumbnail(clip.id),

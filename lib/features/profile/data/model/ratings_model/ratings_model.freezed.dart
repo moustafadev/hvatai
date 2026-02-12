@@ -1215,6 +1215,9 @@ mixin _$UserPersonalRating {
   String get updatedAt => throw _privateConstructorUsedError;
   List<dynamic> get attributes => throw _privateConstructorUsedError;
   RatingUser? get reviewer => throw _privateConstructorUsedError;
+  String? get reply => throw _privateConstructorUsedError;
+  @JsonKey(name: 'replied_at')
+  String? get repliedAt => throw _privateConstructorUsedError;
 
   /// Serializes this UserPersonalRating to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -1242,7 +1245,9 @@ abstract class $UserPersonalRatingCopyWith<$Res> {
       @JsonKey(name: 'created_at') String createdAt,
       @JsonKey(name: 'updated_at') String updatedAt,
       List<dynamic> attributes,
-      RatingUser? reviewer});
+      RatingUser? reviewer,
+      String? reply,
+      @JsonKey(name: 'replied_at') String? repliedAt});
 
   $RatingUserCopyWith<$Res>? get reviewer;
 }
@@ -1272,6 +1277,8 @@ class _$UserPersonalRatingCopyWithImpl<$Res, $Val extends UserPersonalRating>
     Object? updatedAt = null,
     Object? attributes = null,
     Object? reviewer = freezed,
+    Object? reply = freezed,
+    Object? repliedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -1314,6 +1321,14 @@ class _$UserPersonalRatingCopyWithImpl<$Res, $Val extends UserPersonalRating>
           ? _value.reviewer
           : reviewer // ignore: cast_nullable_to_non_nullable
               as RatingUser?,
+      reply: freezed == reply
+          ? _value.reply
+          : reply // ignore: cast_nullable_to_non_nullable
+              as String?,
+      repliedAt: freezed == repliedAt
+          ? _value.repliedAt
+          : repliedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -1350,7 +1365,9 @@ abstract class _$$UserPersonalRatingImplCopyWith<$Res>
       @JsonKey(name: 'created_at') String createdAt,
       @JsonKey(name: 'updated_at') String updatedAt,
       List<dynamic> attributes,
-      RatingUser? reviewer});
+      RatingUser? reviewer,
+      String? reply,
+      @JsonKey(name: 'replied_at') String? repliedAt});
 
   @override
   $RatingUserCopyWith<$Res>? get reviewer;
@@ -1379,6 +1396,8 @@ class __$$UserPersonalRatingImplCopyWithImpl<$Res>
     Object? updatedAt = null,
     Object? attributes = null,
     Object? reviewer = freezed,
+    Object? reply = freezed,
+    Object? repliedAt = freezed,
   }) {
     return _then(_$UserPersonalRatingImpl(
       id: null == id
@@ -1421,6 +1440,14 @@ class __$$UserPersonalRatingImplCopyWithImpl<$Res>
           ? _value.reviewer
           : reviewer // ignore: cast_nullable_to_non_nullable
               as RatingUser?,
+      reply: freezed == reply
+          ? _value.reply
+          : reply // ignore: cast_nullable_to_non_nullable
+              as String?,
+      repliedAt: freezed == repliedAt
+          ? _value.repliedAt
+          : repliedAt // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -1438,7 +1465,9 @@ class _$UserPersonalRatingImpl implements _UserPersonalRating {
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'updated_at') required this.updatedAt,
       required final List<dynamic> attributes,
-      required this.reviewer})
+      required this.reviewer,
+      required this.reply,
+      @JsonKey(name: 'replied_at') required this.repliedAt})
       : _attributes = attributes;
 
   factory _$UserPersonalRatingImpl.fromJson(Map<String, dynamic> json) =>
@@ -1474,10 +1503,15 @@ class _$UserPersonalRatingImpl implements _UserPersonalRating {
 
   @override
   final RatingUser? reviewer;
+  @override
+  final String? reply;
+  @override
+  @JsonKey(name: 'replied_at')
+  final String? repliedAt;
 
   @override
   String toString() {
-    return 'UserPersonalRating(id: $id, reviewerId: $reviewerId, userId: $userId, score: $score, comment: $comment, image: $image, createdAt: $createdAt, updatedAt: $updatedAt, attributes: $attributes, reviewer: $reviewer)';
+    return 'UserPersonalRating(id: $id, reviewerId: $reviewerId, userId: $userId, score: $score, comment: $comment, image: $image, createdAt: $createdAt, updatedAt: $updatedAt, attributes: $attributes, reviewer: $reviewer, reply: $reply, repliedAt: $repliedAt)';
   }
 
   @override
@@ -1499,7 +1533,10 @@ class _$UserPersonalRatingImpl implements _UserPersonalRating {
             const DeepCollectionEquality()
                 .equals(other._attributes, _attributes) &&
             (identical(other.reviewer, reviewer) ||
-                other.reviewer == reviewer));
+                other.reviewer == reviewer) &&
+            (identical(other.reply, reply) || other.reply == reply) &&
+            (identical(other.repliedAt, repliedAt) ||
+                other.repliedAt == repliedAt));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -1515,7 +1552,9 @@ class _$UserPersonalRatingImpl implements _UserPersonalRating {
       createdAt,
       updatedAt,
       const DeepCollectionEquality().hash(_attributes),
-      reviewer);
+      reviewer,
+      reply,
+      repliedAt);
 
   /// Create a copy of UserPersonalRating
   /// with the given fields replaced by the non-null parameter values.
@@ -1536,16 +1575,19 @@ class _$UserPersonalRatingImpl implements _UserPersonalRating {
 
 abstract class _UserPersonalRating implements UserPersonalRating {
   const factory _UserPersonalRating(
-      {required final int id,
-      @JsonKey(name: 'reviewer_id') required final int reviewerId,
-      @JsonKey(name: 'user_id') required final int userId,
-      required final int score,
-      required final String? comment,
-      required final String? image,
-      @JsonKey(name: 'created_at') required final String createdAt,
-      @JsonKey(name: 'updated_at') required final String updatedAt,
-      required final List<dynamic> attributes,
-      required final RatingUser? reviewer}) = _$UserPersonalRatingImpl;
+          {required final int id,
+          @JsonKey(name: 'reviewer_id') required final int reviewerId,
+          @JsonKey(name: 'user_id') required final int userId,
+          required final int score,
+          required final String? comment,
+          required final String? image,
+          @JsonKey(name: 'created_at') required final String createdAt,
+          @JsonKey(name: 'updated_at') required final String updatedAt,
+          required final List<dynamic> attributes,
+          required final RatingUser? reviewer,
+          required final String? reply,
+          @JsonKey(name: 'replied_at') required final String? repliedAt}) =
+      _$UserPersonalRatingImpl;
 
   factory _UserPersonalRating.fromJson(Map<String, dynamic> json) =
       _$UserPersonalRatingImpl.fromJson;
@@ -1574,6 +1616,11 @@ abstract class _UserPersonalRating implements UserPersonalRating {
   List<dynamic> get attributes;
   @override
   RatingUser? get reviewer;
+  @override
+  String? get reply;
+  @override
+  @JsonKey(name: 'replied_at')
+  String? get repliedAt;
 
   /// Create a copy of UserPersonalRating
   /// with the given fields replaced by the non-null parameter values.

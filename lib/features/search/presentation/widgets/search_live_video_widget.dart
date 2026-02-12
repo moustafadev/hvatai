@@ -134,17 +134,9 @@ class SearchLiveVideoWidget extends StatelessWidget {
           // joinLiveStreamingWithPrefs(stream.channelId);
         },
         child: CustomLiveVideoCard(
-          price: stream.price,
-          title: stream.title,
-          adminName: stream.adminName,
-          adminImage: stream.adminPhoto,
-          viewsCount: stream.viewsCount,
-          description: stream.description,
-          liveImage: stream.selectedProductImage.isNotEmpty
-              ? stream.selectedProductImage
-              : stream.liveImage,
-          latestThumbnailUrl: stream.latestThumbnailUrl,
-          latestGifUrl: stream.latestGifUrl,
+          stream: stream.toStreamDataModel(),
+          price: stream.price.isNotEmpty ? stream.price : null,
+          categoryName: stream.category.isNotEmpty ? stream.category : null,
         ),
       ),
     );

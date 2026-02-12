@@ -7,6 +7,7 @@ class MyCategorySearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
+        final cubit = context.read<SearchCubit>();
         final categories = state.parentCategories;
 
         if (categories.isEmpty) {
@@ -23,9 +24,18 @@ class MyCategorySearch extends StatelessWidget {
 
         return ReusableCategoryWidget(
           categories: filteredCategories,
-          selectedIndices: state.selectedIndices.toList(),
-          onTap: (index, key) {},
-          // onTap: (index, key) => cubit.toggleInterest(index, key),
+          selectedIndices: state.selectedCategoryId != null
+              ? filteredCategories
+                  .asMap()
+                  .entries
+                  .where((entry) => entry.value.id == state.selectedCategoryId)
+                  .map((entry) => entry.key)
+                  .toList()
+              : [],
+          onTap: (index, key) {
+            final category = filteredCategories[index];
+            cubit.selectCategoryById(category);
+          },
         );
       },
     );

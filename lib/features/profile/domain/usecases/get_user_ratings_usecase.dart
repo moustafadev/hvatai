@@ -5,8 +5,14 @@ import 'package:hvatai/features/profile/domain/repositories/profile_repository.d
 
 class GetUserRatingsParams {
   final int userId;
+  final String? sortBy; // 'created_at' (default) or 'score'
+  final String? sortOrder; // 'desc' (default) or 'asc'
 
-  const GetUserRatingsParams({required this.userId});
+  const GetUserRatingsParams({
+    required this.userId,
+    this.sortBy,
+    this.sortOrder,
+  });
 }
 
 class GetUserRatingsUsecase
@@ -19,6 +25,10 @@ class GetUserRatingsUsecase
   Future<Either<String, UserRatingsResponse>> call(
     GetUserRatingsParams params,
   ) {
-    return _profileRepository.getUserRatings(params.userId);
+    return _profileRepository.getUserRatings(
+      params.userId,
+      sortBy: params.sortBy,
+      sortOrder: params.sortOrder,
+    );
   }
 }

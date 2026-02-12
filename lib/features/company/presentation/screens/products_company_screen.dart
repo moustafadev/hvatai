@@ -126,10 +126,14 @@ class ProductsCompanyTab extends StatelessWidget {
                               onTap: () {
                                 ProductsFilterBottomSheet.show(
                                   context,
+                                  initialSortOption: context
+                                      .read<CompanyCubit>()
+                                      .state
+                                      .selectedSortOption,
                                   onApply: (sortOption) {
-                                    // TODO: Apply filter to products
-                                    debugPrint(
-                                        'Selected sort option: $sortOption');
+                                    context
+                                        .read<CompanyCubit>()
+                                        .sortProducts(sortOption);
                                   },
                                 );
                               },

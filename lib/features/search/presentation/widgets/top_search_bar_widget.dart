@@ -58,7 +58,13 @@ class _TopBarSearchWidgetState extends State<TopBarSearchWidget> {
       children: [
         GestureDetector(
             onTap: () {
-              context.pop();
+              // Clear selected category if one is selected, otherwise pop
+              final searchCubit = context.read<SearchCubit>();
+              if (searchCubit.state.selectedCategoryId != null) {
+                searchCubit.clearSelectedCategory();
+              } else {
+                context.pop();
+              }
             },
             child: Icon(Icons.arrow_back_ios)),
         widget.isSearch ? 2.ph : const Spacer(),

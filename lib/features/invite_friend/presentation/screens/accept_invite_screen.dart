@@ -6,7 +6,7 @@ class AcceptInviteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AcceptInviteCubit(),
+      create: (_) => locator<AcceptInviteCubit>(),
       child: BlocBuilder<AcceptInviteCubit, AcceptInviteState>(
         builder: (context, state) {
           final cubit = context.read<AcceptInviteCubit>();

@@ -80,15 +80,27 @@ class ReviewsCompanyScreen extends StatelessWidget {
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w800,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            CompanyFilterDialog.showReviewsFilter(context);
+                        Builder(
+                          builder: (builderContext) {
+                            return GestureDetector(
+                              onTap: () {
+                                final RenderBox? renderBox = builderContext
+                                    .findRenderObject() as RenderBox?;
+                                if (renderBox != null) {
+                                  CompanyFilterDialog.showReviewsFilter(
+                                    context,
+                                    renderBox,
+                                    userId,
+                                  );
+                                }
+                              },
+                              child: SvgPicture.asset(
+                                Assets.assetsIconsFilter,
+                                width: 24.w,
+                                height: 24.h,
+                              ),
+                            );
                           },
-                          child: SvgPicture.asset(
-                            Assets.assetsIconsFilter,
-                            width: 24.w,
-                            height: 24.h,
-                          ),
                         ),
                       ],
                     ),
@@ -153,9 +165,15 @@ class ReviewsCompanyScreen extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                     height: 54,
                     radius: 10.r,
-                    onPressed: () {
-                      context.push(AppRoutes.leaveReview,
+                    onPressed: () async {
+                      final result = await context.push(AppRoutes.leaveReview,
                           extra: {'userId': userId});
+                      if (result != null &&
+                          result is bool &&
+                          result &&
+                          context.mounted) {
+                        context.read<CompanyCubit>().fetchReviews(userId);
+                      }
                     },
                   ),
                 ),

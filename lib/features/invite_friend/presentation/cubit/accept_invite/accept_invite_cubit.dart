@@ -2,9 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'accept_invite_state.dart';
+import 'package:hvatai/features/invite_friend/domain/usecases/apply_invite_code_usecase.dart';
 
 class AcceptInviteCubit extends Cubit<AcceptInviteState> {
-  AcceptInviteCubit() : super(const AcceptInviteState());
+  AcceptInviteCubit(this._applyInviteCodeUsecase)
+      : super(const AcceptInviteState());
+
+  final ApplyInviteCodeUsecase _applyInviteCodeUsecase;
 
   void updateCode(String code) {
     emit(state.copyWith(
@@ -18,40 +22,41 @@ class AcceptInviteCubit extends Cubit<AcceptInviteState> {
 
     emit(state.copyWith(isLoading: true, error: AcceptInviteError.none));
 
-    try {
-      // TODO: Replace with actual API call
-      await Future.delayed(const Duration(seconds: 1));
+    final result = await _applyInviteCodeUsecase(
+      ApplyInviteCodeParams(inviteCode: state.code),
+    );
 
-      // Simulate validation - in real implementation this would come from API
-      // For demo purposes, we'll accept codes that are not "invalid" or "used"
-      if (state.code.toLowerCase() == 'invalid') {
+    result.fold(
+      (failure) {
+        debugPrint('Error applying invite code: $failure');
+        // Map API errors to appropriate error states
+        if (failure.toLowerCase().contains('not found') ||
+            failure.toLowerCase().contains('invalid')) {
+          emit(state.copyWith(
+            isLoading: false,
+            error: AcceptInviteError.codeNotFound,
+          ));
+        } else if (failure.toLowerCase().contains('already') ||
+            failure.toLowerCase().contains('used')) {
+          emit(state.copyWith(
+            isLoading: false,
+            error: AcceptInviteError.codeAlreadyUsed,
+          ));
+        } else {
+          emit(state.copyWith(
+            isLoading: false,
+            error: AcceptInviteError.codeNotFound,
+          ));
+        }
+      },
+      (_) {
         emit(state.copyWith(
           isLoading: false,
-          error: AcceptInviteError.codeNotFound,
+          isSuccess: true,
         ));
-        return;
-      }
-
-      if (state.code.toLowerCase() == 'used') {
-        emit(state.copyWith(
-          isLoading: false,
-          error: AcceptInviteError.codeAlreadyUsed,
-        ));
-        return;
-      }
-
-      emit(state.copyWith(
-        isLoading: false,
-        isSuccess: true,
-      ));
-      onSuccess?.call();
-    } catch (e) {
-      debugPrint('Error submitting code: $e');
-      emit(state.copyWith(
-        isLoading: false,
-        error: AcceptInviteError.codeNotFound,
-      ));
-    }
+        onSuccess?.call();
+      },
+    );
   }
 
   void clearError() {

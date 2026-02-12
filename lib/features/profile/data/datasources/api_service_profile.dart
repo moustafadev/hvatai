@@ -163,9 +163,23 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-  Future<UserRatingsResponse> getUserRatings(int userId) async {
+  Future<UserRatingsResponse> getUserRatings(
+    int userId, {
+    String? sortBy,
+    String? sortOrder,
+  }) async {
     return executeAndHandleErrorServer<UserRatingsResponse>(() async {
-      final response = await get(ServerConfig.userRatings(userId));
+      final queryParams = <String, dynamic>{};
+      if (sortBy != null) {
+        queryParams['sort_by'] = sortBy;
+      }
+      if (sortOrder != null) {
+        queryParams['sort_order'] = sortOrder;
+      }
+      final response = await get(
+        ServerConfig.userRatings(userId),
+        queryParameters: queryParams.isNotEmpty ? queryParams : null,
+      );
       if (response.statusCode == 200 || response.statusCode == 201) {
         return UserRatingsResponse.fromJson(response.json['data']);
       }
@@ -180,6 +194,29 @@ class ApiServiceProfile extends ApiBase {
         return MyRatingsResponse.fromJson(response.json);
       }
       throw Exception;
+    });
+  }
+
+  Future<void> deleteRating(int ratingId) async {
+    return executeAndHandleErrorServer<void>(() async {
+      final response = await delete(ServerConfig.deleteRating(ratingId));
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return;
+      }
+      throw Exception('Failed to delete rating');
+    });
+  }
+
+  Future<void> replyToRating(int ratingId, String comment) async {
+    return executeAndHandleErrorServer<void>(() async {
+      final response = await post(
+        ServerConfig.replyToRating(ratingId),
+        body: {'reply': comment},
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return;
+      }
+      throw Exception('Failed to reply to rating');
     });
   }
 }

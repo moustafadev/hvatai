@@ -62,15 +62,8 @@ class StreamsTabWidget extends StatelessWidget {
                 }
               },
               child: CustomLiveVideoCard(
-                price: "",
-                title: product?.name ?? stream.title ?? '',
-                adminName: stream.user?.name ?? 'company_name',
-                adminImage: stream.user?.image ?? '',
-                viewsCount: stream.viewerCount ?? 0,
-                description: categoryName,
-                liveImage: stream.thumbnailUrl ?? stream.recordUrl ?? '',
-                latestThumbnailUrl: stream.latestThumbnailUrl,
-                latestGifUrl: stream.latestGifUrl,
+                stream: stream,
+                categoryName: categoryName,
               ),
             );
           },
@@ -79,4 +72,3 @@ class StreamsTabWidget extends StatelessWidget {
     );
   }
 }
-

@@ -25,6 +25,7 @@ class ProductsFilterBottomSheet extends StatefulWidget {
       context: context,
       backgroundColor: Colors.transparent,
       isScrollControlled: true,
+      useRootNavigator: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
       ),
@@ -40,8 +41,7 @@ class ProductsFilterBottomSheet extends StatefulWidget {
       _ProductsFilterBottomSheetState();
 }
 
-class _ProductsFilterBottomSheetState
-    extends State<ProductsFilterBottomSheet> {
+class _ProductsFilterBottomSheetState extends State<ProductsFilterBottomSheet> {
   ProductSortOption? _selectedOption;
 
   @override

@@ -49,10 +49,37 @@ class StreamsCompanyTab extends StatelessWidget {
             SliverPadding(
               padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
               sliver: SliverToBoxAdapter(
-                child: CustomText(
-                  text: 'streams'.tr(),
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.w800,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CustomText(
+                      text: 'streams'.tr(),
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w800,
+                    ),
+                    Builder(
+                      builder: (builderContext) {
+                        return GestureDetector(
+                          onTap: () {
+                            final RenderBox? renderBox =
+                                builderContext.findRenderObject() as RenderBox?;
+                            if (renderBox != null) {
+                              CompanyFilterDialog.showStreamsFilter(
+                                context,
+                                renderBox,
+                                userId,
+                              );
+                            }
+                          },
+                          child: SvgPicture.asset(
+                            Assets.assetsIconsFilter,
+                            width: 24.w,
+                            height: 24.h,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -128,16 +155,8 @@ class StreamsCompanyTab extends StatelessWidget {
                           }
                         },
                         child: CustomLiveVideoCard(
-                          price: "",
-                          title: product?.name ?? stream.title ?? '',
-                          adminName: stream.user?.name ?? 'company_name',
-                          adminImage: stream.user?.image ?? '',
-                          viewsCount: stream.viewerCount ?? 0,
-                          description: categoryName,
-                          liveImage:
-                              stream.thumbnailUrl ?? stream.recordUrl ?? '',
-                          latestThumbnailUrl: stream.latestThumbnailUrl,
-                          latestGifUrl: stream.latestGifUrl,
+                          stream: stream,
+                          categoryName: categoryName,
                         ),
                       );
                     },
