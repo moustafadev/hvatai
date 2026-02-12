@@ -41,7 +41,7 @@ class ScheduleStreamScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Expanded(
-                            child: _ActionCard(
+                            child: ActionCard(
                               icon: Assets.assetsIconsUsersGroupRoundedIcon,
                               title: 'Создать товар',
                               onTap: () {
@@ -51,7 +51,7 @@ class ScheduleStreamScreen extends StatelessWidget {
                           ),
                           SizedBox(width: 12.w),
                           Expanded(
-                            child: _ActionCard(
+                            child: ActionCard(
                               icon: Assets.assetsIconsSoundwaveCircle2,
                               title: 'Создать трансляцию',
                               onTap: () {
@@ -83,16 +83,15 @@ class ScheduleStreamScreen extends StatelessWidget {
                             child: CustomText(
                               text:
                                   'Запланированные стримы других пользователей',
-                              fontSize: 16.sp,
+                              fontSize: 20.sp,
                               fontWeight: FontWeight.w800,
-                              color: AppColors.blackDark,
                             ),
                           ),
                           14.pw,
                           Image.asset(
                             Assets.assetsIconsDoubleAltArrowRight,
-                            width: 24.w,
-                            height: 24.h,
+                            width: 16.w,
+                            height: 16.h,
                           ),
                         ],
                       ),
@@ -141,37 +140,15 @@ class ScheduleStreamScreen extends StatelessWidget {
                         itemCount: state.scheduledStreams.length,
                         itemBuilder: (context, index) {
                           final stream = state.scheduledStreams[index];
-                          final firstProduct =
-                              stream.streamProducts?.isNotEmpty == true
-                                  ? stream.streamProducts!.first
-                                  : null;
-                          final startingPrice =
-                              firstProduct?.startingPrice ?? '0';
-                          final product = firstProduct?.product;
                           final categoryName =
-                              stream.categories?.isNotEmpty == true
-                                  ? stream.categories!.first.name ?? ''
-                                  : '';
+                              stream.categories?.firstOrNull?.name ?? '';
 
                           return Container(
                             width: 180.w,
                             margin: EdgeInsets.only(right: 12.w),
-                            child: GestureDetector(
-                              onTap: () {
-                                // Navigate to stream details or join stream
-                                if (stream.status == 'scheduled' &&
-                                    stream.id != null) {
-                                  // Navigate to stream details or schedule view
-                                  // You can add navigation logic here if needed
-                                }
-                              },
-                              child: ScheduledStreamCard(
-                                stream: stream,
-                                price: startingPrice != '0'
-                                    ? 'Стартовая цена $startingPrice Р'
-                                    : null,
-                                categoryName: categoryName,
-                              ),
+                            child: ScheduledStreamCard(
+                              stream: stream,
+                              categoryName: categoryName,
                             ),
                           );
                         },
@@ -188,12 +165,13 @@ class ScheduleStreamScreen extends StatelessWidget {
   }
 }
 
-class _ActionCard extends StatelessWidget {
+class ActionCard extends StatelessWidget {
   final String icon;
   final String title;
   final VoidCallback onTap;
 
-  const _ActionCard({
+  const ActionCard({
+    super.key,
     required this.icon,
     required this.title,
     required this.onTap,
@@ -205,42 +183,30 @@ class _ActionCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: const Color(0xFFFFFFFF),
-          borderRadius: BorderRadius.circular(16.r),
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(12.r),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFF000000).withOpacity(0.05),
+              color: AppColors.blackColor.withValues(alpha: 0.05),
               offset: const Offset(0, 3),
               blurRadius: 7,
               spreadRadius: 0,
             ),
             BoxShadow(
-              color: const Color(0xFF000000).withOpacity(0.05),
+              color: AppColors.blackColor.withValues(alpha: 0.05),
               offset: const Offset(0, 13),
               blurRadius: 13,
               spreadRadius: 0,
             ),
             BoxShadow(
-              color: const Color(0xFF000000).withOpacity(0.03),
+              color: AppColors.blackColor.withValues(alpha: 0.03),
               offset: const Offset(0, 30),
               blurRadius: 18,
               spreadRadius: 0,
             ),
-            BoxShadow(
-              color: const Color(0xFF000000).withOpacity(0.00),
-              offset: const Offset(0, 53),
-              blurRadius: 21,
-              spreadRadius: 0,
-            ),
-            BoxShadow(
-              color: const Color(0xFF000000).withOpacity(0.00),
-              offset: const Offset(0, 83),
-              blurRadius: 23,
-              spreadRadius: 0,
-            ),
           ],
         ),
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,

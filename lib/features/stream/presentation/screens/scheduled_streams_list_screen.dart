@@ -43,9 +43,8 @@ class ScheduledStreamsListScreen extends StatelessWidget {
                     12.ph,
                     CustomText(
                       text: 'Запланированные стримы других пользователей',
-                      fontSize: 18.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.blackDark,
+                      fontSize: 20.sp,
+                      fontWeight: FontWeight.w800,
                     ),
                   ],
                 ),
@@ -76,31 +75,12 @@ class ScheduledStreamsListScreen extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       final stream = streams[index];
-                      final firstProduct =
-                          stream.streamProducts?.isNotEmpty == true
-                              ? stream.streamProducts!.first
-                              : null;
-                      final startingPrice = firstProduct?.startingPrice ?? '0';
-                      final product = firstProduct?.product;
-                      final categoryName = stream.categories?.isNotEmpty == true
-                          ? stream.categories!.first.name ?? ''
-                          : '';
+                      final categoryName =
+                          stream.categories?.firstOrNull?.name ?? '';
 
-                      return GestureDetector(
-                        onTap: () {
-                          // Navigate to stream details or schedule view
-                          if (stream.status == 'scheduled' &&
-                              stream.id != null) {
-                            // You can add navigation logic here if needed
-                          }
-                        },
-                        child: ScheduledStreamCard(
-                          stream: stream,
-                          price: startingPrice != '0'
-                              ? 'Стартовая цена $startingPrice Р'
-                              : null,
-                          categoryName: categoryName,
-                        ),
+                      return ScheduledStreamCard(
+                        stream: stream,
+                        categoryName: categoryName,
                       );
                     },
                     childCount: streams.length,

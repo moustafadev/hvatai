@@ -126,8 +126,7 @@ class _ScheduledStreamCardState extends State<ScheduledStreamCard> {
                       child: Align(
                         alignment: Alignment.topLeft,
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 6, vertical: 6),
+                          padding: EdgeInsets.all(4),
                           decoration: BoxDecoration(
                             color: AppColors.primaryPink,
                             borderRadius: BorderRadius.circular(10),
@@ -166,17 +165,23 @@ class _ScheduledStreamCardState extends State<ScheduledStreamCard> {
                                     .read<ToggleFavoriteCubit>()
                                     .toggleFavorite('stream', streamId)
                                 : null),
-                            child: CircleAvatar(
-                              radius: 12.r,
-                              backgroundColor: isFavorited
-                                  ? AppColors.primaryPink
-                                  : AppColors.blackDark,
-                              child: Image.asset(
-                                Assets.assetsIconsSave,
-                                height: 14.h,
-                                width: 14.w,
-                                fit: BoxFit.cover,
-                                color: AppColors.white,
+                            child: Container(
+                              width: 24.w,
+                              height: 24.h,
+                              decoration: BoxDecoration(
+                                color: AppColors.blackColor
+                                    .withValues(alpha: 0.65),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Image.asset(
+                                  Assets.assetsIconsFavsav,
+                                  height: 14.h,
+                                  width: 14.w,
+                                  color: isFavorited
+                                      ? AppColors.primaryColor
+                                      : AppColors.white,
+                                ),
                               ),
                             ),
                           );
@@ -212,8 +217,8 @@ class _ScheduledStreamCardState extends State<ScheduledStreamCard> {
                         child: CustomText(
                           text: widget.stream.user?.name ?? 'company_name',
                           color: AppColors.white,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.w800,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
