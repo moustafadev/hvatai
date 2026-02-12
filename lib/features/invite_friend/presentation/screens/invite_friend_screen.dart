@@ -8,6 +8,7 @@ class InviteFriendScreen extends StatelessWidget {
     return BlocProvider(
       create: (_) => locator<InviteFriendCubit>()..loadInviteCode(),
       child: Scaffold(
+        backgroundColor: AppColors.white,
         body: BlocBuilder<InviteFriendCubit, InviteFriendState>(
           builder: (context, state) {
             return Padding(
@@ -61,13 +62,12 @@ class InviteFriendScreen extends StatelessWidget {
                     ),
                     16.ph,
                     Container(
-                      height: 52.h,
+                      height: 52,
                       padding: const EdgeInsets.all(6.0),
                       decoration: BoxDecoration(
-                        color: AppColors.white,
                         borderRadius: BorderRadius.circular(10.r),
-                        border:
-                            Border.all(color: AppColors.graniteGray, width: 1),
+                        border: Border.all(
+                            color: AppColors.blackColor.withValues(alpha: 0.2)),
                       ),
                       child: Row(
                         children: [
@@ -84,9 +84,7 @@ class InviteFriendScreen extends StatelessWidget {
                                     ),
                                   )
                                 : CustomText(
-                                    text: state.inviteCode.isEmpty
-                                        ? 'Loading...'
-                                        : state.inviteCode,
+                                    text: state.inviteCode,
                                     color: AppColors.blackDark,
                                     fontWeight: FontWeight.w400,
                                     fontSize: 14.sp,
@@ -101,9 +99,8 @@ class InviteFriendScreen extends StatelessWidget {
                               color: AppColors.primaryColor,
                               title: 'copy'.tr(),
                               fontSize: 14.sp,
-                              height: 50,
                               fontWeight: FontWeight.w700,
-                              textColor: AppColors.white,
+                              textColor: AppColors.background,
                               onPressed: state.inviteCode.isEmpty
                                   ? null
                                   : () {
