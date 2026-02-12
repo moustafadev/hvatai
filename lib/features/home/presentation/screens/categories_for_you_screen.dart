@@ -16,7 +16,7 @@ class CategoriesForYouScreen extends StatelessWidget {
       create: (_) =>
           locator<CategoriesForYouCubit>()..initialize(initialSelectedIds),
       child: Scaffold(
-        backgroundColor: AppColors.lightGreyBackground,
+        backgroundColor: AppColors.background,
         body: SafeArea(
           child: Stack(
             children: [
@@ -41,7 +41,7 @@ class CategoriesForYouScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: CustomText(
                       text: 'categoriesForYou'.tr(),
-                      fontSize: 20.sp,
+                      fontSize: 28.sp,
                       fontWeight: FontWeight.w800,
                     ),
                   ),

@@ -10,6 +10,7 @@ import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cu
 import 'package:hvatai/features/create_clip/presentation/cubit/create_clip_cubit/create_clip_cubit.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/preview_clip_cubit/preview_clip_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/categories_for_you/categories_for_you_cubit.dart';
+import 'package:hvatai/features/home/presentation/cubit/home_search/home_search_cubit.dart';
 import 'package:hvatai/features/review/data/datasources/api_service_review.dart';
 import 'package:hvatai/features/review/data/repositories/review_repository_impl.dart';
 import 'package:hvatai/features/review/domain/repositories/review_repository.dart';
@@ -199,6 +200,12 @@ Future<void> setupLocator() async {
   locator.registerFactory(
       () => CartCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => SearchCubit(
+        locator(),
+        locator(),
+        locator(),
+        locator(),
+      ));
+  locator.registerFactory(() => HomeSearchCubit(
         locator(),
         locator(),
         locator(),

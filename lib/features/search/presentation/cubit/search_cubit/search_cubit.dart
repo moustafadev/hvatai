@@ -3,7 +3,6 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hvatai/features/cart/data/model/cart_model.dart' as cart;
 import 'package:hvatai/features/cart/data/model/cart_model.dart';
 import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
 import 'package:hvatai/features/cart/presentation/event_bus/events.dart';

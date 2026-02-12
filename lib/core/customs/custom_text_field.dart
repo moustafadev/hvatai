@@ -28,6 +28,8 @@ class CustomTextField extends StatelessWidget {
   final int? maxLength;
   final ValueChanged<String>? onSubmitted;
   final EdgeInsets? contentPadding;
+  final ValueChanged<String>? onFieldSubmitted;
+  final FocusNode? focusNode;
   const CustomTextField({
     super.key,
     required this.hintText,
@@ -57,6 +59,8 @@ class CustomTextField extends StatelessWidget {
     this.maxLength,
     this.onSubmitted,
     this.contentPadding,
+    this.onFieldSubmitted,
+    this.focusNode,
   });
 
   @override
@@ -69,6 +73,7 @@ class CustomTextField extends StatelessWidget {
         minLines: maxLines ?? 1,
         cursorColor: Colors.black,
         onTap: onTap,
+        focusNode: focusNode,
         controller: controller,
         obscureText: obscureText,
         readOnly: readOnly,
@@ -77,7 +82,7 @@ class CustomTextField extends StatelessWidget {
         autovalidateMode: autovalidateMode,
         keyboardType: keyboardType,
         onChanged: onChanged,
-        onFieldSubmitted: onSubmitted,
+        onFieldSubmitted: onFieldSubmitted,
         textInputAction: textInputAction,
         inputFormatters: inputFormatters,
         maxLength: maxLength,

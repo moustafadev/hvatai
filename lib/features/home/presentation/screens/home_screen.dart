@@ -3,15 +3,19 @@ part of '../home.dart';
 bool inChat = false;
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({
-    super.key,
-  });
+  const HomeScreen({super.key});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late final HomeSearchCubit _searchCubit;
+  final TextEditingController _searchController = TextEditingController();
+  final FocusNode _searchFocusNode = FocusNode();
+  final GlobalKey _searchFieldKey = GlobalKey();
+  final LayerLink _searchFieldLink = LayerLink();
+
   final _pusherManager = PusherManager();
   late final PusherClient _pusher;
   late final Channel _channel;
@@ -19,7 +23,20 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
     _connectToPusher();
+
+    _searchCubit = locator<HomeSearchCubit>();
+
+    _searchController.addListener(() {
+      final q = _searchController.text;
+
+      if (q.trim().isEmpty) {
+        _searchCubit.hideSearch(); // home + clear suggestions
+      } else {
+        _searchCubit.onQueryChanged(q); // suggestions only
+      }
+    });
   }
 
   void _connectToPusher() {
@@ -33,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
       final message =
           SocketMessageModel.fromJson(data).message.toMessageModel();
       chatsCubit.updateChatWithNewMessage(message);
-      // locator<HomeSummaryCubit>()..loadSummary();
 
       if (message.chatId == chatsCubit.state.currentChatId &&
           message.sender?.id != userId) {
@@ -58,18 +74,39 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     _pusher.unsubscribe('private-user.${locator<AppLocal>().getUserId()}');
     _pusherManager.dispose();
+
+    _searchController.dispose();
+    _searchFocusNode.dispose();
+
+    // if this cubit is created from locator as singleton, don't close it.
+    // if it's factory/unique per screen then you can close.
+    _searchCubit.close();
+
     super.dispose();
+  }
+
+  void _submitSearch(BuildContext context, String q) {
+    final query = q.trim();
+    if (query.isEmpty) return;
+
+    FocusScope.of(context).unfocus();
+    _searchCubit
+        .onSubmitted(query); // ✅ switches to search mode + loads streams
+  }
+
+  void _clearSearch(BuildContext context) {
+    _searchController.clear(); // ✅ triggers listener => hideSearch()
+    FocusScope.of(context).unfocus();
+    _searchCubit.hideSearch();
   }
 
   @override
   Widget build(BuildContext context) {
-    inChat = false;
-
     return Scaffold(
-      resizeToAvoidBottomInset: true,
       backgroundColor: AppColors.background,
       body: MultiBlocProvider(
         providers: [
+          BlocProvider.value(value: _searchCubit),
           BlocProvider(
             create: (_) => locator<CategoriesCubit>()
               ..loadAllCategories()
@@ -91,68 +128,79 @@ class _HomeScreenState extends State<HomeScreen> {
                 context.read<CategoriesCubit>().loadAllCategories();
                 context.read<CategoriesCubit>().loadFavoriteCategories();
               },
-              child: CustomScrollView(
-                physics: const ClampingScrollPhysics(
-                  parent: AlwaysScrollableScrollPhysics(),
-                ),
-                slivers: [
-                  SliverAppBar(
-                    pinned: true, // ✅ fixed at top
-                    floating: false,
-                    snap: false,
-                    elevation: 0,
-                    backgroundColor: AppColors.background,
-                    automaticallyImplyLeading: false,
-                    toolbarHeight: 40, // adjust as you need
-                    titleSpacing: 0,
-                    title: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: TopBarWidget(isBack: false),
+              child: GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  FocusScope.of(context).unfocus();
+                  context.read<HomeSearchCubit>().hideSuggestions();
+                },
+                child: NotificationListener<ScrollNotification>(
+                  onNotification: (n) {
+                    if (n is ScrollStartNotification ||
+                        n is ScrollUpdateNotification) {
+                      context.read<HomeSearchCubit>().hideSuggestions();
+                    }
+                    return false;
+                  },
+                  child: CustomScrollView(
+                    physics: const ClampingScrollPhysics(
+                      parent: AlwaysScrollableScrollPhysics(),
                     ),
-                  ),
-                  SliverToBoxAdapter(child: 16.ph),
-                  SliverToBoxAdapter(
-                    child: BlocBuilder<CategoriesCubit, CategoriesState>(
-                      builder: (context, categoriesState) {
-                        final hasSelectedFavCategory =
-                            categoriesState.selectedFavoriteCategoryIds.isNotEmpty;
+                    slivers: [
+                      SliverAppBar(
+                        pinned: true,
+                        elevation: 0,
+                        backgroundColor: AppColors.background,
+                        automaticallyImplyLeading: false,
+                        toolbarHeight: 56,
+                        titleSpacing: 0,
+                        title: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: TopBarHomeWidget(
+                            // ✅ pass key/link like SearchScreen
+                            searchFieldKey: _searchFieldKey,
+                            searchFieldLink: _searchFieldLink,
 
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                            controller: _searchController,
+                            focusNode: _searchFocusNode,
+                            onSubmitted: (q) => _submitSearch(context, q),
+                            onClear: () => _clearSearch(context),
+                            onFocus: () => context
+                                .read<HomeSearchCubit>()
+                                .onSearchFieldFocused(),
+                          ),
+                        ),
+                      ),
+
+                      // ✅ keep suggestions overlay in the same stack layer
+                      SliverToBoxAdapter(
+                        child: Stack(
                           children: [
-                            if (!hasSelectedFavCategory) ...[
-                              const AllChildCategoriesWidget(),
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                                child: TitleCategoriesForYou(),
-                              ),
-                              12.ph,
-                              MyCategory(),
-                            ],
-                            if (hasSelectedFavCategory) ...[
-                              const Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                                child: TitleCategoriesForYou(),
-                              ),
-                              12.ph,
-                              MyCategory(),
-                              CategoryTabsWidget(),
-                            ],
-                            24.ph,
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              child: LiveVideosWidget(
-                                liveStreams: liveStreamsState.liveStreams,
-                              ),
+                            // main content
+                            HomeBody(
+                              liveStreamsState: liveStreamsState,
+                              controller: _searchController,
                             ),
-                            120.ph,
+
+                            // overlay suggestions (only when query not empty)
+                            // ✅ always mounted (it will show/hide using cubit state)
+                            HomeSearchSuggestionsOverlay(
+                              searchFieldKey: _searchFieldKey,
+                              searchFieldLink: _searchFieldLink,
+                              onSelected: (text) {
+                                _searchController.text = text;
+                                _searchController.selection =
+                                    TextSelection.collapsed(
+                                        offset: text.length);
+                                
+                              },
+                            ),
                           ],
-                        );
-                      },
-                    ),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             );
           },
