@@ -12,7 +12,7 @@ class AddNewProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreyBackground,
+      backgroundColor: AppColors.background,
       appBar: CustomAppBar(
         showBack: true,
         showSearch: false,
@@ -51,10 +51,7 @@ class NewProductWidgetBody extends StatelessWidget {
         builder: (context, state) {
       final cubit = context.read<ProductFormCubit>();
       if (state.isLoading) {
-        return const Center(
-            child: CircularProgressIndicator(
-          color: AppColors.grey,
-        ));
+        return const Center(child: CustomCircularProgrressIndicator());
       }
 
       if (state.errorMessage.isNotEmpty) {
@@ -76,34 +73,64 @@ class NewProductWidgetBody extends StatelessWidget {
                     fontWeight: FontWeight.w800,
                   ),
                   12.ph,
-                  CustomTextField(
-                    key: ValueKey('title_field'),
-                    hintText: 'title'.tr(),
-                    initialValue: state.product.productName,
-                    onChanged: (value) => cubit.updateField('name', value),
+                  Container(
+                    decoration: BoxDecoration(
+                      boxShadow: AppColors.boxShadowTextField,
+                    ),
+                    child: CustomTextField(
+                      key: ValueKey('title_field'),
+                      hintText: 'title'.tr(),
+                      initialValue: state.product.productName,
+                      hintStyle: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.blackColor.withValues(alpha: 0.2),
+                      ),
+                      onChanged: (value) => cubit.updateField('name', value),
+                    ),
                   ),
                   12.ph,
-                  CustomTextField(
-                    key: ValueKey('description_field'),
-                    hintText: 'description'.tr(),
-                    initialValue: state.product.productDescription,
-                    onChanged: (value) =>
-                        cubit.updateField('description', value),
-                    maxLines: 5,
+                  Container(
+                    decoration: BoxDecoration(
+                      boxShadow: AppColors.boxShadowTextField,
+                    ),
+                    child: CustomTextField(
+                      key: ValueKey('description_field'),
+                      hintText: 'description'.tr(),
+                      hintStyle: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.blackColor.withValues(alpha: 0.2),
+                      ),
+                      initialValue: state.product.productDescription,
+                      onChanged: (value) =>
+                          cubit.updateField('description', value),
+                      maxLines: 5,
+                    ),
                   ),
                   12.ph,
                   CategoryDropdown(),
                   12.ph,
-                  CustomTextField(
-                    key: ValueKey('price_field'),
-                    hintText: 'price'.tr(),
-                    keyboardType: TextInputType.number,
-                    initialValue: state.product.variants.isNotEmpty &&
-                            state.product.variants.first.price != null
-                        ? state.product.variants.first.price.toString()
-                        : '',
-                    onChanged: (value) =>
-                        cubit.updateField('startingBid', value),
+                  Container(
+                    decoration: BoxDecoration(
+                      boxShadow: AppColors.boxShadowTextField,
+                    ),
+                    child: CustomTextField(
+                      key: ValueKey('price_field'),
+                      hintText: 'price'.tr(),
+                      hintStyle: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.blackColor.withValues(alpha: 0.2),
+                      ),
+                      keyboardType: TextInputType.number,
+                      initialValue: state.product.variants.isNotEmpty &&
+                              state.product.variants.first.price != null
+                          ? state.product.variants.first.price.toString()
+                          : '',
+                      onChanged: (value) =>
+                          cubit.updateField('startingBid', value),
+                    ),
                   ),
                   24.ph,
                   CustomText(
@@ -139,17 +166,6 @@ class NewProductWidgetBody extends StatelessWidget {
                     onChanged: (val) => cubit.togglePickupFree(),
                   ),
                   12.ph,
-                  // CustomSwitchWidget(
-                  //   title: 'Оплата продавцом',
-                  //   value: (state.product.deliveryDiscount ?? 0) > 0,
-                  //   onChanged: (val) {
-                  //     cubit.updateField(
-                  //       'deliveryDiscount',
-                  //       val ? '100' : '0',
-                  //     );
-                  //   },
-                  // ),
-                  30.ph,
                 ]),
               ),
             ),

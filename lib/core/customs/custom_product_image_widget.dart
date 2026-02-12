@@ -71,7 +71,8 @@ class ProductImageCubit extends Cubit<ProductImageState> {
           }
         },
         onChoosePhoto: () async {
-          final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+          final pickedFile =
+              await picker.pickImage(source: ImageSource.gallery);
           if (pickedFile != null) {
             final updated = List<MediaItem>.from(state.mediaItems)
               ..add(MediaItem(path: pickedFile.path, type: MediaType.image));
@@ -91,7 +92,8 @@ class ProductImageCubit extends Cubit<ProductImageState> {
           }
         },
         onChoosePhoto: () async {
-          final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+          final pickedFile =
+              await picker.pickImage(source: ImageSource.gallery);
           if (pickedFile != null) {
             final updated = List<MediaItem>.from(state.mediaItems)
               ..add(MediaItem(path: pickedFile.path, type: MediaType.image));
@@ -107,7 +109,8 @@ class ProductImageCubit extends Cubit<ProductImageState> {
           }
         },
         onChooseVideo: () async {
-          final pickedFile = await picker.pickVideo(source: ImageSource.gallery);
+          final pickedFile =
+              await picker.pickVideo(source: ImageSource.gallery);
           if (pickedFile != null) {
             final updated = List<MediaItem>.from(state.mediaItems)
               ..add(MediaItem(path: pickedFile.path, type: MediaType.video));
@@ -125,7 +128,8 @@ class ProductImageCubit extends Cubit<ProductImageState> {
         showPhotoOptionsDialog(
           context: context,
           onTakePhoto: () async {
-            final pickedFile = await picker.pickImage(source: ImageSource.camera);
+            final pickedFile =
+                await picker.pickImage(source: ImageSource.camera);
             if (pickedFile != null) {
               final updated = List<MediaItem>.from(state.mediaItems);
               updated[index] =
@@ -151,7 +155,8 @@ class ProductImageCubit extends Cubit<ProductImageState> {
         showMediaOptionsDialog(
           context: context,
           onTakePhoto: () async {
-            final pickedFile = await picker.pickImage(source: ImageSource.camera);
+            final pickedFile =
+                await picker.pickImage(source: ImageSource.camera);
             if (pickedFile != null) {
               final updated = List<MediaItem>.from(state.mediaItems);
               updated[index] =
@@ -170,7 +175,8 @@ class ProductImageCubit extends Cubit<ProductImageState> {
             }
           },
           onTakeVideo: () async {
-            final pickedFile = await picker.pickVideo(source: ImageSource.camera);
+            final pickedFile =
+                await picker.pickVideo(source: ImageSource.camera);
             if (pickedFile != null) {
               final updated = List<MediaItem>.from(state.mediaItems);
               updated[index] =
@@ -256,35 +262,35 @@ class PlaceHolder extends StatelessWidget {
                 ),
                 5.ph,
                 CustomText(
-                  text: imagesOnly ? 'uploadPhotos'.tr() : 'uploadPhotoOrVideo'.tr(),
-                  fontSize: 14.sp,
+                  text: imagesOnly
+                      ? 'uploadPhotos'.tr()
+                      : 'uploadPhotoOrVideo'.tr(),
+                  fontSize: 12.sp,
                   fontWeight: FontWeight.w600,
                   color: AppColors.blackDark,
                 ),
-                if (isShowMinimum) ...[
-                  4.ph,
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: 'photoRequired'.tr(),
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.graniteGray,
-                              fontSize: 10,
-                              fontFamily: 'Manrope'),
-                        ),
-                        TextSpan(
-                          text: '*',
-                          style: const TextStyle(
-                              color: AppColors.red,
-                              fontSize: 10,
-                              fontFamily: 'Manrope'),
-                        ),
-                      ],
-                    ),
+                4.ph,
+                RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'photoRequired'.tr(),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.greyTransparent,
+                            fontSize: 10,
+                            fontFamily: 'Manrope'),
+                      ),
+                      TextSpan(
+                        text: '*',
+                        style: const TextStyle(
+                            color: AppColors.red,
+                            fontSize: 10,
+                            fontFamily: 'Manrope'),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ],
             ],
           ),
@@ -381,13 +387,13 @@ class CustomProductImageWidget extends StatelessWidget {
                     text: 'mediaUploaded'.tr(),
                     fontSize: 10.sp,
                     fontWeight: FontWeight.w400,
-                    color: AppColors.graniteGray,
+                    color: AppColors.blackColor.withValues(alpha: 0.5),
                   ),
                   CustomText(
                     text: ' ${state.mediaItems.length}/8',
                     fontSize: 10.sp,
                     fontWeight: FontWeight.w400,
-                    color: AppColors.graniteGray,
+                    color: AppColors.blackColor.withValues(alpha: 0.5),
                   ),
                 ],
               ),

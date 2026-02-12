@@ -29,26 +29,31 @@ class CategoryDropdown extends StatelessWidget {
             )
             .name;
 
-        return CustomDropdown(
-          hintText: 'selectCategory'.tr(),
-          value: selectedCategoryName,
-          onChanged: (value) {
-            if (value != null) {
-              final selected = filteredCategories.firstWhere(
-                (c) => c.name == value,
-                orElse: () => MainCategoryModel(),
-              );
-              if (selected.id != null) {
-                cubit.setCategory(selected.id!, selected.name);
+        return Container(
+          decoration: BoxDecoration(
+            boxShadow: AppColors.boxShadowTextField,
+          ),
+          child: CustomDropdown(
+            hintText: 'selectCategory'.tr(),
+            value: selectedCategoryName,
+            onChanged: (value) {
+              if (value != null) {
+                final selected = filteredCategories.firstWhere(
+                  (c) => c.name == value,
+                  orElse: () => MainCategoryModel(),
+                );
+                if (selected.id != null) {
+                  cubit.setCategory(selected.id!, selected.name);
+                }
               }
-            }
-          },
-          items: filteredCategories
-              .map((category) => DropdownMenuItem(
-                    value: category.name,
-                    child: Text(category.name ?? ''),
-                  ))
-              .toList(),
+            },
+            items: filteredCategories
+                .map((category) => DropdownMenuItem(
+                      value: category.name,
+                      child: Text(category.name ?? ''),
+                    ))
+                .toList(),
+          ),
         );
       },
     );

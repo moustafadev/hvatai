@@ -42,8 +42,8 @@ class CustomDropdown extends StatelessWidget {
               Expanded(
                 child: CustomText(
                   text: value ?? hintText,
-                  color: value == null ? Colors.black : Colors.black,
-                  fontSize: 16,
+                  fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
               if (isRequired)

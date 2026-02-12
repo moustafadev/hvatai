@@ -6,7 +6,7 @@ class ScheduleStreamScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
+      backgroundColor: AppColors.background,
       body: SafeArea(
         child: BlocBuilder<ScheduleStreamCubit, ScheduleStreamState>(
           builder: (context, state) {
