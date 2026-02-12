@@ -152,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         elevation: 0,
                         backgroundColor: AppColors.background,
                         automaticallyImplyLeading: false,
-                        toolbarHeight: 56,
+                        toolbarHeight: 40,
                         titleSpacing: 0,
                         title: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -192,7 +192,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                 _searchController.selection =
                                     TextSelection.collapsed(
                                         offset: text.length);
-                                
                               },
                             ),
                           ],

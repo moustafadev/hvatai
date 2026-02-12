@@ -24,6 +24,7 @@ class ProductsSearchWidget extends StatelessWidget {
 
             return CustomProductCard(
               product: product,
+              color: Colors.transparent,
               selectedCategoryIndex: index,
             );
           },

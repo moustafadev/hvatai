@@ -208,8 +208,6 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => HomeSearchCubit(
         locator(),
         locator(),
-        locator(),
-        locator(),
       ));
   locator.registerFactory(() => ScheduleStreamCubit(locator()));
   locator.registerFactory(() => InviteFriendCubit(locator()));

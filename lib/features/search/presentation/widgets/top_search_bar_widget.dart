@@ -3,8 +3,6 @@ part of '../search.dart';
 class TopBarSearchWidget extends StatefulWidget {
   const TopBarSearchWidget({
     super.key,
-    required this.image,
-    required this.isSearch,
     required this.searchFieldLink,
     required this.searchFieldKey,
     this.onChanged,
@@ -13,8 +11,6 @@ class TopBarSearchWidget extends StatefulWidget {
     this.initialValue,
   });
 
-  final String image;
-  final bool isSearch;
   final LayerLink searchFieldLink;
   final GlobalKey searchFieldKey;
   final ValueChanged<String>? onChanged;
@@ -67,49 +63,33 @@ class _TopBarSearchWidgetState extends State<TopBarSearchWidget> {
               }
             },
             child: Icon(Icons.arrow_back_ios)),
-        widget.isSearch ? 2.ph : const Spacer(),
-        widget.isSearch
-            ? Expanded(
-                child: CompositedTransformTarget(
-                  link: widget.searchFieldLink,
-                  child: SizedBox(
-                    key: widget.searchFieldKey,
-                    height: 40,
-                  child: CustomTextField(
-                    controller: _controller,
-                    fillColor: AppColors.white,
-                    height: 40,
-                    borderRadius: BorderRadius.circular(10.r),
-                    onChanged: widget.onChanged,
-                    onTap: widget.onFocus,
-                      onSubmitted: widget.onSubmitted,
-                      textInputAction: TextInputAction.search,
-                    hintText: 'find'.tr(),
-                    prefixIcon: Image.asset(
-                      Assets.assetsIconsSearch,
-                      color: AppColors.blackDark,
-                      height: 22.h,
-                      width: 22.w,
-                      ),
-                    ),
-                  ),
+        2.ph,
+        Expanded(
+          child: CompositedTransformTarget(
+            link: widget.searchFieldLink,
+            child: SizedBox(
+              key: widget.searchFieldKey,
+              height: 40,
+              child: CustomTextField(
+                controller: _controller,
+                fillColor: AppColors.white,
+                height: 40,
+                borderRadius: BorderRadius.circular(10.r),
+                onChanged: widget.onChanged,
+                onTap: widget.onFocus,
+                onSubmitted: widget.onSubmitted,
+                textInputAction: TextInputAction.search,
+                hintText: 'find'.tr(),
+                prefixIcon: Image.asset(
+                  Assets.assetsIconsSearch,
+                  color: AppColors.blackDark,
+                  height: 22.h,
+                  width: 22.w,
                 ),
-              )
-            : Container(),
-        widget.isSearch ? 8.pw : 0.ph,
-        // Padding(
-        //   padding: const EdgeInsets.only(bottom: 8.0),
-        //   child: GestureDetector(
-        //     onTap: () {
-        //       // Get.to(() => NotificationScreen1());
-        //     },
-        //     child: Image.asset(
-        //       image,
-        //       width: 24,
-        //       height: 24,
-        //     ),
-        //   ),
-        // ),
+              ),
+            ),
+          ),
+        )
       ],
     );
   }

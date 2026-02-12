@@ -44,10 +44,7 @@ class StreamsTabWidget extends StatelessWidget {
           itemCount: state.streams.length,
           itemBuilder: (context, index) {
             final stream = state.streams[index];
-            final firstProduct = stream.streamProducts?.isNotEmpty == true
-                ? stream.streamProducts!.first
-                : null;
-            final product = firstProduct?.product;
+
             final categoryName = stream.categories?.isNotEmpty == true
                 ? stream.categories!.first.name ?? ''
                 : '';

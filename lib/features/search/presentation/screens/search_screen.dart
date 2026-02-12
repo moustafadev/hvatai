@@ -33,7 +33,7 @@ class _SearchScreenState extends State<SearchScreen> {
           final isSearching = state.isLoading && state.hasLoadedInitial;
 
           return Scaffold(
-            backgroundColor: AppColors.lightGreyBackground,
+            backgroundColor: AppColors.background,
             body: Stack(
               children: [
                 Column(
@@ -45,8 +45,6 @@ class _SearchScreenState extends State<SearchScreen> {
                       child: TopBarSearchWidget(
                         searchFieldKey: _searchFieldKey,
                         searchFieldLink: _searchFieldLink,
-                        isSearch: true,
-                        image: Assets.assetsIconsShare,
                         onChanged: cubit.onQueryChanged,
                         onFocus: cubit.onSearchFieldFocused,
                         onSubmitted: cubit.onSearchSubmitted,
