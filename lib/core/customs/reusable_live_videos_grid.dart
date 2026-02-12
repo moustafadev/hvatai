@@ -6,35 +6,21 @@ typedef BlockedCardBuilder<T> = Widget Function(BuildContext context, T item);
 
 class ReusableLiveVideosGrid<T> extends StatelessWidget {
   final List<T> items;
-  final FilterFunction<T> filter;
   final LiveCardBuilder<T> liveCardBuilder;
-  final BlockedCardBuilder<T>? blockedCardBuilder;
-  final bool Function(T item)? isBlocked;
-  final bool Function(T item)? isOwner;
 
   const ReusableLiveVideosGrid({
     super.key,
     required this.items,
-    required this.filter,
     required this.liveCardBuilder,
-    this.blockedCardBuilder,
-    this.isBlocked,
-    this.isOwner,
   });
 
   @override
   Widget build(BuildContext context) {
-    final filtered = items.where(filter).toList();
-
-    if (filtered.isEmpty) {
-      return SizedBox();
-    }
-
     return GridView.builder(
       padding: const EdgeInsets.all(0),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: filtered.length,
+      itemCount: items.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
         crossAxisSpacing: 11.w,
@@ -43,16 +29,7 @@ class ReusableLiveVideosGrid<T> extends StatelessWidget {
         childAspectRatio: 0.6,
       ),
       itemBuilder: (context, index) {
-        final item = filtered[index];
-
-        if (isBlocked != null &&
-            isOwner != null &&
-            isBlocked!(item) &&
-            isOwner!(item)) {
-          if (blockedCardBuilder != null) {
-            return blockedCardBuilder!(context, item);
-          }
-        }
+        final item = items[index];
 
         return liveCardBuilder(context, item);
       },

@@ -100,15 +100,7 @@ class StreamsCompanyTab extends StatelessWidget {
                 sliver: SliverToBoxAdapter(
                   child: ReusableLiveVideosGrid<StreamDataModel>(
                     items: state.streams,
-                    filter: (stream) => true,
-                    isBlocked: (stream) => false,
-                    isOwner: (stream) => false,
                     liveCardBuilder: (context, stream) {
-                      final firstProduct =
-                          stream.streamProducts?.isNotEmpty == true
-                              ? stream.streamProducts!.first
-                              : null;
-                      final product = firstProduct?.product;
                       final categoryName = stream.categories?.isNotEmpty == true
                           ? stream.categories!.first.name ?? ''
                           : '';

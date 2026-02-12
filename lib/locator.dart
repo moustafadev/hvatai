@@ -133,6 +133,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => InterestsCubit(
         locator(),
         locator(),
+        locator(),
       ));
   locator.registerFactory(() => EditAddressCubit(
         locator(),

@@ -67,7 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
-      backgroundColor: AppColors.lightGreyBackground,
+      backgroundColor: AppColors.background,
       body: MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -91,64 +91,66 @@ class _HomeScreenState extends State<HomeScreen> {
                 context.read<CategoriesCubit>().getCategories();
                 context.read<CategoriesCubit>().getFavCategories();
               },
-              child: ListView(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16.0),
-                    child: TopBarWidget(
-                        // onGiftTap: () => context.push(AppRoutes.awardsGift),
-                        ),
+              child: CustomScrollView(
+                physics: const ClampingScrollPhysics(
+                  parent: AlwaysScrollableScrollPhysics(),
+                ),
+                slivers: [
+                  SliverAppBar(
+                    pinned: true, // ✅ fixed at top
+                    floating: false,
+                    snap: false,
+                    elevation: 0,
+                    backgroundColor: AppColors.background,
+                    automaticallyImplyLeading: false,
+                    toolbarHeight: 40, // adjust as you need
+                    titleSpacing: 0,
+                    title: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: TopBarWidget(isBack: false),
+                    ),
                   ),
-                  16.ph,
-                  BlocBuilder<CategoriesCubit, CategoriesState>(
-                    builder: (context, categoriesState) {
-                      final hasSelectedFavCategory =
-                          categoriesState.selectedFavCategoryId != null;
+                  SliverToBoxAdapter(child: 16.ph),
+                  SliverToBoxAdapter(
+                    child: BlocBuilder<CategoriesCubit, CategoriesState>(
+                      builder: (context, categoriesState) {
+                        final hasSelectedFavCategory =
+                            categoriesState.selectedFavCategoryId != null;
 
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          // State 1: No favorite category selected
-                          // Show: All child categories -> Categories for you -> Favorite categories
-                          if (!hasSelectedFavCategory) ...[
-                            // All child categories at the top
-                            const AllChildCategoriesWidget(),
-                            // Categories for you
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              child: TitleCategoriesForYou(),
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (!hasSelectedFavCategory) ...[
+                              const AllChildCategoriesWidget(),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                child: TitleCategoriesForYou(),
+                              ),
+                              12.ph,
+                              MyCategory(),
+                            ],
+                            if (hasSelectedFavCategory) ...[
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                                child: TitleCategoriesForYou(),
+                              ),
+                              12.ph,
+                              MyCategory(),
+                              CategoryTabsWidget(),
+                            ],
+                            24.ph,
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              child: LiveVideosWidget(
+                                liveStreams: liveStreamsState.liveStreams,
+                              ),
                             ),
-                            12.ph,
-                            MyCategory(),
+                            120.ph,
                           ],
-
-                          // State 2: Favorite category selected
-                          // Show: Categories for you -> Favorite categories -> Subcategories
-                          if (hasSelectedFavCategory) ...[
-                            // Categories for you
-                            const Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 16.0),
-                              child: TitleCategoriesForYou(),
-                            ),
-                            12.ph,
-                            MyCategory(),
-                            // Subcategories of selected favorite category
-                            CategoryTabsWidget(),
-                          ],
-
-                          24.ph,
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
-                            child: LiveVideosWidget(
-                              liveStreams: liveStreamsState.liveStreams,
-                              currentUserId: '',
-                            ),
-                          ),
-                          100.ph
-                        ],
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ],
               ),

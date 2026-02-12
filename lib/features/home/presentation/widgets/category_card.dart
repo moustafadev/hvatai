@@ -46,7 +46,7 @@ class CategoryCard extends StatelessWidget {
             children: [
               Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 4.0, vertical: 6),
+                    const EdgeInsets.symmetric(horizontal: 4.0, vertical: 4),
                 child: CustomText(
                   text: category.name ?? '',
                   fontSize: 14,
@@ -98,6 +98,7 @@ class CategoryCard extends StatelessWidget {
                 child: CustomImage(
                   imageSource: imageUrl,
                   fit: BoxFit.cover,
+                  width: double.infinity,
                 ),
               ),
             ],

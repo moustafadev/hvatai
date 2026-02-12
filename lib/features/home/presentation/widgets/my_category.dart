@@ -27,7 +27,7 @@ class MyCategory extends StatelessWidget {
             if (state.isLoading)
               const LinearProgressIndicator(color: Colors.blue),
             SizedBox(
-              height: 150,
+              height: 141,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(

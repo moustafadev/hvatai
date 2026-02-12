@@ -95,7 +95,7 @@ class AllChildCategoriesWidget extends StatelessWidget {
                 ),
               ),
             ),
-            24.ph,
+            16.ph,
           ],
         );
       },

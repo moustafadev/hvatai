@@ -6,10 +6,12 @@ class TopBarWidget extends StatelessWidget {
       this.isCircle = false,
       this.onGiftTap,
       this.isGift = true,
+      this.isBack = true,
       super.key});
   final bool isSearch;
   final bool isGift;
   final bool isCircle;
+  final bool isBack;
   final VoidCallback? onGiftTap;
   @override
   Widget build(BuildContext context) {
@@ -21,11 +23,12 @@ class TopBarWidget extends StatelessWidget {
         final count = state.notifications?.data?.length ?? 0;
         return Row(
           children: [
-            GestureDetector(
-                onTap: () {
-                  context.pop();
-                },
-                child: Icon(Icons.arrow_back_ios)),
+            if (isBack)
+              GestureDetector(
+                  onTap: () {
+                    context.pop();
+                  },
+                  child: Icon(Icons.arrow_back_ios)),
             Expanded(
               child: isSearch
                   ? CustomTextField(

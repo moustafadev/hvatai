@@ -16,17 +16,22 @@ class TitleCategoriesForYou extends StatelessWidget {
         ),
         const Spacer(),
         GestureDetector(
-            onTap: () {
-              final liveStreamsCubit = context.read<LiveStreamsCubit>();
-              final categoriesCubit = context.read<CategoriesCubit>();
-              final categories = categoriesCubit.state.categories?.data ?? [];
-              context.push(AppRoutes.categoriesForYou, extra: {
-                'liveStreamsCubit': liveStreamsCubit,
-                'categoriesCubit': categoriesCubit,
-                'categories': categories,
-              });
-            },
-            child: Icon(Icons.double_arrow_sharp, size: 14.sp))
+          onTap: () {
+            final liveStreamsCubit = context.read<LiveStreamsCubit>();
+            final categoriesCubit = context.read<CategoriesCubit>();
+            final categories = categoriesCubit.state.categories?.data ?? [];
+            context.push(AppRoutes.categoriesForYou, extra: {
+              'liveStreamsCubit': liveStreamsCubit,
+              'categoriesCubit': categoriesCubit,
+              'categories': categories,
+            });
+          },
+          child: SvgPicture.asset(
+            Assets.assetsIconsDoubleAltArrow,
+            width: 14.w,
+            height: 14.h,
+          ),
+        )
       ],
     );
   }

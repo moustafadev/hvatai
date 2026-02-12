@@ -38,19 +38,12 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
 
   @override
   Widget build(BuildContext context) {
-    // final String imageUrl = liveImage.isNotEmpty
-    //     ? liveImage
-    //     : adminImage.isNotEmpty
-    //         ? adminImage
-    //         : '';
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
         // Live Image + Favorite Overlay
         Expanded(
-          flex: 3,
           child: GestureDetector(
             onLongPress: (widget.stream.latestGifUrl != null &&
                     widget.stream.latestGifUrl!.isNotEmpty)
@@ -85,12 +78,6 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                           width: double.infinity,
                           height: double.infinity,
                           fit: BoxFit.cover,
-                          placeholder: (context, url) => Image.asset(
-                            Assets.assetsIconsStreamPlaceholder,
-                            width: double.infinity,
-                            height: double.infinity,
-                            fit: BoxFit.fill,
-                          ),
                           errorWidget: (context, url, error) => Image.asset(
                             Assets.assetsIconsStreamPlaceholder,
                             width: double.infinity,
@@ -105,12 +92,6 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                               width: double.infinity,
                               height: double.infinity,
                               fit: BoxFit.cover,
-                              placeholder: (context, url) => Image.asset(
-                                Assets.assetsIconsStreamPlaceholder,
-                                width: double.infinity,
-                                height: double.infinity,
-                                fit: BoxFit.fill,
-                              ),
                               errorWidget: (context, url, error) => Image.asset(
                                 Assets.assetsIconsStreamPlaceholder,
                                 width: double.infinity,
@@ -136,14 +117,14 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                             horizontal: 6, vertical: 3),
                         decoration: BoxDecoration(
                           color: AppColors.primaryPink,
-                          borderRadius: BorderRadius.circular(6),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: CustomText(
                           text: "Live • ${widget.stream.viewerCount ?? 0}",
                           textAlign: TextAlign.center,
                           color: AppColors.white,
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ),
@@ -172,28 +153,34 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                                     .read<ToggleFavoriteCubit>()
                                     .toggleFavorite('stream', streamId)
                                 : null),
-                            child: CircleAvatar(
-                              radius: 12.r,
-                              backgroundColor: isFavorited
-                                  ? AppColors.primaryPink
-                                  : AppColors.blackDark,
-                              child: Image.asset(
-                                Assets.assetsIconsSave,
-                                height: 14.h,
-                                width: 14.w,
-                                fit: BoxFit.cover,
-                                color: AppColors.white,
+                            child: Container(
+                              width: 24.w,
+                              height: 24.h,
+                              decoration: BoxDecoration(
+                                color: AppColors.blackColor
+                                    .withValues(alpha: 0.65),
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Image.asset(
+                                  Assets.assetsIconsFavsav,
+                                  height: 14.h,
+                                  width: 14.w,
+                                  color: isFavorited
+                                      ? AppColors.primaryColor
+                                      : AppColors.white,
+                                ),
                               ),
                             ),
                           );
                         },
                       ),
-                      4.ph,
+                      2.ph,
                       CustomText(
                           text: (widget.stream.viewerCount ?? 0).toString(),
                           color: AppColors.white,
                           fontSize: 12.sp,
-                          fontWeight: FontWeight.bold),
+                          fontWeight: FontWeight.w600),
                     ],
                   ),
                 ),
@@ -205,7 +192,6 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                       horizontal: 8,
                       vertical: 2,
                     ),
-                    height: 20.h,
                     decoration: BoxDecoration(
                       color: AppColors.primary,
                       borderRadius: BorderRadius.circular(10.r),
