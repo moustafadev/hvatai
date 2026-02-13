@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/features/cart/data/model/cart_model.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
-import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/search/data/model/recent_search_response.dart';
 import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
@@ -332,5 +331,4 @@ class SearchCubit extends Cubit<SearchState> {
       );
     }).toList();
   }
-
 }

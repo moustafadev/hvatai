@@ -12,7 +12,6 @@ import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cu
 import 'package:hvatai/features/cart/presentation/cart.dart';
 import 'package:hvatai/features/orders/presentation/cubit/my_orders_cubit.dart';
 import 'package:hvatai/features/orders/presentation/widgets/orders_content.dart';
-import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
 import 'package:hvatai/features/stream/presentation/stream.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
@@ -23,5 +22,4 @@ part 'widgets/streams_tab_widget.dart';
 part 'widgets/bids_tab_widget.dart';
 part 'widgets/activity_bid_item_card.dart';
 part 'widgets/fav_live_video_card.dart';
-part 'widgets/fav_live_video_widget.dart';
 part 'widgets/orders_activity_widget.dart';
