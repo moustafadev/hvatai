@@ -4,14 +4,12 @@ class SearchLiveVideoWidget extends StatelessWidget {
   final List<SearchLiveStreamModel> liveStreams;
   final String currentUserId;
   final String searchQuery;
-  final String? selectedCategory;
 
   const SearchLiveVideoWidget({
     super.key,
     required this.liveStreams,
     required this.currentUserId,
     this.searchQuery = '',
-    this.selectedCategory,
   });
 
   @override

@@ -51,7 +51,6 @@ class _SearchScreenState extends State<SearchScreen> {
                         initialValue: state.query,
                       ),
                     ),
-                    // Recent searches section
                     Expanded(
                       child: isSearching
                           ? const Center(
@@ -74,58 +73,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     if (state.recentSearches.isNotEmpty &&
                                         state.query.isEmpty &&
                                         state.selectedCategoryId == null)
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            16.ph,
-                                            CustomText(
-                                              text: 'Недавно искали',
-                                              fontSize: 20.sp,
-                                              fontWeight: FontWeight.w800,
-                                            ),
-                                            12.ph,
-                                            Wrap(
-                                              spacing: 8,
-                                              runSpacing: 8,
-                                              children: state.recentSearches
-                                                  .map((item) {
-                                                return InputChip(
-                                                  side: const BorderSide(
-                                                    color:
-                                                        AppColors.transparent,
-                                                  ),
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10),
-                                                  ),
-                                                  backgroundColor:
-                                                      AppColors.greyButton,
-                                                  deleteIconColor:
-                                                      AppColors.text,
-                                                  label: CustomText(
-                                                    text: item.query,
-                                                    fontSize: 12.sp,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                  onDeleted: () {
-                                                    cubit.removeRecentSearch(
-                                                        item);
-                                                  },
-                                                  onPressed: () {
-                                                    cubit.selectSuggestion(
-                                                        item.query);
-                                                  },
-                                                );
-                                              }).toList(),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                      RecentSearchWidget(),
                                     16.ph,
                                     // Hide category section if one is selected
                                     if (state.selectedCategoryId == null) ...[
@@ -167,8 +115,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                             liveStreams: state.liveStreams,
                                             currentUserId: '',
                                             searchQuery: state.query,
-                                            selectedCategory:
-                                                cubit.selectedCategory,
                                           ),
                                           24.ph,
                                           CustomText(
@@ -176,8 +122,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                             fontWeight: FontWeight.w800,
                                             fontSize: 20.sp,
                                           ),
-                                          12.ph,
-                                          UsersSearchWidget(),
                                         ],
                                       ),
                                     ),

@@ -12,8 +12,6 @@ import 'package:hvatai/features/cart/domain/usecases/delete_cart_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/get_product_by_id_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/update_cart_usecase.dart';
 import 'package:hvatai/features/cart/presentation/cubit/cart_cubit/cart_cubit.dart';
-import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
-import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
 import 'package:hvatai/features/home/domain/usecases/join_stream_usecase.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
@@ -451,13 +449,6 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
           isFavorited: response.isFavorited,
           favoritesCount: response.favoritesCount,
         );
-
-        EventBus().publish(FavoriteUpdatedEvent(
-          productId: productId,
-          isFavorite: response.isFavorited,
-          favoritesCount: response.favoritesCount,
-          product: updatedProduct,
-        ));
 
         emit(state.copyWith(
           isLoading: false,

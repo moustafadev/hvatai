@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/features/cart/data/model/cart_model.dart';
-import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
-import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
@@ -28,38 +26,9 @@ class SearchCubit extends Cubit<SearchState> {
     this._deleteRecentSearchUsecase,
   ) : super(SearchState(
           categories: const [],
-          selectedIndex: 0,
-        )) {
-    EventBus().subscribe<ProductAddedEvent>((event) {
-      _handleProductAdded(event);
-    });
-    EventBus().subscribe<FavoriteUpdatedEvent>((event) {
-      _handleFavoriteUpdated(event);
-    });
-  }
+        ));
 
   static const _defaultQuery = '';
-
-  void _handleFavoriteUpdated(FavoriteUpdatedEvent event) {
-    final updatedProducts = state.products.map((product) {
-      if (product.id == event.productId) {
-        return product.copyWith(
-          isFavorited: event.isFavorite,
-          favoritesCount: event.favoritesCount,
-        );
-      }
-      return product;
-    }).toList();
-
-    emit(state.copyWith(products: updatedProducts));
-  }
-
-  void _handleProductAdded(ProductAddedEvent event) {
-    if (!state.products.any((product) => product.id == event.product.id)) {
-      final updatedProducts = [event.product, ...state.products];
-      emit(state.copyWith(products: updatedProducts));
-    }
-  }
 
   final SearchUsecase _searchUsecase;
   final SearchSuggestionsUsecase _searchSuggestionsUsecase;
@@ -70,17 +39,9 @@ class SearchCubit extends Cubit<SearchState> {
 
   @override
   Future<void> close() {
-    EventBus().unsubscribe<FavoriteUpdatedEvent>(_handleFavoriteUpdated);
-
-    EventBus().unsubscribe<ProductAddedEvent>(_handleProductAdded);
     _debounce?.cancel();
     _suggestionsDebounce?.cancel();
     return super.close();
-  }
-
-  void removeItem(String item) {
-    final updatedList = List<String>.from(state.searchedItems)..remove(item);
-    emit(state.copyWith(searchedItems: updatedList));
   }
 
   void initialize() {
@@ -263,22 +224,16 @@ class SearchCubit extends Cubit<SearchState> {
       ),
       (response) {
         final data = response.data;
-        final parentCategories = data?.parentCategories ?? [];
-        final childCategories = data?.childCategories ?? [];
+        final categories = data?.parentCategories ?? [];
         final products =
             _mapProducts(data?.products?.data ?? const <SearchProductDto>[]);
         final streams = _mapStreams(data?.streams ?? const <SearchStreamDto>[]);
-        final users = _mapUsers(data?.users ?? const <SearchUserDto>[]);
-        final categories = _buildCategories(parentCategories);
 
         emit(
           state.copyWith(
             isLoading: false,
             products: products,
             liveStreams: streams,
-            users: users,
-            parentCategories: parentCategories,
-            childCategories: childCategories,
             categories: categories,
             hasNoResults: data?.hasNoResults ?? false,
             hasLoadedInitial: true,
@@ -289,37 +244,10 @@ class SearchCubit extends Cubit<SearchState> {
     );
   }
 
-  void toggleInterest(int index, String interestKey) {
-    final isSelected = state.selectedIndices.contains(index);
-    final updatedIndices = Set<int>.from(state.selectedIndices);
-    final updatedInterests = List<String>.from(state.selectedInterests);
-
-    if (isSelected) {
-      updatedIndices.remove(index);
-      updatedInterests.remove(interestKey);
-    } else {
-      updatedIndices.add(index);
-      updatedInterests.add(interestKey);
-    }
-
-    emit(state.copyWith(
-      selectedIndices: updatedIndices,
-      selectedInterests: updatedInterests,
-    ));
-  }
-
-  void selectCategory(dynamic index) {
-    if (state.categories.isEmpty) return;
-    final safeIndex = (index is int) ? index : 0;
-    emit(state.copyWith(
-        selectedIndex: safeIndex.clamp(0, state.categories.length - 1)));
-  }
-
   void selectCategoryById(CategoryData category) {
     if (category.id == null) return;
     emit(state.copyWith(
       selectedCategoryId: category.id,
-      selectedCategoryName: category.name,
     ));
     // Trigger search with selected category
     search(state.query);
@@ -328,25 +256,9 @@ class SearchCubit extends Cubit<SearchState> {
   void clearSelectedCategory() {
     emit(state.copyWith(
       selectedCategoryId: null,
-      selectedCategoryName: null,
     ));
     // Trigger search without category filter
     search(state.query);
-  }
-
-  String? get selectedCategory {
-    if (state.categories.isEmpty) return null;
-    final safeIndex = state.selectedIndex.clamp(0, state.categories.length - 1);
-    final category = state.categories[safeIndex];
-    return category == 'All' ? null : category;
-  }
-
-  List<String> _buildCategories(List<CategoryData> categories) {
-    final names = categories
-        .map((category) => category.name ?? '')
-        .where((name) => name.isNotEmpty)
-        .toList();
-    return names;
   }
 
   List<ProductModel> _mapProducts(List<SearchProductDto> products) {
@@ -421,20 +333,4 @@ class SearchCubit extends Cubit<SearchState> {
     }).toList();
   }
 
-  List<UserRegistrationData> _mapUsers(List<SearchUserDto> users) {
-    return users
-        .map(
-          (user) => UserRegistrationData(
-            id: user.id,
-            firstName: user.name,
-            email: user.email,
-            image: user.image,
-            description: user.description,
-            personalRating: user.personalRating,
-            personalRatingCount: user.personalRatingCount,
-            favoritesCount: user.favoritesCount,
-          ),
-        )
-        .toList();
-  }
 }

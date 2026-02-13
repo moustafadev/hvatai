@@ -7,8 +7,7 @@ class MyCategorySearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SearchCubit, SearchState>(
       builder: (context, state) {
-        final cubit = context.read<SearchCubit>();
-        final categories = state.parentCategories;
+        final categories = state.categories;
 
         if (categories.isEmpty) {
           return const SizedBox.shrink();
@@ -22,20 +21,35 @@ class MyCategorySearch extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        return ReusableCategoryWidget(
-          categories: filteredCategories,
-          selectedIndices: state.selectedCategoryId != null
-              ? filteredCategories
-                  .asMap()
-                  .entries
-                  .where((entry) => entry.value.id == state.selectedCategoryId)
-                  .map((entry) => entry.key)
-                  .toList()
-              : [],
-          onTap: (index, key) {
-            final category = filteredCategories[index];
-            cubit.selectCategoryById(category);
-          },
+        return SizedBox(
+          height: 150,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(
+                categories.length,
+                (index) {
+                  final category = categories[index];
+                  return Padding(
+                    padding: EdgeInsets.only(left: index == 0 ? 16 : 12),
+                    child: SizedBox(
+                      width: 120,
+                      height: 150,
+                      child: CategoryCard(
+                        category: category,
+                        isSelected: false,
+                        onTap: () {
+                          context
+                              .read<SearchCubit>()
+                              .selectCategoryById(category);
+                        },
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
         );
       },
     );

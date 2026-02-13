@@ -24,40 +24,42 @@ class MyCategory extends StatelessWidget {
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children:
-                      List.generate(favoriteCategories.data!.length, (index) {
-                    final category = favoriteCategories.data![index];
-                    final catId = category.id ?? 0;
+                  children: List.generate(
+                    favoriteCategories.data!.length,
+                    (index) {
+                      final category = favoriteCategories.data![index];
+                      final catId = category.id ?? 0;
 
-                    final isSelected =
-                        state.selectedFavoriteCategoryIds.contains(catId);
+                      final isSelected =
+                          state.selectedFavoriteCategoryIds.contains(catId);
 
-                    final cubit = context.read<CategoriesCubit>();
-                    return Padding(
-                      padding: EdgeInsets.only(left: index == 0 ? 16 : 12),
-                      child: SizedBox(
-                        width: 120,
-                        height: 141,
-                        child: CategoryCard(
-                          category: category,
-                          isSelected: isSelected,
-                          onTap: () {
-                            cubit.toggleFavoriteCategory(
-                                categoryId: category.id ?? 0);
-                            final liveStreamsCubit =
-                                context.read<LiveStreamsCubit>();
-                            liveStreamsCubit.fetchLiveStreams(
-                              isRefresh: true,
-                              categoryIds: [
-                                ...cubit.state.selectedFavoriteCategoryIds,
-                                ...cubit.state.selectedSubcategoryIds
-                              ],
-                            );
-                          },
+                      final cubit = context.read<CategoriesCubit>();
+                      return Padding(
+                        padding: EdgeInsets.only(left: index == 0 ? 16 : 12),
+                        child: SizedBox(
+                          width: 120,
+                          height: 141,
+                          child: CategoryCard(
+                            category: category,
+                            isSelected: isSelected,
+                            onTap: () {
+                              cubit.toggleFavoriteCategory(
+                                  categoryId: category.id ?? 0);
+                              final liveStreamsCubit =
+                                  context.read<LiveStreamsCubit>();
+                              liveStreamsCubit.fetchLiveStreams(
+                                isRefresh: true,
+                                categoryIds: [
+                                  ...cubit.state.selectedFavoriteCategoryIds,
+                                  ...cubit.state.selectedSubcategoryIds
+                                ],
+                              );
+                            },
+                          ),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                    },
+                  ),
                 ),
               ),
             ),

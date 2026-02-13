@@ -9,8 +9,6 @@ import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
-import 'package:hvatai/features/cart/presentation/event_bus/event_bus.dart';
-import 'package:hvatai/features/cart/presentation/event_bus/events.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/add_new_product/domain/usecases/add_new_product_usecase.dart';
 import 'package:hvatai/features/add_new_product/domain/usecases/get_product_category_usecase.dart';
@@ -382,7 +380,6 @@ class ProductFormCubit extends Cubit<ProductFormState> {
         id: newProduct.id,
       );
 
-      EventBus().publish(ProductAddedEvent(completeProduct));
 
       emit(state.copyWith(isLoadingRequest: false));
       showFloatingMessageSuccess('productAdded'.tr());

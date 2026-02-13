@@ -49,7 +49,6 @@ class HomeSearchResult extends StatelessWidget {
                 liveStreams: homeSearchState.streams,
                 currentUserId: '',
                 searchQuery: homeSearchState.query,
-                selectedCategory: null,
               ),
             ),
             100.ph,

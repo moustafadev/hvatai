@@ -1,4 +1,4 @@
-part of '../search.dart';
+part of '../customs/customs.dart';
 
 class ReviewItem extends StatelessWidget {
   final String username;

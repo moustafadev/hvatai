@@ -16,26 +16,15 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SearchState {
-  List<String> get categories => throw _privateConstructorUsedError;
-  int get selectedIndex => throw _privateConstructorUsedError;
+  List<CategoryData> get categories => throw _privateConstructorUsedError;
   String get query => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   bool get hasLoadedInitial => throw _privateConstructorUsedError;
-  bool get isFavourites => throw _privateConstructorUsedError;
-  bool get isCart => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   List<ProductModel> get products => throw _privateConstructorUsedError;
   List<SearchLiveStreamModel> get liveStreams =>
       throw _privateConstructorUsedError;
-  List<UserRegistrationData> get users => throw _privateConstructorUsedError;
-  List<CategoryData> get parentCategories => throw _privateConstructorUsedError;
-  List<CategoryData> get childCategories => throw _privateConstructorUsedError;
   bool get hasNoResults => throw _privateConstructorUsedError;
-  List<String> get selectedInterests => throw _privateConstructorUsedError;
-  Set<int> get selectedIndices => throw _privateConstructorUsedError;
-  List<String> get searchedItems => throw _privateConstructorUsedError;
-  int get selectedCategoryIndex => throw _privateConstructorUsedError;
-  int get currentImageIndex => throw _privateConstructorUsedError;
   PageController? get pageController => throw _privateConstructorUsedError;
   List<String> get suggestions => throw _privateConstructorUsedError;
   bool get isLoadingSuggestions => throw _privateConstructorUsedError;
@@ -45,7 +34,6 @@ mixin _$SearchState {
       throw _privateConstructorUsedError;
   bool get isLoadingRecentSearches => throw _privateConstructorUsedError;
   int? get selectedCategoryId => throw _privateConstructorUsedError;
-  String? get selectedCategoryName => throw _privateConstructorUsedError;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -61,25 +49,14 @@ abstract class $SearchStateCopyWith<$Res> {
       _$SearchStateCopyWithImpl<$Res, SearchState>;
   @useResult
   $Res call(
-      {List<String> categories,
-      int selectedIndex,
+      {List<CategoryData> categories,
       String query,
       bool isLoading,
       bool hasLoadedInitial,
-      bool isFavourites,
-      bool isCart,
       String errorMessage,
       List<ProductModel> products,
       List<SearchLiveStreamModel> liveStreams,
-      List<UserRegistrationData> users,
-      List<CategoryData> parentCategories,
-      List<CategoryData> childCategories,
       bool hasNoResults,
-      List<String> selectedInterests,
-      Set<int> selectedIndices,
-      List<String> searchedItems,
-      int selectedCategoryIndex,
-      int currentImageIndex,
       PageController? pageController,
       List<String> suggestions,
       bool isLoadingSuggestions,
@@ -87,8 +64,7 @@ abstract class $SearchStateCopyWith<$Res> {
       bool isSearchFocused,
       List<RecentSearchItem> recentSearches,
       bool isLoadingRecentSearches,
-      int? selectedCategoryId,
-      String? selectedCategoryName});
+      int? selectedCategoryId});
 }
 
 /// @nodoc
@@ -107,24 +83,13 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
   @override
   $Res call({
     Object? categories = null,
-    Object? selectedIndex = null,
     Object? query = null,
     Object? isLoading = null,
     Object? hasLoadedInitial = null,
-    Object? isFavourites = null,
-    Object? isCart = null,
     Object? errorMessage = null,
     Object? products = null,
     Object? liveStreams = null,
-    Object? users = null,
-    Object? parentCategories = null,
-    Object? childCategories = null,
     Object? hasNoResults = null,
-    Object? selectedInterests = null,
-    Object? selectedIndices = null,
-    Object? searchedItems = null,
-    Object? selectedCategoryIndex = null,
-    Object? currentImageIndex = null,
     Object? pageController = freezed,
     Object? suggestions = null,
     Object? isLoadingSuggestions = null,
@@ -133,17 +98,12 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     Object? recentSearches = null,
     Object? isLoadingRecentSearches = null,
     Object? selectedCategoryId = freezed,
-    Object? selectedCategoryName = freezed,
   }) {
     return _then(_value.copyWith(
       categories: null == categories
           ? _value.categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedIndex: null == selectedIndex
-          ? _value.selectedIndex
-          : selectedIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+              as List<CategoryData>,
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
@@ -155,14 +115,6 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
       hasLoadedInitial: null == hasLoadedInitial
           ? _value.hasLoadedInitial
           : hasLoadedInitial // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFavourites: null == isFavourites
-          ? _value.isFavourites
-          : isFavourites // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isCart: null == isCart
-          ? _value.isCart
-          : isCart // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: null == errorMessage
           ? _value.errorMessage
@@ -176,42 +128,10 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           ? _value.liveStreams
           : liveStreams // ignore: cast_nullable_to_non_nullable
               as List<SearchLiveStreamModel>,
-      users: null == users
-          ? _value.users
-          : users // ignore: cast_nullable_to_non_nullable
-              as List<UserRegistrationData>,
-      parentCategories: null == parentCategories
-          ? _value.parentCategories
-          : parentCategories // ignore: cast_nullable_to_non_nullable
-              as List<CategoryData>,
-      childCategories: null == childCategories
-          ? _value.childCategories
-          : childCategories // ignore: cast_nullable_to_non_nullable
-              as List<CategoryData>,
       hasNoResults: null == hasNoResults
           ? _value.hasNoResults
           : hasNoResults // ignore: cast_nullable_to_non_nullable
               as bool,
-      selectedInterests: null == selectedInterests
-          ? _value.selectedInterests
-          : selectedInterests // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedIndices: null == selectedIndices
-          ? _value.selectedIndices
-          : selectedIndices // ignore: cast_nullable_to_non_nullable
-              as Set<int>,
-      searchedItems: null == searchedItems
-          ? _value.searchedItems
-          : searchedItems // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedCategoryIndex: null == selectedCategoryIndex
-          ? _value.selectedCategoryIndex
-          : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      currentImageIndex: null == currentImageIndex
-          ? _value.currentImageIndex
-          : currentImageIndex // ignore: cast_nullable_to_non_nullable
-              as int,
       pageController: freezed == pageController
           ? _value.pageController
           : pageController // ignore: cast_nullable_to_non_nullable
@@ -244,10 +164,6 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           ? _value.selectedCategoryId
           : selectedCategoryId // ignore: cast_nullable_to_non_nullable
               as int?,
-      selectedCategoryName: freezed == selectedCategoryName
-          ? _value.selectedCategoryName
-          : selectedCategoryName // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -261,25 +177,14 @@ abstract class _$$SearchStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<String> categories,
-      int selectedIndex,
+      {List<CategoryData> categories,
       String query,
       bool isLoading,
       bool hasLoadedInitial,
-      bool isFavourites,
-      bool isCart,
       String errorMessage,
       List<ProductModel> products,
       List<SearchLiveStreamModel> liveStreams,
-      List<UserRegistrationData> users,
-      List<CategoryData> parentCategories,
-      List<CategoryData> childCategories,
       bool hasNoResults,
-      List<String> selectedInterests,
-      Set<int> selectedIndices,
-      List<String> searchedItems,
-      int selectedCategoryIndex,
-      int currentImageIndex,
       PageController? pageController,
       List<String> suggestions,
       bool isLoadingSuggestions,
@@ -287,8 +192,7 @@ abstract class _$$SearchStateImplCopyWith<$Res>
       bool isSearchFocused,
       List<RecentSearchItem> recentSearches,
       bool isLoadingRecentSearches,
-      int? selectedCategoryId,
-      String? selectedCategoryName});
+      int? selectedCategoryId});
 }
 
 /// @nodoc
@@ -305,24 +209,13 @@ class __$$SearchStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? categories = null,
-    Object? selectedIndex = null,
     Object? query = null,
     Object? isLoading = null,
     Object? hasLoadedInitial = null,
-    Object? isFavourites = null,
-    Object? isCart = null,
     Object? errorMessage = null,
     Object? products = null,
     Object? liveStreams = null,
-    Object? users = null,
-    Object? parentCategories = null,
-    Object? childCategories = null,
     Object? hasNoResults = null,
-    Object? selectedInterests = null,
-    Object? selectedIndices = null,
-    Object? searchedItems = null,
-    Object? selectedCategoryIndex = null,
-    Object? currentImageIndex = null,
     Object? pageController = freezed,
     Object? suggestions = null,
     Object? isLoadingSuggestions = null,
@@ -331,17 +224,12 @@ class __$$SearchStateImplCopyWithImpl<$Res>
     Object? recentSearches = null,
     Object? isLoadingRecentSearches = null,
     Object? selectedCategoryId = freezed,
-    Object? selectedCategoryName = freezed,
   }) {
     return _then(_$SearchStateImpl(
       categories: null == categories
           ? _value._categories
           : categories // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedIndex: null == selectedIndex
-          ? _value.selectedIndex
-          : selectedIndex // ignore: cast_nullable_to_non_nullable
-              as int,
+              as List<CategoryData>,
       query: null == query
           ? _value.query
           : query // ignore: cast_nullable_to_non_nullable
@@ -353,14 +241,6 @@ class __$$SearchStateImplCopyWithImpl<$Res>
       hasLoadedInitial: null == hasLoadedInitial
           ? _value.hasLoadedInitial
           : hasLoadedInitial // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isFavourites: null == isFavourites
-          ? _value.isFavourites
-          : isFavourites // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isCart: null == isCart
-          ? _value.isCart
-          : isCart // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: null == errorMessage
           ? _value.errorMessage
@@ -374,42 +254,10 @@ class __$$SearchStateImplCopyWithImpl<$Res>
           ? _value._liveStreams
           : liveStreams // ignore: cast_nullable_to_non_nullable
               as List<SearchLiveStreamModel>,
-      users: null == users
-          ? _value._users
-          : users // ignore: cast_nullable_to_non_nullable
-              as List<UserRegistrationData>,
-      parentCategories: null == parentCategories
-          ? _value._parentCategories
-          : parentCategories // ignore: cast_nullable_to_non_nullable
-              as List<CategoryData>,
-      childCategories: null == childCategories
-          ? _value._childCategories
-          : childCategories // ignore: cast_nullable_to_non_nullable
-              as List<CategoryData>,
       hasNoResults: null == hasNoResults
           ? _value.hasNoResults
           : hasNoResults // ignore: cast_nullable_to_non_nullable
               as bool,
-      selectedInterests: null == selectedInterests
-          ? _value._selectedInterests
-          : selectedInterests // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedIndices: null == selectedIndices
-          ? _value._selectedIndices
-          : selectedIndices // ignore: cast_nullable_to_non_nullable
-              as Set<int>,
-      searchedItems: null == searchedItems
-          ? _value._searchedItems
-          : searchedItems // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      selectedCategoryIndex: null == selectedCategoryIndex
-          ? _value.selectedCategoryIndex
-          : selectedCategoryIndex // ignore: cast_nullable_to_non_nullable
-              as int,
-      currentImageIndex: null == currentImageIndex
-          ? _value.currentImageIndex
-          : currentImageIndex // ignore: cast_nullable_to_non_nullable
-              as int,
       pageController: freezed == pageController
           ? _value.pageController
           : pageController // ignore: cast_nullable_to_non_nullable
@@ -442,10 +290,6 @@ class __$$SearchStateImplCopyWithImpl<$Res>
           ? _value.selectedCategoryId
           : selectedCategoryId // ignore: cast_nullable_to_non_nullable
               as int?,
-      selectedCategoryName: freezed == selectedCategoryName
-          ? _value.selectedCategoryName
-          : selectedCategoryName // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -454,25 +298,14 @@ class __$$SearchStateImplCopyWithImpl<$Res>
 
 class _$SearchStateImpl implements _SearchState {
   const _$SearchStateImpl(
-      {required final List<String> categories,
-      required this.selectedIndex,
+      {required final List<CategoryData> categories,
       this.query = '',
       this.isLoading = false,
       this.hasLoadedInitial = false,
-      this.isFavourites = false,
-      this.isCart = false,
       this.errorMessage = '',
       final List<ProductModel> products = const [],
       final List<SearchLiveStreamModel> liveStreams = const [],
-      final List<UserRegistrationData> users = const [],
-      final List<CategoryData> parentCategories = const [],
-      final List<CategoryData> childCategories = const [],
       this.hasNoResults = false,
-      final List<String> selectedInterests = const [],
-      final Set<int> selectedIndices = const {},
-      final List<String> searchedItems = const [],
-      this.selectedCategoryIndex = 0,
-      this.currentImageIndex = 0,
       this.pageController,
       final List<String> suggestions = const [],
       this.isLoadingSuggestions = false,
@@ -480,30 +313,21 @@ class _$SearchStateImpl implements _SearchState {
       this.isSearchFocused = false,
       final List<RecentSearchItem> recentSearches = const [],
       this.isLoadingRecentSearches = false,
-      this.selectedCategoryId,
-      this.selectedCategoryName})
+      this.selectedCategoryId})
       : _categories = categories,
         _products = products,
         _liveStreams = liveStreams,
-        _users = users,
-        _parentCategories = parentCategories,
-        _childCategories = childCategories,
-        _selectedInterests = selectedInterests,
-        _selectedIndices = selectedIndices,
-        _searchedItems = searchedItems,
         _suggestions = suggestions,
         _recentSearches = recentSearches;
 
-  final List<String> _categories;
+  final List<CategoryData> _categories;
   @override
-  List<String> get categories {
+  List<CategoryData> get categories {
     if (_categories is EqualUnmodifiableListView) return _categories;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_categories);
   }
 
-  @override
-  final int selectedIndex;
   @override
   @JsonKey()
   final String query;
@@ -513,12 +337,6 @@ class _$SearchStateImpl implements _SearchState {
   @override
   @JsonKey()
   final bool hasLoadedInitial;
-  @override
-  @JsonKey()
-  final bool isFavourites;
-  @override
-  @JsonKey()
-  final bool isCart;
   @override
   @JsonKey()
   final String errorMessage;
@@ -540,71 +358,9 @@ class _$SearchStateImpl implements _SearchState {
     return EqualUnmodifiableListView(_liveStreams);
   }
 
-  final List<UserRegistrationData> _users;
-  @override
-  @JsonKey()
-  List<UserRegistrationData> get users {
-    if (_users is EqualUnmodifiableListView) return _users;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_users);
-  }
-
-  final List<CategoryData> _parentCategories;
-  @override
-  @JsonKey()
-  List<CategoryData> get parentCategories {
-    if (_parentCategories is EqualUnmodifiableListView)
-      return _parentCategories;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_parentCategories);
-  }
-
-  final List<CategoryData> _childCategories;
-  @override
-  @JsonKey()
-  List<CategoryData> get childCategories {
-    if (_childCategories is EqualUnmodifiableListView) return _childCategories;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_childCategories);
-  }
-
   @override
   @JsonKey()
   final bool hasNoResults;
-  final List<String> _selectedInterests;
-  @override
-  @JsonKey()
-  List<String> get selectedInterests {
-    if (_selectedInterests is EqualUnmodifiableListView)
-      return _selectedInterests;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_selectedInterests);
-  }
-
-  final Set<int> _selectedIndices;
-  @override
-  @JsonKey()
-  Set<int> get selectedIndices {
-    if (_selectedIndices is EqualUnmodifiableSetView) return _selectedIndices;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableSetView(_selectedIndices);
-  }
-
-  final List<String> _searchedItems;
-  @override
-  @JsonKey()
-  List<String> get searchedItems {
-    if (_searchedItems is EqualUnmodifiableListView) return _searchedItems;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_searchedItems);
-  }
-
-  @override
-  @JsonKey()
-  final int selectedCategoryIndex;
-  @override
-  @JsonKey()
-  final int currentImageIndex;
   @override
   final PageController? pageController;
   final List<String> _suggestions;
@@ -639,12 +395,10 @@ class _$SearchStateImpl implements _SearchState {
   final bool isLoadingRecentSearches;
   @override
   final int? selectedCategoryId;
-  @override
-  final String? selectedCategoryName;
 
   @override
   String toString() {
-    return 'SearchState(categories: $categories, selectedIndex: $selectedIndex, query: $query, isLoading: $isLoading, hasLoadedInitial: $hasLoadedInitial, isFavourites: $isFavourites, isCart: $isCart, errorMessage: $errorMessage, products: $products, liveStreams: $liveStreams, users: $users, parentCategories: $parentCategories, childCategories: $childCategories, hasNoResults: $hasNoResults, selectedInterests: $selectedInterests, selectedIndices: $selectedIndices, searchedItems: $searchedItems, selectedCategoryIndex: $selectedCategoryIndex, currentImageIndex: $currentImageIndex, pageController: $pageController, suggestions: $suggestions, isLoadingSuggestions: $isLoadingSuggestions, showSuggestions: $showSuggestions, isSearchFocused: $isSearchFocused, recentSearches: $recentSearches, isLoadingRecentSearches: $isLoadingRecentSearches, selectedCategoryId: $selectedCategoryId, selectedCategoryName: $selectedCategoryName)';
+    return 'SearchState(categories: $categories, query: $query, isLoading: $isLoading, hasLoadedInitial: $hasLoadedInitial, errorMessage: $errorMessage, products: $products, liveStreams: $liveStreams, hasNoResults: $hasNoResults, pageController: $pageController, suggestions: $suggestions, isLoadingSuggestions: $isLoadingSuggestions, showSuggestions: $showSuggestions, isSearchFocused: $isSearchFocused, recentSearches: $recentSearches, isLoadingRecentSearches: $isLoadingRecentSearches, selectedCategoryId: $selectedCategoryId)';
   }
 
   @override
@@ -654,38 +408,18 @@ class _$SearchStateImpl implements _SearchState {
             other is _$SearchStateImpl &&
             const DeepCollectionEquality()
                 .equals(other._categories, _categories) &&
-            (identical(other.selectedIndex, selectedIndex) ||
-                other.selectedIndex == selectedIndex) &&
             (identical(other.query, query) || other.query == query) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.hasLoadedInitial, hasLoadedInitial) ||
                 other.hasLoadedInitial == hasLoadedInitial) &&
-            (identical(other.isFavourites, isFavourites) ||
-                other.isFavourites == isFavourites) &&
-            (identical(other.isCart, isCart) || other.isCart == isCart) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             const DeepCollectionEquality().equals(other._products, _products) &&
             const DeepCollectionEquality()
                 .equals(other._liveStreams, _liveStreams) &&
-            const DeepCollectionEquality().equals(other._users, _users) &&
-            const DeepCollectionEquality()
-                .equals(other._parentCategories, _parentCategories) &&
-            const DeepCollectionEquality()
-                .equals(other._childCategories, _childCategories) &&
             (identical(other.hasNoResults, hasNoResults) ||
                 other.hasNoResults == hasNoResults) &&
-            const DeepCollectionEquality()
-                .equals(other._selectedInterests, _selectedInterests) &&
-            const DeepCollectionEquality()
-                .equals(other._selectedIndices, _selectedIndices) &&
-            const DeepCollectionEquality()
-                .equals(other._searchedItems, _searchedItems) &&
-            (identical(other.selectedCategoryIndex, selectedCategoryIndex) ||
-                other.selectedCategoryIndex == selectedCategoryIndex) &&
-            (identical(other.currentImageIndex, currentImageIndex) ||
-                other.currentImageIndex == currentImageIndex) &&
             (identical(other.pageController, pageController) ||
                 other.pageController == pageController) &&
             const DeepCollectionEquality()
@@ -702,43 +436,28 @@ class _$SearchStateImpl implements _SearchState {
                     other.isLoadingRecentSearches, isLoadingRecentSearches) ||
                 other.isLoadingRecentSearches == isLoadingRecentSearches) &&
             (identical(other.selectedCategoryId, selectedCategoryId) ||
-                other.selectedCategoryId == selectedCategoryId) &&
-            (identical(other.selectedCategoryName, selectedCategoryName) ||
-                other.selectedCategoryName == selectedCategoryName));
+                other.selectedCategoryId == selectedCategoryId));
   }
 
   @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        const DeepCollectionEquality().hash(_categories),
-        selectedIndex,
-        query,
-        isLoading,
-        hasLoadedInitial,
-        isFavourites,
-        isCart,
-        errorMessage,
-        const DeepCollectionEquality().hash(_products),
-        const DeepCollectionEquality().hash(_liveStreams),
-        const DeepCollectionEquality().hash(_users),
-        const DeepCollectionEquality().hash(_parentCategories),
-        const DeepCollectionEquality().hash(_childCategories),
-        hasNoResults,
-        const DeepCollectionEquality().hash(_selectedInterests),
-        const DeepCollectionEquality().hash(_selectedIndices),
-        const DeepCollectionEquality().hash(_searchedItems),
-        selectedCategoryIndex,
-        currentImageIndex,
-        pageController,
-        const DeepCollectionEquality().hash(_suggestions),
-        isLoadingSuggestions,
-        showSuggestions,
-        isSearchFocused,
-        const DeepCollectionEquality().hash(_recentSearches),
-        isLoadingRecentSearches,
-        selectedCategoryId,
-        selectedCategoryName
-      ]);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_categories),
+      query,
+      isLoading,
+      hasLoadedInitial,
+      errorMessage,
+      const DeepCollectionEquality().hash(_products),
+      const DeepCollectionEquality().hash(_liveStreams),
+      hasNoResults,
+      pageController,
+      const DeepCollectionEquality().hash(_suggestions),
+      isLoadingSuggestions,
+      showSuggestions,
+      isSearchFocused,
+      const DeepCollectionEquality().hash(_recentSearches),
+      isLoadingRecentSearches,
+      selectedCategoryId);
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -751,25 +470,14 @@ class _$SearchStateImpl implements _SearchState {
 
 abstract class _SearchState implements SearchState {
   const factory _SearchState(
-      {required final List<String> categories,
-      required final int selectedIndex,
+      {required final List<CategoryData> categories,
       final String query,
       final bool isLoading,
       final bool hasLoadedInitial,
-      final bool isFavourites,
-      final bool isCart,
       final String errorMessage,
       final List<ProductModel> products,
       final List<SearchLiveStreamModel> liveStreams,
-      final List<UserRegistrationData> users,
-      final List<CategoryData> parentCategories,
-      final List<CategoryData> childCategories,
       final bool hasNoResults,
-      final List<String> selectedInterests,
-      final Set<int> selectedIndices,
-      final List<String> searchedItems,
-      final int selectedCategoryIndex,
-      final int currentImageIndex,
       final PageController? pageController,
       final List<String> suggestions,
       final bool isLoadingSuggestions,
@@ -777,13 +485,10 @@ abstract class _SearchState implements SearchState {
       final bool isSearchFocused,
       final List<RecentSearchItem> recentSearches,
       final bool isLoadingRecentSearches,
-      final int? selectedCategoryId,
-      final String? selectedCategoryName}) = _$SearchStateImpl;
+      final int? selectedCategoryId}) = _$SearchStateImpl;
 
   @override
-  List<String> get categories;
-  @override
-  int get selectedIndex;
+  List<CategoryData> get categories;
   @override
   String get query;
   @override
@@ -791,33 +496,13 @@ abstract class _SearchState implements SearchState {
   @override
   bool get hasLoadedInitial;
   @override
-  bool get isFavourites;
-  @override
-  bool get isCart;
-  @override
   String get errorMessage;
   @override
   List<ProductModel> get products;
   @override
   List<SearchLiveStreamModel> get liveStreams;
   @override
-  List<UserRegistrationData> get users;
-  @override
-  List<CategoryData> get parentCategories;
-  @override
-  List<CategoryData> get childCategories;
-  @override
   bool get hasNoResults;
-  @override
-  List<String> get selectedInterests;
-  @override
-  Set<int> get selectedIndices;
-  @override
-  List<String> get searchedItems;
-  @override
-  int get selectedCategoryIndex;
-  @override
-  int get currentImageIndex;
   @override
   PageController? get pageController;
   @override
@@ -834,8 +519,6 @@ abstract class _SearchState implements SearchState {
   bool get isLoadingRecentSearches;
   @override
   int? get selectedCategoryId;
-  @override
-  String? get selectedCategoryName;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
