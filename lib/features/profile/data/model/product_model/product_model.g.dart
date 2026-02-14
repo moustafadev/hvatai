@@ -13,6 +13,8 @@ _$ProductModelImpl _$$ProductModelImplFromJson(Map<String, dynamic> json) =>
       productDescription: json['product_description'] as String?,
       saleType: json['sale_type'] as String? ?? 'buy_now',
       deliveryAvailable: _boolFromInt(json['delivery_available']),
+      deliveryTime: json['delivery_time'] as String?,
+      deliveryDiscount: _parseDouble(json['delivery_discount']),
       selfPickup: json['self_pickup'] == null
           ? false
           : _boolFromInt(json['self_pickup']),
@@ -54,6 +56,8 @@ Map<String, dynamic> _$$ProductModelImplToJson(_$ProductModelImpl instance) =>
       'product_description': instance.productDescription,
       'sale_type': instance.saleType,
       'delivery_available': instance.deliveryAvailable,
+      'delivery_time': instance.deliveryTime,
+      'delivery_discount': instance.deliveryDiscount,
       'self_pickup': instance.selfPickup,
       'self_destruction': instance.selfDestruction,
       'user_id': instance.userId,

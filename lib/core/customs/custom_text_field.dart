@@ -30,6 +30,8 @@ class CustomTextField extends StatelessWidget {
   final EdgeInsets? contentPadding;
   final ValueChanged<String>? onFieldSubmitted;
   final FocusNode? focusNode;
+  final TextStyle? style;
+  final bool enabled;
   const CustomTextField({
     super.key,
     required this.hintText,
@@ -61,6 +63,8 @@ class CustomTextField extends StatelessWidget {
     this.contentPadding,
     this.onFieldSubmitted,
     this.focusNode,
+    this.style,
+    this.enabled = true,
   });
 
   @override
@@ -86,10 +90,11 @@ class CustomTextField extends StatelessWidget {
         textInputAction: textInputAction,
         inputFormatters: inputFormatters,
         maxLength: maxLength,
-        style: TextStyle(
-            color: textColor ?? AppColors.text,
-            fontWeight: FontWeight.w600,
-            fontSize: 14),
+        style: style ??
+            TextStyle(
+                color: textColor ?? AppColors.text,
+                fontWeight: FontWeight.w600,
+                fontSize: 14),
         decoration: InputDecoration(
           hintText: isRequired ? '$hintText*' : hintText,
           hintStyle: TextStyle(

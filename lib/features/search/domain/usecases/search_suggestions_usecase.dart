@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
-import 'package:hvatai/features/search/data/model/search_suggestions_response.dart';
+import 'package:hvatai/features/search/data/model/search_suggestions_response/search_suggestions_response.dart';
 import 'package:hvatai/features/search/domain/repositories/search_repository.dart';
 
 class SearchSuggestionsParams {

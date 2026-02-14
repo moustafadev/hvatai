@@ -15,6 +15,9 @@ class ProductModel with _$ProductModel {
     @JsonKey(name: 'sale_type') @Default('buy_now') String saleType,
     @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
     bool? deliveryAvailable,
+    @JsonKey(name: 'delivery_time') String? deliveryTime,
+    @JsonKey(name: 'delivery_discount', fromJson: _parseDouble)
+    double? deliveryDiscount,
     @JsonKey(name: 'self_pickup', fromJson: _boolFromInt)
     @Default(false)
     bool? selfPickup,

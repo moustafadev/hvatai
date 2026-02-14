@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
 import 'package:hvatai/features/add_new_product/domain/repositories/add_new_product_repository.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
@@ -7,11 +6,11 @@ import 'package:hvatai/features/profile/data/model/product_model/product_model.d
 class UpdateProductParams {
   const UpdateProductParams({
     required this.productId,
-    required this.formData,
+    required this.product,
   });
 
   final int productId;
-  final FormData formData;
+  final ProductModel product;
 }
 
 class UpdateProductUsecase
@@ -24,7 +23,7 @@ class UpdateProductUsecase
   Future<Either<String, ProductModel>> call(UpdateProductParams params) {
     return _repository.updateProduct(
       productId: params.productId,
-      formData: params.formData,
+      product: params.product,
     );
   }
 }

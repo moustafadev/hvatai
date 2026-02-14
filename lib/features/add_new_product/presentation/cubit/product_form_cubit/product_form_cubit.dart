@@ -1,11 +1,9 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
@@ -29,6 +27,9 @@ class ProductFormCubit extends Cubit<ProductFormState> {
             product: ProductModel(
               variants: [VariantModel()],
               saleType: 'buy_now',
+              deliveryAvailable: false,
+              deliveryTime: '',
+              selfPickup: false,
             ),
           ),
         );
@@ -36,7 +37,7 @@ class ProductFormCubit extends Cubit<ProductFormState> {
   final GetLastUsedCategoriesUsecase getLastUsedCategoriesUsecase;
   final AddNewProductUsecase addNewProductUsecase;
   final UpdateProductUsecase updateProductUsecase;
-
+  final TextEditingController deliveryTimeController = TextEditingController();
   bool isDisabled() {
     // Check if there's at least one image (excluding videos)
     return (state.product.productName == null ||
@@ -147,6 +148,10 @@ class ProductFormCubit extends Cubit<ProductFormState> {
       case 'saleType':
         product = state.product.copyWith(saleType: value.toString());
         break;
+      case 'deliveryTime':
+        product = state.product.copyWith(deliveryTime: value.toString());
+        deliveryTimeController.text = value.toString();
+        break;
       default:
         product = state.product;
     }
@@ -224,128 +229,11 @@ class ProductFormCubit extends Cubit<ProductFormState> {
     ));
   }
 
-  Future<File> compressImage(File file, {int quality = 70}) async {
-    final targetPath = file.absolute.path.replaceAll('.jpg', '_compressed.jpg');
-
-    final result = await FlutterImageCompress.compressAndGetFile(
-      file.absolute.path,
-      targetPath,
-      quality: quality,
-      minWidth: 1080,
-      minHeight: 1080,
-    );
-    // Return the compressed file, or original if compression failed
-    return result != null ? File(result.path) : file;
-  }
-
-  Future<MultipartFile?> _prepareImageFile(String? filePath) async {
-    if (filePath == null || filePath.isEmpty) return null;
-
-    try {
-      File file = File(filePath);
-      if (!await file.exists()) return null;
-
-      // Check if it's a video file
-      final extension = filePath.toLowerCase().split('.').last;
-      final isVideo = ['mp4', 'mov', 'avi', 'mkv', 'webm'].contains(extension);
-
-      // For videos, just return the file as is (no compression)
-      if (isVideo) {
-        return MultipartFile.fromFile(file.path,
-            filename: file.path.split('/').last);
-      }
-
-      // For images, apply compression logic
-      // Get original file size
-      final originalSize = await file.length();
-
-      // If file is already small enough, use it as is
-      if (originalSize <= 2 * 1024 * 1024) {
-        return MultipartFile.fromFile(file.path,
-            filename: file.path.split('/').last);
-      }
-
-      // Compress the image with decreasing quality
-      int quality = 85;
-      File compressedFile = file;
-
-      while (quality >= 30) {
-        final targetPath =
-            file.absolute.path.replaceAll('.jpg', '_compressed_$quality.jpg');
-
-        final result = await FlutterImageCompress.compressAndGetFile(
-          file.absolute.path,
-          targetPath,
-          quality: quality,
-          minWidth: 1080,
-          minHeight: 1080,
-        );
-
-        if (result != null) {
-          compressedFile = File(result.path);
-          final compressedSize = await compressedFile.length();
-
-          // If compressed size is acceptable, use this file
-          if (compressedSize <= 2 * 1024 * 1024) {
-            break;
-          }
-
-          // Delete intermediate compressed file if it's still too large
-          if (quality > 30) {
-            await compressedFile.delete();
-          }
-        }
-
-        quality -= 15;
-      }
-
-      // Final check - if still too large, use the most compressed version anyway
-      final finalSize = await compressedFile.length();
-      if (finalSize > 2 * 1024 * 1024) {
-        debugPrint(
-            'Warning: Image still large after compression: ${finalSize / 1024 / 1024}MB');
-        // Continue anyway rather than throwing exception
-      }
-
-      return MultipartFile.fromFile(compressedFile.path,
-          filename: compressedFile.path.split('/').last);
-    } catch (e) {
-      debugPrint('Error preparing media file: $e');
-      // Instead of throwing exception, return null to skip this file
-      return null;
-    }
-  }
-
-  Future<FormData> _prepareProductFormData(ProductModel product) async {
-    final formData = FormData();
-
-    void addField(String key, dynamic value) {
-      if (value == null) return;
-      formData.fields.add(MapEntry(key, value.toString()));
-    }
-
-    void addBoolField(String key, bool? value) {
-      if (value == null) return;
-      formData.fields.add(MapEntry(key, value ? '1' : '0'));
-    }
-
-    addField('product_name', product.productName ?? '');
-    addField('product_description', product.productDescription ?? '-');
-    addField('category_id', product.categoryId);
-    addField('sale_type', product.saleType);
-    addBoolField('delivery_available', product.deliveryAvailable ?? true);
-    addBoolField('self_pickup', product.selfPickup ?? false);
-    addField('variants[0][price]', product.variants.first.price ?? 0.0);
-    addField('variants[0][stock]', product.variants.first.stock);
-    if (product.images.isNotEmpty) {
-      for (int i = 0; i < product.images.length; i++) {
-        final file = await _prepareImageFile(product.images[i]);
-        if (file != null) {
-          formData.files.add(MapEntry('product_pictures[$i]', file));
-        }
-      }
-    }
-    return formData;
+  void updateDeliveryPrice(String value) {
+    final doubleValue = double.tryParse(value) ?? 0.0;
+    final updatedProduct =
+        state.product.copyWith(deliveryDiscount: doubleValue);
+    emit(state.copyWith(product: updatedProduct));
   }
 
   Future<ProductModel?> addProduct(BuildContext context,
@@ -360,26 +248,20 @@ class ProductFormCubit extends Cubit<ProductFormState> {
 
     emit(state.copyWith(isLoadingRequest: true, errorMessage: ''));
 
-    final formData = await _prepareProductFormData(state.product);
-
     final result = await addNewProductUsecase.call(
-      AddNewProductParams(formData: formData),
+      AddNewProductParams(product: state.product),
     );
 
     ProductModel? createdProduct;
 
     result.fold((failure) {
-      emit(state.copyWith(isLoadingRequest: false, errorMessage: failure));
-      showFloatingMessageError('somethingWentWrong'.tr());
+      emit(state.copyWith(isLoadingRequest: false));
+      showFloatingMessageError(failure);
       createdProduct = null;
     }, (newProduct) {
-      print('==============================');
-      print('newProduct: $newProduct');
-      print('==============================');
       final completeProduct = state.product.copyWith(
         id: newProduct.id,
       );
-
 
       emit(state.copyWith(isLoadingRequest: false));
       showFloatingMessageSuccess('productAdded'.tr());
@@ -441,13 +323,12 @@ class ProductFormCubit extends Cubit<ProductFormState> {
 
     emit(state.copyWith(isLoadingRequest: true, errorMessage: ''));
 
-    final formData = await _prepareProductFormData(state.product);
     final result = await updateProductUsecase.call(
-      UpdateProductParams(productId: productId, formData: formData),
+      UpdateProductParams(productId: productId, product: state.product),
     );
 
     result.fold((failure) {
-      emit(state.copyWith(isLoadingRequest: false, errorMessage: failure));
+      emit(state.copyWith(isLoadingRequest: false));
       showFloatingMessageError(failure);
     }, (updatedProduct) {
       emit(state.copyWith(

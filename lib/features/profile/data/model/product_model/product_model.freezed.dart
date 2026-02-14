@@ -29,6 +29,10 @@ mixin _$ProductModel {
   String get saleType => throw _privateConstructorUsedError;
   @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
   bool? get deliveryAvailable => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_time')
+  String? get deliveryTime => throw _privateConstructorUsedError;
+  @JsonKey(name: 'delivery_discount', fromJson: _parseDouble)
+  double? get deliveryDiscount => throw _privateConstructorUsedError;
   @JsonKey(name: 'self_pickup', fromJson: _boolFromInt)
   bool? get selfPickup => throw _privateConstructorUsedError;
   @JsonKey(name: 'self_destruction')
@@ -80,6 +84,9 @@ abstract class $ProductModelCopyWith<$Res> {
       @JsonKey(name: 'sale_type') String saleType,
       @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
       bool? deliveryAvailable,
+      @JsonKey(name: 'delivery_time') String? deliveryTime,
+      @JsonKey(name: 'delivery_discount', fromJson: _parseDouble)
+      double? deliveryDiscount,
       @JsonKey(name: 'self_pickup', fromJson: _boolFromInt) bool? selfPickup,
       @JsonKey(name: 'self_destruction') String? selfDestruction,
       @JsonKey(name: 'user_id') int? userId,
@@ -125,6 +132,8 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
     Object? productDescription = freezed,
     Object? saleType = null,
     Object? deliveryAvailable = freezed,
+    Object? deliveryTime = freezed,
+    Object? deliveryDiscount = freezed,
     Object? selfPickup = freezed,
     Object? selfDestruction = freezed,
     Object? userId = freezed,
@@ -163,6 +172,14 @@ class _$ProductModelCopyWithImpl<$Res, $Val extends ProductModel>
           ? _value.deliveryAvailable
           : deliveryAvailable // ignore: cast_nullable_to_non_nullable
               as bool?,
+      deliveryTime: freezed == deliveryTime
+          ? _value.deliveryTime
+          : deliveryTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryDiscount: freezed == deliveryDiscount
+          ? _value.deliveryDiscount
+          : deliveryDiscount // ignore: cast_nullable_to_non_nullable
+              as double?,
       selfPickup: freezed == selfPickup
           ? _value.selfPickup
           : selfPickup // ignore: cast_nullable_to_non_nullable
@@ -302,6 +319,9 @@ abstract class _$$ProductModelImplCopyWith<$Res>
       @JsonKey(name: 'sale_type') String saleType,
       @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
       bool? deliveryAvailable,
+      @JsonKey(name: 'delivery_time') String? deliveryTime,
+      @JsonKey(name: 'delivery_discount', fromJson: _parseDouble)
+      double? deliveryDiscount,
       @JsonKey(name: 'self_pickup', fromJson: _boolFromInt) bool? selfPickup,
       @JsonKey(name: 'self_destruction') String? selfDestruction,
       @JsonKey(name: 'user_id') int? userId,
@@ -349,6 +369,8 @@ class __$$ProductModelImplCopyWithImpl<$Res>
     Object? productDescription = freezed,
     Object? saleType = null,
     Object? deliveryAvailable = freezed,
+    Object? deliveryTime = freezed,
+    Object? deliveryDiscount = freezed,
     Object? selfPickup = freezed,
     Object? selfDestruction = freezed,
     Object? userId = freezed,
@@ -387,6 +409,14 @@ class __$$ProductModelImplCopyWithImpl<$Res>
           ? _value.deliveryAvailable
           : deliveryAvailable // ignore: cast_nullable_to_non_nullable
               as bool?,
+      deliveryTime: freezed == deliveryTime
+          ? _value.deliveryTime
+          : deliveryTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      deliveryDiscount: freezed == deliveryDiscount
+          ? _value.deliveryDiscount
+          : deliveryDiscount // ignore: cast_nullable_to_non_nullable
+              as double?,
       selfPickup: freezed == selfPickup
           ? _value.selfPickup
           : selfPickup // ignore: cast_nullable_to_non_nullable
@@ -465,6 +495,9 @@ class _$ProductModelImpl implements _ProductModel {
       @JsonKey(name: 'sale_type') this.saleType = 'buy_now',
       @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
       this.deliveryAvailable,
+      @JsonKey(name: 'delivery_time') this.deliveryTime,
+      @JsonKey(name: 'delivery_discount', fromJson: _parseDouble)
+      this.deliveryDiscount,
       @JsonKey(name: 'self_pickup', fromJson: _boolFromInt)
       this.selfPickup = false,
       @JsonKey(name: 'self_destruction') this.selfDestruction,
@@ -505,6 +538,12 @@ class _$ProductModelImpl implements _ProductModel {
   @override
   @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
   final bool? deliveryAvailable;
+  @override
+  @JsonKey(name: 'delivery_time')
+  final String? deliveryTime;
+  @override
+  @JsonKey(name: 'delivery_discount', fromJson: _parseDouble)
+  final double? deliveryDiscount;
   @override
   @JsonKey(name: 'self_pickup', fromJson: _boolFromInt)
   final bool? selfPickup;
@@ -571,7 +610,7 @@ class _$ProductModelImpl implements _ProductModel {
 
   @override
   String toString() {
-    return 'ProductModel(id: $id, productName: $productName, productDescription: $productDescription, saleType: $saleType, deliveryAvailable: $deliveryAvailable, selfPickup: $selfPickup, selfDestruction: $selfDestruction, userId: $userId, categoryId: $categoryId, averageRating: $averageRating, ratingsCount: $ratingsCount, images: $images, variants: $variants, category: $category, user: $user, owner: $owner, isFavorited: $isFavorited, favoritesCount: $favoritesCount, ratings: $ratings, isInLiveAuction: $isInLiveAuction, liveAuction: $liveAuction)';
+    return 'ProductModel(id: $id, productName: $productName, productDescription: $productDescription, saleType: $saleType, deliveryAvailable: $deliveryAvailable, deliveryTime: $deliveryTime, deliveryDiscount: $deliveryDiscount, selfPickup: $selfPickup, selfDestruction: $selfDestruction, userId: $userId, categoryId: $categoryId, averageRating: $averageRating, ratingsCount: $ratingsCount, images: $images, variants: $variants, category: $category, user: $user, owner: $owner, isFavorited: $isFavorited, favoritesCount: $favoritesCount, ratings: $ratings, isInLiveAuction: $isInLiveAuction, liveAuction: $liveAuction)';
   }
 
   @override
@@ -588,6 +627,10 @@ class _$ProductModelImpl implements _ProductModel {
                 other.saleType == saleType) &&
             (identical(other.deliveryAvailable, deliveryAvailable) ||
                 other.deliveryAvailable == deliveryAvailable) &&
+            (identical(other.deliveryTime, deliveryTime) ||
+                other.deliveryTime == deliveryTime) &&
+            (identical(other.deliveryDiscount, deliveryDiscount) ||
+                other.deliveryDiscount == deliveryDiscount) &&
             (identical(other.selfPickup, selfPickup) ||
                 other.selfPickup == selfPickup) &&
             (identical(other.selfDestruction, selfDestruction) ||
@@ -625,6 +668,8 @@ class _$ProductModelImpl implements _ProductModel {
         productDescription,
         saleType,
         deliveryAvailable,
+        deliveryTime,
+        deliveryDiscount,
         selfPickup,
         selfDestruction,
         userId,
@@ -667,6 +712,9 @@ abstract class _ProductModel implements ProductModel {
       @JsonKey(name: 'sale_type') final String saleType,
       @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
       final bool? deliveryAvailable,
+      @JsonKey(name: 'delivery_time') final String? deliveryTime,
+      @JsonKey(name: 'delivery_discount', fromJson: _parseDouble)
+      final double? deliveryDiscount,
       @JsonKey(name: 'self_pickup', fromJson: _boolFromInt)
       final bool? selfPickup,
       @JsonKey(name: 'self_destruction') final String? selfDestruction,
@@ -705,6 +753,12 @@ abstract class _ProductModel implements ProductModel {
   @override
   @JsonKey(name: 'delivery_available', fromJson: _boolFromInt)
   bool? get deliveryAvailable;
+  @override
+  @JsonKey(name: 'delivery_time')
+  String? get deliveryTime;
+  @override
+  @JsonKey(name: 'delivery_discount', fromJson: _parseDouble)
+  double? get deliveryDiscount;
   @override
   @JsonKey(name: 'self_pickup', fromJson: _boolFromInt)
   bool? get selfPickup;

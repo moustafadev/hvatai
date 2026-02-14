@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:dio/dio.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/features/add_new_product/data/datasources/api_service_add_new_product.dart';
 import 'package:hvatai/features/add_new_product/domain/repositories/add_new_product_repository.dart';
@@ -11,9 +10,9 @@ class AddNewProductImplRepository implements AddNewProductRepository {
   AddNewProductImplRepository(this._apiService);
 
   @override
-  Future<Either<String, ProductModel>> addNewProduct(FormData formData) {
+  Future<Either<String, ProductModel>> addNewProduct(ProductModel product) {
     return executeAndHandleError<ProductModel>(() async {
-      final res = await _apiService.addNewProduct(formData);
+      final res = await _apiService.addNewProduct(product);
       return res;
     });
   }
@@ -37,12 +36,12 @@ class AddNewProductImplRepository implements AddNewProductRepository {
   @override
   Future<Either<String, ProductModel>> updateProduct({
     required int productId,
-    required FormData formData,
+    required ProductModel product,
   }) {
     return executeAndHandleError<ProductModel>(() async {
       final res = await _apiService.updateProduct(
         productId: productId,
-        formData: formData,
+        product: product,
       );
       return res;
     });

@@ -600,6 +600,7 @@
   "noMatchingResults": "No matching results found",
   "editProduct": "Edit Product",
   "quantity": "Quantity",
+  "deliveryCost": "Delivery Cost",
   "selfDestruct": "Self Destruct",
   "liveOnly": "Live Only",
   "selectStreamer": "Select Streamer",
