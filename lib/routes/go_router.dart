@@ -8,7 +8,6 @@ import 'package:hvatai/features/auth/data/models/registration_model/user_registr
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/cart/presentation/cubit/cart_product_details/cart_product_details_cubit.dart';
 import 'package:hvatai/features/address/presentation/address.dart';
-import 'package:hvatai/features/change_password/presentation/change_password.dart';
 import 'package:hvatai/features/chat/data/models/chat/chat_model.dart';
 import 'package:hvatai/features/chat/presentation/chat.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
@@ -256,12 +255,7 @@ final GoRouter router = GoRouter(
         );
       },
     ),
-    GoRoute(
-      path: AppRoutes.changePassword, // Remove the leading '/'
-      builder: (BuildContext context, GoRouterState state) {
-        return ChangePasswordUserScreen();
-      },
-    ),
+    
     GoRoute(
       path: AppRoutes.addProduct, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {

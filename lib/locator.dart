@@ -39,10 +39,6 @@ import 'package:hvatai/features/address/domain/repositories/address_repository.d
 import 'package:hvatai/features/payment_method/data/datasources/api_service_payment_method.dart';
 import 'package:hvatai/features/payment_method/data/repositories/payment_method_impl_repository.dart';
 import 'package:hvatai/features/payment_method/domain/repositories/payment_method_repository.dart';
-import 'package:hvatai/features/change_password/data/datasources/api_service_change_password.dart';
-import 'package:hvatai/features/change_password/data/repositories/change_password_impl_repository.dart';
-import 'package:hvatai/features/change_password/domain/repositories/change_password_repository.dart';
-import 'package:hvatai/features/change_password/presentation/cubit/change_password_cubit.dart';
 import 'package:hvatai/features/chat/data/datasources/api_service_chat.dart';
 import 'package:hvatai/features/chat/data/repositories/chat_impl_repository.dart';
 import 'package:hvatai/features/chat/domain/repositories/chat_repository.dart';
@@ -155,9 +151,6 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => FavoriteCubit(locator()));
   locator.registerFactory(() => ToggleFavoriteCubit(locator()));
   locator.registerFactory(() => NotificationCubit());
-  locator.registerFactory(() => ChangePasswordCubit(
-        locator(),
-      ));
   locator.registerFactory(() => AwardsClubCubit(locator(), locator()));
   locator.registerFactory(() => SendRewardFlowCubit(locator()));
   locator.registerFactory(() => EndedStreamCubit(locator()));
@@ -289,10 +282,6 @@ Future<void> setupLocator() async {
       () => CompanyRepositoryImpl(locator()));
   locator.registerLazySingleton<WalletRepository>(
       () => WalletImplRepository(locator()));
-  locator.registerLazySingleton<ChangePasswordRepository>(
-      () => ChangePasswordImplRepository(
-            locator(),
-          ));
   locator.registerLazySingleton<AddressRepository>(
       () => AddressImplRepository(locator()));
   locator.registerLazySingleton<PaymentMethodRepository>(
@@ -309,7 +298,6 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ApiServiceAuth());
   locator.registerLazySingleton(() => ApiServiceAddress());
   locator.registerLazySingleton(() => ApiServicePaymentMethod());
-  locator.registerLazySingleton(() => ApiServiceChangePassword());
   locator.registerLazySingleton(() => ApiServiceCart());
   locator.registerLazySingleton(() => ApiServiceHome());
   locator.registerLazySingleton(() => ApiServiceAwards());
