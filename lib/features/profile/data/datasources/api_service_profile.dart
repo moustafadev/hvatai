@@ -219,4 +219,20 @@ class ApiServiceProfile extends ApiBase {
       throw Exception('Failed to reply to rating');
     });
   }
+
+  Future<List<ProductModel>> getFavProducts() async {
+    return executeAndHandleErrorServer<List<ProductModel>>(() async {
+      final response = await get(ServerConfig.getFavProduct);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final List<dynamic> data = response.json['data']['products'];
+
+        return data
+            .map((e) => ProductModel.fromJson(e as Map<String, dynamic>))
+            .toList();
+      } else {
+        throw Exception('Failed to fetch favorite products');
+      }
+    });
+  }
 }

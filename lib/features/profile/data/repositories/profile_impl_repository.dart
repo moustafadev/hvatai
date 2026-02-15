@@ -41,7 +41,6 @@ class ProfileImplRepository implements ProfileRepository {
     });
   }
 
-
   @override
   Future<Either<String, Unit>> deleteAccount() {
     return executeAndHandleError<Unit>(() async {
@@ -132,6 +131,14 @@ class ProfileImplRepository implements ProfileRepository {
   Future<Either<String, void>> replyToRating(int ratingId, String comment) {
     return executeAndHandleError<void>(() async {
       await _apiServiceProfile.replyToRating(ratingId, comment);
+    });
+  }
+
+  @override
+  Future<Either<String, List<ProductModel>>> getFavProducts() {
+    return executeAndHandleError<List<ProductModel>>(() async {
+      final response = await _apiServiceProfile.getFavProducts();
+      return response;
     });
   }
 }

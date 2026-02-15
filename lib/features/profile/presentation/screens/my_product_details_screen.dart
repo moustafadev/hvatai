@@ -106,10 +106,6 @@ class _MyProductDetailsScreenState extends State<MyProductDetailsScreen> {
                                   },
                                 );
                                 if (result == true && context.mounted) {
-                                  print("================================");
-                                  print('product: $product');
-                                  print('result: $result');
-                                  print("================================");
                                   context.pop(true);
                                 }
                               },
@@ -164,7 +160,7 @@ class _MyProductDetailsScreenState extends State<MyProductDetailsScreen> {
                                       : "${variant?.price} ₽",
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
-                                  color: AppColors.white,
+                                  color: AppColors.background,
                                 ),
                               ),
                           ],
@@ -175,8 +171,8 @@ class _MyProductDetailsScreenState extends State<MyProductDetailsScreen> {
                             children: [
                               CustomText(
                                 text: '${product?.category?.name} ',
-                                color: AppColors.blackLite,
                                 fontSize: 14.sp,
+                                fontWeight: FontWeight.w600,
                               ),
                             ],
                           ),
@@ -197,7 +193,7 @@ class _MyProductDetailsScreenState extends State<MyProductDetailsScreen> {
                               ),
                             ),
                             8.pw,
-                            if (product?.saleType.isNotEmpty ?? false)
+                            if (product?.variants.isNotEmpty ?? false)
                               Container(
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 8, vertical: 3),
@@ -206,7 +202,7 @@ class _MyProductDetailsScreenState extends State<MyProductDetailsScreen> {
                                     color: AppColors.gray),
                                 child: CustomText(
                                   text:
-                                      "${product?.saleType[0].toUpperCase()}${product?.saleType.substring(1)}",
+                                      "${product?.variants.first.discountType}",
                                   fontSize: 10.sp,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.blackLite,
@@ -220,53 +216,60 @@ class _MyProductDetailsScreenState extends State<MyProductDetailsScreen> {
                             text: product?.productDescription ?? '',
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w600,
+                            color: AppColors.black2,
                           ),
                         17.ph,
-                        // Container(
-                        //   padding: const EdgeInsets.symmetric(
-                        //       horizontal: 12, vertical: 9),
-                        //   decoration: BoxDecoration(
-                        //     color: AppColors.gray,
-                        //     borderRadius: BorderRadius.circular(6.r),
-                        //   ),
-                        //   child: Row(
-                        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: [
-                        //       CustomText(
-                        //         text: 'delivery'.tr(),
-                        //         color: AppColors.blackDark,
-                        //         fontSize: 14.sp,
-                        //         fontWeight: FontWeight.w700,
-                        //       ),
-                        //       CustomText(
-                        //         text: product?.deliveryMethods?.first ?? '',
-                        //         color: AppColors.blackDark,
-                        //         fontSize: 14.sp,
-                        //         fontWeight: FontWeight.w700,
-                        //       ),
-                        //     ],
-                        //   ),
-                        // ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 12, vertical: 9),
+                          decoration: BoxDecoration(
+                            color: AppColors.blackColor.withValues(alpha: 0.03),
+                            borderRadius: BorderRadius.circular(6.r),
+                          ),
+                          child: Column(
+                            children: [
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceBetween,
+                              //   children: [
+                              //     CustomText(
+                              //       text: 'delivery'.tr(),
+                              //       color: AppColors.blackDark,
+                              //       fontSize: 14.sp,
+                              //       fontWeight: FontWeight.w700,
+                              //     ),
+                              //     CustomText(
+                              //       text:
+                              //           product?.variants.first.discountType ??
+                              //               '',
+                              //       color: AppColors.blackDark,
+                              //       fontSize: 14.sp,
+                              //       fontWeight: FontWeight.w700,
+                              //     ),
+                              //   ],
+                              // ),
 
-                        9.ph,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomText(
-                              text: 'pickup'.tr(),
-                              color: AppColors.blackDark,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
-                            CustomText(
-                              text: product?.selfPickup == true
-                                  ? 'free'.tr()
-                                  : 'paid'.tr(),
-                              color: AppColors.blackDark,
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ],
+                              // 12.ph,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CustomText(
+                                    text: 'pickup'.tr(),
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                  CustomText(
+                                    text: product?.selfPickup == true
+                                        ? 'free'.tr()
+                                        : 'paid'.tr(),
+                                    fontSize: 14.sp,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                         30.ph,
                       ],

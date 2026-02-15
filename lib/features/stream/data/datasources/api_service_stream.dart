@@ -486,4 +486,25 @@ class ApiServiceStream extends ApiBase {
     }
     return parts.isEmpty ? '' : parts.join(', ');
   }
+
+  Future<void> toggleFavorite({
+    required String type,
+    required int id,
+  }) async {
+    return executeAndHandleErrorServer<void>(() async {
+      final response = await post(
+        ServerConfig.toggleFavorite,
+        body: {
+          'type': type,
+          'id': id,
+        },
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return;
+      }
+
+      throw Exception('Failed to toggle favorite');
+    });
+  }
 }

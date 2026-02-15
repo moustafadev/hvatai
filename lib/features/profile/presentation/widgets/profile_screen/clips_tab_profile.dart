@@ -9,7 +9,7 @@ class ClipsTabProfile extends StatelessWidget {
       builder: (context, state) {
         if (state.isLoadingClips) {
           return const Center(
-            child: CircularProgressIndicator(color: AppColors.grey),
+            child: CustomCircularProgrressIndicator(),
           );
         }
         if (state.errorMessageClips.isNotEmpty) {
@@ -25,7 +25,7 @@ class ClipsTabProfile extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               sliver: SliverToBoxAdapter(
                 child: CustomText(
-                  text: 'Клипы',
+                  text: 'clips'.tr(),
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w800,
                 ),
@@ -34,9 +34,9 @@ class ClipsTabProfile extends StatelessWidget {
             if (clips.isEmpty)
               SliverFillRemaining(
                 hasScrollBody: false,
-                child: const Center(
+                child: Center(
                   child: CustomText(
-                    text: 'Пока нет клипов',
+                    text: 'noClips'.tr(),
                     fontWeight: FontWeight.w600,
                     color: AppColors.blackTransparent40,
                   ),

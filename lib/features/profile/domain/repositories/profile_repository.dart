@@ -32,4 +32,5 @@ abstract class ProfileRepository {
   Future<Either<String, MyRatingsResponse>> getMyRatings();
   Future<Either<String, void>> deleteRating(int ratingId);
   Future<Either<String, void>> replyToRating(int ratingId, String comment);
+  Future<Either<String, List<ProductModel>>> getFavProducts();
 }

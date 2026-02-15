@@ -11,7 +11,7 @@ import 'package:hvatai/features/stream/data/models/my_streams/my_streams_respons
 import 'package:hvatai/features/stream/data/models/start_stream/start_stream_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_comment/stream_comment_model.dart';
 import 'package:hvatai/features/stream/data/models/stream_products/stream_products_response.dart';
-import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
+import 'package:hvatai/features/stream/domain/repositories/stream_repository.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_product_to_stream_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/add_stream_bids_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_bid_session_usecase.dart';
@@ -231,6 +231,16 @@ class StreamImplRepository implements StreamRepository {
         shippingAddress: shippingAddress,
       );
       return res;
+    });
+  }
+
+  @override
+  Future<Either<String, void>> toggleFavorite({
+    required String type,
+    required int id,
+  }) {
+    return executeAndHandleError<void>(() async {
+      await _apiServiceStream.toggleFavorite(type: type, id: id);
     });
   }
 }

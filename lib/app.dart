@@ -6,7 +6,7 @@ import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/core/theme/themes.dart';
 import 'package:hvatai/features/cart/presentation/cubit/cart_cubit/cart_cubit.dart';
 import 'package:hvatai/features/chat/presentation/cubit/chats_cubit.dart';
-import 'package:hvatai/features/favorites/presentation/cubit/toggle_favorite_cubit/toggle_favorite_cubit.dart';
+import 'package:hvatai/features/stream/presentation/cubit/toggle_favorite_cubit/toggle_favorite_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/go_router.dart';
 import 'package:easy_localization/easy_localization.dart';

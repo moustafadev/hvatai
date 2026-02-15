@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
-import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
+import 'package:hvatai/features/stream/domain/repositories/stream_repository.dart';
 
 class ToggleSubscriptionParams {
   const ToggleSubscriptionParams({required this.userId});

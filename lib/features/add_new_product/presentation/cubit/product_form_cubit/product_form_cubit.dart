@@ -122,6 +122,8 @@ class ProductFormCubit extends Cubit<ProductFormState> {
   }
 
   void initProductModel(ProductModel product) {
+    deliveryTimeController.text = product.deliveryTime ?? '';
+
     emit(state.copyWith(product: product));
   }
 

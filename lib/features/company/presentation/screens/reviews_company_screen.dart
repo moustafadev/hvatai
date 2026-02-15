@@ -38,30 +38,7 @@ class ReviewsCompanyScreen extends StatelessWidget {
               );
             }
 
-            // Combine product ratings and user personal ratings
-            final allReviews = <_ReviewItemData>[];
-
-            // Add product ratings
-            for (var rating in userRatings.productRatings) {
-              allReviews.add(_ReviewItemData(
-                username: rating.user?.name ?? 'Unknown',
-                rating: rating.score.toDouble(),
-                date: _formatDate(rating.createdAt),
-                reviewText: rating.comment ?? '',
-                userImage: rating.user?.image,
-              ));
-            }
-
-            // Add user personal ratings
-            for (var rating in userRatings.userPersonalRatings) {
-              allReviews.add(_ReviewItemData(
-                username: rating.reviewer?.name ?? 'Unknown',
-                rating: rating.score.toDouble(),
-                date: _formatDate(rating.createdAt),
-                reviewText: rating.comment ?? '',
-                userImage: rating.reviewer?.image,
-              ));
-            }
+           
 
             return CustomScrollView(
               slivers: [
@@ -106,7 +83,7 @@ class ReviewsCompanyScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (allReviews.isEmpty)
+                if (userRatings.userPersonalRatings.isEmpty)
                   SliverFillRemaining(
                     hasScrollBody: false,
                     child: Center(
@@ -123,22 +100,18 @@ class ReviewsCompanyScreen extends StatelessWidget {
                     sliver: SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
-                          final review = allReviews[index];
+                          final review = userRatings.userPersonalRatings[index];
                           return Padding(
                             padding: EdgeInsets.only(
                               top: 12,
-                              bottom: index < allReviews.length - 1 ? 12.h : 0,
+                              bottom: index < userRatings.userPersonalRatings.length - 1 ? 12.h : 0,
                             ),
                             child: ReviewItem(
-                              username: review.username,
-                              rating: review.rating.toStringAsFixed(1),
-                              date: review.date,
-                              reviewText: review.reviewText,
-                              userImage: review.userImage,
+                              reviewModel: review,
                             ),
                           );
                         },
-                        childCount: allReviews.length,
+                        childCount: userRatings.userPersonalRatings.length,
                       ),
                     ),
                   ),

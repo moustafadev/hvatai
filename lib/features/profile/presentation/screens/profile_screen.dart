@@ -17,7 +17,7 @@ class ProfileScreen extends StatelessWidget {
           create: (_) => locator<MyStreamsCubit>()..loadMyStreams(),
         ),
         BlocProvider(
-          create: (_) => locator<FavoriteCubit>(),
+          create: (_) => locator<FavoriteCubit>()..getFavProducts(),
         ),
         BlocProvider(
           create: (_) => locator<ReviewsCubit>(),
@@ -41,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
               return const Scaffold(
                 backgroundColor: AppColors.background,
                 body: Center(
-                  child: CircularProgressIndicator(color: AppColors.grey),
+                  child: CustomCircularProgrressIndicator(),
                 ),
               );
             }
@@ -97,11 +97,11 @@ class ProfileScreen extends StatelessWidget {
                               ),
                               indicatorSize: TabBarIndicatorSize.tab,
                               labelPadding: EdgeInsets.zero,
-                              tabs: const [
-                                Tab(text: 'Товары'),
-                                Tab(text: 'Отзывы'),
-                                Tab(text: 'Стримы'),
-                                Tab(text: 'Клипы'),
+                              tabs: [
+                                Tab(text: 'goods'.tr()),
+                                Tab(text: 'reviews'.tr()),
+                                Tab(text: 'streams'.tr()),
+                                Tab(text: 'clips'.tr()),
                               ],
                             ),
                           ),

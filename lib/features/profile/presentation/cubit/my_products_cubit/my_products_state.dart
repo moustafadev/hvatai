@@ -4,6 +4,8 @@ part of 'my_products_cubit.dart';
 class MyProductsState with _$MyProductsState {
   const factory MyProductsState({
     @Default([]) List<ProductModel> products,
+    @Default('') String searchQuery,
+    @Default([]) List<ProductModel> filteredProducts,
     @Default(false) bool isLoading,
     @Default('') String errorMessage,
     @Default(0) int selectedCategoryIndex,

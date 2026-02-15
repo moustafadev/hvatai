@@ -6,8 +6,7 @@ import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/features/activity/presentation/activity.dart';
-import 'package:hvatai/features/favorites/presentation/cubit/favorite/favorite_cubit.dart';
-import 'package:hvatai/features/favorites/presentation/favorites.dart';
+import 'package:hvatai/features/profile/presentation/cubit/favorite/favorite_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
@@ -153,20 +152,6 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
             ),
           ],
         ),
-        StatefulShellBranch(routes: <RouteBase>[
-          GoRoute(
-              path: AppRoutes.favorite,
-              pageBuilder: (context, state) {
-                return buildCupertinoTransitionPage(
-                  context: context,
-                  state: state,
-                  child: BlocProvider(
-                    create: (_) => locator<FavoriteCubit>()..getFavProducts(),
-                    child: const FavoriteScreen(),
-                  ),
-                );
-              }),
-        ]),
         StatefulShellBranch(routes: <RouteBase>[
           GoRoute(
               path: AppRoutes.tradeProfileDetail,

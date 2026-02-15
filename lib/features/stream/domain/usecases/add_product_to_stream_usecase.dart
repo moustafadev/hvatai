@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
-import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
+import 'package:hvatai/features/stream/domain/repositories/stream_repository.dart';
 
 class AddProductToStreamUsecase
     implements UseCase<StreamProductModel, AddProductToStreamParams> {

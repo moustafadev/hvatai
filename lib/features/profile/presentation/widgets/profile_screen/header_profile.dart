@@ -72,7 +72,7 @@ class HeaderProfile extends StatelessWidget {
                 text: user.lastName ?? '',
                 fontSize: 14.sp,
                 fontWeight: FontWeight.w600,
-                color: AppColors.greyTransparent,
+                color: AppColors.blackColor.withValues(alpha: 0.2),
               ),
               4.ph,
               RichText(
@@ -91,7 +91,7 @@ class HeaderProfile extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: ' подписчиков  ',
+                      text: ' ${'subscribers'.tr()}  ',
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontWeight: FontWeight.w400,
@@ -113,7 +113,7 @@ class HeaderProfile extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: ' подписок',
+                      text: ' ${'subscriptions'.tr()}',
                       style: TextStyle(
                         fontFamily: 'Manrope',
                         fontWeight: FontWeight.w400,

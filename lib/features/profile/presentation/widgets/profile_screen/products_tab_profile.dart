@@ -86,7 +86,7 @@ class _ProductsScrollViewContent extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      text: 'Товары',
+                      text: 'goods'.tr(),
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w800,
                     ),
@@ -122,16 +122,12 @@ class _ProductsScrollViewContent extends StatelessWidget {
                   builder: (context, state) {
                     return TabSwitchWidget(
                       isFirstSelected: state.isShowingMyProducts,
-                      firstLabel: 'Мои товары',
-                      secondLabel: 'Избранное',
+                      firstLabel: 'myProducts'.tr(),
+                      secondLabel: 'favorites'.tr(),
                       onChanged: (isMyProducts) {
                         context
                             .read<MyProductsCubit>()
                             .toggleProductsView(isMyProducts);
-                        if (!isMyProducts) {
-                          // Load favorites when switching to Избранное
-                          context.read<FavoriteCubit>().getFavProducts();
-                        }
                       },
                     );
                   },
@@ -163,34 +159,37 @@ class _ProductsScrollViewContent extends StatelessWidget {
                             height: 22.h,
                             width: 22.w,
                           ),
-                          onChanged: (_) {},
-                        ),
-                      ),
-                      12.pw,
-                      GestureDetector(
-                        onTap: () {
-                          ProductsFilterBottomSheet.show(
-                            context,
-                            initialSortOption: context
+                          onChanged: (value) {
+                            context
                                 .read<MyProductsCubit>()
-                                .state
-                                .selectedSortOption,
-                            onApply: (sortOption) {
-                              context
-                                  .read<MyProductsCubit>()
-                                  .sortProducts(sortOption);
-                            },
-                          );
-                        },
-                        child: SvgPicture.asset(
-                          Assets.assetsIconsFilter,
-                          width: 20.w,
-                          height: 20.h,
+                                .searchMyProducts(value);
+                          },
                         ),
                       ),
+                      // 12.pw,
+                      // GestureDetector(
+                      //   onTap: () {
+                      //     ProductsFilterBottomSheet.show(
+                      //       context,
+                      //       initialSortOption: context
+                      //           .read<MyProductsCubit>()
+                      //           .state
+                      //           .selectedSortOption,
+                      //       onApply: (sortOption) {
+                      //         context
+                      //             .read<MyProductsCubit>()
+                      //             .sortProducts(sortOption);
+                      //       },
+                      //     );
+                      //   },
+                      //   child: SvgPicture.asset(
+                      //     Assets.assetsIconsFilter,
+                      //     width: 20.w,
+                      //     height: 20.h,
+                      //   ),
+                      // ),
                     ],
                   ),
-                  20.ph,
                 ]
               ],
             ),
@@ -229,7 +228,7 @@ class _ProductsScrollViewContent extends StatelessWidget {
           )
         else
           SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 100),
             sliver: SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {

@@ -110,4 +110,9 @@ abstract class StreamRepository {
     int? walletId,
     required AddressModel shippingAddress,
   });
+  
+  Future<Either<String, void>> toggleFavorite({
+    required String type,
+    required int id,
+  });
 }

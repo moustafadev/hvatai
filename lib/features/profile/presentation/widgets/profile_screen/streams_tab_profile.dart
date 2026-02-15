@@ -9,7 +9,7 @@ class StreamsTabProfile extends StatelessWidget {
       builder: (context, state) {
         if (state.isLoading) {
           return const Center(
-            child: CircularProgressIndicator(color: AppColors.grey),
+            child: CustomCircularProgrressIndicator(),
           );
         }
         if (state.errorMessage.isNotEmpty) {
@@ -28,7 +28,7 @@ class StreamsTabProfile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomText(
-                      text: 'Стримы',
+                      text: 'streams'.tr(),
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w800,
                     ),
@@ -53,9 +53,9 @@ class StreamsTabProfile extends StatelessWidget {
             if (streams.isEmpty)
               SliverFillRemaining(
                 hasScrollBody: false,
-                child: const Center(
+                child: Center(
                   child: CustomText(
-                    text: 'Пока нет стримов',
+                    text: 'noStreams'.tr(),
                     fontWeight: FontWeight.w600,
                     color: AppColors.blackTransparent40,
                   ),
@@ -63,7 +63,8 @@ class StreamsTabProfile extends StatelessWidget {
               )
             else
               SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding:
+                    const EdgeInsets.only(left: 16, right: 16, bottom: 100),
                 sliver: SliverGrid(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -75,11 +76,7 @@ class StreamsTabProfile extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       final stream = streams[index];
-                      final firstProduct =
-                          stream.streamProducts?.isNotEmpty == true
-                              ? stream.streamProducts!.first
-                              : null;
-                      final product = firstProduct?.product;
+
                       final categoryName = stream.categories?.isNotEmpty == true
                           ? stream.categories!.first.name ?? ''
                           : '';

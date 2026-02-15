@@ -17,6 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$MyProductsState {
   List<ProductModel> get products => throw _privateConstructorUsedError;
+  String get searchQuery => throw _privateConstructorUsedError;
+  List<ProductModel> get filteredProducts => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   int get selectedCategoryIndex => throw _privateConstructorUsedError;
@@ -40,6 +42,8 @@ abstract class $MyProductsStateCopyWith<$Res> {
   @useResult
   $Res call(
       {List<ProductModel> products,
+      String searchQuery,
+      List<ProductModel> filteredProducts,
       bool isLoading,
       String errorMessage,
       int selectedCategoryIndex,
@@ -63,6 +67,8 @@ class _$MyProductsStateCopyWithImpl<$Res, $Val extends MyProductsState>
   @override
   $Res call({
     Object? products = null,
+    Object? searchQuery = null,
+    Object? filteredProducts = null,
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? selectedCategoryIndex = null,
@@ -73,6 +79,14 @@ class _$MyProductsStateCopyWithImpl<$Res, $Val extends MyProductsState>
       products: null == products
           ? _value.products
           : products // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>,
+      searchQuery: null == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
+              as String,
+      filteredProducts: null == filteredProducts
+          ? _value.filteredProducts
+          : filteredProducts // ignore: cast_nullable_to_non_nullable
               as List<ProductModel>,
       isLoading: null == isLoading
           ? _value.isLoading
@@ -108,6 +122,8 @@ abstract class _$$MyProductsStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {List<ProductModel> products,
+      String searchQuery,
+      List<ProductModel> filteredProducts,
       bool isLoading,
       String errorMessage,
       int selectedCategoryIndex,
@@ -129,6 +145,8 @@ class __$$MyProductsStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? products = null,
+    Object? searchQuery = null,
+    Object? filteredProducts = null,
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? selectedCategoryIndex = null,
@@ -139,6 +157,14 @@ class __$$MyProductsStateImplCopyWithImpl<$Res>
       products: null == products
           ? _value._products
           : products // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>,
+      searchQuery: null == searchQuery
+          ? _value.searchQuery
+          : searchQuery // ignore: cast_nullable_to_non_nullable
+              as String,
+      filteredProducts: null == filteredProducts
+          ? _value._filteredProducts
+          : filteredProducts // ignore: cast_nullable_to_non_nullable
               as List<ProductModel>,
       isLoading: null == isLoading
           ? _value.isLoading
@@ -169,12 +195,15 @@ class __$$MyProductsStateImplCopyWithImpl<$Res>
 class _$MyProductsStateImpl implements _MyProductsState {
   const _$MyProductsStateImpl(
       {final List<ProductModel> products = const [],
+      this.searchQuery = '',
+      final List<ProductModel> filteredProducts = const [],
       this.isLoading = false,
       this.errorMessage = '',
       this.selectedCategoryIndex = 0,
       this.isShowingMyProducts = true,
       this.selectedSortOption})
-      : _products = products;
+      : _products = products,
+        _filteredProducts = filteredProducts;
 
   final List<ProductModel> _products;
   @override
@@ -183,6 +212,19 @@ class _$MyProductsStateImpl implements _MyProductsState {
     if (_products is EqualUnmodifiableListView) return _products;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_products);
+  }
+
+  @override
+  @JsonKey()
+  final String searchQuery;
+  final List<ProductModel> _filteredProducts;
+  @override
+  @JsonKey()
+  List<ProductModel> get filteredProducts {
+    if (_filteredProducts is EqualUnmodifiableListView)
+      return _filteredProducts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_filteredProducts);
   }
 
   @override
@@ -203,7 +245,7 @@ class _$MyProductsStateImpl implements _MyProductsState {
 
   @override
   String toString() {
-    return 'MyProductsState(products: $products, isLoading: $isLoading, errorMessage: $errorMessage, selectedCategoryIndex: $selectedCategoryIndex, isShowingMyProducts: $isShowingMyProducts, selectedSortOption: $selectedSortOption)';
+    return 'MyProductsState(products: $products, searchQuery: $searchQuery, filteredProducts: $filteredProducts, isLoading: $isLoading, errorMessage: $errorMessage, selectedCategoryIndex: $selectedCategoryIndex, isShowingMyProducts: $isShowingMyProducts, selectedSortOption: $selectedSortOption)';
   }
 
   @override
@@ -212,6 +254,10 @@ class _$MyProductsStateImpl implements _MyProductsState {
         (other.runtimeType == runtimeType &&
             other is _$MyProductsStateImpl &&
             const DeepCollectionEquality().equals(other._products, _products) &&
+            (identical(other.searchQuery, searchQuery) ||
+                other.searchQuery == searchQuery) &&
+            const DeepCollectionEquality()
+                .equals(other._filteredProducts, _filteredProducts) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -228,6 +274,8 @@ class _$MyProductsStateImpl implements _MyProductsState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_products),
+      searchQuery,
+      const DeepCollectionEquality().hash(_filteredProducts),
       isLoading,
       errorMessage,
       selectedCategoryIndex,
@@ -247,6 +295,8 @@ class _$MyProductsStateImpl implements _MyProductsState {
 abstract class _MyProductsState implements MyProductsState {
   const factory _MyProductsState(
       {final List<ProductModel> products,
+      final String searchQuery,
+      final List<ProductModel> filteredProducts,
       final bool isLoading,
       final String errorMessage,
       final int selectedCategoryIndex,
@@ -255,6 +305,10 @@ abstract class _MyProductsState implements MyProductsState {
 
   @override
   List<ProductModel> get products;
+  @override
+  String get searchQuery;
+  @override
+  List<ProductModel> get filteredProducts;
   @override
   bool get isLoading;
   @override

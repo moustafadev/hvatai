@@ -12,7 +12,7 @@ import 'package:hvatai/features/profile/data/model/product_model/product_model.d
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_subscribed_users_usecase.dart';
 import 'package:hvatai/features/stream/domain/usecases/toggle_subscription_usecase.dart';
-import 'package:hvatai/features/favorites/domain/usecases/toggle_favorite_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/toggle_favorite_usecase.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 import 'package:hvatai/features/company/presentation/company.dart';

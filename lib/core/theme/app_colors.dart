@@ -8,6 +8,7 @@ class AppColors {
   static const Color hotPink = Color(0xFFEC3078);
   static const Color raspberryRed = Color(0xFFF24259);
   static const Color graniteGray = Color(0xFF707070);
+  static const Color black2 = Color(0xFF222222);
   static const Color eerieBlack = Color(0xFF1B1B1B);
   static const Color whiteGrey = Color(0xffBEBEBE);
   static const Color grey2 = Color(0xff383838);

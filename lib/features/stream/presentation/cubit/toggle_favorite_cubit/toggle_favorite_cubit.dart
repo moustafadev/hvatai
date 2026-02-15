@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/core/customs/customs.dart';
-import 'package:hvatai/features/favorites/domain/usecases/toggle_favorite_usecase.dart';
+import 'package:hvatai/features/stream/domain/usecases/toggle_favorite_usecase.dart';
 
 part 'toggle_favorite_cubit.freezed.dart';
 part 'toggle_favorite_state.dart';

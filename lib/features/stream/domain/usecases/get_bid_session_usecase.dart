@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
 import 'package:hvatai/features/stream/data/models/bid_session/bid_session_response.dart';
-import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
+import 'package:hvatai/features/stream/domain/repositories/stream_repository.dart';
 
 class GetBidSessionUsecase
     implements UseCase<BidSessionResponse, GetBidSessionParams> {

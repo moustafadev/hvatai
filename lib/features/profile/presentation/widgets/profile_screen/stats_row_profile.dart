@@ -17,19 +17,19 @@ class StatsRowProfile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           StatTileProfile(
-            title: 'Рейтинг',
+            title: 'rating'.tr(),
             asset: Assets.assetsIconsStar,
             value: rating.toStringAsFixed(1),
           ),
           StatTileProfile(
-            title: 'Заказы',
+            title: 'orders'.tr(),
             asset: Assets.assetsImagesOrderIcon,
             onTap: () {
               context.push(AppRoutes.myOrders);
             },
           ),
           StatTileProfile(
-            title: 'Кошелёк',
+            title: 'wallet'.tr(),
             asset: Assets.assetsImagesWalletIcon,
             onTap: () {
               context

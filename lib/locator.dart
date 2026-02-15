@@ -16,8 +16,8 @@ import 'package:hvatai/features/review/data/repositories/review_repository_impl.
 import 'package:hvatai/features/review/domain/repositories/review_repository.dart';
 import 'package:hvatai/features/review/presentation/cubit/review_cubit/review_cubit.dart';
 import 'package:hvatai/features/stream/domain/usecases/get_my_streams_usecase.dart';
-import 'package:hvatai/features/favorites/presentation/cubit/favorite/favorite_cubit.dart';
-import 'package:hvatai/features/favorites/presentation/cubit/toggle_favorite_cubit/toggle_favorite_cubit.dart';
+import 'package:hvatai/features/profile/presentation/cubit/favorite/favorite_cubit.dart';
+import 'package:hvatai/features/stream/presentation/cubit/toggle_favorite_cubit/toggle_favorite_cubit.dart';
 import 'package:hvatai/features/cart/data/datasources/api_service_cart.dart';
 import 'package:hvatai/features/cart/data/repositories/cart_repository_impl.dart';
 import 'package:hvatai/features/cart/domain/repositories/cart_repository.dart';
@@ -98,14 +98,11 @@ import 'package:hvatai/features/company/data/datasources/api_service_company.dar
 import 'package:hvatai/features/company/data/repositories/company_repository_impl.dart';
 import 'package:hvatai/features/company/domain/repositories/company_repository.dart';
 import 'package:hvatai/features/company/presentation/cubit/company/company_cubit.dart';
-import 'package:hvatai/features/favorites/data/datasources/api_service_favorites.dart';
-import 'package:hvatai/features/favorites/data/repositories/favorites_repository_impl.dart';
-import 'package:hvatai/features/favorites/domain/repositories/favorites_repository.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:hvatai/features/stream/presentation/cubit/schedule_stream_cubit/schedule_stream_cubit.dart';
 import 'package:hvatai/features/stream/data/datasources/api_service_stream.dart';
-import 'package:hvatai/features/stream/data/repositories/stream_repository.dart';
-import 'package:hvatai/features/stream/domain/repositories/stream_impl_repository.dart';
+import 'package:hvatai/features/stream/domain/repositories/stream_repository.dart';
+import 'package:hvatai/features/stream/data/repositories/stream_impl_repository.dart';
 import 'package:hvatai/features/create_clip/data/datasources/api_service_clip.dart';
 import 'package:hvatai/features/create_clip/data/repositories/clip_impl_repository.dart';
 import 'package:hvatai/features/create_clip/domain/repositories/clip_repository.dart';
@@ -290,8 +287,6 @@ Future<void> setupLocator() async {
       () => SearchRepositoryImpl(locator()));
   locator.registerLazySingleton<CompanyRepository>(
       () => CompanyRepositoryImpl(locator()));
-  locator.registerLazySingleton<FavoritesRepository>(
-      () => FavoritesRepositoryImpl(locator()));
   locator.registerLazySingleton<WalletRepository>(
       () => WalletImplRepository(locator()));
   locator.registerLazySingleton<ChangePasswordRepository>(
@@ -322,7 +317,6 @@ Future<void> setupLocator() async {
   locator.registerLazySingleton(() => ApiServiceProfile());
   locator.registerLazySingleton(() => ApiServiceSearch());
   locator.registerLazySingleton(() => ApiServiceCompany());
-  locator.registerLazySingleton(() => ApiServiceFavorites());
   locator.registerLazySingleton(() => ApiServiceChat());
   locator.registerLazySingleton(() => ApiServiceStream());
   locator.registerLazySingleton(() => ApiServiceClip());

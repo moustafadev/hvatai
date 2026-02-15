@@ -76,7 +76,7 @@ class TabSwitchWidget extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: GestureDetector(
+                      child: InkWell(
                         onTap: () => onChanged(true),
                         child: Container(
                           padding: const EdgeInsets.symmetric(
@@ -101,7 +101,7 @@ class TabSwitchWidget extends StatelessWidget {
                       ),
                     ),
                     Expanded(
-                      child: GestureDetector(
+                      child: InkWell(
                         onTap: () => onChanged(false),
                         child: Container(
                           padding: const EdgeInsets.symmetric(
