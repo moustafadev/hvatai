@@ -23,9 +23,8 @@ class OrderCard extends StatelessWidget {
     final item = order.items.isNotEmpty ? order.items.first : null;
 
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 18.h),
       decoration: BoxDecoration(
-        color: AppColors.lightGreyBackground,
+        color: AppColors.transparent,
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Row(
@@ -84,14 +83,13 @@ class _OrderImageSection extends StatelessWidget {
               vertical: 4.h,
             ),
             decoration: BoxDecoration(
-              color: statusColor.withValues(alpha: 0.12),
+              color: statusColor,
               borderRadius: BorderRadius.circular(20.r),
             ),
             child: CustomText(
               text: statusLabel,
               fontSize: 10.sp,
-              fontWeight: FontWeight.w700,
-              color: statusColor,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ),

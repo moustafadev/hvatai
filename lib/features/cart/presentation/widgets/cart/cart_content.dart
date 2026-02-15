@@ -128,9 +128,10 @@ class CartContent extends StatelessWidget {
                       onTap: () async {
                         final updatedAddress =
                             await context.push<UserRegistrationData>(
-                          AppRoutes.editDeliveryAddress,
+                          AppRoutes.deliveryAddressForm,
                           extra: {
-                            'model': deliveryAddress,
+                            'mode': AddressFormMode.edit,
+                            'address': deliveryAddress,
                           },
                         );
                         if (!context.mounted) return;

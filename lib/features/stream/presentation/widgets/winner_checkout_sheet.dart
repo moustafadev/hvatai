@@ -20,8 +20,10 @@ class _WinnerCheckoutSheetState extends State<WinnerCheckoutSheet> {
   Future<void> _openAddAddress(BuildContext context) async {
     final cubit = context.read<DeliveryAddressCubit>();
     await context.push(
-      AppRoutes.addDeliveryAddress,
-      extra: cubit,
+      AppRoutes.deliveryAddressForm,
+      extra: {
+        'mode': AddressFormMode.add,
+      },
     );
     if (!mounted) return;
     await cubit.getDeliveryAddress();
@@ -70,8 +72,7 @@ class _WinnerCheckoutSheetState extends State<WinnerCheckoutSheet> {
                 color: Colors.transparent,
               ),
               child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: BoxDecoration(
                   color: const Color(0xFFFBFBFB),
                   borderRadius: BorderRadius.vertical(
@@ -109,10 +110,12 @@ class _WinnerCheckoutSheetState extends State<WinnerCheckoutSheet> {
                       _InfoTile(
                         icon: Assets.assetsIconsDelivery,
                         title: addressTitle,
-                        onTap: hasAddress ? () {} : () => _openAddAddress(context),
+                        onTap:
+                            hasAddress ? () {} : () => _openAddAddress(context),
                         trailing: hasAddress
                             ? null
-                            : _PlusAction(onTap: () => _openAddAddress(context)),
+                            : _PlusAction(
+                                onTap: () => _openAddAddress(context)),
                       ),
                     SizedBox(height: 16.h),
                     if (paymentState.isLoading)
@@ -141,12 +144,11 @@ class _WinnerCheckoutSheetState extends State<WinnerCheckoutSheet> {
                       title: 'Ок',
                       color: const Color(0xFF7BE4EE),
                       textColor: Colors.white,
-                      
                       radius: 10,
                       height: 42,
                       fontWeight: FontWeight.w800,
                       fontSize: 16,
-                      onPressed: hasAddress && hasCard ? () {} : (){},
+                      onPressed: hasAddress && hasCard ? () {} : () {},
                     ),
                     SizedBox(height: 16.h),
                   ],
@@ -340,10 +342,10 @@ class _PromoSection extends StatelessWidget {
             child: CustomButton(
               title: applied ? 'Применено' : 'Применить',
               onPressed: applied ? null : onApply,
-              color: applied ? const Color(0xFFD2FBFF) : const Color(0xffD2FBFF),
+              color:
+                  applied ? const Color(0xFFD2FBFF) : const Color(0xffD2FBFF),
               disabled: applied,
-              textColor:
-                   const Color(0xFFE8E8E8),
+              textColor: const Color(0xFFE8E8E8),
               radius: 12,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
               fontSize: 14,
@@ -355,4 +357,3 @@ class _PromoSection extends StatelessWidget {
     );
   }
 }
-

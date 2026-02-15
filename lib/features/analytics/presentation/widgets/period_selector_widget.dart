@@ -10,15 +10,15 @@ class PeriodSelectorWidget extends StatelessWidget {
   final int selectedIndex;
   final ValueChanged<int> onPeriodChanged;
 
-  final List<String> _periods = const [
-    'Неделя',
-    'Месяц',
-    'Квартал',
-    'Год',
-  ];
-
   @override
   Widget build(BuildContext context) {
+    final List<String> periods = [
+      'week'.tr(),
+      'month'.tr(),
+      'quarter'.tr(),
+      'year'.tr(),
+    ];
+
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 16.w),
       padding: EdgeInsets.symmetric(horizontal: 4.w, vertical: 4.h),
@@ -28,7 +28,7 @@ class PeriodSelectorWidget extends StatelessWidget {
       ),
       child: Row(
         children: List.generate(
-          _periods.length,
+          periods.length,
           (index) => Expanded(
             child: GestureDetector(
               onTap: () => onPeriodChanged(index),
@@ -42,7 +42,7 @@ class PeriodSelectorWidget extends StatelessWidget {
                 ),
                 child: Center(
                   child: CustomText(
-                    text: _periods[index],
+                    text: periods[index],
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
                     color: selectedIndex == index

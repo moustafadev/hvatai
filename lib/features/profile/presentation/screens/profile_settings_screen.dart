@@ -5,6 +5,8 @@ class ProfileSettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: BodyNormalProfile(key: key));
+    return Scaffold(
+        backgroundColor: AppColors.background,
+        body: BodyNormalProfile(key: key));
   }
 }

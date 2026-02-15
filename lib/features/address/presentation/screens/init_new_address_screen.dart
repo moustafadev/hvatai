@@ -12,10 +12,7 @@ class InitNewAddressScreen extends StatelessWidget {
           final cubit = context.read<DeliveryAddressCubit>();
           if (state.isLoading) {
             return Scaffold(
-              body: Center(
-                  child: CircularProgressIndicator(
-                color: AppColors.grey,
-              )),
+              body: Center(child: CustomCircularProgrressIndicator()),
             );
           }
 
@@ -24,9 +21,9 @@ class InitNewAddressScreen extends StatelessWidget {
           }
 
           return Scaffold(
-            backgroundColor: AppColors.lightGreyBackground,
+            backgroundColor: AppColors.background,
             appBar: AppBar(
-              backgroundColor: AppColors.lightGreyBackground,
+              backgroundColor: AppColors.background,
               leading: IconButton(
                 icon:
                     Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
@@ -49,11 +46,12 @@ class InitNewAddressScreen extends StatelessWidget {
                     24.ph,
                     ListView.separated(
                       shrinkWrap: true,
+                      padding: EdgeInsets.zero,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.deliveryModel.length,
                       separatorBuilder: (_, __) => Divider(
                         thickness: 1,
-                        color: AppColors.gray,
+                        color: AppColors.greyButton,
                         height: 12.h,
                       ),
                       itemBuilder: (context, index) {
@@ -90,26 +88,16 @@ class InitNewAddressScreen extends StatelessWidget {
                             size: 28,
                           ),
                           onTap: () async {
-                            /* async {
-            final updatedUser = await context.push<UserRegistrationData>(
-              AppRoutes.settings,
-              extra: user,
-            );
-          
-            if (updatedUser != null) {
-              context.read<ProfileCubit>().updateUserData(updatedUser);
-            } */
                             final updatedAddress =
                                 await context.push<UserRegistrationData>(
                               AppRoutes.editDeliveryAddress,
                               extra: {
-                                'model': state.deliveryModel[index].toUserRegistrationData(),
-                                // 'cubit': cubit,
+                                'model': state.deliveryModel[index]
+                                    .toUserRegistrationData(),
                               },
                             );
                             if (updatedAddress != null) {
                               cubit.getDeliveryAddress();
-                             
                             }
                           },
                         );
@@ -117,15 +105,22 @@ class InitNewAddressScreen extends StatelessWidget {
                     ),
                     Divider(
                       thickness: 1,
-                      color: AppColors.gray,
+                      color: AppColors.greyButton,
                       height: 12.h,
                     ),
                     ListTile(
                       onTap: () async {
-                        await context.push(
-                          AppRoutes.addDeliveryAddress,
-                          extra: cubit,
+                        final updatedAddress =
+                            await context.push<UserRegistrationData>(
+                          AppRoutes.deliveryAddressForm,
+                          extra: {
+                            'mode': AddressFormMode.add,
+                          },
                         );
+
+                        if (updatedAddress != null) {
+                          cubit.getDeliveryAddress();
+                        }
                       },
                       contentPadding: EdgeInsets.all(0),
                       leading: Image.asset(
@@ -146,7 +141,7 @@ class InitNewAddressScreen extends StatelessWidget {
                     ),
                     Divider(
                       thickness: 1,
-                      color: AppColors.gray,
+                      color: AppColors.greyButton,
                       height: 12.h,
                     ),
                   ],

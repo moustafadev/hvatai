@@ -7,6 +7,7 @@ import 'package:hvatai/features/activity/data/datasources/api_service_activity.d
 import 'package:hvatai/features/activity/data/repositories/activity_impl_repository.dart';
 import 'package:hvatai/features/activity/domain/repositories/activity_repository.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
+import 'package:hvatai/features/address/presentation/cubit/address_form/address_form_cubit.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/create_clip_cubit/create_clip_cubit.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/preview_clip_cubit/preview_clip_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/categories_for_you/categories_for_you_cubit.dart';
@@ -22,7 +23,6 @@ import 'package:hvatai/features/cart/data/datasources/api_service_cart.dart';
 import 'package:hvatai/features/cart/data/repositories/cart_repository_impl.dart';
 import 'package:hvatai/features/cart/domain/repositories/cart_repository.dart';
 import 'package:hvatai/features/cart/presentation/cubit/cart_cubit/cart_cubit.dart';
-import 'package:hvatai/features/address/presentation/cubit/edit_address/edit_address_cubit.dart';
 import 'package:hvatai/features/cart/presentation/cubit/cart_product_details/cart_product_details_cubit.dart';
 import 'package:hvatai/features/auth/data/datasources/api_service_auth.dart';
 import 'package:hvatai/features/auth/data/repositories/auth_impl_repository.dart';
@@ -131,9 +131,7 @@ Future<void> setupLocator() async {
         locator(),
         locator(),
       ));
-  locator.registerFactory(() => EditAddressCubit(
-        locator(),
-      ));
+
   locator.registerFactory(() => NameCubit(locator()));
   locator.registerFactory(
       () => InterestsDetailCubit(locator(), locator(), locator()));
@@ -222,8 +220,10 @@ Future<void> setupLocator() async {
 
   locator.registerFactory(
       () => PaymentMethodCubit(locator(), locator(), locator()));
-  locator
-      .registerFactory(() => EditProfileCubit(locator(), locator(), locator()));
+  locator.registerFactory(() => EditProfileCubit(
+        locator(),
+        locator(),
+      ));
   locator.registerFactory(() => ProductFormCubit(
         locator(),
         locator(),
@@ -245,8 +245,8 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => DeliveryAddressCubit(
         locator(),
         locator(),
-        locator(),
       ));
+  locator.registerFactory(() => AddressFormCubit(locator(), locator()));
   locator.registerFactory(() => OtpCubit(locator(), locator()));
   locator.registerFactory(() => LiveListingsShopCubit(
       locator(), locator(), locator(), locator(), locator(), locator()));

@@ -8,14 +8,11 @@ import 'package:hvatai/features/auth/data/models/registration_model/user_registr
 import 'package:hvatai/features/auth/presentation/auth.dart';
 import 'package:hvatai/features/cart/presentation/cubit/cart_product_details/cart_product_details_cubit.dart';
 import 'package:hvatai/features/address/presentation/address.dart';
-import 'package:hvatai/features/address/presentation/cubit/delivery_address/delivery_address_cubit.dart';
 import 'package:hvatai/features/change_password/presentation/change_password.dart';
 import 'package:hvatai/features/chat/data/models/chat/chat_model.dart';
 import 'package:hvatai/features/chat/presentation/chat.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/awards/presentation/awards.dart';
-import 'package:hvatai/features/home/presentation/cubit/live_streams/live_streams_cubit.dart';
-import 'package:hvatai/features/home/presentation/cubit/categories/categories_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/notifications/presentation/cubit/notifications_cubit/notifications_cubit.dart';
 import 'package:hvatai/features/notifications/presentation/notifications.dart';
@@ -196,14 +193,7 @@ final GoRouter router = GoRouter(
         ),
       ],
     ),
-    GoRoute(
-      path: AppRoutes.addDeliveryAddress, // Remove the leading '/'
-      builder: (BuildContext context, GoRouterState state) {
-        final cubit = state.extra as DeliveryAddressCubit..clearAddress();
-        return BlocProvider.value(
-            value: cubit, child: const AddDeliveryAddressScreen());
-      },
-    ),
+
     GoRoute(
       path: AppRoutes.payments, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
@@ -251,21 +241,7 @@ final GoRouter router = GoRouter(
         );
       },
     ),
-    GoRoute(
-      path: AppRoutes.editDeliveryAddress,
-      builder: (BuildContext context, GoRouterState state) {
-        final extra = state.extra as Map<String, dynamic>;
 
-        final model = extra['model'] as UserRegistrationData;
-        // final cubit = extra['cubit'] as DeliveryAddressCubit
-        //   ..initRegistrationModel(model)
-        //   ..prefill(model.country);
-
-        return EditDeliveryAddressScreen(
-          address: model,
-        );
-      },
-    ),
     GoRoute(
       path: AppRoutes.changeEmail, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
@@ -318,7 +294,8 @@ final GoRouter router = GoRouter(
       builder: (context, state) {
         final extra = state.extra as Map<String, Object>;
         final favorites = extra['favorites'] as List<CategoryData>;
-        final List<int> initialSelectedIds = extra['initialSelectedIds'] as List<int>;
+        final List<int> initialSelectedIds =
+            extra['initialSelectedIds'] as List<int>;
 
         return CategoriesForYouScreen(
           favorites: favorites,
@@ -375,10 +352,24 @@ final GoRouter router = GoRouter(
         return WalletScreen(walletId: walletId);
       },
     ),
+
     GoRoute(
       path: AppRoutes.myOrders,
       builder: (BuildContext context, GoRouterState state) {
         return const MyOrdersScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.deliveryAddressForm,
+      builder: (BuildContext context, GoRouterState state) {
+        final extra = state.extra as Map<String, dynamic>? ?? {};
+        final mode = extra['mode'] as AddressFormMode? ?? AddressFormMode.add;
+        final address = extra['address'] as UserRegistrationData?;
+
+        return DeliveryAddressFormScreen(
+          mode: mode,
+          initialAddress: address,
+        );
       },
     ),
     GoRoute(

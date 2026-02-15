@@ -69,12 +69,14 @@ dependencies:
   flutter_html: ^3.0.0
   video_player: ^2.10.1
   video_thumbnail: ^0.5.3
-  ffmpeg_kit_flutter_new: ^4.1.0
+  # ffmpeg_kit_flutter_new: ^4.1.0
   path_provider: ^2.1.1
   http: ^1.2.0
   readmore: ^3.0.0
   path: ^1.9.1
   saver_gallery: ^4.1.0
+  image: ^4.7.2
+  package_info_plus: ^9.0.0
 
 dev_dependencies:
   flutter_test:

@@ -34,35 +34,9 @@ class PaymentAndDelivery extends StatelessWidget {
 
           final option = state.settingsOptions[dataIndex];
 
-          return ListTile(
-            contentPadding: EdgeInsets.all(0),
-            leading: Container(
-              decoration: BoxDecoration(
-                color: AppColors.gray,
-                shape: BoxShape.circle,
-              ),
-              child: Padding(
-                padding: EdgeInsets.all(8.0.r),
-                child: CustomContainer(
-                  height: 24.h,
-                  width: 24.w,
-                  image: DecorationImage(
-                    image: AssetImage(option['icon']),
-                  ),
-                ),
-              ),
-            ),
-            title: CustomText(
-              text: option['title'],
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
-              color: AppColors.blackDark,
-            ),
-            trailing: Icon(
-              Icons.chevron_right,
-              color: AppColors.blackDark,
-              size: 28,
-            ),
+          return ReusableProfileTile(
+            title: option['title'],
+            iconAsset: option['icon'],
             onTap: () {
               final screen = option['screen'];
               if (screen is Function(BuildContext)) {

@@ -32,53 +32,53 @@ class EverythingAnalyticsWidget extends StatelessWidget {
             children: [
               // Выручка (Revenue)
               AnalyticsMetricCard(
-                title: 'Выручка',
+                title: 'revenue'.tr(),
                 value: statistics.statistics?.revenue?.total ?? '-',
                 onInfoTap: () {
                   AnalyticsInfoBottomSheet.show(
                     context,
-                    title: 'Выручка',
+                    title: 'revenue'.tr(),
                     message:
-                        'Выручка – это общая сумма денег, которую вы получаете от реализации своих товаров или стримов за определённый период (например, за месяц, квартал или год).',
+                        'revenueMessage'.tr(),
                   );
                 },
               ),
               // Количество стримов (Number of streams)
               AnalyticsMetricCard(
-                title: 'Количество стримов',
+                title: 'numberOfStreams'.tr(),
                 value: statistics.statistics?.streams?.total ?? '-',
                 onInfoTap: () {
                   AnalyticsInfoBottomSheet.show(
                     context,
-                    title: 'Количество стримов',
+                    title: 'numberOfStreams'.tr(),
                     message:
-                        'Количество стримов – это число проведённых онлайн-трансляций на платформе.',
+                        'numberOfStreamsMessage'.tr(),
                   );
                 },
               ),
               // Количество ставок (Number of bids)
               AnalyticsMetricCard(
-                title: 'Количество ставок',
+                title: 'numberOfBids'.tr(),
                 value: statistics.statistics?.bids?.total ?? '-',
                 onInfoTap: () {
                   AnalyticsInfoBottomSheet.show(
                     context,
-                    title: 'Количество ставок',
+                    title: 'numberOfBids'.tr(),
                     message:
-                        'Количество ставок – это общее число сделанных ставок за определённый период (день, месяц, событие).',
+                        'numberOfBidsMessage'.tr(),
                   );
                 },
               ),
               // Проданные товары (Items sold)
               AnalyticsMetricCard(
-                title: 'Проданные товары',
+                title: 'soldProducts'.tr(),
                 value: statistics.statistics?.soldProducts?.total ?? '-',
                 onInfoTap: () {
                   AnalyticsInfoBottomSheet.show(
                     context,
-                    title: 'Проданные товары',
+                    title: 'soldProducts'.tr(),
                     message:
-                        'Проданные товары – это товары, которые были переданы покупателю (или оказана услуга) и за которые получена оплата (или обязательство оплаты).',
+                        'soldProductsMessage'.tr(),
                   );
                 },
               ),

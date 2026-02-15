@@ -31,7 +31,7 @@ class ReportViolationScreen extends StatelessWidget {
           ),
           title: CustomText(
             text: 'Сообщить о нарушении',
-            fontSize: 20.sp,
+            fontSize: 18.sp,
             fontWeight: FontWeight.w700,
             color: AppColors.blackDark,
           ),
@@ -50,16 +50,15 @@ class ReportViolationScreen extends StatelessWidget {
                     CustomText(
                       text: 'Причина жалобы',
                       fontSize: 20.sp,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.blackDark,
+                      fontWeight: FontWeight.w800,
                     ),
                     8.ph,
                     CustomText(
                       text:
                           'Расскажите, что не так в описании товара или поведении пользователя',
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.grey,
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.blackColor.withValues(alpha: 0.2),
                     ),
                     24.ph,
                     ...violationReasons.map((reason) {
@@ -98,9 +97,8 @@ class ReportViolationScreen extends StatelessWidget {
                               Expanded(
                                 child: CustomText(
                                   text: reason['title']!,
-                                  fontSize: 14.sp,
+                                  fontSize: 16.sp,
                                   fontWeight: FontWeight.w400,
-                                  color: AppColors.blackDark,
                                 ),
                               ),
                             ],
@@ -172,20 +170,25 @@ class _CustomReasonFieldState extends State<_CustomReasonField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        CustomTextField(
-          hintText: 'Укажите причину',
-          controller: _controller,
-          onChanged: widget.onChanged,
-          maxLines: 5,
-          maxLength: 2000,
-          isRequired: false,
+        Container(
+          decoration: BoxDecoration(
+            boxShadow: AppColors.boxShadowTextField,
+          ),
+          child: CustomTextField(
+            hintText: 'Укажите причину',
+            controller: _controller,
+            onChanged: widget.onChanged,
+            maxLines: 5,
+            maxLength: 2000,
+            isRequired: false,
+          ),
         ),
         8.ph,
         CustomText(
           text: 'Не более 2000 символов',
-          fontSize: 12.sp,
-          fontWeight: FontWeight.w400,
-          color: AppColors.grey,
+          fontSize: 10.sp,
+          fontWeight: FontWeight.w600,
+          color: AppColors.blackColor.withValues(alpha: 0.2),
         ),
       ],
     );

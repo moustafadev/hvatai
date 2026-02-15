@@ -32,72 +32,72 @@ class StreamsAnalyticsWidget extends StatelessWidget {
             children: [
               // Выручка (Revenue)
               AnalyticsMetricCard(
-                title: 'Выручка',
+                title: 'revenue'.tr(),
                 value: statistics.statistics?.revenue?.total ?? '-',
                 onInfoTap: () {
                   AnalyticsInfoBottomSheet.show(
                     context,
-                    title: 'Выручка',
+                    title: 'revenue'.tr(),
                     message:
-                        'Выручка — это общая сумма денег, которую вы получаете от реализации своих товаров или стримов за определённый период (например, за месяц, квартал или год).',
+                        'revenueMessage'.tr(),
                   );
                 },
               ),
               12.ph,
               // Количество продаж (Number of sales)
               AnalyticsMetricCard(
-                title: 'Количество продаж',
+                title: 'soldProducts'.tr(),
                 value: statistics.statistics?.soldProducts?.total ?? '-',
                 onInfoTap: () {
                   AnalyticsInfoBottomSheet.show(
                     context,
-                    title: 'Количество продаж',
+                    title: 'soldProducts'.tr(),
                     message:
-                        'Количество продаж — это число товаров или услуг, проданных непосредственно во время онлайн-трансляций (live-стримов).',
+                        'soldProductsMessage'.tr(),
                   );
                 },
               ),
               12.ph,
               // Ставки всего / участники (Total bids / participants)
               AnalyticsMetricCard(
-                title: 'Ставки всего / участники',
+                title: 'totalBidsAndParticipants'.tr(),
                 value:
                     '${statistics.statistics?.bids?.total ?? '-'} / ${statistics.statistics?.participants?.total ?? '-'}',
                 onInfoTap: () {
                   AnalyticsInfoBottomSheet.show(
                     context,
-                    title: 'Ставки всего / участники',
+                    title: 'totalBidsAndParticipants'.tr(),
                     message:
-                        'Общее количество ставок и количество участников, сделавших хотя бы одну ставку.',
+                        'totalBidsAndParticipantsMessage'.tr(),
                   );
                 },
               ),
               12.ph,
               // Максимальное количество зрителей (Maximum number of viewers)
               AnalyticsMetricCard(
-                title: 'Максимальное количество зрителей',
+                title: 'maximumNumberOfViewers'.tr(),
                 value: statistics.statistics?.maxViewers?.total ?? '-',
                 onInfoTap: () {
                   AnalyticsInfoBottomSheet.show(
                     context,
-                    title: 'Максимальное количество зрителей',
+                    title: 'maximumNumberOfViewers'.tr(),
                     message:
-                        'Максимальное количество зрителей — это пиковое число пользователей, одновременно присутствовавших на онлайн-трансляции (стриме) в течение всего её времени.',
+                        'maximumNumberOfViewersMessage'.tr(),
                   );
                 },
               ),
               12.ph,
               // Победители лотов (Lot winners)
               AnalyticsMetricCard(
-                title: 'Победители лотов',
+                title: 'lotWinners'.tr(),
                 value:
                     statistics.statistics?.auctionWinners?.totalUnique ?? '-',
                 onInfoTap: () {
                   AnalyticsInfoBottomSheet.show(
                     context,
-                    title: 'Победители лотов',
+                    title: 'lotWinners'.tr(),
                     message:
-                        'Победители лотов — это пользователи, которые выиграли право на покупку товара или услуги в результате аукциона, розыгрыша или конкурса, организованного в формате лотов (отдельных позиций).',
+                        'lotWinnersMessage'.tr(),
                   );
                 },
               ),

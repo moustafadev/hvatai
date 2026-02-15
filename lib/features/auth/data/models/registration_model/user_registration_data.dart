@@ -38,10 +38,6 @@ class UserRegistrationData with _$UserRegistrationData {
     String? passwordConfirmation,
     @JsonKey(name: 'current_password', includeIfNull: false)
     String? currentPassword,
-    @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
-    bool? agreedToTerms,
-    @JsonKey(
-        name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
     bool? isAbove18,
     @JsonKey(includeIfNull: false) String? email,
     @JsonKey(includeIfNull: false) String? token,
@@ -63,11 +59,6 @@ class UserRegistrationData with _$UserRegistrationData {
     @JsonKey(includeIfNull: false) String? lang,
     @JsonKey(name: 'business_id', includeIfNull: false) int? businessId,
     @JsonKey(includeIfNull: false) String? visibility,
-    @JsonKey(includeIfNull: false, fromJson: toStringNullable) String? sms,
-    @JsonKey(includeIfNull: false, fromJson: toStringNullable) String? push,
-    @JsonKey(
-        name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
-    String? sendEmail,
     @JsonKey(includeIfNull: false) String? status,
     @JsonKey(name: 'fcm_tokens', includeIfNull: false) List<String>? fcmTokens,
     @JsonKey(name: 'email_verified_at', includeIfNull: false)

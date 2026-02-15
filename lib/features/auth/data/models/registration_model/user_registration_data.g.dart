@@ -15,8 +15,7 @@ _$UserRegistrationDataImpl _$$UserRegistrationDataImplFromJson(
       appleId: json['apple_id'] as String?,
       passwordConfirmation: json['password_confirmation'] as String?,
       currentPassword: json['current_password'] as String?,
-      agreedToTerms: intToBool(json['terms_agreement']),
-      isAbove18: intToBool(json['age_confirmation']),
+      isAbove18: json['isAbove18'] as bool?,
       email: json['email'] as String?,
       token: json['token'] as String?,
       password: json['password'] as String?,
@@ -35,9 +34,6 @@ _$UserRegistrationDataImpl _$$UserRegistrationDataImplFromJson(
       lang: json['lang'] as String?,
       businessId: (json['business_id'] as num?)?.toInt(),
       visibility: json['visibility'] as String?,
-      sms: toStringNullable(json['sms']),
-      push: toStringNullable(json['push']),
-      sendEmail: toStringNullable(json['send_email']),
       status: json['status'] as String?,
       fcmTokens: (json['fcm_tokens'] as List<dynamic>?)
           ?.map((e) => e as String)
@@ -81,8 +77,7 @@ Map<String, dynamic> _$$UserRegistrationDataImplToJson(
       if (instance.passwordConfirmation case final value?)
         'password_confirmation': value,
       if (instance.currentPassword case final value?) 'current_password': value,
-      if (instance.agreedToTerms case final value?) 'terms_agreement': value,
-      if (instance.isAbove18 case final value?) 'age_confirmation': value,
+      'isAbove18': instance.isAbove18,
       if (instance.email case final value?) 'email': value,
       if (instance.token case final value?) 'token': value,
       if (instance.password case final value?) 'password': value,
@@ -101,9 +96,6 @@ Map<String, dynamic> _$$UserRegistrationDataImplToJson(
       if (instance.lang case final value?) 'lang': value,
       if (instance.businessId case final value?) 'business_id': value,
       if (instance.visibility case final value?) 'visibility': value,
-      if (instance.sms case final value?) 'sms': value,
-      if (instance.push case final value?) 'push': value,
-      if (instance.sendEmail case final value?) 'send_email': value,
       if (instance.status case final value?) 'status': value,
       if (instance.fcmTokens case final value?) 'fcm_tokens': value,
       if (instance.emailVerifiedAt case final value?)

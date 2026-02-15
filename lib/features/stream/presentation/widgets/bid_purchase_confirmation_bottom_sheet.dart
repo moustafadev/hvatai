@@ -91,11 +91,12 @@ class BidPurchaseConfirmationBottomSheet extends StatelessWidget {
                       onEdit: () async {
                         final updatedAddress =
                             await context.push<UserRegistrationData>(
-                          AppRoutes.editDeliveryAddress,
+                          AppRoutes.deliveryAddressForm,
                           extra: {
-                            'model': selectedAddress?.toUserRegistrationData()
-                            // 'cubit': cubit,
+                            'mode': AddressFormMode.edit,
+                            'address': selectedAddress?.toUserRegistrationData(),
                           },
+                         
                         );
 
                         if (updatedAddress != null && context.mounted) {

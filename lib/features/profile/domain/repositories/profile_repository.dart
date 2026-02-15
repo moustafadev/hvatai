@@ -13,8 +13,6 @@ abstract class ProfileRepository {
 
   Future<Either<String, Unit>> deleteAccount();
 
-  Future<Either<String, UserRegistrationData>> updateProfileType();
-
   Future<Either<String, Unit>> signOut();
 
   Future<Either<String, List<ProductModel>>> getMyProducts({

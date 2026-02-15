@@ -10,7 +10,7 @@ class NotificationSettingsScreen extends StatelessWidget {
       value: notificationCubit,
       child: Scaffold(
         appBar: AppBar(
-          backgroundColor: AppColors.lightGreyBackground,
+          backgroundColor: AppColors.background,
           leading: IconButton(
             icon: Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
             onPressed: () {
@@ -18,7 +18,7 @@ class NotificationSettingsScreen extends StatelessWidget {
             },
           ),
         ),
-        backgroundColor: AppColors.lightGreyBackground,
+        backgroundColor: AppColors.background,
         body: BlocBuilder<NotificationCubit, NotificationState>(
           builder: (context, state) {
             final cubit = context.read<NotificationCubit>();
@@ -33,14 +33,13 @@ class NotificationSettingsScreen extends StatelessWidget {
                       text: 'notificationSettings'.tr(),
                       fontSize: 20.sp,
                       fontWeight: FontWeight.w800,
-                      color: AppColors.blackDark,
                     ),
                     12.ph,
                     CustomText(
                       text: 'notificationDescription'.tr(),
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.grey,
+                      color: AppColors.text.withValues(alpha: 0.4),
                     ),
                     14.ph,
                     CustomSwitchWidget(
@@ -70,7 +69,7 @@ class NotificationSettingsScreen extends StatelessWidget {
                       padding: const EdgeInsets.only(top: 16.0, bottom: 40),
                       child: CustomText(
                         text: 'controlDescription'.tr(),
-                        color: AppColors.grey,
+                        color: AppColors.text.withValues(alpha: 0.4),
                         fontSize: 12.sp,
                         fontWeight: FontWeight.w500,
                       ),
@@ -109,7 +108,7 @@ class NotificationSettingsScreen extends StatelessWidget {
                       text: 'bookmarkNotificationDescription'.tr(),
                       fontSize: 12.sp,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.grey,
+                      color: AppColors.text.withValues(alpha: 0.4),
                     ),
                     5.ph,
                     CustomSwitchWidget(

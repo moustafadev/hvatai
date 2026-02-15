@@ -6,7 +6,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
@@ -138,28 +137,16 @@ class ProfileCubit extends Cubit<ProfileState> {
     ];
   }
 
-  void updateRole(bool isSeller) {
-    emit(state.copyWith(isSeller: isSeller));
-  }
-
   Future<void> pickAndUpdateImage(
     BuildContext context,
     ImageSource source,
   ) async {
-    debugPrint(
-        '📸 [ProfileCubit] Starting image pick - source: ${source.name}');
     try {
       final pickedFile = await ImagePicker().pickImage(source: source);
       if (pickedFile != null && context.mounted) {
-        debugPrint(
-            '✅ [ProfileCubit] Image picked successfully - path: ${pickedFile.path}');
         await updateProfileImage(context, pickedFile.path);
-      } else {
-        debugPrint('⚠️ [ProfileCubit] No image picked or context not mounted');
       }
-    } catch (e, stackTrace) {
-      debugPrint('❌ [ProfileCubit] Error picking image: $e');
-      debugPrint('Stack trace: $stackTrace');
+    } catch (e) {
       if (context.mounted) {
         showFloatingMessageError('somethingWentWrong'.tr());
       }
@@ -171,26 +158,15 @@ class ProfileCubit extends Cubit<ProfileState> {
     String imagePath,
   ) async {
     final user = state.userProfileModel;
-    debugPrint('🔄 [ProfileCubit] Starting image update');
-    debugPrint('   - Image path: $imagePath');
-    debugPrint('   - User firstName: ${user.firstName}');
-    debugPrint('   - User lastName: ${user.lastName}');
-
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
     final updatedUser = user.copyWith(image: imagePath);
-    debugPrint('📦 [ProfileCubit] Preparing form data...');
-    final formData = await _prepareProfileFormData(updatedUser);
-    debugPrint('✅ [ProfileCubit] Form data prepared');
-
-    debugPrint('🌐 [ProfileCubit] Calling updateProfileDataUseCase...');
     final result = await updateProfileDataUseCase.call(
-      UpdateProfileParams(formData: formData),
+      UpdateProfileParams(userRegistrationData: updatedUser),
     );
 
     result.fold(
       (failure) {
-        debugPrint('❌ [ProfileCubit] Update failed: $failure');
         emit(state.copyWith(
           isLoading: false,
           errorMessage: failure,
@@ -200,8 +176,6 @@ class ProfileCubit extends Cubit<ProfileState> {
         }
       },
       (updatedUserData) {
-        debugPrint('✅ [ProfileCubit] Update successful');
-        debugPrint('   - Updated user image: ${updatedUserData.image}');
         emit(state.copyWith(
           isLoading: false,
           userProfileModel: updatedUserData,
@@ -211,135 +185,5 @@ class ProfileCubit extends Cubit<ProfileState> {
         }
       },
     );
-  }
-
-  Future<FormData> _prepareProfileFormData(UserRegistrationData params) async {
-    debugPrint('📋 [ProfileCubit] _prepareProfileFormData - Starting');
-    final dataMap = Map<String, dynamic>.from(params.toJson());
-    dataMap.remove('phone');
-    debugPrint('   - Removed phone from dataMap');
-
-    dataMap['terms_agreement'] = params.agreedToTerms ?? false ? 1 : 0;
-    dataMap['age_confirmation'] = params.isAbove18 ?? false ? 1 : 0;
-    debugPrint('   - terms_agreement: ${dataMap['terms_agreement']}');
-    debugPrint('   - age_confirmation: ${dataMap['age_confirmation']}');
-
-    MultipartFile? imageFile;
-    if (params.image != null && File(params.image!).existsSync()) {
-      debugPrint('   - Image path exists, preparing image file...');
-      imageFile = await _prepareImageFile(params.image);
-      debugPrint('   - Image file prepared: ${imageFile != null}');
-    } else {
-      debugPrint('   - Image path is null or file does not exist');
-    }
-
-    if (imageFile != null) {
-      dataMap['image'] = imageFile;
-      debugPrint('   - Added image to dataMap');
-    } else {
-      dataMap.remove('image');
-      debugPrint('   - Removed image from dataMap');
-    }
-
-    debugPrint('✅ [ProfileCubit] _prepareProfileFormData - Completed');
-    return FormData.fromMap(dataMap);
-  }
-
-  Future<File> compressImage(File file, {int quality = 70}) async {
-    final originalSize = await file.length();
-    debugPrint('🗜️ [ProfileCubit] compressImage - Starting');
-    debugPrint('   - Original file: ${file.path}');
-    debugPrint(
-        '   - Original size: ${(originalSize / 1024).toStringAsFixed(2)} KB');
-    debugPrint('   - Quality: $quality');
-
-    final targetPath = file.absolute.path.replaceAll('.jpg', '_compressed.jpg');
-    debugPrint('   - Target path: $targetPath');
-
-    final result = await FlutterImageCompress.compressAndGetFile(
-      file.absolute.path,
-      targetPath,
-      quality: quality,
-      minWidth: 1080,
-      minHeight: 1080,
-    );
-
-    if (result != null) {
-      final compressedFile = File(result.path);
-      final compressedSize = await compressedFile.length();
-      debugPrint('✅ [ProfileCubit] compressImage - Completed');
-      debugPrint('   - Compressed file: ${compressedFile.path}');
-      debugPrint(
-          '   - Compressed size: ${(compressedSize / 1024).toStringAsFixed(2)} KB');
-      debugPrint(
-          '   - Size reduction: ${((1 - compressedSize / originalSize) * 100).toStringAsFixed(1)}%');
-      return compressedFile;
-    } else {
-      debugPrint(
-          '⚠️ [ProfileCubit] compressImage - Compression returned null, using original');
-      return file;
-    }
-  }
-
-  Future<MultipartFile?> _prepareImageFile(String? imagePath) async {
-    debugPrint('🖼️ [ProfileCubit] _prepareImageFile - Starting');
-    debugPrint('   - Image path: $imagePath');
-
-    if (imagePath == null || imagePath.isEmpty) {
-      debugPrint(
-          '❌ [ProfileCubit] _prepareImageFile - Image path is null or empty');
-      return null;
-    }
-
-    try {
-      File file = File(imagePath);
-      if (!await file.exists()) {
-        debugPrint('❌ [ProfileCubit] _prepareImageFile - File does not exist');
-        return null;
-      }
-
-      final initialSize = await file.length();
-      debugPrint(
-          '   - Initial file size: ${(initialSize / 1024 / 1024).toStringAsFixed(2)} MB');
-
-      int quality = 85;
-      int compressionRound = 1;
-      while (await file.length() > 1 * 1024 * 1024 && quality > 30) {
-        debugPrint(
-            '   - Compression round $compressionRound: size > 1MB, quality: $quality');
-        file = await compressImage(file, quality: quality);
-        quality -= 15;
-        compressionRound++;
-      }
-
-      final afterLoopSize = await file.length();
-      if (afterLoopSize > 2 * 1024 * 1024) {
-        debugPrint(
-            '   - Final compression: size still > 2MB, applying quality 50');
-        file = await compressImage(file, quality: 50);
-        final finalSize = await file.length();
-        if (finalSize > 2 * 1024 * 1024) {
-          debugPrint(
-              '❌ [ProfileCubit] _prepareImageFile - File still too large after compression: ${(finalSize / 1024 / 1024).toStringAsFixed(2)} MB');
-          return null;
-        }
-        debugPrint(
-            '✅ [ProfileCubit] _prepareImageFile - Final size after compression: ${(finalSize / 1024 / 1024).toStringAsFixed(2)} MB');
-      } else {
-        debugPrint(
-            '✅ [ProfileCubit] _prepareImageFile - Size acceptable: ${(afterLoopSize / 1024 / 1024).toStringAsFixed(2)} MB');
-      }
-
-      final filename = file.path.split('/').last;
-      debugPrint('   - Creating MultipartFile with filename: $filename');
-      final multipartFile =
-          MultipartFile.fromFile(file.path, filename: filename);
-      debugPrint('✅ [ProfileCubit] _prepareImageFile - Completed successfully');
-      return multipartFile;
-    } catch (e, stackTrace) {
-      debugPrint('❌ [ProfileCubit] _prepareImageFile - Error: $e');
-      debugPrint('Stack trace: $stackTrace');
-      return null;
-    }
   }
 }

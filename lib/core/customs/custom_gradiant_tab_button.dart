@@ -32,7 +32,6 @@ class CustomGradiantTabButton extends StatelessWidget {
           child: CustomText(
             text: text,
             fontSize: 14.sp,
-            color: AppColors.blackDark,
             fontWeight: FontWeight.w600,
           ),
         ),

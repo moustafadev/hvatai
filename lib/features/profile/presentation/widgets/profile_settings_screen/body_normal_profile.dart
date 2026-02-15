@@ -7,15 +7,12 @@ class BodyNormalProfile extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       bottom: false,
-      child: BlocConsumer<ProfileCubit, ProfileState>(
-        listener: (context, state) {},
+      child: BlocBuilder<ProfileCubit, ProfileState>(
         builder: (context, state) {
           final cubit = context.read<ProfileCubit>();
 
           if (state.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(color: AppColors.grey),
-            );
+            return const Center(child: CustomCircularProgrressIndicator());
           }
 
           if (state.errorMessage.isNotEmpty) {
@@ -49,14 +46,12 @@ class BodyNormalProfile extends StatelessWidget {
                   Row(
                     children: [
                       GestureDetector(
-                        onTap: () {
-                          context.pop();
-                        },
-                        child: Icon(Icons.arrow_back_ios),
+                        onTap: () => context.pop(),
+                        child: const Icon(Icons.arrow_back_ios),
                       ),
                       12.pw,
                       CustomText(
-                        text: 'Настройки профиля',
+                        text: 'profileSettings'.tr(),
                         fontWeight: FontWeight.w700,
                         fontSize: 18.sp,
                       ),
@@ -65,82 +60,30 @@ class BodyNormalProfile extends StatelessWidget {
                   12.ph,
                   const TopProfileInfo(),
                   20.ph,
-                  // Настройки доставки
-                  ListTile(
-                    contentPadding: EdgeInsets.all(0),
-                    leading: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.gray,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0.r),
-                        child: CustomContainer(
-                          height: 24.h,
-                          width: 24.w,
-                          image: DecorationImage(
-                            image: AssetImage(
-                              Assets.assetsImagesDeliveryIcon,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    title: CustomText(
-                      text: "deliverySettings".tr(),
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.blackDark,
-                    ),
-                    trailing: Icon(
-                      Icons.chevron_right,
-                      color: AppColors.blackDark,
-                      size: 28,
-                    ),
-                    onTap: () {
-                      showDeliverySettingsBottomSheet(context);
-                    },
+
+                  // ✅ Delivery settings
+                  ReusableProfileTile(
+                    title: "deliverySettings".tr(),
+                    iconAsset: Assets.assetsImagesDeliveryIcon,
+                    onTap: () => showDeliverySettingsBottomSheet(context),
                   ),
+
                   12.ph,
-                  // Аналитика
-                  ListTile(
-                    contentPadding: EdgeInsets.all(0),
-                    leading: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.gray,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0.r),
-                        child: CustomContainer(
-                          height: 24.h,
-                          width: 24.w,
-                          image: DecorationImage(
-                            image: AssetImage(
-                              Assets.assetsImagesAnalyticsIcon,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    title: CustomText(
-                      text: "analytics".tr(),
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.blackDark,
-                    ),
-                    trailing: Icon(
-                      Icons.chevron_right,
-                      color: AppColors.blackDark,
-                      size: 28,
-                    ),
-                    onTap: () {
-                      context.push(AppRoutes.analytics);
-                    },
+
+                  // ✅ Analytics
+                  ReusableProfileTile(
+                    title: "analytics".tr(),
+                    iconAsset: Assets.assetsImagesAnalyticsIcon,
+                    onTap: () => context.push(AppRoutes.analytics),
                   ),
+
                   20.ph,
-                  const HelpContacts(),
+
+                  // ✅ Help & Contacts list (same tile)
+                  const HelpContactsSection(),
+
                   30.ph,
+
                   GestureDetector(
                     onTap: () {
                       showLogoutBottomSheet(
@@ -176,15 +119,9 @@ class BodyNormalProfile extends StatelessWidget {
                       ),
                     ),
                   ),
+
                   16.ph,
-                  Center(
-                    child: CustomText(
-                      text: "v25.3.5 (11)\n© 2023 Whatnot, Inc.",
-                      fontWeight: FontWeight.w400,
-                      fontSize: 14.sp,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+                  const Center(child: AppVersionWidget()),
                   100.ph,
                 ],
               ),
@@ -192,6 +129,77 @@ class BodyNormalProfile extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+/// ✅ HelpContacts section using the same reusable tile
+class HelpContactsSection extends StatelessWidget {
+  const HelpContactsSection({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ProfileCubit, ProfileState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: CustomText(
+                text: "helpContacts".tr(),
+                fontWeight: FontWeight.w800,
+                fontSize: 20.sp,
+                fontFamily: "Manrope",
+              ),
+            ),
+            ...state.helpAndContact.map(
+              (item) {
+                return ReusableProfileTile(
+                  title: item['title'],
+                  iconAsset: item['icon'],
+                  onTap: () {
+                    final screen = item['screen'];
+                    if (screen is Function(BuildContext)) {
+                      screen(context);
+                    } else if (screen is Function()) {
+                      screen();
+                    }
+                  },
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class AppVersionWidget extends StatelessWidget {
+  const AppVersionWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<PackageInfo>(
+      future: PackageInfo.fromPlatform(),
+      builder: (context, snap) {
+        if (!snap.hasData) {
+          return const SizedBox.shrink();
+        }
+        final v = snap.data!;
+        final version = v.version;
+        final build = v.buildNumber;
+        return CustomText(
+          text: "v$version ($build)\n© 2023 Hvatai",
+          fontWeight: FontWeight.w500,
+          fontSize: 14.sp,
+          color: AppColors.blackColor.withValues(alpha: 0.2),
+          textAlign: TextAlign.center,
+        );
+      },
     );
   }
 }

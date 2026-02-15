@@ -17,10 +17,8 @@ class SettingsScreen extends StatelessWidget {
 
             if (state.isLoading) {
               return Scaffold(
-                body: const Center(
-                    child: CircularProgressIndicator(
-                  color: AppColors.grey,
-                )),
+                backgroundColor: AppColors.background,
+                body: const Center(child: CustomCircularProgrressIndicator()),
               );
             }
 
@@ -48,10 +46,10 @@ class SettingsScreen extends StatelessWidget {
                     },
                     child: const Icon(Icons.arrow_back_ios),
                   ),
-                  backgroundColor: AppColors.lightGreyBackground,
+                  backgroundColor: AppColors.background,
                   elevation: 0,
                 ),
-                backgroundColor: AppColors.lightGreyBackground,
+                backgroundColor: AppColors.background,
                 body: SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -64,33 +62,54 @@ class SettingsScreen extends StatelessWidget {
                           fontWeight: FontWeight.w800,
                         ),
                         12.ph,
-                        CustomTextField(
-                          initialValue: state.user.firstName,
-                          onChanged: (v) => cubit.updateNewField('name', v),
-                          hintText: 'firstName'.tr(),
-                          isRequired: false,
+                        Container(
+                          decoration: BoxDecoration(
+                            boxShadow: AppColors.boxShadowTextField,
+                          ),
+                          child: CustomTextField(
+                            initialValue: state.user.firstName,
+                            onChanged: (v) => cubit.updateNewField('name', v),
+                            hintText: 'firstName'.tr(),
+                            isRequired: false,
+                          ),
                         ),
                         12.ph,
-                        CustomTextField(
-                          initialValue: state.user.lastName,
-                          onChanged: (v) => cubit.updateNewField('lastName', v),
-                          hintText: 'lastName'.tr(),
-                          isRequired: false,
+                        Container(
+                          decoration: BoxDecoration(
+                            boxShadow: AppColors.boxShadowTextField,
+                          ),
+                          child: CustomTextField(
+                            initialValue: state.user.lastName,
+                            onChanged: (v) =>
+                                cubit.updateNewField('lastName', v),
+                            hintText: 'lastName'.tr(),
+                            isRequired: false,
+                          ),
                         ),
                         12.ph,
-                        CustomSelectGender(
-                          value: _normalizeGender(
-                              (state.user.gender?.isEmpty ?? true)
-                                  ? user.gender ?? ''
-                                  : state.user.gender),
-                          onChanged: (val) => cubit.setNewGender(val),
+                        Container(
+                          decoration: BoxDecoration(
+                            boxShadow: AppColors.boxShadowTextField,
+                          ),
+                          child: CustomSelectGender(
+                            value: _normalizeGender(
+                                (state.user.gender?.isEmpty ?? true)
+                                    ? user.gender ?? ''
+                                    : state.user.gender),
+                            onChanged: (val) => cubit.setNewGender(val),
+                          ),
                         ),
                         12.ph,
-                        UpdateCountryDropdown(
-                          country: (state.user.country == null ||
-                                  state.user.country!.isEmpty)
-                              ? user.country ?? ''
-                              : state.user.country!,
+                        Container(
+                          decoration: BoxDecoration(
+                            boxShadow: AppColors.boxShadowTextField,
+                          ),
+                          child: UpdateCountryDropdown(
+                            country: (state.user.country == null ||
+                                    state.user.country!.isEmpty)
+                                ? user.country ?? ''
+                                : state.user.country!,
+                          ),
                         ),
                         20.ph,
                         ChangeInfoProfile(),

@@ -32,9 +32,6 @@ mixin _$UserRegistrationData {
   String? get passwordConfirmation => throw _privateConstructorUsedError;
   @JsonKey(name: 'current_password', includeIfNull: false)
   String? get currentPassword => throw _privateConstructorUsedError;
-  @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
-  bool? get agreedToTerms => throw _privateConstructorUsedError;
-  @JsonKey(name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
   bool? get isAbove18 => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
   String? get email => throw _privateConstructorUsedError;
@@ -73,12 +70,6 @@ mixin _$UserRegistrationData {
   int? get businessId => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
   String? get visibility => throw _privateConstructorUsedError;
-  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
-  String? get sms => throw _privateConstructorUsedError;
-  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
-  String? get push => throw _privateConstructorUsedError;
-  @JsonKey(name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
-  String? get sendEmail => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
   String? get status => throw _privateConstructorUsedError;
   @JsonKey(name: 'fcm_tokens', includeIfNull: false)
@@ -156,10 +147,6 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       String? passwordConfirmation,
       @JsonKey(name: 'current_password', includeIfNull: false)
       String? currentPassword,
-      @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
-      bool? agreedToTerms,
-      @JsonKey(
-          name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
       bool? isAbove18,
       @JsonKey(includeIfNull: false) String? email,
       @JsonKey(includeIfNull: false) String? token,
@@ -183,11 +170,6 @@ abstract class $UserRegistrationDataCopyWith<$Res> {
       @JsonKey(includeIfNull: false) String? lang,
       @JsonKey(name: 'business_id', includeIfNull: false) int? businessId,
       @JsonKey(includeIfNull: false) String? visibility,
-      @JsonKey(includeIfNull: false, fromJson: toStringNullable) String? sms,
-      @JsonKey(includeIfNull: false, fromJson: toStringNullable) String? push,
-      @JsonKey(
-          name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
-      String? sendEmail,
       @JsonKey(includeIfNull: false) String? status,
       @JsonKey(name: 'fcm_tokens', includeIfNull: false)
       List<String>? fcmTokens,
@@ -253,7 +235,6 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
     Object? appleId = freezed,
     Object? passwordConfirmation = freezed,
     Object? currentPassword = freezed,
-    Object? agreedToTerms = freezed,
     Object? isAbove18 = freezed,
     Object? email = freezed,
     Object? token = freezed,
@@ -273,9 +254,6 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
     Object? lang = freezed,
     Object? businessId = freezed,
     Object? visibility = freezed,
-    Object? sms = freezed,
-    Object? push = freezed,
-    Object? sendEmail = freezed,
     Object? status = freezed,
     Object? fcmTokens = freezed,
     Object? emailVerifiedAt = freezed,
@@ -327,10 +305,6 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
           ? _value.currentPassword
           : currentPassword // ignore: cast_nullable_to_non_nullable
               as String?,
-      agreedToTerms: freezed == agreedToTerms
-          ? _value.agreedToTerms
-          : agreedToTerms // ignore: cast_nullable_to_non_nullable
-              as bool?,
       isAbove18: freezed == isAbove18
           ? _value.isAbove18
           : isAbove18 // ignore: cast_nullable_to_non_nullable
@@ -406,18 +380,6 @@ class _$UserRegistrationDataCopyWithImpl<$Res,
       visibility: freezed == visibility
           ? _value.visibility
           : visibility // ignore: cast_nullable_to_non_nullable
-              as String?,
-      sms: freezed == sms
-          ? _value.sms
-          : sms // ignore: cast_nullable_to_non_nullable
-              as String?,
-      push: freezed == push
-          ? _value.push
-          : push // ignore: cast_nullable_to_non_nullable
-              as String?,
-      sendEmail: freezed == sendEmail
-          ? _value.sendEmail
-          : sendEmail // ignore: cast_nullable_to_non_nullable
               as String?,
       status: freezed == status
           ? _value.status
@@ -540,10 +502,6 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       String? passwordConfirmation,
       @JsonKey(name: 'current_password', includeIfNull: false)
       String? currentPassword,
-      @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
-      bool? agreedToTerms,
-      @JsonKey(
-          name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
       bool? isAbove18,
       @JsonKey(includeIfNull: false) String? email,
       @JsonKey(includeIfNull: false) String? token,
@@ -567,11 +525,6 @@ abstract class _$$UserRegistrationDataImplCopyWith<$Res>
       @JsonKey(includeIfNull: false) String? lang,
       @JsonKey(name: 'business_id', includeIfNull: false) int? businessId,
       @JsonKey(includeIfNull: false) String? visibility,
-      @JsonKey(includeIfNull: false, fromJson: toStringNullable) String? sms,
-      @JsonKey(includeIfNull: false, fromJson: toStringNullable) String? push,
-      @JsonKey(
-          name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
-      String? sendEmail,
       @JsonKey(includeIfNull: false) String? status,
       @JsonKey(name: 'fcm_tokens', includeIfNull: false)
       List<String>? fcmTokens,
@@ -634,7 +587,6 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
     Object? appleId = freezed,
     Object? passwordConfirmation = freezed,
     Object? currentPassword = freezed,
-    Object? agreedToTerms = freezed,
     Object? isAbove18 = freezed,
     Object? email = freezed,
     Object? token = freezed,
@@ -654,9 +606,6 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
     Object? lang = freezed,
     Object? businessId = freezed,
     Object? visibility = freezed,
-    Object? sms = freezed,
-    Object? push = freezed,
-    Object? sendEmail = freezed,
     Object? status = freezed,
     Object? fcmTokens = freezed,
     Object? emailVerifiedAt = freezed,
@@ -708,10 +657,6 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
           ? _value.currentPassword
           : currentPassword // ignore: cast_nullable_to_non_nullable
               as String?,
-      agreedToTerms: freezed == agreedToTerms
-          ? _value.agreedToTerms
-          : agreedToTerms // ignore: cast_nullable_to_non_nullable
-              as bool?,
       isAbove18: freezed == isAbove18
           ? _value.isAbove18
           : isAbove18 // ignore: cast_nullable_to_non_nullable
@@ -787,18 +732,6 @@ class __$$UserRegistrationDataImplCopyWithImpl<$Res>
       visibility: freezed == visibility
           ? _value.visibility
           : visibility // ignore: cast_nullable_to_non_nullable
-              as String?,
-      sms: freezed == sms
-          ? _value.sms
-          : sms // ignore: cast_nullable_to_non_nullable
-              as String?,
-      push: freezed == push
-          ? _value.push
-          : push // ignore: cast_nullable_to_non_nullable
-              as String?,
-      sendEmail: freezed == sendEmail
-          ? _value.sendEmail
-          : sendEmail // ignore: cast_nullable_to_non_nullable
               as String?,
       status: freezed == status
           ? _value.status
@@ -916,11 +849,6 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       this.passwordConfirmation,
       @JsonKey(name: 'current_password', includeIfNull: false)
       this.currentPassword,
-      @JsonKey(
-          name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
-      this.agreedToTerms,
-      @JsonKey(
-          name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
       this.isAbove18,
       @JsonKey(includeIfNull: false) this.email,
       @JsonKey(includeIfNull: false) this.token,
@@ -944,26 +872,17 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
       @JsonKey(includeIfNull: false) this.lang,
       @JsonKey(name: 'business_id', includeIfNull: false) this.businessId,
       @JsonKey(includeIfNull: false) this.visibility,
-      @JsonKey(includeIfNull: false, fromJson: toStringNullable) this.sms,
-      @JsonKey(includeIfNull: false, fromJson: toStringNullable) this.push,
-      @JsonKey(
-          name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
-      this.sendEmail,
       @JsonKey(includeIfNull: false) this.status,
       @JsonKey(name: 'fcm_tokens', includeIfNull: false)
       final List<String>? fcmTokens,
-      @JsonKey(
-          name: 'email_verified_at', includeIfNull: false)
+      @JsonKey(name: 'email_verified_at', includeIfNull: false)
       this.emailVerifiedAt,
       @JsonKey(includeIfNull: false) this.address,
-      @JsonKey(
-          name: 'personal_rating', includeIfNull: false)
+      @JsonKey(name: 'personal_rating', includeIfNull: false)
       this.personalRating,
-      @JsonKey(
-          name: 'personal_rating_count', includeIfNull: false)
+      @JsonKey(name: 'personal_rating_count', includeIfNull: false)
       this.personalRatingCount,
-      @JsonKey(
-          name: 'business_rating', includeIfNull: false)
+      @JsonKey(name: 'business_rating', includeIfNull: false)
       this.businessRating,
       @JsonKey(name: 'business_rating_count', includeIfNull: false)
       this.businessRatingCount,
@@ -1017,10 +936,6 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   @JsonKey(name: 'current_password', includeIfNull: false)
   final String? currentPassword;
   @override
-  @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
-  final bool? agreedToTerms;
-  @override
-  @JsonKey(name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
   final bool? isAbove18;
   @override
   @JsonKey(includeIfNull: false)
@@ -1077,15 +992,6 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
   @override
   @JsonKey(includeIfNull: false)
   final String? visibility;
-  @override
-  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
-  final String? sms;
-  @override
-  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
-  final String? push;
-  @override
-  @JsonKey(name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
-  final String? sendEmail;
   @override
   @JsonKey(includeIfNull: false)
   final String? status;
@@ -1190,7 +1096,7 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
 
   @override
   String toString() {
-    return 'UserRegistrationData(firstName: $firstName, lastName: $lastName, googleId: $googleId, appleId: $appleId, passwordConfirmation: $passwordConfirmation, currentPassword: $currentPassword, agreedToTerms: $agreedToTerms, isAbove18: $isAbove18, email: $email, token: $token, password: $password, gender: $gender, id: $id, userId: $userId, street: $street, index: $index, city: $city, country: $country, phone: $phone, role: $role, image: $image, imageBusiness: $imageBusiness, description: $description, lang: $lang, businessId: $businessId, visibility: $visibility, sms: $sms, push: $push, sendEmail: $sendEmail, status: $status, fcmTokens: $fcmTokens, emailVerifiedAt: $emailVerifiedAt, address: $address, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount, isFavorited: $isFavorited, favoritesCount: $favoritesCount, floor: $floor, frontDoor: $frontDoor, intercomCode: $intercomCode, apartment: $apartment, isPrimary: $isPrimary, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, walletBalance: $walletBalance, walletId: $walletId, updatedAt: $updatedAt, interests: $interests, detailedInterests: $detailedInterests, subscribersCount: $subscribersCount, subscribedUsersCount: $subscribedUsersCount)';
+    return 'UserRegistrationData(firstName: $firstName, lastName: $lastName, googleId: $googleId, appleId: $appleId, passwordConfirmation: $passwordConfirmation, currentPassword: $currentPassword, isAbove18: $isAbove18, email: $email, token: $token, password: $password, gender: $gender, id: $id, userId: $userId, street: $street, index: $index, city: $city, country: $country, phone: $phone, role: $role, image: $image, imageBusiness: $imageBusiness, description: $description, lang: $lang, businessId: $businessId, visibility: $visibility, status: $status, fcmTokens: $fcmTokens, emailVerifiedAt: $emailVerifiedAt, address: $address, personalRating: $personalRating, personalRatingCount: $personalRatingCount, businessRating: $businessRating, businessRatingCount: $businessRatingCount, isFavorited: $isFavorited, favoritesCount: $favoritesCount, floor: $floor, frontDoor: $frontDoor, intercomCode: $intercomCode, apartment: $apartment, isPrimary: $isPrimary, latitude: $latitude, longitude: $longitude, createdAt: $createdAt, walletBalance: $walletBalance, walletId: $walletId, updatedAt: $updatedAt, interests: $interests, detailedInterests: $detailedInterests, subscribersCount: $subscribersCount, subscribedUsersCount: $subscribedUsersCount)';
   }
 
   @override
@@ -1209,8 +1115,6 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
                 other.passwordConfirmation == passwordConfirmation) &&
             (identical(other.currentPassword, currentPassword) ||
                 other.currentPassword == currentPassword) &&
-            (identical(other.agreedToTerms, agreedToTerms) ||
-                other.agreedToTerms == agreedToTerms) &&
             (identical(other.isAbove18, isAbove18) ||
                 other.isAbove18 == isAbove18) &&
             (identical(other.email, email) || other.email == email) &&
@@ -1236,10 +1140,6 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
                 other.businessId == businessId) &&
             (identical(other.visibility, visibility) ||
                 other.visibility == visibility) &&
-            (identical(other.sms, sms) || other.sms == sms) &&
-            (identical(other.push, push) || other.push == push) &&
-            (identical(other.sendEmail, sendEmail) ||
-                other.sendEmail == sendEmail) &&
             (identical(other.status, status) || other.status == status) &&
             const DeepCollectionEquality()
                 .equals(other._fcmTokens, _fcmTokens) &&
@@ -1299,7 +1199,6 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
         appleId,
         passwordConfirmation,
         currentPassword,
-        agreedToTerms,
         isAbove18,
         email,
         token,
@@ -1319,9 +1218,6 @@ class _$UserRegistrationDataImpl implements _UserRegistrationData {
         lang,
         businessId,
         visibility,
-        sms,
-        push,
-        sendEmail,
         status,
         const DeepCollectionEquality().hash(_fcmTokens),
         emailVerifiedAt,
@@ -1377,10 +1273,6 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       final String? passwordConfirmation,
       @JsonKey(name: 'current_password', includeIfNull: false)
       final String? currentPassword,
-      @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
-      final bool? agreedToTerms,
-      @JsonKey(
-          name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
       final bool? isAbove18,
       @JsonKey(includeIfNull: false) final String? email,
       @JsonKey(includeIfNull: false) final String? token,
@@ -1405,13 +1297,6 @@ abstract class _UserRegistrationData implements UserRegistrationData {
       @JsonKey(includeIfNull: false) final String? lang,
       @JsonKey(name: 'business_id', includeIfNull: false) final int? businessId,
       @JsonKey(includeIfNull: false) final String? visibility,
-      @JsonKey(includeIfNull: false, fromJson: toStringNullable)
-      final String? sms,
-      @JsonKey(includeIfNull: false, fromJson: toStringNullable)
-      final String? push,
-      @JsonKey(
-          name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
-      final String? sendEmail,
       @JsonKey(includeIfNull: false) final String? status,
       @JsonKey(name: 'fcm_tokens', includeIfNull: false)
       final List<String>? fcmTokens,
@@ -1480,10 +1365,6 @@ abstract class _UserRegistrationData implements UserRegistrationData {
   @JsonKey(name: 'current_password', includeIfNull: false)
   String? get currentPassword;
   @override
-  @JsonKey(name: 'terms_agreement', includeIfNull: false, fromJson: intToBool)
-  bool? get agreedToTerms;
-  @override
-  @JsonKey(name: 'age_confirmation', includeIfNull: false, fromJson: intToBool)
   bool? get isAbove18;
   @override
   @JsonKey(includeIfNull: false)
@@ -1540,15 +1421,6 @@ abstract class _UserRegistrationData implements UserRegistrationData {
   @override
   @JsonKey(includeIfNull: false)
   String? get visibility;
-  @override
-  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
-  String? get sms;
-  @override
-  @JsonKey(includeIfNull: false, fromJson: toStringNullable)
-  String? get push;
-  @override
-  @JsonKey(name: 'send_email', includeIfNull: false, fromJson: toStringNullable)
-  String? get sendEmail;
   @override
   @JsonKey(includeIfNull: false)
   String? get status;

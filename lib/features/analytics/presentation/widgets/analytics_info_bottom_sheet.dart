@@ -39,7 +39,6 @@ class AnalyticsInfoBottomSheet extends StatelessWidget {
               text: title,
               fontSize: 16.sp,
               fontWeight: FontWeight.w800,
-              color: AppColors.blackDark,
             ),
             8.ph,
 
@@ -48,7 +47,6 @@ class AnalyticsInfoBottomSheet extends StatelessWidget {
               text: message,
               fontSize: 12.sp,
               fontWeight: FontWeight.w400,
-              color: AppColors.blackDark,
               height: 1.5,
             ),
 

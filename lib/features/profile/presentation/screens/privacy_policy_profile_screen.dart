@@ -23,10 +23,9 @@ class PrivacyPolicyProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                text: 'Политика конфиденциальности',
+                text: 'privacyPolicy'.tr(),
                 fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color: AppColors.blackDark,
+                fontWeight: FontWeight.w800,
               ),
             ],
           ),

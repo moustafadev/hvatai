@@ -23,10 +23,9 @@ class TermsAndConditionsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CustomText(
-                text: 'Правила и условия',
+                text: 'termsAndConditions'.tr(),
                 fontSize: 20.sp,
-                fontWeight: FontWeight.w700,
-                color: AppColors.blackDark,
+                fontWeight: FontWeight.w800,
               ),
             ],
           ),

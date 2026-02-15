@@ -14,9 +14,9 @@ class MyAwardsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreyBackground,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.lightGreyBackground,
+        backgroundColor: AppColors.background,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios, color: AppColors.blackColorIcon),
           onPressed: () {
@@ -33,7 +33,6 @@ class MyAwardsScreen extends StatelessWidget {
               text: "My awards".tr(),
               fontWeight: FontWeight.w800,
               fontSize: 20.sp,
-              color: AppColors.blackDark,
             ),
             16.ph,
             Expanded(

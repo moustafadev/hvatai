@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/features/orders/data/model/order_model/order_model.dart';
 import 'package:hvatai/features/orders/domain/usecases/get_user_orders_usecase.dart';
 
@@ -53,8 +54,7 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
     }
     return state.orders
         .where(
-          (order) =>
-              (order.status ?? '').toLowerCase() == state.selectedFilter,
+          (order) => (order.status ?? '').toLowerCase() == state.selectedFilter,
         )
         .toList();
   }
@@ -83,18 +83,17 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
   static Color statusColor(String? status) {
     switch ((status ?? '').toLowerCase()) {
       case 'pending':
-        return const Color(0xFF4E5BA6);
+        return AppColors.purple2;
       case 'awaiting_shipment':
-        return const Color(0xFF00BCD4);
+        return AppColors.primaryColor;
       case 'awaiting_receipt':
-        return const Color(0xFFFFC107);
+        return AppColors.gold;
       case 'in_transit':
-        return const Color(0xFF4CAF50);
+        return AppColors.green;
       case 'delivered':
-        return const Color(0xFF00C48C);
+        return AppColors.primary;
       default:
-        return const Color(0xFFB0BEC5);
+        return AppColors.grey;
     }
   }
 }
-

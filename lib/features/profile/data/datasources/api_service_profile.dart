@@ -1,5 +1,10 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:image/image.dart' as img;
+
 import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
@@ -20,9 +25,6 @@ class ApiServiceProfile extends ApiBase {
         contentType: 'multipart/form-data',
       );
       if (response.statusCode == 200 || response.statusCode == 201) {
-        print('==============================');
-        print('response.json: ${response.json}');
-        print('==============================');
         return ProductModel.fromJson(response.json['data']);
       }
       throw Exception;
@@ -109,19 +111,10 @@ class ApiServiceProfile extends ApiBase {
     });
   }
 
-  Future<UserRegistrationData> updateProfileType() async {
+  Future<UserRegistrationData> updateProfileData(
+      UserRegistrationData userRegistrationData) async {
     return executeAndHandleErrorServer<UserRegistrationData>(() async {
-      final response = await post(ServerConfig.upgrade);
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        return UserRegistrationData.fromJson(response.json['data']);
-      } else {
-        throw Exception;
-      }
-    });
-  }
-
-  Future<UserRegistrationData> updateProfileData(FormData formData) async {
-    return executeAndHandleErrorServer<UserRegistrationData>(() async {
+      final formData = await _prepareProfileFormData(userRegistrationData);
       final response = await post(
         ServerConfig.profile,
         body: formData,
@@ -235,4 +228,17 @@ class ApiServiceProfile extends ApiBase {
       }
     });
   }
+}
+
+Future<FormData> _prepareProfileFormData(UserRegistrationData params) async {
+  final dataMap = Map<String, dynamic>.from(params.toJson());
+  dataMap.remove('phone');
+
+  if (params.image != null && File(params.image!).existsSync()) {
+    dataMap['image'] = await MultipartFile.fromFile(params.image!);
+  } else{
+    dataMap.remove('image');
+  }
+
+  return FormData.fromMap(dataMap);
 }

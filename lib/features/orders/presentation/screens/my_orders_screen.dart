@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/features/orders/presentation/cubit/my_orders_cubit.dart';
 import 'package:hvatai/features/orders/presentation/widgets/orders_content.dart';
@@ -23,7 +24,20 @@ class _MyOrdersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreyBackground,
+      appBar: AppBar(
+        leading: GestureDetector(
+          onTap: () {
+            context.pop();
+          },
+          child: const Icon(
+            Icons.arrow_back_ios,
+            color: AppColors.blackDark,
+          ),
+        ),
+        backgroundColor: AppColors.background,
+        elevation: 0,
+      ),
+      backgroundColor: AppColors.background,
       body: const OrdersContent(),
     );
   }

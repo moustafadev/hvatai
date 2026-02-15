@@ -12,7 +12,6 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_account_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
-import 'package:hvatai/features/profile/domain/usecases/update_profile_type_usecase.dart';
 
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -20,13 +19,13 @@ part 'edit_profile_state.dart';
 part 'edit_profile_cubit.freezed.dart';
 
 class EditProfileCubit extends Cubit<EditProfileState> {
-  EditProfileCubit(this.deleteAccountUseCase, this.updateProfileDataUseCase,
-      this.updateProfileTypeUsecase)
-      : super(EditProfileState(user: UserRegistrationData()));
+  EditProfileCubit(
+    this.deleteAccountUseCase,
+    this.updateProfileDataUseCase,
+  ) : super(EditProfileState(user: UserRegistrationData()));
 
   final UpdateProfileDataUsecase updateProfileDataUseCase;
   final DeleteAccountUsecase deleteAccountUseCase;
-  final UpdateProfileTypeUsecase updateProfileTypeUsecase;
 
   void initProfileModel(UserRegistrationData user) {
     emit(state.copyWith(user: user));
@@ -42,9 +41,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
       phone: userData.phone ?? '',
       country: userData.country ?? '',
       gender: _normalizeGender(userData.gender),
-      sms: userData.sms,
-      push: userData.push,
-      sendEmail: userData.sendEmail,
       role: userData.role,
       image: userData.image ?? '',
     );
@@ -271,33 +267,6 @@ class EditProfileCubit extends Cubit<EditProfileState> {
           }
         },
       },
-      // {
-      //   "icon": Assets.assetsIconsPasswordMinimalisticInput,
-      //   "title": "changePassword".tr(),
-      //   "screen": (BuildContext context) async {
-      //     final updatedUser = await context.push<UserRegistrationData>(
-      //         AppRoutes.changePassword,
-      //         extra: state.user);
-      //     if (updatedUser != null) {
-      //       updateUserData(updatedUser);
-      //     }
-      //   },
-      // },
-      // {
-      //   "icon": Assets.assetsIconsProfileType,
-      //   "title": "profileType".tr(),
-      //   "screen": (BuildContext context) async {
-      //     final updatedUser = await context
-      //         .push<UserRegistrationData>(AppRoutes.tradeProfile, extra: {
-      //       'model': state.user,
-      //       'cubit': this,
-      //     });
-
-      //     if (updatedUser != null) {
-      //       updateUserData(updatedUser);
-      //     }
-      //   },
-      // },
       {
         "icon": Assets.assetsIconsBell,
         "title": "settingUpNotifications".tr(),
@@ -328,101 +297,11 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     );
   }
 
-  Future<void> updateProfileType(BuildContext context) async {
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
-
-    final result = await updateProfileTypeUsecase.call(unit);
-
-    result.fold(
-      (failure) {
-        emit(state.copyWith(isLoading: false, errorMessage: failure));
-        showFloatingMessageError('somethingWentWrong'.tr());
-      },
-      (updatedUser) {
-        emit(state.copyWith(
-          isLoading: false,
-          success: true,
-          user: updatedUser,
-        ));
-        context.go(AppRoutes.profile, extra: updatedUser);
-        showFloatingMessageSuccess('profileUpdated'.tr());
-      },
-    );
-  }
-
-  Future<FormData> _prepareProfileFormData(UserRegistrationData params) async {
-    final dataMap = Map<String, dynamic>.from(params.toJson());
-    dataMap.remove('phone');
-
-    dataMap['terms_agreement'] = params.agreedToTerms ?? false ? 1 : 0;
-    dataMap['age_confirmation'] = params.isAbove18 ?? false ? 1 : 0;
-
-    MultipartFile? imageFile;
-    if (params.image != null && File(params.image!).existsSync()) {
-      imageFile = await _prepareImageFile(params.image);
-    }
-
-    if (imageFile != null) {
-      dataMap['image'] = imageFile;
-    } else {
-      dataMap.remove('image');
-    }
-
-    return FormData.fromMap(dataMap);
-  }
-
-  Future<File> compressImage(File file, {int quality = 70}) async {
-    final targetPath = file.absolute.path.replaceAll('.jpg', '_compressed.jpg');
-
-    final result = await FlutterImageCompress.compressAndGetFile(
-      file.absolute.path,
-      targetPath,
-      quality: quality,
-      minWidth: 1080,
-      minHeight: 1080,
-    );
-
-    // Return the compressed file instead of the original
-    return result != null ? File(result.path) : file;
-  }
-
-  Future<MultipartFile?> _prepareImageFile(String? imagePath) async {
-    if (imagePath == null || imagePath.isEmpty) return null;
-
-    try {
-      File file = File(imagePath);
-      if (!await file.exists()) return null;
-
-      int quality = 85;
-      while (await file.length() > 1 * 1024 * 1024 && quality > 30) {
-        file = await compressImage(file, quality: quality);
-        quality -= 15;
-      }
-
-      if (await file.length() > 2 * 1024 * 1024) {
-        file = await compressImage(file, quality: 50);
-        if (await file.length() > 2 * 1024 * 1024) {
-          // Instead of throwing an exception, return null or handle gracefully
-          return null;
-        }
-      }
-
-      return MultipartFile.fromFile(file.path,
-          filename: file.path.split('/').last);
-    } catch (e) {
-      // Log the error and return null instead of crashing
-      debugPrint('Error preparing image file: $e');
-      return null;
-    }
-  }
-
   Future<void> submit(BuildContext context) async {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
-    final formData = await _prepareProfileFormData(state.user);
-
     final result = await updateProfileDataUseCase.call(
-      UpdateProfileParams(formData: formData),
+      UpdateProfileParams(userRegistrationData: state.user),
     );
     result.fold(
       (failure) {

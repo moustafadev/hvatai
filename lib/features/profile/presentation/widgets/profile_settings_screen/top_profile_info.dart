@@ -10,21 +10,19 @@ class TopProfileInfo extends StatelessWidget {
   ) {
     showPhotoOptionsDialog(
       context: context,
-          onTakePhoto: () {
-            context.read<ProfileCubit>().pickAndUpdateImage(
-                  context,
-                  ImageSource.camera,
-                );
-          },
-          onChoosePhoto: () {
-            context.read<ProfileCubit>().pickAndUpdateImage(
-                  context,
-                  ImageSource.gallery,
-                );
-          },
-          onDelete: () {
-        // Delete functionality can be added here if needed
+      onTakePhoto: () {
+        context.read<ProfileCubit>().pickAndUpdateImage(
+              context,
+              ImageSource.camera,
+            );
       },
+      onChoosePhoto: () {
+        context.read<ProfileCubit>().pickAndUpdateImage(
+              context,
+              ImageSource.gallery,
+            );
+      },
+      onDelete: () {},
     );
   }
 
@@ -41,8 +39,8 @@ class TopProfileInfo extends StatelessWidget {
                 borderRadius: BorderRadius.circular(50.r),
                 child: CustomImage(
                   key: ValueKey(user.image),
-                  height: 41.h,
-                  width: 41.w,
+                  height: 40,
+                  width: 40,
                   imageSource: user.image ?? '',
                   fit: BoxFit.cover,
                 ),
@@ -61,11 +59,11 @@ class TopProfileInfo extends StatelessWidget {
                 Row(
                   children: [
                     CustomGradientButton(
-                      fontSize: 13.sp,
-                      height: 20.h,
+                      fontSize: 10.sp,
+                      height: 19,
                       width: 110.w,
                       borderRadius: 30.r,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w600,
                       buttonColor: AppColors.primary,
                       onPressed: () async {
                         final updatedUser =
@@ -83,7 +81,7 @@ class TopProfileInfo extends StatelessWidget {
                       text: user.role == 'seller'
                           ? 'sellerProfile'.tr()
                           : 'tradeProfile'.tr(),
-                      textColor: AppColors.blackDark,
+                      textColor: AppColors.blackColor,
                     ),
                   ],
                 )

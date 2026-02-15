@@ -19,6 +19,7 @@ class AnalyticsMetricCard extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       decoration: BoxDecoration(
         color: AppColors.white,
+        boxShadow: AppColors.boxShadowTextField,
         borderRadius: BorderRadius.circular(12.r),
       ),
       child: Row(
@@ -31,14 +32,12 @@ class AnalyticsMetricCard extends StatelessWidget {
                   text: title,
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w800,
-                  color: AppColors.blackDark,
                 ),
                 14.ph,
                 CustomText(
                   text: value,
                   fontSize: 20.sp,
                   fontWeight: FontWeight.w800,
-                  color: AppColors.blackDark,
                 ),
               ],
             ),

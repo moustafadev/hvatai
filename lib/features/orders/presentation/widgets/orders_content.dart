@@ -4,11 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
-import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/features/orders/presentation/cubit/my_orders_cubit.dart';
 import 'package:hvatai/features/orders/presentation/widgets/orders_empty_state.dart';
 import 'package:hvatai/features/orders/presentation/widgets/orders_filter_bar.dart';
-import 'package:hvatai/features/orders/presentation/widgets/orders_header.dart';
 import 'package:hvatai/features/orders/presentation/widgets/orders_list.dart';
 
 /// Main content widget for the orders screen
@@ -16,15 +14,7 @@ import 'package:hvatai/features/orders/presentation/widgets/orders_list.dart';
 class OrdersContent extends StatelessWidget {
   const OrdersContent({
     super.key,
-    this.showHeader = true,
-    this.contentPadding = const EdgeInsets.symmetric(horizontal: 16),
   });
-
-  /// Whether to show the header section
-  final bool showHeader;
-
-  /// Padding for the content
-  final EdgeInsetsGeometry contentPadding;
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +24,7 @@ class OrdersContent extends StatelessWidget {
 
         if (state.isLoading) {
           return const Center(
-            child: CircularProgressIndicator(
-              color: AppColors.primaryColor,
-            ),
+            child: CustomCircularProgrressIndicator(),
           );
         }
 
@@ -59,11 +47,16 @@ class OrdersContent extends StatelessWidget {
         return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding: contentPadding,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                OrdersHeader(showAppBar: showHeader),
+                CustomText(
+                  text: 'orders'.tr(),
+                  fontSize: 20.sp,
+                  fontWeight: FontWeight.w800,
+                ),
+                16.ph,
                 OrdersFilterBar(
                   selectedFilter: state.selectedFilter,
                   onFilterSelected: cubit.selectFilter,

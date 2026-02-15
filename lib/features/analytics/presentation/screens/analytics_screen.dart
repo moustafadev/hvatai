@@ -13,7 +13,7 @@ class AnalyticsScreen extends StatelessWidget {
             length: 2,
             initialIndex: state.selectedTabIndex,
             child: Scaffold(
-              backgroundColor: AppColors.lightGreyBackground,
+              backgroundColor: AppColors.background,
               appBar: AppBar(
                 leading: GestureDetector(
                   onTap: () {
@@ -24,7 +24,7 @@ class AnalyticsScreen extends StatelessWidget {
                     color: AppColors.blackDark,
                   ),
                 ),
-                backgroundColor: AppColors.lightGreyBackground,
+                backgroundColor: AppColors.background,
                 elevation: 0,
               ),
               body: NestedScrollView(
@@ -36,8 +36,7 @@ class AnalyticsScreen extends StatelessWidget {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.w),
                           child: CustomText(
-                            text: "Аналитика",
-                            color: AppColors.blackDark,
+                            text: 'analytics'.tr(),
                             fontSize: 20.sp,
                             fontWeight: FontWeight.w800,
                           ),
@@ -46,49 +45,62 @@ class AnalyticsScreen extends StatelessWidget {
                         // Tab selector
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 16.w),
-                          child: AnimatedContainer(
-                            height: 45.h,
-                            padding: EdgeInsets.all(4.r),
+                          child: Container(
                             decoration: BoxDecoration(
-                              color: AppColors.white,
-                              borderRadius: BorderRadius.circular(12.r),
+                              boxShadow: AppColors.boxShadowTextField,
                             ),
-                            duration: const Duration(milliseconds: 300),
-                            child: TabBar(
-                              onTap: (index) {
-                                context.read<AnalyticsCubit>().changeTab(index);
-                              },
-                              labelPadding: EdgeInsets.zero,
-                              indicator: BoxDecoration(
-                                color: AppColors.primaryColor,
-                                borderRadius: BorderRadius.circular(10.r),
+                            child: AnimatedContainer(
+                              height: 50,
+                              padding: EdgeInsets.all(4.r),
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(12.r),
                               ),
-                              labelColor: AppColors.white,
-                              unselectedLabelColor: AppColors.blackDark,
-                              indicatorColor: Colors.transparent,
-                              dividerColor: Colors.transparent,
-                              tabs: [
-                                Tab(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: CustomText(
-                                      text: "Вся",
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w700,
+                              duration: const Duration(milliseconds: 300),
+                              child: TabBar(
+                                onTap: (index) {
+                                  context
+                                      .read<AnalyticsCubit>()
+                                      .changeTab(index);
+                                },
+                                labelPadding: EdgeInsets.zero,
+                                indicator: BoxDecoration(
+                                  color: AppColors.primaryColor,
+                                  borderRadius: BorderRadius.circular(10.r),
+                                ),
+                                labelColor: AppColors.white,
+                                unselectedLabelColor: AppColors.blackDark,
+                                indicatorColor: Colors.transparent,
+                                dividerColor: Colors.transparent,
+                                tabs: [
+                                  Tab(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child: CustomText(
+                                        text: "all".tr(),
+                                        fontSize: 14.sp,
+                                        color: state.selectedTabIndex == 0
+                                            ? AppColors.white
+                                            : AppColors.text,
+                                        fontWeight: FontWeight.w700,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Tab(
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: CustomText(
-                                      text: "Стримы",
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w700,
+                                  Tab(
+                                    child: Container(
+                                      alignment: Alignment.center,
+                                      child: CustomText(
+                                        text: "streams".tr(),
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                        color: state.selectedTabIndex == 1
+                                            ? AppColors.white
+                                            : AppColors.text,
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ),
                         ),

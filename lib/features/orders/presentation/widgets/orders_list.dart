@@ -27,7 +27,7 @@ class OrdersList extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: orders.length,
       itemBuilder: (context, index) => OrderCard(order: orders[index]),
-      separatorBuilder: (context, index) => const SizedBox.shrink(),
+      separatorBuilder: (context, index) => SizedBox(height: 16),
     );
   }
 }
