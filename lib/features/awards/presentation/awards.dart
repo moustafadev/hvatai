@@ -11,8 +11,6 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/awards/presentation/cubit/awards_club/awards_club_cubit.dart';
 import 'package:hvatai/features/awards/presentation/cubit/send_reward_flow/send_reward_flow_cubit.dart';
 import 'package:hvatai/features/company/presentation/cubit/company/company_cubit.dart';
-import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/search/data/model/user_data_model.dart';
 import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/core/customs/payment_methods_section.dart';
