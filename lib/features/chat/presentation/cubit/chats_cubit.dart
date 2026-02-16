@@ -175,6 +175,10 @@ class ChatsCubit extends Cubit<ChatsState> {
   }
 
   void addMessage(MessageModel message) {
+    /// if message is exists don't add it
+    if (state.messages.any((m) => m.id == message.id)) {
+      return;
+    }
     final updatedMessages = List<MessageModel>.from(state.messages)
       ..add(message);
     emit(state.copyWith(messages: updatedMessages));

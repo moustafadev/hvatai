@@ -34,14 +34,10 @@ class ChatScreen extends StatelessWidget {
               child: BlocBuilder<ChatsCubit, ChatsState>(
                 builder: (context, state) {
                   if (state.isLoading || state.isLoadingSupportChat) {
-                    return Container(
-                        color: Colors.white,
-                        child:
-                            const Center(child: CircularProgressIndicator()));
+                    return const Center(
+                        child: CustomCircularProgressIndicator());
                   } else if (state.isError) {
-                    return Container(
-                        color: Colors.white,
-                        child: Center(child: Text(state.errorMessage)));
+                    return Center(child: Text(state.errorMessage));
                   } else if (state.chats.isEmpty &&
                       state.supportChat?.lastMessage == null) {
                     return Container(
@@ -55,8 +51,8 @@ class ChatScreen extends StatelessWidget {
                           SizedBox(
                             height: 20.h,
                           ),
-                          const CustomText(
-                            text: 'Здесь будут ваши сообщения',
+                          CustomText(
+                            text: 'noMessages'.tr(),
                           )
                         ],
                       ),

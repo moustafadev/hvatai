@@ -73,7 +73,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                       RecentSearchWidget(),
                                     16.ph,
                                     // Hide category section if one is selected
-                                    if (state.selectedCategoryId == null) ...[
+                                    if (state.selectedCategoryId == null &&
+                                        state.query.isEmpty) ...[
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 16.0),

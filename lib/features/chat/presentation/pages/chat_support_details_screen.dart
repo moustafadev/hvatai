@@ -51,6 +51,7 @@ class _ChatSupportDetailsScreenState extends State<ChatSupportDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    inChat = true;
     return Scaffold(
       backgroundColor: AppColors.background,
       body: SafeArea(

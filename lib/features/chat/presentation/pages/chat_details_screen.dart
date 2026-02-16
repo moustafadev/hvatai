@@ -12,6 +12,7 @@ class ChatDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    inChat = true;
     final contentController = TextEditingController();
 
     // Load messages if chatId exists
