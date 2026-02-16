@@ -55,7 +55,6 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
   }
 
   void changeImageIndex(int index) {
-    print('index: $index');
     emit(state.copyWith(currentImageIndex: index));
   }
 

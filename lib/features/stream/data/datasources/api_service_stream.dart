@@ -332,11 +332,6 @@ class ApiServiceStream extends ApiBase {
             filename: 'thumbnail.png',
           ),
         });
-        print('formData: $formData');
-
-        /// print the form data
-        print('formData.fields: ${formData.fields}');
-        print('formData.files: ${formData.files}');
 
         final res = await post(
           path,

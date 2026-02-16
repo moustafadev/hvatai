@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/chat/data/models/message/message_model.dart';
 
 part 'socket_message_model.freezed.dart';

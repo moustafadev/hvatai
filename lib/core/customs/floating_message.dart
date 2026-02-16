@@ -1,10 +1,8 @@
 part of 'customs.dart';
 
-
 void showFloatingMessageError(String message) {
   final context = navigatorKey.currentContext;
   if (context != null) {
-    print(message);
     if (message.contains('-')) {
       List<String> messages = message.split('-');
       showMultipleMessages(messages, isError: true);
@@ -66,7 +64,8 @@ void floatingSnackBar({
 
     final overlayEntry = OverlayEntry(
       builder: (context) => Positioned(
-        top: MediaQueryData.fromView(WidgetsBinding.instance.window)
+        top: MediaQueryData.fromView(
+                    WidgetsBinding.instance.platformDispatcher.views.first)
                 .padding
                 .top +
             50,
@@ -81,7 +80,7 @@ void floatingSnackBar({
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.15),
+                  color: Colors.black.withValues(alpha: 0.15),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),

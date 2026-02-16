@@ -121,7 +121,7 @@ class EndedStreamScreen extends StatelessWidget {
                               readOnly: true,
                               borderRadius: BorderRadius.circular(24),
                               borderSide: const BorderSide(color: Colors.white),
-                              hintColor: Colors.black.withOpacity(0.2),
+                              hintColor: Colors.black.withValues(alpha: 0.2),
                               suffixIcon: IconButton(
                                 icon: const Icon(
                                   Icons.send,

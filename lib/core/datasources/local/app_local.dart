@@ -5,7 +5,6 @@ class AppLocal extends CacheHelper {
   final String _currentUserId = 'userId';
   final String _onboarding = 'onboarding';
   final String _isSetup = 'is_setup';
-  final String _user = 'user';
   final String _streamTermsAccepted = 'stream_terms_accepted';
   Future<bool> saveToken(String? token) async {
     if (token == null) return false;

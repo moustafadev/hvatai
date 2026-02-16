@@ -38,10 +38,11 @@ class _AwardsClubView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightGreyBackground,
-      body: WillPopScope(
-        onWillPop: () async {
-          context.pop(companyCubit?.state.isSubscribed ?? false);
-          return true;
+      body: PopScope(
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) {
+            context.pop(companyCubit?.state.isSubscribed ?? false);
+          }
         },
         child: BlocConsumer<AwardsClubCubit, AwardsClubState>(
           listenWhen: (previous, current) =>

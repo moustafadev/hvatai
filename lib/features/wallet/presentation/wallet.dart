@@ -10,7 +10,6 @@ import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/payment_method/data/model/card_model/card_model.dart';
 import 'package:hvatai/features/payment_method/presentation/cubit/payment_method/payment_method_cubit.dart';
-import 'package:hvatai/features/profile/presentation/cubit/profile_cubit/profile_cubit.dart';
 import 'package:hvatai/features/wallet/data/models/transaction_model/transaction_model.dart';
 import 'package:hvatai/features/wallet/presentation/cubit/wallet_cubit/wallet_cubit.dart';
 import 'package:hvatai/locator.dart';

@@ -62,7 +62,7 @@ class _CustomDateFieldState extends State<CustomDateField> {
           lastDate: DateTime(2100),
         );
 
-        if (pickedDate != null) {
+        if (pickedDate != null && context.mounted) {
           // Step 2: Pick the time
           TimeOfDay? pickedTime = await showTimePicker(
             context: context,

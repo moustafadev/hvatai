@@ -151,7 +151,6 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
       );
 
       _streamChannel!.bind(
-        // TODO: handle bid placed time to start timer
         'bid.placed',
         (raw) => _handleBid(raw, source: channelName),
       );

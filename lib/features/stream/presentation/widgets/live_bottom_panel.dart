@@ -143,7 +143,7 @@ class _CommentsSection extends StatelessWidget {
                     controller: textController,
                     borderRadius: BorderRadius.circular(24),
                     borderSide: const BorderSide(color: Colors.white),
-                    hintColor: Colors.black.withOpacity(0.2),
+                    hintColor: Colors.black.withValues(alpha: 0.2),
                     onChanged: onCommentChanged,
                     suffixIcon: IconButton(
                       icon:
@@ -317,7 +317,7 @@ class _ProductDetailsSection extends StatelessWidget {
                                 child: CustomButton(
                                   title: 'Изменить',
                                   onPressed: onEditPressed,
-                                  color: Colors.black.withOpacity(0.6),
+                                  color: Colors.black.withValues(alpha: 0.6),
                                   textColor: Colors.white,
                                   radius: 24,
                                   height: 40,

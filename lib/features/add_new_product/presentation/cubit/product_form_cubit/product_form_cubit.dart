@@ -50,11 +50,10 @@ class ProductFormCubit extends Cubit<ProductFormState> {
         state.product.categoryId == null ||
         state.product.categoryId == 0 ||
         (state.product.deliveryAvailable == true &&
-                (state.product.deliveryDiscount == null ||
+            ((state.product.deliveryDiscount == null ||
                     state.product.deliveryDiscount == 0.0) ||
-            (state.product.deliveryAvailable == true &&
-                    state.product.deliveryTime == null ||
-                state.product.deliveryTime == '')));
+                (state.product.deliveryTime == null ||
+                    state.product.deliveryTime == ''))));
   }
 
   /// Check if there's at least one image (excluding videos) in the images list
@@ -239,7 +238,11 @@ class ProductFormCubit extends Cubit<ProductFormState> {
 
   Future<ProductModel?> addProduct(BuildContext context,
       {bool isStream = false}) async {
-    // Validate before submitting and show specific error messages
+    /// must hava at lease one image
+    if (!_hasAtLeastOneImage(state.product.images)) {
+      showFloatingMessageError('atLeastOneImage'.tr());
+      return null;
+    }
 
     emit(state.copyWith(isLoadingRequest: true, errorMessage: ''));
 

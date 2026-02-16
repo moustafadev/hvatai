@@ -234,7 +234,7 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                               ),
                             );
 
-                            if (option == null || !mounted) return;
+                            if (option == null || !context.mounted) return;
 
                             if (option == 'create') {
                               // Show add product bottom sheet

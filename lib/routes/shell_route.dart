@@ -80,7 +80,6 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
                 title: "profile".tr()),
           ),
         ],
-        onWillPop: (p0) => Future.value(false),
 
         // Use a custom bottom navigation bar style (Style1BottomNavBar)
         navBarBuilder: (navBarConfig) => CustomNavBar(
@@ -123,7 +122,8 @@ StatefulShellRoute get statefulShellRoute => StatefulShellRoute.indexedStack(
               context: context,
               state: state,
               child: BlocProvider(
-                create: (_) => locator<ScheduleStreamCubit>()..loadScheduledStreams(),
+                create: (_) =>
+                    locator<ScheduleStreamCubit>()..loadScheduledStreams(),
                 child: const ScheduleStreamScreen(),
               ),
             ),

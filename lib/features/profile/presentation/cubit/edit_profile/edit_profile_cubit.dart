@@ -134,8 +134,9 @@ class EditProfileCubit extends Cubit<EditProfileState> {
 
   String? validateEmail(String? value) {
     if (value == null || value.isEmpty) return 'Please enter your email.';
-    if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(value))
+    if (!RegExp(r"^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$").hasMatch(value)) {
       return 'Please enter a valid email.';
+    }
     return null;
   }
 
@@ -145,8 +146,9 @@ class EditProfileCubit extends Cubit<EditProfileState> {
     if (!RegExp(r'(?=.*[A-Z])').hasMatch(value)) return 'Must have uppercase.';
     if (!RegExp(r'(?=.*[a-z])').hasMatch(value)) return 'Must have lowercase.';
     if (!RegExp(r'(?=.*\d)').hasMatch(value)) return 'Must have a digit.';
-    if (!RegExp(r'(?=.*[@$!%*?&])').hasMatch(value))
+    if (!RegExp(r'(?=.*[@$!%*?&])').hasMatch(value)) {
       return 'Must have special character.';
+    }
     return null;
   }
 

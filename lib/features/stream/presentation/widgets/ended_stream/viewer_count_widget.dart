@@ -18,7 +18,7 @@ class _EndedStreamViewerCountWidget extends StatelessWidget {
               children: [
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.65),
+                    color: Colors.black.withValues(alpha: 0.65),
                     borderRadius: BorderRadius.circular(100),
                   ),
                   child: Padding(
@@ -46,7 +46,7 @@ class _EndedStreamViewerCountWidget extends StatelessWidget {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.black.withOpacity(0.65),
+                      color: Colors.black.withValues(alpha: 0.65),
                       borderRadius: BorderRadius.circular(100),
                     ),
                     child: Icon(
@@ -65,7 +65,7 @@ class _EndedStreamViewerCountWidget extends StatelessWidget {
                 margin: EdgeInsets.only(top: 8.h),
                 padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
                 decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.65),
+                  color: Colors.black.withValues(alpha: 0.65),
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: InkWell(

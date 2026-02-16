@@ -25,8 +25,6 @@ mixin _$MessageModel {
   int? get chatId => throw _privateConstructorUsedError;
   @JsonKey(name: 'sender_id')
   int? get senderId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'chat_type')
-  String? get chat_type => throw _privateConstructorUsedError;
   @JsonKey(name: 'receiver_id')
   int? get receiverId => throw _privateConstructorUsedError;
   String? get content => throw _privateConstructorUsedError;
@@ -77,7 +75,6 @@ abstract class $MessageModelCopyWith<$Res> {
       {int? id,
       @JsonKey(name: 'chat_id') int? chatId,
       @JsonKey(name: 'sender_id') int? senderId,
-      @JsonKey(name: 'chat_type') String? chat_type,
       @JsonKey(name: 'receiver_id') int? receiverId,
       String? content,
       @JsonKey(name: 'read_at') String? readAt,
@@ -116,7 +113,6 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
     Object? id = freezed,
     Object? chatId = freezed,
     Object? senderId = freezed,
-    Object? chat_type = freezed,
     Object? receiverId = freezed,
     Object? content = freezed,
     Object? readAt = freezed,
@@ -146,10 +142,6 @@ class _$MessageModelCopyWithImpl<$Res, $Val extends MessageModel>
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as int?,
-      chat_type: freezed == chat_type
-          ? _value.chat_type
-          : chat_type // ignore: cast_nullable_to_non_nullable
-              as String?,
       receiverId: freezed == receiverId
           ? _value.receiverId
           : receiverId // ignore: cast_nullable_to_non_nullable
@@ -254,7 +246,6 @@ abstract class _$$MessageModelImplCopyWith<$Res>
       {int? id,
       @JsonKey(name: 'chat_id') int? chatId,
       @JsonKey(name: 'sender_id') int? senderId,
-      @JsonKey(name: 'chat_type') String? chat_type,
       @JsonKey(name: 'receiver_id') int? receiverId,
       String? content,
       @JsonKey(name: 'read_at') String? readAt,
@@ -293,7 +284,6 @@ class __$$MessageModelImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? chatId = freezed,
     Object? senderId = freezed,
-    Object? chat_type = freezed,
     Object? receiverId = freezed,
     Object? content = freezed,
     Object? readAt = freezed,
@@ -323,10 +313,6 @@ class __$$MessageModelImplCopyWithImpl<$Res>
           ? _value.senderId
           : senderId // ignore: cast_nullable_to_non_nullable
               as int?,
-      chat_type: freezed == chat_type
-          ? _value.chat_type
-          : chat_type // ignore: cast_nullable_to_non_nullable
-              as String?,
       receiverId: freezed == receiverId
           ? _value.receiverId
           : receiverId // ignore: cast_nullable_to_non_nullable
@@ -398,7 +384,6 @@ class _$MessageModelImpl implements _MessageModel {
       {required this.id,
       @JsonKey(name: 'chat_id') required this.chatId,
       @JsonKey(name: 'sender_id') required this.senderId,
-      @JsonKey(name: 'chat_type') this.chat_type,
       @JsonKey(name: 'receiver_id') required this.receiverId,
       required this.content,
       @JsonKey(name: 'read_at') this.readAt,
@@ -429,9 +414,6 @@ class _$MessageModelImpl implements _MessageModel {
   @override
   @JsonKey(name: 'sender_id')
   final int? senderId;
-  @override
-  @JsonKey(name: 'chat_type')
-  final String? chat_type;
   @override
   @JsonKey(name: 'receiver_id')
   final int? receiverId;
@@ -505,7 +487,7 @@ class _$MessageModelImpl implements _MessageModel {
 
   @override
   String toString() {
-    return 'MessageModel(id: $id, chatId: $chatId, senderId: $senderId, chat_type: $chat_type, receiverId: $receiverId, content: $content, readAt: $readAt, createdAt: $createdAt, updatedAt: $updatedAt, replyTo: $replyTo, sender: $sender, receiver: $receiver, images: $images, localImages: $localImages, suggestions: $suggestions, botIntent: $botIntent, botConfidence: $botConfidence, botReplySource: $botReplySource, botMetadata: $botMetadata)';
+    return 'MessageModel(id: $id, chatId: $chatId, senderId: $senderId, receiverId: $receiverId, content: $content, readAt: $readAt, createdAt: $createdAt, updatedAt: $updatedAt, replyTo: $replyTo, sender: $sender, receiver: $receiver, images: $images, localImages: $localImages, suggestions: $suggestions, botIntent: $botIntent, botConfidence: $botConfidence, botReplySource: $botReplySource, botMetadata: $botMetadata)';
   }
 
   @override
@@ -517,8 +499,6 @@ class _$MessageModelImpl implements _MessageModel {
             (identical(other.chatId, chatId) || other.chatId == chatId) &&
             (identical(other.senderId, senderId) ||
                 other.senderId == senderId) &&
-            (identical(other.chat_type, chat_type) ||
-                other.chat_type == chat_type) &&
             (identical(other.receiverId, receiverId) ||
                 other.receiverId == receiverId) &&
             (identical(other.content, content) || other.content == content) &&
@@ -548,28 +528,26 @@ class _$MessageModelImpl implements _MessageModel {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        chatId,
-        senderId,
-        chat_type,
-        receiverId,
-        content,
-        readAt,
-        createdAt,
-        updatedAt,
-        replyTo,
-        sender,
-        receiver,
-        const DeepCollectionEquality().hash(_images),
-        const DeepCollectionEquality().hash(_localImages),
-        const DeepCollectionEquality().hash(_suggestions),
-        botIntent,
-        botConfidence,
-        botReplySource,
-        const DeepCollectionEquality().hash(botMetadata)
-      ]);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      chatId,
+      senderId,
+      receiverId,
+      content,
+      readAt,
+      createdAt,
+      updatedAt,
+      replyTo,
+      sender,
+      receiver,
+      const DeepCollectionEquality().hash(_images),
+      const DeepCollectionEquality().hash(_localImages),
+      const DeepCollectionEquality().hash(_suggestions),
+      botIntent,
+      botConfidence,
+      botReplySource,
+      const DeepCollectionEquality().hash(botMetadata));
 
   /// Create a copy of MessageModel
   /// with the given fields replaced by the non-null parameter values.
@@ -592,7 +570,6 @@ abstract class _MessageModel implements MessageModel {
           {required final int? id,
           @JsonKey(name: 'chat_id') required final int? chatId,
           @JsonKey(name: 'sender_id') required final int? senderId,
-          @JsonKey(name: 'chat_type') final String? chat_type,
           @JsonKey(name: 'receiver_id') required final int? receiverId,
           required final String? content,
           @JsonKey(name: 'read_at') final String? readAt,
@@ -621,9 +598,6 @@ abstract class _MessageModel implements MessageModel {
   @override
   @JsonKey(name: 'sender_id')
   int? get senderId;
-  @override
-  @JsonKey(name: 'chat_type')
-  String? get chat_type;
   @override
   @JsonKey(name: 'receiver_id')
   int? get receiverId;

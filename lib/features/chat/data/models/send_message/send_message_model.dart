@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/chat/data/models/message/message_model.dart';
 
 part 'send_message_model.freezed.dart';
@@ -109,7 +108,6 @@ extension SendMessageModelToMessageModel on SendMessageModel {
       botConfidence: message?.chat?.lastMessage?.botConfidence,
       botReplySource: message?.chat?.lastMessage?.botReplySource,
       botMetadata: message?.chat?.lastMessage?.botMetadata,
-      chat_type: message?.chatType,
       content: message?.content,
       readAt: null,
       createdAt: message?.createdAt,

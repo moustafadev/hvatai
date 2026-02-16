@@ -11,7 +11,6 @@ class SendMessageUseCase
 
   @override
   Future<Either<String, SendMessageModel>> call(SendMessageParams params) {
-    print(params.imagePaths.length);
 
     return _repository.sendMessage(params);
   }

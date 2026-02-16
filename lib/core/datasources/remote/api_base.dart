@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hvatai/core/datasources/remote/interceptor.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
 
@@ -37,7 +38,9 @@ class ApiBase {
       'Accept': 'application/json',
       ...headers,
     };
-    print(path);
+    if (kDebugMode) {
+      debugPrint(path);
+    }
     try {
       switch (method) {
         case 'post':

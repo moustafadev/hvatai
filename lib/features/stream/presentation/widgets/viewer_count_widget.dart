@@ -100,7 +100,7 @@ class ViewerCountMenu extends StatelessWidget {
       margin: EdgeInsets.only(top: 8.h),
       padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
       decoration: BoxDecoration(
-        color: Colors.black.withOpacity(0.8),
+        color: Colors.black.withValues(alpha: 0.8),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(

@@ -86,7 +86,7 @@ class _HomeSearchSuggestionsOverlayState
                 elevation: 8,
                 borderRadius: BorderRadius.circular(10.r),
                 color: Colors.transparent,
-                shadowColor: Colors.black.withOpacity(0.2),
+                shadowColor: Colors.black.withValues(alpha: 0.2),
                 child: GestureDetector(
                   behavior: HitTestBehavior.opaque,
                   onTap: () {}, // prevent closing when tap inside

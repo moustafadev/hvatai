@@ -16,7 +16,6 @@ class ApiServiceChat extends ApiBase {
 
       if (response.statusCode == 200) {
         final json = response.json;
-        print('Chat API response: $json');
 
         if (json is List) {
           return json.map((e) => ChatModel.fromJson(e)).toList();
@@ -36,7 +35,6 @@ class ApiServiceChat extends ApiBase {
 
       if (response.statusCode == 200) {
         final json = response.json;
-        print('Messages API response: $json');
 
         if (json is List) {
           return json.map((e) => MessageModel.fromJson(e)).toList();
@@ -55,7 +53,6 @@ class ApiServiceChat extends ApiBase {
 
       if (response.statusCode == 200) {
         final json = response.json;
-        print('Messages API response: $json');
         final messagesJson = json['messages'] as List; // 👈 cast to List
         return messagesJson
             .map((e) => MessageModel.fromJson(e as Map<String, dynamic>))

@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hvatai/core/error/exception.dart';
 import 'package:hvatai/core/shared/utils/network_info.dart';
 import 'package:hvatai/locator.dart';
@@ -13,8 +14,10 @@ Future<Either<String, T>> executeAndHandleError<T>(
     final result = await function();
     return Right(result);
   } catch (e, s) {
-    print('Exception in executeAndHandleError$e');
-    print('Stack trace in executeAndHandleError$s');
+    if (kDebugMode) {
+      debugPrint('Exception in executeAndHandleError$e');
+      debugPrint('Stack trace in executeAndHandleError$s');
+    }
     final failure = ErrorHandler.handle(e);
     return Left(failure.errorMessage ?? "");
   }
@@ -59,7 +62,9 @@ Future<T> executeAndHandleErrorServer<T>(Future<T> Function() function) async {
         errorMessage = 'Unknown network error occurred';
         break;
     }
-    print(error.response?.data);
+    if (kDebugMode) {
+      debugPrint(error.response?.data);
+    }
     throw DioException(
       requestOptions: error.requestOptions,
       response: error.response,
@@ -70,8 +75,10 @@ Future<T> executeAndHandleErrorServer<T>(Future<T> Function() function) async {
   } on NoInternetException {
     throw NoInternetException();
   } on Exception catch (error, s) {
-    print('Exception in executeAndHandleError$error');
-    print('Stack trace in executeAndHandleError$s');
+    if (kDebugMode) {
+      debugPrint('Exception in executeAndHandleError$error');
+      debugPrint('Stack trace in executeAndHandleError$s');
+    }
     throw Exception(error.toString());
   }
 }

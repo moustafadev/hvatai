@@ -86,7 +86,7 @@ class _SharedVideoPlayerState extends State<SharedVideoPlayer> {
           ),
           if (!widget.controller.value.isPlaying && !_hasReachedEnd)
             Container(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withValues(alpha: 0.3),
               child: const Center(
                 child: Icon(
                   Icons.play_circle_filled,
@@ -101,7 +101,7 @@ class _SharedVideoPlayerState extends State<SharedVideoPlayer> {
               child: GestureDetector(
                 onTap: _rewind,
                 child: Container(
-                  color: Colors.black.withOpacity(0.3),
+                  color: Colors.black.withValues(alpha: 0.3),
                   child: Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -110,7 +110,7 @@ class _SharedVideoPlayerState extends State<SharedVideoPlayer> {
                           width: 60,
                           height: 60,
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.9),
+                            color: Colors.white.withValues(alpha: 0.9),
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(

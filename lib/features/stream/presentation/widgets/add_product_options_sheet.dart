@@ -70,7 +70,7 @@ class AddProductOptionsSheet extends StatelessWidget {
                   Icon(
                     Icons.arrow_forward_ios,
                     size: 16.sp,
-                    color: AppColors.blackDark.withOpacity(0.4),
+                    color: AppColors.blackDark.withValues(alpha: 0.4),
                   ),
                 ],
               ),
@@ -103,7 +103,7 @@ class AddProductOptionsSheet extends StatelessWidget {
                   Icon(
                     Icons.arrow_forward_ios,
                     size: 16.sp,
-                    color: AppColors.blackDark.withOpacity(0.4),
+                    color: AppColors.blackDark.withValues(alpha: 0.4),
                   ),
                 ],
               ),

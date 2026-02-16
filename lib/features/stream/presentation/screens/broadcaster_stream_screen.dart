@@ -107,12 +107,13 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
             timerText = _formatTime(state.streamSeconds);
           }
 
-          return WillPopScope(
-            onWillPop: () async {
-              final action = await _showExitDialog();
-              if (action == _ExitAction.cancel) return false;
-              await _performExit(action);
-              return false;
+          return PopScope(
+            onPopInvokedWithResult: (didPop, result) async {
+              if (didPop) {
+                final action = await _showExitDialog();
+                if (action == _ExitAction.cancel) return;
+                await _performExit(action);
+              }
             },
             child: Scaffold(
               backgroundColor: Colors.black,

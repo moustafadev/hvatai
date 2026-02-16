@@ -263,6 +263,7 @@
   "active": "Active",
   "sold": "Sold",
   "fix": "Fix",
+  "atLeastOneImage": "At least one image is required",
   "find": "Find...",
   "minutes": "minutes",
   "hours": "hours",

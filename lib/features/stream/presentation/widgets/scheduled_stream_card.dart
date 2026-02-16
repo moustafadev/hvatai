@@ -51,8 +51,6 @@ class _ScheduledStreamCardState extends State<ScheduledStreamCard> {
 
   @override
   Widget build(BuildContext context) {
-    final streamId = widget.stream.id;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,

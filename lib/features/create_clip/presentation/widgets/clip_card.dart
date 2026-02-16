@@ -245,7 +245,7 @@ class _ClipCardState extends State<ClipCard> {
                           width: double.infinity,
                           decoration: BoxDecoration(
                             color: const Color(0xFF000000)
-                                .withOpacity(0.65), // #000000A6
+                                .withValues(alpha: 0.65), // #000000A6
                             borderRadius: BorderRadius.circular(8.r),
                           ),
                           child: CustomText(

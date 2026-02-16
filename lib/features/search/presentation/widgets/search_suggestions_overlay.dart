@@ -74,7 +74,7 @@ class _SearchSuggestionsOverlayState extends State<_SearchSuggestionsOverlay> {
                 elevation: 8,
                 borderRadius: BorderRadius.circular(10.r),
                 color: Colors.transparent,
-                shadowColor: Colors.black.withOpacity(0.2),
+                shadowColor: Colors.black.withValues(alpha: 0.2),
                 child: GestureDetector(
                   onTap: () {}, // Prevent tap from propagating
                   behavior: HitTestBehavior.opaque,

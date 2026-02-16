@@ -114,49 +114,49 @@ class PaymentMethodsSection extends StatelessWidget {
   }
 }
 
-class _PrimaryMethodRow extends StatelessWidget {
-  const _PrimaryMethodRow({
-    required this.label,
-    required this.iconPath,
-    this.isSelected = false,
-  });
+// class _PrimaryMethodRow extends StatelessWidget {
+//   const _PrimaryMethodRow({
+//     required this.label,
+//     required this.iconPath,
+//     this.isSelected = false,
+//   });
 
-  final String label;
-  final String iconPath;
-  final bool isSelected;
+//   final String label;
+//   final String iconPath;
+//   final bool isSelected;
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 48.w,
-          height: 48.h,
-          decoration: BoxDecoration(
-            color: AppColors.greyButton,
-            shape: BoxShape.circle,
-          ),
-          child: Center(
-            child: Image.asset(
-              iconPath,
-              width: 24.w,
-              height: 24.h,
-            ),
-          ),
-        ),
-        12.pw,
-        Expanded(
-          child: CustomText(
-            text: label,
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w700,
-          ),
-        ),
-        _CustomRadioButton(isSelected: isSelected),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         Container(
+//           width: 48.w,
+//           height: 48.h,
+//           decoration: BoxDecoration(
+//             color: AppColors.greyButton,
+//             shape: BoxShape.circle,
+//           ),
+//           child: Center(
+//             child: Image.asset(
+//               iconPath,
+//               width: 24.w,
+//               height: 24.h,
+//             ),
+//           ),
+//         ),
+//         12.pw,
+//         Expanded(
+//           child: CustomText(
+//             text: label,
+//             fontSize: 14.sp,
+//             fontWeight: FontWeight.w700,
+//           ),
+//         ),
+//         _CustomRadioButton(isSelected: isSelected),
+//       ],
+//     );
+//   }
+// }
 
 class _CustomRadioButton extends StatelessWidget {
   const _CustomRadioButton({

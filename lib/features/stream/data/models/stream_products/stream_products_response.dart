@@ -1,7 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
-import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 
 part 'stream_products_response.freezed.dart';
 part 'stream_products_response.g.dart';

@@ -206,7 +206,6 @@ class FirstBidBottomSheet extends StatelessWidget {
                 // Link
                 GestureDetector(
                   onTap: () {
-                    // TODO: Show info about maximum bid
                     context.pop();
                   },
                   child: CustomText(

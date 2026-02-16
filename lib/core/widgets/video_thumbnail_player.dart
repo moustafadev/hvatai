@@ -254,7 +254,7 @@ class _VideoThumbnailPlayerState extends State<VideoThumbnailPlayer>
             // Play/Pause overlay
             if (!_isPlaying)
               Container(
-                color: Colors.black.withOpacity(0.3),
+                color: Colors.black.withValues(alpha: 0.3),
                 child: const Center(
                   child: Icon(
                     Icons.play_circle_filled,

@@ -1,6 +1,7 @@
 // interceptor.dart
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/datasources/local/app_local.dart';
@@ -16,16 +17,22 @@ class AuthInterceptor extends QueuedInterceptor {
   @override
   void onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
-    final token = await appLocal.getToken();
+    final token = appLocal.getToken();
 
-    print('Token in interceptor: $token');
+    if (kDebugMode) {
+      debugPrint('Token in interceptor: $token');
+    }
 
     if (token != null && token.isNotEmpty && token != 'null') {
       options.headers['Authorization'] = 'Bearer $token';
-      print('Authorization header added: Bearer $token');
+      if (kDebugMode) {
+        debugPrint('Authorization header added: Bearer $token');
+      }
     } else {
       options.headers.remove('Authorization');
-      print('No valid token found, Authorization header removed');
+      if (kDebugMode) {
+        debugPrint('No valid token found, Authorization header removed');
+      }
     }
 
     options.headers['Content-Type'] = 'application/json';

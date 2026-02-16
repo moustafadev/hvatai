@@ -1,13 +1,12 @@
 import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hvatai/blocs_observer.dart';
 import 'package:hvatai/core/datasources/local/cache_helper.dart';
 import 'package:hvatai/core/shared/utils/temp_video_cleaner.dart';
-import 'package:hvatai/firebase_options.dart';
 
 import '../locator.dart';
 
@@ -21,9 +20,6 @@ class InitApp {
     await Future.value([
       await setupLocator(),
       await EasyLocalization.ensureInitialized(),
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      ),
       await locator<CacheHelper>().init(),
     ]);
     HttpOverrides.global = MyHttpOverrides();
@@ -45,7 +41,9 @@ class MyHttpOverrides extends HttpOverrides {
           return true;
         };
     } catch (e) {
-      print('Error: $e');
+      if (kDebugMode) {
+        debugPrint('Error: $e');
+      }
       rethrow;
     }
   }

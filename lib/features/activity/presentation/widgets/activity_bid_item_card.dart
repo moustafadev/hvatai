@@ -232,7 +232,6 @@ class ActivityBidItemCard extends StatelessWidget {
                 }
               } else if (bid.status == 'PAID') {
                 // Navigate to order status
-                // TODO: Implement order status navigation
               } else if (bid.status == 'LOST') {
                 // LOST status - button is shown but action can be empty or show message
               }

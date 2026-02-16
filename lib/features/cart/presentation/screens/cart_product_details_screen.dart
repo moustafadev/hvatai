@@ -64,7 +64,6 @@ class CartProductDetailsScreen extends StatelessWidget {
                         cubit.toggleFav(currentProduct.isFavorited);
                       },
                       onShareTap: () {
-                        // TODO: Implement share functionality
                       },
                       onParticipateTap: () => cubit.joinStream(context),
                       isInLiveAuction: isInLiveAuction,

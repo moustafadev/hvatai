@@ -3,10 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/create_clip_cubit/create_clip_state.dart';
-import 'package:hvatai/routes/app_routes.dart';
-import 'package:hvatai/routes/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
@@ -269,16 +266,16 @@ class CreateClipCubit extends Cubit<CreateClipState> {
     // }
   }
 
-  void _navigateToPreview(String videoPath) {
-    final context = navigatorKey.currentContext;
-    if (context != null) {
-      context.push(AppRoutes.previewVideo, extra: {
-        'videoPath': videoPath,
-        'streamId': state.streamId,
-        'clipName': state.clipName,
-      });
-    }
-  }
+  // void _navigateToPreview(String videoPath) {
+  //   final context = navigatorKey.currentContext;
+  //   if (context != null) {
+  //     context.push(AppRoutes.previewVideo, extra: {
+  //       'videoPath': videoPath,
+  //       'streamId': state.streamId,
+  //       'clipName': state.clipName,
+  //     });
+  //   }
+  // }
 
   void updateStartValue(double value) {
     emit(state.copyWith(startValue: value));

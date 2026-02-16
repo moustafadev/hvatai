@@ -43,7 +43,7 @@ class EditVideoEditor extends StatelessWidget {
                           child: GestureDetector(
                             onTap: () => cubit.rewind(),
                             child: Container(
-                              color: Colors.black.withOpacity(0.3),
+                              color: Colors.black.withValues(alpha: 0.3),
                               child: Center(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +52,7 @@ class EditVideoEditor extends StatelessWidget {
                                       width: 60,
                                       height: 60,
                                       decoration: BoxDecoration(
-                                        color: Colors.white.withOpacity(0.9),
+                                        color: Colors.white.withValues(alpha: 0.9),
                                         shape: BoxShape.circle,
                                       ),
                                       child: const Icon(

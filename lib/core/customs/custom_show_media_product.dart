@@ -48,7 +48,7 @@ class CustomShowMediaProduct extends StatelessWidget {
             ),
           // Play icon overlay
           Container(
-            color: Colors.black.withOpacity(0.3),
+            color: Colors.black.withValues(alpha: 0.3),
             child: const Center(
               child: Icon(
                 Icons.play_circle_filled,

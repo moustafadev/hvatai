@@ -29,7 +29,7 @@ class PhotoUploadWidget extends StatelessWidget {
                 color: AppColors.white,
                 borderRadius: BorderRadius.circular(10.r),
                 border: Border.all(
-                  color: AppColors.graniteGray.withOpacity(0.3),
+                  color: AppColors.graniteGray.withValues(alpha: 0.3),
                   width: 1,
                 ),
               ),
@@ -82,7 +82,7 @@ class PhotoUploadWidget extends StatelessWidget {
                   child: Container(
                     padding: EdgeInsets.all(4.r),
                     decoration: BoxDecoration(
-                      color: AppColors.blackDark.withOpacity(0.7),
+                      color: AppColors.blackDark.withValues(alpha: 0.7),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(

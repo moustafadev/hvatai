@@ -56,7 +56,6 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
 
   @override
   Widget build(BuildContext context) {
-    final streamId = widget.stream.id;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

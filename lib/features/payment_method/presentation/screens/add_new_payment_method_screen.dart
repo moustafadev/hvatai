@@ -76,12 +76,14 @@ class AddNewPaymentMethodScreen extends StatelessWidget {
                                 isRequired: false,
                                 hintText: 'mmYy'.tr(),
                                 validator: (v) {
-                                  if (v == null || v.isEmpty)
+                                  if (v == null || v.isEmpty) {
                                     return 'enterDate'.tr();
+                                  }
 
                                   final parts = v.split('/');
-                                  if (parts.length != 2)
+                                  if (parts.length != 2) {
                                     return 'invalidFormat'.tr();
+                                  }
 
                                   final mm = int.tryParse(parts[0].trim());
                                   final yy = int.tryParse(parts[1].trim());

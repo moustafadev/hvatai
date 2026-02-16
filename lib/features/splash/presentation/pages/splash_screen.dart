@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/datasources/local/app_local.dart';
-import 'package:hvatai/features/cart/presentation/cubit/cart_cubit/cart_cubit.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 
@@ -27,8 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
     final token = appLocal.getToken();
     final isSetup = appLocal.getIsSetup();
-    print('token$token');
-    print('isSetup $isSetup');
     if (token == null || token.isEmpty) {
       context.go(AppRoutes.socialLogin);
       return;
@@ -36,7 +32,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (isSetup == false) {
       await appLocal.removeToken();
-      print('token removed because isSetup = false');
       // ignore: use_build_context_synchronously
       context.go(AppRoutes.socialLogin);
     } else {

@@ -10,7 +10,6 @@ class MessageModel with _$MessageModel {
     required int? id,
     @JsonKey(name: 'chat_id') required int? chatId,
     @JsonKey(name: 'sender_id') required int? senderId,
-    @JsonKey(name: 'chat_type') String? chat_type,
     @JsonKey(name: 'receiver_id') required int? receiverId,
     required String? content,
     @JsonKey(name: 'read_at') String? readAt,
