@@ -9,7 +9,7 @@ class StreamsTabWidget extends StatelessWidget {
       builder: (context, state) {
         if (state.isLoadingStreams) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CustomCircularProgressIndicator(),
           );
         }
 
@@ -51,12 +51,12 @@ class StreamsTabWidget extends StatelessWidget {
 
             return GestureDetector(
               onTap: () {
-                if (stream.id != null) {
-                  context.push(
-                    AppRoutes.liveStreamViewer,
-                    extra: {'streamId': stream.id},
-                  );
-                }
+                // if (stream.id != null) {
+                //   context.push(
+                //     AppRoutes.liveStreamViewer,
+                //     extra: {'streamId': stream.id},
+                //   );
+                // }
               },
               child: CustomLiveVideoCard(
                 stream: stream,

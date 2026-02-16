@@ -6,17 +6,14 @@ import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
-import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/activity/data/models/user_bids_response/user_bids_response.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
 import 'package:hvatai/features/cart/presentation/cart.dart';
 import 'package:hvatai/features/stream/presentation/stream.dart';
 import 'package:hvatai/locator.dart';
-import 'package:hvatai/routes/app_routes.dart';
 
 part 'screens/activity_screen.dart';
 part 'widgets/favorites_tab_widget.dart';
 part 'widgets/streams_tab_widget.dart';
 part 'widgets/bids_tab_widget.dart';
 part 'widgets/activity_bid_item_card.dart';
-part 'widgets/fav_live_video_card.dart';

@@ -9,7 +9,7 @@ class FavoritesTabWidget extends StatelessWidget {
       builder: (context, state) {
         if (state.isLoadingFavorites) {
           return const Center(
-            child: CircularProgressIndicator(),
+            child: CustomCircularProgressIndicator(),
           );
         }
 

@@ -6,14 +6,7 @@ class ActivityScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) {
-        final cubit = locator<ActivityCubit>();
-        // Initialize after first frame
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          cubit.init();
-        });
-        return cubit;
-      },
+      create: (_) => locator<ActivityCubit>()..init(),
       child: const _ActivityScreenContent(),
     );
   }
@@ -79,7 +72,6 @@ class _ActivityScreenContentState extends State<_ActivityScreenContent>
                     children: [
                       CustomText(
                         text: "activity".tr(),
-                        color: AppColors.blackDark,
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w800,
                       ),
@@ -101,13 +93,13 @@ class _ActivityScreenContentState extends State<_ActivityScreenContent>
                       fontSize: 14.sp,
                       fontFamily: 'Manrope',
                       fontWeight: FontWeight.w800,
-                      color: AppColors.blackColorIcon,
+                      color: AppColors.text,
                     ),
                     unselectedLabelStyle: TextStyle(
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w600,
                       fontFamily: 'Manrope',
-                      color: AppColors.greyTransparent,
+                      color: AppColors.blackColor.withValues(alpha: 0.2),
                     ),
                     indicatorSize: TabBarIndicatorSize.tab,
                     labelPadding: EdgeInsets.zero,

@@ -14,11 +14,11 @@ class BidsTabWidget extends StatelessWidget {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
                 child: AnimatedContainer(
-                  height: 45.h,
+                  height: 45,
                   padding: EdgeInsets.all(4.r),
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius: BorderRadius.circular(12.r),
+                    borderRadius: BorderRadius.circular(10.r),
                     boxShadow: [
                       BoxShadow(
                         offset: const Offset(0, 3),
@@ -89,6 +89,7 @@ class BidsTabWidget extends StatelessWidget {
                             }
                           },
                           child: Container(
+                            height: 37,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               color: state.selectedBidSubTabIndex == 1
@@ -102,7 +103,7 @@ class BidsTabWidget extends StatelessWidget {
                               fontWeight: FontWeight.w700,
                               color: state.selectedBidSubTabIndex == 1
                                   ? AppColors.white
-                                  : AppColors.blackDark,
+                                  : AppColors.text,
                             ),
                           ),
                         ),
@@ -144,7 +145,7 @@ class BidsListWidget extends StatelessWidget {
     if (isLoading) {
       return SliverFillRemaining(
         child: const Center(
-          child: CircularProgressIndicator(),
+          child: CustomCircularProgressIndicator(),
         ),
       );
     }
