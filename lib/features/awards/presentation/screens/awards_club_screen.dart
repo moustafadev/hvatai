@@ -37,64 +37,57 @@ class _AwardsClubView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreyBackground,
-      body: PopScope(
-        onPopInvokedWithResult: (didPop, result) async {
-          if (didPop) {
-            context.pop(companyCubit?.state.isSubscribed ?? false);
-          }
+      backgroundColor: AppColors.background,
+      body: BlocConsumer<AwardsClubCubit, AwardsClubState>(
+        listenWhen: (previous, current) =>
+            previous.isSubscribed != current.isSubscribed,
+        listener: (_, state) {
+          companyCubit?.syncSubscriptionStatus(state.isSubscribed);
         },
-        child: BlocConsumer<AwardsClubCubit, AwardsClubState>(
-          listenWhen: (previous, current) =>
-              previous.isSubscribed != current.isSubscribed,
-          listener: (_, state) {
-            companyCubit?.syncSubscriptionStatus(state.isSubscribed);
-          },
-          builder: (context, state) {
-            return Stack(
-              children: [
-                CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: AwardsClubHeaderWidget(),
-                    ),
-                    AwardsClubListWidget(),
-                  ],
-                ),
-                // Fixed bottom subscribe button
-                Positioned(
-                  left: 16.w,
-                  right: 16.w,
-                  bottom: 0,
-                  child: SafeArea(
-                    top: false,
-                    child: CustomButton(
-                      title: state.isSubscribed
-                          ? 'unsubscribe'.tr()
-                          : 'subscribe'.tr(),
-                      color: state.isSubscribed
-                          ? AppColors.white
-                          : AppColors.blackDark,
-                      textColor: state.isSubscribed
-                          ? AppColors.blackDark
-                          : AppColors.white,
-                      colorBorderSide:
-                          state.isSubscribed ? AppColors.blackDark : null,
-                      isLoading: state.isToggleLoading,
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.w800,
-                      height: 54,
-                      radius: 10.r,
-                      onPressed: () {
-                        context.read<AwardsClubCubit>().toggleSubscription();
-                      },
-                    ),
+        builder: (context, state) {
+          return Stack(
+            children: [
+              CustomScrollView(
+                slivers: [
+                  SliverToBoxAdapter(
+                    child: AwardsClubHeaderWidget(),
+                  ),
+                  AwardsClubListWidget(),
+                ],
+              ),
+              // Fixed bottom subscribe button
+              Positioned(
+                left: 16.w,
+                right: 16.w,
+                bottom: 0,
+                child: SafeArea(
+                  top: false,
+                  child: CustomButton(
+                    title: state.isSubscribed
+                        ? 'unsubscribe'.tr()
+                        : 'subscribe'.tr(),
+                    color: state.isSubscribed
+                        ? AppColors.white
+                        : AppColors.blackDark,
+                    textColor: state.isSubscribed
+                        ? AppColors.blackDark
+                        : AppColors.white,
+                    colorBorderSide:
+                        state.isSubscribed ? AppColors.blackDark : null,
+                    isLoading: state.isToggleLoading,
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.w800,
+                    height: 54,
+                    radius: 10.r,
+                    onPressed: () {
+                      context.read<AwardsClubCubit>().toggleSubscription();
+                    },
                   ),
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

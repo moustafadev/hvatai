@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
+import 'package:hvatai/features/awards/presentation/cubit/send_reward_flow/send_reward_flow_cubit.dart';
 import 'package:hvatai/features/cart/presentation/cart.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/auth/presentation/auth.dart';
@@ -226,7 +227,9 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: AppRoutes.selectAwaySend, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
-        return SelectAwayRewardsScreen();
+        final extra = state.extra as Map<String, dynamic>?;
+        final sendRewardFlowCubit = extra?['sendRewardFlowCubit'] as SendRewardFlowCubit;
+        return SelectAwayRewardsScreen(sendRewardFlowCubit: sendRewardFlowCubit);
       },
     ),
     GoRoute(

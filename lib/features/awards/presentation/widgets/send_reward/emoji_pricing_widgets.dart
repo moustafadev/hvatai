@@ -1,14 +1,12 @@
 part of '../../awards.dart';
 
 class EmojiPricingRow extends StatelessWidget {
-  final List<EmojiPricingItem> items;
   final double spacing;
   final int? selectedIndex;
   final Function(int index) onSelect;
 
   const EmojiPricingRow({
     super.key,
-    required this.items,
     required this.selectedIndex,
     required this.onSelect,
     this.spacing = 14.0,
@@ -16,6 +14,14 @@ class EmojiPricingRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<EmojiPricingItem> items = [
+      EmojiPricingItem(emoji: '👋', price: '50 ₽'),
+      EmojiPricingItem(emoji: '👍', price: '100 ₽'),
+      EmojiPricingItem(emoji: '😊', price: '200 ₽'),
+      EmojiPricingItem(emoji: '🤩', price: '500 ₽'),
+      EmojiPricingItem(emoji: '🤑', price: '1000 ₽'),
+      EmojiPricingItem(emoji: '💸', price: '5000 ₽'),
+    ];
     return Wrap(
       spacing: spacing,
       runSpacing: spacing,

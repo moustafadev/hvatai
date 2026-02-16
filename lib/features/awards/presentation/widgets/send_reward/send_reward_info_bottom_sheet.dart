@@ -33,11 +33,11 @@ class SendRewardInfoBottomSheet extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          4.ph,
+          8.ph,
           _RewardInfoBottomSheetHandle(),
           CustomText(
             text: 'rewardInfoTitle'.tr(),
-            fontSize: 20.sp,
+            fontSize: 18.sp,
             textAlign: TextAlign.center,
             fontWeight: FontWeight.w800,
           ),
@@ -59,7 +59,7 @@ class SendRewardInfoBottomSheet extends StatelessWidget {
                     child: CustomText(
                       text: item.textKey.tr(),
                       fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
+                      fontWeight: FontWeight.w700,
                       height: 1.4,
                     ),
                   ),
@@ -71,7 +71,7 @@ class SendRewardInfoBottomSheet extends StatelessWidget {
           CustomButton(
             title: 'sendReward'.tr(),
             onPressed: () {
-              context.push(AppRoutes.selectAwaySend, extra: {'userId': userId});
+              context.push(AppRoutes.sendReward, extra: {'userId': userId});
             },
             color: AppColors.primaryColor,
             textColor: AppColors.white,
@@ -96,8 +96,8 @@ class _RewardInfoBottomSheetHandle extends StatelessWidget {
         height: 4.h,
         margin: EdgeInsets.only(bottom: 12.h),
         decoration: BoxDecoration(
-          color: AppColors.gray,
-          borderRadius: BorderRadius.circular(30.r),
+          color: AppColors.greyButton,
+          borderRadius: BorderRadius.circular(100.r),
         ),
       ),
     );

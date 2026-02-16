@@ -38,7 +38,7 @@ class CustomButton extends StatelessWidget {
     this.widget,
     this.elevation = 0,
     this.sizedBetweenIcon,
-    this.fontSize = AppConst.fontMedium,
+    this.fontSize = 24,
     this.radius = AppConst.borderRadius,
     this.fontWeight = FontWeight.normal,
     this.maxLines,
@@ -66,7 +66,7 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(radius)),
         ),
         padding: padding,
-        textStyle: const TextStyle(fontSize: 24),
+        textStyle: TextStyle(fontSize: fontSize),
       ).merge(
         ButtonStyle(
           elevation: WidgetStateProperty.resolveWith<double>(
@@ -97,6 +97,7 @@ class CustomButton extends StatelessWidget {
                   fontWeight: fontWeight,
                   textAlign: textAlign,
                   maxLines: maxLines,
+                  fontSize: fontSize,
                   fontFamily: 'Manrope',
                   overflow: textOverflow,
                 ),

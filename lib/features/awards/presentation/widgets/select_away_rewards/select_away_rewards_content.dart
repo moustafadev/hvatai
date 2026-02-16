@@ -1,20 +1,14 @@
 part of '../../awards.dart';
 
-class _SelectAwayRewardsContent extends StatelessWidget {
-  const _SelectAwayRewardsContent({
-    required this.onAddPayment,
-    required this.onPay,
-  });
-
-  final VoidCallback onAddPayment;
-  final VoidCallback onPay;
+class SelectAwayRewardsContent extends StatelessWidget {
+  const SelectAwayRewardsContent({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreyBackground,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.lightGreyBackground,
+        backgroundColor: AppColors.background,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
@@ -33,7 +27,7 @@ class _SelectAwayRewardsContent extends StatelessWidget {
                 50.ph,
                 RewardPaymentSummaryWidget(),
                 32.ph,
-                RewardPaymentMethodSectionWidget(onAddPayment: onAddPayment),
+                RewardPaymentMethodSectionWidget(),
               ]),
             ),
           ),
@@ -47,7 +41,10 @@ class _SelectAwayRewardsContent extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  RewardPayButtonWidget(onPay: onPay),
+                  RewardPayButtonWidget(onPay: () {
+                    final cubit = context.read<SendRewardFlowCubit>();
+                    cubit.sendReward();
+                  }),
                   20.ph,
                 ],
               ),

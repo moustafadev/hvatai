@@ -52,7 +52,7 @@ import 'package:hvatai/features/home/domain/repositories/home_repository.dart';
 import 'package:hvatai/features/notifications/data/datasources/api_service_notifications.dart';
 import 'package:hvatai/features/notifications/data/repositories/notifications_impl_repository.dart';
 import 'package:hvatai/features/notifications/domain/repositories/notifications_repository.dart';
-import 'package:hvatai/features/awards/presentation/cubit/awards_club_cubit.dart';
+import 'package:hvatai/features/awards/presentation/cubit/awards_club/awards_club_cubit.dart';
 import 'package:hvatai/features/awards/presentation/cubit/send_reward_flow/send_reward_flow_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/categories/categories_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/live_streams/live_streams_cubit.dart';
@@ -151,7 +151,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => FavoriteCubit(locator()));
   locator.registerFactory(() => ToggleFavoriteCubit(locator()));
   locator.registerFactory(() => NotificationCubit());
-  locator.registerFactory(() => AwardsClubCubit(locator(), locator()));
+  locator.registerFactory(() => AwardsClubCubit(locator()));
   locator.registerFactory(() => SendRewardFlowCubit(locator()));
   locator.registerFactory(() => EndedStreamCubit(locator()));
   locator.registerFactory(() => ClipBottomSheetCubit(locator()));

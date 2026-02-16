@@ -37,6 +37,7 @@ class SendRewardFlowCubit extends Cubit<SendRewardFlowState> {
       updateRewardMessage('');
     }
   }
+  
 
   void updateRewardMessage(String message) {
     emit(state.copyWith(rewardMessage: message));

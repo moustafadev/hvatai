@@ -16,7 +16,9 @@ class Assets {
   static const String assetsImagesPointUp = "assets/images/point_up.png";
 
   /// assests for double alt arrow svg
-  static const String assetsIconsDoubleAltArrow = "assets/icons/double_alt_arrow.svg";
+  static const String assetsIconsDoubleAltArrow =
+      "assets/icons/double_alt_arrow.svg";
+
   /// assets star border svg
   static const String assetsIconsStarBorder = "assets/icons/star_border.svg";
 
@@ -130,6 +132,7 @@ class Assets {
 
   /// info circle icon
   static const String assetsIconsInfoCircle2 = "assets/icons/info_circle.svg";
+  static const String assetsIconsInfoCircle3 = "assets/icons/info_circle3.svg";
 
   /// check correct image
   static const String assetsImagesCheckCorrect =
