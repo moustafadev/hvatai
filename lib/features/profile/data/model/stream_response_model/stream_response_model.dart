@@ -75,6 +75,7 @@ class StreamDataModel with _$StreamDataModel {
       toJson: _nullOrStringList,
     )
     List<String>? gifHistory,
+    @JsonKey(name: 'is_favorite') bool? isFavorited,
     @JsonKey(name: 'last_thumbnail_generated_at')
     DateTime? lastThumbnailGeneratedAt,
     @JsonKey(name: 'last_gif_generated_at') DateTime? lastGifGeneratedAt,

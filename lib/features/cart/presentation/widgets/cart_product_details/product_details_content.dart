@@ -55,6 +55,7 @@ class ProductDetailsContent extends StatelessWidget {
             ),
           12.ph,
           ProductDetailsSeller(
+            ownerId: product.user?.id ?? 0,
             ownerName: product.user?.name,
             ownerImage: product.user?.image,
           ),

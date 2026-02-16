@@ -29,6 +29,8 @@ mixin _$ClipModel {
   String get videoUrl => throw _privateConstructorUsedError;
   ClipStreamModel? get stream => throw _privateConstructorUsedError;
   ClipUserModel? get user => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_favorite')
+  bool? get isFavorited => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime? get createdAt => throw _privateConstructorUsedError;
 
@@ -55,6 +57,7 @@ abstract class $ClipModelCopyWith<$Res> {
       @JsonKey(name: 'video_url') String videoUrl,
       ClipStreamModel? stream,
       ClipUserModel? user,
+      @JsonKey(name: 'is_favorite') bool? isFavorited,
       @JsonKey(name: 'created_at') DateTime? createdAt});
 
   $ClipStreamModelCopyWith<$Res>? get stream;
@@ -83,6 +86,7 @@ class _$ClipModelCopyWithImpl<$Res, $Val extends ClipModel>
     Object? videoUrl = null,
     Object? stream = freezed,
     Object? user = freezed,
+    Object? isFavorited = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
@@ -114,6 +118,10 @@ class _$ClipModelCopyWithImpl<$Res, $Val extends ClipModel>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as ClipUserModel?,
+      isFavorited: freezed == isFavorited
+          ? _value.isFavorited
+          : isFavorited // ignore: cast_nullable_to_non_nullable
+              as bool?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -166,6 +174,7 @@ abstract class _$$ClipModelImplCopyWith<$Res>
       @JsonKey(name: 'video_url') String videoUrl,
       ClipStreamModel? stream,
       ClipUserModel? user,
+      @JsonKey(name: 'is_favorite') bool? isFavorited,
       @JsonKey(name: 'created_at') DateTime? createdAt});
 
   @override
@@ -194,6 +203,7 @@ class __$$ClipModelImplCopyWithImpl<$Res>
     Object? videoUrl = null,
     Object? stream = freezed,
     Object? user = freezed,
+    Object? isFavorited = freezed,
     Object? createdAt = freezed,
   }) {
     return _then(_$ClipModelImpl(
@@ -225,6 +235,10 @@ class __$$ClipModelImplCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as ClipUserModel?,
+      isFavorited: freezed == isFavorited
+          ? _value.isFavorited
+          : isFavorited // ignore: cast_nullable_to_non_nullable
+              as bool?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -244,6 +258,7 @@ class _$ClipModelImpl implements _ClipModel {
       @JsonKey(name: 'video_url') this.videoUrl = '',
       this.stream,
       this.user,
+      @JsonKey(name: 'is_favorite') this.isFavorited,
       @JsonKey(name: 'created_at') this.createdAt});
 
   factory _$ClipModelImpl.fromJson(Map<String, dynamic> json) =>
@@ -269,12 +284,15 @@ class _$ClipModelImpl implements _ClipModel {
   @override
   final ClipUserModel? user;
   @override
+  @JsonKey(name: 'is_favorite')
+  final bool? isFavorited;
+  @override
   @JsonKey(name: 'created_at')
   final DateTime? createdAt;
 
   @override
   String toString() {
-    return 'ClipModel(id: $id, name: $name, status: $status, videoPath: $videoPath, videoUrl: $videoUrl, stream: $stream, user: $user, createdAt: $createdAt)';
+    return 'ClipModel(id: $id, name: $name, status: $status, videoPath: $videoPath, videoUrl: $videoUrl, stream: $stream, user: $user, isFavorited: $isFavorited, createdAt: $createdAt)';
   }
 
   @override
@@ -291,6 +309,8 @@ class _$ClipModelImpl implements _ClipModel {
                 other.videoUrl == videoUrl) &&
             (identical(other.stream, stream) || other.stream == stream) &&
             (identical(other.user, user) || other.user == user) &&
+            (identical(other.isFavorited, isFavorited) ||
+                other.isFavorited == isFavorited) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
   }
@@ -298,7 +318,7 @@ class _$ClipModelImpl implements _ClipModel {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, name, status, videoPath,
-      videoUrl, stream, user, createdAt);
+      videoUrl, stream, user, isFavorited, createdAt);
 
   /// Create a copy of ClipModel
   /// with the given fields replaced by the non-null parameter values.
@@ -325,6 +345,7 @@ abstract class _ClipModel implements ClipModel {
           @JsonKey(name: 'video_url') final String videoUrl,
           final ClipStreamModel? stream,
           final ClipUserModel? user,
+          @JsonKey(name: 'is_favorite') final bool? isFavorited,
           @JsonKey(name: 'created_at') final DateTime? createdAt}) =
       _$ClipModelImpl;
 
@@ -347,6 +368,9 @@ abstract class _ClipModel implements ClipModel {
   ClipStreamModel? get stream;
   @override
   ClipUserModel? get user;
+  @override
+  @JsonKey(name: 'is_favorite')
+  bool? get isFavorited;
   @override
   @JsonKey(name: 'created_at')
   DateTime? get createdAt;

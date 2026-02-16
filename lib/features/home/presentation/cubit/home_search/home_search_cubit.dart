@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
-import 'package:hvatai/features/search/data/model/search_response/search_response_model.dart';
 import 'package:hvatai/features/search/domain/usecases/search_suggestions_usecase.dart';
 import 'package:hvatai/features/search/domain/usecases/search_usecase.dart';
 
@@ -114,11 +112,10 @@ class HomeSearchCubit extends Cubit<HomeSearchState> {
       (failure) => emit(state.copyWith(isLoading: false, errorMessage: failure)),
       (response) {
         final data = response.data;
-        final streams = _mapStreams(data?.streams ?? const <SearchStreamDto>[]);
 
         emit(state.copyWith(
           isLoading: false,
-          streams: streams,
+          streams: data?.streams ?? [],
           errorMessage: '',
         ));
       },
@@ -149,31 +146,4 @@ class HomeSearchCubit extends Cubit<HomeSearchState> {
     );
   }
 
-
-  List<SearchLiveStreamModel> _mapStreams(List<SearchStreamDto> streams) {
-    return streams.map((stream) {
-      final firstCategory =
-          (stream.categories != null && stream.categories!.isNotEmpty)
-              ? stream.categories!.first.name ?? ''
-              : '';
-      return SearchLiveStreamModel(
-        channelId: stream.id?.toString() ?? '',
-        adminName: stream.user?.name ?? '',
-        adminPhoto: stream.user?.image ?? '',
-        price: '',
-        latestThumbnailUrl: stream.latestThumbnailUrl ?? '',
-        latestGifUrl: stream.latestGifUrl ?? '',
-        viewsCount: stream.viewerCount ?? 0,
-        title: stream.title ?? '',
-        description: stream.description ?? '',
-        liveImage: stream.thumbnail ?? '',
-        selectedProductImage: stream.thumbnail ?? '',
-        category: firstCategory,
-        isBlocked: stream.status == 'blocked',
-        adminId: stream.user?.id?.toString() ?? '',
-        unblockRequested: false,
-        unblockRequestReason: '',
-      );
-    }).toList();
-  }
 }

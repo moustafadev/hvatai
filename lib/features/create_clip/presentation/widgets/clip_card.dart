@@ -180,18 +180,21 @@ class _ClipCardState extends State<ClipCard> {
                       },
                       behavior: HitTestBehavior.opaque,
                       child: Container(
-                        padding: EdgeInsets.all(6.r),
+                        width: 24.w,
+                        height: 24.h,
                         decoration: BoxDecoration(
-                          color: widget.isFavorited
-                              ? AppColors.primaryPink
-                              : Colors.black.withOpacity(0.5),
+                          color: AppColors.blackColor.withValues(alpha: 0.65),
                           shape: BoxShape.circle,
                         ),
-                        child: Image.asset(
-                          Assets.assetsIconsSave,
-                          width: 16.w,
-                          height: 16.h,
-                          color: Colors.white,
+                        child: Center(
+                          child: Image.asset(
+                            Assets.assetsIconsFavsav,
+                            height: 14.h,
+                            width: 14.w,
+                            color: widget.isFavorited
+                                ? AppColors.primaryColor
+                                : AppColors.white,
+                          ),
                         ),
                       ),
                     ),

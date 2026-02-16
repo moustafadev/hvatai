@@ -16,10 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ToggleFavoriteState {
-  Set<int> get favoritedIds =>
-      throw _privateConstructorUsedError; // Set of favorited item IDs by type
-  Map<String, Set<int>> get favoritedByType =>
-      throw _privateConstructorUsedError;
+  Set<int> get favoritedStreamIds => throw _privateConstructorUsedError;
 
   /// Create a copy of ToggleFavoriteState
   /// with the given fields replaced by the non-null parameter values.
@@ -34,7 +31,7 @@ abstract class $ToggleFavoriteStateCopyWith<$Res> {
           ToggleFavoriteState value, $Res Function(ToggleFavoriteState) then) =
       _$ToggleFavoriteStateCopyWithImpl<$Res, ToggleFavoriteState>;
   @useResult
-  $Res call({Set<int> favoritedIds, Map<String, Set<int>> favoritedByType});
+  $Res call({Set<int> favoritedStreamIds});
 }
 
 /// @nodoc
@@ -52,18 +49,13 @@ class _$ToggleFavoriteStateCopyWithImpl<$Res, $Val extends ToggleFavoriteState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? favoritedIds = null,
-    Object? favoritedByType = null,
+    Object? favoritedStreamIds = null,
   }) {
     return _then(_value.copyWith(
-      favoritedIds: null == favoritedIds
-          ? _value.favoritedIds
-          : favoritedIds // ignore: cast_nullable_to_non_nullable
+      favoritedStreamIds: null == favoritedStreamIds
+          ? _value.favoritedStreamIds
+          : favoritedStreamIds // ignore: cast_nullable_to_non_nullable
               as Set<int>,
-      favoritedByType: null == favoritedByType
-          ? _value.favoritedByType
-          : favoritedByType // ignore: cast_nullable_to_non_nullable
-              as Map<String, Set<int>>,
     ) as $Val);
   }
 }
@@ -76,7 +68,7 @@ abstract class _$$ToggleFavoriteStateImplCopyWith<$Res>
       __$$ToggleFavoriteStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Set<int> favoritedIds, Map<String, Set<int>> favoritedByType});
+  $Res call({Set<int> favoritedStreamIds});
 }
 
 /// @nodoc
@@ -92,18 +84,13 @@ class __$$ToggleFavoriteStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? favoritedIds = null,
-    Object? favoritedByType = null,
+    Object? favoritedStreamIds = null,
   }) {
     return _then(_$ToggleFavoriteStateImpl(
-      favoritedIds: null == favoritedIds
-          ? _value._favoritedIds
-          : favoritedIds // ignore: cast_nullable_to_non_nullable
+      favoritedStreamIds: null == favoritedStreamIds
+          ? _value._favoritedStreamIds
+          : favoritedStreamIds // ignore: cast_nullable_to_non_nullable
               as Set<int>,
-      favoritedByType: null == favoritedByType
-          ? _value._favoritedByType
-          : favoritedByType // ignore: cast_nullable_to_non_nullable
-              as Map<String, Set<int>>,
     ));
   }
 }
@@ -112,34 +99,22 @@ class __$$ToggleFavoriteStateImplCopyWithImpl<$Res>
 
 class _$ToggleFavoriteStateImpl implements _ToggleFavoriteState {
   const _$ToggleFavoriteStateImpl(
-      {final Set<int> favoritedIds = const {},
-      final Map<String, Set<int>> favoritedByType = const {}})
-      : _favoritedIds = favoritedIds,
-        _favoritedByType = favoritedByType;
+      {final Set<int> favoritedStreamIds = const <int>{}})
+      : _favoritedStreamIds = favoritedStreamIds;
 
-  final Set<int> _favoritedIds;
+  final Set<int> _favoritedStreamIds;
   @override
   @JsonKey()
-  Set<int> get favoritedIds {
-    if (_favoritedIds is EqualUnmodifiableSetView) return _favoritedIds;
+  Set<int> get favoritedStreamIds {
+    if (_favoritedStreamIds is EqualUnmodifiableSetView)
+      return _favoritedStreamIds;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableSetView(_favoritedIds);
-  }
-
-// Set of favorited item IDs by type
-  final Map<String, Set<int>> _favoritedByType;
-// Set of favorited item IDs by type
-  @override
-  @JsonKey()
-  Map<String, Set<int>> get favoritedByType {
-    if (_favoritedByType is EqualUnmodifiableMapView) return _favoritedByType;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_favoritedByType);
+    return EqualUnmodifiableSetView(_favoritedStreamIds);
   }
 
   @override
   String toString() {
-    return 'ToggleFavoriteState(favoritedIds: $favoritedIds, favoritedByType: $favoritedByType)';
+    return 'ToggleFavoriteState(favoritedStreamIds: $favoritedStreamIds)';
   }
 
   @override
@@ -148,16 +123,12 @@ class _$ToggleFavoriteStateImpl implements _ToggleFavoriteState {
         (other.runtimeType == runtimeType &&
             other is _$ToggleFavoriteStateImpl &&
             const DeepCollectionEquality()
-                .equals(other._favoritedIds, _favoritedIds) &&
-            const DeepCollectionEquality()
-                .equals(other._favoritedByType, _favoritedByType));
+                .equals(other._favoritedStreamIds, _favoritedStreamIds));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_favoritedIds),
-      const DeepCollectionEquality().hash(_favoritedByType));
+      runtimeType, const DeepCollectionEquality().hash(_favoritedStreamIds));
 
   /// Create a copy of ToggleFavoriteState
   /// with the given fields replaced by the non-null parameter values.
@@ -170,14 +141,11 @@ class _$ToggleFavoriteStateImpl implements _ToggleFavoriteState {
 }
 
 abstract class _ToggleFavoriteState implements ToggleFavoriteState {
-  const factory _ToggleFavoriteState(
-      {final Set<int> favoritedIds,
-      final Map<String, Set<int>> favoritedByType}) = _$ToggleFavoriteStateImpl;
+  const factory _ToggleFavoriteState({final Set<int> favoritedStreamIds}) =
+      _$ToggleFavoriteStateImpl;
 
   @override
-  Set<int> get favoritedIds; // Set of favorited item IDs by type
-  @override
-  Map<String, Set<int>> get favoritedByType;
+  Set<int> get favoritedStreamIds;
 
   /// Create a copy of ToggleFavoriteState
   /// with the given fields replaced by the non-null parameter values.

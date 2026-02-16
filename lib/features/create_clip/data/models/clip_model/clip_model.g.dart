@@ -19,6 +19,7 @@ _$ClipModelImpl _$$ClipModelImplFromJson(Map<String, dynamic> json) =>
       user: json['user'] == null
           ? null
           : ClipUserModel.fromJson(json['user'] as Map<String, dynamic>),
+      isFavorited: json['is_favorite'] as bool?,
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -33,6 +34,7 @@ Map<String, dynamic> _$$ClipModelImplToJson(_$ClipModelImpl instance) =>
       'video_url': instance.videoUrl,
       'stream': instance.stream,
       'user': instance.user,
+      'is_favorite': instance.isFavorited,
       'created_at': instance.createdAt?.toIso8601String(),
     };
 

@@ -22,8 +22,7 @@ mixin _$SearchState {
   bool get hasLoadedInitial => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   List<ProductModel> get products => throw _privateConstructorUsedError;
-  List<SearchLiveStreamModel> get liveStreams =>
-      throw _privateConstructorUsedError;
+  List<StreamDataModel> get liveStreams => throw _privateConstructorUsedError;
   bool get hasNoResults => throw _privateConstructorUsedError;
   PageController? get pageController => throw _privateConstructorUsedError;
   List<String> get suggestions => throw _privateConstructorUsedError;
@@ -55,7 +54,7 @@ abstract class $SearchStateCopyWith<$Res> {
       bool hasLoadedInitial,
       String errorMessage,
       List<ProductModel> products,
-      List<SearchLiveStreamModel> liveStreams,
+      List<StreamDataModel> liveStreams,
       bool hasNoResults,
       PageController? pageController,
       List<String> suggestions,
@@ -127,7 +126,7 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
       liveStreams: null == liveStreams
           ? _value.liveStreams
           : liveStreams // ignore: cast_nullable_to_non_nullable
-              as List<SearchLiveStreamModel>,
+              as List<StreamDataModel>,
       hasNoResults: null == hasNoResults
           ? _value.hasNoResults
           : hasNoResults // ignore: cast_nullable_to_non_nullable
@@ -183,7 +182,7 @@ abstract class _$$SearchStateImplCopyWith<$Res>
       bool hasLoadedInitial,
       String errorMessage,
       List<ProductModel> products,
-      List<SearchLiveStreamModel> liveStreams,
+      List<StreamDataModel> liveStreams,
       bool hasNoResults,
       PageController? pageController,
       List<String> suggestions,
@@ -253,7 +252,7 @@ class __$$SearchStateImplCopyWithImpl<$Res>
       liveStreams: null == liveStreams
           ? _value._liveStreams
           : liveStreams // ignore: cast_nullable_to_non_nullable
-              as List<SearchLiveStreamModel>,
+              as List<StreamDataModel>,
       hasNoResults: null == hasNoResults
           ? _value.hasNoResults
           : hasNoResults // ignore: cast_nullable_to_non_nullable
@@ -304,7 +303,7 @@ class _$SearchStateImpl implements _SearchState {
       this.hasLoadedInitial = false,
       this.errorMessage = '',
       final List<ProductModel> products = const [],
-      final List<SearchLiveStreamModel> liveStreams = const [],
+      final List<StreamDataModel> liveStreams = const [],
       this.hasNoResults = false,
       this.pageController,
       final List<String> suggestions = const [],
@@ -349,10 +348,10 @@ class _$SearchStateImpl implements _SearchState {
     return EqualUnmodifiableListView(_products);
   }
 
-  final List<SearchLiveStreamModel> _liveStreams;
+  final List<StreamDataModel> _liveStreams;
   @override
   @JsonKey()
-  List<SearchLiveStreamModel> get liveStreams {
+  List<StreamDataModel> get liveStreams {
     if (_liveStreams is EqualUnmodifiableListView) return _liveStreams;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_liveStreams);
@@ -476,7 +475,7 @@ abstract class _SearchState implements SearchState {
       final bool hasLoadedInitial,
       final String errorMessage,
       final List<ProductModel> products,
-      final List<SearchLiveStreamModel> liveStreams,
+      final List<StreamDataModel> liveStreams,
       final bool hasNoResults,
       final PageController? pageController,
       final List<String> suggestions,
@@ -500,7 +499,7 @@ abstract class _SearchState implements SearchState {
   @override
   List<ProductModel> get products;
   @override
-  List<SearchLiveStreamModel> get liveStreams;
+  List<StreamDataModel> get liveStreams;
   @override
   bool get hasNoResults;
   @override

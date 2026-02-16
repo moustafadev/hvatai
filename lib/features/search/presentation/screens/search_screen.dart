@@ -54,10 +54,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     Expanded(
                       child: isSearching
                           ? const Center(
-                              child: CircularProgressIndicator(
-                                color: AppColors.grey,
-                              ),
-                            )
+                              child: CustomCircularProgrressIndicator())
                           : NotificationListener<ScrollNotification>(
                               onNotification: (notification) {
                                 if (notification is ScrollUpdateNotification ||
@@ -117,11 +114,6 @@ class _SearchScreenState extends State<SearchScreen> {
                                             searchQuery: state.query,
                                           ),
                                           24.ph,
-                                          CustomText(
-                                            text: 'users'.tr(),
-                                            fontWeight: FontWeight.w800,
-                                            fontSize: 20.sp,
-                                          ),
                                         ],
                                       ),
                                     ),

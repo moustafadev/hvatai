@@ -61,8 +61,6 @@ class CompanyState extends Equatable {
     this.clipsPagination,
     // Thumbnail cache: Map<clipId, thumbnailBytes>
     this.clipThumbnails = const {},
-    // Favorited clip IDs
-    this.favoritedClipIds = const {},
   });
 
   final bool isLoading;
@@ -104,8 +102,6 @@ class CompanyState extends Equatable {
   // Thumbnail cache
   final Map<int, Uint8List> clipThumbnails;
 
-  // Favorited clip IDs
-  final Set<int> favoritedClipIds;
 
   CompanyState copyWith({
     bool? isLoading,
@@ -144,8 +140,6 @@ class CompanyState extends Equatable {
     ClipsPaginationModel? clipsPagination,
     // Thumbnails
     Map<int, Uint8List>? clipThumbnails,
-    // Favorited clips
-    Set<int>? favoritedClipIds,
   }) {
     return CompanyState(
       isLoading: isLoading ?? this.isLoading,
@@ -179,7 +173,6 @@ class CompanyState extends Equatable {
       clips: clips ?? this.clips,
       clipsPagination: clipsPagination ?? this.clipsPagination,
       clipThumbnails: clipThumbnails ?? this.clipThumbnails,
-      favoritedClipIds: favoritedClipIds ?? this.favoritedClipIds,
     );
   }
 
@@ -213,6 +206,5 @@ class CompanyState extends Equatable {
         clips,
         clipsPagination,
         clipThumbnails,
-        favoritedClipIds,
       ];
 }

@@ -12,50 +12,47 @@ class ToggleFavoriteCubit extends Cubit<ToggleFavoriteState> {
   ToggleFavoriteCubit(this._toggleFavoriteUsecase)
       : super(const ToggleFavoriteState());
 
-  /// Check if an item is favorited
-  bool isFavorited(String type, int id) {
-    final typeSet = state.favoritedByType[type] ?? {};
-    return typeSet.contains(id);
+  bool isFavorited(int streamId) => state.favoritedStreamIds.contains(streamId);
+
+  /// seed from model once (only if server says true)
+  void seedStream(int streamId, {required bool isFavorited}) {
+    if (!isFavorited) return;
+    if (state.favoritedStreamIds.contains(streamId)) return;
+    emit(state.copyWith(
+      favoritedStreamIds: {...state.favoritedStreamIds, streamId},
+    ));
   }
 
-  /// Toggle favorite for an item with optimistic update
-  Future<void> toggleFavorite(String type, int id) async {
-    final isCurrentlyFavorited = isFavorited(type, id);
-    final updatedByType = Map<String, Set<int>>.from(state.favoritedByType);
-    final typeSet = Set<int>.from(updatedByType[type] ?? {});
+  Future<void> toggleStreamFavorite(int streamId) async {
+    final prev = Set<int>.from(state.favoritedStreamIds);
+    final wasFav = prev.contains(streamId);
 
-    // Optimistically update UI immediately
-    if (isCurrentlyFavorited) {
-      typeSet.remove(id);
+    // optimistic local update
+    final next = Set<int>.from(prev);
+    if (wasFav) {
+      next.remove(streamId);
     } else {
-      typeSet.add(id);
+      next.add(streamId);
     }
-    updatedByType[type] = typeSet;
+    emit(state.copyWith(favoritedStreamIds: next));
 
-    emit(state.copyWith(favoritedByType: updatedByType));
-
-    // Make API call in background
+    // api
     final result = await _toggleFavoriteUsecase(
-      ToggleFavoriteParams(type: type, id: id),
+      ToggleFavoriteParams(type: 'stream', id: streamId),
     );
 
     result.fold(
       (error) {
-        // Rollback: restore previous favorite state
-        final rollbackByType = Map<String, Set<int>>.from(state.favoritedByType);
-        final rollbackTypeSet = Set<int>.from(rollbackByType[type] ?? {});
-        if (isCurrentlyFavorited) {
-          rollbackTypeSet.add(id);
-        } else {
-          rollbackTypeSet.remove(id);
-        }
-        rollbackByType[type] = rollbackTypeSet;
-        emit(state.copyWith(favoritedByType: rollbackByType));
+        // rollback to prev
+        emit(state.copyWith(favoritedStreamIds: prev));
         showFloatingMessageError(error);
       },
       (_) {
-        // Success: state already updated optimistically
+        // success: keep optimistic state
       },
     );
   }
+
+  /// call on logout
+  void clear() => emit(const ToggleFavoriteState());
 }

@@ -58,11 +58,7 @@ class ClipsCompanyTab extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       final clip = clips[index];
-                      final isFavorited = context
-                          .read<CompanyCubit>()
-                          .state
-                          .favoritedClipIds
-                          .contains(clip.id);
+                      final isFavorited = clip.isFavorited ?? false;
 
                       return ClipCard(
                         clip: clip,

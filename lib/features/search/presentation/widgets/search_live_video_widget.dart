@@ -1,7 +1,7 @@
 part of '../search.dart';
 
 class SearchLiveVideoWidget extends StatelessWidget {
-  final List<SearchLiveStreamModel> liveStreams;
+  final List<StreamDataModel> liveStreams;
   final String currentUserId;
   final String searchQuery;
 
@@ -21,16 +21,16 @@ class SearchLiveVideoWidget extends StatelessWidget {
       );
     }
 
-    return ReusableLiveVideosGrid<SearchLiveStreamModel>(
+    return ReusableLiveVideosGrid<StreamDataModel>(
       items: liveStreams,
       liveCardBuilder: (context, stream) => GestureDetector(
         onTap: () {
           // joinLiveStreamingWithPrefs(stream.channelId);
         },
         child: CustomLiveVideoCard(
-          stream: stream.toStreamDataModel(),
-          price: stream.price.isNotEmpty ? stream.price : null,
-          categoryName: stream.category.isNotEmpty ? stream.category : null,
+          stream: stream,
+          price: stream.streamProducts?.firstOrNull?.startingPrice ,
+          categoryName: stream.categories?.firstOrNull?.name,
         ),
       ),
     );

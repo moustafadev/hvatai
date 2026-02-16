@@ -14,7 +14,6 @@ class CompanyScreen extends StatelessWidget {
       create: (_) {
         final cubit = locator<CompanyCubit>();
         cubit.loadCompanyProfile(userId);
-        // Preload all tabs data
         cubit.fetchProducts(userId);
         cubit.fetchReviews(userId);
         cubit.loadCompanyStreams(userId);
@@ -57,7 +56,7 @@ class _CompanyViewState extends State<_CompanyView> {
         builder: (context, state) {
           if (state.isLoading) {
             return const Center(
-              child: CircularProgressIndicator(color: AppColors.primaryColor),
+              child: CustomCircularProgrressIndicator(),
             );
           }
 

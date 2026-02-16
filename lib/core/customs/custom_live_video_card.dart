@@ -18,11 +18,29 @@ class CustomLiveVideoCard extends StatefulWidget {
 
 class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
   bool _showGif = false;
+  bool _seeded = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_seeded) return;
+
+    final id = widget.stream.id;
+    if (id != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        context.read<ToggleFavoriteCubit>().seedStream(
+              id,
+              isFavorited: widget.stream.isFavorited ?? false,
+            );
+      });
+    }
+
+    _seeded = true;
+  }
 
   String _getPrice() {
-    if (widget.price != null && widget.price!.isNotEmpty) {
-      return widget.price!;
-    }
+    if (widget.price != null && widget.price!.isNotEmpty) return widget.price!;
     final firstProduct = widget.stream.streamProducts?.firstOrNull;
     if (firstProduct?.startingPrice != null &&
         firstProduct!.startingPrice != '0') {
@@ -38,41 +56,30 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
 
   @override
   Widget build(BuildContext context) {
+    final streamId = widget.stream.id;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Live Image + Favorite Overlay
         Expanded(
           child: GestureDetector(
-            onLongPress: (widget.stream.latestGifUrl != null &&
-                    widget.stream.latestGifUrl!.isNotEmpty)
+            onLongPress: (widget.stream.latestGifUrl?.isNotEmpty ?? false)
                 ? () {
-                    // Toggle GIF display on long press
-                    setState(() {
-                      _showGif = !_showGif;
-                    });
-
-                    // Auto-hide GIF after 5 seconds
+                    setState(() => _showGif = !_showGif);
                     if (_showGif) {
                       Future.delayed(const Duration(seconds: 5), () {
-                        if (mounted) {
-                          setState(() {
-                            _showGif = false;
-                          });
-                        }
+                        if (mounted) setState(() => _showGif = false);
                       });
                     }
                   }
                 : null,
             child: Stack(
               children: [
-                // Background image - GIF or latest thumbnail or placeholder
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10.r),
                   child: (_showGif &&
-                          widget.stream.latestGifUrl != null &&
-                          widget.stream.latestGifUrl!.isNotEmpty)
+                          (widget.stream.latestGifUrl?.isNotEmpty ?? false))
                       ? CachedNetworkImage(
                           imageUrl: widget.stream.latestGifUrl!,
                           width: double.infinity,
@@ -85,8 +92,8 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                             fit: BoxFit.fill,
                           ),
                         )
-                      : (widget.stream.latestThumbnailUrl != null &&
-                              widget.stream.latestThumbnailUrl!.isNotEmpty)
+                      : ((widget.stream.latestThumbnailUrl?.isNotEmpty ??
+                              false))
                           ? CachedNetworkImage(
                               imageUrl: widget.stream.latestThumbnailUrl!,
                               width: double.infinity,
@@ -106,7 +113,6 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                               fit: BoxFit.fill,
                             ),
                 ),
-                // Overlay content
                 Positioned.fill(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -136,23 +142,25 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                   child: Column(
                     children: [
                       BlocBuilder<ToggleFavoriteCubit, ToggleFavoriteState>(
-                        builder: (context, state) {
+                        buildWhen: (p, c) =>
+                            p.favoritedStreamIds != c.favoritedStreamIds,
+                        builder: (context, favState) {
                           final streamId = widget.stream.id;
-                          final isFavorited = streamId != null &&
-                              (context
-                                      .read<ToggleFavoriteCubit>()
-                                      .state
-                                      .favoritedByType['stream']
-                                      ?.contains(streamId) ??
-                                  widget.stream.user?.isFavorited ??
-                                  false);
+                          final modelFav = widget.stream.isFavorited ?? false;
+
+                          final isFav = streamId == null
+                              ? modelFav
+                              : (_seeded
+                                  ? favState.favoritedStreamIds
+                                      .contains(streamId)
+                                  : modelFav);
 
                           return GestureDetector(
-                            onTap: (streamId != null
-                                ? () => context
+                            onTap: streamId == null
+                                ? null
+                                : () => context
                                     .read<ToggleFavoriteCubit>()
-                                    .toggleFavorite('stream', streamId)
-                                : null),
+                                    .toggleStreamFavorite(streamId),
                             child: Container(
                               width: 24.w,
                               height: 24.h,
@@ -166,7 +174,7 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                                   Assets.assetsIconsFavsav,
                                   height: 14.h,
                                   width: 14.w,
-                                  color: isFavorited
+                                  color: isFav
                                       ? AppColors.primaryColor
                                       : AppColors.white,
                                 ),
@@ -177,10 +185,11 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                       ),
                       2.ph,
                       CustomText(
-                          text: (widget.stream.viewerCount ?? 0).toString(),
-                          color: AppColors.white,
-                          fontSize: 12.sp,
-                          fontWeight: FontWeight.w600),
+                        text: "0",
+                        color: AppColors.white,
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ],
                   ),
                 ),
@@ -188,10 +197,8 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                   bottom: 8,
                   child: Container(
                     margin: const EdgeInsets.symmetric(horizontal: 10),
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 8,
-                      vertical: 2,
-                    ),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                     decoration: BoxDecoration(
                       color: AppColors.primary,
                       borderRadius: BorderRadius.circular(10.r),
@@ -233,7 +240,7 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
           ),
           4.ph,
         ],
-        if (widget.categoryName != null && widget.categoryName!.isNotEmpty) ...[
+        if (widget.categoryName?.isNotEmpty ?? false) ...[
           CustomText(
             text: widget.categoryName!,
             fontSize: 12,
@@ -245,7 +252,6 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
           6.ph,
         ],
         4.ph,
-        // Admin Info
         Row(
           children: [
             ClipRRect(

@@ -9,7 +9,7 @@ class SearchState with _$SearchState {
     @Default(false) bool hasLoadedInitial,
     @Default('') String errorMessage,
     @Default([]) List<ProductModel> products,
-    @Default([]) List<SearchLiveStreamModel> liveStreams,
+    @Default([]) List<StreamDataModel> liveStreams,
     @Default(false) bool hasNoResults,
     PageController? pageController,
     @Default([]) List<String> suggestions,

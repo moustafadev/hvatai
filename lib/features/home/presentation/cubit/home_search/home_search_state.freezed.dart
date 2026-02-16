@@ -21,7 +21,7 @@ mixin _$HomeSearchState {
   bool get isSearchMode => throw _privateConstructorUsedError; // results
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
-  List<SearchLiveStreamModel> get streams =>
+  List<StreamDataModel> get streams =>
       throw _privateConstructorUsedError; // suggestions
   List<String> get suggestions => throw _privateConstructorUsedError;
   bool get isLoadingSuggestions => throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ abstract class $HomeSearchStateCopyWith<$Res> {
       bool isSearchMode,
       bool isLoading,
       String errorMessage,
-      List<SearchLiveStreamModel> streams,
+      List<StreamDataModel> streams,
       List<String> suggestions,
       bool isLoadingSuggestions,
       bool showSuggestions,
@@ -98,7 +98,7 @@ class _$HomeSearchStateCopyWithImpl<$Res, $Val extends HomeSearchState>
       streams: null == streams
           ? _value.streams
           : streams // ignore: cast_nullable_to_non_nullable
-              as List<SearchLiveStreamModel>,
+              as List<StreamDataModel>,
       suggestions: null == suggestions
           ? _value.suggestions
           : suggestions // ignore: cast_nullable_to_non_nullable
@@ -132,7 +132,7 @@ abstract class _$$HomeSearchStateImplCopyWith<$Res>
       bool isSearchMode,
       bool isLoading,
       String errorMessage,
-      List<SearchLiveStreamModel> streams,
+      List<StreamDataModel> streams,
       List<String> suggestions,
       bool isLoadingSuggestions,
       bool showSuggestions,
@@ -182,7 +182,7 @@ class __$$HomeSearchStateImplCopyWithImpl<$Res>
       streams: null == streams
           ? _value._streams
           : streams // ignore: cast_nullable_to_non_nullable
-              as List<SearchLiveStreamModel>,
+              as List<StreamDataModel>,
       suggestions: null == suggestions
           ? _value._suggestions
           : suggestions // ignore: cast_nullable_to_non_nullable
@@ -211,7 +211,7 @@ class _$HomeSearchStateImpl implements _HomeSearchState {
       this.isSearchMode = false,
       this.isLoading = false,
       this.errorMessage = '',
-      final List<SearchLiveStreamModel> streams = const [],
+      final List<StreamDataModel> streams = const [],
       final List<String> suggestions = const [],
       this.isLoadingSuggestions = false,
       this.showSuggestions = false,
@@ -233,10 +233,10 @@ class _$HomeSearchStateImpl implements _HomeSearchState {
   @override
   @JsonKey()
   final String errorMessage;
-  final List<SearchLiveStreamModel> _streams;
+  final List<StreamDataModel> _streams;
   @override
   @JsonKey()
-  List<SearchLiveStreamModel> get streams {
+  List<StreamDataModel> get streams {
     if (_streams is EqualUnmodifiableListView) return _streams;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_streams);
@@ -320,7 +320,7 @@ abstract class _HomeSearchState implements HomeSearchState {
       final bool isSearchMode,
       final bool isLoading,
       final String errorMessage,
-      final List<SearchLiveStreamModel> streams,
+      final List<StreamDataModel> streams,
       final List<String> suggestions,
       final bool isLoadingSuggestions,
       final bool showSuggestions,
@@ -336,7 +336,7 @@ abstract class _HomeSearchState implements HomeSearchState {
   @override
   String get errorMessage;
   @override
-  List<SearchLiveStreamModel> get streams; // suggestions
+  List<StreamDataModel> get streams; // suggestions
   @override
   List<String> get suggestions;
   @override

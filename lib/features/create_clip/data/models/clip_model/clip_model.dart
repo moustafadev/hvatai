@@ -13,6 +13,7 @@ class ClipModel with _$ClipModel {
     @Default('') @JsonKey(name: 'video_url') String videoUrl,
     ClipStreamModel? stream,
     ClipUserModel? user,
+    @JsonKey(name: 'is_favorite') bool? isFavorited,
     @JsonKey(name: 'created_at') DateTime? createdAt,
   }) = _ClipModel;
 

@@ -426,18 +426,12 @@ class CompanyCubit extends Cubit<CompanyState> {
 
   // Toggle favorite for clip
   Future<void> toggleClipFavorite(int clipId) async {
-    final isCurrentlyFavorited = state.favoritedClipIds.contains(clipId);
-    final updatedFavoritedIds = Set<int>.from(state.favoritedClipIds);
-
-    // Optimistically update UI immediately
-    if (isCurrentlyFavorited) {
-      updatedFavoritedIds.remove(clipId);
-    } else {
-      updatedFavoritedIds.add(clipId);
-    }
-
-    emit(state.copyWith(favoritedClipIds: updatedFavoritedIds));
-
+    final clip = state.clips.firstWhere((clip) => clip.id == clipId);
+    final isCurrentlyFavorited = clip.isFavorited ?? false;
+    final updatedClips = state.clips
+        .map((c) => c.id == clipId ? clip.copyWith(isFavorited: !isCurrentlyFavorited) : c)
+        .toList();
+    emit(state.copyWith(clips: updatedClips));
     // Make API call in background
     final result = await _toggleFavoriteUsecase(
       ToggleFavoriteParams(type: 'clip', id: clipId),
@@ -446,13 +440,11 @@ class CompanyCubit extends Cubit<CompanyState> {
     result.fold(
       (error) {
         // Rollback: restore previous favorite state
-        final rollbackIds = Set<int>.from(state.favoritedClipIds);
-        if (isCurrentlyFavorited) {
-          rollbackIds.add(clipId);
-        } else {
-          rollbackIds.remove(clipId);
-        }
-        emit(state.copyWith(favoritedClipIds: rollbackIds));
+        emit(state.copyWith(
+          clips: state.clips
+              .map((clip) => clip.copyWith(isFavorited: isCurrentlyFavorited))
+              .toList(),
+        ));
         showFloatingMessageError(error);
       },
       (_) {

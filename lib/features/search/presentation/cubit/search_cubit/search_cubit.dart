@@ -6,9 +6,9 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/features/cart/data/model/cart_model.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
+import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/search/data/model/recent_search_response/recent_search_response.dart';
 import 'package:hvatai/features/search/data/model/search_live_stream_model.dart';
-import 'package:hvatai/features/search/data/model/search_response/search_response_model.dart';
 import 'package:hvatai/features/search/domain/usecases/get_recent_searches_usecase.dart';
 import 'package:hvatai/features/search/domain/usecases/search_usecase.dart';
 import 'package:hvatai/features/search/domain/usecases/search_suggestions_usecase.dart';
@@ -224,15 +224,12 @@ class SearchCubit extends Cubit<SearchState> {
       (response) {
         final data = response.data;
         final categories = data?.parentCategories ?? [];
-        final products =
-            _mapProducts(data?.products?.data ?? const <SearchProductDto>[]);
-        final streams = _mapStreams(data?.streams ?? const <SearchStreamDto>[]);
-
+       
         emit(
           state.copyWith(
             isLoading: false,
-            products: products,
-            liveStreams: streams,
+            products: data?.products?.data ?? [],
+            liveStreams: data?.streams ?? [],
             categories: categories,
             hasNoResults: data?.hasNoResults ?? false,
             hasLoadedInitial: true,
@@ -258,77 +255,5 @@ class SearchCubit extends Cubit<SearchState> {
     ));
     // Trigger search without category filter
     search(state.query);
-  }
-
-  List<ProductModel> _mapProducts(List<SearchProductDto> products) {
-    return products.map((product) {
-      final variants = product.variants
-              ?.map(
-                (variant) => VariantModel(
-                  id: variant.id,
-                  price: variant.price,
-                  stock: variant.stock ?? 0,
-                  discount: variant.discount,
-                  discountType: variant.discountType,
-                ),
-              )
-              .toList() ??
-          [VariantModel(price: product.price)];
-
-      return ProductModel(
-        id: product.id,
-        productName: product.name,
-        productDescription: product.description,
-        category: product.category == null
-            ? null
-            : MainCategoryModel(
-                id: product.category?.id,
-                name: product.category?.name,
-              ),
-        user: product.user == null
-            ? null
-            : UserModel(
-                id: product.user?.id,
-                name: product.user?.name,
-                email: product.user?.email,
-                image: product.user?.image,
-                description: product.user?.description,
-              ),
-        variants: variants,
-        images: product.images ?? [],
-        deliveryAvailable: product.delivery?.available,
-        isFavorited: product.isFavorited ?? false,
-        favoritesCount: product.favoritesCount ?? 0,
-        ratingsCount: product.ratingsCount ?? 0,
-        averageRating: product.rating,
-      );
-    }).toList();
-  }
-
-  List<SearchLiveStreamModel> _mapStreams(List<SearchStreamDto> streams) {
-    return streams.map((stream) {
-      final firstCategory =
-          (stream.categories != null && stream.categories!.isNotEmpty)
-              ? stream.categories!.first.name ?? ''
-              : '';
-      return SearchLiveStreamModel(
-        channelId: stream.id?.toString() ?? '',
-        adminName: stream.user?.name ?? '',
-        adminPhoto: stream.user?.image ?? '',
-        price: '',
-        latestThumbnailUrl: stream.latestThumbnailUrl ?? '',
-        latestGifUrl: stream.latestGifUrl ?? '',
-        viewsCount: stream.viewerCount ?? 0,
-        title: stream.title ?? '',
-        description: stream.description ?? '',
-        liveImage: stream.thumbnail ?? '',
-        selectedProductImage: stream.thumbnail ?? '',
-        category: firstCategory,
-        isBlocked: stream.status == 'blocked',
-        adminId: stream.user?.id?.toString() ?? '',
-        unblockRequested: false,
-        unblockRequestReason: '',
-      );
-    }).toList();
   }
 }
