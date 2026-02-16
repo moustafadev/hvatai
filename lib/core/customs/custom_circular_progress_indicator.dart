@@ -1,7 +1,7 @@
 part of 'customs.dart';
 
-class CustomCircularProgrressIndicator extends StatelessWidget {
-  const CustomCircularProgrressIndicator({
+class CustomCircularProgressIndicator extends StatelessWidget {
+  const CustomCircularProgressIndicator({
     super.key,
   });
 

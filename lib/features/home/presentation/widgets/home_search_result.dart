@@ -1,4 +1,5 @@
 part of '../home.dart';
+
 class HomeSearchResult extends StatelessWidget {
   const HomeSearchResult({
     super.key,
@@ -11,7 +12,7 @@ class HomeSearchResult extends StatelessWidget {
         if (homeSearchState.isLoading) {
           return const Padding(
             padding: EdgeInsets.all(24),
-            child: Center(child: CustomCircularProgrressIndicator()),
+            child: Center(child: CustomCircularProgressIndicator()),
           );
         }
 

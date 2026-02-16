@@ -12,7 +12,7 @@ class InitNewAddressScreen extends StatelessWidget {
           final cubit = context.read<DeliveryAddressCubit>();
           if (state.isLoading) {
             return Scaffold(
-              body: Center(child: CustomCircularProgrressIndicator()),
+              body: Center(child: CustomCircularProgressIndicator()),
             );
           }
 

@@ -33,8 +33,6 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   }
 
   Future<void> markResdNotification(int markReadId) async {
-    emit(state.copyWith(isLoading: true, errorMessage: ''));
-
     final notificationItem =
         state.notifications?.data?.firstWhere((item) => item.id == markReadId);
 
@@ -66,5 +64,13 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         ));
       },
     );
+  }
+
+  /// Get unread notifications count
+  int getUnreadNotificationsCount() {
+    return state.notifications?.data
+            ?.where((item) => item.read == false)
+            .length ??
+        0;
   }
 }

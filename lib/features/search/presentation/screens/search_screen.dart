@@ -54,7 +54,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     Expanded(
                       child: isSearching
                           ? const Center(
-                              child: CustomCircularProgrressIndicator())
+                              child: CustomCircularProgressIndicator())
                           : NotificationListener<ScrollNotification>(
                               onNotification: (notification) {
                                 if (notification is ScrollUpdateNotification ||

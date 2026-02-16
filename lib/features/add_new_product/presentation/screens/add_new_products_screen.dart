@@ -54,7 +54,7 @@ class NewProductWidgetBody extends StatelessWidget {
 
       final cubit = context.read<ProductFormCubit>();
       if (state.isLoading) {
-        return const Center(child: CustomCircularProgrressIndicator());
+        return const Center(child: CustomCircularProgressIndicator());
       }
 
       if (state.errorMessage.isNotEmpty) {

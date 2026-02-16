@@ -27,11 +27,11 @@ class TopBarHomeWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => locator<NotificationsCubit>(),
+      create: (context) => locator<NotificationsCubit>()..getNotifications(),
       child: BlocBuilder<NotificationsCubit, NotificationsState>(
         builder: (context, state) {
           final cubit = context.read<NotificationsCubit>();
-          final count = state.notifications?.data?.length ?? 0;
+          final count = cubit.getUnreadNotificationsCount();
 
           return Row(
             children: [

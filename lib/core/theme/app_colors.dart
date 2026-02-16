@@ -53,6 +53,7 @@ class AppColors {
   static const Color darkYellow = Color(0xFFF4D1A1);
   static const Color lightYellow = Color(0xFFFDF1E1);
   static const Color background = Color(0xFFFBFBFB);
+  static const Color black41 = Color(0xFF414141);
   static const Color disabledBackground = Color(0xffE8E8E8);
   // ✅ Colors with Opacity
   static Color greyLiteLine = const Color(0xFF808080).withValues(alpha: 0.5);

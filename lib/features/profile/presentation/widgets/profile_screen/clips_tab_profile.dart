@@ -9,7 +9,7 @@ class ClipsTabProfile extends StatelessWidget {
       builder: (context, state) {
         if (state.isLoadingClips) {
           return const Center(
-            child: CustomCircularProgrressIndicator(),
+            child: CustomCircularProgressIndicator(),
           );
         }
         if (state.errorMessageClips.isNotEmpty) {

@@ -52,7 +52,7 @@ class ProductsCompanyTab extends StatelessWidget {
           builder: (context, state) {
             if (state.isLoadingProducts && state.products.isEmpty) {
               return const Center(
-                child: CustomCircularProgrressIndicator(),
+                child: CustomCircularProgressIndicator(),
               );
             }
 

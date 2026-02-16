@@ -9,7 +9,6 @@ import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/notifications/data/model/notification_model/notification_model.dart';
 import 'package:hvatai/features/notifications/presentation/cubit/notifications_cubit/notifications_cubit.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 part 'screens/notifications_screen.dart';
 part 'widgets/notification_item_widget.dart';

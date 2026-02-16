@@ -6,9 +6,9 @@ class NotificationsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.lightGreyBackground,
+      backgroundColor: AppColors.background,
       appBar: AppBar(
-        backgroundColor: AppColors.lightGreyBackground,
+        backgroundColor: AppColors.background,
         leading: IconButton(
           icon: Icon(
             Icons.arrow_back_ios,
@@ -23,9 +23,7 @@ class NotificationsScreen extends StatelessWidget {
         builder: (context, state) {
           if (state.isLoading) {
             return Center(
-              child: CircularProgressIndicator(
-                color: AppColors.grey,
-              ),
+              child: CustomCircularProgressIndicator(),
             );
           }
 

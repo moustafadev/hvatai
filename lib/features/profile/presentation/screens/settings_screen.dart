@@ -18,7 +18,7 @@ class SettingsScreen extends StatelessWidget {
             if (state.isLoading) {
               return Scaffold(
                 backgroundColor: AppColors.background,
-                body: const Center(child: CustomCircularProgrressIndicator()),
+                body: const Center(child: CustomCircularProgressIndicator()),
               );
             }
 

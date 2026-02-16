@@ -24,7 +24,7 @@ class OrdersContent extends StatelessWidget {
 
         if (state.isLoading) {
           return const Center(
-            child: CustomCircularProgrressIndicator(),
+            child: CustomCircularProgressIndicator(),
           );
         }
 

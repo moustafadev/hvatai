@@ -41,7 +41,7 @@ class ProfileScreen extends StatelessWidget {
               return const Scaffold(
                 backgroundColor: AppColors.background,
                 body: Center(
-                  child: CustomCircularProgrressIndicator(),
+                  child: CustomCircularProgressIndicator(),
                 ),
               );
             }

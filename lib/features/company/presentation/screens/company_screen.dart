@@ -56,7 +56,7 @@ class _CompanyViewState extends State<_CompanyView> {
         builder: (context, state) {
           if (state.isLoading) {
             return const Center(
-              child: CustomCircularProgrressIndicator(),
+              child: CustomCircularProgressIndicator(),
             );
           }
 

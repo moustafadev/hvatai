@@ -14,7 +14,7 @@ class LiveVideosWidget extends StatelessWidget {
       builder: (context, liveStreamsState) {
         if (liveStreamsState.isLoading) {
           return const Center(
-            child: CustomCircularProgrressIndicator(),
+            child: CustomCircularProgressIndicator(),
           );
         }
         return ReusableLiveVideosGrid<StreamDataModel>(
@@ -32,7 +32,7 @@ class LiveVideosWidget extends StatelessWidget {
                   children: [
                     if (state.isJoining)
                       const Center(
-                        child: CustomCircularProgrressIndicator(),
+                        child: CustomCircularProgressIndicator(),
                       ),
                     CustomLiveVideoCard(
                       stream: stream,

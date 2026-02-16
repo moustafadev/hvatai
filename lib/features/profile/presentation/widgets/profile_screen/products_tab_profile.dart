@@ -199,7 +199,7 @@ class _ProductsScrollViewContent extends StatelessWidget {
           SliverFillRemaining(
             hasScrollBody: false,
             child: const Center(
-              child: CustomCircularProgrressIndicator(),
+              child: CustomCircularProgressIndicator(),
             ),
           )
         else if (errorMessage.isNotEmpty)

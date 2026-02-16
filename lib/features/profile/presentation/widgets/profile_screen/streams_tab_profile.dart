@@ -9,7 +9,7 @@ class StreamsTabProfile extends StatelessWidget {
       builder: (context, state) {
         if (state.isLoading) {
           return const Center(
-            child: CustomCircularProgrressIndicator(),
+            child: CustomCircularProgressIndicator(),
           );
         }
         if (state.errorMessage.isNotEmpty) {

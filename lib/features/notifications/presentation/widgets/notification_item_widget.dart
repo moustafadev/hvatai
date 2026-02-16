@@ -36,20 +36,20 @@ class NotificationItemWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 8,
-              offset: Offset(0, 4),
+              color: AppColors.black41.withValues(alpha: 0.08),
+              blurRadius: 24,
+              offset: Offset(0, 10),
             ),
           ],
         ),
         child: ListTile(
           contentPadding: EdgeInsets.zero,
-          leading: Image.asset(
-            Assets.assetsIconsAppleg,
-            height: 40.h,
-            width: 40.w,
-            fit: BoxFit.cover,
-          ),
+          // leading: Image.asset(
+          //   Assets.assetsIconsAppleg,
+          //   height: 40.h,
+          //   width: 40.w,
+          //   fit: BoxFit.cover,
+          // ),
           title: RichText(
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -58,30 +58,29 @@ class NotificationItemWidget extends StatelessWidget {
                 TextSpan(
                   text: "${notification.message?.title ?? ''} ",
                   style: TextStyle(
-                    color: AppColors.primaryPink,
+                    color: AppColors.text,
                     fontSize: 14.sp,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
-                TextSpan(
-                  text: notification.message?.body ?? '',
-                  style: TextStyle(
-                    color: AppColors.blackDark,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
+                // TextSpan(
+                //   text: notification.message?.body ?? '',
+                //   style: TextStyle(
+                //     color: AppColors.blackDark,
+                //     fontSize: 14.sp,
+                //     fontWeight: FontWeight.w700,
+                //   ),
+                // ),
               ],
             ),
           ),
           subtitle: CustomText(
-            text:
-                '${formatTimestamp(notification.message?.timestamp)} ago'.tr(),
-            color: AppColors.grey,
+            text: getDiffTime(notification.createdAt ?? ''),
+            color: AppColors.blackColor.withValues(alpha: 0.2),
             fontSize: 14.sp,
             fontWeight: FontWeight.w600,
           ),
-          trailing: notification.read == 0
+          trailing: notification.read == false
               ? Container(
                   width: 8.w,
                   height: 8.w,
@@ -95,14 +94,23 @@ class NotificationItemWidget extends StatelessWidget {
       ),
     );
   }
+}
 
-  String formatTimestamp(String? timestamp) {
-    if (timestamp == null) return '';
-    try {
-      final parsedTime = DateTime.parse(timestamp);
-      return timeago.format(parsedTime, locale: 'en_short');
-    } catch (e) {
-      return '';
-    }
+String getDiffTime(String timestamp) {
+  final dateTime = DateTime.parse(timestamp);
+  final diff = DateTime.now().difference(dateTime);
+  // format if less than 60 minutes
+  if (diff.inMinutes < 60) {
+    return '${diff.inMinutes} ${'minutes'.tr()} ${'ago'.tr()}';
   }
+  // format if less than 24 hours
+  if (diff.inHours < 24) {
+    return '${diff.inHours} ${'hours'.tr()} ${'ago'.tr()}';
+  }
+  // format if less than 7 days
+  if (diff.inDays < 7) {
+    return '${diff.inDays} ${'days'.tr()} ${'ago'.tr()}';
+  }
+  // format if more than 7 days
+  return '${diff.inDays} ${'days'.tr()}';
 }

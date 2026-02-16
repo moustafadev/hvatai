@@ -27,7 +27,7 @@ class InterestsScreen extends StatelessWidget {
               final cubit = context.read<InterestsCubit>();
               if (state.isLoadingCategories) {
                 return Scaffold(
-                  body: Center(child: CustomCircularProgrressIndicator()),
+                  body: Center(child: CustomCircularProgressIndicator()),
                 );
               }
 

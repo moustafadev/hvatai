@@ -11,7 +11,7 @@ class AboutMeReviewsSliver extends StatelessWidget {
           return SliverFillRemaining(
             hasScrollBody: false,
             child: const Center(
-              child: CustomCircularProgrressIndicator(),
+              child: CustomCircularProgressIndicator(),
             ),
           );
         }
@@ -33,7 +33,7 @@ class AboutMeReviewsSliver extends StatelessWidget {
           return SliverFillRemaining(
             hasScrollBody: false,
             child: const Center(
-              child: CustomCircularProgrressIndicator(),
+              child: CustomCircularProgressIndicator(),
             ),
           );
         }
