@@ -37,7 +37,6 @@ class ProductFormCubit extends Cubit<ProductFormState> {
   final GetLastUsedCategoriesUsecase getLastUsedCategoriesUsecase;
   final AddNewProductUsecase addNewProductUsecase;
   final UpdateProductUsecase updateProductUsecase;
-  final TextEditingController deliveryTimeController = TextEditingController();
   bool isDisabled() {
     // Check if there's at least one image (excluding videos)
     return (state.product.productName == null ||
@@ -51,8 +50,11 @@ class ProductFormCubit extends Cubit<ProductFormState> {
         state.product.categoryId == null ||
         state.product.categoryId == 0 ||
         (state.product.deliveryAvailable == true &&
-            (state.product.variants.first.price == null ||
-                state.product.variants.first.price == 0.0)));
+                (state.product.deliveryDiscount == null ||
+                    state.product.deliveryDiscount == 0.0) ||
+            (state.product.deliveryAvailable == true &&
+                    state.product.deliveryTime == null ||
+                state.product.deliveryTime == '')));
   }
 
   /// Check if there's at least one image (excluding videos) in the images list
@@ -122,8 +124,6 @@ class ProductFormCubit extends Cubit<ProductFormState> {
   }
 
   void initProductModel(ProductModel product) {
-    deliveryTimeController.text = product.deliveryTime ?? '';
-
     emit(state.copyWith(product: product));
   }
 
@@ -152,7 +152,6 @@ class ProductFormCubit extends Cubit<ProductFormState> {
         break;
       case 'deliveryTime':
         product = state.product.copyWith(deliveryTime: value.toString());
-        deliveryTimeController.text = value.toString();
         break;
       default:
         product = state.product;

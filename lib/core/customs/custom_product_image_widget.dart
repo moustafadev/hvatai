@@ -340,9 +340,8 @@ class CustomProductImageWidget extends StatelessWidget {
                 shrinkWrap: true,
                 slivers: [
                   SliverGrid(
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: state.mediaItems.isEmpty ? 1 : 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 15,
                       mainAxisExtent: 200,

@@ -49,7 +49,7 @@ class NewProductWidgetBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProductFormCubit, ProductFormState>(
         builder: (context, state) {
-      final presets = ["15–20 мин", "30–40 мин", "1 ч"];
+      final presets = ["20 мин", "30-40 мин", "60 мин", "90 мин", "120 мин"];
       final selected = state.product.deliveryTime;
 
       final cubit = context.read<ProductFormCubit>();
@@ -65,111 +65,113 @@ class NewProductWidgetBody extends StatelessWidget {
         absorbing: state.isLoadingRequest,
         child: CustomScrollView(
           slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    12.ph,
-                    CustomText(
-                      text: 'createProduct'.tr(),
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w800,
-                    ),
-                    12.ph,
-                    Container(
-                      decoration: BoxDecoration(
-                        boxShadow: AppColors.boxShadowTextField,
-                      ),
-                      child: CustomTextField(
-                        key: ValueKey('title_field'),
-                        hintText: 'title'.tr(),
-                        initialValue: state.product.productName,
-                        hintStyle: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.blackColor.withValues(alpha: 0.2),
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      children: [
+                        12.ph,
+                        CustomText(
+                          text: 'createProduct'.tr(),
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w800,
                         ),
-                        onChanged: (value) => cubit.updateField('name', value),
-                      ),
-                    ),
-                    12.ph,
-                    Container(
-                      decoration: BoxDecoration(
-                        boxShadow: AppColors.boxShadowTextField,
-                      ),
-                      child: CustomTextField(
-                        key: ValueKey('description_field'),
-                        hintText: 'description'.tr(),
-                        hintStyle: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.blackColor.withValues(alpha: 0.2),
+                        12.ph,
+                        CustomText(
+                          text: 'photo'.tr(),
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w800,
                         ),
-                        initialValue: state.product.productDescription,
-                        onChanged: (value) =>
-                            cubit.updateField('description', value),
-                        maxLines: 5,
-                      ),
-                    ),
-                    12.ph,
-                    CategoryDropdown(),
-                    12.ph,
-                    Container(
-                      decoration: BoxDecoration(
-                        boxShadow: AppColors.boxShadowTextField,
-                      ),
-                      child: CustomTextField(
-                        key: ValueKey('price_field'),
-                        hintText: 'price'.tr(),
-                        hintStyle: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600,
-                          color: AppColors.blackColor.withValues(alpha: 0.2),
+                        CustomProductImageWidget(
+                          updateImage: (List<String> imageUpdate) {
+                            cubit.updateProductImages(imageUpdate);
+                          },
+                          initialImages: state.product.images,
+                          title: '',
                         ),
-                        keyboardType: TextInputType.number,
-                        initialValue: state.product.variants.isNotEmpty &&
-                                state.product.variants.first.price != null
-                            ? state.product.variants.first.price.toString()
-                            : '',
-                        onChanged: (value) =>
-                            cubit.updateField('startingBid', value),
-                      ),
+                        12.ph,
+                        CategoryDropdown(),
+                        12.ph,
+                        Container(
+                          decoration: BoxDecoration(
+                            boxShadow: AppColors.boxShadowTextField,
+                          ),
+                          child: CustomTextField(
+                            key: ValueKey('title_field'),
+                            hintText: 'title'.tr(),
+                            initialValue: state.product.productName,
+                            hintStyle: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color:
+                                  AppColors.blackColor.withValues(alpha: 0.2),
+                            ),
+                            onChanged: (value) =>
+                                cubit.updateField('name', value),
+                          ),
+                        ),
+                        12.ph,
+                        Container(
+                          decoration: BoxDecoration(
+                            boxShadow: AppColors.boxShadowTextField,
+                          ),
+                          child: CustomTextField(
+                            key: ValueKey('description_field'),
+                            hintText: 'description'.tr(),
+                            hintStyle: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color:
+                                  AppColors.blackColor.withValues(alpha: 0.2),
+                            ),
+                            initialValue: state.product.productDescription,
+                            onChanged: (value) =>
+                                cubit.updateField('description', value),
+                            maxLines: 5,
+                          ),
+                        ),
+                        12.ph,
+                        Container(
+                          decoration: BoxDecoration(
+                            boxShadow: AppColors.boxShadowTextField,
+                          ),
+                          child: CustomTextField(
+                            key: ValueKey('price_field'),
+                            hintText: 'price'.tr(),
+                            hintStyle: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.w600,
+                              color:
+                                  AppColors.blackColor.withValues(alpha: 0.2),
+                            ),
+                            keyboardType: TextInputType.number,
+                            initialValue: state.product.variants.isNotEmpty &&
+                                    state.product.variants.first.price != null
+                                ? state.product.variants.first.price.toString()
+                                : '',
+                            onChanged: (value) =>
+                                cubit.updateField('startingBid', value),
+                          ),
+                        ),
+                        12.ph,
+                        QantityWidget(),
+                        12.ph,
+                      ],
                     ),
-                    12.ph,
-                    QantityWidget(),
-                    12.ph,
-                    CustomText(
-                      text: 'photo'.tr(),
-                      fontSize: 20.sp,
-                      fontWeight: FontWeight.w800,
-                    ),
-                    8.ph,
-                    CustomText(
-                      text:
-                          'Добавьте миниатюру и предварительный просмотр видео, чтобы максимально раскрыть то, чего нет в вашем шоу.',
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w400,
-                      color: AppColors.graniteGray,
-                    ),
-                    CustomProductImageWidget(
-                      updateImage: (List<String> imageUpdate) {
-                        cubit.updateProductImages(imageUpdate);
-                      },
-                      initialImages: state.product.images,
-                      title: '',
-                    ),
-                    24.ph,
-                    CustomSwitchWidget(
+                  ),
+                  DeliveryProductSection(presets: presets, selected: selected),
+                  12.ph,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: CustomSwitchWidget(
                       title: 'pickupFree'.tr(),
                       value: state.product.selfPickup == true,
                       onChanged: (val) => cubit.togglePickupFree(),
                     ),
-                    12.ph,
-                    DeliveryProductSection(
-                        presets: presets, selected: selected),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
             SliverFillRemaining(
