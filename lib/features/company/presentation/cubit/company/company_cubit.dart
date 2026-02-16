@@ -201,6 +201,7 @@ class CompanyCubit extends Cubit<CompanyState> {
   }
 
   // Products methods
+// Products methods
   Future<void> fetchProducts(int userId) async {
     if (userId == 0) {
       emit(
@@ -215,7 +216,8 @@ class CompanyCubit extends Cubit<CompanyState> {
     emit(state.copyWith(isLoadingProducts: true, errorMessageProducts: ''));
 
     final result = await _getCompanyProductsUsecase(
-        GetCompanyProductsParams(userId: userId));
+      GetCompanyProductsParams(userId: userId),
+    );
 
     result.fold(
       (failure) => emit(
@@ -225,55 +227,63 @@ class CompanyCubit extends Cubit<CompanyState> {
         ),
       ),
       (products) {
+        // خزّن الـ source of truth
         emit(
           state.copyWith(
             isLoadingProducts: false,
             products: products,
           ),
         );
-        // Reapply sorting if one was selected
-        if (state.selectedSortOption != null) {
-          sortProducts(state.selectedSortOption);
-        }
+
+        // طبّق search + sort على filteredProducts
+        applyFiltersAndSort();
       },
     );
   }
 
+  /// ✅ UI will call this on TextField.onChanged
+  void onSearchChanged(String query) {
+    emit(state.copyWith(searchQuery: query));
+    applyFiltersAndSort();
+  }
+
+  /// ✅ this is the only method that writes filteredProducts
+  void applyFiltersAndSort() {
+    final q = state.searchQuery.trim().toLowerCase();
+
+    // 1) Filter
+    List<ProductModel> list = state.products.where((p) {
+      if (q.isEmpty) return true;
+
+      final name = (p.productName ?? '').toLowerCase();
+      final desc = (p.productDescription ?? '').toLowerCase();
+
+      return name.contains(q) || desc.contains(q);
+    }).toList();
+
+    final sortOption = state.selectedSortOption;
+    if (sortOption != null) {
+      switch (sortOption) {
+        case ProductSortOption.recentlyAdded:
+          list.sort((a, b) => (b.id ?? 0).compareTo(a.id ?? 0));
+          break;
+
+        case ProductSortOption.cheapestFirst:
+          list.sort((a, b) => _getMinPrice(a).compareTo(_getMinPrice(b)));
+          break;
+
+        case ProductSortOption.mostExpensiveFirst:
+          list.sort((a, b) => _getMaxPrice(b).compareTo(_getMaxPrice(a)));
+          break;
+      }
+    }
+
+    emit(state.copyWith(filteredProducts: list));
+  }
+
   void sortProducts(ProductSortOption? sortOption) {
-    if (sortOption == null) {
-      emit(state.copyWith(selectedSortOption: null));
-      return;
-    }
-
-    final sortedProducts = List<ProductModel>.from(state.products);
-
-    switch (sortOption) {
-      case ProductSortOption.recentlyAdded:
-        // Sort by ID descending (higher ID = more recent)
-        sortedProducts.sort((a, b) => (b.id ?? 0).compareTo(a.id ?? 0));
-        break;
-      case ProductSortOption.cheapestFirst:
-        // Sort by minimum price ascending
-        sortedProducts.sort((a, b) {
-          final priceA = _getMinPrice(a);
-          final priceB = _getMinPrice(b);
-          return priceA.compareTo(priceB);
-        });
-        break;
-      case ProductSortOption.mostExpensiveFirst:
-        // Sort by maximum price descending
-        sortedProducts.sort((a, b) {
-          final priceA = _getMaxPrice(a);
-          final priceB = _getMaxPrice(b);
-          return priceB.compareTo(priceA);
-        });
-        break;
-    }
-
-    emit(state.copyWith(
-      products: sortedProducts,
-      selectedSortOption: sortOption,
-    ));
+    emit(state.copyWith(selectedSortOption: sortOption));
+    applyFiltersAndSort();
   }
 
   double _getMinPrice(ProductModel product) {
@@ -429,7 +439,9 @@ class CompanyCubit extends Cubit<CompanyState> {
     final clip = state.clips.firstWhere((clip) => clip.id == clipId);
     final isCurrentlyFavorited = clip.isFavorited ?? false;
     final updatedClips = state.clips
-        .map((c) => c.id == clipId ? clip.copyWith(isFavorited: !isCurrentlyFavorited) : c)
+        .map((c) => c.id == clipId
+            ? clip.copyWith(isFavorited: !isCurrentlyFavorited)
+            : c)
         .toList();
     emit(state.copyWith(clips: updatedClips));
     // Make API call in background

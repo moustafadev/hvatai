@@ -40,6 +40,8 @@ class CompanyState extends Equatable {
     this.isLoadingProducts = false,
     this.errorMessageProducts = '',
     this.products = const [],
+    this.filteredProducts = const [],
+    this.searchQuery = '',
     this.selectedSortOption,
     // Reviews
     this.isLoadingReviews = false,
@@ -76,6 +78,8 @@ class CompanyState extends Equatable {
   final bool isLoadingProducts;
   final String errorMessageProducts;
   final List<ProductModel> products;
+  final List<ProductModel> filteredProducts;
+  final String searchQuery;
   final ProductSortOption? selectedSortOption;
 
   // Reviews
@@ -102,7 +106,6 @@ class CompanyState extends Equatable {
   // Thumbnail cache
   final Map<int, Uint8List> clipThumbnails;
 
-
   CompanyState copyWith({
     bool? isLoading,
     String? errorMessage,
@@ -119,7 +122,9 @@ class CompanyState extends Equatable {
     bool? isLoadingProducts,
     String? errorMessageProducts,
     List<ProductModel>? products,
+    List<ProductModel>? filteredProducts,
     ProductSortOption? selectedSortOption,
+    String? searchQuery,
     // Reviews
     bool? isLoadingReviews,
     String? errorMessageReviews,
@@ -150,13 +155,14 @@ class CompanyState extends Equatable {
       reviewFilter:
           clearReviewFilter ? null : (reviewFilter ?? this.reviewFilter),
       clipsFilter: clearClipsFilter ? null : (clipsFilter ?? this.clipsFilter),
-      streamsFilter: clearStreamsFilter
-          ? null
-          : (streamsFilter ?? this.streamsFilter),
+      streamsFilter:
+          clearStreamsFilter ? null : (streamsFilter ?? this.streamsFilter),
       isLoadingProducts: isLoadingProducts ?? this.isLoadingProducts,
       errorMessageProducts: errorMessageProducts ?? this.errorMessageProducts,
       products: products ?? this.products,
+      filteredProducts: filteredProducts ?? this.filteredProducts,
       selectedSortOption: selectedSortOption ?? this.selectedSortOption,
+      searchQuery: searchQuery ?? this.searchQuery,
       isLoadingReviews: isLoadingReviews ?? this.isLoadingReviews,
       errorMessageReviews: errorMessageReviews ?? this.errorMessageReviews,
       userRatings: userRatings ?? this.userRatings,
@@ -189,7 +195,9 @@ class CompanyState extends Equatable {
         isLoadingProducts,
         errorMessageProducts,
         products,
+        filteredProducts,
         selectedSortOption,
+        searchQuery,
         isLoadingReviews,
         errorMessageReviews,
         userRatings,

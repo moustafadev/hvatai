@@ -51,10 +51,9 @@ class CustomProductCard extends StatelessWidget {
         final variant = product.variants.firstOrNull ?? VariantModel();
         final String imageUrl = _getFirstImage(product.images) ?? '';
         final saleType = (product.saleType).toLowerCase();
-        final saleLabel = saleType == 'auction' ? 'Аукцион' : 'Фикс';
-        final saleColor = saleType == 'auction'
-            ? const Color(0xFF7BE4EE)
-            : const Color(0xFFA1F4A8);
+        final saleLabel = saleType == 'auction' ? 'auction'.tr() : 'fixed'.tr();
+        final saleColor =
+            saleType == 'auction' ? AppColors.primaryColor : AppColors.primary;
 
         return GestureDetector(
           onTap: () {

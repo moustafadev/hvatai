@@ -158,28 +158,3 @@ class ReviewsCompanyScreen extends StatelessWidget {
     );
   }
 }
-
-class _ReviewItemData {
-  final String username;
-  final double rating;
-  final String date;
-  final String reviewText;
-  final String? userImage;
-
-  _ReviewItemData({
-    required this.username,
-    required this.rating,
-    required this.date,
-    required this.reviewText,
-    this.userImage,
-  });
-}
-
-String _formatDate(String dateString) {
-  try {
-    final date = DateTime.parse(dateString);
-    return '${date.day.toString().padLeft(2, '0')}.${date.month.toString().padLeft(2, '0')}.${date.year}';
-  } catch (e) {
-    return dateString;
-  }
-}

@@ -241,12 +241,6 @@ class ProductFormCubit extends Cubit<ProductFormState> {
       {bool isStream = false}) async {
     // Validate before submitting and show specific error messages
 
-    final validationError = isStream ? null : _validateProduct();
-    if (validationError != null) {
-      showFloatingMessageError(validationError);
-      return null;
-    }
-
     emit(state.copyWith(isLoadingRequest: true, errorMessage: ''));
 
     final result = await addNewProductUsecase.call(
@@ -274,45 +268,6 @@ class ProductFormCubit extends Cubit<ProductFormState> {
     });
 
     return createdProduct;
-  }
-
-  /// Validate product data and return error message if validation fails
-  String? _validateProduct() {
-    if (state.product.productName == null ||
-        state.product.productName!.isEmpty) {
-      return 'Please enter product name'.tr();
-    }
-
-    if (state.product.productDescription == null ||
-        state.product.productDescription!.isEmpty) {
-      return 'Please enter product description'.tr();
-    }
-
-    if (state.product.variants.isEmpty) {
-      return 'Product variant is required'.tr();
-    }
-
-    if (state.product.variants.first.price == null ||
-        state.product.variants.first.price == 0.0) {
-      return 'Please enter product price'.tr();
-    }
-
-    if (state.product.categoryId == null || state.product.categoryId == 0) {
-      return 'Please select a category'.tr();
-    }
-
-    // Check if there's at least one image (excluding videos)
-    if (!_hasAtLeastOneImage(state.product.images)) {
-      return 'Please add at least one image'.tr();
-    }
-
-    if (state.product.deliveryAvailable == true &&
-        (state.product.variants.first.price == null ||
-            state.product.variants.first.price == 0.0)) {
-      return 'Please enter product price'.tr();
-    }
-
-    return null; // No validation errors
   }
 
   Future<void> updateProduct(BuildContext context) async {

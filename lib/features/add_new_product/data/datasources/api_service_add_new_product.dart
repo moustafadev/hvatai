@@ -50,7 +50,6 @@ class ApiServiceAddNewProduct extends ApiBase {
   }) async {
     return executeAndHandleErrorServer<ProductModel>(() async {
       final formData = await _buildProductFormData(product);
-
       final response = await post(
         ServerConfig.updateProduct(productId),
         body: formData,
@@ -77,6 +76,11 @@ class ApiServiceAddNewProduct extends ApiBase {
     dataMap.remove('user');
     dataMap.remove('owner');
     dataMap.remove('live_auction');
+
+    if (product.deliveryAvailable == false) {
+      dataMap.remove('delivery_time');
+      dataMap.remove('delivery_discount');
+    }
 
     // ✅ Make booleans Laravel-friendly (0/1) if these keys exist
     // (Adjust key names if your API expects different ones.)

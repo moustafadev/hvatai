@@ -71,6 +71,7 @@ class NewProductWidgetBody extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         12.ph,
                         CustomText(

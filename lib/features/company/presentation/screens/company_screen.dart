@@ -164,34 +164,30 @@ class _CompanyViewState extends State<_CompanyView> {
                             ),
                             if (description != null) ...[
                               6.ph,
-                              CustomText(
-                                text: description,
-                                fontSize: 12.sp,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.greyTransparent,
+                              ReadMoreText(
+                                description,
+                                trimMode: TrimMode.Line,
+                                trimLines: 2,
                                 textAlign: TextAlign.center,
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              6.ph,
-                              GestureDetector(
-                                onTap: () {},
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    CustomText(
-                                      text: "viewAll".tr(),
-                                      fontSize: 12.sp,
-                                      fontWeight: FontWeight.w600,
-                                      color: AppColors.primaryPink,
-                                    ),
-                                    4.pw,
-                                    Icon(
-                                      Icons.keyboard_arrow_down,
-                                      size: 14.sp,
-                                      color: AppColors.primaryPink,
-                                    ),
-                                  ],
+                                // نجبر النص الجديد يبدأ في سطر جديد
+                                trimCollapsedText: "\n${"seeAll".tr()}",
+                                trimExpandedText: "\n${"seeLess".tr()}",
+
+                                moreStyle: TextStyle(
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primaryPink,
+                                ),
+                                lessStyle: TextStyle(
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primaryPink,
+                                ),
+                                style: TextStyle(
+                                  fontSize: 10.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.blackColor
+                                      .withValues(alpha: 0.2),
                                 ),
                               ),
                             ],

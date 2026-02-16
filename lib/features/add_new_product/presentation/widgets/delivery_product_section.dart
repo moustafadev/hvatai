@@ -15,13 +15,14 @@ class DeliveryProductSection extends StatelessWidget {
     return BlocBuilder<ProductFormCubit, ProductFormState>(
       builder: (context, state) {
         final cubit = context.read<ProductFormCubit>();
+        final isDeliveryAvailable = state.product.deliveryAvailable == true;
         return Column(
           children: [
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: CustomSwitchWidget(
                 title: 'delivery'.tr(),
-                value: state.product.deliveryAvailable == true,
+                value: isDeliveryAvailable,
                 onChanged: (val) {
                   cubit.toggleDeliveryAvailable();
                   // unfocus the text field
@@ -38,27 +39,27 @@ class DeliveryProductSection extends StatelessWidget {
                 ),
                 child: CustomTextField(
                   hintText: "${'deliveryCost'.tr()}, ₽",
-                  readOnly: state.product.deliveryAvailable == false,
+                  readOnly: !isDeliveryAvailable,
                   initialValue:
                       state.product.deliveryDiscount?.toString() ?? '',
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
-                  enabled: state.product.deliveryAvailable == true,
+                  enabled: isDeliveryAvailable,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: state.product.deliveryAvailable == false
-                        ? AppColors.greyBorder
+                    color: !isDeliveryAvailable
+                        ? AppColors.disabledBackground
                         : AppColors.blackColor,
                   ),
                   hintStyle: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: state.product.deliveryAvailable == false
-                        ? AppColors.greyBorder
-                        : AppColors.blackColor,
                   ),
-                  onChanged: state.product.deliveryAvailable == false
+                  hintColor: !isDeliveryAvailable
+                      ? AppColors.disabledBackground
+                      : AppColors.blackColor.withValues(alpha: 0.2),
+                  onChanged: !isDeliveryAvailable
                       ? null
                       : (val) => cubit.updateDeliveryPrice(val),
                 ),
@@ -87,7 +88,7 @@ class DeliveryProductSection extends StatelessWidget {
                       final time = entry.value;
                       final isSelected = selected == time;
                       return GestureDetector(
-                        onTap: state.product.deliveryAvailable == false
+                        onTap: !isDeliveryAvailable
                             ? null
                             : () {
                                 if (selected == time) {
@@ -99,26 +100,28 @@ class DeliveryProductSection extends StatelessWidget {
                         child: Container(
                           margin: EdgeInsets.only(left: index == 0 ? 16 : 0),
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 5),
+                              horizontal: 10, vertical: 8),
                           decoration: BoxDecoration(
                             border: Border.all(
-                              color: state.product.deliveryAvailable == false
-                                  ? AppColors.greyBorder
+                              color: !isDeliveryAvailable
+                                  ? AppColors.disabledBackground
                                   : (isSelected
-                                      ? Colors.black
-                                      : Colors.grey.shade400),
+                                      ? AppColors.text
+                                      : AppColors.blackColor
+                                          .withValues(alpha: 0.2)),
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: CustomText(
                             text: time,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                            color: state.product.deliveryAvailable == false
-                                ? AppColors.greyBorder
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w700,
+                            color: !isDeliveryAvailable
+                                ? AppColors.disabledBackground
                                 : (isSelected
-                                    ? Colors.black
-                                    : AppColors.blackColor),
+                                    ? AppColors.text
+                                    : AppColors.blackColor
+                                        .withValues(alpha: 0.2)),
                           ),
                         ),
                       );

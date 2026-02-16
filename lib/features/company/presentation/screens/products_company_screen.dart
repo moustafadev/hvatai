@@ -52,9 +52,7 @@ class ProductsCompanyTab extends StatelessWidget {
           builder: (context, state) {
             if (state.isLoadingProducts && state.products.isEmpty) {
               return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.grey,
-                ),
+                child: CustomCircularProgrressIndicator(),
               );
             }
 
@@ -118,7 +116,11 @@ class ProductsCompanyTab extends StatelessWidget {
                                   height: 22.h,
                                   width: 22.w,
                                 ),
-                                onChanged: (_) {},
+                                onChanged: (text) {
+                                  context
+                                      .read<CompanyCubit>()
+                                      .onSearchChanged(text);
+                                },
                               ),
                             ),
                             12.pw,
@@ -167,10 +169,10 @@ class ProductsCompanyTab extends StatelessWidget {
                     sliver: SliverList(
                       delegate: SliverChildBuilderDelegate(
                         (context, index) {
-                          final product = state.products[index];
+                          final product = state.filteredProducts[index];
                           return Padding(
                             padding: EdgeInsets.only(
-                              bottom: index < state.products.length - 1
+                              bottom: index < state.filteredProducts.length - 1
                                   ? 12.h
                                   : 20.h,
                             ),
@@ -186,7 +188,7 @@ class ProductsCompanyTab extends StatelessWidget {
                             ),
                           );
                         },
-                        childCount: state.products.length,
+                        childCount: state.filteredProducts.length,
                       ),
                     ),
                   ),

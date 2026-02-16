@@ -22,7 +22,7 @@ class _CompanyFollowersRow extends StatelessWidget {
               fontWeight: FontWeight.w700,
               fontSize: 14.sp,
               height: 1,
-              color: AppColors.blackColorIcon,
+              color: AppColors.text,
             ),
           ),
           TextSpan(
@@ -42,7 +42,7 @@ class _CompanyFollowersRow extends StatelessWidget {
               fontWeight: FontWeight.w700,
               fontSize: 14.sp,
               height: 1,
-              color: AppColors.blackColorIcon,
+              color: AppColors.text,
             ),
           ),
           TextSpan(
