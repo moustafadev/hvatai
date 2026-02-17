@@ -9,7 +9,6 @@ class ProductDetailsHeader extends StatelessWidget {
 
   final String? productName;
   final double? price;
-
   @override
   Widget build(BuildContext context) {
     return Row(

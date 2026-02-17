@@ -9,6 +9,7 @@ class ProductCardInfoSection extends StatelessWidget {
     required this.ownerName,
     required this.ownerImage,
     required this.averageRating,
+    required this.isDeliveryAvailable,
   });
 
   final String? productName;
@@ -17,6 +18,7 @@ class ProductCardInfoSection extends StatelessWidget {
   final String? ownerName;
   final String? ownerImage;
   final double? averageRating;
+  final bool isDeliveryAvailable;
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +80,20 @@ class ProductCardInfoSection extends StatelessWidget {
           color: AppColors.blackTransparent40,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
+        ),
+        12.ph,
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+          decoration: BoxDecoration(
+            color: AppColors.text,
+            borderRadius: BorderRadius.circular(10.r),
+          ),
+          child: CustomText(
+            text: isDeliveryAvailable ? "delivery".tr() : "pickup".tr(),
+            fontWeight: FontWeight.w600,
+            color: AppColors.white,
+            fontSize: 10.sp,
+          ),
         ),
       ],
     );

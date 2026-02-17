@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
-import 'package:hvatai/features/cart/data/model/cart_model.dart';
-import 'package:hvatai/features/cart/data/model/product_with_others_response.dart';
+import 'package:hvatai/features/cart/data/model/cart_model/cart_model.dart';
+import 'package:hvatai/features/cart/data/model/product_with_others_response/product_with_others_response.dart';
 import 'package:hvatai/features/cart/domain/usecases/add_fav_product_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/add_product_to_cart_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/delete_cart_usecase.dart';

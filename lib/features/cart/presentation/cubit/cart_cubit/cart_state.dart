@@ -6,12 +6,12 @@ class CartState with _$CartState {
     @Default(false) bool isLoading,
     @Default('') String errorMessage,
     @Default([]) List<CartModel> carts,
-    required CartModel cart,
     @Default({}) Map<int, int> tempQuantities,
     @Default([]) List<UserRegistrationData> deliveryModel,
     @Default(0.0) double totalCartPrice,
     @Default(0) int selectedTipAmount,
     @Default('wallet') String selectedPaymentMethod,
+    @Default('delivery') String deliveryMethod, // 'delivery' or 'pickup'  
     @Default(false) bool isCreatingOrder,
     @Default(false) bool showOrderLoadingScreen,
     @Default(false) bool showOrderSuccessScreen,

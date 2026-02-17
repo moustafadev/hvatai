@@ -54,7 +54,7 @@ class CartContent extends StatelessWidget {
                         '$totalItemsCount ${totalItemsCount == 1 ? 'item'.tr() : 'items'.tr()}',
                     fontSize: 10.sp,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.greyTransparent,
+                    color: AppColors.blackColor.withValues(alpha: 0.2),
                   ),
                   16.ph,
                   CartProductList(cartItems: cartItems),

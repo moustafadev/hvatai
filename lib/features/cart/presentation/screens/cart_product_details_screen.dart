@@ -14,7 +14,7 @@ class CartProductDetailsScreen extends StatelessWidget {
       builder: (context, state) {
         if (state.isLoading) {
           return Scaffold(
-              body: const Center(child: CircularProgressIndicator()));
+              body: const Center(child: CustomCircularProgressIndicator()));
         }
         if (state.errorMessage.isNotEmpty) {
           return Scaffold(body: Center(child: Text(state.errorMessage)));
@@ -23,7 +23,7 @@ class CartProductDetailsScreen extends StatelessWidget {
         // Safety check: ensure product is loaded
         if (state.product.id == null) {
           return Scaffold(
-            body: const Center(child: CircularProgressIndicator()),
+            body: const Center(child: CustomCircularProgressIndicator()),
           );
         }
 
@@ -43,7 +43,7 @@ class CartProductDetailsScreen extends StatelessWidget {
 
         return Scaffold(
           floatingActionButton: const CartFloatingActionButton(),
-          backgroundColor: AppColors.lightGreyBackground,
+          backgroundColor: AppColors.background,
           body: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,8 +63,7 @@ class CartProductDetailsScreen extends StatelessWidget {
                         cubit.addFavProduct(currentProduct.id!);
                         cubit.toggleFav(currentProduct.isFavorited);
                       },
-                      onShareTap: () {
-                      },
+                      onShareTap: () {},
                       onParticipateTap: () => cubit.joinStream(context),
                       isInLiveAuction: isInLiveAuction,
                       isJoiningStream: state.isJoiningStream,
@@ -91,18 +90,18 @@ class CartProductDetailsScreen extends StatelessWidget {
                 ),
                 12.ph,
                 ProductDetailsContent(
-                  product: currentProduct,
-                  variant: variant,
-                  ownerProducts: ownerProducts,
-                  isFavorited: state.isFavourites ?? currentProduct.isFavorited,
-                  onFavoriteTap: () {
-                    cubit.addFavProduct(currentProduct.id!);
-                    cubit.toggleFav(currentProduct.isFavorited);
-                  },
-                  onParticipateTap: isInLiveAuction
-                      ? () => cubit.joinStream(context)
-                      : () => cubit.addProductToCart(context, currentProduct),
-                ),
+                    product: currentProduct,
+                    variant: variant,
+                    ownerProducts: ownerProducts,
+                    isFavorited:
+                        state.isFavourites ?? currentProduct.isFavorited,
+                    onFavoriteTap: () {
+                      cubit.addFavProduct(currentProduct.id!);
+                      cubit.toggleFav(currentProduct.isFavorited);
+                    },
+                    onParticipateTap: isInLiveAuction
+                        ? () => cubit.joinStream(context)
+                        : () {}),
               ],
             ),
           ),

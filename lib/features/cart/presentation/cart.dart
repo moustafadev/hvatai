@@ -10,7 +10,7 @@ import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/address/presentation/address.dart';
-import 'package:hvatai/features/cart/data/model/cart_model.dart';
+import 'package:hvatai/features/cart/data/model/cart_model/cart_model.dart';
 import 'package:hvatai/features/cart/presentation/cubit/cart_cubit/cart_cubit.dart';
 import 'package:hvatai/features/cart/presentation/cubit/cart_product_details/cart_product_details_cubit.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
@@ -21,6 +21,7 @@ import 'package:hvatai/features/profile/presentation/profile.dart';
 import 'package:hvatai/core/widgets/video_thumbnail_player.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
+import 'package:readmore/readmore.dart';
 
 part 'widgets/quantity_buttons.dart';
 part 'screens/cart_screen.dart';
@@ -51,7 +52,6 @@ part 'widgets/cart/cart_error_state.dart';
 part 'widgets/cart/cart_screen_body.dart';
 part 'widgets/cart/cart_main_content.dart';
 part 'widgets/cart_floating_action_button.dart';
-
 // Custom Product Card Widgets
 part 'widgets/custom_product_card/custom_product_card.dart';
 part 'widgets/custom_product_card/product_card_image_section.dart';

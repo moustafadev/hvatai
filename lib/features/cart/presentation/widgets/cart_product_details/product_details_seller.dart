@@ -21,7 +21,6 @@ class ProductDetailsSeller extends StatelessWidget {
         children: [
           CustomText(
             text: 'seller'.tr(),
-            color: AppColors.blackDark,
             fontSize: 20.sp,
             fontWeight: FontWeight.w800,
           ),

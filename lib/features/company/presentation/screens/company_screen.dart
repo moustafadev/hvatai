@@ -169,7 +169,6 @@ class _CompanyViewState extends State<_CompanyView> {
                                 trimMode: TrimMode.Line,
                                 trimLines: 2,
                                 textAlign: TextAlign.center,
-                                // نجبر النص الجديد يبدأ في سطر جديد
                                 trimCollapsedText: "\n${"seeAll".tr()}",
                                 trimExpandedText: "\n${"seeLess".tr()}",
 

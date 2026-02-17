@@ -5,11 +5,12 @@ class ProductDetailsBadges extends StatelessWidget {
     super.key,
     required this.stock,
     required this.saleType,
+    required this.currentBid,
   });
 
   final int? stock;
   final String saleType;
-
+  final double? currentBid;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -19,13 +20,12 @@ class ProductDetailsBadges extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.r),
-              color: AppColors.gray,
+              color: AppColors.greyButton,
             ),
             child: CustomText(
               text: '$stock ${'pcs'.tr()}',
               fontSize: 10.sp,
               fontWeight: FontWeight.w600,
-              color: AppColors.blackLite,
             ),
           ),
         8.pw,
@@ -34,13 +34,26 @@ class ProductDetailsBadges extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10.r),
-              color: AppColors.gray,
+              color: AppColors.greyButton,
             ),
             child: CustomText(
-              text: "${saleType[0].toUpperCase()}${saleType.substring(1)}",
+              text: saleType == "auction" ? "auction".tr() : "fixed".tr(),
               fontSize: 10.sp,
               fontWeight: FontWeight.w600,
-              color: AppColors.blackLite,
+            ),
+          ),
+        8.pw,
+        if (currentBid != null)
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.r),
+              color: AppColors.greyButton,
+            ),
+            child: CustomText(
+              text: '${currentBid!.toInt()} ₽',
+              fontSize: 10.sp,
+              fontWeight: FontWeight.w600,
             ),
           ),
       ],

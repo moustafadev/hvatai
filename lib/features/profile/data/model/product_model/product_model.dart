@@ -1,7 +1,7 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
-import 'package:hvatai/features/cart/data/model/cart_model.dart';
+import 'package:hvatai/features/cart/data/model/cart_model/cart_model.dart';
 
 part 'product_model.freezed.dart';
 part 'product_model.g.dart';

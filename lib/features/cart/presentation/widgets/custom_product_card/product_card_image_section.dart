@@ -42,7 +42,8 @@ class ProductCardImageSection extends StatelessWidget {
               children: [
                 if (showSaleTypeChip)
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
                     decoration: BoxDecoration(
                       color: saleColor,
                       borderRadius: BorderRadius.circular(10.r),
@@ -53,24 +54,6 @@ class ProductCardImageSection extends StatelessWidget {
                       fontSize: 10.sp,
                     ),
                   ),
-                if (discountType != null && showFixed)
-                  Padding(
-                    padding: EdgeInsets.only(top: showSaleTypeChip ? 4.h : 0),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
-                      decoration: BoxDecoration(
-                        color: discountType == 'fixed'
-                            ? AppColors.primary
-                            : AppColors.primaryColor,
-                        borderRadius: BorderRadius.circular(10.r),
-                      ),
-                      child: CustomText(
-                        text: discountType ?? '',
-                        fontWeight: FontWeight.w600,
-                        fontSize: 10.sp,
-                      ),
-                    ),
-                  ),
               ],
             ),
           ),
@@ -78,4 +61,3 @@ class ProductCardImageSection extends StatelessWidget {
     );
   }
 }
-

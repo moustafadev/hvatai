@@ -19,13 +19,14 @@ mixin _$CartState {
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   List<CartModel> get carts => throw _privateConstructorUsedError;
-  CartModel get cart => throw _privateConstructorUsedError;
   Map<int, int> get tempQuantities => throw _privateConstructorUsedError;
   List<UserRegistrationData> get deliveryModel =>
       throw _privateConstructorUsedError;
   double get totalCartPrice => throw _privateConstructorUsedError;
   int get selectedTipAmount => throw _privateConstructorUsedError;
   String get selectedPaymentMethod => throw _privateConstructorUsedError;
+  String get deliveryMethod =>
+      throw _privateConstructorUsedError; // 'delivery' or 'pickup'
   bool get isCreatingOrder => throw _privateConstructorUsedError;
   bool get showOrderLoadingScreen => throw _privateConstructorUsedError;
   bool get showOrderSuccessScreen => throw _privateConstructorUsedError;
@@ -47,18 +48,16 @@ abstract class $CartStateCopyWith<$Res> {
       {bool isLoading,
       String errorMessage,
       List<CartModel> carts,
-      CartModel cart,
       Map<int, int> tempQuantities,
       List<UserRegistrationData> deliveryModel,
       double totalCartPrice,
       int selectedTipAmount,
       String selectedPaymentMethod,
+      String deliveryMethod,
       bool isCreatingOrder,
       bool showOrderLoadingScreen,
       bool showOrderSuccessScreen,
       bool showOrderErrorScreen});
-
-  $CartModelCopyWith<$Res> get cart;
 }
 
 /// @nodoc
@@ -79,12 +78,12 @@ class _$CartStateCopyWithImpl<$Res, $Val extends CartState>
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? carts = null,
-    Object? cart = null,
     Object? tempQuantities = null,
     Object? deliveryModel = null,
     Object? totalCartPrice = null,
     Object? selectedTipAmount = null,
     Object? selectedPaymentMethod = null,
+    Object? deliveryMethod = null,
     Object? isCreatingOrder = null,
     Object? showOrderLoadingScreen = null,
     Object? showOrderSuccessScreen = null,
@@ -103,10 +102,6 @@ class _$CartStateCopyWithImpl<$Res, $Val extends CartState>
           ? _value.carts
           : carts // ignore: cast_nullable_to_non_nullable
               as List<CartModel>,
-      cart: null == cart
-          ? _value.cart
-          : cart // ignore: cast_nullable_to_non_nullable
-              as CartModel,
       tempQuantities: null == tempQuantities
           ? _value.tempQuantities
           : tempQuantities // ignore: cast_nullable_to_non_nullable
@@ -127,6 +122,10 @@ class _$CartStateCopyWithImpl<$Res, $Val extends CartState>
           ? _value.selectedPaymentMethod
           : selectedPaymentMethod // ignore: cast_nullable_to_non_nullable
               as String,
+      deliveryMethod: null == deliveryMethod
+          ? _value.deliveryMethod
+          : deliveryMethod // ignore: cast_nullable_to_non_nullable
+              as String,
       isCreatingOrder: null == isCreatingOrder
           ? _value.isCreatingOrder
           : isCreatingOrder // ignore: cast_nullable_to_non_nullable
@@ -145,16 +144,6 @@ class _$CartStateCopyWithImpl<$Res, $Val extends CartState>
               as bool,
     ) as $Val);
   }
-
-  /// Create a copy of CartState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $CartModelCopyWith<$Res> get cart {
-    return $CartModelCopyWith<$Res>(_value.cart, (value) {
-      return _then(_value.copyWith(cart: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -169,19 +158,16 @@ abstract class _$$CartStateImplCopyWith<$Res>
       {bool isLoading,
       String errorMessage,
       List<CartModel> carts,
-      CartModel cart,
       Map<int, int> tempQuantities,
       List<UserRegistrationData> deliveryModel,
       double totalCartPrice,
       int selectedTipAmount,
       String selectedPaymentMethod,
+      String deliveryMethod,
       bool isCreatingOrder,
       bool showOrderLoadingScreen,
       bool showOrderSuccessScreen,
       bool showOrderErrorScreen});
-
-  @override
-  $CartModelCopyWith<$Res> get cart;
 }
 
 /// @nodoc
@@ -200,12 +186,12 @@ class __$$CartStateImplCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? carts = null,
-    Object? cart = null,
     Object? tempQuantities = null,
     Object? deliveryModel = null,
     Object? totalCartPrice = null,
     Object? selectedTipAmount = null,
     Object? selectedPaymentMethod = null,
+    Object? deliveryMethod = null,
     Object? isCreatingOrder = null,
     Object? showOrderLoadingScreen = null,
     Object? showOrderSuccessScreen = null,
@@ -224,10 +210,6 @@ class __$$CartStateImplCopyWithImpl<$Res>
           ? _value._carts
           : carts // ignore: cast_nullable_to_non_nullable
               as List<CartModel>,
-      cart: null == cart
-          ? _value.cart
-          : cart // ignore: cast_nullable_to_non_nullable
-              as CartModel,
       tempQuantities: null == tempQuantities
           ? _value._tempQuantities
           : tempQuantities // ignore: cast_nullable_to_non_nullable
@@ -247,6 +229,10 @@ class __$$CartStateImplCopyWithImpl<$Res>
       selectedPaymentMethod: null == selectedPaymentMethod
           ? _value.selectedPaymentMethod
           : selectedPaymentMethod // ignore: cast_nullable_to_non_nullable
+              as String,
+      deliveryMethod: null == deliveryMethod
+          ? _value.deliveryMethod
+          : deliveryMethod // ignore: cast_nullable_to_non_nullable
               as String,
       isCreatingOrder: null == isCreatingOrder
           ? _value.isCreatingOrder
@@ -275,12 +261,12 @@ class _$CartStateImpl implements _CartState {
       {this.isLoading = false,
       this.errorMessage = '',
       final List<CartModel> carts = const [],
-      required this.cart,
       final Map<int, int> tempQuantities = const {},
       final List<UserRegistrationData> deliveryModel = const [],
       this.totalCartPrice = 0.0,
       this.selectedTipAmount = 0,
       this.selectedPaymentMethod = 'wallet',
+      this.deliveryMethod = 'delivery',
       this.isCreatingOrder = false,
       this.showOrderLoadingScreen = false,
       this.showOrderSuccessScreen = false,
@@ -304,8 +290,6 @@ class _$CartStateImpl implements _CartState {
     return EqualUnmodifiableListView(_carts);
   }
 
-  @override
-  final CartModel cart;
   final Map<int, int> _tempQuantities;
   @override
   @JsonKey()
@@ -335,6 +319,10 @@ class _$CartStateImpl implements _CartState {
   final String selectedPaymentMethod;
   @override
   @JsonKey()
+  final String deliveryMethod;
+// 'delivery' or 'pickup'
+  @override
+  @JsonKey()
   final bool isCreatingOrder;
   @override
   @JsonKey()
@@ -348,7 +336,7 @@ class _$CartStateImpl implements _CartState {
 
   @override
   String toString() {
-    return 'CartState(isLoading: $isLoading, errorMessage: $errorMessage, carts: $carts, cart: $cart, tempQuantities: $tempQuantities, deliveryModel: $deliveryModel, totalCartPrice: $totalCartPrice, selectedTipAmount: $selectedTipAmount, selectedPaymentMethod: $selectedPaymentMethod, isCreatingOrder: $isCreatingOrder, showOrderLoadingScreen: $showOrderLoadingScreen, showOrderSuccessScreen: $showOrderSuccessScreen, showOrderErrorScreen: $showOrderErrorScreen)';
+    return 'CartState(isLoading: $isLoading, errorMessage: $errorMessage, carts: $carts, tempQuantities: $tempQuantities, deliveryModel: $deliveryModel, totalCartPrice: $totalCartPrice, selectedTipAmount: $selectedTipAmount, selectedPaymentMethod: $selectedPaymentMethod, deliveryMethod: $deliveryMethod, isCreatingOrder: $isCreatingOrder, showOrderLoadingScreen: $showOrderLoadingScreen, showOrderSuccessScreen: $showOrderSuccessScreen, showOrderErrorScreen: $showOrderErrorScreen)';
   }
 
   @override
@@ -361,7 +349,6 @@ class _$CartStateImpl implements _CartState {
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
             const DeepCollectionEquality().equals(other._carts, _carts) &&
-            (identical(other.cart, cart) || other.cart == cart) &&
             const DeepCollectionEquality()
                 .equals(other._tempQuantities, _tempQuantities) &&
             const DeepCollectionEquality()
@@ -372,6 +359,8 @@ class _$CartStateImpl implements _CartState {
                 other.selectedTipAmount == selectedTipAmount) &&
             (identical(other.selectedPaymentMethod, selectedPaymentMethod) ||
                 other.selectedPaymentMethod == selectedPaymentMethod) &&
+            (identical(other.deliveryMethod, deliveryMethod) ||
+                other.deliveryMethod == deliveryMethod) &&
             (identical(other.isCreatingOrder, isCreatingOrder) ||
                 other.isCreatingOrder == isCreatingOrder) &&
             (identical(other.showOrderLoadingScreen, showOrderLoadingScreen) ||
@@ -388,12 +377,12 @@ class _$CartStateImpl implements _CartState {
       isLoading,
       errorMessage,
       const DeepCollectionEquality().hash(_carts),
-      cart,
       const DeepCollectionEquality().hash(_tempQuantities),
       const DeepCollectionEquality().hash(_deliveryModel),
       totalCartPrice,
       selectedTipAmount,
       selectedPaymentMethod,
+      deliveryMethod,
       isCreatingOrder,
       showOrderLoadingScreen,
       showOrderSuccessScreen,
@@ -413,12 +402,12 @@ abstract class _CartState implements CartState {
       {final bool isLoading,
       final String errorMessage,
       final List<CartModel> carts,
-      required final CartModel cart,
       final Map<int, int> tempQuantities,
       final List<UserRegistrationData> deliveryModel,
       final double totalCartPrice,
       final int selectedTipAmount,
       final String selectedPaymentMethod,
+      final String deliveryMethod,
       final bool isCreatingOrder,
       final bool showOrderLoadingScreen,
       final bool showOrderSuccessScreen,
@@ -431,8 +420,6 @@ abstract class _CartState implements CartState {
   @override
   List<CartModel> get carts;
   @override
-  CartModel get cart;
-  @override
   Map<int, int> get tempQuantities;
   @override
   List<UserRegistrationData> get deliveryModel;
@@ -442,6 +429,8 @@ abstract class _CartState implements CartState {
   int get selectedTipAmount;
   @override
   String get selectedPaymentMethod;
+  @override
+  String get deliveryMethod; // 'delivery' or 'pickup'
   @override
   bool get isCreatingOrder;
   @override

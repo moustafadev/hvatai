@@ -8,7 +8,7 @@ class CustomProductCard extends StatelessWidget {
     this.isProductCompany = false,
     this.isNameCompany = false,
     this.productDetailsCubit,
-    this.showSaleTypeChip = false,
+    this.showSaleTypeChip = true,
     this.showFixed = true,
     this.color,
   });
@@ -22,38 +22,72 @@ class CustomProductCard extends StatelessWidget {
   final bool showFixed;
   final Color? color;
 
-  /// Get the first image (excluding videos) from the product images list
-  String? _getFirstImage(List<String>? images) {
-    if (images == null || images.isEmpty) return null;
-
-    for (final imagePath in images) {
-      if (_isImageFile(imagePath)) {
-        return imagePath;
-      }
+  @override
+  Widget build(BuildContext context) {
+    if (productDetailsCubit != null) {
+      return BlocProvider<CartProductDetailsCubit>.value(
+        value: productDetailsCubit!,
+        child: _ProductCardBody(
+          product: product,
+          selectedCategoryIndex: selectedCategoryIndex,
+          isProductCompany: isProductCompany,
+          isNameCompany: isNameCompany,
+          showSaleTypeChip: showSaleTypeChip,
+          showFixed: showFixed,
+          color: color,
+        ),
+      );
     }
-    return null;
-  }
 
-  /// Check if a file path is an image (not a video)
-  bool _isImageFile(String path) {
-    final extension = path.toLowerCase().split('.').last;
-    final videoExtensions = ['mp4', 'mov', 'avi', 'mkv', 'webm'];
-    return !videoExtensions.contains(extension);
+    return BlocProvider<CartProductDetailsCubit>(
+      create: (_) => locator<CartProductDetailsCubit>(),
+      child: _ProductCardBody(
+        product: product,
+        selectedCategoryIndex: selectedCategoryIndex,
+        isProductCompany: isProductCompany,
+        isNameCompany: isNameCompany,
+        showSaleTypeChip: showSaleTypeChip,
+        showFixed: showFixed,
+        color: color,
+      ),
+    );
   }
+}
+
+class _ProductCardBody extends StatelessWidget {
+  const _ProductCardBody({
+    required this.product,
+    required this.selectedCategoryIndex,
+    required this.isProductCompany,
+    required this.isNameCompany,
+    required this.showSaleTypeChip,
+    required this.showFixed,
+    required this.color,
+  });
+
+  final ProductModel product;
+  final int selectedCategoryIndex;
+  final bool isProductCompany;
+  final bool isNameCompany;
+  final bool showSaleTypeChip;
+  final bool showFixed;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
-    final blocChild =
-        BlocConsumer<CartProductDetailsCubit, CartProductDetailsState>(
-      listener: (context, state) {},
+    return BlocConsumer<CartProductDetailsCubit, CartProductDetailsState>(
+      listener: (_, __) {},
       builder: (context, state) {
         final cubit = context.read<CartProductDetailsCubit>();
         final variant = product.variants.firstOrNull ?? VariantModel();
-        final String imageUrl = _getFirstImage(product.images) ?? '';
+
         final saleType = (product.saleType).toLowerCase();
-        final saleLabel = saleType == 'auction' ? 'auction'.tr() : 'fixed'.tr();
+        final saleLabel = saleType == 'auction' ? 'auction'.tr() : "fixed".tr();
         final saleColor =
             saleType == 'auction' ? AppColors.primaryColor : AppColors.primary;
+
+        final imageUrl =
+            product.images.firstWhere((e) => !_isVideo(e), orElse: () => '');
 
         return GestureDetector(
           onTap: () {
@@ -72,7 +106,6 @@ class CustomProductCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ProductCardImageSection(
                   imageUrl: imageUrl,
@@ -98,18 +131,29 @@ class CustomProductCard extends StatelessWidget {
                           ownerName: product.owner?.name,
                           ownerImage: product.owner?.image,
                           averageRating: product.averageRating,
+                          isDeliveryAvailable:
+                              product.deliveryAvailable ?? false,
                         ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 8.h),
-                          child: ProductCardPriceSection(
-                            price: variant.price,
-                            showStoreIcon: isProductCompany,
-                            product: product,
-                            isInCart: cubit.isProductInCart(product),
-                            onCartTap: () {
-                              cubit.toggleProductInCart(context, product);
-                            },
-                          ),
+                        BlocBuilder<CartCubit, CartState>(
+                          builder: (context, cartState) {
+                            final variantId = product.variants.firstOrNull?.id;
+
+                            final isInCart = variantId != null &&
+                                cartState.carts.any((cart) => (cart.items ?? [])
+                                    .any((item) => item.item?.id == variantId));
+
+                            return ProductCardPriceSection(
+                              price: variant.price,
+                              isInCart: isInCart,
+                              onCartTap: () {
+                                context
+                                    .read<CartCubit>()
+                                    .toggleProductInCart(context, product);
+                              },
+                              showStoreIcon: isProductCompany,
+                              product: product,
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -121,17 +165,10 @@ class CustomProductCard extends StatelessWidget {
         );
       },
     );
+  }
 
-    if (productDetailsCubit != null) {
-      return BlocProvider<CartProductDetailsCubit>.value(
-        value: productDetailsCubit!,
-        child: blocChild,
-      );
-    }
-
-    return BlocProvider<CartProductDetailsCubit>(
-      create: (_) => locator<CartProductDetailsCubit>(),
-      child: blocChild,
-    );
+  bool _isVideo(String path) {
+    final ext = path.toLowerCase().split('.').last;
+    return ['mp4', 'mov', 'avi', 'mkv', 'webm'].contains(ext);
   }
 }

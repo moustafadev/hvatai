@@ -22,7 +22,6 @@ class ProductDetailsContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
-      color: AppColors.lightGreyBackground,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,8 +35,8 @@ class ProductDetailsContent extends StatelessWidget {
               children: [
                 CustomText(
                   text: '${product.category?.name} ',
-                  color: AppColors.blackLite,
                   fontSize: 14.sp,
+                  fontWeight: FontWeight.w600,
                 ),
               ],
             ),
@@ -45,13 +44,32 @@ class ProductDetailsContent extends StatelessWidget {
           ProductDetailsBadges(
             stock: variant.stock,
             saleType: product.saleType,
+            currentBid: product.liveAuction?.currentBid,
           ),
           8.ph,
           if (product.productDescription?.isNotEmpty ?? false)
-            CustomText(
-              text: product.productDescription ?? '',
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w600,
+            ReadMoreText(
+              product.productDescription ?? '',
+              trimMode: TrimMode.Line,
+              trimLines: 2,
+              textAlign: TextAlign.center,
+              trimCollapsedText: "\n${"seeAll".tr()}",
+              trimExpandedText: "\n${"seeLess".tr()}",
+              moreStyle: TextStyle(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w600,
+                color: AppColors.primaryPink,
+              ),
+              lessStyle: TextStyle(
+                fontSize: 10.sp,
+                fontWeight: FontWeight.w600,
+                color: AppColors.primaryPink,
+              ),
+              style: TextStyle(
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                color: AppColors.text,
+              ),
             ),
           12.ph,
           ProductDetailsSeller(

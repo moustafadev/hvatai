@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
-import 'package:hvatai/features/cart/data/model/product_with_others_response.dart';
+import 'package:hvatai/features/cart/data/model/product_with_others_response/product_with_others_response.dart';
 import 'package:hvatai/features/cart/domain/repositories/cart_repository.dart';
 
 class GetProductByIdUsecase

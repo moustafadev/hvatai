@@ -35,6 +35,8 @@ class ProductDetailsOtherProducts extends StatelessWidget {
             return CustomProductCard(
               product: ownerproduct,
               isProductCompany: true,
+              color: Colors.transparent,
+              showSaleTypeChip: true,
               selectedCategoryIndex: index,
               productDetailsCubit: productDetailsCubit,
             );
