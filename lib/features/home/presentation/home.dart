@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,13 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
-import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/core/theme/assets.dart';
-import 'package:hvatai/features/chat/data/models/socket_message/socket_message_model.dart';
-import 'package:hvatai/features/chat/presentation/cubit/chats_cubit.dart';
-import 'package:hvatai/features/chat/presentation/pages/chat_service.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/home/presentation/cubit/categories/categories_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/categories/categories_state.dart';
@@ -21,13 +19,13 @@ import 'package:hvatai/features/home/presentation/cubit/home_search/home_search_
 import 'package:hvatai/features/home/presentation/cubit/home_search/home_search_state.dart';
 import 'package:hvatai/features/home/presentation/cubit/live_streams/live_streams_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/live_streams/live_streams_state.dart';
+import 'package:hvatai/features/home/presentation/cubit/pusher/pusher_cubit.dart';
 import 'package:hvatai/features/notifications/presentation/cubit/notifications_cubit/notifications_cubit.dart';
 import 'package:hvatai/features/notifications/presentation/notifications.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/search/presentation/search.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
-import 'package:pusher_client_socket/pusher_client_socket.dart';
 
 part 'screens/home_screen.dart';
 part 'screens/categories_for_you_screen.dart';

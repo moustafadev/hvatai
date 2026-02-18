@@ -8,10 +8,12 @@ import 'package:hvatai/features/activity/data/repositories/activity_impl_reposit
 import 'package:hvatai/features/activity/domain/repositories/activity_repository.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
 import 'package:hvatai/features/address/presentation/cubit/address_form/address_form_cubit.dart';
+import 'package:hvatai/features/chat/presentation/pages/chat_service.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/create_clip_cubit/create_clip_cubit.dart';
 import 'package:hvatai/features/create_clip/presentation/cubit/preview_clip_cubit/preview_clip_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/categories_for_you/categories_for_you_cubit.dart';
 import 'package:hvatai/features/home/presentation/cubit/home_search/home_search_cubit.dart';
+import 'package:hvatai/features/home/presentation/cubit/pusher/pusher_cubit.dart';
 import 'package:hvatai/features/review/data/datasources/api_service_review.dart';
 import 'package:hvatai/features/review/data/repositories/review_repository_impl.dart';
 import 'package:hvatai/features/review/domain/repositories/review_repository.dart';
@@ -185,6 +187,9 @@ Future<void> setupLocator() async {
         locator(),
         locator(),
       ));
+  locator.registerLazySingleton(() => PusherManager());
+  locator.registerLazySingleton(() => PusherCubit(locator()));
+
   locator.registerFactory(
       () => CartCubit(locator(), locator(), locator(), locator(), locator()));
   locator.registerFactory(() => SearchCubit(
