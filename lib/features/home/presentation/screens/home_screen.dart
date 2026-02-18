@@ -74,12 +74,13 @@ class _HomeScreenState extends State<HomeScreen> {
           BlocProvider(
             create: (_) => locator<CategoriesCubit>()
               ..loadAllCategories()
-              ..loadFavoriteCategories(),
+              ..loadFavoriteCategories()
+              ..subscribeToCategories(),
           ),
           BlocProvider(
             create: (_) => locator<LiveStreamsCubit>()
               ..fetchLiveStreams()
-              ..subscribeToLiveStreams(),
+              ..subscribeToLiveStreams(context),
           ),
         ],
         child: BlocBuilder<LiveStreamsCubit, LiveStreamsState>(

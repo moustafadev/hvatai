@@ -239,7 +239,7 @@ class ProductFormCubit extends Cubit<ProductFormState> {
   Future<ProductModel?> addProduct(BuildContext context,
       {bool isStream = false}) async {
     /// must hava at lease one image
-    if (!_hasAtLeastOneImage(state.product.images)) {
+    if (!_hasAtLeastOneImage(state.product.images) && !isStream) {
       showFloatingMessageError('atLeastOneImage'.tr());
       return null;
     }

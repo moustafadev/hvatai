@@ -40,12 +40,7 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
       child: BlocListener<LiveListingsShopCubit, LiveListingsShopState>(
         listenWhen: (previous, current) =>
             previous.isAddingProduct && !current.isAddingProduct,
-        listener: (context, state) {
-          // Close bottom sheet when product is successfully added (no error)
-          if (!state.isAddingProduct && state.errorMessage == null) {
-            Navigator.pop(context);
-          }
-        },
+        listener: (context, state) {},
         child: Stack(
           children: [
             Container(
@@ -238,7 +233,7 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
 
                             if (option == 'create') {
                               // Show add product bottom sheet
-                              await showModalBottomSheet(
+                              final result = await showModalBottomSheet(
                                 isScrollControlled: true,
                                 context: context,
                                 backgroundColor: Colors.transparent,
@@ -250,7 +245,7 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                                   ),
                                 ),
                               );
-                              if (mounted) {
+                              if (result == true && mounted) {
                                 cubit.getMyProducts();
                                 await cubit.getStreamProducts(
                                   streamId: widget.streamId,
@@ -259,7 +254,7 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                               }
                             } else if (option == 'select') {
                               // Show my products selection bottom sheet
-                              await showModalBottomSheet(
+                              final result = await showModalBottomSheet(
                                 isScrollControlled: true,
                                 context: context,
                                 backgroundColor: Colors.transparent,
@@ -268,7 +263,7 @@ class _LiveListingsBottomSheetState extends State<LiveListingsBottomSheet> {
                                   streamId: widget.streamId,
                                 ),
                               );
-                              if (mounted) {
+                              if (result == true && mounted) {
                                 await cubit.getStreamProducts(
                                   streamId: widget.streamId,
                                   categoryIds: cubit.state.categoryIds,

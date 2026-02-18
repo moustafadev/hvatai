@@ -67,15 +67,15 @@ class _SlideToBidButtonState extends State<SlideToBidButton>
         curve: Curves.easeOut,
       ),
     );
-    
+
     void listener() {
       setState(() {
         _dragX = animation.value;
       });
     }
-    
+
     animation.addListener(listener);
-    
+
     _controller.forward().whenComplete(() {
       animation.removeListener(listener);
       widget.onSlideComplete();
@@ -91,7 +91,7 @@ class _SlideToBidButtonState extends State<SlideToBidButton>
         final totalWidth = constraints.maxWidth;
         // Inner pill width (similar to button inside bordered container). Leave small gutter.
         final innerWidth = (totalWidth - 70).clamp(0.0, totalWidth);
-        final maxDrag = (totalWidth - innerWidth).clamp(0.0, totalWidth);
+        final maxDrag = (totalWidth - innerWidth).clamp(0.0, totalWidth) - 4;
         // Initialize pill position at ~3/4 of the slide distance
         if (!_initializedPosition && maxDrag > 0.0) {
           _dragX = 4;
@@ -102,15 +102,15 @@ class _SlideToBidButtonState extends State<SlideToBidButton>
           children: [
             // Outer border
             Container(
-  height: 40,
-                                padding: const EdgeInsets.all(4),
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: AppColors.primaryColor,
-                                    width: 1.5,
-                                  ),
-                                  borderRadius: BorderRadius.circular(24),
-                                ),
+              height: 40,
+              padding: const EdgeInsets.all(4),
+              decoration: BoxDecoration(
+                border: Border.all(
+                  color: AppColors.primaryColor,
+                  width: 1.5,
+                ),
+                borderRadius: BorderRadius.circular(24),
+              ),
             ),
             // Sliding cyan pill (the button itself)
             Positioned(
@@ -146,7 +146,6 @@ class _SlideToBidButtonState extends State<SlideToBidButton>
                   decoration: BoxDecoration(
                     color: fillColor,
                     borderRadius: BorderRadius.circular(100),
-                  
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(4),
@@ -204,5 +203,3 @@ class _SlideToBidButtonState extends State<SlideToBidButton>
     );
   }
 }
-
-

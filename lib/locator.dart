@@ -209,6 +209,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => CategoriesCubit(
         locator(),
         locator(),
+        locator(),
       ));
   locator.registerFactory(() => LiveStreamsCubit(
         locator(),

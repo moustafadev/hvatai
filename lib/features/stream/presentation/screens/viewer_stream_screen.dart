@@ -219,13 +219,13 @@ class _ViewerStreamScreenState extends State<ViewerStreamScreen> {
                 );
               }
 
-              return PopScope(
-                onPopInvokedWithResult: (didPop, result) async {
-                  if (didPop) {
-                    final action = await _showExitDialog();
-                    if (action == _ViewerExitAction.cancel) return;
-                    await _performExit(action);
-                  }
+              // ignore: deprecated_member_use
+              return WillPopScope(
+                onWillPop: () async {
+                  final action = await _showExitDialog();
+                  if (action == _ViewerExitAction.cancel) return false;
+                  await _performExit(action);
+                  return false;
                 },
                 child: Scaffold(
                   backgroundColor: Colors.black,

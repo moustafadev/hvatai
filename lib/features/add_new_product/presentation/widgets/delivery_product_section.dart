@@ -3,19 +3,27 @@ part of '../add_new_product.dart';
 class DeliveryProductSection extends StatelessWidget {
   const DeliveryProductSection({
     super.key,
-    required this.presets,
     required this.selected,
+    required this.isDeliveryAvailable,
+    required this.onChanged,
+    required this.onDeliveryTimeChanged,
+    required this.onDeliveryPriceChanged,
+    required this.onDeliveryTimeSelected,
   });
 
-  final List<String> presets;
   final String? selected;
+  final bool isDeliveryAvailable;
+  final Function(bool) onChanged;
+  final Function(String) onDeliveryTimeChanged;
+  final Function(String) onDeliveryPriceChanged;
+  final Function(String) onDeliveryTimeSelected;
 
   @override
   Widget build(BuildContext context) {
+    final presets = ["20 мин", "30-40 мин", "60 мин", "90 мин", "120 мин"];
+
     return BlocBuilder<ProductFormCubit, ProductFormState>(
       builder: (context, state) {
-        final cubit = context.read<ProductFormCubit>();
-        final isDeliveryAvailable = state.product.deliveryAvailable == true;
         return Column(
           children: [
             Padding(
@@ -24,7 +32,7 @@ class DeliveryProductSection extends StatelessWidget {
                 title: 'delivery'.tr(),
                 value: isDeliveryAvailable,
                 onChanged: (val) {
-                  cubit.toggleDeliveryAvailable();
+                  onChanged(val);
                   // unfocus the text field
                   FocusScope.of(context).unfocus();
                 },
@@ -61,7 +69,7 @@ class DeliveryProductSection extends StatelessWidget {
                       : AppColors.blackColor.withValues(alpha: 0.2),
                   onChanged: !isDeliveryAvailable
                       ? null
-                      : (val) => cubit.updateDeliveryPrice(val),
+                      : (val) => onDeliveryPriceChanged(val),
                 ),
               ),
             ),
@@ -74,6 +82,9 @@ class DeliveryProductSection extends StatelessWidget {
                   child: CustomText(
                     text: 'deliveryTime'.tr(),
                     fontSize: 14.sp,
+                    color: !isDeliveryAvailable
+                        ? AppColors.disabledBackground
+                        : AppColors.blackColor,
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -92,9 +103,9 @@ class DeliveryProductSection extends StatelessWidget {
                             ? null
                             : () {
                                 if (selected == time) {
-                                  cubit.updateField('deliveryTime', '');
+                                  onDeliveryTimeSelected('');
                                 } else {
-                                  cubit.updateField('deliveryTime', time);
+                                  onDeliveryTimeSelected(time);
                                 }
                               },
                         child: Container(

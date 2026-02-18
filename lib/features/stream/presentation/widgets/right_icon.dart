@@ -29,27 +29,27 @@ class RightIcon extends StatelessWidget {
                 height: size,
                 child: Image.asset(icon, fit: BoxFit.contain),
               ),
-              if (counter != null)
-                Positioned(
-                  top: -12,
-                  right: -5,
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    decoration: BoxDecoration(
-                      color: AppColors.purple2,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    constraints:
-                        const BoxConstraints(minWidth: 20, minHeight: 20),
-                    child: CustomText(
-                      text: counter!,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white,
-                      fontSize: 10,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
+              // if (counter != null)
+              // Positioned(
+              //   top: -12,
+              //   right: -5,
+              //   child: Container(
+              //     padding: const EdgeInsets.all(4),
+              //     decoration: BoxDecoration(
+              //       color: AppColors.purple2,
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //     constraints:
+              //         const BoxConstraints(minWidth: 20, minHeight: 20),
+              //     child: CustomText(
+              //       text: counter!,
+              //       fontWeight: FontWeight.w500,
+              //       color: Colors.white,
+              //       fontSize: 10,
+              //       textAlign: TextAlign.center,
+              //     ),
+              //   ),
+              // ),
             ],
           ),
           SizedBox(height: 4.h),

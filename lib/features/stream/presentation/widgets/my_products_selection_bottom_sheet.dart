@@ -245,7 +245,7 @@ class MyProductsSelectionBottomSheet extends StatelessWidget {
                                           product: selectedProduct,
                                         );
                                         if (context.mounted) {
-                                          Navigator.pop(context);
+                                          Navigator.of(context).pop(true);
                                         }
 
                                         if (success && context.mounted) {

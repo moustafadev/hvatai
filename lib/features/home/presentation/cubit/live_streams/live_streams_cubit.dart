@@ -1,32 +1,42 @@
 import 'dart:async';
 
-import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/core/datasources/local/app_local.dart';
+import 'package:hvatai/features/chat/presentation/pages/chat_service.dart';
 import 'package:hvatai/features/home/data/model/join_stream_model/join_stream_model.dart';
 import 'package:hvatai/features/home/data/model/live_stream_event/live_stream_event.dart';
 import 'package:hvatai/features/home/domain/usecases/get_live_streams_usecases.dart';
 import 'package:hvatai/features/home/domain/usecases/join_stream_usecase.dart';
-import 'package:hvatai/features/home/domain/usecases/watch_live_streams_usecase.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
+import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
+import 'package:pusher_client_socket/pusher_client_socket.dart';
 
 import 'live_streams_state.dart';
 
 class LiveStreamsCubit extends Cubit<LiveStreamsState> {
   final GetLiveStreamsUsecase _getLiveStreams;
-  final WatchLiveStreamsUsecase _watchLiveStreams;
   final JoinStreamUsecase _joinPublicStream;
 
-  StreamSubscription<Either<String, LiveStreamEvent>>? _liveStreamsSubscription;
+  final PusherManager _pusherManager;
+  PusherClient? _pusher;
+  Channel? _channel;
+  bool _pusherBound = false;
+
+  List<int>? _categoryIdsFilter;
 
   LiveStreamsCubit(
     this._getLiveStreams,
-    this._watchLiveStreams,
     this._joinPublicStream,
+    this._pusherManager,
   ) : super(LiveStreamsState.initial());
+
+  // =========================
+  // REST FETCH
+  // =========================
 
   Future<void> refreshLiveStreams() async {
     emit(state.copyWith(
@@ -42,28 +52,131 @@ class LiveStreamsCubit extends Cubit<LiveStreamsState> {
     await _fetchLiveStreamsInternal(page: 1, append: false);
   }
 
-  void subscribeToLiveStreams() {
-    _liveStreamsSubscription?.cancel();
-    _liveStreamsSubscription = _watchLiveStreams().listen(
-      (result) {
-        result.fold(
-          (failure) {
-            emit(state.copyWith(
-              isLoading: false,
-              error: failure,
-            ));
-          },
-          _handleLiveStreamEvent,
-        );
-      },
-      onError: (error, stackTrace) {
+  Future<void> fetchLiveStreams(
+      {bool isRefresh = false, List<int>? categoryIds}) async {
+    final next = isRefresh ? 1 : state.page + 1;
+    final targetPage = state.liveStreams.isEmpty ? 1 : next;
+    final append = state.liveStreams.isNotEmpty && !isRefresh;
+
+    // ✅ update filter
+    _categoryIdsFilter = categoryIds ?? state.categoryIds;
+
+    emit(state.copyWith(
+      isLoading: true,
+      error: null,
+      categoryIds: categoryIds ?? state.categoryIds,
+    ));
+
+    await _fetchLiveStreamsInternal(
+      page: targetPage,
+      append: append,
+      categoryIds: categoryIds ?? state.categoryIds,
+    );
+  }
+
+  Future<void> _fetchLiveStreamsInternal({
+    required int page,
+    required bool append,
+    List<int>? categoryIds,
+  }) async {
+    final res = await _getLiveStreams(
+      GetLiveStreamsParams(page: page, perPage: 15, categoryIds: categoryIds),
+    );
+
+    res.fold(
+      (err) => emit(state.copyWith(isLoading: false, error: err)),
+      (payload) {
+        final items = payload.data ?? <StreamDataModel>[];
+        final current = append
+            ? List<StreamDataModel>.from(state.liveStreams)
+            : <StreamDataModel>[];
+        current.addAll(items);
+
+        final currentPage =
+            int.tryParse(payload.pagination?.currentPage ?? "0") ?? page;
+        final lastPage = payload.pagination?.lastPage ?? currentPage;
+        final hasMore = currentPage < lastPage;
+
         emit(state.copyWith(
           isLoading: false,
-          error: error.toString(),
+          error: null,
+          liveStreams: current,
+          page: currentPage,
+          lastPage: lastPage,
+          hasMore: hasMore,
+          categoryIds: categoryIds ?? state.categoryIds,
         ));
       },
     );
   }
+
+  // =========================
+  // PUSHER (replaces SSE)
+  // =========================
+
+  Future<void> subscribeToLiveStreams(BuildContext context,
+      {List<int>? categoryIds}) async {
+    // keep filter in sync with state
+    _categoryIdsFilter = categoryIds ?? state.categoryIds;
+
+    // prevent duplicate binds
+    if (_pusherBound) return;
+
+    final token = locator<AppLocal>().getToken();
+    if (token?.isEmpty ?? true) return;
+
+    try {
+      _pusher = _pusherManager.initializePusher();
+      _channel = _pusher!.subscribe('streams');
+
+      // bind only once
+      _channel!.bind('stream.updated', (data) {
+        try {
+          if (data is! Map) return;
+          final payload = Map<String, dynamic>.from(data);
+
+          // Optional category filter if backend includes category_id under stream
+          if (_categoryIdsFilter != null && _categoryIdsFilter!.isNotEmpty) {
+            final s = payload['stream'];
+            if (s is Map) {
+              final streamMap = Map<String, dynamic>.from(s);
+              final catId = streamMap['category_id'];
+              if (catId is int && !_categoryIdsFilter!.contains(catId)) {
+                return; // ignore not matching category
+              }
+            }
+          }
+
+          // ✅ Your LiveStreamEvent.fromJson now supports pusher payload without "type"
+          final event = LiveStreamEvent.fromJson(payload);
+          _handleLiveStreamEvent(event);
+        } catch (e) {
+          // don't crash realtime
+          // ignore or log
+        }
+      });
+
+      _pusherBound = true;
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, error: e.toString()));
+    }
+  }
+
+  void unsubscribeFromLiveStreams() {
+    try {
+      _channel?.unbind('stream.updated');
+      _pusher?.unsubscribe('streams');
+      _pusherManager.dispose();
+    } catch (_) {}
+
+    _channel = null;
+    _pusher = null;
+    _pusherBound = false;
+  }
+
+  // =========================
+  // EVENT HANDLING (same as before)
+  // =========================
 
   void _handleLiveStreamEvent(LiveStreamEvent event) {
     final stream = event.stream;
@@ -111,6 +224,7 @@ class LiveStreamsCubit extends Cubit<LiveStreamsState> {
             }
         }
         break;
+
       case LiveStreamEventType.viewerJoined:
       case LiveStreamEventType.viewerLeft:
         if (event.isLiveStatus) {
@@ -127,8 +241,8 @@ class LiveStreamsCubit extends Cubit<LiveStreamsState> {
           removeIfPresent();
         }
         break;
+
       case LiveStreamEventType.unknown:
-        // Ignore unknown events but ensure loading state resets.
         break;
     }
 
@@ -144,62 +258,9 @@ class LiveStreamsCubit extends Cubit<LiveStreamsState> {
     ));
   }
 
-  void unsubscribeFromLiveStreams() {
-    _liveStreamsSubscription?.cancel();
-    _liveStreamsSubscription = null;
-  }
-
-  Future<void> fetchLiveStreams(
-      {bool isRefresh = false, List<int>? categoryIds}) async {
-    final next = isRefresh ? 1 : state.page + 1;
-    final targetPage = state.liveStreams.isEmpty ? 1 : next;
-    final append = state.liveStreams.isNotEmpty && !isRefresh;
-
-    emit(state.copyWith(
-        isLoading: true,
-        error: null,
-        categoryIds: categoryIds ?? state.categoryIds));
-    await _fetchLiveStreamsInternal(
-      page: targetPage,
-      append: append,
-      categoryIds: categoryIds ?? state.categoryIds,
-    );
-  }
-
-  Future<void> _fetchLiveStreamsInternal({
-    required int page,
-    required bool append,
-    List<int>? categoryIds,
-  }) async {
-    final res = await _getLiveStreams(GetLiveStreamsParams(
-        page: page, perPage: 15, categoryIds: categoryIds));
-
-    res.fold(
-      (err) => emit(state.copyWith(isLoading: false, error: err)),
-      (payload) {
-        final items = payload.data ?? <StreamDataModel>[];
-        final current = append
-            ? List<StreamDataModel>.from(state.liveStreams)
-            : <StreamDataModel>[];
-        current.addAll(items);
-
-        final currentPage =
-            int.tryParse(payload.pagination?.currentPage ?? "0") ?? page;
-        final lastPage = payload.pagination?.lastPage ?? currentPage;
-        final hasMore = currentPage < lastPage;
-
-        emit(state.copyWith(
-          isLoading: false,
-          error: null,
-          liveStreams: current,
-          page: currentPage,
-          lastPage: lastPage,
-          hasMore: hasMore,
-          categoryIds: categoryIds ?? state.categoryIds,
-        ));
-      },
-    );
-  }
+  // =========================
+  // JOIN STREAM (unchanged)
+  // =========================
 
   Future<JoinStreamData?> joinStream({
     required StreamDataModel stream,
@@ -224,7 +285,6 @@ class LiveStreamsCubit extends Cubit<LiveStreamsState> {
 
         final join = joinResponse.data;
 
-        // Merge join response into the original stream
         final updatedStream = stream.copyWith(
           channelName: join.stream.channelName,
         );
@@ -240,6 +300,7 @@ class LiveStreamsCubit extends Cubit<LiveStreamsState> {
         return joinResponse.data;
       },
     );
+
     return null;
   }
 

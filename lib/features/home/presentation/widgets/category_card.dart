@@ -6,7 +6,7 @@ class CategoryCard extends StatelessWidget {
     required this.category,
     required this.isSelected,
     required this.onTap,
-    this.showEye = true, // ✅ new
+    this.showEye = true,
   });
 
   final CategoryData category;

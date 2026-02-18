@@ -82,6 +82,11 @@ class ApiServiceAddNewProduct extends ApiBase {
       dataMap.remove('delivery_discount');
     }
 
+    // if the product_description is empty, pass it as empty string
+    if (product.productDescription == null) {
+      dataMap['product_description'] = 'stream product';
+    }
+
     // ✅ Make booleans Laravel-friendly (0/1) if these keys exist
     // (Adjust key names if your API expects different ones.)
     if (dataMap.containsKey('delivery_available')) {

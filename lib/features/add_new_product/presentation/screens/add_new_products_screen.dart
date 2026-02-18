@@ -49,9 +49,8 @@ class NewProductWidgetBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ProductFormCubit, ProductFormState>(
         builder: (context, state) {
-      final presets = ["20 мин", "30-40 мин", "60 мин", "90 мин", "120 мин"];
       final selected = state.product.deliveryTime;
-
+      final isDeliveryAvailable = state.product.deliveryAvailable == true;
       final cubit = context.read<ProductFormCubit>();
       if (state.isLoading) {
         return const Center(child: CustomCircularProgressIndicator());
@@ -162,7 +161,16 @@ class NewProductWidgetBody extends StatelessWidget {
                       ],
                     ),
                   ),
-                  DeliveryProductSection(presets: presets, selected: selected),
+                  DeliveryProductSection(
+                      selected: selected,
+                      isDeliveryAvailable: isDeliveryAvailable,
+                      onChanged: (val) => cubit.toggleDeliveryAvailable(),
+                      onDeliveryTimeChanged: (val) =>
+                          cubit.updateField('deliveryTime', val),
+                      onDeliveryPriceChanged: (val) =>
+                          cubit.updateDeliveryPrice(val),
+                      onDeliveryTimeSelected: (val) =>
+                          cubit.updateField('deliveryTime', val)),
                   12.ph,
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16.0),

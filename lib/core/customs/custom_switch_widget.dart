@@ -17,12 +17,14 @@ class CustomSwitchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(children: [
-      CustomText(
-        text: title,
-        fontSize: size ?? 16.sp,
-        fontWeight: fontWeight ?? FontWeight.w700,
+      Expanded(
+        child: CustomText(
+          text: title,
+          fontSize: size ?? 16.sp,
+          fontWeight: fontWeight ?? FontWeight.w700,
+        ),
       ),
-      Spacer(),
+      16.pw,
       CupertinoSwitch(
         value: value,
         activeTrackColor: AppColors.primary,
