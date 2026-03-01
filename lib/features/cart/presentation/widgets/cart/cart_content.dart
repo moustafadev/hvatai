@@ -25,9 +25,31 @@ class CartContent extends StatelessWidget {
         final totalItemsCount = _calculateTotalItemsCount(state.carts);
         final cartItems =
             state.carts.expand((cart) => cart.items ?? <CartItem>[]).toList();
-        final totalCartPrice = state.totalCartPrice;
         final deliveryAddress =
             state.deliveryModel.isNotEmpty ? state.deliveryModel[0] : null;
+
+        // Calculate total from checkoutTotals based on delivery method
+        double totalCartPrice = 0.0;
+        for (final cart in state.carts) {
+          final checkoutTotals = cart.checkoutTotals;
+          if (checkoutTotals != null) {
+            final selectedTotals = state.deliveryMethod == 'delivery'
+                ? checkoutTotals.delivery
+                : checkoutTotals.pickup;
+            final grandTotal = selectedTotals?.grand;
+            if (grandTotal != null && grandTotal.finalValue != null) {
+              totalCartPrice += grandTotal.finalValue!;
+            } else {
+              // Fallback to state totalCartPrice
+              totalCartPrice = state.totalCartPrice;
+              break;
+            }
+          } else {
+            // Fallback to state totalCartPrice
+            totalCartPrice = state.totalCartPrice;
+            break;
+          }
+        }
 
         return BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, profileState) {
@@ -57,6 +79,9 @@ class CartContent extends StatelessWidget {
                     color: AppColors.blackColor.withValues(alpha: 0.2),
                   ),
                   16.ph,
+                  if (cartItems.isNotEmpty)
+                    DeliveryMethodSelector(items: cartItems),
+                  if (cartItems.isNotEmpty) 16.ph,
                   CartProductList(cartItems: cartItems),
                   16.ph,
                   CustomText(
@@ -166,6 +191,32 @@ class CartContent extends StatelessWidget {
                   CartPayButton(
                     hasDeliveryAddress: deliveryAddress != null,
                     onPay: () {
+                      final hasInvalidPickupItems = _hasPickupNotSupportedItems(
+                        cartItems,
+                        state.deliveryMethod,
+                      );
+
+                      if (hasInvalidPickupItems) {
+                        _showPickupRestrictionBottomSheet(
+                          context,
+                          onContinuePayment: () {
+                            basketCubit.createOrderFromCart(
+                              cartId: cartId,
+                              walletId: walletId,
+                              street: deliveryAddress?.street ?? '',
+                              city: deliveryAddress?.city ?? '',
+                              floor: deliveryAddress?.floor,
+                              frontDoor: deliveryAddress?.frontDoor,
+                              intercomCode: deliveryAddress?.intercomCode,
+                              apartment: deliveryAddress?.apartment,
+                              confirmationCall: true,
+                              tipAmount: state.selectedTipAmount,
+                            );
+                          },
+                        );
+                        return;
+                      }
+
                       if (deliveryAddress != null) {
                         basketCubit.createOrderFromCart(
                           cartId: cartId,
@@ -191,4 +242,119 @@ class CartContent extends StatelessWidget {
       },
     );
   }
+}
+
+bool _hasPickupNotSupportedItems(
+  List<CartItem> items,
+  String deliveryMethod,
+) {
+  if (deliveryMethod != 'pickup') return false;
+
+  for (final item in items) {
+    final fulfillment = item.fulfillment;
+    final supportsPickup = fulfillment?.pickup == true;
+    final supportsDelivery = fulfillment?.delivery == true;
+
+    // This matches your warningColor2 condition
+    if (!supportsPickup && supportsDelivery) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+void _showPickupRestrictionBottomSheet(
+  BuildContext context, {
+  required VoidCallback onContinuePayment,
+}) {
+  showModalBottomSheet(
+    context: context,
+    backgroundColor: Colors.transparent,
+    isScrollControlled: true,
+    builder: (context) {
+      return Container(
+        decoration: BoxDecoration(
+          color: AppColors.background,
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(16.r),
+          ),
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: 8),
+            Container(
+              width: 40,
+              height: 4,
+              margin: const EdgeInsets.only(bottom: 32),
+              decoration: BoxDecoration(
+                color: AppColors.greyButton,
+                borderRadius: BorderRadius.circular(100),
+              ),
+            ),
+            Container(
+              height: 48,
+              width: 48,
+              decoration: const BoxDecoration(
+                color: AppColors.primaryColor,
+                shape: BoxShape.circle,
+              ),
+              child: Center(
+                child: Image.asset(
+                  Assets.assetsImagesCircleWarning,
+                  height: 24,
+                  width: 24,
+                ),
+              ),
+            ),
+            12.ph,
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: CustomText(
+                text:
+                    'Некоторые товары доступны только для доставки, поэтому они останутся в корзине.',
+                fontSize: 14.sp,
+                fontWeight: FontWeight.w600,
+                textAlign: TextAlign.center,
+              ),
+            ),
+            24.ph,
+
+            /// 🔥 CLOSE BUTTON
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: CustomButton(
+                title: 'Закрыть',
+                color: AppColors.text,
+                textColor: AppColors.white,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w800,
+                onPressed: () => Navigator.pop(context),
+              ),
+            ),
+
+            12.ph,
+
+            /// 🔥 CONTINUE BUTTON
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: CustomButton(
+                title: 'Продолжить',
+                color: AppColors.primaryColor,
+                fontSize: 16.sp,
+                fontWeight: FontWeight.w800,
+                onPressed: () {
+                  Navigator.pop(context);
+                  onContinuePayment();
+                },
+              ),
+            ),
+
+            24.ph,
+          ],
+        ),
+      );
+    },
+  );
 }

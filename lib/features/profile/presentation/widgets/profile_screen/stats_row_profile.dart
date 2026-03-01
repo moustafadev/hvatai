@@ -19,7 +19,7 @@ class StatsRowProfile extends StatelessWidget {
           StatTileProfile(
             title: 'rating'.tr(),
             asset: Assets.assetsIconsStar,
-            value: rating.toStringAsFixed(1),
+            value: rating.toStringAsFixedSmart,
           ),
           StatTileProfile(
             title: 'orders'.tr(),

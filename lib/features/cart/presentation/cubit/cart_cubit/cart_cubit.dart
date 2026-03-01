@@ -118,6 +118,7 @@ class CartCubit extends Cubit<CartState> {
       await _updateProductCartInternal(itemId, newQuantity);
       _pendingUpdates.remove(itemId);
     }
+    getCartProducts();
   }
 
   Future<void> updateCartItemQuantity(int itemId, int newQuantity) async {
@@ -171,8 +172,11 @@ class CartCubit extends Cubit<CartState> {
       final updatedTempQuantities = Map<int, int>.from(state.tempQuantities);
       updatedTempQuantities.remove(itemId);
 
-      // Calculate total price from updated carts
-      final totalPrice = _calculateTotalPrice(updatedCarts);
+      // Calculate total price from checkoutTotals if available, otherwise fallback
+      final totalPrice = _calculateTotalPriceFromCheckoutTotals(
+        updatedCarts,
+        state.deliveryMethod,
+      );
 
       emit(state.copyWith(
         carts: updatedCarts,
@@ -227,7 +231,10 @@ class CartCubit extends Cubit<CartState> {
 
     emit(state.copyWith(
       carts: updatedCarts,
-      totalCartPrice: _calculateTotalPrice(updatedCarts),
+      totalCartPrice: _calculateTotalPriceFromCheckoutTotals(
+        updatedCarts,
+        state.deliveryMethod,
+      ),
     ));
 
     // API remove uses cartItemId (UpdateCartParams.cartId)
@@ -246,7 +253,10 @@ class CartCubit extends Cubit<CartState> {
             .toList();
         emit(state.copyWith(
           carts: finalCarts,
-          totalCartPrice: _calculateTotalPrice(finalCarts),
+          totalCartPrice: _calculateTotalPriceFromCheckoutTotals(
+            finalCarts,
+            state.deliveryMethod,
+          ),
         ));
       },
     );
@@ -268,13 +278,68 @@ class CartCubit extends Cubit<CartState> {
       id: -variantId, // temp unique
       quantity: 1,
       price: itemPrice,
-      item: MainVariantModel(
+      originalPrice: itemPrice,
+      totalPrice: itemPrice,
+      totalOriginalPrice: itemPrice,
+      item: CartItemProductWrapper(
         id: variantId, // ✅ variant id
-        productId: productId, // optional but useful
-        price: itemPrice,
-        product: MainProductModel(
+        product: CartItemProduct(
           id: productId,
-          name: product.productName,
+          productName: product.productName,
+          productDescription: product.productDescription,
+          type: null,
+          saleType: product.saleType,
+          deliveryAvailable: product.deliveryAvailable,
+          deliveryType: null,
+          deliveryTime: product.deliveryTime,
+          deliveryPrice: null,
+          deliveryDiscount: product.deliveryDiscount,
+          deliveryRadius: null,
+          status: null,
+          userId: product.userId,
+          categoryId: product.categoryId,
+          averageRating: product.averageRating,
+          ratingsCount: product.ratingsCount,
+          images: product.images,
+          variants: product.variants
+              .map((v) => CartItemVariant(
+                    id: v.id,
+                    sku: v.sku,
+                    price: v.price,
+                    stock: v.stock,
+                    attributes: v.attributes,
+                    discount: v.discount,
+                    discountType: v.discountType,
+                  ))
+              .toList(),
+          category: product.category != null
+              ? Category(
+                  id: product.category!.id,
+                  parentId: product.category!.parentId,
+                  name: product.category!.name,
+                  type: product.category!.type,
+                  icon: product.category!.icon,
+                  description: product.category!.description,
+                  userId: product.category!.userId,
+                  status: product.category!.status,
+                  createdAt: product.category!.createdAt,
+                  updatedAt: product.category!.updatedAt,
+                )
+              : null,
+          user: product.user,
+          owner: product.owner != null
+              ? UserModel(
+                  id: product.owner!.id,
+                  name: product.owner!.name,
+                  email: product.owner!.email,
+                  image: product.owner!.image,
+                )
+              : null,
+          isFavorited: product.isFavorited,
+          favoritesCount: product.favoritesCount,
+          ratings: product.ratings,
+          isInLiveAuction: product.isInLiveAuction,
+          liveAuction: product.liveAuction,
         ),
       ),
     );
@@ -298,7 +363,10 @@ class CartCubit extends Cubit<CartState> {
 
     emit(state.copyWith(
       carts: updatedCarts,
-      totalCartPrice: _calculateTotalPrice(updatedCarts),
+      totalCartPrice: _calculateTotalPriceFromCheckoutTotals(
+        updatedCarts,
+        state.deliveryMethod,
+      ),
     ));
 
     // ✅ API add must use variantId as itemId
@@ -376,17 +444,86 @@ class CartCubit extends Cubit<CartState> {
       (failure) =>
           emit(state.copyWith(isLoading: false, errorMessage: failure)),
       (cartList) {
-        // Calculate total price from the fetched carts
-        final totalPrice = _calculateTotalPrice(cartList);
+        // Determine initial delivery method based on fulfillment
+        String initialDeliveryMethod = 'pickup';
+        if (cartList.isNotEmpty) {
+          final firstCart = cartList.first;
+          if (firstCart.items != null && firstCart.items!.isNotEmpty) {
+            final firstItem = firstCart.items!.first;
+            final fulfillment = firstItem.fulfillment;
+            if (fulfillment != null) {
+              if (fulfillment.delivery == true && fulfillment.pickup == false) {
+                initialDeliveryMethod = 'delivery';
+              } else if (fulfillment.delivery == false &&
+                  fulfillment.pickup == true) {
+                initialDeliveryMethod = 'pickup';
+              } else if (fulfillment.delivery == true &&
+                  fulfillment.pickup == true) {
+                initialDeliveryMethod =
+                    'pickup'; // Default to pickup when both available
+              }
+            }
+          }
+        }
+
+        // Calculate total price from checkoutTotals based on delivery method
+        final totalPrice = _calculateTotalPriceFromCheckoutTotals(
+          cartList,
+          initialDeliveryMethod,
+        );
 
         emit(state.copyWith(
           isLoading: false,
           carts: cartList,
           tempQuantities: {},
           totalCartPrice: totalPrice,
+          deliveryMethod: initialDeliveryMethod,
         ));
       },
     );
+  }
+
+  void updateDeliveryMethod(String method) {
+    final totalPrice = _calculateTotalPriceFromCheckoutTotals(
+      state.carts,
+      method,
+    );
+    emit(state.copyWith(
+      deliveryMethod: method,
+      totalCartPrice: totalPrice,
+    ));
+  }
+
+  double _calculateTotalPriceFromCheckoutTotals(
+    List<CartModel> carts,
+    String deliveryMethod,
+  ) {
+    double total = 0.0;
+    for (final cart in carts) {
+      final checkoutTotals = cart.checkoutTotals;
+      if (checkoutTotals != null) {
+        final selectedTotals = deliveryMethod == 'delivery'
+            ? checkoutTotals.delivery
+            : checkoutTotals.pickup;
+        final grandTotal = selectedTotals?.grand;
+        if (grandTotal != null && grandTotal.finalValue != null) {
+          total += grandTotal.finalValue!;
+        } else {
+          // Fallback to calculating from items
+          for (final item in cart.items ?? <CartItem>[]) {
+            final itemPrice = (item.price ?? 0.0) * (item.quantity ?? 0);
+            total += itemPrice;
+          }
+        }
+      } else {
+        // Fallback to calculating from items
+        for (final item in cart.items ?? <CartItem>[]) {
+          final itemPrice = (item.price ?? 0.0) * (item.quantity ?? 0);
+          total += itemPrice;
+        }
+      }
+    }
+    return total;
   }
 
   Future<void> createOrderFromCart({
@@ -432,6 +569,7 @@ class CartCubit extends Cubit<CartState> {
         ));
       },
       (response) {
+        getCartProducts();
         emit(state.copyWith(
           isCreatingOrder: false,
           showOrderLoadingScreen: false,

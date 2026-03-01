@@ -13,10 +13,8 @@ class PusherManager {
 
     _pusher = PusherClient(
       options: PusherOptions(
-        key: 'uokyfuuczemhtftlo3uk',
-        host: 'khvatai.ru',
-        wsPort: 8443, // Used when encrypted is false
-        wssPort: 8443, // <-- ADD THIS LINE. Used when encrypted is true
+        key: 'khv_ws_key_2024_secure_1755890182',
+        host: 'reverb.khvatai.ru',
         encrypted: true,
         cluster: '',
         enableLogging: true,

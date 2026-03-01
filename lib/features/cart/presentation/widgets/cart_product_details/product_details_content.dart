@@ -30,6 +30,7 @@ class ProductDetailsContent extends StatelessWidget {
             price: variant.price,
           ),
           8.ph,
+
           if (product.category?.name != null)
             Row(
               children: [
@@ -40,19 +41,23 @@ class ProductDetailsContent extends StatelessWidget {
                 ),
               ],
             ),
+
           8.ph,
+
           ProductDetailsBadges(
             stock: variant.stock,
             saleType: product.saleType,
             currentBid: product.liveAuction?.currentBid,
           ),
+
           8.ph,
+
           if (product.productDescription?.isNotEmpty ?? false)
             ReadMoreText(
               product.productDescription ?? '',
               trimMode: TrimMode.Line,
               trimLines: 2,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.start,
               trimCollapsedText: "\n${"seeAll".tr()}",
               trimExpandedText: "\n${"seeLess".tr()}",
               moreStyle: TextStyle(
@@ -71,17 +76,73 @@ class ProductDetailsContent extends StatelessWidget {
                 color: AppColors.text,
               ),
             ),
+
           12.ph,
+
+          /// SELLER
           ProductDetailsSeller(
             ownerId: product.user?.id ?? 0,
             ownerName: product.user?.name,
             ownerImage: product.user?.image,
           ),
-          12.ph,
+
+          16.ph,
+
+          /// 🔥 ADD TO CART BUTTON
+          BlocBuilder<CartCubit, CartState>(
+            builder: (context, cartState) {
+              final variantId = product.variants.firstOrNull?.id;
+
+              final isInCart = variantId != null &&
+                  cartState.carts.any((cart) => (cart.items ?? [])
+                      .any((item) => item.item?.id == variantId));
+
+              return GestureDetector(
+                onTap: () {
+                  context
+                      .read<CartCubit>()
+                      .toggleProductInCart(context, product);
+                },
+                child: Container(
+                  height: 56,
+                  decoration: BoxDecoration(
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.circular(10.r),
+                  ),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                          Assets.assetsIconsStore,
+                          width: 24.w,
+                          height: 24.h,
+                        ),
+                        10.pw,
+                        Text(
+                          isInCart ? "В корзине" : "Добавить в корзину",
+                          style: TextStyle(
+                            color: AppColors.white,
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+
+          20.ph,
+
+          /// OTHER PRODUCTS
           ProductDetailsOtherProducts(
             ownerProducts: ownerProducts,
             productDetailsCubit: context.read<CartProductDetailsCubit>(),
           ),
+
           30.ph,
         ],
       ),

@@ -170,6 +170,7 @@
   "resendEmail": "Resend Email",
   "alreadyInFavorites": "Category already in favorites",
   "delete": "Delete",
+  "pleaseSelectDeliveryMethod": "Please select at least one delivery method.",
   "emailVerified": "Email verified successfully!",
   "deletePaymentMethod": "Delete payment method",
   "deleteAddressMessage": "Are you sure you want to delete this address?",

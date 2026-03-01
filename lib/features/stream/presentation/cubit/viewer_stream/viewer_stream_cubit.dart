@@ -50,7 +50,7 @@ class ViewerStreamCubit extends Cubit<ViewerStreamState> {
   }) : super(ViewerStreamState(
           stream: stream,
           joinData: joinData,
-          viewerCount: joinData?.stream.viewerCount ?? 0,
+          viewerCount: (joinData?.stream.viewerCount ?? 0) + 1,
           currentUserId: appLocal.getUserId(),
         )) {
     _initialize();

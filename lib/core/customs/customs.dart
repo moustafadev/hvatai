@@ -11,6 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hvatai/core/extensions/extension.dart';
 import 'package:hvatai/core/extensions/size_extension.dart';
 import 'package:hvatai/core/shared/utils/app_const.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';

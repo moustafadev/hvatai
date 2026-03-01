@@ -60,7 +60,7 @@ class PaymentMethodsSection extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                 ),
               ),
-              _CustomRadioButton(isSelected: walletSelected),
+              CustomRadioButton(isSelected: walletSelected),
             ],
           ),
         ),
@@ -158,8 +158,9 @@ class PaymentMethodsSection extends StatelessWidget {
 //   }
 // }
 
-class _CustomRadioButton extends StatelessWidget {
-  const _CustomRadioButton({
+class CustomRadioButton extends StatelessWidget {
+  const CustomRadioButton({
+    super.key,
     required this.isSelected,
   });
 
@@ -183,7 +184,7 @@ class _CustomRadioButton extends StatelessWidget {
                 width: 12.w,
                 height: 12.h,
                 decoration: const BoxDecoration(
-                  color: AppColors.primaryColor,
+                  color: AppColors.purple2,
                   shape: BoxShape.circle,
                 ),
               ),

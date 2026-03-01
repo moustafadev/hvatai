@@ -44,7 +44,7 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
     final firstProduct = widget.stream.streamProducts?.firstOrNull;
     if (firstProduct?.startingPrice != null &&
         firstProduct!.startingPrice != '0') {
-      return 'Стартовая цена ${firstProduct.startingPrice} Р';
+      return 'Стартовая цена ${double.tryParse(firstProduct.startingPrice ?? '0')?.toStringAsFixedSmart ?? '0'} Р';
     }
     return '';
   }

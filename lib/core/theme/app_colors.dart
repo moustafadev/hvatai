@@ -28,6 +28,10 @@ class AppColors {
   static const Color greyLite = Color(0xFFD0D0D0);
   static const Color raspberryPink = Color(0xFFFF3369);
   static const Color primaryColor = Color(0xFF7BE4EE);
+  static const Color warningText = Color(0xff4B4A4A);
+
+  static const Color warningColor = Color(0xffF1FBC5);
+  static const Color warningColor2 = Color(0xFFF9D0DD);
   static const Color disabledColor = Color(0xFFD2FBFF);
   static const Color blackColorIcon = Color(0xFF2A2A2A);
   static const Color grey = Color(0xFFB3B3B3);
