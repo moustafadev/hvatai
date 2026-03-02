@@ -90,10 +90,10 @@ class InitNewAddressScreen extends StatelessWidget {
                           onTap: () async {
                             final updatedAddress =
                                 await context.push<UserRegistrationData>(
-                              AppRoutes.editDeliveryAddress,
+                              AppRoutes.deliveryAddressForm,
                               extra: {
-                                'model': state.deliveryModel[index]
-                                    .toUserRegistrationData(),
+                                'mode': AddressFormMode.edit,
+                                'address': address.toUserRegistrationData(),
                               },
                             );
                             if (updatedAddress != null) {

@@ -91,7 +91,7 @@ class CartProductList extends StatelessWidget {
                                 ),
                                 4.ph,
                                 CustomText(
-                                  text: '${item.price?.toInt() ?? 0} ₽',
+                                  text: '${item.price?.toStringAsFixedSmart ?? 0} ₽',
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w700,
                                 ),

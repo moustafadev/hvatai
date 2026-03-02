@@ -178,10 +178,8 @@ class CartContent extends StatelessWidget {
                         fontWeight: FontWeight.w800,
                       ),
                       CustomText(
-                        text: ((totalCartPrice + state.selectedTipAmount) % 1 ==
-                                0
-                            ? "${(totalCartPrice + state.selectedTipAmount).toInt()} ₽"
-                            : "${totalCartPrice + state.selectedTipAmount} ₽"),
+                        text:
+                            "${(totalCartPrice + state.selectedTipAmount).toStringAsFixedSmart} ₽",
                         fontSize: 20.sp,
                         fontWeight: FontWeight.w800,
                       ),

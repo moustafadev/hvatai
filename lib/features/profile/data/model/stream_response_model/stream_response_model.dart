@@ -76,6 +76,7 @@ class StreamDataModel with _$StreamDataModel {
     )
     List<String>? gifHistory,
     @JsonKey(name: 'is_favorite') bool? isFavorited,
+    @JsonKey(name: 'favorites_count') int? favoritesCount,
     @JsonKey(name: 'last_thumbnail_generated_at')
     DateTime? lastThumbnailGeneratedAt,
     @JsonKey(name: 'last_gif_generated_at') DateTime? lastGifGeneratedAt,
@@ -146,6 +147,7 @@ class StreamUserModel with _$StreamUserModel {
     @JsonKey(name: 'personal_rating') double? personalRating,
     @JsonKey(name: 'personal_rating_count') int? personalRatingCount,
     @JsonKey(name: 'is_favorited') bool? isFavorited,
+
     @JsonKey(name: 'favorites_count') int? favoritesCount,
   }) = _StreamUserModel;
 

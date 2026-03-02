@@ -37,7 +37,7 @@ abstract class ServerConfig {
   static const String myRatings = "me/ratings";
   static const String inviteCode = "me/invite-code";
   static const String applyInviteCode = "me/apply-invite-code";
-
+  static const String profileImage = "profile/image";
   // =============================== Product & Cart & Order endpoints ===============================
 
   static String togglefav(int id) => '$products/$id/toggle-favorite';

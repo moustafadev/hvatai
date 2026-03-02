@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ToggleFavoriteState {
   Set<int> get favoritedStreamIds => throw _privateConstructorUsedError;
+  Map<int, int> get streamFavoriteCounts => throw _privateConstructorUsedError;
 
   /// Create a copy of ToggleFavoriteState
   /// with the given fields replaced by the non-null parameter values.
@@ -31,7 +32,7 @@ abstract class $ToggleFavoriteStateCopyWith<$Res> {
           ToggleFavoriteState value, $Res Function(ToggleFavoriteState) then) =
       _$ToggleFavoriteStateCopyWithImpl<$Res, ToggleFavoriteState>;
   @useResult
-  $Res call({Set<int> favoritedStreamIds});
+  $Res call({Set<int> favoritedStreamIds, Map<int, int> streamFavoriteCounts});
 }
 
 /// @nodoc
@@ -50,12 +51,17 @@ class _$ToggleFavoriteStateCopyWithImpl<$Res, $Val extends ToggleFavoriteState>
   @override
   $Res call({
     Object? favoritedStreamIds = null,
+    Object? streamFavoriteCounts = null,
   }) {
     return _then(_value.copyWith(
       favoritedStreamIds: null == favoritedStreamIds
           ? _value.favoritedStreamIds
           : favoritedStreamIds // ignore: cast_nullable_to_non_nullable
               as Set<int>,
+      streamFavoriteCounts: null == streamFavoriteCounts
+          ? _value.streamFavoriteCounts
+          : streamFavoriteCounts // ignore: cast_nullable_to_non_nullable
+              as Map<int, int>,
     ) as $Val);
   }
 }
@@ -68,7 +74,7 @@ abstract class _$$ToggleFavoriteStateImplCopyWith<$Res>
       __$$ToggleFavoriteStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Set<int> favoritedStreamIds});
+  $Res call({Set<int> favoritedStreamIds, Map<int, int> streamFavoriteCounts});
 }
 
 /// @nodoc
@@ -85,12 +91,17 @@ class __$$ToggleFavoriteStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? favoritedStreamIds = null,
+    Object? streamFavoriteCounts = null,
   }) {
     return _then(_$ToggleFavoriteStateImpl(
       favoritedStreamIds: null == favoritedStreamIds
           ? _value._favoritedStreamIds
           : favoritedStreamIds // ignore: cast_nullable_to_non_nullable
               as Set<int>,
+      streamFavoriteCounts: null == streamFavoriteCounts
+          ? _value._streamFavoriteCounts
+          : streamFavoriteCounts // ignore: cast_nullable_to_non_nullable
+              as Map<int, int>,
     ));
   }
 }
@@ -99,8 +110,10 @@ class __$$ToggleFavoriteStateImplCopyWithImpl<$Res>
 
 class _$ToggleFavoriteStateImpl implements _ToggleFavoriteState {
   const _$ToggleFavoriteStateImpl(
-      {final Set<int> favoritedStreamIds = const <int>{}})
-      : _favoritedStreamIds = favoritedStreamIds;
+      {final Set<int> favoritedStreamIds = const <int>{},
+      final Map<int, int> streamFavoriteCounts = const <int, int>{}})
+      : _favoritedStreamIds = favoritedStreamIds,
+        _streamFavoriteCounts = streamFavoriteCounts;
 
   final Set<int> _favoritedStreamIds;
   @override
@@ -112,9 +125,19 @@ class _$ToggleFavoriteStateImpl implements _ToggleFavoriteState {
     return EqualUnmodifiableSetView(_favoritedStreamIds);
   }
 
+  final Map<int, int> _streamFavoriteCounts;
+  @override
+  @JsonKey()
+  Map<int, int> get streamFavoriteCounts {
+    if (_streamFavoriteCounts is EqualUnmodifiableMapView)
+      return _streamFavoriteCounts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_streamFavoriteCounts);
+  }
+
   @override
   String toString() {
-    return 'ToggleFavoriteState(favoritedStreamIds: $favoritedStreamIds)';
+    return 'ToggleFavoriteState(favoritedStreamIds: $favoritedStreamIds, streamFavoriteCounts: $streamFavoriteCounts)';
   }
 
   @override
@@ -123,12 +146,16 @@ class _$ToggleFavoriteStateImpl implements _ToggleFavoriteState {
         (other.runtimeType == runtimeType &&
             other is _$ToggleFavoriteStateImpl &&
             const DeepCollectionEquality()
-                .equals(other._favoritedStreamIds, _favoritedStreamIds));
+                .equals(other._favoritedStreamIds, _favoritedStreamIds) &&
+            const DeepCollectionEquality()
+                .equals(other._streamFavoriteCounts, _streamFavoriteCounts));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_favoritedStreamIds));
+      runtimeType,
+      const DeepCollectionEquality().hash(_favoritedStreamIds),
+      const DeepCollectionEquality().hash(_streamFavoriteCounts));
 
   /// Create a copy of ToggleFavoriteState
   /// with the given fields replaced by the non-null parameter values.
@@ -141,11 +168,14 @@ class _$ToggleFavoriteStateImpl implements _ToggleFavoriteState {
 }
 
 abstract class _ToggleFavoriteState implements ToggleFavoriteState {
-  const factory _ToggleFavoriteState({final Set<int> favoritedStreamIds}) =
-      _$ToggleFavoriteStateImpl;
+  const factory _ToggleFavoriteState(
+      {final Set<int> favoritedStreamIds,
+      final Map<int, int> streamFavoriteCounts}) = _$ToggleFavoriteStateImpl;
 
   @override
   Set<int> get favoritedStreamIds;
+  @override
+  Map<int, int> get streamFavoriteCounts;
 
   /// Create a copy of ToggleFavoriteState
   /// with the given fields replaced by the non-null parameter values.

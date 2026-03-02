@@ -51,7 +51,7 @@ class ProductDetailsBadges extends StatelessWidget {
               color: AppColors.greyButton,
             ),
             child: CustomText(
-              text: '${currentBid!.toInt()} ₽',
+              text: '${currentBid!.toStringAsFixedSmart} ₽',
               fontSize: 10.sp,
               fontWeight: FontWeight.w600,
             ),

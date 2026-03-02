@@ -183,7 +183,7 @@ class ActivityBidItemCard extends StatelessWidget {
                           ),
                           CustomText(
                             text: bid.bidAmount != null
-                                ? '${bid.bidAmount! % 1 == 0 ? bid.bidAmount!.toInt().toString() : bid.bidAmount!.toStringAsFixed(0)} ₽'
+                                ? '${bid.bidAmount! % 1 == 0 ? bid.bidAmount!.toDouble().toStringAsFixedSmart : bid.bidAmount!.toStringAsFixedSmart} ₽'
                                 : '0 ₽',
                             fontSize: 14.sp,
                             fontWeight: FontWeight.w700,

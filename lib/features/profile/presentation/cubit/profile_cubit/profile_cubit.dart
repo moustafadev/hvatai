@@ -1,4 +1,3 @@
-
 import 'package:dartz/dartz.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
@@ -11,6 +10,7 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
 import 'package:hvatai/features/chat/presentation/cubit/chats_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
+import 'package:hvatai/features/profile/domain/usecases/delete_profile_image_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_profile_data_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/sign_out_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/update_profile_data_usecase.dart';
@@ -23,11 +23,12 @@ class ProfileCubit extends Cubit<ProfileState> {
   final GetProfileDataUsecase getProfileDataUseCase;
   final SignOutUsecase signOutUsecase;
   final UpdateProfileDataUsecase updateProfileDataUseCase;
-
+  final DeleteProfileImageUsecase deleteProfileImageUseCase;
   ProfileCubit(
     this.getProfileDataUseCase,
     this.signOutUsecase,
     this.updateProfileDataUseCase,
+    this.deleteProfileImageUseCase,
   ) : super(ProfileState(userProfileModel: UserRegistrationData()));
 
   Future<void> signOut(BuildContext context) async {
@@ -183,5 +184,20 @@ class ProfileCubit extends Cubit<ProfileState> {
         }
       },
     );
+  }
+
+  Future<void> deleteProfileImage(BuildContext context) async {
+    emit(state.copyWith(isLoading: true, errorMessage: ''));
+    final result = await deleteProfileImageUseCase.call(unit);
+    result.fold((failure) {
+      emit(state.copyWith(isLoading: false, errorMessage: failure));
+    }, (success) {
+      emit(state.copyWith(
+          isLoading: false,
+          userProfileModel: state.userProfileModel.copyWith(image: '')));
+      if (context.mounted) {
+        showFloatingMessageSuccess('profileImageDeletedSuccessfully'.tr());
+      }
+    });
   }
 }

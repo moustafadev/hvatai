@@ -226,6 +226,16 @@ class ApiServiceProfile extends ApiBase {
       }
     });
   }
+
+  Future<bool> deleteProfileImage() async {
+    return executeAndHandleErrorServer<bool>(() async {
+      final response = await delete(ServerConfig.profileImage);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return true;
+      }
+      return false;
+    });
+  }
 }
 
 Future<FormData> _prepareProfileFormData(UserRegistrationData params) async {

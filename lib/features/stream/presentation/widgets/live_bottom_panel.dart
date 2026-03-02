@@ -234,7 +234,7 @@ class _ProductDetailsSection extends StatelessWidget {
                       fontWeight: FontWeight.w600,
                     ),
                     CustomText(
-                      text: '$startPrice ₽',
+                      text: '${startPrice.toStringAsFixedSmart} ₽',
                       color: AppColors.primaryPink,
                       fontSize: 12,
                       fontWeight: FontWeight.w700,

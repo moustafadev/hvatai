@@ -29,7 +29,7 @@ class ProductDetailsHeader extends StatelessWidget {
               borderRadius: BorderRadius.circular(10.r),
             ),
             child: CustomText(
-              text: price! % 1 == 0 ? "${price!.toInt()} ₽" : "$price ₽",
+              text: "${price!.toStringAsFixedSmart} ₽",
               fontSize: 20.sp,
               fontWeight: FontWeight.w800,
               color: AppColors.white,

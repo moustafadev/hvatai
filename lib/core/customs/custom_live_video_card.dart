@@ -32,6 +32,7 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
         context.read<ToggleFavoriteCubit>().seedStream(
               id,
               isFavorited: widget.stream.isFavorited ?? false,
+              initialCount: widget.stream.favoritesCount ?? 0,
             );
       });
     }
@@ -137,23 +138,29 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                 Positioned(
                   top: 10,
                   right: 10,
-                  child: Column(
-                    children: [
-                      BlocBuilder<ToggleFavoriteCubit, ToggleFavoriteState>(
-                        buildWhen: (p, c) =>
-                            p.favoritedStreamIds != c.favoritedStreamIds,
-                        builder: (context, favState) {
-                          final streamId = widget.stream.id;
-                          final modelFav = widget.stream.isFavorited ?? false;
+                  child: BlocBuilder<ToggleFavoriteCubit, ToggleFavoriteState>(
+                    buildWhen: (p, c) =>
+                        p.favoritedStreamIds != c.favoritedStreamIds,
+                    builder: (context, favState) {
+                      final streamId = widget.stream.id;
+                      final modelFav = widget.stream.isFavorited ?? false;
 
-                          final isFav = streamId == null
-                              ? modelFav
-                              : (_seeded
-                                  ? favState.favoritedStreamIds
-                                      .contains(streamId)
-                                  : modelFav);
+                      final isFav = streamId == null
+                          ? modelFav
+                          : (_seeded
+                              ? favState.favoritedStreamIds.contains(streamId)
+                              : modelFav);
 
-                          return GestureDetector(
+                      final count = streamId == null
+                          ? widget.stream.favoritesCount ?? 0
+                          : favState.streamFavoriteCounts[streamId] ??
+                              widget.stream.favoritesCount ??
+                              0;
+
+                      final countString = count.toStringAsFixed(0);
+                      return Column(
+                        children: [
+                          GestureDetector(
                             onTap: streamId == null
                                 ? null
                                 : () => context
@@ -178,17 +185,17 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                                 ),
                               ),
                             ),
-                          );
-                        },
-                      ),
-                      2.ph,
-                      CustomText(
-                        text: "0",
-                        color: AppColors.white,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ],
+                          ),
+                          2.ph,
+                          CustomText(
+                            text: countString,
+                            color: AppColors.white,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ],
+                      );
+                    },
                   ),
                 ),
                 Positioned(

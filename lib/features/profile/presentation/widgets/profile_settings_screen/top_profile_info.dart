@@ -22,7 +22,9 @@ class TopProfileInfo extends StatelessWidget {
               ImageSource.gallery,
             );
       },
-      onDelete: () {},
+      onDelete: () {
+        context.read<ProfileCubit>().deleteProfileImage(context);
+      },
     );
   }
 

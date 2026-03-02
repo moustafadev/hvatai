@@ -15,41 +15,64 @@ class ToggleFavoriteCubit extends Cubit<ToggleFavoriteState> {
   bool isFavorited(int streamId) => state.favoritedStreamIds.contains(streamId);
 
   /// seed from model once (only if server says true)
-  void seedStream(int streamId, {required bool isFavorited}) {
-    if (!isFavorited) return;
-    if (state.favoritedStreamIds.contains(streamId)) return;
+  void seedStream(
+    int streamId, {
+    required bool isFavorited,
+    required int initialCount,
+  }) {
+    final newFavIds = Set<int>.from(state.favoritedStreamIds);
+    final newCounts = Map<int, int>.from(state.streamFavoriteCounts);
+
+    if (isFavorited) {
+      newFavIds.add(streamId);
+    }
+
+    newCounts[streamId] = initialCount;
+
     emit(state.copyWith(
-      favoritedStreamIds: {...state.favoritedStreamIds, streamId},
+      favoritedStreamIds: newFavIds,
+      streamFavoriteCounts: newCounts,
     ));
   }
 
   Future<void> toggleStreamFavorite(int streamId) async {
-    final prev = Set<int>.from(state.favoritedStreamIds);
-    final wasFav = prev.contains(streamId);
+    final prevIds = Set<int>.from(state.favoritedStreamIds);
+    final prevCounts = Map<int, int>.from(state.streamFavoriteCounts);
 
-    // optimistic local update
-    final next = Set<int>.from(prev);
+    final wasFav = prevIds.contains(streamId);
+
+    final newIds = Set<int>.from(prevIds);
+    final newCounts = Map<int, int>.from(prevCounts);
+
+    final currentCount = newCounts[streamId] ?? 0;
+
     if (wasFav) {
-      next.remove(streamId);
+      newIds.remove(streamId);
+      newCounts[streamId] = (currentCount - 1).clamp(0, 999999);
     } else {
-      next.add(streamId);
+      newIds.add(streamId);
+      newCounts[streamId] = currentCount + 1;
     }
-    emit(state.copyWith(favoritedStreamIds: next));
 
-    // api
+    emit(state.copyWith(
+      favoritedStreamIds: newIds,
+      streamFavoriteCounts: newCounts,
+    ));
+
     final result = await _toggleFavoriteUsecase(
       ToggleFavoriteParams(type: 'stream', id: streamId),
     );
 
     result.fold(
       (error) {
-        // rollback to prev
-        emit(state.copyWith(favoritedStreamIds: prev));
+        // rollback
+        emit(state.copyWith(
+          favoritedStreamIds: prevIds,
+          streamFavoriteCounts: prevCounts,
+        ));
         showFloatingMessageError(error);
       },
-      (_) {
-        // success: keep optimistic state
-      },
+      (_) {},
     );
   }
 

@@ -22,7 +22,7 @@ class ProductCardPriceSection extends StatelessWidget {
       children: [
         CustomText(
           text: price != null
-              ? (price! % 1 == 0 ? "${price!.toInt()} ₽" : "$price ₽")
+                ? "${price!.toStringAsFixedSmart} ₽"
               : "",
           fontSize: 20.sp,
           fontWeight: FontWeight.w700,

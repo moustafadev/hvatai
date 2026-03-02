@@ -134,4 +134,12 @@ class ProfileImplRepository implements ProfileRepository {
       return response;
     });
   }
+
+  @override
+  Future<Either<String, bool>> deleteProfileImage() {
+    return executeAndHandleError<bool>(() async {
+      final response = await _apiServiceProfile.deleteProfileImage();
+      return response;
+    });
+  }
 }

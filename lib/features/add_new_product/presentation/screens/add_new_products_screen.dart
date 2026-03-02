@@ -149,7 +149,7 @@ class NewProductWidgetBody extends StatelessWidget {
                             keyboardType: TextInputType.number,
                             initialValue: state.product.variants.isNotEmpty &&
                                     state.product.variants.first.price != null
-                                ? state.product.variants.first.price.toString()
+                                ? state.product.variants.first.price?.toStringAsFixedSmart
                                 : '',
                             onChanged: (value) =>
                                 cubit.updateField('startingBid', value),

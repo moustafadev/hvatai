@@ -12,7 +12,7 @@ class CartFloatingActionButton extends StatelessWidget {
         final totalPrice = state.totalCartPrice;
 
         return FloatingActionButton.extended(
-          backgroundColor: AppColors.primaryPink,
+          backgroundColor: AppColors.primaryColor,
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.r),
@@ -26,9 +26,7 @@ class CartFloatingActionButton extends StatelessWidget {
             width: 22.w,
           ),
           label: CustomText(
-            text: totalPrice % 1 == 0
-                ? "${totalPrice.toInt()} ₽"
-                : "$totalPrice ₽",
+            text: "${totalPrice.toStringAsFixedSmart} ₽",
             fontSize: 16.sp,
             fontWeight: FontWeight.w800,
             color: AppColors.background,

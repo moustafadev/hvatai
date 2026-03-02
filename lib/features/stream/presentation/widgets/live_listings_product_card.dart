@@ -40,9 +40,7 @@ class LiveListingsProductCard extends StatelessWidget {
         : (currentHighestBid > 0 ? currentHighestBid : variantPrice);
     final priceLabel = effectiveBidAmount == 0
         ? '—'
-        : (effectiveBidAmount % 1 == 0
-            ? '${effectiveBidAmount.toInt()} ₽'
-            : '${effectiveBidAmount.toStringAsFixed(2)} ₽');
+        : '${effectiveBidAmount.toStringAsFixedSmart} ₽';
 
     final isCurrentAuction = currentStreamProductId != null &&
         streamProduct.streamProductId != null &&

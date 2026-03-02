@@ -137,6 +137,7 @@ Future<void> setupLocator() async {
         locator(),
         locator(),
         locator(),
+        locator(),
       ));
   locator.registerFactory(() => ProfileClipsCubit(
         locator(),
@@ -209,7 +210,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => CategoriesCubit(
         locator(),
         locator(),
-        locator(),
+        locator(),  
       ));
   locator.registerFactory(() => LiveStreamsCubit(
         locator(),

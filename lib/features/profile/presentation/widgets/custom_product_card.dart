@@ -125,9 +125,7 @@ class MyCustomProductCard extends StatelessWidget {
                         ),
                         CustomText(
                           text: variant.price != null
-                              ? (variant.price! % 1 == 0
-                                  ? "${variant.price!.toInt()} ₽"
-                                  : "${variant.price} ₽")
+                              ? "${variant.price!.toStringAsFixedSmart} ₽"
                               : "",
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700,

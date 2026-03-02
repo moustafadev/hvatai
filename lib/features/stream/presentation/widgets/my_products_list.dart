@@ -170,9 +170,7 @@ class MyProductSelectionCard extends StatelessWidget {
     final price = variant.price ?? 0.0;
     final priceLabel = price == 0
         ? '—'
-        : (price % 1 == 0
-            ? '${price.toInt()} ₽'
-            : '${price.toStringAsFixed(2)} ₽');
+        : '${price.toStringAsFixedSmart} ₽';
 
     return Container(
       padding: EdgeInsets.all(16.w),

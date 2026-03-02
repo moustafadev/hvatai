@@ -384,6 +384,8 @@ mixin _$StreamDataModel {
   List<String>? get gifHistory => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_favorite')
   bool? get isFavorited => throw _privateConstructorUsedError;
+  @JsonKey(name: 'favorites_count')
+  int? get favoritesCount => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_thumbnail_generated_at')
   DateTime? get lastThumbnailGeneratedAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'last_gif_generated_at')
@@ -488,6 +490,7 @@ abstract class $StreamDataModelCopyWith<$Res> {
           toJson: _nullOrStringList)
       List<String>? gifHistory,
       @JsonKey(name: 'is_favorite') bool? isFavorited,
+      @JsonKey(name: 'favorites_count') int? favoritesCount,
       @JsonKey(name: 'last_thumbnail_generated_at')
       DateTime? lastThumbnailGeneratedAt,
       @JsonKey(name: 'last_gif_generated_at') DateTime? lastGifGeneratedAt,
@@ -563,6 +566,7 @@ class _$StreamDataModelCopyWithImpl<$Res, $Val extends StreamDataModel>
     Object? thumbnailHistory = freezed,
     Object? gifHistory = freezed,
     Object? isFavorited = freezed,
+    Object? favoritesCount = freezed,
     Object? lastThumbnailGeneratedAt = freezed,
     Object? lastGifGeneratedAt = freezed,
     Object? latestThumbnail = freezed,
@@ -691,6 +695,10 @@ class _$StreamDataModelCopyWithImpl<$Res, $Val extends StreamDataModel>
           ? _value.isFavorited
           : isFavorited // ignore: cast_nullable_to_non_nullable
               as bool?,
+      favoritesCount: freezed == favoritesCount
+          ? _value.favoritesCount
+          : favoritesCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       lastThumbnailGeneratedAt: freezed == lastThumbnailGeneratedAt
           ? _value.lastThumbnailGeneratedAt
           : lastThumbnailGeneratedAt // ignore: cast_nullable_to_non_nullable
@@ -872,6 +880,7 @@ abstract class _$$StreamDataModelImplCopyWith<$Res>
           toJson: _nullOrStringList)
       List<String>? gifHistory,
       @JsonKey(name: 'is_favorite') bool? isFavorited,
+      @JsonKey(name: 'favorites_count') int? favoritesCount,
       @JsonKey(name: 'last_thumbnail_generated_at')
       DateTime? lastThumbnailGeneratedAt,
       @JsonKey(name: 'last_gif_generated_at') DateTime? lastGifGeneratedAt,
@@ -948,6 +957,7 @@ class __$$StreamDataModelImplCopyWithImpl<$Res>
     Object? thumbnailHistory = freezed,
     Object? gifHistory = freezed,
     Object? isFavorited = freezed,
+    Object? favoritesCount = freezed,
     Object? lastThumbnailGeneratedAt = freezed,
     Object? lastGifGeneratedAt = freezed,
     Object? latestThumbnail = freezed,
@@ -1076,6 +1086,10 @@ class __$$StreamDataModelImplCopyWithImpl<$Res>
           ? _value.isFavorited
           : isFavorited // ignore: cast_nullable_to_non_nullable
               as bool?,
+      favoritesCount: freezed == favoritesCount
+          ? _value.favoritesCount
+          : favoritesCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       lastThumbnailGeneratedAt: freezed == lastThumbnailGeneratedAt
           ? _value.lastThumbnailGeneratedAt
           : lastThumbnailGeneratedAt // ignore: cast_nullable_to_non_nullable
@@ -1210,6 +1224,7 @@ class _$StreamDataModelImpl implements _StreamDataModel {
           toJson: _nullOrStringList)
       final List<String>? gifHistory,
       @JsonKey(name: 'is_favorite') this.isFavorited,
+      @JsonKey(name: 'favorites_count') this.favoritesCount,
       @JsonKey(name: 'last_thumbnail_generated_at')
       this.lastThumbnailGeneratedAt,
       @JsonKey(name: 'last_gif_generated_at') this.lastGifGeneratedAt,
@@ -1362,6 +1377,9 @@ class _$StreamDataModelImpl implements _StreamDataModel {
   @JsonKey(name: 'is_favorite')
   final bool? isFavorited;
   @override
+  @JsonKey(name: 'favorites_count')
+  final int? favoritesCount;
+  @override
   @JsonKey(name: 'last_thumbnail_generated_at')
   final DateTime? lastThumbnailGeneratedAt;
   @override
@@ -1448,7 +1466,7 @@ class _$StreamDataModelImpl implements _StreamDataModel {
 
   @override
   String toString() {
-    return 'StreamDataModel(id: $id, userId: $userId, title: $title, description: $description, channelName: $channelName, muxLiveStreamId: $muxLiveStreamId, muxStreamKey: $muxStreamKey, muxPlaybackId: $muxPlaybackId, livekitRoomName: $livekitRoomName, livekitServerUrl: $livekitServerUrl, livekitConfig: $livekitConfig, livekitRoomCreatedAt: $livekitRoomCreatedAt, status: $status, scheduledAt: $scheduledAt, startedAt: $startedAt, endedAt: $endedAt, isRecordingEnabled: $isRecordingEnabled, recordingResourceId: $recordingResourceId, recordingSid: $recordingSid, recordingFiles: $recordingFiles, thumbnailUrl: $thumbnailUrl, latestThumbnailUrl: $latestThumbnailUrl, latestGifUrl: $latestGifUrl, thumbnailHistory: $thumbnailHistory, gifHistory: $gifHistory, isFavorited: $isFavorited, lastThumbnailGeneratedAt: $lastThumbnailGeneratedAt, lastGifGeneratedAt: $lastGifGeneratedAt, latestThumbnail: $latestThumbnail, latestGif: $latestGif, viewerCount: $viewerCount, maxViewers: $maxViewers, isPublic: $isPublic, createdAt: $createdAt, updatedAt: $updatedAt, autoDeleteAfterEnd: $autoDeleteAfterEnd, autoDeleteHours: $autoDeleteHours, saveRecording: $saveRecording, enableComments: $enableComments, enableBidding: $enableBidding, minimumBidIncrement: $minimumBidIncrement, bidDurationSeconds: $bidDurationSeconds, streamSettings: $streamSettings, isMine: $isMine, user: $user, streamProducts: $streamProducts, categories: $categories, recordUrl: $recordUrl)';
+    return 'StreamDataModel(id: $id, userId: $userId, title: $title, description: $description, channelName: $channelName, muxLiveStreamId: $muxLiveStreamId, muxStreamKey: $muxStreamKey, muxPlaybackId: $muxPlaybackId, livekitRoomName: $livekitRoomName, livekitServerUrl: $livekitServerUrl, livekitConfig: $livekitConfig, livekitRoomCreatedAt: $livekitRoomCreatedAt, status: $status, scheduledAt: $scheduledAt, startedAt: $startedAt, endedAt: $endedAt, isRecordingEnabled: $isRecordingEnabled, recordingResourceId: $recordingResourceId, recordingSid: $recordingSid, recordingFiles: $recordingFiles, thumbnailUrl: $thumbnailUrl, latestThumbnailUrl: $latestThumbnailUrl, latestGifUrl: $latestGifUrl, thumbnailHistory: $thumbnailHistory, gifHistory: $gifHistory, isFavorited: $isFavorited, favoritesCount: $favoritesCount, lastThumbnailGeneratedAt: $lastThumbnailGeneratedAt, lastGifGeneratedAt: $lastGifGeneratedAt, latestThumbnail: $latestThumbnail, latestGif: $latestGif, viewerCount: $viewerCount, maxViewers: $maxViewers, isPublic: $isPublic, createdAt: $createdAt, updatedAt: $updatedAt, autoDeleteAfterEnd: $autoDeleteAfterEnd, autoDeleteHours: $autoDeleteHours, saveRecording: $saveRecording, enableComments: $enableComments, enableBidding: $enableBidding, minimumBidIncrement: $minimumBidIncrement, bidDurationSeconds: $bidDurationSeconds, streamSettings: $streamSettings, isMine: $isMine, user: $user, streamProducts: $streamProducts, categories: $categories, recordUrl: $recordUrl)';
   }
 
   @override
@@ -1503,6 +1521,8 @@ class _$StreamDataModelImpl implements _StreamDataModel {
                 .equals(other._gifHistory, _gifHistory) &&
             (identical(other.isFavorited, isFavorited) ||
                 other.isFavorited == isFavorited) &&
+            (identical(other.favoritesCount, favoritesCount) ||
+                other.favoritesCount == favoritesCount) &&
             (identical(other.lastThumbnailGeneratedAt, lastThumbnailGeneratedAt) ||
                 other.lastThumbnailGeneratedAt == lastThumbnailGeneratedAt) &&
             (identical(other.lastGifGeneratedAt, lastGifGeneratedAt) ||
@@ -1539,8 +1559,7 @@ class _$StreamDataModelImpl implements _StreamDataModel {
                 other.streamSettings == streamSettings) &&
             (identical(other.isMine, isMine) || other.isMine == isMine) &&
             (identical(other.user, user) || other.user == user) &&
-            const DeepCollectionEquality()
-                .equals(other._streamProducts, _streamProducts) &&
+            const DeepCollectionEquality().equals(other._streamProducts, _streamProducts) &&
             const DeepCollectionEquality().equals(other._categories, _categories) &&
             (identical(other.recordUrl, recordUrl) || other.recordUrl == recordUrl));
   }
@@ -1575,6 +1594,7 @@ class _$StreamDataModelImpl implements _StreamDataModel {
         const DeepCollectionEquality().hash(_thumbnailHistory),
         const DeepCollectionEquality().hash(_gifHistory),
         isFavorited,
+        favoritesCount,
         lastThumbnailGeneratedAt,
         lastGifGeneratedAt,
         latestThumbnail,
@@ -1657,6 +1677,7 @@ abstract class _StreamDataModel implements StreamDataModel {
           toJson: _nullOrStringList)
       final List<String>? gifHistory,
       @JsonKey(name: 'is_favorite') final bool? isFavorited,
+      @JsonKey(name: 'favorites_count') final int? favoritesCount,
       @JsonKey(name: 'last_thumbnail_generated_at')
       final DateTime? lastThumbnailGeneratedAt,
       @JsonKey(name: 'last_gif_generated_at')
@@ -1776,6 +1797,9 @@ abstract class _StreamDataModel implements StreamDataModel {
   @override
   @JsonKey(name: 'is_favorite')
   bool? get isFavorited;
+  @override
+  @JsonKey(name: 'favorites_count')
+  int? get favoritesCount;
   @override
   @JsonKey(name: 'last_thumbnail_generated_at')
   DateTime? get lastThumbnailGeneratedAt;

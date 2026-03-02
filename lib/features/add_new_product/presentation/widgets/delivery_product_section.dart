@@ -49,7 +49,7 @@ class DeliveryProductSection extends StatelessWidget {
                   hintText: "${'deliveryCost'.tr()}, ₽",
                   readOnly: !isDeliveryAvailable,
                   initialValue:
-                      state.product.deliveryDiscount?.toString() ?? '',
+                      state.product.deliveryDiscount?.toStringAsFixedSmart ?? '',
                   keyboardType:
                       const TextInputType.numberWithOptions(decimal: true),
                   enabled: isDeliveryAvailable,

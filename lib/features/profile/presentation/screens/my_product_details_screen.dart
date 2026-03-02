@@ -155,9 +155,8 @@ class _MyProductDetailsScreenState extends State<MyProductDetailsScreen> {
                                   borderRadius: BorderRadius.circular(10.r),
                                 ),
                                 child: CustomText(
-                                  text: (variant?.price?.toInt() ?? 1) % 1 == 0
-                                      ? "${variant?.price!.toInt()} ₽"
-                                      : "${variant?.price} ₽",
+                                  text:
+                                      "${variant?.price?.toStringAsFixedSmart ?? 0} ₽",
                                   fontSize: 20.sp,
                                   fontWeight: FontWeight.w800,
                                   color: AppColors.background,

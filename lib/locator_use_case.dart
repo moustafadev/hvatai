@@ -45,6 +45,7 @@ import 'package:hvatai/features/payment_method/domain/usecases/delete_card_useca
 import 'package:hvatai/features/payment_method/domain/usecases/get_card_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/create_stream_uscecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/delete_account_usecase.dart';
+import 'package:hvatai/features/profile/domain/usecases/delete_profile_image_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_my_products_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_my_ratings_usecase.dart';
 import 'package:hvatai/features/profile/domain/usecases/get_user_ratings_usecase.dart';
@@ -105,6 +106,7 @@ void locatorUseCase() {
   locator.registerLazySingleton(() => GetNotificationUsecase(locator()));
   locator.registerLazySingleton(() => AddNewCardUsecase(locator()));
   locator.registerLazySingleton(() => DeleteAccountUsecase(locator()));
+  locator.registerLazySingleton(() => DeleteProfileImageUsecase(locator()));
   locator.registerLazySingleton(() => SignOutUsecase(locator()));
   locator.registerLazySingleton(() => DeleteAddressUsecase(locator()));
   locator.registerLazySingleton(() => DeleteCardUsecase(locator()));

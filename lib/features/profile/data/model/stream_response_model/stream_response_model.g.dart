@@ -72,6 +72,7 @@ _$StreamDataModelImpl _$$StreamDataModelImplFromJson(
       thumbnailHistory: _stringListOrNull(json['thumbnail_history']),
       gifHistory: _stringListOrNull(json['gif_history']),
       isFavorited: json['is_favorite'] as bool?,
+      favoritesCount: (json['favorites_count'] as num?)?.toInt(),
       lastThumbnailGeneratedAt: json['last_thumbnail_generated_at'] == null
           ? null
           : DateTime.parse(json['last_thumbnail_generated_at'] as String),
@@ -143,6 +144,7 @@ Map<String, dynamic> _$$StreamDataModelImplToJson(
       'thumbnail_history': _nullOrStringList(instance.thumbnailHistory),
       'gif_history': _nullOrStringList(instance.gifHistory),
       'is_favorite': instance.isFavorited,
+      'favorites_count': instance.favoritesCount,
       'last_thumbnail_generated_at':
           instance.lastThumbnailGeneratedAt?.toIso8601String(),
       'last_gif_generated_at': instance.lastGifGeneratedAt?.toIso8601String(),

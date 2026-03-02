@@ -26,9 +26,7 @@ class ProductDetailsFloatingButton extends StatelessWidget {
           width: 22.w,
         ),
         label: CustomText(
-          text: totalCartPrice % 1 == 0
-              ? "${totalCartPrice.toInt()} ₽"
-              : "$totalCartPrice ₽",
+          text: "${totalCartPrice.toStringAsFixedSmart} ₽",
           fontSize: 20.sp,
           fontWeight: FontWeight.w800,
         ),
