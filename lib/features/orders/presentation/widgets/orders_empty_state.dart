@@ -1,10 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hvatai/core/customs/customs.dart';
-import 'package:hvatai/core/extensions/size_extension.dart';
-import 'package:hvatai/core/theme/app_colors.dart';
-import 'package:hvatai/core/theme/assets.dart';
+part of '../orders.dart';
 
 /// Empty state widget for when there are no orders
 /// Displays an icon, message, and retry button

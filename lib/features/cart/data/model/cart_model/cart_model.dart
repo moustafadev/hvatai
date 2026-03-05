@@ -311,7 +311,7 @@ List<String>? _imagesFromJson(dynamic json) {
   if (json is List) {
     return json
         .map((e) =>
-            e is Map<String, dynamic> ? e['image_path'] as String? : null)
+            e is Map<String, dynamic> ? e['url'] as String? : null)
         .whereType<String>()
         .toList();
   }

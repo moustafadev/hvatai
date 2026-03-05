@@ -1,8 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hvatai/core/customs/customs.dart';
-import 'package:hvatai/features/orders/presentation/cubit/my_orders_cubit.dart';
+part of '../orders.dart';
 
 /// Filter bar widget for filtering orders by status
 /// Displays horizontal scrollable filter buttons

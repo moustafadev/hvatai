@@ -25,11 +25,14 @@ class SearchLiveVideoWidget extends StatelessWidget {
       items: liveStreams,
       liveCardBuilder: (context, stream) => GestureDetector(
         onTap: () {
-          // joinLiveStreamingWithPrefs(stream.channelId);
+          context.read<LiveStreamsCubit>().joinStream(
+              stream: stream,
+              isPublisher: false, // viewer
+              context: context);
         },
         child: CustomLiveVideoCard(
           stream: stream,
-          price: stream.streamProducts?.firstOrNull?.startingPrice ,
+          price: stream.streamProducts?.firstOrNull?.startingPrice,
           categoryName: stream.categories?.firstOrNull?.name,
         ),
       ),

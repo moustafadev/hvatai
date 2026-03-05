@@ -16,7 +16,7 @@ import 'package:hvatai/features/awards/presentation/awards.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
 import 'package:hvatai/features/notifications/presentation/cubit/notifications_cubit/notifications_cubit.dart';
 import 'package:hvatai/features/notifications/presentation/notifications.dart';
-import 'package:hvatai/features/orders/presentation/screens/my_orders_screen.dart';
+import 'package:hvatai/features/orders/presentation/orders.dart';
 import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/presentation/cubit/edit_profile/edit_profile_cubit.dart';

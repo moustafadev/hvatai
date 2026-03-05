@@ -16,9 +16,6 @@ class CartProductDetailsScreen extends StatelessWidget {
           return Scaffold(
               body: const Center(child: CustomCircularProgressIndicator()));
         }
-        if (state.errorMessage.isNotEmpty) {
-          return Scaffold(body: Center(child: Text(state.errorMessage)));
-        }
 
         // Safety check: ensure product is loaded
         if (state.product.id == null) {

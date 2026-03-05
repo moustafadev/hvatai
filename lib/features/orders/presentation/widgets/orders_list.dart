@@ -1,6 +1,4 @@
-import 'package:flutter/material.dart';
-import 'package:hvatai/features/orders/data/model/order_model/order_model.dart';
-import 'package:hvatai/features/orders/presentation/widgets/order_card.dart';
+part of '../orders.dart';
 
 /// List widget for displaying orders
 /// Shows a scrollable list of order cards

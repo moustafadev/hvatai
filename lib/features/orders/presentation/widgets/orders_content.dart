@@ -1,13 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:hvatai/core/customs/customs.dart';
-import 'package:hvatai/core/extensions/size_extension.dart';
-import 'package:hvatai/features/orders/presentation/cubit/my_orders_cubit.dart';
-import 'package:hvatai/features/orders/presentation/widgets/orders_empty_state.dart';
-import 'package:hvatai/features/orders/presentation/widgets/orders_filter_bar.dart';
-import 'package:hvatai/features/orders/presentation/widgets/orders_list.dart';
+part of '../orders.dart';
 
 /// Main content widget for the orders screen
 /// Handles loading, error, and success states

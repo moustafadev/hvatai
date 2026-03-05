@@ -13,8 +13,15 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => locator<SearchCubit>()..initialize(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => locator<SearchCubit>()..initialize(),
+        ),
+        BlocProvider(
+          create: (_) => locator<LiveStreamsCubit>(),
+        ),
+      ],
       child: BlocBuilder<SearchCubit, SearchState>(
         builder: (context, state) {
           final cubit = context.read<SearchCubit>();
