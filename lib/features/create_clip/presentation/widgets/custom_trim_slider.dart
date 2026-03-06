@@ -1,8 +1,9 @@
 part of '../clips.dart';
 
 class CustomTrimSlider extends StatefulWidget {
-  final File videoFile;
   final Duration videoDuration;
+  final List<String?>? previewImageUrls; // New: URLs from server
+  final bool isLoading;
   final double startValue; // in milliseconds
   final double endValue; // in milliseconds
   final ValueChanged<double> onStartChanged;
@@ -14,9 +15,10 @@ class CustomTrimSlider extends StatefulWidget {
 
   const CustomTrimSlider({
     super.key,
-    required this.videoFile,
     required this.videoDuration,
     required this.startValue,
+    this.previewImageUrls,
+    required this.isLoading,
     required this.endValue,
     required this.onStartChanged,
     required this.onEndChanged,
@@ -31,8 +33,6 @@ class CustomTrimSlider extends StatefulWidget {
 }
 
 class _CustomTrimSliderState extends State<CustomTrimSlider> {
-  List<Uint8List?> _thumbnails = [];
-  bool _isLoading = true;
   double _startPosition = 0.0;
   double _endPosition = 0.0;
   bool _isDraggingStart = false;
@@ -42,7 +42,6 @@ class _CustomTrimSliderState extends State<CustomTrimSlider> {
   @override
   void initState() {
     super.initState();
-    _generateThumbnails();
     _updatePositions();
   }
 
@@ -59,47 +58,18 @@ class _CustomTrimSliderState extends State<CustomTrimSlider> {
     if (_availableWidth == null) return;
 
     final totalDuration = widget.videoDuration.inMilliseconds;
-
+    
     setState(() {
       // Positions are relative to the thumbnail area (inside the light blue container)
       _startPosition = (widget.startValue / totalDuration) * _availableWidth!;
       _endPosition = (widget.endValue / totalDuration) * _availableWidth!;
+      print("==================");
+      print(widget.endValue);
+      print(totalDuration);
+      print(_startPosition);
+      print(_endPosition);
+      print("==================");
     });
-  }
-
-  Future<void> _generateThumbnails() async {
-    setState(() {
-      _isLoading = true;
-    });
-
-    final thumbnails = <Uint8List?>[];
-    final totalDuration = widget.videoDuration.inMilliseconds;
-    final interval = totalDuration / widget.thumbnailCount;
-
-    for (int i = 0; i < widget.thumbnailCount; i++) {
-      try {
-        final timeMs = (interval * i).toInt();
-        final thumbnail = await VideoThumbnail.thumbnailData(
-          video: widget.videoFile.path,
-          imageFormat: ImageFormat.JPEG,
-          timeMs: timeMs,
-          quality: 75,
-        );
-        thumbnails.add(thumbnail);
-      } catch (e) {
-        debugPrint('Error generating thumbnail $i: $e');
-        thumbnails.add(null);
-      }
-    }
-
-    if (mounted) {
-      setState(() {
-        _thumbnails = thumbnails;
-        _isLoading = false;
-      });
-      // Notify parent that thumbnails are loaded
-      widget.onThumbnailsLoaded?.call();
-    }
   }
 
   double _getValueFromPosition(double position) {
@@ -173,8 +143,8 @@ class _CustomTrimSliderState extends State<CustomTrimSlider> {
               _TimelineWrapperWidget(
                 arrowButtonSize: arrowButtonSize,
                 thumbnailHeight: widget.thumbnailHeight,
-                isLoading: _isLoading,
-                thumbnails: _thumbnails,
+                isLoading: widget.isLoading,
+                thumbnails: widget.previewImageUrls ?? [],
                 thumbnailCount: widget.thumbnailCount,
                 startPosition: _startPosition,
                 endPosition: _endPosition,
@@ -245,7 +215,7 @@ class _TimelineWrapperWidget extends StatelessWidget {
   final double arrowButtonSize;
   final double thumbnailHeight;
   final bool isLoading;
-  final List<Uint8List?> thumbnails;
+  final List<String?> thumbnails;
   final int thumbnailCount;
   final double startPosition;
   final double endPosition;
@@ -322,7 +292,7 @@ class _TimelineWrapperWidget extends StatelessWidget {
 class _TimelineContainerWidget extends StatelessWidget {
   final double thumbnailHeight;
   final bool isLoading;
-  final List<Uint8List?> thumbnails;
+  final List<String?> thumbnails;
   final int thumbnailCount;
   final double startPosition;
   final double endPosition;
@@ -391,7 +361,7 @@ class _TimelineContainerWidget extends StatelessWidget {
 
 // Thumbnails row widget with clipping
 class _ThumbnailsRowWidget extends StatelessWidget {
-  final List<Uint8List?> thumbnails;
+  final List<String?> thumbnails;
   final int thumbnailCount;
   final double thumbnailHeight;
   final double startPosition;
@@ -426,7 +396,7 @@ class _ThumbnailsRowWidget extends StatelessWidget {
 
 // Individual thumbnail item widget
 class _ThumbnailItemWidget extends StatelessWidget {
-  final Uint8List? thumbnail;
+  final String? thumbnail;
   final double thumbnailHeight;
 
   const _ThumbnailItemWidget({
@@ -446,8 +416,8 @@ class _ThumbnailItemWidget extends StatelessWidget {
           ),
         ),
         child: thumbnail != null
-            ? Image.memory(
-                thumbnail!,
+            ? CustomImage(
+                imageSource: thumbnail ?? "",
                 fit: BoxFit.cover,
               )
             : Container(

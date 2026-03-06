@@ -1,32 +1,29 @@
-import 'package:dio/dio.dart';
 import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:hvatai/features/create_clip/data/models/clip_model/clip_model.dart';
+import 'package:hvatai/features/create_clip/data/models/preview_images/preview_images_model.dart';
+import 'package:hvatai/features/create_clip/domain/usecases/upload_clip_usecase.dart';
 
 class ApiServiceClip extends ApiBase {
   /// POST: streams/{streamId}/clips
   /// body: FormData with { name: "...", video: MultipartFile }
-  Future<bool> uploadClip({
-    required int streamId,
-    required String name,
-    required String videoFilePath,
-  }) async {
+  Future<bool> uploadClip(UploadClipParams params) async {
     return executeAndHandleErrorServer<bool>(() async {
-      final path = ServerConfig.uploadClip(streamId);
-
-      final formData = FormData.fromMap({
-        'name': name,
-        'video': await MultipartFile.fromFile(
-          videoFilePath,
-          filename: videoFilePath.split('/').last,
-        ),
-      });
+      final path = ServerConfig.uploadClip(params.streamId);
 
       final res = await post(
         path,
-        body: formData,
-        contentType: 'multipart/form-data',
+        body: {
+          "name": params.name,
+          "segments": [
+            {
+              "from": _formatSeconds(params.startValue),
+              "to": _formatSeconds(params.endValue),
+            }
+          ]
+        },
+        contentType: 'application/json',
       );
 
       if (res.statusCode == 200 || res.statusCode == 201) {
@@ -88,4 +85,28 @@ class ApiServiceClip extends ApiBase {
       return false;
     });
   }
+
+  Future<PreviewImagesResponse> getPreviewImages(int streamId) async {
+    return executeAndHandleErrorServer<PreviewImagesResponse>(() async {
+      final path = ServerConfig.previewImages(streamId);
+      final res = await get(path);
+
+      if (res.statusCode == 200) {
+        return PreviewImagesResponse.fromJson(res.json);
+      }
+
+      throw Exception(
+          'Failed to get preview images for stream $streamId: ${res.statusCode}');
+    });
+  }
+}
+
+String _formatSeconds(num seconds) {
+  final totalSeconds = seconds.floor();
+
+  final hours = (totalSeconds ~/ 3600).toString().padLeft(2, '0');
+  final minutes = ((totalSeconds % 3600) ~/ 60).toString().padLeft(2, '0');
+  final secs = (totalSeconds % 60).toString().padLeft(2, '0');
+
+  return "$hours:$minutes:$secs";
 }

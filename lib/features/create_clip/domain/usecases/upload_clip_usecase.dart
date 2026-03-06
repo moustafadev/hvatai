@@ -8,22 +8,20 @@ class UploadClipUsecase implements UseCase<bool, UploadClipParams> {
 
   @override
   Future<Either<String, bool>> call(UploadClipParams params) {
-    return _repo.uploadClip(
-      streamId: params.streamId,
-      name: params.name,
-      videoFilePath: params.videoFilePath,
-    );
+    return _repo.uploadClip(params);
   }
 }
 
 class UploadClipParams {
   final int streamId;
   final String name;
-  final String videoFilePath;
+  final double startValue;
+  final double endValue;
 
   UploadClipParams({
     required this.streamId,
     required this.name,
-    required this.videoFilePath,
+    required this.startValue,
+    required this.endValue,
   });
 }

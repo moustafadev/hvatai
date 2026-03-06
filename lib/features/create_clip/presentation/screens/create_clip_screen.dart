@@ -34,7 +34,9 @@ class CreateClipScreen extends StatelessWidget {
               ),
             ],
           ),
-          body: const EditVideoBody(),
+          body: EditVideoBody(
+            videoUrl: videoUrl,
+          ),
         );
       },
     );

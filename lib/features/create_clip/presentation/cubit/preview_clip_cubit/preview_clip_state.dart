@@ -9,7 +9,9 @@ class PreviewClipState with _$PreviewClipState {
     @Default(false) bool isPlaying,
     @Default(false) bool isUploading,
     @Default('') String errorMessage,
-    String? videoPath,
+    String? videoUrl,
+    double? startValue,
+    double? endValue,
     int? streamId,
     String? clipName,
   }) = _PreviewClipState;

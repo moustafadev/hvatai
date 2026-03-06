@@ -12,12 +12,15 @@ class VideoThumbnailPlayer extends StatefulWidget {
     super.key,
     required this.videoPath,
     this.height,
+    this.controller, // optional pre-initialized controller
+
     this.width,
   });
 
   final String videoPath;
   final double? height;
   final double? width;
+  final VideoPlayerController? controller;
 
   @override
   State<VideoThumbnailPlayer> createState() => _VideoThumbnailPlayerState();
@@ -62,7 +65,29 @@ class _VideoThumbnailPlayerState extends State<VideoThumbnailPlayer>
   @override
   void initState() {
     super.initState();
-    _initializeVideo();
+
+    // If controller is provided from outside, use it directly
+    if (widget.controller != null) {
+      _controller = widget.controller;
+      _isInitialized = _controller!.value.isInitialized;
+      _isPlaying = _controller!.value.isPlaying;
+
+      // Add listener if not already added
+      _controller!.addListener(_controllerListener);
+    } else {
+      _initializeVideo();
+    }
+  }
+
+  void _controllerListener() {
+    if (!mounted || _controller == null) return;
+
+    final value = _controller!.value;
+    setState(() {
+      _isPlaying = value.isPlaying;
+      _isInitialized = value.isInitialized;
+      if (value.hasError) _errorMessage = value.errorDescription;
+    });
   }
 
   Future<void> _initializeVideo() async {

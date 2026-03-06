@@ -1,13 +1,11 @@
 part of '../clips.dart';
 
 class PreviewClipScreen extends StatelessWidget {
-  final String videoPath;
   final int? streamId;
   final String clipName;
 
   const PreviewClipScreen({
     super.key,
-    required this.videoPath,
     this.streamId,
     required this.clipName,
   });
@@ -43,7 +41,8 @@ class PreviewClipScreen extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(24),
                     child: VideoThumbnailPlayer(
-                      videoPath: videoPath,
+                      videoPath: state.videoUrl ?? "",
+                      controller: cubit.controller,
                     ),
                   ),
                 ),

@@ -23,14 +23,15 @@ mixin _$CreateClipState {
   bool get hasReachedEnd => throw _privateConstructorUsedError;
   bool get isSharedController => throw _privateConstructorUsedError;
   bool get isThumbnailsLoaded => throw _privateConstructorUsedError;
-  String? get videoPath => throw _privateConstructorUsedError;
-  String? get trimmedVideoPath => throw _privateConstructorUsedError;
+  bool get isPreviewLoading => throw _privateConstructorUsedError; // new
   Duration? get videoDuration => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   double get startValue => throw _privateConstructorUsedError;
   double get endValue => throw _privateConstructorUsedError;
   String get clipName => throw _privateConstructorUsedError;
   int? get streamId => throw _privateConstructorUsedError;
+  PreviewImagesResponse? get previewImages =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of CreateClipState
   /// with the given fields replaced by the non-null parameter values.
@@ -53,14 +54,16 @@ abstract class $CreateClipStateCopyWith<$Res> {
       bool hasReachedEnd,
       bool isSharedController,
       bool isThumbnailsLoaded,
-      String? videoPath,
-      String? trimmedVideoPath,
+      bool isPreviewLoading,
       Duration? videoDuration,
       String errorMessage,
       double startValue,
       double endValue,
       String clipName,
-      int? streamId});
+      int? streamId,
+      PreviewImagesResponse? previewImages});
+
+  $PreviewImagesResponseCopyWith<$Res>? get previewImages;
 }
 
 /// @nodoc
@@ -85,14 +88,14 @@ class _$CreateClipStateCopyWithImpl<$Res, $Val extends CreateClipState>
     Object? hasReachedEnd = null,
     Object? isSharedController = null,
     Object? isThumbnailsLoaded = null,
-    Object? videoPath = freezed,
-    Object? trimmedVideoPath = freezed,
+    Object? isPreviewLoading = null,
     Object? videoDuration = freezed,
     Object? errorMessage = null,
     Object? startValue = null,
     Object? endValue = null,
     Object? clipName = null,
     Object? streamId = freezed,
+    Object? previewImages = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -123,14 +126,10 @@ class _$CreateClipStateCopyWithImpl<$Res, $Val extends CreateClipState>
           ? _value.isThumbnailsLoaded
           : isThumbnailsLoaded // ignore: cast_nullable_to_non_nullable
               as bool,
-      videoPath: freezed == videoPath
-          ? _value.videoPath
-          : videoPath // ignore: cast_nullable_to_non_nullable
-              as String?,
-      trimmedVideoPath: freezed == trimmedVideoPath
-          ? _value.trimmedVideoPath
-          : trimmedVideoPath // ignore: cast_nullable_to_non_nullable
-              as String?,
+      isPreviewLoading: null == isPreviewLoading
+          ? _value.isPreviewLoading
+          : isPreviewLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       videoDuration: freezed == videoDuration
           ? _value.videoDuration
           : videoDuration // ignore: cast_nullable_to_non_nullable
@@ -155,7 +154,25 @@ class _$CreateClipStateCopyWithImpl<$Res, $Val extends CreateClipState>
           ? _value.streamId
           : streamId // ignore: cast_nullable_to_non_nullable
               as int?,
+      previewImages: freezed == previewImages
+          ? _value.previewImages
+          : previewImages // ignore: cast_nullable_to_non_nullable
+              as PreviewImagesResponse?,
     ) as $Val);
+  }
+
+  /// Create a copy of CreateClipState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $PreviewImagesResponseCopyWith<$Res>? get previewImages {
+    if (_value.previewImages == null) {
+      return null;
+    }
+
+    return $PreviewImagesResponseCopyWith<$Res>(_value.previewImages!, (value) {
+      return _then(_value.copyWith(previewImages: value) as $Val);
+    });
   }
 }
 
@@ -175,14 +192,17 @@ abstract class _$$CreateClipStateImplCopyWith<$Res>
       bool hasReachedEnd,
       bool isSharedController,
       bool isThumbnailsLoaded,
-      String? videoPath,
-      String? trimmedVideoPath,
+      bool isPreviewLoading,
       Duration? videoDuration,
       String errorMessage,
       double startValue,
       double endValue,
       String clipName,
-      int? streamId});
+      int? streamId,
+      PreviewImagesResponse? previewImages});
+
+  @override
+  $PreviewImagesResponseCopyWith<$Res>? get previewImages;
 }
 
 /// @nodoc
@@ -205,14 +225,14 @@ class __$$CreateClipStateImplCopyWithImpl<$Res>
     Object? hasReachedEnd = null,
     Object? isSharedController = null,
     Object? isThumbnailsLoaded = null,
-    Object? videoPath = freezed,
-    Object? trimmedVideoPath = freezed,
+    Object? isPreviewLoading = null,
     Object? videoDuration = freezed,
     Object? errorMessage = null,
     Object? startValue = null,
     Object? endValue = null,
     Object? clipName = null,
     Object? streamId = freezed,
+    Object? previewImages = freezed,
   }) {
     return _then(_$CreateClipStateImpl(
       isLoading: null == isLoading
@@ -243,14 +263,10 @@ class __$$CreateClipStateImplCopyWithImpl<$Res>
           ? _value.isThumbnailsLoaded
           : isThumbnailsLoaded // ignore: cast_nullable_to_non_nullable
               as bool,
-      videoPath: freezed == videoPath
-          ? _value.videoPath
-          : videoPath // ignore: cast_nullable_to_non_nullable
-              as String?,
-      trimmedVideoPath: freezed == trimmedVideoPath
-          ? _value.trimmedVideoPath
-          : trimmedVideoPath // ignore: cast_nullable_to_non_nullable
-              as String?,
+      isPreviewLoading: null == isPreviewLoading
+          ? _value.isPreviewLoading
+          : isPreviewLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
       videoDuration: freezed == videoDuration
           ? _value.videoDuration
           : videoDuration // ignore: cast_nullable_to_non_nullable
@@ -275,6 +291,10 @@ class __$$CreateClipStateImplCopyWithImpl<$Res>
           ? _value.streamId
           : streamId // ignore: cast_nullable_to_non_nullable
               as int?,
+      previewImages: freezed == previewImages
+          ? _value.previewImages
+          : previewImages // ignore: cast_nullable_to_non_nullable
+              as PreviewImagesResponse?,
     ));
   }
 }
@@ -290,14 +310,14 @@ class _$CreateClipStateImpl implements _CreateClipState {
       this.hasReachedEnd = false,
       this.isSharedController = false,
       this.isThumbnailsLoaded = false,
-      this.videoPath,
-      this.trimmedVideoPath,
+      this.isPreviewLoading = false,
       this.videoDuration,
       this.errorMessage = '',
       this.startValue = 0.0,
       this.endValue = 0.0,
       this.clipName = '',
-      this.streamId});
+      this.streamId,
+      this.previewImages});
 
   @override
   @JsonKey()
@@ -321,9 +341,9 @@ class _$CreateClipStateImpl implements _CreateClipState {
   @JsonKey()
   final bool isThumbnailsLoaded;
   @override
-  final String? videoPath;
-  @override
-  final String? trimmedVideoPath;
+  @JsonKey()
+  final bool isPreviewLoading;
+// new
   @override
   final Duration? videoDuration;
   @override
@@ -340,10 +360,12 @@ class _$CreateClipStateImpl implements _CreateClipState {
   final String clipName;
   @override
   final int? streamId;
+  @override
+  final PreviewImagesResponse? previewImages;
 
   @override
   String toString() {
-    return 'CreateClipState(isLoading: $isLoading, isTrimming: $isTrimming, isVideoLoaded: $isVideoLoaded, isPlaying: $isPlaying, hasReachedEnd: $hasReachedEnd, isSharedController: $isSharedController, isThumbnailsLoaded: $isThumbnailsLoaded, videoPath: $videoPath, trimmedVideoPath: $trimmedVideoPath, videoDuration: $videoDuration, errorMessage: $errorMessage, startValue: $startValue, endValue: $endValue, clipName: $clipName, streamId: $streamId)';
+    return 'CreateClipState(isLoading: $isLoading, isTrimming: $isTrimming, isVideoLoaded: $isVideoLoaded, isPlaying: $isPlaying, hasReachedEnd: $hasReachedEnd, isSharedController: $isSharedController, isThumbnailsLoaded: $isThumbnailsLoaded, isPreviewLoading: $isPreviewLoading, videoDuration: $videoDuration, errorMessage: $errorMessage, startValue: $startValue, endValue: $endValue, clipName: $clipName, streamId: $streamId, previewImages: $previewImages)';
   }
 
   @override
@@ -365,10 +387,8 @@ class _$CreateClipStateImpl implements _CreateClipState {
                 other.isSharedController == isSharedController) &&
             (identical(other.isThumbnailsLoaded, isThumbnailsLoaded) ||
                 other.isThumbnailsLoaded == isThumbnailsLoaded) &&
-            (identical(other.videoPath, videoPath) ||
-                other.videoPath == videoPath) &&
-            (identical(other.trimmedVideoPath, trimmedVideoPath) ||
-                other.trimmedVideoPath == trimmedVideoPath) &&
+            (identical(other.isPreviewLoading, isPreviewLoading) ||
+                other.isPreviewLoading == isPreviewLoading) &&
             (identical(other.videoDuration, videoDuration) ||
                 other.videoDuration == videoDuration) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -380,7 +400,9 @@ class _$CreateClipStateImpl implements _CreateClipState {
             (identical(other.clipName, clipName) ||
                 other.clipName == clipName) &&
             (identical(other.streamId, streamId) ||
-                other.streamId == streamId));
+                other.streamId == streamId) &&
+            (identical(other.previewImages, previewImages) ||
+                other.previewImages == previewImages));
   }
 
   @override
@@ -393,14 +415,14 @@ class _$CreateClipStateImpl implements _CreateClipState {
       hasReachedEnd,
       isSharedController,
       isThumbnailsLoaded,
-      videoPath,
-      trimmedVideoPath,
+      isPreviewLoading,
       videoDuration,
       errorMessage,
       startValue,
       endValue,
       clipName,
-      streamId);
+      streamId,
+      previewImages);
 
   /// Create a copy of CreateClipState
   /// with the given fields replaced by the non-null parameter values.
@@ -421,14 +443,14 @@ abstract class _CreateClipState implements CreateClipState {
       final bool hasReachedEnd,
       final bool isSharedController,
       final bool isThumbnailsLoaded,
-      final String? videoPath,
-      final String? trimmedVideoPath,
+      final bool isPreviewLoading,
       final Duration? videoDuration,
       final String errorMessage,
       final double startValue,
       final double endValue,
       final String clipName,
-      final int? streamId}) = _$CreateClipStateImpl;
+      final int? streamId,
+      final PreviewImagesResponse? previewImages}) = _$CreateClipStateImpl;
 
   @override
   bool get isLoading;
@@ -445,9 +467,7 @@ abstract class _CreateClipState implements CreateClipState {
   @override
   bool get isThumbnailsLoaded;
   @override
-  String? get videoPath;
-  @override
-  String? get trimmedVideoPath;
+  bool get isPreviewLoading; // new
   @override
   Duration? get videoDuration;
   @override
@@ -460,6 +480,8 @@ abstract class _CreateClipState implements CreateClipState {
   String get clipName;
   @override
   int? get streamId;
+  @override
+  PreviewImagesResponse? get previewImages;
 
   /// Create a copy of CreateClipState
   /// with the given fields replaced by the non-null parameter values.

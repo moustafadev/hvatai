@@ -20,7 +20,9 @@ mixin _$PreviewClipState {
   bool get isPlaying => throw _privateConstructorUsedError;
   bool get isUploading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
-  String? get videoPath => throw _privateConstructorUsedError;
+  String? get videoUrl => throw _privateConstructorUsedError;
+  double? get startValue => throw _privateConstructorUsedError;
+  double? get endValue => throw _privateConstructorUsedError;
   int? get streamId => throw _privateConstructorUsedError;
   String? get clipName => throw _privateConstructorUsedError;
 
@@ -42,7 +44,9 @@ abstract class $PreviewClipStateCopyWith<$Res> {
       bool isPlaying,
       bool isUploading,
       String errorMessage,
-      String? videoPath,
+      String? videoUrl,
+      double? startValue,
+      double? endValue,
       int? streamId,
       String? clipName});
 }
@@ -66,7 +70,9 @@ class _$PreviewClipStateCopyWithImpl<$Res, $Val extends PreviewClipState>
     Object? isPlaying = null,
     Object? isUploading = null,
     Object? errorMessage = null,
-    Object? videoPath = freezed,
+    Object? videoUrl = freezed,
+    Object? startValue = freezed,
+    Object? endValue = freezed,
     Object? streamId = freezed,
     Object? clipName = freezed,
   }) {
@@ -87,10 +93,18 @@ class _$PreviewClipStateCopyWithImpl<$Res, $Val extends PreviewClipState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      videoPath: freezed == videoPath
-          ? _value.videoPath
-          : videoPath // ignore: cast_nullable_to_non_nullable
+      videoUrl: freezed == videoUrl
+          ? _value.videoUrl
+          : videoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      startValue: freezed == startValue
+          ? _value.startValue
+          : startValue // ignore: cast_nullable_to_non_nullable
+              as double?,
+      endValue: freezed == endValue
+          ? _value.endValue
+          : endValue // ignore: cast_nullable_to_non_nullable
+              as double?,
       streamId: freezed == streamId
           ? _value.streamId
           : streamId // ignore: cast_nullable_to_non_nullable
@@ -116,7 +130,9 @@ abstract class _$$PreviewClipStateImplCopyWith<$Res>
       bool isPlaying,
       bool isUploading,
       String errorMessage,
-      String? videoPath,
+      String? videoUrl,
+      double? startValue,
+      double? endValue,
       int? streamId,
       String? clipName});
 }
@@ -138,7 +154,9 @@ class __$$PreviewClipStateImplCopyWithImpl<$Res>
     Object? isPlaying = null,
     Object? isUploading = null,
     Object? errorMessage = null,
-    Object? videoPath = freezed,
+    Object? videoUrl = freezed,
+    Object? startValue = freezed,
+    Object? endValue = freezed,
     Object? streamId = freezed,
     Object? clipName = freezed,
   }) {
@@ -159,10 +177,18 @@ class __$$PreviewClipStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      videoPath: freezed == videoPath
-          ? _value.videoPath
-          : videoPath // ignore: cast_nullable_to_non_nullable
+      videoUrl: freezed == videoUrl
+          ? _value.videoUrl
+          : videoUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      startValue: freezed == startValue
+          ? _value.startValue
+          : startValue // ignore: cast_nullable_to_non_nullable
+              as double?,
+      endValue: freezed == endValue
+          ? _value.endValue
+          : endValue // ignore: cast_nullable_to_non_nullable
+              as double?,
       streamId: freezed == streamId
           ? _value.streamId
           : streamId // ignore: cast_nullable_to_non_nullable
@@ -183,7 +209,9 @@ class _$PreviewClipStateImpl implements _PreviewClipState {
       this.isPlaying = false,
       this.isUploading = false,
       this.errorMessage = '',
-      this.videoPath,
+      this.videoUrl,
+      this.startValue,
+      this.endValue,
       this.streamId,
       this.clipName});
 
@@ -200,7 +228,11 @@ class _$PreviewClipStateImpl implements _PreviewClipState {
   @JsonKey()
   final String errorMessage;
   @override
-  final String? videoPath;
+  final String? videoUrl;
+  @override
+  final double? startValue;
+  @override
+  final double? endValue;
   @override
   final int? streamId;
   @override
@@ -208,7 +240,7 @@ class _$PreviewClipStateImpl implements _PreviewClipState {
 
   @override
   String toString() {
-    return 'PreviewClipState(isInitialized: $isInitialized, isPlaying: $isPlaying, isUploading: $isUploading, errorMessage: $errorMessage, videoPath: $videoPath, streamId: $streamId, clipName: $clipName)';
+    return 'PreviewClipState(isInitialized: $isInitialized, isPlaying: $isPlaying, isUploading: $isUploading, errorMessage: $errorMessage, videoUrl: $videoUrl, startValue: $startValue, endValue: $endValue, streamId: $streamId, clipName: $clipName)';
   }
 
   @override
@@ -224,8 +256,12 @@ class _$PreviewClipStateImpl implements _PreviewClipState {
                 other.isUploading == isUploading) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
-            (identical(other.videoPath, videoPath) ||
-                other.videoPath == videoPath) &&
+            (identical(other.videoUrl, videoUrl) ||
+                other.videoUrl == videoUrl) &&
+            (identical(other.startValue, startValue) ||
+                other.startValue == startValue) &&
+            (identical(other.endValue, endValue) ||
+                other.endValue == endValue) &&
             (identical(other.streamId, streamId) ||
                 other.streamId == streamId) &&
             (identical(other.clipName, clipName) ||
@@ -233,8 +269,17 @@ class _$PreviewClipStateImpl implements _PreviewClipState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isInitialized, isPlaying,
-      isUploading, errorMessage, videoPath, streamId, clipName);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isInitialized,
+      isPlaying,
+      isUploading,
+      errorMessage,
+      videoUrl,
+      startValue,
+      endValue,
+      streamId,
+      clipName);
 
   /// Create a copy of PreviewClipState
   /// with the given fields replaced by the non-null parameter values.
@@ -252,7 +297,9 @@ abstract class _PreviewClipState implements PreviewClipState {
       final bool isPlaying,
       final bool isUploading,
       final String errorMessage,
-      final String? videoPath,
+      final String? videoUrl,
+      final double? startValue,
+      final double? endValue,
       final int? streamId,
       final String? clipName}) = _$PreviewClipStateImpl;
 
@@ -265,7 +312,11 @@ abstract class _PreviewClipState implements PreviewClipState {
   @override
   String get errorMessage;
   @override
-  String? get videoPath;
+  String? get videoUrl;
+  @override
+  double? get startValue;
+  @override
+  double? get endValue;
   @override
   int? get streamId;
   @override

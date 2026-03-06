@@ -1,7 +1,8 @@
 part of '../clips.dart';
 
 class SaveButton extends StatelessWidget {
-  const SaveButton({super.key});
+  const SaveButton({super.key, this.videoUrl});
+  final String? videoUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -10,7 +11,7 @@ class SaveButton extends StatelessWidget {
         final cubit = context.read<CreateClipCubit>();
 
         final isDisabled = state.clipName.trim().isEmpty ||
-            !state.isThumbnailsLoaded ||
+            state.isPreviewLoading ||
             state.endValue <= state.startValue;
 
         return Align(
@@ -20,7 +21,7 @@ class SaveButton extends StatelessWidget {
                 ? null
                 : () {
                     if (state.endValue > state.startValue) {
-                      cubit.trimVideo();
+                      cubit.navigateToPreview(videoUrl ?? "");
                     } else {
                       showFloatingMessageError(
                           'Please select a valid video segment');

@@ -22,61 +22,62 @@ class RightSideIcons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        RightIcon(
-          icon: Assets.assetsImagesFilm,
-          label: 'Клип',
-          counter:
-              userTime != null && userTime! > 0 ? _formatTime(userTime!) : null,
-          onTap: () async {
-            if (onClipTap == null) return;
+        // RightIcon(
+        //   icon: Assets.assetsImagesFilm,
+        //   label: 'Клип',
+        //   counter:
+        //       userTime != null && userTime! > 0 ? _formatTime(userTime!) : null,
+        //   onTap: () async {
+        //     if (onClipTap == null) return;
 
-            if (userTime == null || userTime! <= 0) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text(
-                      'Пожалуйста, подождите, пока стрим инициализируется'),
-                  backgroundColor: Colors.red,
-                ),
-              );
-              return;
-            }
+        //     if (userTime == null || userTime! <= 0) {
+        //       ScaffoldMessenger.of(context).showSnackBar(
+        //         const SnackBar(
+        //           content: Text(
+        //               'Пожалуйста, подождите, пока стрим инициализируется'),
+        //           backgroundColor: Colors.red,
+        //         ),
+        //       );
+        //       return;
+        //     }
 
-            // Show dialog to enter clip name
-            final nameController = TextEditingController();
-            final result = await showDialog<String>(
-              context: context,
-              builder: (dialogContext) => AlertDialog(
-                title: const Text('Создать клип'),
-                content: TextField(
-                  controller: nameController,
-                  decoration: const InputDecoration(
-                    hintText: 'Название клипа',
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(dialogContext).pop(),
-                    child: const Text('Отмена'),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      if (nameController.text.trim().isNotEmpty) {
-                        Navigator.of(dialogContext)
-                            .pop(nameController.text.trim());
-                      }
-                    },
-                    child: const Text('Создать'),
-                  ),
-                ],
-              ),
-            );
+        //     // Show dialog to enter clip name
+        //     final nameController = TextEditingController();
+        //     final result = await showDialog<String>(
+        //       context: context,
+        //       builder: (dialogContext) => AlertDialog(
+        //         title: const Text('Создать клип'),
+        //         content: TextField(
+        //           controller: nameController,
+        //           decoration: const InputDecoration(
+        //             hintText: 'Название клипа',
+        //             border: OutlineInputBorder(),
+        //           ),
+        //         ),
+        //         actions: [
+        //           TextButton(
+        //             onPressed: () => Navigator.of(dialogContext).pop(),
+        //             child: const Text('Отмена'),
+        //           ),
+        //           TextButton(
+        //             onPressed: () {
+        //               if (nameController.text.trim().isNotEmpty) {
+        //                 Navigator.of(dialogContext)
+        //                     .pop(nameController.text.trim());
+        //               }
+        //             },
+        //             child: const Text('Создать'),
+        //           ),
+        //         ],
+        //       ),
+        //     );
 
-            if (result != null && result.isNotEmpty) {
-              await onClipTap!(result);
-            }
-          },
-        ),
+        //     if (result != null && result.isNotEmpty) {
+        //       await onClipTap!(result);
+        //     }
+        //   },
+        // ),
+
         const SizedBox(height: 24),
         RightIcon(
           onTap: () async {
@@ -115,7 +116,7 @@ class RightSideIcons extends StatelessWidget {
           icon: Assets.assetsIconsShop,
           label: 'Магазин',
           size: 38,
-          counter: '159',
+          // counter: '159',
         ),
       ],
     );

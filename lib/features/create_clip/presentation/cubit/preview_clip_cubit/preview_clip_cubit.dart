@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -21,38 +19,70 @@ class PreviewClipCubit extends Cubit<PreviewClipState> {
   /// Initialize the cubit with video path, stream ID, and clip name
   /// This should be called after creating the cubit instance
   void init({
-    required String videoPath,
+    required String videoUrl,
     required int? streamId,
     required String clipName,
+    required double startValue,
+    required double endValue,
   }) {
+    // Round start and end values to seconds
+    final startSec = startValue ~/ 1000; // integer division to get seconds
+    final endSec = endValue / 1000;
+
     emit(state.copyWith(
-      videoPath: videoPath,
+      videoUrl: videoUrl,
       streamId: streamId,
       clipName: clipName,
+      startValue: startSec.toDouble(),
+      endValue: endSec.toDouble(),
     ));
+
+    print("=====================");
+    print(endSec);
+    print("=====================");
+
     _initializeVideo();
   }
 
   Future<void> _initializeVideo() async {
-    if (state.videoPath == null || state.videoPath!.isEmpty) {
-      return;
-    }
+    if (state.videoUrl == null || state.videoUrl!.isEmpty) return;
 
     try {
-      _controller = VideoPlayerController.file(File(state.videoPath!));
+      _controller = VideoPlayerController.networkUrl(
+        Uri.parse(state.videoUrl!),
+      );
+
       await _controller!.initialize();
       _controller!.addListener(_videoListener);
+
+      // Seek to trimmed start
+      if ((state.startValue ?? 0) > 0) {
+        await _controller!.seekTo(
+          Duration(seconds: (state.startValue ?? 0).toInt()),
+        );
+      }
+
       emit(state.copyWith(isInitialized: true));
     } catch (e) {
       debugPrint('❌ Error initializing video: $e');
-      emit(state.copyWith(
-        errorMessage: 'Error initializing video: $e',
-      ));
+      emit(state.copyWith(errorMessage: 'Error initializing video: $e'));
     }
   }
 
   void _videoListener() {
     if (isClosed || _controller == null) return;
+
+    final position = _controller!.value.position;
+
+    final endDuration =
+        Duration(milliseconds: ((state.endValue ?? 0) * 1000).toInt());
+
+    if (position >= endDuration) {
+      _controller!.pause();
+      _controller!.seekTo(
+        Duration(milliseconds: ((state.startValue ?? 0) * 1000).toInt()),
+      );
+    }
 
     final isPlayingNow = _controller!.value.isPlaying;
     if (state.isPlaying != isPlayingNow) {
@@ -71,10 +101,10 @@ class PreviewClipCubit extends Cubit<PreviewClipState> {
 
     final result = await _uploadClipUsecase.call(
       UploadClipParams(
-        streamId: state.streamId!,
-        name: state.clipName!.trim(),
-        videoFilePath: state.videoPath!,
-      ),
+          streamId: state.streamId!,
+          name: state.clipName!.trim(),
+          startValue: state.startValue ?? 0,
+          endValue: state.endValue ?? 0),
     );
 
     result.fold(

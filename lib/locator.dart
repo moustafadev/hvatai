@@ -210,7 +210,7 @@ Future<void> setupLocator() async {
   locator.registerFactory(() => CategoriesCubit(
         locator(),
         locator(),
-        locator(),  
+        locator(),
       ));
   locator.registerFactory(() => LiveStreamsCubit(
         locator(),
@@ -235,7 +235,7 @@ Future<void> setupLocator() async {
       () => ReviewsCubit(locator(), locator(), locator(), locator()));
   locator.registerFactory(() => MyProductDetailsCubit());
   locator.registerFactory(() => ProductImageCubit());
-  locator.registerFactory(() => CreateClipCubit());
+  locator.registerFactory(() => CreateClipCubit(locator()));
   locator.registerFactory(() => PreviewClipCubit(locator()));
   // Analytics
   locator.registerFactory(() => AnalyticsCubit(locator()));

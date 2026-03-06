@@ -84,7 +84,7 @@ class _ClipCardState extends State<ClipCard> {
         context.push(
           AppRoutes.previewVideo,
           extra: {
-            'videoPath': widget.clip.videoUrl,
+            'videoUrl': widget.clip.videoUrl,
             'clipName': widget.clip.name,
           },
         );

@@ -42,54 +42,6 @@ class ClipBottomSheetCubit extends Cubit<ClipBottomSheetState> {
       isInitialized: true,
     ));
     // Auto-download when cubit is initialized
-    downloadForEditing();
-  }
-
-  Future<void> downloadForEditing() async {
-    // Check if initialized
-    if (!state.isInitialized || state.videoUrl.isEmpty) {
-      return;
-    }
-
-    // If already downloaded, return
-    if (state.tempVideoPath != null && state.tempVideoPath!.isNotEmpty) {
-      return;
-    }
-
-    emit(state.copyWith(isDownloading: true, errorMessage: ''));
-
-    // Download video to temporary directory
-    final tempDir = await getTemporaryDirectory();
-    final fileName =
-        'temp_file_khavati_${DateTime.now().millisecondsSinceEpoch}.mp4';
-    final tempPath = p.join(tempDir.path, fileName);
-
-    final result = await _downloadVideoUsecase.call(
-      DownloadVideoParams(
-        videoUrl: state.videoUrl,
-        targetPath: tempPath,
-      ),
-    );
-
-    result.fold(
-      (error) {
-        debugPrint('❌ Error downloading video for editing: $error');
-        showFloatingMessageError('Ошибка загрузки видео');
-        emit(state.copyWith(
-          isDownloading: false,
-          errorMessage: 'Error downloading video: $error',
-        ));
-      },
-      (downloadedPath) {
-        _tempVideoPath = downloadedPath;
-        debugPrint('✅ Video downloaded temporarily: $downloadedPath');
-        emit(state.copyWith(
-          isDownloading: false,
-          tempVideoPath: downloadedPath,
-          errorMessage: '',
-        ));
-      },
-    );
   }
 
   Future<void> saveToDownloads() async {
@@ -167,7 +119,6 @@ class ClipBottomSheetCubit extends Cubit<ClipBottomSheetState> {
       extra: {
         'videoUrl': state.tempVideoPath ?? state.videoUrl,
         'sharedController': controller,
-        'tempVideoPath': state.tempVideoPath, // Pass temp path for cleanup
         'streamId': streamId, // Pass stream ID for uploading clip
       },
     );

@@ -93,7 +93,10 @@ abstract class ServerConfig {
   static String updateStreamMedia(int streamId) => "streams/$streamId/media";
   static String createClipFromStream(int streamId) =>
       "streams/$streamId/clips/livekit";
-  static String uploadClip(int streamId) => "streams/$streamId/clips";
+  static String uploadClip(int streamId) =>
+      "streams/$streamId/clips/from-recording";
+  static String previewImages(int streamId) =>
+      "streams/$streamId/preview-images";
   static String getUserClips(int userId) => "users/$userId/clips";
   static String updateClip(int clipId) => "streams/clips/$clipId";
   static String deleteClip(int clipId) => "streams/clips/$clipId";

@@ -87,24 +87,22 @@ class _ClipPreviewSheet extends StatelessWidget {
                     ),
                     // Edit icon outside video preview, right side, padding 16 from right screen
                     // Only show when video is downloaded
-                    if (state.tempVideoPath != null &&
-                        state.tempVideoPath!.isNotEmpty &&
-                        !state.isDownloading)
-                      Positioned(
-                        top: 0,
-                        right: 16,
-                        child: GestureDetector(
-                          onTap: () => cubit.openEditor(
-                              context, sharedController, streamId),
-                          child: CircleAvatar(
-                            backgroundColor: AppColors.greyButton,
-                            radius: 16,
-                            child: SvgPicture.asset(
-                              Assets.assetsIconsEdit,
-                            ),
+
+                    Positioned(
+                      top: 0,
+                      right: 16,
+                      child: GestureDetector(
+                        onTap: () => cubit.openEditor(
+                            context, sharedController, streamId),
+                        child: CircleAvatar(
+                          backgroundColor: AppColors.greyButton,
+                          radius: 16,
+                          child: SvgPicture.asset(
+                            Assets.assetsIconsEdit,
                           ),
                         ),
                       ),
+                    ),
                   ],
                 ),
                 SizedBox(height: 16),

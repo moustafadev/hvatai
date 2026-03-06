@@ -228,8 +228,10 @@ final GoRouter router = GoRouter(
       path: AppRoutes.selectAwaySend, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, dynamic>?;
-        final sendRewardFlowCubit = extra?['sendRewardFlowCubit'] as SendRewardFlowCubit;
-        return SelectAwayRewardsScreen(sendRewardFlowCubit: sendRewardFlowCubit);
+        final sendRewardFlowCubit =
+            extra?['sendRewardFlowCubit'] as SendRewardFlowCubit;
+        return SelectAwayRewardsScreen(
+            sendRewardFlowCubit: sendRewardFlowCubit);
       },
     ),
     GoRoute(
@@ -258,7 +260,7 @@ final GoRouter router = GoRouter(
         );
       },
     ),
-    
+
     GoRoute(
       path: AppRoutes.addProduct, // Remove the leading '/'
       builder: (BuildContext context, GoRouterState state) {
@@ -521,29 +523,17 @@ final GoRouter router = GoRouter(
             extra?['videoUrl'] as String; // Default URL if not provided
         final sharedController =
             extra?['sharedController'] as VideoPlayerController?;
-        final tempVideoPath = extra?['tempVideoPath'] as String?;
         final streamId = extra?['streamId'] as int?;
 
         return BlocProvider(
           create: (context) {
-            final cubit = locator<CreateClipCubit>();
+            final cubit = locator<CreateClipCubit>()
+              ..fetchPreviewImages(streamId ?? 0);
             cubit.init(
               sharedController: sharedController,
               streamId: streamId,
             );
 
-            // If tempVideoPath is provided (local file), use loadVideo directly
-            if (tempVideoPath != null && tempVideoPath.isNotEmpty) {
-              cubit.loadVideo(tempVideoPath,
-                  sharedController: sharedController);
-            } else if (sharedController != null &&
-                sharedController.value.isInitialized) {
-              // Use shared controller - download file for thumbnails but use shared controller for playback
-              cubit.downloadVideoFromUrl(videoUrl,
-                  sharedController: sharedController);
-            } else {
-              cubit.downloadVideoFromUrl(videoUrl);
-            }
             return cubit;
           },
           child: CreateClipScreen(
@@ -556,21 +546,24 @@ final GoRouter router = GoRouter(
       path: AppRoutes.previewVideo,
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, dynamic>?;
-        final videoPath = extra?['videoPath'] as String? ?? '';
+        final videoUrl = extra?['videoUrl'] as String? ?? '';
         final streamId = extra?['streamId'] as int?;
         final clipName = extra?['clipName'] as String? ?? '';
+        final startValue = extra?['startValue'] as double? ?? 0;
+        final endValue = extra?['endValue'] as double? ?? 0;
         return BlocProvider(
           create: (context) {
             final cubit = locator<PreviewClipCubit>();
             cubit.init(
-              videoPath: videoPath,
+              videoUrl: videoUrl,
               streamId: streamId,
+              startValue: startValue,
+              endValue: endValue,
               clipName: clipName,
             );
             return cubit;
           },
           child: PreviewClipScreen(
-            videoPath: videoPath,
             streamId: streamId,
             clipName: clipName,
           ),

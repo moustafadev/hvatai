@@ -1,20 +1,18 @@
 part of '../clips.dart';
 
 class EditVideoEditor extends StatelessWidget {
-  const EditVideoEditor({super.key});
+  const EditVideoEditor({super.key, this.videoUrl});
+  final String? videoUrl;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CreateClipCubit, CreateClipState>(
       builder: (context, state) {
         final cubit = context.read<CreateClipCubit>();
-        final videoFile = cubit.videoFile;
         final videoDuration = cubit.videoDuration;
         final videoController = cubit.videoController;
 
-        if (videoFile == null ||
-            videoDuration == null ||
-            videoController == null) {
+        if (videoDuration == null || videoController == null) {
           return const SizedBox.shrink();
         }
 
@@ -52,7 +50,8 @@ class EditVideoEditor extends StatelessWidget {
                                       width: 60,
                                       height: 60,
                                       decoration: BoxDecoration(
-                                        color: Colors.white.withValues(alpha: 0.9),
+                                        color:
+                                            Colors.white.withValues(alpha: 0.9),
                                         shape: BoxShape.circle,
                                       ),
                                       child: const Icon(
@@ -137,7 +136,10 @@ class EditVideoEditor extends StatelessWidget {
                       ),
                       Expanded(
                         child: CustomTrimSlider(
-                          videoFile: videoFile,
+                          previewImageUrls: state.previewImages?.data?.images
+                              ?.map((e) => e.url)
+                              .toList(),
+                          isLoading: state.isPreviewLoading,
                           videoDuration: videoDuration,
                           startValue: state.startValue,
                           endValue: state.endValue,
@@ -148,7 +150,8 @@ class EditVideoEditor extends StatelessWidget {
                           onEndChanged: (value) {
                             cubit.updateEndValue(value);
                           },
-                          thumbnailCount: 10, // Fixed number of thumbnails
+                          thumbnailCount:
+                              state.previewImages?.data?.count ?? 10,
                           thumbnailHeight: 60.0,
                           showTimeDisplay: false,
                           onThumbnailsLoaded: () {
@@ -170,7 +173,9 @@ class EditVideoEditor extends StatelessWidget {
                     },
                   ),
                   12.ph,
-                  const SaveButton(),
+                  SaveButton(
+                    videoUrl: videoUrl,
+                  ),
                 ],
               ),
             ),
