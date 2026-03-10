@@ -77,11 +77,29 @@ class PreviewClipCubit extends Cubit<PreviewClipState> {
     final endDuration =
         Duration(milliseconds: ((state.endValue ?? 0) * 1000).toInt());
 
-    if (position >= endDuration) {
-      _controller!.pause();
-      _controller!.seekTo(
-        Duration(milliseconds: ((state.startValue ?? 0) * 1000).toInt()),
-      );
+    void videoListener() {
+      if (isClosed || _controller == null) return;
+
+      final position = _controller!.value.position;
+
+      final endValue = state.endValue ?? 0;
+
+      // Only apply trim logic if endValue > 0
+      if (endValue > 0) {
+        final endDuration = Duration(milliseconds: (endValue * 1000).toInt());
+
+        if (position >= endDuration) {
+          _controller!.pause();
+          _controller!.seekTo(
+            Duration(milliseconds: ((state.startValue ?? 0) * 1000).toInt()),
+          );
+        }
+      }
+
+      final isPlayingNow = _controller!.value.isPlaying;
+      if (state.isPlaying != isPlayingNow) {
+        emit(state.copyWith(isPlaying: isPlayingNow));
+      }
     }
 
     final isPlayingNow = _controller!.value.isPlaying;
