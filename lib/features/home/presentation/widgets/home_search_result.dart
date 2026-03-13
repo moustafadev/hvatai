@@ -31,29 +31,35 @@ class HomeSearchResult extends StatelessWidget {
             ),
           );
         }
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            16.ph,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: CustomText(
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              CustomText(
+                text: 'goods'.tr(),
+                fontWeight: FontWeight.w800,
+                fontSize: 20.sp,
+              ),
+              12.ph,
+              ProductsSearchWidget(
+                products: homeSearchState.products,
+              ),
+              16.ph,
+              CustomText(
                 text: 'streams'.tr(),
                 fontWeight: FontWeight.w800,
                 fontSize: 20.sp,
               ),
-            ),
-            10.ph,
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: SearchLiveVideoWidget(
+              10.ph,
+              SearchLiveVideoWidget(
                 liveStreams: homeSearchState.streams,
                 currentUserId: '',
                 searchQuery: homeSearchState.query,
               ),
-            ),
-            100.ph,
-          ],
+              100.ph,
+            ],
+          ),
         );
       },
     );

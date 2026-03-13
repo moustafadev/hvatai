@@ -18,7 +18,9 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$HomeSearchState {
   String get query =>
       throw _privateConstructorUsedError; // UI mode: false => show normal home, true => show search results
-  bool get isSearchMode => throw _privateConstructorUsedError; // results
+  bool get isSearchMode => throw _privateConstructorUsedError;
+  List<ProductModel> get products =>
+      throw _privateConstructorUsedError; // results
   bool get isLoading => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
   List<StreamDataModel> get streams =>
@@ -44,6 +46,7 @@ abstract class $HomeSearchStateCopyWith<$Res> {
   $Res call(
       {String query,
       bool isSearchMode,
+      List<ProductModel> products,
       bool isLoading,
       String errorMessage,
       List<StreamDataModel> streams,
@@ -70,6 +73,7 @@ class _$HomeSearchStateCopyWithImpl<$Res, $Val extends HomeSearchState>
   $Res call({
     Object? query = null,
     Object? isSearchMode = null,
+    Object? products = null,
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? streams = null,
@@ -87,6 +91,10 @@ class _$HomeSearchStateCopyWithImpl<$Res, $Val extends HomeSearchState>
           ? _value.isSearchMode
           : isSearchMode // ignore: cast_nullable_to_non_nullable
               as bool,
+      products: null == products
+          ? _value.products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -130,6 +138,7 @@ abstract class _$$HomeSearchStateImplCopyWith<$Res>
   $Res call(
       {String query,
       bool isSearchMode,
+      List<ProductModel> products,
       bool isLoading,
       String errorMessage,
       List<StreamDataModel> streams,
@@ -154,6 +163,7 @@ class __$$HomeSearchStateImplCopyWithImpl<$Res>
   $Res call({
     Object? query = null,
     Object? isSearchMode = null,
+    Object? products = null,
     Object? isLoading = null,
     Object? errorMessage = null,
     Object? streams = null,
@@ -171,6 +181,10 @@ class __$$HomeSearchStateImplCopyWithImpl<$Res>
           ? _value.isSearchMode
           : isSearchMode // ignore: cast_nullable_to_non_nullable
               as bool,
+      products: null == products
+          ? _value._products
+          : products // ignore: cast_nullable_to_non_nullable
+              as List<ProductModel>,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -209,6 +223,7 @@ class _$HomeSearchStateImpl implements _HomeSearchState {
   const _$HomeSearchStateImpl(
       {this.query = '',
       this.isSearchMode = false,
+      final List<ProductModel> products = const [],
       this.isLoading = false,
       this.errorMessage = '',
       final List<StreamDataModel> streams = const [],
@@ -216,7 +231,8 @@ class _$HomeSearchStateImpl implements _HomeSearchState {
       this.isLoadingSuggestions = false,
       this.showSuggestions = false,
       this.isSearchFocused = false})
-      : _streams = streams,
+      : _products = products,
+        _streams = streams,
         _suggestions = suggestions;
 
   @override
@@ -226,6 +242,15 @@ class _$HomeSearchStateImpl implements _HomeSearchState {
   @override
   @JsonKey()
   final bool isSearchMode;
+  final List<ProductModel> _products;
+  @override
+  @JsonKey()
+  List<ProductModel> get products {
+    if (_products is EqualUnmodifiableListView) return _products;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_products);
+  }
+
 // results
   @override
   @JsonKey()
@@ -265,7 +290,7 @@ class _$HomeSearchStateImpl implements _HomeSearchState {
 
   @override
   String toString() {
-    return 'HomeSearchState(query: $query, isSearchMode: $isSearchMode, isLoading: $isLoading, errorMessage: $errorMessage, streams: $streams, suggestions: $suggestions, isLoadingSuggestions: $isLoadingSuggestions, showSuggestions: $showSuggestions, isSearchFocused: $isSearchFocused)';
+    return 'HomeSearchState(query: $query, isSearchMode: $isSearchMode, products: $products, isLoading: $isLoading, errorMessage: $errorMessage, streams: $streams, suggestions: $suggestions, isLoadingSuggestions: $isLoadingSuggestions, showSuggestions: $showSuggestions, isSearchFocused: $isSearchFocused)';
   }
 
   @override
@@ -276,6 +301,7 @@ class _$HomeSearchStateImpl implements _HomeSearchState {
             (identical(other.query, query) || other.query == query) &&
             (identical(other.isSearchMode, isSearchMode) ||
                 other.isSearchMode == isSearchMode) &&
+            const DeepCollectionEquality().equals(other._products, _products) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -296,6 +322,7 @@ class _$HomeSearchStateImpl implements _HomeSearchState {
       runtimeType,
       query,
       isSearchMode,
+      const DeepCollectionEquality().hash(_products),
       isLoading,
       errorMessage,
       const DeepCollectionEquality().hash(_streams),
@@ -318,6 +345,7 @@ abstract class _HomeSearchState implements HomeSearchState {
   const factory _HomeSearchState(
       {final String query,
       final bool isSearchMode,
+      final List<ProductModel> products,
       final bool isLoading,
       final String errorMessage,
       final List<StreamDataModel> streams,
@@ -330,7 +358,9 @@ abstract class _HomeSearchState implements HomeSearchState {
   String
       get query; // UI mode: false => show normal home, true => show search results
   @override
-  bool get isSearchMode; // results
+  bool get isSearchMode;
+  @override
+  List<ProductModel> get products; // results
   @override
   bool get isLoading;
   @override

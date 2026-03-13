@@ -1,33 +1,36 @@
 part of '../search.dart';
 
 class ProductsSearchWidget extends StatelessWidget {
-  const ProductsSearchWidget({super.key});
+  const ProductsSearchWidget({
+    super.key,
+    required this.products,
+    this.emptyText = 'No products found',
+  });
+
+  final List<ProductModel> products;
+  final String emptyText;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchCubit, SearchState>(
-      builder: (context, state) {
-        if (state.products.isEmpty) {
-          return const CustomText(
-            text: 'No products found',
-            fontWeight: FontWeight.w500,
-          );
-        }
+    if (products.isEmpty) {
+      return CustomText(
+        text: emptyText,
+        fontWeight: FontWeight.w500,
+      );
+    }
 
-        return ListView.builder(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: state.products.length,
-          itemBuilder: (context, index) {
-            final product = state.products[index];
+    return ListView.builder(
+      padding: EdgeInsets.zero,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: products.length,
+      itemBuilder: (context, index) {
+        final product = products[index];
 
-            return CustomProductCard(
-              product: product,
-              color: Colors.transparent,
-              selectedCategoryIndex: index,
-            );
-          },
+        return CustomProductCard(
+          product: product,
+          color: Colors.transparent,
+          selectedCategoryIndex: index,
         );
       },
     );

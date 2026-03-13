@@ -38,23 +38,32 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     final result = await getCategoryUsecase.call(unit);
 
     result.fold(
-      (failure) => emit(state.copyWith(isLoading: false, errorMessage: failure)),
-      (categories) => emit(state.copyWith(
-        isLoading: false,
-        allCategories: categories,
-      )),
-    );
+        (failure) =>
+            emit(state.copyWith(isLoading: false, errorMessage: failure)),
+        (categories) {
+      final List<CategoryData> randomCategories = List.of(categories.data!)
+        ..shuffle();
+      emit(
+        state.copyWith(
+          isLoading: false,
+          allCategories: categories.copyWith(data: randomCategories),
+        ),
+      );
+    });
   }
 
   Future<void> loadFavoriteCategories() async {
-    emit(state.copyWith(isLoading: true, errorMessage: '', favoriteCategories: null));
+    emit(state.copyWith(
+        isLoading: true, errorMessage: '', favoriteCategories: null));
     final result = await getFavCategoryUsecase.call(unit);
 
     result.fold(
-      (failure) => emit(state.copyWith(isLoading: false, errorMessage: failure)),
+      (failure) =>
+          emit(state.copyWith(isLoading: false, errorMessage: failure)),
       (categories) {
-        final filteredCategories =
-            categories.data?.where((category) => category.parentId == null).toList();
+        final filteredCategories = categories.data
+            ?.where((category) => category.parentId == null)
+            .toList();
         emit(state.copyWith(
           isLoading: false,
           favoriteCategories: CategoryModel(data: filteredCategories),
@@ -67,7 +76,6 @@ class CategoriesCubit extends Cubit<CategoriesState> {
   // PUSHER REALTIME
   // =========================
 
- 
   Future<void> subscribeToCategories() async {
     if (_pusherBound) return;
 
@@ -119,7 +127,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
           if (catJson is! Map) return;
 
-          final category = CategoryData.fromJson(Map<String, dynamic>.from(catJson));
+          final category =
+              CategoryData.fromJson(Map<String, dynamic>.from(catJson));
 
           if (category.id == null) return;
 
@@ -214,7 +223,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
 
       // If it is a child category, update parent.children
       if (category.parentId != null) {
-        final parentIndex = updated.indexWhere((x) => x.id == category.parentId);
+        final parentIndex =
+            updated.indexWhere((x) => x.id == category.parentId);
         if (parentIndex != -1) {
           final parent = updated[parentIndex];
           final children = parent.children ?? const <CategoryChild>[];
@@ -263,7 +273,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
         // remove from parent.children
         final children = c.children;
         if (children != null && children.isNotEmpty) {
-          final newChildren = children.where((ch) => ch.id != categoryId).toList();
+          final newChildren =
+              children.where((ch) => ch.id != categoryId).toList();
           updated.add(c.copyWith(children: newChildren));
         } else {
           updated.add(c);
@@ -274,8 +285,10 @@ class CategoriesCubit extends Cubit<CategoriesState> {
     }
 
     // also remove from selections if user had it selected
-    final nextFav = List<int>.from(state.selectedFavoriteCategoryIds)..remove(categoryId);
-    final nextSub = List<int>.from(state.selectedSubcategoryIds)..remove(categoryId);
+    final nextFav = List<int>.from(state.selectedFavoriteCategoryIds)
+      ..remove(categoryId);
+    final nextSub = List<int>.from(state.selectedSubcategoryIds)
+      ..remove(categoryId);
 
     emit(state.copyWith(
       allCategories: removeFrom(state.allCategories),
@@ -322,7 +335,8 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       nextSubIds = const <int>[];
     } else if (isSelected) {
       final removedChildIds = _getChildrenIdsOfFavorite(categoryId).toSet();
-      nextSubIds = prevSubIds.where((id) => !removedChildIds.contains(id)).toList();
+      nextSubIds =
+          prevSubIds.where((id) => !removedChildIds.contains(id)).toList();
     } else {
       nextSubIds = prevSubIds;
     }
@@ -389,14 +403,16 @@ class CategoriesCubit extends Cubit<CategoriesState> {
       return;
     }
 
-    final removedFavIds = prevFavIds.where((oldId) => !ids.contains(oldId)).toList();
+    final removedFavIds =
+        prevFavIds.where((oldId) => !ids.contains(oldId)).toList();
 
     final removedChildIds = <int>{};
     for (final favId in removedFavIds) {
       removedChildIds.addAll(_getChildrenIdsOfFavorite(favId));
     }
 
-    final nextSubIds = prevSubIds.where((subId) => !removedChildIds.contains(subId)).toList();
+    final nextSubIds =
+        prevSubIds.where((subId) => !removedChildIds.contains(subId)).toList();
 
     emit(state.copyWith(
       selectedFavoriteCategoryIds: ids,

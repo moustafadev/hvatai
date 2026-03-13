@@ -19,7 +19,7 @@ class ImageDelayScreen extends StatelessWidget {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: CustomGradientButton(
-                text: "Continue",
+                text: "continue".tr(),
                 isDisabled: false,
                 isLoading: false,
                 onPressed: () {

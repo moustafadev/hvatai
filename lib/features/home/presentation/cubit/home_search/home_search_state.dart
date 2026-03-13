@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 
 part 'home_search_state.freezed.dart';
@@ -10,6 +11,7 @@ class HomeSearchState with _$HomeSearchState {
 
     // UI mode: false => show normal home, true => show search results
     @Default(false) bool isSearchMode,
+    @Default([]) List<ProductModel> products,
 
     // results
     @Default(false) bool isLoading,
@@ -21,6 +23,5 @@ class HomeSearchState with _$HomeSearchState {
     @Default(false) bool isLoadingSuggestions,
     @Default(false) bool showSuggestions,
     @Default(false) bool isSearchFocused,
-
   }) = _HomeSearchState;
 }

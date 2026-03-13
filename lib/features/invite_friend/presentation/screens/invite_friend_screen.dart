@@ -112,7 +112,7 @@ class InviteFriendScreen extends StatelessWidget {
                                           .showSnackBar(
                                         SnackBar(
                                           content: CustomText(
-                                            text: 'Invite code copied!',
+                                            text: 'inviteCode'.tr(),
                                             color: AppColors.white,
                                           ),
                                           backgroundColor:

@@ -108,7 +108,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                             fontSize: 20.sp,
                                           ),
                                           12.ph,
-                                          ProductsSearchWidget(),
+                                          ProductsSearchWidget(
+                                            products: state.products,
+                                          ),
                                           24.ph,
                                           CustomText(
                                             text: 'streams'.tr(),

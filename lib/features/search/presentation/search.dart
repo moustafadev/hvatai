@@ -10,6 +10,7 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/cart/presentation/cart.dart';
 import 'package:hvatai/features/home/presentation/cubit/live_streams/live_streams_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';
+import 'package:hvatai/features/profile/data/model/product_model/product_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/search/presentation/cubit/search_cubit/search_cubit.dart';
 import 'package:hvatai/locator.dart';

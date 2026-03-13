@@ -17,7 +17,6 @@ class HomeSearchCubit extends Cubit<HomeSearchState> {
 
   Timer? _suggestionsDebounce;
 
-
   @override
   Future<void> close() {
     _suggestionsDebounce?.cancel();
@@ -52,7 +51,8 @@ class HomeSearchCubit extends Cubit<HomeSearchState> {
   void onSearchFieldFocused() {
     emit(state.copyWith(
       isSearchFocused: true,
-      showSuggestions: state.query.trim().isNotEmpty && state.suggestions.isNotEmpty,
+      showSuggestions:
+          state.query.trim().isNotEmpty && state.suggestions.isNotEmpty,
     ));
 
     final q = state.query.trim();
@@ -106,15 +106,18 @@ class HomeSearchCubit extends Cubit<HomeSearchState> {
       streams: const [],
     ));
 
-    final result = await _searchUsecase(SearchParams(query: query, categoryIds: const <int>[]));
+    final result = await _searchUsecase(
+        SearchParams(query: query, categoryIds: const <int>[]));
 
     result.fold(
-      (failure) => emit(state.copyWith(isLoading: false, errorMessage: failure)),
+      (failure) =>
+          emit(state.copyWith(isLoading: false, errorMessage: failure)),
       (response) {
         final data = response.data;
 
         emit(state.copyWith(
           isLoading: false,
+          products: data?.products?.data ?? [],
           streams: data?.streams ?? [],
           errorMessage: '',
         ));
@@ -134,16 +137,18 @@ class HomeSearchCubit extends Cubit<HomeSearchState> {
 
     emit(state.copyWith(isLoadingSuggestions: true));
 
-    final result = await _suggestionsUsecase(SearchSuggestionsParams(query: query));
+    final result =
+        await _suggestionsUsecase(SearchSuggestionsParams(query: query));
 
     result.fold(
-      (_) => emit(state.copyWith(isLoadingSuggestions: false, suggestions: const [])),
+      (_) => emit(
+          state.copyWith(isLoadingSuggestions: false, suggestions: const [])),
       (response) => emit(state.copyWith(
         isLoadingSuggestions: false,
         suggestions: response.data.suggestions,
-        showSuggestions: response.data.suggestions.isNotEmpty && state.isSearchFocused,
+        showSuggestions:
+            response.data.suggestions.isNotEmpty && state.isSearchFocused,
       )),
     );
   }
-
 }

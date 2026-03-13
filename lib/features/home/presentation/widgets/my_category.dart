@@ -7,11 +7,11 @@ class MyCategory extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<CategoriesCubit, CategoriesState>(
       builder: (context, state) {
-        final favoriteCategories = state.favoriteCategories;
+        final allCategories = state.allCategories;
 
-        if (favoriteCategories == null ||
-            favoriteCategories.data == null ||
-            favoriteCategories.data!.isEmpty) {
+        if (allCategories == null ||
+            allCategories.data == null ||
+            allCategories.data!.isEmpty) {
           return SizedBox();
         }
 
@@ -25,9 +25,9 @@ class MyCategory extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children: List.generate(
-                    favoriteCategories.data!.length,
+                    allCategories.data!.length,
                     (index) {
-                      final category = favoriteCategories.data![index];
+                      final category = allCategories.data![index];
                       final catId = category.id ?? 0;
 
                       final isSelected =
