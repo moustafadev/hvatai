@@ -49,76 +49,65 @@ class _ActivityScreenContentState extends State<_ActivityScreenContent>
 
         return Scaffold(
           backgroundColor: AppColors.background,
-          appBar: AppBar(
-            leading: GestureDetector(
-              onTap: () {
-                context.pop();
-              },
-              child: const Icon(
-                Icons.arrow_back_ios,
-                color: AppColors.blackDark,
-              ),
-            ),
-            backgroundColor: AppColors.background,
-            elevation: 0,
-          ),
-          body: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) => [
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        text: "activity".tr(),
-                        fontSize: 20.sp,
+          body: SafeArea(
+            child: NestedScrollView(
+              headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: "activity".tr(),
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w800,
+                        ),
+                        12.ph,
+                      ],
+                    ),
+                  ),
+                ),
+                SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _SliverTabBarDelegate(
+                    TabBar(
+                      controller: tabController,
+                      onTap: cubit.changeTab,
+                      indicatorColor: AppColors.primaryColor,
+                      dividerColor: Colors.transparent,
+                      indicatorWeight: 2,
+                      labelStyle: TextStyle(
+                        fontSize: 14.sp,
+                        fontFamily: 'Manrope',
                         fontWeight: FontWeight.w800,
+                        color: AppColors.text,
                       ),
-                      12.ph,
-                    ],
+                      unselectedLabelStyle: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Manrope',
+                        color: AppColors.blackColor.withValues(alpha: 0.2),
+                      ),
+                      indicatorSize: TabBarIndicatorSize.tab,
+                      labelPadding: EdgeInsets.zero,
+                      tabs: [
+                        Tab(text: "favorites".tr()),
+                        Tab(text: "streams".tr()),
+                        Tab(text: "bids".tr()),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SliverPersistentHeader(
-                pinned: true,
-                delegate: _SliverTabBarDelegate(
-                  TabBar(
-                    controller: tabController,
-                    onTap: cubit.changeTab,
-                    indicatorColor: AppColors.primaryColor,
-                    dividerColor: Colors.transparent,
-                    indicatorWeight: 2,
-                    labelStyle: TextStyle(
-                      fontSize: 14.sp,
-                      fontFamily: 'Manrope',
-                      fontWeight: FontWeight.w800,
-                      color: AppColors.text,
-                    ),
-                    unselectedLabelStyle: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Manrope',
-                      color: AppColors.blackColor.withValues(alpha: 0.2),
-                    ),
-                    indicatorSize: TabBarIndicatorSize.tab,
-                    labelPadding: EdgeInsets.zero,
-                    tabs: [
-                      Tab(text: "favorites".tr()),
-                      Tab(text: "streams".tr()),
-                      Tab(text: "bids".tr()),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-            body: TabBarView(
-              controller: tabController,
-              children: const [
-                FavoritesTabWidget(),
-                StreamsTabWidget(),
-                BidsTabWidget(),
               ],
+              body: TabBarView(
+                controller: tabController,
+                children: const [
+                  FavoritesTabWidget(),
+                  StreamsTabWidget(),
+                  BidsTabWidget(),
+                ],
+              ),
             ),
           ),
         );

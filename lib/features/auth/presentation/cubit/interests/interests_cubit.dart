@@ -51,7 +51,7 @@ class InterestsCubit extends Cubit<InterestsState> {
         emit(state.copyWith(isLoading: false));
         appLocal.saveIsSetup(true);
         if (_allSelectedHaveNoChildren()) {
-          context.push(AppRoutes.notification);
+          context.go(AppRoutes.notification);
         } else {
           context.push(AppRoutes.interestsDetail);
         }

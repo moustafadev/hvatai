@@ -60,6 +60,7 @@ dependencies:
   saver_gallery: ^4.1.0
   image: ^4.7.2
   package_info_plus: ^9.0.0
+  flutter_image_compress: ^2.4.0
 
 dev_dependencies:
   flutter_test:

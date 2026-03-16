@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:hvatai/core/datasources/remote/api_base.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
@@ -155,11 +158,19 @@ class ApiServiceAddNewProduct extends ApiBase {
 
     for (var i = 0; i < pictures.length; i++) {
       final path = pictures[i];
+
       if (_isUrl(path)) continue;
 
+      File file = File(path);
+
+      /// 🔹 compress image before upload
+      final compressed = await _compressImage(path);
+
+      final uploadFile = compressed ?? file;
+
       map['product_pictures[$i]'] = await MultipartFile.fromFile(
-        path,
-        filename: path.split('/').last,
+        uploadFile.path,
+        filename: uploadFile.path.split('/').last,
       );
     }
   }
@@ -179,4 +190,23 @@ class ApiServiceAddNewProduct extends ApiBase {
 
 bool _isUrl(String path) {
   return path.startsWith('http://') || path.startsWith('https://');
+}
+
+Future<File?> _compressImage(String path) async {
+  final file = File(path);
+
+  final targetPath =
+      "${file.parent.path}/${DateTime.now().millisecondsSinceEpoch}_compressed.jpg";
+
+  final result = await FlutterImageCompress.compressAndGetFile(
+    file.absolute.path,
+    targetPath,
+    quality: 70,
+    minWidth: 1280,
+    minHeight: 1280,
+  );
+
+  if (result == null) return null;
+
+  return File(result.path);
 }
