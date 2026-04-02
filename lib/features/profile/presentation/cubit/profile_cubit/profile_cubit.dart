@@ -38,13 +38,25 @@ class ProfileCubit extends Cubit<ProfileState> {
 
     result.fold(
       (failure) {
-        emit(
-            state.copyWith(isLoading: false, errorMessage: failure.toString()));
+        if (!isClosed) {
+          emit(state.copyWith(
+              isLoading: false, errorMessage: failure.toString()));
+        }
         showFloatingMessageError('somethingWentWrong'.tr());
       },
       (_) {
-        emit(state.copyWith(isLoading: false));
-        context.go(AppRoutes.socialLogin);
+        if (!isClosed) {
+          // Clear user so ProfileScreen's BlocListener does not call
+          // loadUserClips again after isLoading becomes false (would hit API with no token).
+          emit(state.copyWith(
+            isLoading: false,
+            errorMessage: '',
+            userProfileModel: UserRegistrationData(),
+          ));
+        }
+        if (context.mounted) {
+          context.go(AppRoutes.socialLogin);
+        }
       },
     );
   }

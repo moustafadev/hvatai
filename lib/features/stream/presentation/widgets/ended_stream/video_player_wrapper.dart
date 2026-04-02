@@ -20,6 +20,10 @@ class _EndedStreamVideoPlayerWrapperState
 
   @override
   Widget build(BuildContext context) {
+    print("=========================");
+    print(widget.videoPath);
+    print("=========================");
+
     return Stack(
       children: [
         // Video Player

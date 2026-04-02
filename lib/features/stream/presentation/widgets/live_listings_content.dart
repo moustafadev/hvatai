@@ -115,7 +115,8 @@ class _EmptyLiveListings extends StatelessWidget {
             ),
             SizedBox(height: 24.h),
             CustomText(
-              text: 'У вас пока нет товаров',
+              text:
+                  'На стриме пока нет товаров. Добавьте их или создайте прямо сейчас.',
               fontSize: 14.sp,
               fontWeight: FontWeight.w700,
               color: AppColors.blackDark,

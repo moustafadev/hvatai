@@ -46,6 +46,19 @@ class FavoritesTabWidget extends StatelessWidget {
                 isNameCompany: true,
                 showSaleTypeChip: false,
                 showFixed: true,
+                onTap: (cubit) async {
+                  final productId = product.id;
+                  if (productId == null) return;
+
+                  final result = await context.push<bool>(
+                    AppRoutes.cartProductDetails,
+                    extra: {'productId': productId, 'cubit': cubit},
+                  );
+
+                  if (result == true && context.mounted) {
+                    context.read<ActivityCubit>().getFavorites();
+                  }
+                },
               ),
             );
           },

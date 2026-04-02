@@ -36,94 +36,63 @@ class UnknownException extends Failure {
 }
 
 class ErrorHandler {
+  static String? _extractSingleErrorMessage(Map<String, dynamic> errorData) {
+    // 1️⃣ First: nested "errors" map
+    final errorsMap = errorData['errors'];
+    if (errorsMap is Map) {
+      for (final entry in errorsMap.entries) {
+        final value = entry.value;
+
+        if (value is List && value.isNotEmpty) {
+          final first = value.first;
+          if (first is String && first.trim().isNotEmpty) {
+            return first.trim();
+          }
+        } else if (value is String && value.trim().isNotEmpty) {
+          return value.trim();
+        }
+      }
+    }
+
+    // 2️⃣ Then: top-level "message"
+    final message = errorData['message'];
+    if (message is String && message.trim().isNotEmpty) {
+      return message.trim();
+    }
+
+    // 3️⃣ Then: top-level "error"
+    final error = errorData['error'];
+    if (error is String && error.trim().isNotEmpty) {
+      return error.trim();
+    }
+
+    return null;
+  }
+
   static Failure handle(dynamic error) {
     if (error is DioException) {
-      var type = _showMessage(error.type);
-      if (type != null) {
-        return Failure(errorMessage: error.response?.data['message']);
-      } else if (error.response?.data != null) {
-        return _handleApiError(error.response?.data);
-      } else {
-        return Failure(
-          errorMessage: error.message ??
-              "Error connecting to the server, please try again later",
-        );
+      String? detailMessage;
+      final responseData = error.response?.data;
+
+      if (responseData is Map<String, dynamic>) {
+        detailMessage = _extractSingleErrorMessage(responseData);
       }
+
+      final finalMessage = detailMessage ??
+          error.message ??
+          "Ошибка подключения к серверу\nпожалуйста, попробуйте позже";
+
+      return Failure(errorMessage: finalMessage);
     } else if (error is NoInternetException) {
       return Failure(
-        errorMessage: "It seems you're not connected to the internet",
+        errorMessage: "Похоже, вы не подключены к интернету",
       );
     } else if (error is Exception) {
       return Failure(errorMessage: error.toString());
     } else {
       return Failure(
-        errorMessage: "An unexpected error occurred",
+        errorMessage: "Произошла неожиданная ошибка",
       );
-    }
-  }
-
-  static Failure _handleApiError(dynamic data) {
-    try {
-      if (data is String) {
-        data = json.decode(data);
-      }
-      if (data != null && data is Map<String, dynamic>) {
-        if (data.containsKey('message')) {
-          return Failure(errorMessage: data['message']);
-        } else if (data.containsKey('errors')) {
-          var errors = data['errors'] as Map<String, dynamic>;
-          String errorMessages = errors.entries.map((entry) {
-            if (entry.value is List) {
-              // Convert each list of messages into a single string separated by commas.
-              return "${entry.value.join('\n')}";
-            } else {
-              return "${entry.value}";
-            }
-          }).join('\n');
-          return Failure(errorMessage: errorMessages);
-        } else if (data.containsKey('error')) {
-          if (data['error'] is String) {
-            return Failure(errorMessage: data['error']);
-          } else {
-            var error = data['error'] as Map<String, dynamic>;
-            String errorMessages = error.entries.map((entry) {
-              if (entry.value is List) {
-                // Convert each list of messages into a single string separated by commas.
-                return "${entry.value.join('\n')}";
-              } else {
-                return "${entry.value}";
-              }
-            }).join('\n');
-            return Failure(errorMessage: errorMessages);
-          }
-        }
-      }
-      return Failure(
-          errorMessage:
-              "Unknown error occurred or response data is not as expected");
-    } catch (e) {
-      return Failure(errorMessage: e.toString());
-    }
-  }
-
-  static String? _showMessage(DioExceptionType type) {
-    switch (type) {
-      case DioExceptionType.connectionTimeout:
-      case DioExceptionType.receiveTimeout:
-      case DioExceptionType.sendTimeout:
-        // Handle all types of timeouts similarly
-        return "Connection timed out. Please check your internet connection and try again.";
-      case DioExceptionType.badCertificate:
-        // Handle invalid SSL certificates
-        return "Could not establish a secure connection. Please check your network security settings.";
-      case DioExceptionType.cancel:
-        // Handle request cancellations
-        return "Request was cancelled. Please try again if this was an error.";
-      case DioExceptionType.connectionError:
-        return "Failed to establish a connection. Please ensure your internet is active and retry.";
-      default:
-        // Handle unknown errors
-        return null;
     }
   }
 }

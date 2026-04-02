@@ -28,9 +28,10 @@ class SendRewardInfoBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return SingleChildScrollView(
       padding: EdgeInsets.symmetric(horizontal: 16.w),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           8.ph,
@@ -67,7 +68,6 @@ class SendRewardInfoBottomSheet extends StatelessWidget {
               ),
             ),
           ),
-          8.ph,
           CustomButton(
             title: 'sendReward'.tr(),
             onPressed: () {
@@ -78,7 +78,7 @@ class SendRewardInfoBottomSheet extends StatelessWidget {
             fontSize: 16.sp,
             fontWeight: FontWeight.w800,
           ),
-          10.ph,
+          SizedBox(height: 24.h),
         ],
       ),
     );

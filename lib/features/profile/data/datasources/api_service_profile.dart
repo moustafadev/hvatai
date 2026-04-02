@@ -244,7 +244,7 @@ Future<FormData> _prepareProfileFormData(UserRegistrationData params) async {
 
   if (params.image != null && File(params.image!).existsSync()) {
     dataMap['image'] = await MultipartFile.fromFile(params.image!);
-  } else{
+  } else {
     dataMap.remove('image');
   }
 

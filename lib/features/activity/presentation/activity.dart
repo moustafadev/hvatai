@@ -10,8 +10,11 @@ import 'package:hvatai/core/theme/app_colors.dart';
 import 'package:hvatai/features/activity/data/models/user_bids_response/user_bids_response.dart';
 import 'package:hvatai/features/activity/presentation/cubit/activity/activity_cubit.dart';
 import 'package:hvatai/features/cart/presentation/cart.dart';
+import 'package:hvatai/features/cart/presentation/cubit/cart_product_details/cart_product_details_cubit.dart';
 import 'package:hvatai/features/stream/presentation/stream.dart';
 import 'package:hvatai/locator.dart';
+import 'package:hvatai/routes/app_routes.dart';
+import 'package:hvatai/routes/go_router.dart';
 
 part 'screens/activity_screen.dart';
 part 'widgets/favorites_tab_widget.dart';

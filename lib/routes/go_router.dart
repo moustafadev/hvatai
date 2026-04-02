@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/features/auth/data/models/category_model/category_model.dart';
 import 'package:hvatai/features/awards/presentation/cubit/send_reward_flow/send_reward_flow_cubit.dart';
 import 'package:hvatai/features/cart/presentation/cart.dart';
@@ -46,7 +47,7 @@ import 'package:hvatai/routes/shell_route.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 final GoRouter router = GoRouter(
-  // observers: [MyNavigatorObserver()],
+  observers: [MyNavigatorObserver()],
   initialLocation: AppRoutes.splash,
   navigatorKey: navigatorKey,
   routes: <RouteBase>[
@@ -368,6 +369,18 @@ final GoRouter router = GoRouter(
         return DeliveryAddressFormScreen(
           mode: mode,
           initialAddress: address,
+        );
+      },
+    ),
+
+    GoRoute(
+      path: AppRoutes.fullScreenImage,
+      builder: (context, state) {
+        final extra = state.extra as Map<String, dynamic>;
+
+        return FullScreenImageView(
+          imageUrl: extra['imageUrl'] as String,
+          heroTag: extra['heroTag'] as String?,
         );
       },
     ),

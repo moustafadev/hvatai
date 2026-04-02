@@ -147,7 +147,6 @@ class StreamUserModel with _$StreamUserModel {
     @JsonKey(name: 'personal_rating') double? personalRating,
     @JsonKey(name: 'personal_rating_count') int? personalRatingCount,
     @JsonKey(name: 'is_favorited') bool? isFavorited,
-
     @JsonKey(name: 'favorites_count') int? favoritesCount,
   }) = _StreamUserModel;
 

@@ -39,6 +39,8 @@ class AddStreamCubit extends Cubit<AddStreamState> {
           ),
         );
 
+  TextEditingController textEditingController = TextEditingController();
+
   Future<void> loadCategories() async {
     emit(state.copyWith(isCategoriesLoading: true, error: null));
     final result = await _getCategoryUsecase(unit);

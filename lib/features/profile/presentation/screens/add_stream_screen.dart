@@ -14,13 +14,12 @@ class AddStreamScreen extends StatelessWidget {
         showNotification: false,
       ),
       body: BlocProvider(
-        create: (_) =>
-            locator<AddStreamCubit>()..loadCategories(),
+        create: (_) => locator<AddStreamCubit>()..loadCategories(),
         child: BlocBuilder<AddStreamCubit, AddStreamState>(
           builder: (context, state) {
             final cubit = context.read<AddStreamCubit>();
             final model = state.createStreamModel;
-          
+
             if (state.isProductsLoading || state.isCategoriesLoading) {
               return const Center(
                   child: CircularProgressIndicator(
@@ -44,6 +43,7 @@ class AddStreamScreen extends StatelessWidget {
                       CustomTextField(
                         hintText: 'title'.tr(),
                         onChanged: cubit.updateTitle,
+                        controller: cubit.textEditingController,
                       ),
                       12.ph,
 
@@ -176,7 +176,7 @@ class AddStreamScreen extends StatelessWidget {
                       //   fontSize: 20,
                       //   fontWeight: FontWeight.w800,
                       // ),
-                    
+
                       // 12.ph,
                       // Wrap(
                       //   spacing: 8,
@@ -208,7 +208,7 @@ class AddStreamScreen extends StatelessWidget {
                       //     return chips;
                       //   }(),
                       // ),
-                     
+
                       // 12.ph,
                       // CustomDropdown(
                       //   hintText: selectedCategoryIds.isEmpty

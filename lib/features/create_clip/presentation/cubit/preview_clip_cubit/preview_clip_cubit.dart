@@ -37,9 +37,7 @@ class PreviewClipCubit extends Cubit<PreviewClipState> {
       endValue: endSec.toDouble(),
     ));
 
-    print("=====================");
-    print(endSec);
-    print("=====================");
+    debugPrint('PreviewClipCubit trim end (s): $endSec');
 
     _initializeVideo();
   }
@@ -73,32 +71,15 @@ class PreviewClipCubit extends Cubit<PreviewClipState> {
     if (isClosed || _controller == null) return;
 
     final position = _controller!.value.position;
+    final endValue = state.endValue ?? 0;
 
-    final endDuration =
-        Duration(milliseconds: ((state.endValue ?? 0) * 1000).toInt());
-
-    void videoListener() {
-      if (isClosed || _controller == null) return;
-
-      final position = _controller!.value.position;
-
-      final endValue = state.endValue ?? 0;
-
-      // Only apply trim logic if endValue > 0
-      if (endValue > 0) {
-        final endDuration = Duration(milliseconds: (endValue * 1000).toInt());
-
-        if (position >= endDuration) {
-          _controller!.pause();
-          _controller!.seekTo(
-            Duration(milliseconds: ((state.startValue ?? 0) * 1000).toInt()),
-          );
-        }
-      }
-
-      final isPlayingNow = _controller!.value.isPlaying;
-      if (state.isPlaying != isPlayingNow) {
-        emit(state.copyWith(isPlaying: isPlayingNow));
+    if (endValue > 0) {
+      final endDuration = Duration(milliseconds: (endValue * 1000).toInt());
+      if (position >= endDuration) {
+        _controller!.pause();
+        _controller!.seekTo(
+          Duration(milliseconds: ((state.startValue ?? 0) * 1000).toInt()),
+        );
       }
     }
 
@@ -141,7 +122,10 @@ class PreviewClipCubit extends Cubit<PreviewClipState> {
         if (!isClosed) {
           emit(state.copyWith(isUploading: false));
           showFloatingMessageSuccess('Клип успешно загружен');
-          context.go(AppRoutes.profile);
+          context.go(
+            AppRoutes.profile,
+            extra: const RefreshProfileClipsExtra(),
+          );
         }
       },
     );

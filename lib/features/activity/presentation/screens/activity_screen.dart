@@ -28,6 +28,32 @@ class _ActivityScreenContentState extends State<_ActivityScreenContent>
       final cubit = context.read<ActivityCubit>();
       cubit.initializeControllers(this);
     });
+    router.routerDelegate.addListener(_onRouteChanged);
+  }
+
+  String _previousRoute = '';
+
+  void _onRouteChanged() {
+    final location = router.state.uri.toString();
+
+    // screens that should NOT trigger re-init when popping back
+    const skipRoutes = [
+      AppRoutes.cartProductDetails,
+      // add other routes here
+    ];
+
+    if (location == AppRoutes.activity &&
+        !skipRoutes.contains(_previousRoute)) {
+      context.read<ActivityCubit>().init();
+    }
+
+    _previousRoute = location;
+  }
+
+  @override
+  void dispose() {
+    router.routerDelegate.removeListener(_onRouteChanged);
+    super.dispose();
   }
 
   @override

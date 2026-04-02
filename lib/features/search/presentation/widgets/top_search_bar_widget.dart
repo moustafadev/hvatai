@@ -48,21 +48,23 @@ class _TopBarSearchWidgetState extends State<TopBarSearchWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final searchCubit = context.read<SearchCubit>();
+
     return Row(
       //crossAxisAlignment: CrossAxisAlignment.end,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        GestureDetector(
-            onTap: () {
-              // Clear selected category if one is selected, otherwise pop
-              final searchCubit = context.read<SearchCubit>();
-              if (searchCubit.state.selectedCategoryId != null) {
+        if (searchCubit.state.selectedCategoryId != null ||
+            _controller.text.isNotEmpty)
+          GestureDetector(
+              onTap: () {
+                // Clear selected category if one is selected, otherwise pop
                 searchCubit.clearSelectedCategory();
-              } else {
-                context.pop();
-              }
-            },
-            child: Icon(Icons.arrow_back_ios)),
+                setState(() {
+                  _controller.clear();
+                });
+              },
+              child: Icon(Icons.arrow_back_ios)),
         2.ph,
         Expanded(
           child: CompositedTransformTarget(

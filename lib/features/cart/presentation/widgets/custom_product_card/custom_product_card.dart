@@ -11,6 +11,7 @@ class CustomProductCard extends StatelessWidget {
     this.showSaleTypeChip = true,
     this.showFixed = true,
     this.color,
+    this.onTap, // ✅ add
   });
 
   final ProductModel product;
@@ -21,6 +22,7 @@ class CustomProductCard extends StatelessWidget {
   final bool showSaleTypeChip;
   final bool showFixed;
   final Color? color;
+  final void Function(CartProductDetailsCubit cubit)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +37,7 @@ class CustomProductCard extends StatelessWidget {
           showSaleTypeChip: showSaleTypeChip,
           showFixed: showFixed,
           color: color,
+          onTap: onTap,
         ),
       );
     }
@@ -49,6 +52,7 @@ class CustomProductCard extends StatelessWidget {
         showSaleTypeChip: showSaleTypeChip,
         showFixed: showFixed,
         color: color,
+        onTap: onTap,
       ),
     );
   }
@@ -63,6 +67,7 @@ class _ProductCardBody extends StatelessWidget {
     required this.showSaleTypeChip,
     required this.showFixed,
     required this.color,
+    this.onTap,
   });
 
   final ProductModel product;
@@ -72,6 +77,7 @@ class _ProductCardBody extends StatelessWidget {
   final bool showSaleTypeChip;
   final bool showFixed;
   final Color? color;
+  final void Function(CartProductDetailsCubit cubit)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +98,10 @@ class _ProductCardBody extends StatelessWidget {
         return GestureDetector(
           onTap: () {
             final productId = product.id;
-            if (productId != null) {
+            if (productId == null) return;
+            if (onTap != null) {
+              onTap!(cubit); // ✅ cubit is available here from BlocConsumer
+            } else {
               context.push(
                 AppRoutes.cartProductDetails,
                 extra: {'productId': productId, 'cubit': cubit},

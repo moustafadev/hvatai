@@ -54,8 +54,7 @@ class CartProductDetailsScreen extends StatelessWidget {
                       onPageChanged: (index) {
                         cubit.changeImageIndex(index);
                       },
-                      isFavorited:
-                          state.isFavourites ?? currentProduct.isFavorited,
+                      isFavorited: currentProduct.isFavorited,
                       onFavoriteTap: () {
                         cubit.addFavProduct(currentProduct.id!);
                         cubit.toggleFav(currentProduct.isFavorited);
@@ -73,9 +72,11 @@ class CartProductDetailsScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           _CircleButton(
-                            icon: Icons.arrow_back_ios_new_rounded,
-                            onTap: () => context.pop(),
-                          ),
+                              icon: Icons.arrow_back_ios_new_rounded,
+                              onTap: () {
+                                context.pop(state.isPrevFavourites !=
+                                    state.product.isFavorited);
+                              }),
                           _CircleButton(
                             icon: Icons.close,
                             onTap: () => context.pop(),

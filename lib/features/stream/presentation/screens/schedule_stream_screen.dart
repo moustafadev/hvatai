@@ -19,13 +19,6 @@ class ScheduleStreamScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 24.0),
                     child: Row(
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            context.pop();
-                          },
-                          child: Icon(Icons.arrow_back_ios),
-                        ),
-                        12.pw,
                         CustomText(
                           text: 'Запустить стрим',
                           fontWeight: FontWeight.w700,

@@ -12,11 +12,11 @@ class ApiServiceSearch extends ApiBase {
       final queryParams = <String, dynamic>{
         'query': params.query,
       };
-      if (params.categoryIds.isNotEmpty) {
-        final queryParams = <String, dynamic>{
-          'query': params.query,
-        };
+      print("===========================");
+      print(params.categoryIds);
+      print("===========================");
 
+      if (params.categoryIds.isNotEmpty) {
         if (params.categoryIds.isNotEmpty) {
           queryParams['category_ids[]'] = params.categoryIds; // ✅ important
         }

@@ -42,8 +42,6 @@ class PaymentMethodCubit extends Cubit<PaymentMethodState> {
 
   Future<void> submit(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
-      emit(state.copyWith(errorMessage: 'fillAllFields'.tr()));
-      showFloatingMessageError('fillAllFields'.tr());
       return;
     }
 
@@ -55,8 +53,8 @@ class PaymentMethodCubit extends Cubit<PaymentMethodState> {
 
     result.fold(
       (failure) {
-        emit(state.copyWith(isLoading: false, errorMessage: failure));
-        showFloatingMessageError('somethingWentWrong'.tr());
+        emit(state.copyWith(isLoading: false));
+        showFloatingMessageError(failure);
       },
       (newCard) {
         emit(state.copyWith(

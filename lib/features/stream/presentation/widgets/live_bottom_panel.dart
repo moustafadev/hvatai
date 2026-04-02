@@ -143,7 +143,9 @@ class _CommentsSection extends StatelessWidget {
                     controller: textController,
                     borderRadius: BorderRadius.circular(24),
                     borderSide: const BorderSide(color: Colors.white),
-                    hintColor: Colors.black.withValues(alpha: 0.2),
+                    
+                    textColor: Colors.white,
+                    hintColor: Colors.white,
                     onChanged: onCommentChanged,
                     suffixIcon: IconButton(
                       icon:
@@ -300,14 +302,16 @@ class _ProductDetailsSection extends StatelessWidget {
                     : showSingleBidButton
                         ? SlideToBidButton(
                             key: const ValueKey('slide_button'),
-                            priceText: singleBidButtonLabel.replaceAll('Ставка: ', ''),
+                            priceText:
+                                singleBidButtonLabel.replaceAll('Ставка: ', ''),
                             onSlideComplete: () {
                               if (onSingleBidPressed != null) {
                                 onSingleBidPressed!();
                               }
                             },
                             arrowIconLarge: Assets.assetsIconsAltArrowRight,
-                            arrowIconSmall: Assets.assetsIconsAltArrowRightSmall,
+                            arrowIconSmall:
+                                Assets.assetsIconsAltArrowRightSmall,
                             isLoading: isBidLoading,
                           )
                         : Row(
@@ -345,7 +349,8 @@ class _ProductDetailsSection extends StatelessWidget {
                                     children: [
                                       CustomButton(
                                         title: 'Ставка: $startPrice₽',
-                                        onPressed: isBidLoading ? null : onBidPressed,
+                                        onPressed:
+                                            isBidLoading ? null : onBidPressed,
                                         color: AppColors.primaryColor,
                                         textColor: Colors.white,
                                         isLoading: isBidLoading,

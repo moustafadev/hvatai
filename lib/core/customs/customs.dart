@@ -53,6 +53,7 @@ part 'custom_text_field.dart';
 part 'custom_upload_image.dart';
 part 'custom_vertical_divider.dart';
 part 'floating_message.dart';
+part 'full_screen_image_view.dart';
 part 'gradient_check_box.dart';
 part 'reusable_live_videos_grid.dart';
 part 'show_dialog_cupertino.dart';

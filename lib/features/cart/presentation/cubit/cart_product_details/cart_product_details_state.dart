@@ -10,6 +10,7 @@ class CartProductDetailsState with _$CartProductDetailsState {
     @Default(0) int currentImageIndex,
     PageController? pageController,
     required ProductModel product,
+    @Default(false) bool? isPrevFavourites,
     @Default(false) bool? isFavourites,
     @Default(false) bool isJoiningStream,
   }) = _CartProductDetailsState;

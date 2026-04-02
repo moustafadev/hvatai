@@ -24,12 +24,12 @@ class ProfileImplRepository implements ProfileRepository {
     });
   }
 
-
   @override
   Future<Either<String, UserRegistrationData>> updateProfileData(
       UpdateProfileParams params) async {
     return executeAndHandleError<UserRegistrationData>(() async {
-      final res = await _apiServiceProfile.updateProfileData(params.userRegistrationData);
+      final res = await _apiServiceProfile
+          .updateProfileData(params.userRegistrationData);
       return res;
     });
   }

@@ -1,6 +1,6 @@
 part of '../stream.dart';
 
-enum _ExitAction { cancel, leave, end }
+enum _ExitAction { cancel, end }
 
 class BroadcasterStreamScreen extends StatefulWidget {
   final StreamDataModel stream;
@@ -242,7 +242,7 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
             title: Row(
               children: [
                 const Expanded(
-                  child: Text('Leave or end stream?'),
+                  child: Text('End stream?'),
                 ),
                 IconButton(
                   icon: const Icon(Icons.close),
@@ -252,13 +252,9 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
               ],
             ),
             content: const Text(
-              'You can end the stream for everyone or just leave.',
+              'You can end the stream for everyone.',
             ),
             actions: [
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(_ExitAction.leave),
-                child: const Text('Leave'),
-              ),
               TextButton(
                 onPressed: () => Navigator.of(context).pop(_ExitAction.end),
                 child: const Text('End Stream'),
@@ -286,9 +282,7 @@ class _BroadcasterStreamScreenState extends State<BroadcasterStreamScreen>
     await _cubit.state.room?.disconnect();
 
     bool ok = false;
-    if (action == _ExitAction.leave) {
-      ok = await _cubit.leaveStream(streamId: streamId);
-    } else if (action == _ExitAction.end) {
+    if (action == _ExitAction.end) {
       ok = await _cubit.endStream(streamId: streamId);
     }
 

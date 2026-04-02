@@ -565,7 +565,6 @@ class CartCubit extends Cubit<CartState> {
           isCreatingOrder: false,
           showOrderLoadingScreen: false,
           showOrderErrorScreen: true,
-          errorMessage: failure,
         ));
       },
       (response) {

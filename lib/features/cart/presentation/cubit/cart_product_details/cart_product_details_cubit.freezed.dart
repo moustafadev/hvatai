@@ -23,6 +23,7 @@ mixin _$CartProductDetailsState {
   int get currentImageIndex => throw _privateConstructorUsedError;
   PageController? get pageController => throw _privateConstructorUsedError;
   ProductModel get product => throw _privateConstructorUsedError;
+  bool? get isPrevFavourites => throw _privateConstructorUsedError;
   bool? get isFavourites => throw _privateConstructorUsedError;
   bool get isJoiningStream => throw _privateConstructorUsedError;
 
@@ -47,6 +48,7 @@ abstract class $CartProductDetailsStateCopyWith<$Res> {
       int currentImageIndex,
       PageController? pageController,
       ProductModel product,
+      bool? isPrevFavourites,
       bool? isFavourites,
       bool isJoiningStream});
 
@@ -76,6 +78,7 @@ class _$CartProductDetailsStateCopyWithImpl<$Res,
     Object? currentImageIndex = null,
     Object? pageController = freezed,
     Object? product = null,
+    Object? isPrevFavourites = freezed,
     Object? isFavourites = freezed,
     Object? isJoiningStream = null,
   }) {
@@ -108,6 +111,10 @@ class _$CartProductDetailsStateCopyWithImpl<$Res,
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as ProductModel,
+      isPrevFavourites: freezed == isPrevFavourites
+          ? _value.isPrevFavourites
+          : isPrevFavourites // ignore: cast_nullable_to_non_nullable
+              as bool?,
       isFavourites: freezed == isFavourites
           ? _value.isFavourites
           : isFavourites // ignore: cast_nullable_to_non_nullable
@@ -147,6 +154,7 @@ abstract class _$$CartProductDetailsStateImplCopyWith<$Res>
       int currentImageIndex,
       PageController? pageController,
       ProductModel product,
+      bool? isPrevFavourites,
       bool? isFavourites,
       bool isJoiningStream});
 
@@ -176,6 +184,7 @@ class __$$CartProductDetailsStateImplCopyWithImpl<$Res>
     Object? currentImageIndex = null,
     Object? pageController = freezed,
     Object? product = null,
+    Object? isPrevFavourites = freezed,
     Object? isFavourites = freezed,
     Object? isJoiningStream = null,
   }) {
@@ -208,6 +217,10 @@ class __$$CartProductDetailsStateImplCopyWithImpl<$Res>
           ? _value.product
           : product // ignore: cast_nullable_to_non_nullable
               as ProductModel,
+      isPrevFavourites: freezed == isPrevFavourites
+          ? _value.isPrevFavourites
+          : isPrevFavourites // ignore: cast_nullable_to_non_nullable
+              as bool?,
       isFavourites: freezed == isFavourites
           ? _value.isFavourites
           : isFavourites // ignore: cast_nullable_to_non_nullable
@@ -231,6 +244,7 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
       this.currentImageIndex = 0,
       this.pageController,
       required this.product,
+      this.isPrevFavourites = false,
       this.isFavourites = false,
       this.isJoiningStream = false})
       : _ownerProducts = ownerProducts;
@@ -262,6 +276,9 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
   final ProductModel product;
   @override
   @JsonKey()
+  final bool? isPrevFavourites;
+  @override
+  @JsonKey()
   final bool? isFavourites;
   @override
   @JsonKey()
@@ -269,7 +286,7 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
 
   @override
   String toString() {
-    return 'CartProductDetailsState(isLoading: $isLoading, success: $success, errorMessage: $errorMessage, ownerProducts: $ownerProducts, currentImageIndex: $currentImageIndex, pageController: $pageController, product: $product, isFavourites: $isFavourites, isJoiningStream: $isJoiningStream)';
+    return 'CartProductDetailsState(isLoading: $isLoading, success: $success, errorMessage: $errorMessage, ownerProducts: $ownerProducts, currentImageIndex: $currentImageIndex, pageController: $pageController, product: $product, isPrevFavourites: $isPrevFavourites, isFavourites: $isFavourites, isJoiningStream: $isJoiningStream)';
   }
 
   @override
@@ -289,6 +306,8 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
             (identical(other.pageController, pageController) ||
                 other.pageController == pageController) &&
             (identical(other.product, product) || other.product == product) &&
+            (identical(other.isPrevFavourites, isPrevFavourites) ||
+                other.isPrevFavourites == isPrevFavourites) &&
             (identical(other.isFavourites, isFavourites) ||
                 other.isFavourites == isFavourites) &&
             (identical(other.isJoiningStream, isJoiningStream) ||
@@ -305,6 +324,7 @@ class _$CartProductDetailsStateImpl implements _CartProductDetailsState {
       currentImageIndex,
       pageController,
       product,
+      isPrevFavourites,
       isFavourites,
       isJoiningStream);
 
@@ -327,6 +347,7 @@ abstract class _CartProductDetailsState implements CartProductDetailsState {
       final int currentImageIndex,
       final PageController? pageController,
       required final ProductModel product,
+      final bool? isPrevFavourites,
       final bool? isFavourites,
       final bool isJoiningStream}) = _$CartProductDetailsStateImpl;
 
@@ -344,6 +365,8 @@ abstract class _CartProductDetailsState implements CartProductDetailsState {
   PageController? get pageController;
   @override
   ProductModel get product;
+  @override
+  bool? get isPrevFavourites;
   @override
   bool? get isFavourites;
   @override

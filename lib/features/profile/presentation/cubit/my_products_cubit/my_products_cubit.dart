@@ -39,14 +39,17 @@ class MyProductsCubit extends Cubit<MyProductsState> {
 
   // search my products localy
   void searchMyProducts(String query) {
-    final filteredProducts = state.products.where((product) {
-      return product.productName?.toLowerCase().contains(query.toLowerCase()) ??
-          false;
-    }).toList();
-    if (filteredProducts.isEmpty) {
+    final trimmed = query.trim();
+    if (trimmed.isEmpty) {
       emit(state.copyWith(filteredProducts: state.products));
-    } else {
-      emit(state.copyWith(filteredProducts: filteredProducts));
+      return;
     }
+
+    final q = trimmed.toLowerCase();
+    final filteredProducts = state.products.where((product) {
+      return product.productName?.toLowerCase().contains(q) ?? false;
+    }).toList();
+
+    emit(state.copyWith(filteredProducts: filteredProducts));
   }
 }

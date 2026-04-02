@@ -273,21 +273,43 @@ class ChatMessageContent extends StatelessWidget {
                       if (hasLocalImages)
                         ...message.localImages!.map((path) => ClipRRect(
                               borderRadius: BorderRadius.circular(12),
-                              child: Image.file(
-                                File(path),
-                                width: 120,
-                                height: 120,
-                                fit: BoxFit.cover,
+                              child: GestureDetector(
+                                onTap: () {
+                                  context.push(
+                                    AppRoutes.fullScreenImage,
+                                    extra: {
+                                      'imageUrl': path,
+                                      'heroTag': 'chat_local_$path',
+                                    },
+                                  );
+                                },
+                                child: Image.file(
+                                  File(path),
+                                  width: 120,
+                                  height: 120,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             )),
                       if (hasNetworkImages)
                         ...message.images!.map((img) => ClipRRect(
                               borderRadius: BorderRadius.circular(12),
-                              child: CustomImage(
-                                imageSource: img.fullUrl,
-                                width: 120,
-                                height: 120,
-                                fit: BoxFit.cover,
+                              child: GestureDetector(
+                                onTap: () {
+                                  context.push(
+                                    AppRoutes.fullScreenImage,
+                                    extra: {
+                                      'imageUrl': img.fullUrl,
+                                      'heroTag': 'chat_net_${img.fullUrl}',
+                                    },
+                                  );
+                                },
+                                child: CustomImage(
+                                  imageSource: img.fullUrl,
+                                  width: 120,
+                                  height: 120,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             )),
                     ],

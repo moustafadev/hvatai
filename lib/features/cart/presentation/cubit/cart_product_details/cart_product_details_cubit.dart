@@ -35,30 +35,23 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
   /// Initialize with product ID - fetches product and other products from API
   void initProductById(int productId) {
     // Check if this is the same product - if so, don't refetch
-    final isSameProduct = state.product.id == productId;
 
     // Reset image index when product changes
     emit(state.copyWith(
       currentImageIndex: 0,
       pageController: null, // Will be recreated with new initial page
-      ownerProducts: isSameProduct
-          ? state.ownerProducts
-          : [], // Keep products if same product
     ));
 
     // Fetch product with other products if:
     // 1. It's a different product, OR
     // 2. Owner products are empty (first time loading)
-    if (!isSameProduct || state.ownerProducts.isEmpty) {
-      fetchProductWithOthers(productId);
-    }
+    fetchProductWithOthers(productId);
   }
 
   void toggleFav(bool isFav) {
     final currentFav = state.isFavourites ?? isFav;
     emit(state.copyWith(isFavourites: !currentFav));
   }
-
 
   Future<void> addFavProduct(int productId) async {
     final params = AddFavProductParams(productId: productId);
@@ -85,8 +78,6 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
       },
     );
   }
-
-
 
   Future<void> fetchProductWithOthers(int productId) async {
     if (productId == 0) {
@@ -123,6 +114,7 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
           state.copyWith(
             isLoading: false,
             product: updatedProduct,
+            isPrevFavourites: updatedProduct.isFavorited,
             ownerProducts: otherProducts,
           ),
         );
@@ -186,5 +178,4 @@ class CartProductDetailsCubit extends Cubit<CartProductDetailsState> {
       },
     );
   }
-
 }

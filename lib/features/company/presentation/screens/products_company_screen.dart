@@ -35,12 +35,16 @@ class ProductsCompanyTab extends StatelessWidget {
   void _showRewardInfoSheet(BuildContext context, int userId) {
     showModalBottomSheet(
       context: context,
+      isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20.r),
         ),
       ),
-      builder: (_) => SendRewardInfoBottomSheet(userId: userId),
+      builder: (_) => FractionallySizedBox(
+        heightFactor: 0.60,
+        child: SendRewardInfoBottomSheet(userId: userId),
+      ),
     );
   }
 

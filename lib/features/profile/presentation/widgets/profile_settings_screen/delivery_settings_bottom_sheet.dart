@@ -163,7 +163,8 @@ class _DeliverySettingsBottomSheetState
                                       confirmText: 'delete'.tr(),
                                       isDestructive: true,
                                       onConfirm: () {
-                                        cubit.deleteAddress(address.id!, context);
+                                        cubit.deleteAddress(
+                                            address.id!, context);
                                         Navigator.of(context).pop();
                                       },
                                     );
@@ -205,10 +206,13 @@ class _DeliverySettingsBottomSheetState
                           // Add new address
                           ListTile(
                             onTap: () async {
-                              await context.push(
-                                AppRoutes.addDeliveryAddress,
-                                extra: cubit,
+                              await context.push<UserRegistrationData>(
+                                AppRoutes.deliveryAddressForm,
+                                extra: {
+                                  'mode': AddressFormMode.add,
+                                },
                               );
+
                               if (context.mounted) {
                                 cubit.getDeliveryAddress();
                               }
@@ -293,9 +297,14 @@ void showDeliverySettingsBottomSheet(BuildContext context) {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(top: Radius.circular(16.r)),
     ),
-    builder: (context) => SizedBox(
-      height: screenHeight * 0.75,
-      child: const DeliverySettingsBottomSheet(),
+    builder: (context) => Padding(
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
+      child: SizedBox(
+        height: screenHeight * 0.75,
+        child: const DeliverySettingsBottomSheet(),
+      ),
     ),
   );
 }

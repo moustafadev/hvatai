@@ -188,6 +188,7 @@ class CartContent extends StatelessWidget {
                   32.ph,
                   CartPayButton(
                     hasDeliveryAddress: deliveryAddress != null,
+                    method: state.deliveryMethod,
                     onPay: () {
                       final hasInvalidPickupItems = _hasPickupNotSupportedItems(
                         cartItems,

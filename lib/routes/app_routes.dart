@@ -61,7 +61,6 @@ class AppRoutes {
   static const String notificationSettings = '/notification_settings';
   static const String tradeProfile = '/trade_profile';
   static const String interestsDetail = '/interests-detail';
-  static const String addDeliveryAddress = '/add_delivery_address';
   static const String editDeliveryAddress = '/edit_delivery_address';
   static const String tradeProfileDetail = '/trade_profile_detail';
   static const String addProduct = '/add_product';
@@ -72,6 +71,7 @@ class AppRoutes {
   static const String chatDetails = 'chat_details';
   static const String chatSupportDetails = 'chat_support_details';
   static const String mainNotification = '/main_notification';
+  static const fullScreenImage = '/full-screen-image';
 
   static const String liveStreamViewer = '/live_stream_viewer';
   static const String liveStreamBroadcaster = '/live_stream_broadcaster';
@@ -85,4 +85,10 @@ class AppRoutes {
   // =============================== Clips routes ===============================
   static const String editVideo = '/edit_video';
   static const String previewVideo = '/preview_video';
+}
+
+/// Pass as [GoRouter] `extra` when navigating to [AppRoutes.profile] to refetch clips
+/// (e.g. after uploading a new clip).
+class RefreshProfileClipsExtra {
+  const RefreshProfileClipsExtra();
 }

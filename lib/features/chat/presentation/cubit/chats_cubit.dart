@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hvatai/core/customs/customs.dart';
 import 'package:hvatai/core/datasources/local/app_local.dart';
 import 'package:hvatai/features/chat/data/models/chat/chat_model.dart';
 import 'package:hvatai/features/chat/data/models/message/message_model.dart';
@@ -129,9 +130,8 @@ class ChatsCubit extends Cubit<ChatsState> {
             state.messages.where((m) => m.id != tempId).toList();
         emit(state.copyWith(
           messages: updatedMessages,
-          isError: true,
-          errorMessage: failure,
         ));
+        showFloatingMessageError(failure);
       },
       (sentMessage) {
         emit(state.copyWith(
@@ -223,8 +223,8 @@ class ChatsCubit extends Cubit<ChatsState> {
         // Step 2: Remove optimistic message on error
         final updatedMessages =
             state.messages.where((m) => m.id != tempId).toList();
-        emit(state.copyWith(
-            messages: updatedMessages, isError: true, errorMessage: failure));
+        emit(state.copyWith(messages: updatedMessages));
+        showFloatingMessageError(failure);
       },
       (sentMessage) {
         // Store chatId from response if this is a new chat

@@ -222,7 +222,7 @@ class SearchCubit extends Cubit<SearchState> {
       (response) {
         final data = response.data;
         final categories = data?.parentCategories ?? [];
-       
+
         emit(
           state.copyWith(
             isLoading: false,
@@ -252,6 +252,6 @@ class SearchCubit extends Cubit<SearchState> {
       selectedCategoryId: null,
     ));
     // Trigger search without category filter
-    search(state.query);
+    search("");
   }
 }

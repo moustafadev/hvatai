@@ -14,11 +14,6 @@ class HeaderProfile extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  IconButton(
-                    onPressed: () => Navigator.of(context).maybePop(),
-                    icon: const Icon(Icons.arrow_back_ios,
-                        color: AppColors.blackColorIcon),
-                  ),
                   const Spacer(),
                   _IconButton(
                     onTap: () {

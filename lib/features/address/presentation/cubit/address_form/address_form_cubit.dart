@@ -86,7 +86,6 @@ class AddressFormCubit extends Cubit<AddressFormState> {
   bool get isFormValid {
     final u = state.user;
     return [
-      u.country,
       u.city,
       u.street,
       u.floor,

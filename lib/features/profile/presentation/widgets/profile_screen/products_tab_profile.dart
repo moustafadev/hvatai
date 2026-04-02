@@ -27,7 +27,7 @@ class _MyProductsScrollView extends StatelessWidget {
     return BlocBuilder<MyProductsCubit, MyProductsState>(
       builder: (context, state) {
         return _ProductsScrollViewContent(
-          products: state.products,
+          products: state.filteredProducts,
           isLoading: state.isLoading,
           errorMessage: state.errorMessage,
           isShowingMyProducts: true,

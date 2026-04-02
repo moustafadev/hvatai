@@ -22,26 +22,38 @@ class ProfileClipsCubit extends Cubit<ProfileClipsState> {
     this._deleteClipUsecase,
   ) : super(const ProfileClipsState());
 
-  Future<void> loadUserClips(int userId) async {
-    // Skip if already loaded and clips exist (unless we need to refresh)
-    if (!state.isLoadingClips && state.clips.isNotEmpty) {
+  Future<void> loadUserClips(int userId, {bool forceRefresh = false}) async {
+    if (!forceRefresh &&
+        !state.isLoadingClips &&
+        state.clips.isNotEmpty) {
       return;
     }
 
-    emit(state.copyWith(isLoadingClips: true, errorMessageClips: ''));
+    if (!isClosed) {
+      emit(state.copyWith(isLoadingClips: true, errorMessageClips: ''));
+    }
     final result = await _getUserClipsUsecase(userId);
+    if (isClosed) {
+      return;
+    }
     result.fold(
-      (failure) => emit(state.copyWith(
-        isLoadingClips: false,
-        errorMessageClips: failure,
-      )),
+      (failure) {
+        if (!isClosed) {
+          emit(state.copyWith(
+            isLoadingClips: false,
+            errorMessageClips: failure,
+          ));
+        }
+      },
       (response) async {
-        emit(state.copyWith(
-          isLoadingClips: false,
-          clips: response.data,
-          clipsPagination: response.pagination,
-          errorMessageClips: '',
-        ));
+        if (!isClosed) {
+          emit(state.copyWith(
+            isLoadingClips: false,
+            clips: response.data,
+            clipsPagination: response.pagination,
+            errorMessageClips: '',
+          ));
+        }
 
         // Generate thumbnails for clips that don't have cached thumbnails
         await _generateThumbnailsForClips(response.data);
@@ -76,7 +88,7 @@ class ProfileClipsCubit extends Cubit<ProfileClipsState> {
       }
     }
 
-    if (hasNewThumbnails) {
+    if (hasNewThumbnails && !isClosed) {
       emit(state.copyWith(clipThumbnails: newThumbnails));
     }
   }
@@ -197,8 +209,9 @@ class ProfileClipsCubit extends Cubit<ProfileClipsState> {
   }
 
   @override
-  Future<void> close() async {
-    clearThumbnails();
+  Future<void> close() {
+    // Do not emit here: [clearThumbnails] uses emit and can race with async
+    // completions after navigation (e.g. logout).
     return super.close();
   }
 }
