@@ -239,7 +239,7 @@ class AddStreamCubit extends Cubit<AddStreamState> {
       (streamResponse) {
         showFloatingMessageSuccess('Stream created successfully');
         if (state.createStreamModel.scheduledAt != null) {
-          context.pop();
+          context.pop(true);
           return;
         }
         context.push(

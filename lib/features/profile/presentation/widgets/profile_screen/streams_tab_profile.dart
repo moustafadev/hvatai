@@ -3,6 +3,35 @@ part of '../../profile.dart';
 class StreamsTabProfile extends StatelessWidget {
   const StreamsTabProfile({super.key});
 
+  Future<void> _confirmStartStream(
+    BuildContext context, {
+    required dynamic stream,
+  }) async {
+    final scheduledAt = stream.scheduledAt;
+    final now = DateTime.now();
+
+    final message = (scheduledAt != null && now.isBefore(scheduledAt))
+        ? 'Вы уверены, что хотите начать стрим раньше запланированного времени?'
+        : 'Вы уверены, что хотите начать стрим?';
+
+    final shouldStart = await showConfirmDialog(
+      context,
+      title: 'Начать стрим',
+      content: message,
+      cancelText: 'Отмена',
+      confirmText: 'Ок',
+    );
+
+    if (shouldStart == true && context.mounted) {
+      context.push(
+        AppRoutes.liveStreamBroadcaster,
+        extra: {
+          'streamDataModel': stream,
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MyStreamsCubit, MyStreamsState>(
@@ -36,7 +65,11 @@ class StreamsTabProfile extends StatelessWidget {
                       builder: (context, profileState) {
                         return GestureDetector(
                           onTap: () {
-                            context.push(AppRoutes.addStream);
+                            context.push<bool>(AppRoutes.addStream).then((ok) {
+                              if (ok == true && context.mounted) {
+                                context.read<MyStreamsCubit>().loadMyStreams();
+                              }
+                            });
                           },
                           child: SvgPicture.asset(
                             Assets.assetsIconsAddCircle,
@@ -80,16 +113,24 @@ class StreamsTabProfile extends StatelessWidget {
                       final categoryName = stream.categories?.isNotEmpty == true
                           ? stream.categories!.first.name ?? ''
                           : '';
+
+                      final isScheduled = stream.scheduledAt != null &&
+                          stream.status != 'live' &&
+                          stream.status != 'ended';
+
                       return GestureDetector(
                         onTap: () {
                           if (stream.status == 'ended') {
-                            // Navigate to ended stream screen
                             context.push(
                               AppRoutes.endedStreamViewer,
                               extra: {
                                 'stream': stream,
                               },
                             );
+                            return;
+                          }
+                          if (isScheduled) {
+                            _confirmStartStream(context, stream: stream);
                           }
                         },
                         child: CustomLiveVideoCard(

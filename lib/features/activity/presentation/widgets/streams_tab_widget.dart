@@ -3,6 +3,35 @@ part of '../activity.dart';
 class StreamsTabWidget extends StatelessWidget {
   const StreamsTabWidget({super.key});
 
+  Future<void> _confirmStartStream(
+    BuildContext context, {
+    required dynamic stream,
+  }) async {
+    final scheduledAt = stream.scheduledAt;
+    final now = DateTime.now();
+
+    final message = (scheduledAt != null && now.isBefore(scheduledAt))
+        ? 'Вы уверены, что хотите начать стрим раньше запланированного времени?'
+        : 'Вы уверены, что хотите начать стрим?';
+
+    final shouldStart = await showConfirmDialog(
+      context,
+      title: 'Начать стрим',
+      content: message,
+      cancelText: 'Отмена',
+      confirmText: 'Ок',
+    );
+
+    if (shouldStart && context.mounted) {
+      context.push(
+        AppRoutes.liveStreamBroadcaster,
+        extra: {
+          'streamDataModel': stream,
+        },
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ActivityCubit, ActivityState>(
@@ -51,12 +80,23 @@ class StreamsTabWidget extends StatelessWidget {
 
             return GestureDetector(
               onTap: () {
-                // if (stream.id != null) {
-                //   context.push(
-                //     AppRoutes.liveStreamViewer,
-                //     extra: {'streamId': stream.id},
-                //   );
-                // }
+                if (stream.status == 'ended') {
+                  context.push(
+                    AppRoutes.endedStreamViewer,
+                    extra: {
+                      'stream': stream,
+                    },
+                  );
+                  return;
+                }
+
+                final isScheduled = stream.scheduledAt != null &&
+                    stream.status != 'live' &&
+                    stream.status != 'ended';
+
+                if (isScheduled) {
+                  _confirmStartStream(context, stream: stream);
+                }
               },
               child: CustomLiveVideoCard(
                 stream: stream,

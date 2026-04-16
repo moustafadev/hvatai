@@ -4,7 +4,8 @@ import 'package:hvatai/features/profile/data/model/create_stream/create_stream_m
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
 import 'package:hvatai/features/profile/domain/repositories/profile_repository.dart';
 
-class CreateStreamUsecase implements UseCase<StreamResponseModel, CreateStreamModel> {
+class CreateStreamUsecase
+    implements UseCase<StreamResponseModel, CreateStreamModel> {
   final ProfileRepository _profileRepository;
 
   CreateStreamUsecase(this._profileRepository);

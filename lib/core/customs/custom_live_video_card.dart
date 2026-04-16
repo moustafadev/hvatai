@@ -55,8 +55,22 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
     return firstProduct?.product?.name ?? widget.stream.title ?? '';
   }
 
+  String _formatDateTime(DateTime? dateTime) {
+    if (dateTime == null) return '';
+    final day = dateTime.day.toString().padLeft(2, '0');
+    final month = dateTime.month.toString().padLeft(2, '0');
+    final year = dateTime.year.toString().substring(2);
+    final hour = dateTime.hour.toString().padLeft(2, '0');
+    final minute = dateTime.minute.toString().padLeft(2, '0');
+    return '$day.$month.$year • $hour:$minute';
+  }
+
   @override
   Widget build(BuildContext context) {
+    final scheduledAt = widget.stream.scheduledAt;
+    final isScheduled = scheduledAt != null &&
+        widget.stream.status != 'live' &&
+        widget.stream.status != 'ended';
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -125,7 +139,9 @@ class _CustomLiveVideoCardState extends State<CustomLiveVideoCard> {
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: CustomText(
-                          text: "Live • ${widget.stream.viewerCount ?? 0}",
+                          text: isScheduled
+                              ? _formatDateTime(scheduledAt)
+                              : "Live • ${widget.stream.viewerCount ?? 0}",
                           textAlign: TextAlign.center,
                           color: AppColors.white,
                           fontSize: 12.sp,
