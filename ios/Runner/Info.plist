@@ -39,30 +39,39 @@
 	<string>447608090352-2aho7s9rgrgird65qk123nd22750lbt6.apps.googleusercontent.com</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>We need access to your media library to select audio or video for streams and product listings.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to your camera to take a product photo.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We need your location to auto-fill the address</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>We need access to your photo library to select a product image.</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>We need access to your photo library to save videos.</string>
-	<key>NSUserAuthenticationUsageDescription</key>
-	<string>Sign in with Apple is used to log in securely.</string>
-	<key>UIApplicationSupportsIndirectInputEvents</key>
-	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>We need access to your microphone to broadcast your stream.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>We need your location to auto-fill the address</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>We need your location to auto-fill the address</string>
-	<key>NSCameraUsageDescription</key>
-	<string>We need access to your camera to take a product photo.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>We need your location to auto-fill the address</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We need access to your microphone to broadcast your stream.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We need access to your photo library to save videos.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to your photo library to select a product image.</string>
+	<key>NSUserAuthenticationUsageDescription</key>
+	<string>Sign in with Apple is used to log in securely.</string>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
@@ -75,16 +84,6 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
-	</array>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-	</dict>
-	<key>UIBackgroundModes</key>
-	<array>
-		<string>audio</string>
-		<string>picture-in-picture</string>
 	</array>
 </dict>
 </plist>
