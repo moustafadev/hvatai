@@ -23,9 +23,7 @@ class SelectAwayRewardsScreen extends StatelessWidget {
             return const RewardSuccessScreen();
           }
 
-          if (state.showRewardErrorScreen) {
-            return const RewardErrorScreen();
-          }
+        
 
           return SelectAwayRewardsContent();
         },

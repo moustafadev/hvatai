@@ -46,8 +46,8 @@ class _OrderCardState extends State<OrderCard> {
     final store = item?.store;
     final isDeliveryAvailable =
         widget.order.deliveryMethod?.toLowerCase() == 'delivery';
-    final totalPrice = widget.order.totals?.grand?.finalAmount ??
-        double.tryParse(widget.order.totalAmount ?? '') ??
+    final totalPrice = widget.order.totals?.grand?.finalAmount?.toDouble() ??
+        widget.order.totalAmount?.toDouble() ??
         0;
 
     return Container(

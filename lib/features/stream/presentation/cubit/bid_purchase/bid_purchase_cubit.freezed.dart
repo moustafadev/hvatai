@@ -26,7 +26,14 @@ mixin _$BidPurchaseState {
   AddressModel? get selectedAddress => throw _privateConstructorUsedError;
   List<AddressModel> get addresses => throw _privateConstructorUsedError;
   bool get showFirstSheet => throw _privateConstructorUsedError;
-  bool get showSecondSheet => throw _privateConstructorUsedError;
+  bool get showSecondSheet =>
+      throw _privateConstructorUsedError; // Payment result fields (mirrors CartState)
+  bool get showOrderSuccessScreen => throw _privateConstructorUsedError;
+  bool get showOrderErrorScreen => throw _privateConstructorUsedError;
+  String? get qrCodeSvg => throw _privateConstructorUsedError;
+  String? get sbpPaymentUrl => throw _privateConstructorUsedError;
+  String? get pendingPaymentWebViewUrl => throw _privateConstructorUsedError;
+  String? get lastOrderUuid => throw _privateConstructorUsedError;
 
   /// Create a copy of BidPurchaseState
   /// with the given fields replaced by the non-null parameter values.
@@ -52,7 +59,13 @@ abstract class $BidPurchaseStateCopyWith<$Res> {
       AddressModel? selectedAddress,
       List<AddressModel> addresses,
       bool showFirstSheet,
-      bool showSecondSheet});
+      bool showSecondSheet,
+      bool showOrderSuccessScreen,
+      bool showOrderErrorScreen,
+      String? qrCodeSvg,
+      String? sbpPaymentUrl,
+      String? pendingPaymentWebViewUrl,
+      String? lastOrderUuid});
 
   $AddressModelCopyWith<$Res>? get selectedAddress;
 }
@@ -83,6 +96,12 @@ class _$BidPurchaseStateCopyWithImpl<$Res, $Val extends BidPurchaseState>
     Object? addresses = null,
     Object? showFirstSheet = null,
     Object? showSecondSheet = null,
+    Object? showOrderSuccessScreen = null,
+    Object? showOrderErrorScreen = null,
+    Object? qrCodeSvg = freezed,
+    Object? sbpPaymentUrl = freezed,
+    Object? pendingPaymentWebViewUrl = freezed,
+    Object? lastOrderUuid = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -129,6 +148,30 @@ class _$BidPurchaseStateCopyWithImpl<$Res, $Val extends BidPurchaseState>
           ? _value.showSecondSheet
           : showSecondSheet // ignore: cast_nullable_to_non_nullable
               as bool,
+      showOrderSuccessScreen: null == showOrderSuccessScreen
+          ? _value.showOrderSuccessScreen
+          : showOrderSuccessScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showOrderErrorScreen: null == showOrderErrorScreen
+          ? _value.showOrderErrorScreen
+          : showOrderErrorScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      qrCodeSvg: freezed == qrCodeSvg
+          ? _value.qrCodeSvg
+          : qrCodeSvg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sbpPaymentUrl: freezed == sbpPaymentUrl
+          ? _value.sbpPaymentUrl
+          : sbpPaymentUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pendingPaymentWebViewUrl: freezed == pendingPaymentWebViewUrl
+          ? _value.pendingPaymentWebViewUrl
+          : pendingPaymentWebViewUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastOrderUuid: freezed == lastOrderUuid
+          ? _value.lastOrderUuid
+          : lastOrderUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 
@@ -166,7 +209,13 @@ abstract class _$$BidPurchaseStateImplCopyWith<$Res>
       AddressModel? selectedAddress,
       List<AddressModel> addresses,
       bool showFirstSheet,
-      bool showSecondSheet});
+      bool showSecondSheet,
+      bool showOrderSuccessScreen,
+      bool showOrderErrorScreen,
+      String? qrCodeSvg,
+      String? sbpPaymentUrl,
+      String? pendingPaymentWebViewUrl,
+      String? lastOrderUuid});
 
   @override
   $AddressModelCopyWith<$Res>? get selectedAddress;
@@ -196,6 +245,12 @@ class __$$BidPurchaseStateImplCopyWithImpl<$Res>
     Object? addresses = null,
     Object? showFirstSheet = null,
     Object? showSecondSheet = null,
+    Object? showOrderSuccessScreen = null,
+    Object? showOrderErrorScreen = null,
+    Object? qrCodeSvg = freezed,
+    Object? sbpPaymentUrl = freezed,
+    Object? pendingPaymentWebViewUrl = freezed,
+    Object? lastOrderUuid = freezed,
   }) {
     return _then(_$BidPurchaseStateImpl(
       isLoading: null == isLoading
@@ -242,6 +297,30 @@ class __$$BidPurchaseStateImplCopyWithImpl<$Res>
           ? _value.showSecondSheet
           : showSecondSheet // ignore: cast_nullable_to_non_nullable
               as bool,
+      showOrderSuccessScreen: null == showOrderSuccessScreen
+          ? _value.showOrderSuccessScreen
+          : showOrderSuccessScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      showOrderErrorScreen: null == showOrderErrorScreen
+          ? _value.showOrderErrorScreen
+          : showOrderErrorScreen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      qrCodeSvg: freezed == qrCodeSvg
+          ? _value.qrCodeSvg
+          : qrCodeSvg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sbpPaymentUrl: freezed == sbpPaymentUrl
+          ? _value.sbpPaymentUrl
+          : sbpPaymentUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pendingPaymentWebViewUrl: freezed == pendingPaymentWebViewUrl
+          ? _value.pendingPaymentWebViewUrl
+          : pendingPaymentWebViewUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastOrderUuid: freezed == lastOrderUuid
+          ? _value.lastOrderUuid
+          : lastOrderUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -260,7 +339,13 @@ class _$BidPurchaseStateImpl implements _BidPurchaseState {
       this.selectedAddress,
       final List<AddressModel> addresses = const [],
       this.showFirstSheet = false,
-      this.showSecondSheet = false})
+      this.showSecondSheet = false,
+      this.showOrderSuccessScreen = false,
+      this.showOrderErrorScreen = false,
+      this.qrCodeSvg,
+      this.sbpPaymentUrl,
+      this.pendingPaymentWebViewUrl,
+      this.lastOrderUuid})
       : _addresses = addresses;
 
   @override
@@ -300,10 +385,25 @@ class _$BidPurchaseStateImpl implements _BidPurchaseState {
   @override
   @JsonKey()
   final bool showSecondSheet;
+// Payment result fields (mirrors CartState)
+  @override
+  @JsonKey()
+  final bool showOrderSuccessScreen;
+  @override
+  @JsonKey()
+  final bool showOrderErrorScreen;
+  @override
+  final String? qrCodeSvg;
+  @override
+  final String? sbpPaymentUrl;
+  @override
+  final String? pendingPaymentWebViewUrl;
+  @override
+  final String? lastOrderUuid;
 
   @override
   String toString() {
-    return 'BidPurchaseState(isLoading: $isLoading, isLoadingAddresses: $isLoadingAddresses, isLoadingWallet: $isLoadingWallet, errorMessage: $errorMessage, hasDeliveryAddress: $hasDeliveryAddress, selectedPaymentMethod: $selectedPaymentMethod, selectedWalletId: $selectedWalletId, selectedAddress: $selectedAddress, addresses: $addresses, showFirstSheet: $showFirstSheet, showSecondSheet: $showSecondSheet)';
+    return 'BidPurchaseState(isLoading: $isLoading, isLoadingAddresses: $isLoadingAddresses, isLoadingWallet: $isLoadingWallet, errorMessage: $errorMessage, hasDeliveryAddress: $hasDeliveryAddress, selectedPaymentMethod: $selectedPaymentMethod, selectedWalletId: $selectedWalletId, selectedAddress: $selectedAddress, addresses: $addresses, showFirstSheet: $showFirstSheet, showSecondSheet: $showSecondSheet, showOrderSuccessScreen: $showOrderSuccessScreen, showOrderErrorScreen: $showOrderErrorScreen, qrCodeSvg: $qrCodeSvg, sbpPaymentUrl: $sbpPaymentUrl, pendingPaymentWebViewUrl: $pendingPaymentWebViewUrl, lastOrderUuid: $lastOrderUuid)';
   }
 
   @override
@@ -332,7 +432,20 @@ class _$BidPurchaseStateImpl implements _BidPurchaseState {
             (identical(other.showFirstSheet, showFirstSheet) ||
                 other.showFirstSheet == showFirstSheet) &&
             (identical(other.showSecondSheet, showSecondSheet) ||
-                other.showSecondSheet == showSecondSheet));
+                other.showSecondSheet == showSecondSheet) &&
+            (identical(other.showOrderSuccessScreen, showOrderSuccessScreen) ||
+                other.showOrderSuccessScreen == showOrderSuccessScreen) &&
+            (identical(other.showOrderErrorScreen, showOrderErrorScreen) ||
+                other.showOrderErrorScreen == showOrderErrorScreen) &&
+            (identical(other.qrCodeSvg, qrCodeSvg) ||
+                other.qrCodeSvg == qrCodeSvg) &&
+            (identical(other.sbpPaymentUrl, sbpPaymentUrl) ||
+                other.sbpPaymentUrl == sbpPaymentUrl) &&
+            (identical(
+                    other.pendingPaymentWebViewUrl, pendingPaymentWebViewUrl) ||
+                other.pendingPaymentWebViewUrl == pendingPaymentWebViewUrl) &&
+            (identical(other.lastOrderUuid, lastOrderUuid) ||
+                other.lastOrderUuid == lastOrderUuid));
   }
 
   @override
@@ -348,7 +461,13 @@ class _$BidPurchaseStateImpl implements _BidPurchaseState {
       selectedAddress,
       const DeepCollectionEquality().hash(_addresses),
       showFirstSheet,
-      showSecondSheet);
+      showSecondSheet,
+      showOrderSuccessScreen,
+      showOrderErrorScreen,
+      qrCodeSvg,
+      sbpPaymentUrl,
+      pendingPaymentWebViewUrl,
+      lastOrderUuid);
 
   /// Create a copy of BidPurchaseState
   /// with the given fields replaced by the non-null parameter values.
@@ -372,7 +491,13 @@ abstract class _BidPurchaseState implements BidPurchaseState {
       final AddressModel? selectedAddress,
       final List<AddressModel> addresses,
       final bool showFirstSheet,
-      final bool showSecondSheet}) = _$BidPurchaseStateImpl;
+      final bool showSecondSheet,
+      final bool showOrderSuccessScreen,
+      final bool showOrderErrorScreen,
+      final String? qrCodeSvg,
+      final String? sbpPaymentUrl,
+      final String? pendingPaymentWebViewUrl,
+      final String? lastOrderUuid}) = _$BidPurchaseStateImpl;
 
   @override
   bool get isLoading;
@@ -395,7 +520,19 @@ abstract class _BidPurchaseState implements BidPurchaseState {
   @override
   bool get showFirstSheet;
   @override
-  bool get showSecondSheet;
+  bool get showSecondSheet; // Payment result fields (mirrors CartState)
+  @override
+  bool get showOrderSuccessScreen;
+  @override
+  bool get showOrderErrorScreen;
+  @override
+  String? get qrCodeSvg;
+  @override
+  String? get sbpPaymentUrl;
+  @override
+  String? get pendingPaymentWebViewUrl;
+  @override
+  String? get lastOrderUuid;
 
   /// Create a copy of BidPurchaseState
   /// with the given fields replaced by the non-null parameter values.

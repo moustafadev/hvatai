@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/features/awards/data/datasources/api_service_awards.dart';
+import 'package:hvatai/features/awards/data/models/reward_payment_response/reward_payment_response.dart';
 import 'package:hvatai/features/awards/domain/repositories/awards_repository.dart';
 import 'package:hvatai/features/awards/domain/usecases/send_reward_usecase.dart';
 
@@ -10,9 +11,11 @@ class AwardsImplRepository implements AwardsRepository {
   AwardsImplRepository(this._apiServiceAwards);
 
   @override
-  Future<Either<String, Unit>> sendReward(SendRewardParams params) {
-    return executeAndHandleError<Unit>(() async {
-      await _apiServiceAwards.sendReward(
+  Future<Either<String, RewardPaymentResponse>> sendReward(
+    SendRewardParams params,
+  ) {
+    return executeAndHandleError<RewardPaymentResponse>(() async {
+      return await _apiServiceAwards.sendReward(
         userId: params.userId,
         body: {
           'amount': params.amount,
@@ -20,7 +23,6 @@ class AwardsImplRepository implements AwardsRepository {
           'payment_method': params.paymentMethod,
         },
       );
-      return unit;
     });
   }
 }

@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/features/address/data/models/address_model/address_model.dart';
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
+import 'package:hvatai/features/stream/data/models/bid_purchase_response/bid_purchase_response.dart';
 import 'package:hvatai/features/stream/data/models/bid_session/bid_session_response.dart';
 import 'package:hvatai/features/stream/data/models/bid_stream/bid_stream_response.dart';
 import 'package:hvatai/features/stream/data/models/start_stream/start_stream_model.dart';
@@ -104,7 +105,7 @@ abstract class StreamRepository {
 
   /// PUT bid-purchases/{id}/complete
   /// body: { payment_method: "wallet", wallet_id: 1, shipping_address: {...} }
-  Future<Either<String, bool>> completeBidPurchase({
+  Future<Either<String, BidPurchaseResponse>> completeBidPurchase({
     required int bidPurchaseId,
     required String paymentMethod,
     int? walletId,

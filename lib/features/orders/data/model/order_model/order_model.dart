@@ -15,8 +15,14 @@ class OrderModel with _$OrderModel {
     int? id,
     String? uuid,
 
+    @JsonKey(name: 'user_id')
+    int? userId,
+
+    @JsonKey(name: 'order_type')
+    String? orderType,
+
     @JsonKey(name: 'total_amount')
-    String? totalAmount,
+    num? totalAmount,
 
     @JsonKey(name: 'delivery_total')
     num? deliveryTotal,

@@ -26,6 +26,9 @@ mixin _$SendRewardFlowState {
   bool get showRewardSuccessScreen => throw _privateConstructorUsedError;
   bool get showRewardErrorScreen => throw _privateConstructorUsedError;
   String get errorMessage => throw _privateConstructorUsedError;
+  String? get qrCodeSvg => throw _privateConstructorUsedError;
+  String? get sbpPaymentUrl => throw _privateConstructorUsedError;
+  String? get pendingPaymentWebViewUrl => throw _privateConstructorUsedError;
 
   /// Create a copy of SendRewardFlowState
   /// with the given fields replaced by the non-null parameter values.
@@ -50,7 +53,10 @@ abstract class $SendRewardFlowStateCopyWith<$Res> {
       bool showRewardLoadingScreen,
       bool showRewardSuccessScreen,
       bool showRewardErrorScreen,
-      String errorMessage});
+      String errorMessage,
+      String? qrCodeSvg,
+      String? sbpPaymentUrl,
+      String? pendingPaymentWebViewUrl});
 }
 
 /// @nodoc
@@ -78,6 +84,9 @@ class _$SendRewardFlowStateCopyWithImpl<$Res, $Val extends SendRewardFlowState>
     Object? showRewardSuccessScreen = null,
     Object? showRewardErrorScreen = null,
     Object? errorMessage = null,
+    Object? qrCodeSvg = freezed,
+    Object? sbpPaymentUrl = freezed,
+    Object? pendingPaymentWebViewUrl = freezed,
   }) {
     return _then(_value.copyWith(
       userId: freezed == userId
@@ -120,6 +129,18 @@ class _$SendRewardFlowStateCopyWithImpl<$Res, $Val extends SendRewardFlowState>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      qrCodeSvg: freezed == qrCodeSvg
+          ? _value.qrCodeSvg
+          : qrCodeSvg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sbpPaymentUrl: freezed == sbpPaymentUrl
+          ? _value.sbpPaymentUrl
+          : sbpPaymentUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pendingPaymentWebViewUrl: freezed == pendingPaymentWebViewUrl
+          ? _value.pendingPaymentWebViewUrl
+          : pendingPaymentWebViewUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -142,7 +163,10 @@ abstract class _$$SendRewardFlowStateImplCopyWith<$Res>
       bool showRewardLoadingScreen,
       bool showRewardSuccessScreen,
       bool showRewardErrorScreen,
-      String errorMessage});
+      String errorMessage,
+      String? qrCodeSvg,
+      String? sbpPaymentUrl,
+      String? pendingPaymentWebViewUrl});
 }
 
 /// @nodoc
@@ -168,6 +192,9 @@ class __$$SendRewardFlowStateImplCopyWithImpl<$Res>
     Object? showRewardSuccessScreen = null,
     Object? showRewardErrorScreen = null,
     Object? errorMessage = null,
+    Object? qrCodeSvg = freezed,
+    Object? sbpPaymentUrl = freezed,
+    Object? pendingPaymentWebViewUrl = freezed,
   }) {
     return _then(_$SendRewardFlowStateImpl(
       userId: freezed == userId
@@ -210,6 +237,18 @@ class __$$SendRewardFlowStateImplCopyWithImpl<$Res>
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String,
+      qrCodeSvg: freezed == qrCodeSvg
+          ? _value.qrCodeSvg
+          : qrCodeSvg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sbpPaymentUrl: freezed == sbpPaymentUrl
+          ? _value.sbpPaymentUrl
+          : sbpPaymentUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pendingPaymentWebViewUrl: freezed == pendingPaymentWebViewUrl
+          ? _value.pendingPaymentWebViewUrl
+          : pendingPaymentWebViewUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -222,12 +261,15 @@ class _$SendRewardFlowStateImpl implements _SendRewardFlowState {
       this.selectedIndex = null,
       this.addThankYouNote = false,
       this.rewardMessage = '',
-      this.paymentMethod = 'wallet',
+      this.paymentMethod = PaymentMethodType.wallet,
       this.isRewardSubmitting = false,
       this.showRewardLoadingScreen = false,
       this.showRewardSuccessScreen = false,
       this.showRewardErrorScreen = false,
-      this.errorMessage = ''});
+      this.errorMessage = '',
+      this.qrCodeSvg,
+      this.sbpPaymentUrl,
+      this.pendingPaymentWebViewUrl});
 
   @override
   @JsonKey()
@@ -259,10 +301,16 @@ class _$SendRewardFlowStateImpl implements _SendRewardFlowState {
   @override
   @JsonKey()
   final String errorMessage;
+  @override
+  final String? qrCodeSvg;
+  @override
+  final String? sbpPaymentUrl;
+  @override
+  final String? pendingPaymentWebViewUrl;
 
   @override
   String toString() {
-    return 'SendRewardFlowState(userId: $userId, selectedIndex: $selectedIndex, addThankYouNote: $addThankYouNote, rewardMessage: $rewardMessage, paymentMethod: $paymentMethod, isRewardSubmitting: $isRewardSubmitting, showRewardLoadingScreen: $showRewardLoadingScreen, showRewardSuccessScreen: $showRewardSuccessScreen, showRewardErrorScreen: $showRewardErrorScreen, errorMessage: $errorMessage)';
+    return 'SendRewardFlowState(userId: $userId, selectedIndex: $selectedIndex, addThankYouNote: $addThankYouNote, rewardMessage: $rewardMessage, paymentMethod: $paymentMethod, isRewardSubmitting: $isRewardSubmitting, showRewardLoadingScreen: $showRewardLoadingScreen, showRewardSuccessScreen: $showRewardSuccessScreen, showRewardErrorScreen: $showRewardErrorScreen, errorMessage: $errorMessage, qrCodeSvg: $qrCodeSvg, sbpPaymentUrl: $sbpPaymentUrl, pendingPaymentWebViewUrl: $pendingPaymentWebViewUrl)';
   }
 
   @override
@@ -290,7 +338,14 @@ class _$SendRewardFlowStateImpl implements _SendRewardFlowState {
             (identical(other.showRewardErrorScreen, showRewardErrorScreen) ||
                 other.showRewardErrorScreen == showRewardErrorScreen) &&
             (identical(other.errorMessage, errorMessage) ||
-                other.errorMessage == errorMessage));
+                other.errorMessage == errorMessage) &&
+            (identical(other.qrCodeSvg, qrCodeSvg) ||
+                other.qrCodeSvg == qrCodeSvg) &&
+            (identical(other.sbpPaymentUrl, sbpPaymentUrl) ||
+                other.sbpPaymentUrl == sbpPaymentUrl) &&
+            (identical(
+                    other.pendingPaymentWebViewUrl, pendingPaymentWebViewUrl) ||
+                other.pendingPaymentWebViewUrl == pendingPaymentWebViewUrl));
   }
 
   @override
@@ -305,7 +360,10 @@ class _$SendRewardFlowStateImpl implements _SendRewardFlowState {
       showRewardLoadingScreen,
       showRewardSuccessScreen,
       showRewardErrorScreen,
-      errorMessage);
+      errorMessage,
+      qrCodeSvg,
+      sbpPaymentUrl,
+      pendingPaymentWebViewUrl);
 
   /// Create a copy of SendRewardFlowState
   /// with the given fields replaced by the non-null parameter values.
@@ -328,7 +386,10 @@ abstract class _SendRewardFlowState implements SendRewardFlowState {
       final bool showRewardLoadingScreen,
       final bool showRewardSuccessScreen,
       final bool showRewardErrorScreen,
-      final String errorMessage}) = _$SendRewardFlowStateImpl;
+      final String errorMessage,
+      final String? qrCodeSvg,
+      final String? sbpPaymentUrl,
+      final String? pendingPaymentWebViewUrl}) = _$SendRewardFlowStateImpl;
 
   @override
   int? get userId;
@@ -350,6 +411,12 @@ abstract class _SendRewardFlowState implements SendRewardFlowState {
   bool get showRewardErrorScreen;
   @override
   String get errorMessage;
+  @override
+  String? get qrCodeSvg;
+  @override
+  String? get sbpPaymentUrl;
+  @override
+  String? get pendingPaymentWebViewUrl;
 
   /// Create a copy of SendRewardFlowState
   /// with the given fields replaced by the non-null parameter values.

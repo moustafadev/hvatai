@@ -23,10 +23,16 @@ import 'package:hvatai/core/widgets/video_thumbnail_player.dart';
 import 'package:hvatai/locator.dart';
 import 'package:hvatai/routes/app_routes.dart';
 import 'package:readmore/readmore.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 part 'widgets/quantity_buttons.dart';
 part 'screens/cart_screen.dart';
 part 'screens/cart_product_details_screen.dart';
+part 'screens/payment_web_view.dart';
+part 'screens/payment_success_screen.dart';
+part 'screens/payment_failed_screen.dart';
+part 'widgets/show_sbp_qr_bottom_sheet.dart';
 part 'widgets/order_loading_screen.dart';
 part 'widgets/order_success_screen.dart';
 part 'widgets/order_error_screen.dart';

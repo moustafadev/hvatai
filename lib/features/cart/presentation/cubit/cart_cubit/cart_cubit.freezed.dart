@@ -31,6 +31,10 @@ mixin _$CartState {
   bool get showOrderLoadingScreen => throw _privateConstructorUsedError;
   bool get showOrderSuccessScreen => throw _privateConstructorUsedError;
   bool get showOrderErrorScreen => throw _privateConstructorUsedError;
+  String? get qrCodeSvg => throw _privateConstructorUsedError;
+  String? get sbpPaymentUrl => throw _privateConstructorUsedError;
+  String? get pendingPaymentWebViewUrl => throw _privateConstructorUsedError;
+  String? get lastOrderUuid => throw _privateConstructorUsedError;
 
   /// Create a copy of CartState
   /// with the given fields replaced by the non-null parameter values.
@@ -57,7 +61,11 @@ abstract class $CartStateCopyWith<$Res> {
       bool isCreatingOrder,
       bool showOrderLoadingScreen,
       bool showOrderSuccessScreen,
-      bool showOrderErrorScreen});
+      bool showOrderErrorScreen,
+      String? qrCodeSvg,
+      String? sbpPaymentUrl,
+      String? pendingPaymentWebViewUrl,
+      String? lastOrderUuid});
 }
 
 /// @nodoc
@@ -88,6 +96,10 @@ class _$CartStateCopyWithImpl<$Res, $Val extends CartState>
     Object? showOrderLoadingScreen = null,
     Object? showOrderSuccessScreen = null,
     Object? showOrderErrorScreen = null,
+    Object? qrCodeSvg = freezed,
+    Object? sbpPaymentUrl = freezed,
+    Object? pendingPaymentWebViewUrl = freezed,
+    Object? lastOrderUuid = freezed,
   }) {
     return _then(_value.copyWith(
       isLoading: null == isLoading
@@ -142,6 +154,22 @@ class _$CartStateCopyWithImpl<$Res, $Val extends CartState>
           ? _value.showOrderErrorScreen
           : showOrderErrorScreen // ignore: cast_nullable_to_non_nullable
               as bool,
+      qrCodeSvg: freezed == qrCodeSvg
+          ? _value.qrCodeSvg
+          : qrCodeSvg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sbpPaymentUrl: freezed == sbpPaymentUrl
+          ? _value.sbpPaymentUrl
+          : sbpPaymentUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pendingPaymentWebViewUrl: freezed == pendingPaymentWebViewUrl
+          ? _value.pendingPaymentWebViewUrl
+          : pendingPaymentWebViewUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastOrderUuid: freezed == lastOrderUuid
+          ? _value.lastOrderUuid
+          : lastOrderUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -167,7 +195,11 @@ abstract class _$$CartStateImplCopyWith<$Res>
       bool isCreatingOrder,
       bool showOrderLoadingScreen,
       bool showOrderSuccessScreen,
-      bool showOrderErrorScreen});
+      bool showOrderErrorScreen,
+      String? qrCodeSvg,
+      String? sbpPaymentUrl,
+      String? pendingPaymentWebViewUrl,
+      String? lastOrderUuid});
 }
 
 /// @nodoc
@@ -196,6 +228,10 @@ class __$$CartStateImplCopyWithImpl<$Res>
     Object? showOrderLoadingScreen = null,
     Object? showOrderSuccessScreen = null,
     Object? showOrderErrorScreen = null,
+    Object? qrCodeSvg = freezed,
+    Object? sbpPaymentUrl = freezed,
+    Object? pendingPaymentWebViewUrl = freezed,
+    Object? lastOrderUuid = freezed,
   }) {
     return _then(_$CartStateImpl(
       isLoading: null == isLoading
@@ -250,6 +286,22 @@ class __$$CartStateImplCopyWithImpl<$Res>
           ? _value.showOrderErrorScreen
           : showOrderErrorScreen // ignore: cast_nullable_to_non_nullable
               as bool,
+      qrCodeSvg: freezed == qrCodeSvg
+          ? _value.qrCodeSvg
+          : qrCodeSvg // ignore: cast_nullable_to_non_nullable
+              as String?,
+      sbpPaymentUrl: freezed == sbpPaymentUrl
+          ? _value.sbpPaymentUrl
+          : sbpPaymentUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      pendingPaymentWebViewUrl: freezed == pendingPaymentWebViewUrl
+          ? _value.pendingPaymentWebViewUrl
+          : pendingPaymentWebViewUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lastOrderUuid: freezed == lastOrderUuid
+          ? _value.lastOrderUuid
+          : lastOrderUuid // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -270,7 +322,11 @@ class _$CartStateImpl implements _CartState {
       this.isCreatingOrder = false,
       this.showOrderLoadingScreen = false,
       this.showOrderSuccessScreen = false,
-      this.showOrderErrorScreen = false})
+      this.showOrderErrorScreen = false,
+      this.qrCodeSvg,
+      this.sbpPaymentUrl,
+      this.pendingPaymentWebViewUrl,
+      this.lastOrderUuid})
       : _carts = carts,
         _tempQuantities = tempQuantities,
         _deliveryModel = deliveryModel;
@@ -333,10 +389,18 @@ class _$CartStateImpl implements _CartState {
   @override
   @JsonKey()
   final bool showOrderErrorScreen;
+  @override
+  final String? qrCodeSvg;
+  @override
+  final String? sbpPaymentUrl;
+  @override
+  final String? pendingPaymentWebViewUrl;
+  @override
+  final String? lastOrderUuid;
 
   @override
   String toString() {
-    return 'CartState(isLoading: $isLoading, errorMessage: $errorMessage, carts: $carts, tempQuantities: $tempQuantities, deliveryModel: $deliveryModel, totalCartPrice: $totalCartPrice, selectedTipAmount: $selectedTipAmount, selectedPaymentMethod: $selectedPaymentMethod, deliveryMethod: $deliveryMethod, isCreatingOrder: $isCreatingOrder, showOrderLoadingScreen: $showOrderLoadingScreen, showOrderSuccessScreen: $showOrderSuccessScreen, showOrderErrorScreen: $showOrderErrorScreen)';
+    return 'CartState(isLoading: $isLoading, errorMessage: $errorMessage, carts: $carts, tempQuantities: $tempQuantities, deliveryModel: $deliveryModel, totalCartPrice: $totalCartPrice, selectedTipAmount: $selectedTipAmount, selectedPaymentMethod: $selectedPaymentMethod, deliveryMethod: $deliveryMethod, isCreatingOrder: $isCreatingOrder, showOrderLoadingScreen: $showOrderLoadingScreen, showOrderSuccessScreen: $showOrderSuccessScreen, showOrderErrorScreen: $showOrderErrorScreen, qrCodeSvg: $qrCodeSvg, sbpPaymentUrl: $sbpPaymentUrl, pendingPaymentWebViewUrl: $pendingPaymentWebViewUrl, lastOrderUuid: $lastOrderUuid)';
   }
 
   @override
@@ -368,7 +432,16 @@ class _$CartStateImpl implements _CartState {
             (identical(other.showOrderSuccessScreen, showOrderSuccessScreen) ||
                 other.showOrderSuccessScreen == showOrderSuccessScreen) &&
             (identical(other.showOrderErrorScreen, showOrderErrorScreen) ||
-                other.showOrderErrorScreen == showOrderErrorScreen));
+                other.showOrderErrorScreen == showOrderErrorScreen) &&
+            (identical(other.qrCodeSvg, qrCodeSvg) ||
+                other.qrCodeSvg == qrCodeSvg) &&
+            (identical(other.sbpPaymentUrl, sbpPaymentUrl) ||
+                other.sbpPaymentUrl == sbpPaymentUrl) &&
+            (identical(
+                    other.pendingPaymentWebViewUrl, pendingPaymentWebViewUrl) ||
+                other.pendingPaymentWebViewUrl == pendingPaymentWebViewUrl) &&
+            (identical(other.lastOrderUuid, lastOrderUuid) ||
+                other.lastOrderUuid == lastOrderUuid));
   }
 
   @override
@@ -386,7 +459,11 @@ class _$CartStateImpl implements _CartState {
       isCreatingOrder,
       showOrderLoadingScreen,
       showOrderSuccessScreen,
-      showOrderErrorScreen);
+      showOrderErrorScreen,
+      qrCodeSvg,
+      sbpPaymentUrl,
+      pendingPaymentWebViewUrl,
+      lastOrderUuid);
 
   /// Create a copy of CartState
   /// with the given fields replaced by the non-null parameter values.
@@ -411,7 +488,11 @@ abstract class _CartState implements CartState {
       final bool isCreatingOrder,
       final bool showOrderLoadingScreen,
       final bool showOrderSuccessScreen,
-      final bool showOrderErrorScreen}) = _$CartStateImpl;
+      final bool showOrderErrorScreen,
+      final String? qrCodeSvg,
+      final String? sbpPaymentUrl,
+      final String? pendingPaymentWebViewUrl,
+      final String? lastOrderUuid}) = _$CartStateImpl;
 
   @override
   bool get isLoading;
@@ -439,6 +520,14 @@ abstract class _CartState implements CartState {
   bool get showOrderSuccessScreen;
   @override
   bool get showOrderErrorScreen;
+  @override
+  String? get qrCodeSvg;
+  @override
+  String? get sbpPaymentUrl;
+  @override
+  String? get pendingPaymentWebViewUrl;
+  @override
+  String? get lastOrderUuid;
 
   /// Create a copy of CartState
   /// with the given fields replaced by the non-null parameter values.

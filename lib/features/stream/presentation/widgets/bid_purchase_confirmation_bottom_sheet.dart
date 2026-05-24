@@ -35,10 +35,41 @@ class BidPurchaseConfirmationBottomSheet extends StatelessWidget {
     );
   }
 
+  void _handleCompletePurchase(
+    BuildContext context,
+    BidPurchaseCubit cubit,
+  ) {
+    final router = GoRouter.of(context);
+    final navigator = Navigator.of(context, rootNavigator: true);
+
+    cubit.completePurchase(
+      bidPurchaseId,
+      onSuccess: () {
+        navigator.pop(); // close bottom sheet
+        onPaymentSuccess?.call();
+      },
+      onWebView: (url) {
+        navigator.pop(); // close bottom sheet
+        router.push(
+          AppRoutes.paymentWebView,
+          extra: {
+            'url': url,
+            'isPlan': false,
+          },
+        );
+      },
+      onQr: (qrSvg, url) {
+        navigator.pop(); // close bottom sheet
+        showSbpQrBottomSheet(navigator.context, qrSvg, url);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<BidPurchaseCubit, BidPurchaseState>(
       builder: (context, bidState) {
+        final cubit = context.read<BidPurchaseCubit>();
         final selectedAddress = bidState.selectedAddress;
 
         return Container(
@@ -94,68 +125,63 @@ class BidPurchaseConfirmationBottomSheet extends StatelessWidget {
                           AppRoutes.deliveryAddressForm,
                           extra: {
                             'mode': AddressFormMode.edit,
-                            'address': selectedAddress?.toUserRegistrationData(),
+                            'address':
+                                selectedAddress?.toUserRegistrationData(),
                           },
-                         
                         );
-
                         if (updatedAddress != null && context.mounted) {
-                          context.read<BidPurchaseCubit>().selectAddress(
-                              AddressModelFactory.fromUserRegistrationData(
-                                  updatedAddress));
+                          cubit.selectAddress(
+                            AddressModelFactory.fromUserRegistrationData(
+                                updatedAddress),
+                          );
                         }
                       },
                     ),
                   8.ph,
                   // Payment method section
                   PaymentMethodsSection(
-                    walletSelected: bidState.selectedPaymentMethod == 'wallet',
-                    sbpSelected: bidState.selectedPaymentMethod == 'sbp',
-                    onWalletTap: bidState.selectedWalletId == null
-                        ? null
-                        : () {
-                            context
-                                .read<BidPurchaseCubit>()
-                                .selectPaymentMethod(
-                                  'wallet',
-                                  walletId: bidState.selectedWalletId,
-                                );
-                          },
+                    selectedPaymentMethod: bidState.selectedPaymentMethod,
+                    onWalletTap: () {
+                      cubit.selectPaymentMethod(
+                        PaymentMethodType.wallet,
+                        walletId: bidState.selectedWalletId,
+                      );
+                    },
+                    onCardTap: () {
+                      cubit.selectPaymentMethod(PaymentMethodType.card);
+                    },
                     onSbpTap: () {
-                      context
-                          .read<BidPurchaseCubit>()
-                          .selectPaymentMethod('sbp');
+                      cubit.selectPaymentMethod(PaymentMethodType.sbp);
                     },
-                    onAddPaymentTap: null, // Remove card add option
+                    onAddPaymentTap: () async {
+                      PaymentMethodCubit paymentCubit;
+                      try {
+                        paymentCubit = context.read<PaymentMethodCubit>();
+                      } catch (_) {
+                        paymentCubit = locator<PaymentMethodCubit>();
+                      }
+                      final router = GoRouter.of(context);
+                      await router.push(
+                        AppRoutes.addNewPaymentMethod,
+                        extra: paymentCubit,
+                      );
+                      paymentCubit.getPaymentMethods();
+                    },
                   ),
+                  8.ph,
                   // Ok button
-                  BlocListener<BidPurchaseCubit, BidPurchaseState>(
-                    listenWhen: (previous, current) =>
-                        previous.isLoading &&
-                        !current.isLoading &&
-                        current.errorMessage.isEmpty,
-                    listener: (context, state) {
-                      Navigator.of(context).pop();
-                      onPaymentSuccess?.call();
-                    },
-                    child: CustomGradientButton(
-                      text: 'Ок',
-                      onPressed: (selectedAddress == null ||
-                              (bidState.selectedPaymentMethod == 'wallet' &&
-                                  bidState.selectedWalletId == null) ||
-                              (bidState.selectedPaymentMethod != 'wallet' &&
-                                  bidState.selectedPaymentMethod != 'sbp') ||
-                              bidState.isLoading)
-                          ? null
-                          : () {
-                              context
-                                  .read<BidPurchaseCubit>()
-                                  .completePurchase(bidPurchaseId);
-                            },
-                      isLoading: bidState.isLoading,
-                      height: 48,
-                      fontWeight: FontWeight.w800,
-                    ),
+                  CustomGradientButton(
+                    text: 'Ок',
+                    onPressed: (selectedAddress == null ||
+                            (bidState.selectedPaymentMethod ==
+                                    PaymentMethodType.wallet &&
+                                bidState.selectedWalletId == null) ||
+                            bidState.isLoading)
+                        ? null
+                        : () => _handleCompletePurchase(context, cubit),
+                    isLoading: bidState.isLoading,
+                    height: 48,
+                    fontWeight: FontWeight.w800,
                   ),
                   20.ph,
                 ],

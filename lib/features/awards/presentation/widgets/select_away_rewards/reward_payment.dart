@@ -5,19 +5,34 @@ class RewardPaymentMethodSectionWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        CustomText(
-          text: 'paymentMethod'.tr(),
-          fontSize: 16.sp,
-          fontWeight: FontWeight.w700,
-        ),
-        12.ph,
-        PaymentMethodsSection(
-          walletSelected: true,
-        ),
-      ],
+    return BlocBuilder<SendRewardFlowCubit, SendRewardFlowState>(
+      builder: (context, state) {
+        final cubit = context.read<SendRewardFlowCubit>();
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomText(
+              text: 'paymentMethod'.tr(),
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w700,
+            ),
+            12.ph,
+            PaymentMethodsSection(
+              selectedPaymentMethod: state.paymentMethod,
+              onWalletTap: () {
+                cubit.setPaymentMethod(PaymentMethodType.wallet);
+              },
+              onCardTap: () {
+                cubit.setPaymentMethod(PaymentMethodType.card);
+              },
+              onSbpTap: () {
+                cubit.setPaymentMethod(PaymentMethodType.sbp);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

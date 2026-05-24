@@ -345,6 +345,46 @@ final GoRouter router = GoRouter(
       },
     ),
     GoRoute(
+      path: AppRoutes.paymentWebView,
+      builder: (BuildContext context, GoRouterState state) {
+        final extra = state.extra as Map<String, dynamic>? ?? {};
+        final url = extra['url'] as String? ?? '';
+        final isPlan = extra['isReward'] as bool? ?? false;
+        final orderUuid = extra['orderUuid'] as String?;
+        return PaymentWebView(
+          url: url,
+          isReward: isPlan,
+          orderUuid: orderUuid,
+        );
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.rewardLoading,
+      builder: (context, state) => const RewardLoadingScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.rewardSuccess,
+      builder: (context, state) => const RewardSuccessScreen(),
+    ),
+    GoRoute(
+      path: AppRoutes.rewardError,
+      builder: (context, state) {
+        return RewardErrorScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.paymentSuccess,
+      builder: (BuildContext context, GoRouterState state) {
+        return const PaymentSuccessScreen();
+      },
+    ),
+    GoRoute(
+      path: AppRoutes.paymentFailed,
+      builder: (BuildContext context, GoRouterState state) {
+        return PaymentFailedScreen();
+      },
+    ),
+    GoRoute(
       path: AppRoutes.wallet,
       builder: (BuildContext context, GoRouterState state) {
         final extra = state.extra as Map<String, dynamic>?;

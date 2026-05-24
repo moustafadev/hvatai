@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:hvatai/core/shared/utils/usecase.dart';
+import 'package:hvatai/features/awards/data/models/reward_payment_response/reward_payment_response.dart';
 import 'package:hvatai/features/awards/domain/repositories/awards_repository.dart';
 
 class SendRewardParams {
@@ -16,13 +17,13 @@ class SendRewardParams {
   });
 }
 
-class SendRewardUsecase implements UseCase<Unit, SendRewardParams> {
+class SendRewardUsecase implements UseCase<RewardPaymentResponse, SendRewardParams> {
   const SendRewardUsecase(this._repository);
 
   final AwardsRepository _repository;
 
   @override
-  Future<Either<String, Unit>> call(SendRewardParams params) {
+  Future<Either<String, RewardPaymentResponse>> call(SendRewardParams params) {
     return _repository.sendReward(params);
   }
 }

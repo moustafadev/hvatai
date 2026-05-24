@@ -58,7 +58,7 @@ Future<T> executeAndHandleErrorServer<T>(
       locator<AppLocal>().removeToken();
       ServerConfig.token = "";
       locator<AppLocal>().removeUserId();
-      navigatorKey.currentContext?.go(AppRoutes.home);
+      navigatorKey.currentContext?.go(AppRoutes.login);
     }
     if (error.response?.statusCode == 413) {
       throw DioException(

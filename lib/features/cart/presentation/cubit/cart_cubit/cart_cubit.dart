@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/core/customs/payment_methods_section.dart';
 import 'package:hvatai/features/cart/data/model/cart_model/cart_model.dart';
+import 'package:hvatai/features/cart/data/model/order_response/order_response.dart';
 import 'package:hvatai/features/cart/domain/usecases/add_product_to_cart_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/create_order_usecase.dart';
 import 'package:hvatai/features/cart/domain/usecases/get_cart_usecase.dart';
@@ -545,9 +547,11 @@ class CartCubit extends Cubit<CartState> {
       showOrderErrorScreen: false,
     ));
 
+    final originalPaymentMethod = state.selectedPaymentMethod;
+
     final result = await createOrderUsecase.call(CreateOrderParams(
       cartId: cartId,
-      paymentMethod: state.selectedPaymentMethod,
+      paymentMethod: originalPaymentMethod,
       walletId: walletId,
       street: street,
       city: city,
@@ -566,16 +570,114 @@ class CartCubit extends Cubit<CartState> {
           showOrderLoadingScreen: false,
           showOrderErrorScreen: true,
         ));
+        showFloatingMessageError(failure);
       },
       (response) {
         getCartProducts();
+        _handleOrderPaymentResult(
+          response: response,
+          originalPaymentMethod: originalPaymentMethod,
+        );
+      },
+    );
+  }
+
+  void _handleOrderPaymentResult({
+    required OrderResponse response,
+    required String originalPaymentMethod,
+  }) {
+    final orderUuid =
+        response.orders.isNotEmpty ? response.orders.first.uuid : null;
+    final session = response.paymentSession;
+
+    if (originalPaymentMethod == PaymentMethodType.wallet) {
+      if (response.message?.isNotEmpty == true) {
+        showFloatingMessageSuccess(response.message!);
+      }
+      emit(state.copyWith(
+        isCreatingOrder: false,
+        showOrderLoadingScreen: false,
+        showOrderSuccessScreen: true,
+        qrCodeSvg: null,
+        sbpPaymentUrl: null,
+        pendingPaymentWebViewUrl: null,
+        lastOrderUuid: orderUuid,
+      ));
+      return;
+    }
+
+    if (originalPaymentMethod == PaymentMethodType.sbp) {
+      final qrSvg = session?.qrSvg;
+      final sbpUrl = session?.qrLink ?? session?.qrImage;
+
+      if (qrSvg != null && qrSvg.isNotEmpty) {
         emit(state.copyWith(
           isCreatingOrder: false,
           showOrderLoadingScreen: false,
-          showOrderSuccessScreen: true,
+          showOrderSuccessScreen: false,
+          showOrderErrorScreen: false,
+          qrCodeSvg: qrSvg,
+          sbpPaymentUrl: sbpUrl,
+          pendingPaymentWebViewUrl: null,
+          lastOrderUuid: orderUuid,
         ));
-      },
-    );
+        return;
+      }
+
+      emit(state.copyWith(
+        isCreatingOrder: false,
+        showOrderLoadingScreen: false,
+        showOrderSuccessScreen: true,
+        qrCodeSvg: null,
+        sbpPaymentUrl: null,
+        pendingPaymentWebViewUrl: null,
+        lastOrderUuid: orderUuid,
+      ));
+      return;
+    }
+
+    if (originalPaymentMethod == PaymentMethodType.card) {
+      final confirmationUrl = session?.confirmationUrl;
+      if (confirmationUrl != null && confirmationUrl.isNotEmpty) {
+        emit(state.copyWith(
+          isCreatingOrder: false,
+          showOrderLoadingScreen: false,
+          showOrderSuccessScreen: false,
+          showOrderErrorScreen: false,
+          qrCodeSvg: null,
+          sbpPaymentUrl: null,
+          pendingPaymentWebViewUrl: confirmationUrl,
+          lastOrderUuid: orderUuid,
+        ));
+        return;
+      }
+
+      emit(state.copyWith(
+        isCreatingOrder: false,
+        showOrderLoadingScreen: false,
+        showOrderSuccessScreen: true,
+        qrCodeSvg: null,
+        sbpPaymentUrl: null,
+        pendingPaymentWebViewUrl: null,
+        lastOrderUuid: orderUuid,
+      ));
+      return;
+    }
+
+    emit(state.copyWith(
+      isCreatingOrder: false,
+      showOrderLoadingScreen: false,
+      showOrderSuccessScreen: true,
+      lastOrderUuid: orderUuid,
+    ));
+  }
+
+  void clearQrCode() {
+    emit(state.copyWith(qrCodeSvg: null, sbpPaymentUrl: null));
+  }
+
+  void clearPendingPaymentWebView() {
+    emit(state.copyWith(pendingPaymentWebViewUrl: null));
   }
 
   void hideOrderSuccessScreen() {

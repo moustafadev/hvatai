@@ -7,7 +7,46 @@ class CartScreenBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CartCubit, CartState>(
+    return BlocListener<CartCubit, CartState>(
+      listenWhen: (previous, current) {
+        final qrReady = current.qrCodeSvg != null && current.qrCodeSvg!.isNotEmpty;
+        final webViewReady = current.pendingPaymentWebViewUrl != null &&
+            current.pendingPaymentWebViewUrl!.isNotEmpty;
+        return qrReady || webViewReady;
+      },
+      listener: (context, state) {
+        final basketCubit = context.read<CartCubit>();
+
+        if (state.qrCodeSvg != null && state.qrCodeSvg!.isNotEmpty) {
+          final qrCodeSvg = state.qrCodeSvg!;
+          final url = state.sbpPaymentUrl;
+          final orderUuid = state.lastOrderUuid;
+          basketCubit.clearQrCode();
+          showSbpQrBottomSheet(
+            context,
+            qrCodeSvg,
+            url,
+            orderUuid: orderUuid,
+          );
+          return;
+        }
+
+        if (state.pendingPaymentWebViewUrl != null &&
+            state.pendingPaymentWebViewUrl!.isNotEmpty) {
+          final paymentUrl = state.pendingPaymentWebViewUrl!;
+          final orderUuid = state.lastOrderUuid;
+          basketCubit.clearPendingPaymentWebView();
+          context.push(
+            AppRoutes.paymentWebView,
+            extra: {
+              'url': paymentUrl,
+              'isPlan': false,
+              'orderUuid': orderUuid,
+            },
+          );
+        }
+      },
+      child: BlocBuilder<CartCubit, CartState>(
       builder: (context, state) {
         return BlocBuilder<ProfileCubit, ProfileState>(
           builder: (context, profileState) {
@@ -59,6 +98,7 @@ class CartScreenBody extends StatelessWidget {
           },
         );
       },
+    ),
     );
   }
 }

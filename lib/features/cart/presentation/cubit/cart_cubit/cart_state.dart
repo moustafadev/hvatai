@@ -16,5 +16,9 @@ class CartState with _$CartState {
     @Default(false) bool showOrderLoadingScreen,
     @Default(false) bool showOrderSuccessScreen,
     @Default(false) bool showOrderErrorScreen,
+    String? qrCodeSvg,
+    String? sbpPaymentUrl,
+    String? pendingPaymentWebViewUrl,
+    String? lastOrderUuid,
   }) = _CartState;
 }

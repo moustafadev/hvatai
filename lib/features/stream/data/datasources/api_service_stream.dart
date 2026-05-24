@@ -6,6 +6,7 @@ import 'package:hvatai/core/error/execute_and_handle_error.dart';
 import 'package:hvatai/core/shared/utils/server_config.dart';
 import 'package:http/http.dart' as http;
 import 'package:hvatai/features/profile/data/model/stream_response_model/stream_response_model.dart';
+import 'package:hvatai/features/stream/data/models/bid_purchase_response/bid_purchase_response.dart';
 import 'package:hvatai/features/stream/data/models/bid_session/bid_session_response.dart';
 import 'package:hvatai/features/stream/data/models/bid_stream/bid_stream_response.dart';
 import 'package:hvatai/features/stream/data/models/start_stream/start_stream_model.dart';
@@ -424,13 +425,13 @@ class ApiServiceStream extends ApiBase {
 
   /// PUT: bid-purchases/{id}/complete
   /// body: { payment_method: "wallet", wallet_id: 1, shipping_address: {...} }
-  Future<bool> completeBidPurchase({
+  Future<BidPurchaseResponse> completeBidPurchase({
     required int bidPurchaseId,
     required String paymentMethod,
     int? walletId,
     required AddressModel shippingAddress,
   }) async {
-    return executeAndHandleErrorServer<bool>(() async {
+    return executeAndHandleErrorServer<BidPurchaseResponse>(() async {
       final path = ServerConfig.completeBidPurchase(bidPurchaseId);
 
       // Convert AddressModel to the required format
@@ -459,7 +460,9 @@ class ApiServiceStream extends ApiBase {
       final res = await post(path, body: body);
 
       if (res.statusCode == 200 || res.statusCode == 201) {
-        return true;
+        return BidPurchaseResponse.fromJson(
+          Map<String, dynamic>.from(res.json),
+        );
       }
 
       throw Exception(

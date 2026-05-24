@@ -35,6 +35,9 @@ class AppRoutes {
   static const String myProductDetails = '/my_product_details';
   static const String cartProductDetails = '/cart_product_details';
   static const String cart = '/cart';
+  static const String paymentWebView = '/payment_web_view';
+  static const String paymentSuccess = '/payment_success';
+  static const String paymentFailed = '/payment_failed';
   static const String selectAwaySend = '/select_away_send';
   static const String clipsCompany = '/clips_company';
   static const String productsCompany = '/products_company';
@@ -81,7 +84,9 @@ class AppRoutes {
   static const String myOrders = '/my_orders';
   static const String reportViolation = '/report_violation';
   static const String deliveryAddressForm = '/delivery_address_form';
-
+  static const String rewardLoading = '/reward-loading';
+  static const String rewardSuccess = '/reward-success';
+  static const String rewardError = '/reward-error';
   // =============================== Clips routes ===============================
   static const String editVideo = '/edit_video';
   static const String previewVideo = '/preview_video';

@@ -1,9 +1,13 @@
+import 'dart:ui';
+
 import 'package:dartz/dartz.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:hvatai/core/customs/customs.dart';
+import 'package:hvatai/core/customs/payment_methods_section.dart';
 import 'package:hvatai/features/address/data/models/address_model/address_model.dart';
 import 'package:hvatai/features/address/domain/usecases/get_delivery_address_usecase.dart';
+import 'package:hvatai/features/stream/data/models/bid_purchase_response/bid_purchase_response.dart';
 import 'package:hvatai/features/stream/domain/usecases/complete_bid_purchase_usecase.dart';
 import 'package:hvatai/features/wallet/domain/usecases/get_wallets_usecase.dart';
 
@@ -80,13 +84,9 @@ class BidPurchaseCubit extends Cubit<BidPurchaseState> {
   }
 
   void selectPaymentMethod(String method, {int? walletId}) {
-    if (method != 'wallet' && method != 'sbp') {
-      return; // Only allow wallet or sbp
-    }
-
     emit(state.copyWith(
       selectedPaymentMethod: method,
-      selectedWalletId: walletId,
+      selectedWalletId: walletId ?? state.selectedWalletId,
     ));
   }
 
@@ -95,20 +95,19 @@ class BidPurchaseCubit extends Cubit<BidPurchaseState> {
   }
 
   void showSecondSheet() {
-    emit(state.copyWith(
-      showFirstSheet: false,
-      showSecondSheet: true,
-    ));
+    emit(state.copyWith(showFirstSheet: false, showSecondSheet: true));
   }
 
   void closeSheets() {
-    emit(state.copyWith(
-      showFirstSheet: false,
-      showSecondSheet: false,
-    ));
+    emit(state.copyWith(showFirstSheet: false, showSecondSheet: false));
   }
 
-  Future<void> completePurchase(int bidPurchaseId) async {
+  Future<void> completePurchase(
+    int bidPurchaseId, {
+    required VoidCallback onSuccess,
+    required void Function(String url) onWebView,
+    required void Function(String qrSvg, String? url) onQr,
+  }) async {
     if (state.selectedAddress == null) {
       showFloatingMessageError('Пожалуйста, выберите адрес доставки');
       return;
@@ -117,11 +116,12 @@ class BidPurchaseCubit extends Cubit<BidPurchaseState> {
     emit(state.copyWith(isLoading: true, errorMessage: ''));
 
     final address = state.selectedAddress!;
+    final originalPaymentMethod = state.selectedPaymentMethod;
 
     final result = await _completeBidPurchaseUsecase(
       CompleteBidPurchaseParams(
         bidPurchaseId: bidPurchaseId,
-        paymentMethod: state.selectedPaymentMethod,
+        paymentMethod: originalPaymentMethod,
         walletId: state.selectedWalletId,
         shippingAddress: address,
       ),
@@ -129,19 +129,66 @@ class BidPurchaseCubit extends Cubit<BidPurchaseState> {
 
     result.fold(
       (failure) {
-        emit(state.copyWith(
-          isLoading: false,
-          errorMessage: failure,
-        ));
+        emit(state.copyWith(isLoading: false, errorMessage: failure));
         showFloatingMessageError(failure);
       },
-      (success) {
-        emit(state.copyWith(
-          isLoading: false,
-          showSecondSheet: false,
-        ));
-        showFloatingMessageSuccess('Покупка успешно завершена');
-      },
+      (response) => _handlePaymentResult(
+        response: response,
+        originalPaymentMethod: originalPaymentMethod,
+        onSuccess: onSuccess,
+        onWebView: onWebView,
+        onQr: onQr,
+      ),
     );
+  }
+
+  void _handlePaymentResult({
+    required BidPurchaseResponse response,
+    required String originalPaymentMethod,
+    required VoidCallback onSuccess,
+    required void Function(String url) onWebView,
+    required void Function(String qrSvg, String? url) onQr,
+  }) {
+    final session = response.data?.paymentSession;
+
+    if (originalPaymentMethod == PaymentMethodType.wallet) {
+      if (response.message?.isNotEmpty == true) {
+        showFloatingMessageSuccess(response.message!);
+      }
+      emit(state.copyWith(isLoading: false));
+      onSuccess();
+      return;
+    }
+
+    if (originalPaymentMethod == PaymentMethodType.sbp) {
+      final qrSvg = session?.qrSvg;
+      final sbpUrl = session?.qrLink ?? session?.qrImage;
+
+      emit(state.copyWith(isLoading: false));
+
+      if (qrSvg != null && qrSvg.isNotEmpty) {
+        onQr(qrSvg, sbpUrl);
+      } else {
+        onSuccess();
+      }
+      return;
+    }
+
+    if (originalPaymentMethod == PaymentMethodType.card) {
+      final confirmationUrl = session?.confirmationUrl;
+
+      emit(state.copyWith(isLoading: false));
+
+      if (confirmationUrl != null && confirmationUrl.isNotEmpty) {
+        onWebView(confirmationUrl);
+      } else {
+        onSuccess();
+      }
+      return;
+    }
+
+    // Fallback
+    emit(state.copyWith(isLoading: false));
+    onSuccess();
   }
 }

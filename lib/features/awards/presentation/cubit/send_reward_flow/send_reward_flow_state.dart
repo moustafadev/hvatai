@@ -7,11 +7,14 @@ class SendRewardFlowState with _$SendRewardFlowState {
     @Default(null) int? selectedIndex,
     @Default(false) bool addThankYouNote,
     @Default('') String rewardMessage,
-    @Default('wallet') String paymentMethod,
+    @Default(PaymentMethodType.wallet) String paymentMethod,
     @Default(false) bool isRewardSubmitting,
     @Default(false) bool showRewardLoadingScreen,
     @Default(false) bool showRewardSuccessScreen,
     @Default(false) bool showRewardErrorScreen,
     @Default('') String errorMessage,
+    String? qrCodeSvg,
+    String? sbpPaymentUrl,
+    String? pendingPaymentWebViewUrl,
   }) = _SendRewardFlowState;
 }

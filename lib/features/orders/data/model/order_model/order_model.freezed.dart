@@ -22,8 +22,12 @@ OrderModel _$OrderModelFromJson(Map<String, dynamic> json) {
 mixin _$OrderModel {
   int? get id => throw _privateConstructorUsedError;
   String? get uuid => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_id')
+  int? get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'order_type')
+  String? get orderType => throw _privateConstructorUsedError;
   @JsonKey(name: 'total_amount')
-  String? get totalAmount => throw _privateConstructorUsedError;
+  num? get totalAmount => throw _privateConstructorUsedError;
   @JsonKey(name: 'delivery_total')
   num? get deliveryTotal => throw _privateConstructorUsedError;
   @JsonKey(name: 'items_total')
@@ -59,7 +63,9 @@ abstract class $OrderModelCopyWith<$Res> {
   $Res call(
       {int? id,
       String? uuid,
-      @JsonKey(name: 'total_amount') String? totalAmount,
+      @JsonKey(name: 'user_id') int? userId,
+      @JsonKey(name: 'order_type') String? orderType,
+      @JsonKey(name: 'total_amount') num? totalAmount,
       @JsonKey(name: 'delivery_total') num? deliveryTotal,
       @JsonKey(name: 'items_total') num? itemsTotal,
       String? status,
@@ -91,6 +97,8 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
   $Res call({
     Object? id = freezed,
     Object? uuid = freezed,
+    Object? userId = freezed,
+    Object? orderType = freezed,
     Object? totalAmount = freezed,
     Object? deliveryTotal = freezed,
     Object? itemsTotal = freezed,
@@ -111,10 +119,18 @@ class _$OrderModelCopyWithImpl<$Res, $Val extends OrderModel>
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      orderType: freezed == orderType
+          ? _value.orderType
+          : orderType // ignore: cast_nullable_to_non_nullable
+              as String?,
       totalAmount: freezed == totalAmount
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as num?,
       deliveryTotal: freezed == deliveryTotal
           ? _value.deliveryTotal
           : deliveryTotal // ignore: cast_nullable_to_non_nullable
@@ -194,7 +210,9 @@ abstract class _$$OrderModelImplCopyWith<$Res>
   $Res call(
       {int? id,
       String? uuid,
-      @JsonKey(name: 'total_amount') String? totalAmount,
+      @JsonKey(name: 'user_id') int? userId,
+      @JsonKey(name: 'order_type') String? orderType,
+      @JsonKey(name: 'total_amount') num? totalAmount,
       @JsonKey(name: 'delivery_total') num? deliveryTotal,
       @JsonKey(name: 'items_total') num? itemsTotal,
       String? status,
@@ -226,6 +244,8 @@ class __$$OrderModelImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? uuid = freezed,
+    Object? userId = freezed,
+    Object? orderType = freezed,
     Object? totalAmount = freezed,
     Object? deliveryTotal = freezed,
     Object? itemsTotal = freezed,
@@ -246,10 +266,18 @@ class __$$OrderModelImplCopyWithImpl<$Res>
           ? _value.uuid
           : uuid // ignore: cast_nullable_to_non_nullable
               as String?,
+      userId: freezed == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      orderType: freezed == orderType
+          ? _value.orderType
+          : orderType // ignore: cast_nullable_to_non_nullable
+              as String?,
       totalAmount: freezed == totalAmount
           ? _value.totalAmount
           : totalAmount // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as num?,
       deliveryTotal: freezed == deliveryTotal
           ? _value.deliveryTotal
           : deliveryTotal // ignore: cast_nullable_to_non_nullable
@@ -296,6 +324,8 @@ class _$OrderModelImpl implements _OrderModel {
   const _$OrderModelImpl(
       {this.id,
       this.uuid,
+      @JsonKey(name: 'user_id') this.userId,
+      @JsonKey(name: 'order_type') this.orderType,
       @JsonKey(name: 'total_amount') this.totalAmount,
       @JsonKey(name: 'delivery_total') this.deliveryTotal,
       @JsonKey(name: 'items_total') this.itemsTotal,
@@ -316,8 +346,14 @@ class _$OrderModelImpl implements _OrderModel {
   @override
   final String? uuid;
   @override
+  @JsonKey(name: 'user_id')
+  final int? userId;
+  @override
+  @JsonKey(name: 'order_type')
+  final String? orderType;
+  @override
   @JsonKey(name: 'total_amount')
-  final String? totalAmount;
+  final num? totalAmount;
   @override
   @JsonKey(name: 'delivery_total')
   final num? deliveryTotal;
@@ -351,7 +387,7 @@ class _$OrderModelImpl implements _OrderModel {
 
   @override
   String toString() {
-    return 'OrderModel(id: $id, uuid: $uuid, totalAmount: $totalAmount, deliveryTotal: $deliveryTotal, itemsTotal: $itemsTotal, status: $status, paymentStatus: $paymentStatus, paymentMethod: $paymentMethod, deliveryMethod: $deliveryMethod, totals: $totals, items: $items, user: $user)';
+    return 'OrderModel(id: $id, uuid: $uuid, userId: $userId, orderType: $orderType, totalAmount: $totalAmount, deliveryTotal: $deliveryTotal, itemsTotal: $itemsTotal, status: $status, paymentStatus: $paymentStatus, paymentMethod: $paymentMethod, deliveryMethod: $deliveryMethod, totals: $totals, items: $items, user: $user)';
   }
 
   @override
@@ -361,6 +397,9 @@ class _$OrderModelImpl implements _OrderModel {
             other is _$OrderModelImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.uuid, uuid) || other.uuid == uuid) &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.orderType, orderType) ||
+                other.orderType == orderType) &&
             (identical(other.totalAmount, totalAmount) ||
                 other.totalAmount == totalAmount) &&
             (identical(other.deliveryTotal, deliveryTotal) ||
@@ -385,6 +424,8 @@ class _$OrderModelImpl implements _OrderModel {
       runtimeType,
       id,
       uuid,
+      userId,
+      orderType,
       totalAmount,
       deliveryTotal,
       itemsTotal,
@@ -416,7 +457,9 @@ abstract class _OrderModel implements OrderModel {
   const factory _OrderModel(
       {final int? id,
       final String? uuid,
-      @JsonKey(name: 'total_amount') final String? totalAmount,
+      @JsonKey(name: 'user_id') final int? userId,
+      @JsonKey(name: 'order_type') final String? orderType,
+      @JsonKey(name: 'total_amount') final num? totalAmount,
       @JsonKey(name: 'delivery_total') final num? deliveryTotal,
       @JsonKey(name: 'items_total') final num? itemsTotal,
       final String? status,
@@ -435,8 +478,14 @@ abstract class _OrderModel implements OrderModel {
   @override
   String? get uuid;
   @override
+  @JsonKey(name: 'user_id')
+  int? get userId;
+  @override
+  @JsonKey(name: 'order_type')
+  String? get orderType;
+  @override
   @JsonKey(name: 'total_amount')
-  String? get totalAmount;
+  num? get totalAmount;
   @override
   @JsonKey(name: 'delivery_total')
   num? get deliveryTotal;

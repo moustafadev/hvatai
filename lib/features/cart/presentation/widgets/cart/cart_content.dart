@@ -91,13 +91,15 @@ class CartContent extends StatelessWidget {
                   ),
                   8.ph,
                   PaymentMethodsSection(
-                    walletSelected: state.selectedPaymentMethod == 'wallet',
-                    sbpSelected: state.selectedPaymentMethod == 'sbp',
+                    selectedPaymentMethod: state.selectedPaymentMethod,
                     onWalletTap: () {
-                      basketCubit.setPaymentMethod('wallet');
+                      basketCubit.setPaymentMethod(PaymentMethodType.wallet);
+                    },
+                    onCardTap: () {
+                      basketCubit.setPaymentMethod(PaymentMethodType.card);
                     },
                     onSbpTap: () {
-                      basketCubit.setPaymentMethod('sbp');
+                      basketCubit.setPaymentMethod(PaymentMethodType.sbp);
                     },
                     onAddPaymentTap: () async {
                       PaymentMethodCubit paymentCubit;
@@ -114,7 +116,6 @@ class CartContent extends StatelessWidget {
                       paymentCubit.getPaymentMethods();
                     },
                   ),
-                  24.ph,
                   CustomText(
                     text: 'deliveryAddress'.tr(),
                     fontSize: 16.sp,

@@ -18,6 +18,7 @@ import 'package:hvatai/core/theme/assets.dart';
 import 'package:hvatai/features/address/data/models/address_model/address_model.dart';
 import 'package:hvatai/features/address/presentation/address.dart';
 import 'package:hvatai/features/auth/data/models/registration_model/user_registration_data.dart';
+import 'package:hvatai/features/cart/presentation/cart.dart';
 import 'package:hvatai/features/chat/presentation/chat.dart';
 import 'package:hvatai/features/chat/presentation/cubit/chats_cubit.dart';
 import 'package:hvatai/features/home/presentation/home.dart';

@@ -1,20 +1,21 @@
-part of '../../awards.dart';
+part of '../cart.dart';
 
-class RewardErrorScreen extends StatelessWidget {
-  const RewardErrorScreen({
+class PaymentFailedScreen extends StatelessWidget {
+  const PaymentFailedScreen({
     super.key,
   });
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: AppColors.lightGreyBackground,
       appBar: AppBar(
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.lightGreyBackground,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios, color: AppColors.blackDark),
-          onPressed: () => context.pop(),
+          onPressed: () {
+            context.pop();
+          },
         ),
       ),
       body: Center(
@@ -28,14 +29,14 @@ class RewardErrorScreen extends StatelessWidget {
             24.ph,
             CustomText(
               text: 'anErrorOccurred'.tr(),
-              fontSize: 14.sp,
-              fontWeight: FontWeight.w500,
+              fontSize: 18.sp,
+              fontWeight: FontWeight.w700,
               textAlign: TextAlign.center,
             ),
             40.ph,
             CustomGradientButton(
               text: 'retry'.tr(),
-              onPressed: (){
+              onPressed: () {
                 context.pop();
               },
               width: 200.w,
